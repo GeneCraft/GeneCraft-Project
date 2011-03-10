@@ -4,19 +4,29 @@
 #include <QObject>
 
 #include "struct/shape.h"
+#include "struct/shapebuilder.h"
 
 class Entity : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit Entity(QObject *parent = 0);
+    explicit Entity(QString name, QString family, int generation, QObject *parent = 0);
+    ~Entity();
+    Shape* getShape();
+    void   setShape(Shape*);
+
+    void print();
 
 signals:
 
 public slots:
 
 private:
-    Shape structure;
+    Shape* shape;
+    QString name;
+    QString family;
+    int generation;
 
 };
 

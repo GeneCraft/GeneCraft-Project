@@ -10,13 +10,19 @@ class TreeShape : public Shape
     Q_OBJECT
 public:
     explicit TreeShape(QObject *parent = 0);
+    ~TreeShape();
+
+    Fixation* getRoot();
+    void setRoot(Fixation*);
+
+    void print();
 
 signals:
 
 public slots:
 
 private:
-    Fixation start;
+    Fixation* root;
 
 };
 

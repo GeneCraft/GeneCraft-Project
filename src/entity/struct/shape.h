@@ -9,6 +9,8 @@ class Shape : public QObject
 public:
     explicit Shape(QObject *parent = 0);
 
+    virtual void print() = 0;
+
 signals:
 
 public slots:

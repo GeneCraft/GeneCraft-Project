@@ -12,6 +12,7 @@ class Fixation : public QObject
     Q_OBJECT
 public:
     explicit Fixation(QObject *parent = 0);
+    ~Fixation();
 
     Bone* addBone(float alpha,
                  float beta,
@@ -32,6 +33,8 @@ public:
                  float length);
 
     QList<Bone*> getBones();
+
+    QString toString();
 
 signals:
 

@@ -12,13 +12,16 @@ class Bone : public QObject
 public:
     explicit Bone(QObject *parent = 0);
     Bone(float alpha, float beta_min, float beta_max, float r_min, float r_max, float length);
+    ~Bone();
 
+    float getLength();
     float rotationCapacity();
     float hingeCapacity();
     float getAlpha();
     float getBeta();
     Fixation* getFixation();
 
+    QString toString();
 signals:
 
 public slots:
