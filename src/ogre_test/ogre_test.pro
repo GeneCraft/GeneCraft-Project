@@ -31,6 +31,5 @@ CONFIG(Debug) {
 }
 CONFIG(Release) {
     LIBS += -L../lib/ogre/bin/release
-    LIBS += -L../lib/ogrebullet-build/lib
-    LIBS += -lOgreMain -lOIS -lOgreBulletDyn -lOgreBulletCol
+    LIBS += -lOgreMain -lOIS
 }

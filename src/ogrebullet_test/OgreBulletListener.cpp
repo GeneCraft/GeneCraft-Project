@@ -784,7 +784,7 @@ bool OgreBulletListener::frameStarted(Real elapsedTime)
     mCamera->moveRelative(mCameraTrans);
 
     // update physics
-    for(int i =0; i < 150000; i++) {
+    for(int i =0; i < 1; i++) {
         if (!mPaused || mDoOnestep)
             mWorld->stepSimulation(elapsedTime);
     }
