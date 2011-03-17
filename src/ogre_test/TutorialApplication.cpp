@@ -34,6 +34,14 @@ void TutorialApplication::createScene(void)
     QList<int> list;
     list.append(3);
     qDebug() << "bonjour from Qt !";
+
+    Ogre::Entity* ent1 =mSceneMgr->createEntity("robot.mesh");
+    Ogre::SceneNode* node1 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Noeud Robot 1");
+    node1->attachObject(ent1);
+
+    Ogre::Entity* ent2=mSceneMgr->createEntity("Robot 2","robot.mesh");
+    Ogre::SceneNode* node2=mSceneMgr->getRootSceneNode()->createChildSceneNode("Noeud Robot 2",Ogre::Vector3(50,0,0));
+    node2->attachObject(ent2);
 }
 
 
