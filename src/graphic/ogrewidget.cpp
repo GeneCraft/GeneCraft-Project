@@ -53,15 +53,17 @@ void OgreWidget::init() {
     params["macAPICocoaUseNSView"] = "true";
 #endif
 
+    qDebug() << "init !";
     //Finally create our window.
     mOgreWindow = this->mOgreRoot->createRenderWindow(
           "OgreWindow" + QString::number(ogrewidgetCpt++).toStdString()
-                               , width(), height(), false, &params);
+                               , 640, 480, false, &params);
 
     mOgreWindow->setActive(true);
     WId ogreWinId = 0x0;
     mOgreWindow->getCustomAttribute( "WINDOW", &ogreWinId );
 
+    qDebug() << "init !";
     assert( ogreWinId );
 
     this->create( ogreWinId );
@@ -71,6 +73,7 @@ void OgreWidget::init() {
 
     mIsInit = true;
     resized = true;
+    qDebug() << "init !";
 }
 
 /**

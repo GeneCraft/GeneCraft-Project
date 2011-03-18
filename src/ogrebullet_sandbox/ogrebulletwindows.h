@@ -15,6 +15,8 @@ namespace Ui {
 }
 
 class OgreWidget;
+class OgreManager;
+class OgreBulletManager;
 
 class OgreBulletWindows : public QMainWindow
 {
@@ -26,17 +28,14 @@ public:
 
 private:
     Ui::OgreBulletWindows *ui;
-    Ogre::Root* initOgreRoot();
-    void initResources();
-    Ogre::SceneManager* initSceneManager(Ogre::Root* ogreRoot);
-    void createScene(Ogre::SceneManager* scene);
 
-    void initRenderingSystem(Ogre::Root* ogreRoot);
 
     QTimer* timerGraphic;
     Ogre::Root* ogreRoot;
     OgreWidget* oW1;
     OgreWidget* oW2;
+    OgreManager* ogre;
+    OgreBulletManager* physics;
 
 private slots:
     void updateGraphics();

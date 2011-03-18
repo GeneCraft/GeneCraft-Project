@@ -27,10 +27,18 @@ INCLUDEPATH += ../lib/bullet/Extra/ConvexDecomposition
 
 SOURCES += main.cpp\
         ogrebulletwindows.cpp \
-    ../graphic/ogrewidget.cpp
+    ../graphic/ogrewidget.cpp \
+    ../graphic/ogremanager.cpp \
+    ../graphic/scenemanager.cpp \
+    ../graphic/ninjascene.cpp \
+    ../physics/ogrebulletmanager.cpp
 
 HEADERS  += ogrebulletwindows.h \
-    ../graphic/ogrewidget.h
+    ../graphic/ogrewidget.h \
+    ../graphic/ogremanager.h \
+    ../graphic/scenemanager.h \
+    ../graphic/ninjascene.h \
+    ../physics/ogrebulletmanager.h
 
 FORMS    += ogrebulletwindows.ui
 
