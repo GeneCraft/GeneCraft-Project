@@ -25,6 +25,7 @@ void NinjaScene::createScene(Ogre::SceneManager *mSceneMgr) {
 
     entGround->setMaterialName("Examples/Rockwall");
     entGround->setCastShadows(false);
+
     */
 
     Ogre::Light* pointLight = mSceneMgr->createLight("pointLight");
