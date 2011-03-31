@@ -2,60 +2,62 @@
 #define OGREWIDGET_H
 
 #include <QGLWidget>
-#include <OGRE/Ogre.h>
 #include <QX11Info>
 #include <QMutex>
 
-class OgreWidget : public QWidget
-{
-   Q_OBJECT
+#include "classes.h"
 
-   public:
-    OgreWidget(Ogre::Root* ogreRoot,
-               Ogre::SceneManager* scnManager,
-               Ogre::Camera* camera,
-               QWidget *parent=0 ):
-      QWidget( parent ),
-      mOgreWindow(NULL)
-      {
-
-        mOgreRoot = ogreRoot;
-        mSceneMgr = scnManager;
-        mCamera = camera;
-        mIsInit = false;
-        resized = true;
-      }
-
-    virtual ~OgreWidget()
-      {
-        destroy();
-      }
-public:
-    bool resized;
-public slots:
-
-    void resize();
-    void init();
-    void resizeEvent(QResizeEvent* evt);
-    QPaintEngine *paintEngine() const
+namespace GeneLabOgreBullet {
+    class OgreWidget : public QWidget
     {
-            return 0;
-    }
+       Q_OBJECT
 
-    void paintEvent(QPaintEvent* evt)
-    {
-    }
+       public:
+        OgreWidget(Ogre::Root* ogreRoot,
+                   Ogre::SceneManager* scnManager,
+                   Ogre::Camera* camera,
+                   QWidget *parent=0 ):
+          QWidget( parent ),
+          mOgreWindow(NULL)
+          {
+
+            mOgreRoot = ogreRoot;
+            mSceneMgr = scnManager;
+            mCamera = camera;
+            mIsInit = false;
+            resized = true;
+          }
+
+        virtual ~OgreWidget()
+          {
+            destroy();
+          }
+    public:
+        bool resized;
+    public slots:
+
+        void resize();
+        void init();
+        void resizeEvent(QResizeEvent* evt);
+        QPaintEngine *paintEngine() const
+        {
+                return 0;
+        }
+
+        void paintEvent(QPaintEvent* evt)
+        {
+        }
 
 
-   protected:
-    Ogre::String glContext;
-    Ogre::Root *mOgreRoot;
-    Ogre::RenderWindow *mOgreWindow;
-    Ogre::Camera *mCamera;
-    Ogre::Viewport *mViewport;
-    Ogre::SceneManager *mSceneMgr;
-    bool mIsInit;
-    static int ogrewidgetCpt;
-};
+       protected:
+        Ogre::Root *mOgreRoot;
+        Ogre::RenderWindow *mOgreWindow;
+        Ogre::Camera *mCamera;
+        Ogre::Viewport *mViewport;
+        Ogre::SceneManager *mSceneMgr;
 
+        bool mIsInit;
+        static int ogrewidgetCpt;
+    };
+}
 #endif // OGREWIDGET_H

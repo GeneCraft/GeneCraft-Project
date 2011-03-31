@@ -3,20 +3,12 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include "classes.h"
 
 //compilation optimisation
-namespace Ogre {
-    class Root;
-    class SceneManager;
-}
-
 namespace Ui {
     class OgreBulletWindows;
 }
-
-class OgreWidget;
-class OgreManager;
-class OgreBulletManager;
 
 class OgreBulletWindows : public QMainWindow
 {
@@ -32,10 +24,10 @@ private:
 
     QTimer* timerGraphic;
     Ogre::Root* ogreRoot;
-    OgreWidget* oW1;
-    OgreWidget* oW2;
-    OgreManager* ogre;
-    OgreBulletManager* physics;
+    GeneLabOgreBullet::OgreWidget* oW1;
+    GeneLabOgreBullet::OgreWidget* oW2;
+    GeneLabOgreBullet::OgreManager* graphics;
+    GeneLabOgreBullet::BulletManager*  physics;
 
 private slots:
     void updateGraphics();

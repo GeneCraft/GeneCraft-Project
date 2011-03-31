@@ -4,124 +4,131 @@
 #include <QApplication>
 
 #include "graphic/ogrewidget.h"
+#include "graphic/ogrescene.h"
 
-void OgreManager::init(unsigned long winId) {
-    this->initOgreRoot();
-    this->initRenderingSystem(winId);
-    this->initResources();
-    this->initSceneManager();
-}
+namespace GeneLabOgreBullet {
 
-Ogre::Root* OgreManager::getRoot() {
-    return ogreRoot;
-}
+    // We use genelab core for code productivity
+    using namespace GeneLabCore;
 
-Ogre::SceneManager* OgreManager::getSceneManager() {
-    return sceneManager;
-}
-
-void OgreManager::initRenderingSystem(unsigned long winId) {
-    // Get the parameters of the window QT created
-    Ogre::String winHandle;
-    #ifdef WIN32
-    // Windows code
-    winHandle += Ogre::StringConverter::toString(winId);
-    #else
-    // Unix code
-    QX11Info info = x11Info();
-    winHandle  = Ogre::StringConverter::toString((unsigned long)(info.display()));
-    winHandle += ":";
-    winHandle += Ogre::StringConverter::toString((unsigned int)(info.screen()));
-    winHandle += ":";
-    winHandle += Ogre::StringConverter::toString(winId);
-    #endif
-
-    Ogre::NameValuePairList params;
-    params["parentWindowHandle"] = winHandle;
-
-    fakeRender = ogreRoot->createRenderWindow( "fakewindow",
-                             640,
-                             480,
-                             false,
-                             &params );
-
-    fakeRender->setActive(false);
-    fakeRender->setVisible(false);
-}
-
-void OgreManager::initOgreRoot() {
-    ogreRoot = new Ogre::Root();
-    bool ok = ogreRoot->showConfigDialog();
-    if(!ok)
-        QApplication::exit(-1);
-
-    ogreRoot->getRenderSystem()->setConfigOption( "Full Screen", "No" );
-    ogreRoot->saveConfig();
-    ogreRoot->initialise(false); // don't create a window
-}
-
-void OgreManager::initResources() {
-    // Load resource paths from config file
-    Ogre::ConfigFile cf;
-    cf.load("resources.cfg");
-
-    // Go through all sections & settings in the file
-    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-
-    Ogre::String secName, typeName, archName;
-    while (seci.hasMoreElements())
+    OgreManager::OgreManager(unsigned long winId) :
+        GraphicsEngine()
     {
-        secName = seci.peekNextKey();
-        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-        Ogre::ConfigFile::SettingsMultiMap::iterator i;
-        for (i = settings->begin(); i != settings->end(); ++i)
+        this->winId = winId;
+    }
+
+    void OgreManager::init() {
+        this->initOgreRoot();
+        this->initRenderingSystem(winId);
+        this->initResources();
+        this->initSceneManager();
+    }
+
+    Ogre::Root* OgreManager::getRoot() {
+        return ogreRoot;
+    }
+
+    GraphicsScene* OgreManager::getGraphicsScene() {
+        return scnManager;
+    }
+
+    void OgreManager::initOgreRoot() {
+        ogreRoot = new Ogre::Root();
+        bool ok = ogreRoot->showConfigDialog();
+        if(!ok)
+            QApplication::exit(-1);
+
+        ogreRoot->getRenderSystem()->setConfigOption( "Full Screen", "No" );
+        ogreRoot->saveConfig();
+        ogreRoot->initialise(false); // don't create a window
+    }
+
+    void OgreManager::initRenderingSystem(unsigned long winId) {
+        // Get the parameters of the window QT created
+        Ogre::String winHandle;
+        #ifdef WIN32
+        // Windows code
+        winHandle += Ogre::StringConverter::toString(winId);
+        #else
+        // Unix code
+        QX11Info info = x11Info();
+        winHandle  = Ogre::StringConverter::toString((unsigned long)(info.display()));
+        winHandle += ":";
+        winHandle += Ogre::StringConverter::toString((unsigned int)(info.screen()));
+        winHandle += ":";
+        winHandle += Ogre::StringConverter::toString(winId);
+        #endif
+
+        Ogre::NameValuePairList params;
+        params["parentWindowHandle"] = winHandle;
+
+        fakeRender = ogreRoot->createRenderWindow( "fakewindow",
+                                 640,
+                                 480,
+                                 false,
+                                 &params );
+
+        fakeRender->setActive(false);
+        fakeRender->setVisible(false);
+    }
+
+    void OgreManager::initResources() {
+        // Load resource paths from config file
+        Ogre::ConfigFile cf;
+        cf.load("resources.cfg");
+
+        // Go through all sections & settings in the file
+        Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+
+        Ogre::String secName, typeName, archName;
+        while (seci.hasMoreElements())
         {
-            typeName = i->first;
-            archName = i->second;
-            Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                archName, typeName, secName);
+            secName = seci.peekNextKey();
+            Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+            Ogre::ConfigFile::SettingsMultiMap::iterator i;
+            for (i = settings->begin(); i != settings->end(); ++i)
+            {
+                typeName = i->first;
+                archName = i->second;
+                Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+                    archName, typeName, secName);
+            }
+        }
+
+        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    }
+
+    void OgreManager::initSceneManager() {
+        //== Ogre Initialization ==//
+        qDebug() << "ogre ok";
+        Ogre::SceneType scene_manager_type = Ogre::ST_INTERIOR;
+
+        scnOgre = ogreRoot->createSceneManager( scene_manager_type );
+        scnManager = new OgreScene(ogreRoot, scnOgre);
+    }
+
+    OgreWidget* OgreManager::createOgreWidget(
+        Ogre::Camera* cam, QWidget* parent) {
+
+        OgreWidget* ow = new OgreWidget(ogreRoot, scnOgre, cam, parent);
+        ow->init();
+
+        ogreWidgets.append(ow);
+
+        return ow;
+    }
+
+    Ogre::SceneManager* OgreManager::getOgreScene() {
+        return this->scnOgre;
+    }
+
+    void OgreManager::graphicsStep() {
+
+        ogreRoot->renderOneFrame();
+
+        for(int i = 0; i < ogreWidgets.size(); i++) {
+            if(ogreWidgets[i]->resized)
+                ogreWidgets[i]->resize();
         }
     }
-
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-}
-
-void OgreManager::initSceneManager() {
-    //== Ogre Initialization ==//
-    qDebug() << "ogre ok";
-    Ogre::SceneType scene_manager_type = Ogre::ST_INTERIOR;
-
-    sceneManager = ogreRoot->createSceneManager( scene_manager_type );
-}
-
-OgreWidget* OgreManager::createOgreWidget(Ogre::Vector3 camPos, Ogre::Vector3 camLookAt, QWidget* parent) {
-    Ogre::Camera* cam = sceneManager->createCamera("ow" + ogreWidgets.size());
-
-    // Position it at 500 in Z direction
-    cam->setPosition(camPos);
-    // Look back along -Z
-    cam->lookAt(camLookAt);
-    cam->setNearClipDistance(5);
-
-    OgreWidget* ow = new OgreWidget(ogreRoot, sceneManager, cam, parent);
-    ow->init();
-
-    ogreWidgets.append(ow);
-
-    return ow;
-}
-
-void OgreManager::oneStep() {
-
-    ogreRoot->renderOneFrame();
-
-    for(int i = 0; i < ogreWidgets.size(); i++) {
-        if(ogreWidgets[i]->resized)
-            ogreWidgets[i]->resize();
-    }
-}
-
-OgreManager::OgreManager(QObject *parent) :
-    QObject(parent)
-{
 }

@@ -2,46 +2,43 @@
 #define OGREMANAGER_H
 
 #include <QObject>
+#include "classes.h"
+#include "graphic/graphicsengine.h"
 
-namespace Ogre {
-    class Root;
-    class SceneManager;
-    class Vector3;
-    class RenderWindow;
+namespace GeneLabOgreBullet {
+    class OgreManager : public GeneLabCore::GraphicsEngine
+    {
+        Q_OBJECT
+    public:
+        explicit OgreManager(unsigned long winId);
+
+        void init();
+        Ogre::Root* getRoot();
+        Ogre::SceneManager* getOgreScene();
+        GeneLabCore::GraphicsScene* getGraphicsScene();
+
+        OgreWidget* createOgreWidget(
+            Ogre::Camera* cam, QWidget* parent);
+
+    signals:
+
+    public slots:
+        void graphicsStep();
+
+    protected:
+        Ogre::Root* ogreRoot;
+        Ogre::SceneManager* scnOgre;
+        GeneLabCore::GraphicsScene* scnManager;
+        Ogre::RenderWindow* fakeRender;
+
+        void initOgreRoot();
+        void initResources();
+        void initSceneManager();
+        void initRenderingSystem(unsigned long winId);
+
+        QList<OgreWidget*> ogreWidgets;
+        int winId;
+
+    };
 }
-
-class OgreWidget;
-
-class OgreManager : public QObject
-{
-    Q_OBJECT
-public:
-    explicit OgreManager(QObject *parent = 0);
-
-    void init(unsigned long winId);
-    Ogre::Root* getRoot();
-    Ogre::SceneManager* getSceneManager();
-
-    OgreWidget* createOgreWidget(Ogre::Vector3 pos, Ogre::Vector3 lookat, QWidget* parent);
-
-    void oneStep();
-
-signals:
-
-public slots:
-
-protected:
-    Ogre::Root* ogreRoot;
-    Ogre::SceneManager* sceneManager;
-    Ogre::RenderWindow* fakeRender;
-
-    void initOgreRoot();
-    void initResources();
-    void initSceneManager();
-    void initRenderingSystem(unsigned long winId);
-
-    QList<OgreWidget*> ogreWidgets;
-
-};
-
 #endif // OGREMANAGER_H

@@ -29,16 +29,33 @@ SOURCES += main.cpp\
         ogrebulletwindows.cpp \
     ../graphic/ogrewidget.cpp \
     ../graphic/ogremanager.cpp \
-    ../graphic/scenemanager.cpp \
-    ../graphic/ninjascene.cpp \
-    ../physics/ogrebulletmanager.cpp
+    ../graphic/graphicsengine.cpp \
+    ../graphic/graphicsscene.cpp \
+    ../physics/physicsengine.cpp \
+    ../physics/physicsscene.cpp \
+    ../entity/entity.cpp \
+    ../world/world.cpp \
+    ../graphic/ogrescene.cpp \
+    ../physics/bulletmanager.cpp \
+    ../simpletestworld.cpp \
+    ../world/ogrebulletworld.cpp \
+    ../physics/bulletscene.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
     ../graphic/ogremanager.h \
-    ../graphic/scenemanager.h \
-    ../graphic/ninjascene.h \
-    ../physics/ogrebulletmanager.h
+    ../graphic/graphicsengine.h \
+    ../graphic/graphicsscene.h \
+    ../physics/physicsengine.h \
+    ../physics/physicsscene.h \
+    ../classes.h \
+    ../entity/entity.h \
+    ../world/world.h \
+    ../graphic/ogrescene.h \
+    ../physics/bulletmanager.h \
+    ../simpletestworld.h \
+    ../world/ogrebulletworld.h \
+    ../physics/bulletscene.h
 
 FORMS    += ogrebulletwindows.ui
 

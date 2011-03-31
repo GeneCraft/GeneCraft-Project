@@ -6,28 +6,30 @@
 #include "struct/shape.h"
 #include "struct/shapebuilder.h"
 
-class Entity : public QObject
-{
-    Q_OBJECT
+namespace GeneLabCore {
+    class Entity : public QObject
+    {
+        Q_OBJECT
 
-public:
-    explicit Entity(QString name, QString family, int generation, QObject *parent = 0);
-    ~Entity();
-    Shape* getShape();
-    void   setShape(Shape*);
+    public:
+        explicit Entity(QString name, QString family, int generation, QObject *parent = 0);
+        ~Entity();
+        Shape* getShape();
+        void   setShape(Shape*);
 
-    void print();
+        void print();
 
-signals:
+    signals:
 
-public slots:
+    public slots:
 
-private:
-    Shape* shape;
-    QString name;
-    QString family;
-    int generation;
+    private:
+        Shape* shape;
+        QString name;
+        QString family;
+        int generation;
 
-};
+    };
+}
 
 #endif // ENTITY_H

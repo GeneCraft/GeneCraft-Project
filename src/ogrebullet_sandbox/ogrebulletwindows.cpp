@@ -1,11 +1,13 @@
 #include "ogrebulletwindows.h"
 #include "ui_ogrebulletwindows.h"
 
-#include "graphic/ogrewidget.h"
-#include "graphic/ninjascene.h".h"
 #include "graphic/ogremanager.h"
+#include "graphic/graphicsengine.h"
+#include "graphic/ogrewidget.h"
+#include "graphic/ogrescene.h"
 
-#include "physics/ogrebulletmanager.h"
+#include "physics/bulletmanager.h"
+#include "world/ogrebulletworld.h"
 
 #include "OGRE/Ogre.h"
 #include <QDebug>
@@ -16,26 +18,34 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ogre = new OgreManager();
-    ogre->init((unsigned long)this->winId());
-    Ogre::SceneManager* ogreScn    = ogre->getSceneManager();
-    SceneManager* scnManager = new NinjaScene();
+    graphics = new GeneLabOgreBullet::OgreManager((unsigned long)this->winId());
+    graphics->init();
 
-
-    scnManager->createScene(ogreScn);
+    GeneLabCore::GraphicsScene* scn    = graphics->getGraphicsScene();
+    GeneLabCore::World* world = new GeneLabOgreBullet::OgreBulletWorld();
 
     qDebug() << "camera ok";
+    Ogre::Camera* cam1 = graphics->getOgreScene()->createCamera("first");
+    cam1->setPosition(Ogre::Vector3(0, 18, 70));
+    cam1->lookAt(Ogre::Vector3(0, 0, -300));
+    cam1->setNearClipDistance(5);
 
-    OgreWidget* oW1 = ogre->createOgreWidget(
-                Ogre::Vector3(0,18,70), Ogre::Vector3(0, 0, -300), this->ui->centralWidget);
+    Ogre::Camera* cam2 = graphics->getOgreScene()->createCamera("second");
+    cam2->setPosition(Ogre::Vector3(0, 18, 0));
+    cam2->lookAt(Ogre::Vector3(0, 0, 70));
+    cam2->setNearClipDistance(5);
+
+    GeneLabOgreBullet::OgreWidget* oW1 = graphics->createOgreWidget(
+                cam1, this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW1);
-
     OgreWidget* oW2 = ogre->createOgreWidget(
                 Ogre::Vector3(0,18,0), Ogre::Vector3(0, 0, 70), this->ui->centralWidget);
+    GeneLabOgreBullet::OgreWidget* oW2 = graphics->createOgreWidget(
+                cam2, this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW2);
 
-    physics = new OgreBulletManager();
-    physics->init(ogre);
+    physics = new GeneLabOgreBullet::BulletManager();
+    physics->init(this->graphics);
 
     //OgreWidget* oW2 = ogre->createOgreWidget();
 
@@ -61,7 +71,7 @@ OgreBulletWindows::~OgreBulletWindows()
 }
 
 void OgreBulletWindows::updateGraphics() {
-    qDebug() << "update graphics..";
-    ogre->oneStep();
-    physics->oneStep();
+    //qDebug() << "update graphics..";
+    graphics->graphicsStep();
+    physics ->physicsStep();
 }
