@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     ../world/world.cpp \
     ../graphic/ogrescene.cpp \
     ../physics/bulletmanager.cpp \
-    ../simpletestworld.cpp \
     ../world/ogrebulletworld.cpp \
     ../physics/bulletscene.cpp \
     ../engine/engine.cpp \
@@ -52,7 +51,6 @@ HEADERS  += ogrebulletwindows.h \
     ../world/world.h \
     ../graphic/ogrescene.h \
     ../physics/bulletmanager.h \
-    ../simpletestworld.h \
     ../world/ogrebulletworld.h \
     ../physics/bulletscene.h \
     ../engine/engine.h \

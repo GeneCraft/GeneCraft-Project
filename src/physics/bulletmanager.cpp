@@ -37,6 +37,8 @@ namespace GeneLabOgreBullet {
         mWorld->setDebugDrawer(debugDrawer);
         mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
 
+
+        // TODO: Move in world !
         Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
         node->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
 
