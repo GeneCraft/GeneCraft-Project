@@ -11,12 +11,10 @@ namespace GeneLabCore {
     public:
         explicit World(QObject *parent = 0);
 
-        virtual void setPhysics (PhysicsScene*  scene) = 0;
-        virtual void setGraphics(GraphicsScene* scene) = 0;
     signals:
 
     public slots:
-
+        virtual void setup() = 0;
     };
 }
 

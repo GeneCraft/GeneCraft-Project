@@ -3,10 +3,9 @@
 
 #include <QObject>
 #include "classes.h"
-#include "graphic/graphicsscene.h"
 
 namespace GeneLabOgreBullet {
-    class OgreScene : public GeneLabCore::GraphicsScene
+    class OgreScene : public QObject
     {
         Q_OBJECT
     public:
@@ -14,10 +13,10 @@ namespace GeneLabOgreBullet {
                            Ogre::SceneManager* sceneManager);
 
         // Add and remove of world, entity
-        void addWorld(GeneLabCore::World* world);
+        /*void addWorld(GeneLabCore::World* world);
         void addEntity(GeneLabCore::Entity* entity);
         void removeWorld(GeneLabCore::World* world);
-        void removeEntity(GeneLabCore::Entity* entity);
+        void removeEntity(GeneLabCore::Entity* entity);*/
 
     signals:
 

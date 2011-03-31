@@ -1,11 +1,11 @@
 #ifndef BULLETSCENE_H
 #define BULLETSCENE_H
 
+#include <QObject>
 #include "classes.h"
-#include "physics/physicsscene.h"
 
 namespace GeneLabOgreBullet {
-    class BulletScene : public GeneLabCore::PhysicsScene
+    class BulletScene : QObject
     {
         Q_OBJECT
     public:

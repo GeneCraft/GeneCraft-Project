@@ -23,31 +23,30 @@ INCLUDEPATH += ../lib/ogrebullet-build/include/Dynamics
 INCLUDEPATH += ../lib/ogrebullet-build/include
 INCLUDEPATH += ../lib/bullet/src
 INCLUDEPATH += ../lib/bullet/Extra/ConvexDecomposition
+INCLUDEPATH += ../lib/qxt/src/core/
 
 
 SOURCES += main.cpp\
         ogrebulletwindows.cpp \
     ../graphic/ogrewidget.cpp \
     ../graphic/ogremanager.cpp \
-    ../graphic/graphicsengine.cpp \
-    ../graphic/graphicsscene.cpp \
-    ../physics/physicsengine.cpp \
-    ../physics/physicsscene.cpp \
     ../entity/entity.cpp \
     ../world/world.cpp \
     ../graphic/ogrescene.cpp \
     ../physics/bulletmanager.cpp \
     ../simpletestworld.cpp \
     ../world/ogrebulletworld.cpp \
-    ../physics/bulletscene.cpp
+    ../physics/bulletscene.cpp \
+    ../engine/engine.cpp \
+    ../factory/jsonloader.cpp \
+    ../factory/mainfactory.cpp \
+    ../factory/enginefactory.cpp \
+    ../factory/entityfactory.cpp \
+    ../factory/worldfactory.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
     ../graphic/ogremanager.h \
-    ../graphic/graphicsengine.h \
-    ../graphic/graphicsscene.h \
-    ../physics/physicsengine.h \
-    ../physics/physicsscene.h \
     ../classes.h \
     ../entity/entity.h \
     ../world/world.h \
@@ -55,7 +54,13 @@ HEADERS  += ogrebulletwindows.h \
     ../physics/bulletmanager.h \
     ../simpletestworld.h \
     ../world/ogrebulletworld.h \
-    ../physics/bulletscene.h
+    ../physics/bulletscene.h \
+    ../engine/engine.h \
+    ../factory/jsonloader.h \
+    ../factory/mainfactory.h \
+    ../factory/enginefactory.h \
+    ../factory/entityfactory.h \
+    ../factory/worldfactory.h
 
 FORMS    += ogrebulletwindows.ui
 
@@ -71,7 +76,9 @@ CONFIG(Release) {
 
 LIBS += -L../lib/ogrebullet-build/lib
 LIBS += -L../lib/bullet/lib
+LIBS += -L../lib/qxt/lib
 
+LIBS += -lQxtCore
 LIBS += -lOgreBulletCol -lOgreBulletDyn
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision

@@ -11,6 +11,10 @@ namespace GeneLabCore {
         this->shape = NULL;
     }
 
+    void Entity::setup() {
+
+    }
+
     Entity::~Entity() {
         delete this->shape;
     }

@@ -4,31 +4,37 @@
 #include <QObject>
 #include <deque>
 #include "classes.h"
-#include "physics/physicsengine.h"
+#include "engine/engine.h"
 
 namespace GeneLabOgreBullet {
-    class BulletManager : public GeneLabCore::PhysicsEngine
+    class BulletManager : public GeneLabCore::Engine
     {
         Q_OBJECT
     public:
         explicit BulletManager(QObject *parent = 0);
-        void init(OgreManager* ogreRoot);
-        GeneLabCore::PhysicsScene* getPhysicsScene();
+
+        BulletScene* getPhysicsScene();
 
     signals:
 
     public slots:
-        void physicsStep();
+        void beforeStep();
+        void step();
+        void afterStep();
+        void init(OgreManager* ogreRoot);
 
     protected:
-        OgreManager* ogre;
-        Ogre::Root* mOgreRoot;
+        OgreManager*        ogre;
+        Ogre::Root*         mOgreRoot;
         Ogre::SceneManager* mSceneMgr;
 
-        OgreBulletDynamics::DynamicsWorld *mWorld;   // OgreBullet World
+        // OgreBullet World
+        OgreBulletDynamics::DynamicsWorld *mWorld;
         OgreBulletCollisions::DebugDrawer *debugDrawer;
+
         int mNumEntitiesInstanced;
         int mMoveSpeed;
+
         std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
         std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
 

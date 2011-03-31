@@ -12,12 +12,17 @@ namespace GeneLabOgreBullet {
     public:
         explicit OgreBulletWorld(QObject *parent = 0);
 
-        void setPhysics(GeneLabCore::PhysicsScene* scene);
-        void setGraphics(GeneLabCore::GraphicsScene* scene);
+        void setPhysics(BulletScene* bullet);
+        void setGraphics(OgreScene* ogre);
 
     signals:
 
     public slots:
+        void setup();
+
+    private:
+        BulletScene* bullet;
+        OgreScene*   ogre;
 
     };
 

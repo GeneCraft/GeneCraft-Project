@@ -12,7 +12,7 @@ namespace GeneLabOgreBullet {
     using namespace GeneLabCore;
 
     OgreManager::OgreManager(unsigned long winId) :
-        GraphicsEngine()
+        Engine()
     {
         this->winId = winId;
     }
@@ -28,7 +28,7 @@ namespace GeneLabOgreBullet {
         return ogreRoot;
     }
 
-    GraphicsScene* OgreManager::getGraphicsScene() {
+    OgreScene* OgreManager::getGraphicsScene() {
         return scnManager;
     }
 
@@ -122,7 +122,15 @@ namespace GeneLabOgreBullet {
         return this->scnOgre;
     }
 
-    void OgreManager::graphicsStep() {
+    void OgreManager::beforeStep() {
+
+    }
+
+    void OgreManager::afterStep() {
+
+    }
+
+    void OgreManager::step() {
 
         ogreRoot->renderOneFrame();
 

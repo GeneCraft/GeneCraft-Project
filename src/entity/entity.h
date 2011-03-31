@@ -22,6 +22,7 @@ namespace GeneLabCore {
     signals:
 
     public slots:
+        void setup();
 
     private:
         Shape* shape;

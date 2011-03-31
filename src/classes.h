@@ -20,22 +20,13 @@ namespace OgreBulletCollisions {
 
 // Our namespace
 namespace GeneLabCore {
-    // Graphical related
-    class GraphicsEngine;
-    class GraphicsScene;
-
-    // Physical related
-    class PhysicsEngine;
-    class PhysicsScene;
+    // An engine
+    class Engine;
 
     // Entity related
-    class EntityGraphics;
-    class EntityPhysics;
     class World;
 
     // World related
-    class WorldGraphics;
-    class WorldPhysics;
     class Entity;
 }
 

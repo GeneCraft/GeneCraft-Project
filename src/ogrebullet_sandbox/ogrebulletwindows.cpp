@@ -2,12 +2,13 @@
 #include "ui_ogrebulletwindows.h"
 
 #include "graphic/ogremanager.h"
-#include "graphic/graphicsengine.h"
 #include "graphic/ogrewidget.h"
 #include "graphic/ogrescene.h"
 
 #include "physics/bulletmanager.h"
 #include "world/ogrebulletworld.h"
+
+#include "factory/jsonloader.h"
 
 #include "OGRE/Ogre.h"
 #include <QDebug>
@@ -21,7 +22,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     graphics = new GeneLabOgreBullet::OgreManager((unsigned long)this->winId());
     graphics->init();
 
-    GeneLabCore::GraphicsScene* scn    = graphics->getGraphicsScene();
+    GeneLabOgreBullet::OgreScene* scn = graphics->getGraphicsScene();
     GeneLabCore::World* world = new GeneLabOgreBullet::OgreBulletWorld();
 
     qDebug() << "camera ok";
@@ -35,14 +36,15 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     cam2->lookAt(Ogre::Vector3(0, 0, 70));
     cam2->setNearClipDistance(5);
 
-    GeneLabOgreBullet::OgreWidget* oW1 = graphics->createOgreWidget(
+    QWidget*    oW1 = graphics->createOgreWidget(
                 cam1, this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW1);
-    OgreWidget* oW2 = ogre->createOgreWidget(
+
+    /*QWidget*    oW2 = graphics->createOgreWidget(
                 Ogre::Vector3(0,18,0), Ogre::Vector3(0, 0, 70), this->ui->centralWidget);
     GeneLabOgreBullet::OgreWidget* oW2 = graphics->createOgreWidget(
                 cam2, this->ui->centralWidget);
-    this->ui->centralWidget->layout()->addWidget(oW2);
+    this->ui->centralWidget->layout()->addWidget(oW2);*/
 
     physics = new GeneLabOgreBullet::BulletManager();
     physics->init(this->graphics);
@@ -55,7 +57,6 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     oW2->init();
 */
     qDebug() << "ow ok";
-
 
 
     timerGraphic = new QTimer();
@@ -72,6 +73,10 @@ OgreBulletWindows::~OgreBulletWindows()
 
 void OgreBulletWindows::updateGraphics() {
     //qDebug() << "update graphics..";
-    graphics->graphicsStep();
-    physics ->physicsStep();
+    graphics->beforeStep();
+    physics->beforeStep();
+    graphics->step();
+    physics ->step();
+    graphics->afterStep();
+    physics->afterStep();
 }

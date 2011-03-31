@@ -1,8 +1,6 @@
 #include "OGRE/Ogre.h"
 #include <QDebug>
 
-#include "graphic/graphicsscene.h"
-#include "graphic/graphicsengine.h"
 #include "graphic/ogrescene.h"
 #include "entity/entity.h"
 #include "world/world.h"
@@ -12,8 +10,7 @@ namespace GeneLabOgreBullet {
     using namespace GeneLabCore;
 
     OgreScene::OgreScene(Ogre::Root* ogreRoot,
-                         Ogre::SceneManager* sceneManager) :
-        GraphicsScene()
+                         Ogre::SceneManager* sceneManager)
     {
         qDebug() << "Scene creation";
         this->ogreRoot = ogreRoot;
@@ -61,21 +58,6 @@ namespace GeneLabOgreBullet {
     }
 
 
-    // Add and remove of world, entity
-    void OgreScene::addWorld(World* world) {
 
-    }
-
-    void OgreScene::addEntity(Entity* entity) {
-
-    }
-
-    void OgreScene::removeWorld(World* world) {
-
-    }
-
-    void OgreScene::removeEntity(Entity* entity) {
-
-    }
 
 }

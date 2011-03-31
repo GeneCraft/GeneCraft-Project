@@ -11,11 +11,11 @@ namespace GeneLabOgreBullet {
     using namespace Ogre;
 
     BulletManager::BulletManager(QObject *parent) :
-        PhysicsEngine(parent)
+        Engine(parent)
     {
     }
 
-    GeneLabCore::PhysicsScene* BulletManager::getPhysicsScene() {
+    BulletScene* BulletManager::getPhysicsScene() {
         return NULL;
     }
 
@@ -65,8 +65,8 @@ namespace GeneLabOgreBullet {
         mBodies.push_back(defaultPlaneBody);
     }
     int cpt = 99;
-    void BulletManager::physicsStep() {
-        //qDebug() << "physic step";
+
+    void BulletManager::beforeStep() {
         cpt++;
         if(cpt%30 == 0) {
             qDebug() << "adding a box !";
@@ -130,6 +130,15 @@ namespace GeneLabOgreBullet {
 
             qDebug() << "end";
         }
+    }
+
+    void BulletManager::afterStep() {
+
+    }
+
+    void BulletManager::step() {
+        //qDebug() << "physic step";
+
         mWorld->stepSimulation(1000/30, 3);
     }
 }

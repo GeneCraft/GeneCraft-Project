@@ -3,32 +3,41 @@
 
 #include <QObject>
 #include "classes.h"
-#include "graphic/graphicsengine.h"
+#include "engine/engine.h"
 
 namespace GeneLabOgreBullet {
-    class OgreManager : public GeneLabCore::GraphicsEngine
+    class OgreManager : public GeneLabCore::Engine
     {
         Q_OBJECT
     public:
         explicit OgreManager(unsigned long winId);
 
-        void init();
-        Ogre::Root* getRoot();
+        Ogre::Root*         getRoot();
         Ogre::SceneManager* getOgreScene();
-        GeneLabCore::GraphicsScene* getGraphicsScene();
+        OgreScene*          getGraphicsScene();
 
-        OgreWidget* createOgreWidget(
-            Ogre::Camera* cam, QWidget* parent);
+        OgreWidget*         createOgreWidget(Ogre::Camera* cam,
+                                             QWidget* parent);
+
+        QWidget*            getRender(QWidget* parent);
+
+        bool isRenderable() {
+            return true;
+        }
+
 
     signals:
 
     public slots:
-        void graphicsStep();
+        void init();
+        void beforeStep();
+        void step();
+        void afterStep();
 
     protected:
-        Ogre::Root* ogreRoot;
+        Ogre::Root*         ogreRoot;
         Ogre::SceneManager* scnOgre;
-        GeneLabCore::GraphicsScene* scnManager;
+        OgreScene*          scnManager;
         Ogre::RenderWindow* fakeRender;
 
         void initOgreRoot();

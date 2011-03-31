@@ -4,8 +4,7 @@
 namespace GeneLabOgreBullet {
     using namespace GeneLabCore;
 
-    BulletScene::BulletScene(QObject *parent) :
-        PhysicsScene(parent)
+    BulletScene::BulletScene(QObject *parent)
     {
     }
 }

@@ -1,6 +1,4 @@
 #include "ogrebulletworld.h"
-#include "physics/physicsscene.h"
-#include "graphic/graphicsscene.h"
 
 namespace GeneLabOgreBullet {
     using namespace GeneLabCore;
@@ -10,9 +8,15 @@ namespace GeneLabOgreBullet {
     }
 
 
-    void OgreBulletWorld::setPhysics(PhysicsScene* scene) {
+    void OgreBulletWorld::setPhysics(BulletScene* scene) {
+        this->bullet = scene;
     }
 
-    void OgreBulletWorld::setGraphics(GraphicsScene* scene) {
+    void OgreBulletWorld::setGraphics(OgreScene* scene) {
+        this->ogre = scene;
+    }
+
+    void OgreBulletWorld::setup() {
+
     }
 }
