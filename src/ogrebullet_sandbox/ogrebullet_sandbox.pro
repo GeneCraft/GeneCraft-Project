@@ -55,21 +55,19 @@ CONFIG(Release) {
 LIBS += -L../lib/ogrebullet-build/lib
 LIBS += -L../lib/bullet/lib
 
-LIBS += -lOgreBulletCol
-LIBS += -lOgreBulletDyn
+LIBS += -lOgreBulletCol -lOgreBulletDyn
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
 LIBS += -lConvexDecomposition
-LIBS += -lBulletWorldImporter
-LIBS += -lBulletFileLoader
+LIBS += -lBulletWorldImporter -lBulletFileLoader
 LIBS += -lBulletMultiThreaded
 LIBS += -lBulletSoftBody
-#LIBS += -lGIMPACTUtils
+LIBS += -lGIMPACTUtils
 #LIBS += -lgle
 #LIBS += -lglsmap
 #LIBS += -lglut32
-#LIBS += -lGLUI
-#LIBS += -lMiniCL
+LIBS += -lGLUI
+LIBS += -lMiniCL
 #LIBS += -lmui
-#LIBS += -lOpenGLSupport
+LIBS += -lOpenGLSupport

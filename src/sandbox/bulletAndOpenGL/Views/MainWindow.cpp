@@ -32,6 +32,17 @@ MainWindow::MainWindow(QWidget *parent) :
     // boxe
     QToolBox *tbInspector = new QToolBox(this);
 
+
+    // group G6Dof
+    QWidget *tbG6DofC = new QWidget();
+    Generic6DofConstraintController*  g6DofCC = new Generic6DofConstraintController();
+    tbInspector->addItem(g6DofCC,"g6DofCC");
+
+
+    g6DofCC->setConstraint(simulationScene->getMotorisedArm()->getConstraint(0));
+
+
+
     // group 1
     QWidget *tbSimulation = new QWidget();
     QPushButton*  bPlaySimulation = new QPushButton("Play",tbSimulation);

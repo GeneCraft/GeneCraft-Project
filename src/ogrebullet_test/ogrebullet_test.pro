@@ -45,7 +45,8 @@ HEADERS  += \
     TriMesh_Demo.h \
     Vehicle_Demo.h \
     Ragdoll_Demo.h \
-    Terrain_Demo.h
+    Terrain_Demo.h \
+    Snake.h
 
 FORMS    +=
 

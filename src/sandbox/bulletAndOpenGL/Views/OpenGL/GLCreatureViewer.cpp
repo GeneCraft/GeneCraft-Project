@@ -45,11 +45,17 @@ GLCreatureViewer::GLCreatureViewer()
     //human = new Human(dynamicsWorld);
     //drawableObjects.push_back(human);
 
-    snake  = new Snake(dynamicsWorld);
-    drawableObjects.push_back(snake);
+    //snake  = new Snake(dynamicsWorld);
+    //drawableObjects.push_back(snake);
 
     //arm = new Arm(dynamicsWorld);
     //drawableObjects.push_back(arm);
+
+
+    motorisedArm = new MotorisedArm();
+    motorisedArm->addToWorld(dynamicsWorld);
+    drawableObjects.push_back(motorisedArm);
+
 
     /*
     Box * b = new Box(0,0,0,1,1,1);
@@ -152,6 +158,86 @@ void GLCreatureViewer::paintGL()
     for(unsigned int i=0;i<drawableObjects.size();i++)
         drawableObjects.at(i)->draw();
 
+    /*
+    btCollisionObjectArray coa = dynamicsWorld->getCollisionObjectArray();
+
+    for(int i=0;i<coa.m_size;i++)
+        coa.at(i)->
+    */
+
+    /*
+    int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+    for (int i=0;i<numManifolds;i++)
+    {
+            btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+            btRigidBody* obA = static_cast<btRigidBody*>(contactManifold->getBody0());
+            btRigidBody* obB = static_cast<btRigidBody*>(contactManifold->getBody1());
+
+            int numContacts = contactManifold->getNumContacts();
+            for (int j=0;j<numContacts;j++)
+            {
+                    btManifoldPoint& pt = contactManifold->getContactPoint(j);
+                    if (pt.getDistance()<0.f)
+                    {
+
+                            //From : http://www.sjbaker.org/wiki/index.php?title=Physics_-_Bullet_Tutorial2_example
+
+                            //Note here that two points are used. One (A) is actually a little redundant.
+                            // Two points are actually specified because of object penetration - the calculations are not perfect,
+                            //and one object can penetrate into another. As such, there are different graphical points of contact
+                            //for what should be the one collision point. The value m_distance1 of the manifold point shows the
+                            //penetration depth.
+
+                            const btVector3& ptA = pt.getPositionWorldOnA();
+                            const btVector3& ptB = pt.getPositionWorldOnB();
+                            const btVector3& normalOnA = pt.m_normalWorldOnB; // FIXME pourquoi pas de normal world on A ?
+                            const btVector3& normalOnB = pt.m_normalWorldOnB;
+
+                            //obA->applyCentralImpulse(normalOnA * 10);
+                            //obB->applyCentralImpulse(normalOnB * 10);
+
+                            //Sphere *s = new Sphere(ptA.getX(), ptA.getY(), ptA.getZ(),pt.m_appliedImpulse / 10);
+                            //drawableObjects.push_back(s);
+
+
+
+
+                            // FIXME pt.m_appliedImpulse... une seule impulsion mais 2 corps ???
+
+                            DrawableVector *vA = new DrawableVector(normalOnA * pt.m_appliedImpulse,ptA);
+                            drawableObjects.push_back(vA);
+
+                            DrawableVector *vB = new DrawableVector(normalOnB * pt.m_appliedImpulse,ptB);
+                            drawableObjects.push_back(vB);
+
+
+                            //dynamicsWorld->removeRigidBody(obB);
+                            //drawableObjects.erase
+
+
+
+//                            GLdouble radius = 0.5;// pt.m_appliedImpulse / 10;
+
+//                            glPushMatrix();
+
+//                            // position
+//                            glTranslated(ptA.getX(), ptA.getY(), ptA.getZ());
+
+//                            // scale
+//                            glScaled(radius, radius, radius);
+
+//                            // draw sphere with glu
+//                            gluSphere(gluNewQuadric(),1,10,10);
+
+//                            glPopMatrix();
+
+
+                            qDebug() << "collision applied Impulse : " << pt.m_appliedImpulse;
+                    }
+            }
+    }
+
+    */
     glFlush();
 }
 
@@ -165,7 +251,7 @@ void GLCreatureViewer::drawScene()
 
     if(physicEnable)
         dynamicsWorld->stepSimulation(1.f/60.f); // bullet action
-
+    //physicEnable = false; // step by step with pressing 'p'
     camera->bouger(16); // camera
 
     update(); // GL
@@ -284,7 +370,8 @@ void GLCreatureViewer::keyReleaseEvent(QKeyEvent *e)
     }
     else if(e->key() == 74)
     {
-        human->jump();
+        //human->jump();
+        snake->jump();
         //arm->contractA();
     }
     else if(e->key() == 72)

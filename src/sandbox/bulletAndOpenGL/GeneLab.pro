@@ -135,7 +135,8 @@ SOURCES += \
     Views/OpenGL/GLCreatureViewer.cpp \
     World/BasicShapes/Surface.cpp \
     World/BasicShapes/Sphere.cpp \
-    World/BasicShapes/Box.cpp
+    World/BasicShapes/Box.cpp \
+    generic6dofconstraintcontroller.cpp
 
 HEADERS  += \
     Bullet/LinearMath/btRandom.h \
@@ -326,9 +327,13 @@ HEADERS  += \
     World/BasicShapes/Axis.h \
     World/Constraints/HingeConstraint.h \
     World/Arm.h \
-    World/Constraints/ConeTwistConstraint.h
+    World/Constraints/ConeTwistConstraint.h \
+    World/BasicShapes/drawablevector.h \
+    generic6dofconstraintcontroller.h \
+    World/motorisedArm.h
 
 OTHER_FILES +=
 
 FORMS += \
-    Views/mainwindow.ui
+    Views/mainwindow.ui \
+    generic6dofconstraintcontroller.ui

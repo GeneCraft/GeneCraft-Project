@@ -107,7 +107,7 @@ void Vehicles_Demo::init(Ogre::Root *root, Ogre::RenderWindow *win, OgreBulletAp
     mCamera = mSceneMgr->createCamera("Cam");
     //mCamera->setFOVy(Degree(90));
     mCamera->setNearClipDistance(0.1);
-    mCamera->setFarClipDistance(100);
+    mCamera->setFarClipDistance(1000);
     Viewport *vp = win->addViewport(mCamera);
     vp->setBackgroundColour(ColourValue(0,0,0));
     // Alter the camera aspect ratio to match the viewport
@@ -191,7 +191,7 @@ void Vehicles_Demo::init(Ogre::Root *root, Ogre::RenderWindow *win, OgreBulletAp
 #if (OGRE_VERSION < ((1 << 16) | (5 << 8) | 0)) // only applicable before shoggoth (1.5.0)
         mChassis->setNormaliseNormals(true);
 #endif
-		mChassis->setCastShadows(true);
+        mChassis->setCastShadows(true);
 
 
 

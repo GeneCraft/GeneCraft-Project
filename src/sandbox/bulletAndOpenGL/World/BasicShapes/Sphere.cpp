@@ -45,7 +45,7 @@ void Sphere::draw()
     glScaled(radius, radius, radius);
 
     // draw sphere with glu
-    gluSphere(gluNewQuadric(),1,radius*5,radius*5);
+    gluSphere(gluNewQuadric(),1,10,10); // radius*5
 
     glPopMatrix();
 }

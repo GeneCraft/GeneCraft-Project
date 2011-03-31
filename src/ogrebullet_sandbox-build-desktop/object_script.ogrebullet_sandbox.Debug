@@ -1,0 +1,15 @@
+INPUT(
+./debug\main.o
+./debug\ogrebulletwindows.o
+./debug\ogrewidget.o
+./debug\ogremanager.o
+./debug\scenemanager.o
+./debug\ninjascene.o
+./debug\ogrebulletmanager.o
+./debug\moc_ogrebulletwindows.o
+./debug\moc_ogrewidget.o
+./debug\moc_ogremanager.o
+./debug\moc_scenemanager.o
+./debug\moc_ninjascene.o
+./debug\moc_ogrebulletmanager.o
+);

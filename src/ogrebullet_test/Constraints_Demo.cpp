@@ -15,6 +15,10 @@ This source file is not LGPL, it's public source code that you can reuse.
 #include "OgreBulletDynamicsWorld.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Debug/OgreBulletCollisionsDebugDrawer.h"
+#include "Constraints/OgreBulletDynamicsPoint2pointConstraint.h"
+#include "Constraints/OgreBulletDynamicsConeTwistConstraint.h"
+#include "BulletDynamics/ConstraintSolver/btConeTwistConstraint.h"
+
 
 #if !(OGRE_VERSION <  ((1 << 16) | (3 << 8) | 0))
 using namespace OIS;
@@ -72,7 +76,41 @@ void Constraints_Demo::init(Ogre::Root *root, Ogre::RenderWindow *win, OgreBulle
 
     // ------------------------
     // Add the ground
-    addGround();
+    //addGround();
+    addStaticPlane(0.3, 0.8);
+
+    OgreBulletDynamics::RigidBody *bodyA = addCube("corpsA",
+                                                  Ogre::Vector3(13,  -0.25, -5),
+                                                  Quaternion(Radian(Degree(22.5)), Ogre::Vector3::UNIT_X),
+                                                  Ogre::Vector3(1, 1, 1),
+                                                  0.3, 0.8, 1.0);
+
+
+    OgreBulletDynamics::RigidBody *bodyB = addCube("corpsB",
+                                                  Ogre::Vector3(11,  -0.25, -5),
+                                                  Quaternion(Radian(Degree(22.5)), Ogre::Vector3::UNIT_X),
+                                                  Ogre::Vector3(1, 1, 1),
+                                                  0.3, 0.8, 1.0);
+
+    /*
+    OgreBulletDynamics::PointToPointConstraint *p2p = new OgreBulletDynamics::PointToPointConstraint(body,Ogre::Vector3(0,5,0));
+    mWorld->addConstraint(p2p);
+    */
+
+    btTransform frameInA, frameInB;
+    frameInA = btTransform::getIdentity();
+    frameInA.getBasis().setEulerZYX(0, 0, 3.14/2.0);
+    frameInA.setOrigin(btVector3(btScalar(0.), btScalar(-5.), btScalar(0.)));
+    frameInB = btTransform::getIdentity();
+    frameInB.getBasis().setEulerZYX(0,0,  3.14/2.0);
+    frameInB.setOrigin(btVector3(btScalar(0.), btScalar(5.), btScalar(0.)));
+    btTypedConstraint *ct = new btConeTwistConstraint(*bodyA->getBulletRigidBody(),*bodyB->getBulletRigidBody(),frameInA,frameInB);
+
+
+    mWorld->getBulletDynamicsWorld()->addConstraint(ct);
+
+
+    //OgreBulletDynamics::ConeTwistConstraint *ct = new OgreBulletDynamics::ConeTwistConstraint();
 }
 // -------------------------------------------------------------------------
 void Constraints_Demo::keyPressed(BULLET_KEY_CODE key)

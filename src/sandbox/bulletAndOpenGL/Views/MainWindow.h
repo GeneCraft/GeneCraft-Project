@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "generic6dofconstraintcontroller.h"
 
 namespace Ui {
     class MainWindow;

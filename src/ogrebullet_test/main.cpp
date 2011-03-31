@@ -12,7 +12,6 @@ This source file is not LGPL, it's public source code that you can reuse.
 -----------------------------------------------------------------------------*/
 
 #include "OgreBulletApplication.h"
-
 #include "Primitives_Demo.h"
 #include "Constraints_Demo.h"
 #include "Vehicle_Demo.h"
@@ -40,23 +39,18 @@ int main(int argc,char* argv[])
 
     ogrebulletscenes.push_back(new Primitives_Demo());
     ogrebulletscenes.push_back(new Trimesh_Demo());
-	ogrebulletscenes.push_back(new Vehicles_Demo());
-	ogrebulletscenes.push_back(new Constraints_Demo());
-	ogrebulletscenes.push_back(new Terrain_Demo());
-	ogrebulletscenes.push_back(new Ragdoll_Demo());
-
-    //ogrebulletscenes.push_back(new Constraints_Demo());
+    ogrebulletscenes.push_back(new Vehicles_Demo());
+    ogrebulletscenes.push_back(new Constraints_Demo());
+    ogrebulletscenes.push_back(new Terrain_Demo());
+    ogrebulletscenes.push_back(new Ragdoll_Demo());
+    ogrebulletscenes.push_back(new Constraints_Demo());
 
     ogrebulletscenes[0]->setNextKey(KC_F1);
     ogrebulletscenes[1]->setNextKey(KC_F2);
-	ogrebulletscenes[2]->setNextKey(KC_F3);
-	ogrebulletscenes[3]->setNextKey(KC_F4);
-	ogrebulletscenes[4]->setNextKey(KC_F5);
-	ogrebulletscenes[5]->setNextKey(KC_F6);
-
-    //ogrebulletscenes[3]->setNextKey(KC_F4);
-    //ogrebulletscenes[4]->setNextKey(KC_F5);
-    
+    ogrebulletscenes[2]->setNextKey(KC_F3);
+    ogrebulletscenes[3]->setNextKey(KC_F4);
+    ogrebulletscenes[4]->setNextKey(KC_F5);
+    ogrebulletscenes[5]->setNextKey(KC_F6);
 
     // Create the application and try to run it
     OgreBulletApplication app(&ogrebulletscenes);

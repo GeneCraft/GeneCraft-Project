@@ -12,10 +12,13 @@
 #include "World/BasicShapes/Axis.h"
 #include "World/BasicShapes/Sphere.h"
 #include "World/BasicShapes/Surface.h"
+#include "World/BasicShapes/drawablevector.h"
 #include "World/Human.h"
 #include "World/Snake.h"
 #include "World/Arm.h"
+#include "World/motorisedArm.h"
 #include "Bullet/btBulletDynamicsCommon.h"
+
 
 #define ANGLE_DE_VUE 90         // angle de vue
 #define DIST_PROCH_V 0.1        // distance la plus proche visible
@@ -88,9 +91,17 @@ protected:
 
     bool focused;
 
+
+     MotorisedArm * motorisedArm;
+
 public:
     // Constructor
     GLCreatureViewer();
+
+    MotorisedArm * getMotorisedArm()
+    {
+        return motorisedArm;
+    }
 
 public slots:
     void refresh()

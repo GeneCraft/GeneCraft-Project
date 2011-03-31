@@ -29,6 +29,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     OgreWidget* oW1 = ogre->createOgreWidget(
                 Ogre::Vector3(0,18,70), Ogre::Vector3(0, 0, -300), this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW1);
+
     OgreWidget* oW2 = ogre->createOgreWidget(
                 Ogre::Vector3(0,18,0), Ogre::Vector3(0, 0, 70), this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW2);

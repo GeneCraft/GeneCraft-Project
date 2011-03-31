@@ -23,10 +23,13 @@ Box::Box(GLfloat xCenter, GLfloat yCenter, GLfloat zCenter, GLfloat w, GLfloat h
     if(w == 0.1)
         mass = 100000000;
 
+
+
     btVector3 fallInertia(0,0,0);
     this->boxShape->calculateLocalInertia(mass,fallInertia);
-    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,this->motionState,this->boxShape,fallInertia);
-    this->rigidBody = new btRigidBody(fallRigidBodyCI);
+    this->rigidBody = new btRigidBody(mass,this->motionState,this->boxShape,fallInertia);
+
+    this->rigidBody->setFriction(1000);
 }
 
 void Box::draw()

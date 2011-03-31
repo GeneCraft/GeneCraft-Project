@@ -1,0 +1,15 @@
+INPUT(
+./release\main.o
+./release\ogrebulletwindows.o
+./release\ogrewidget.o
+./release\ogremanager.o
+./release\scenemanager.o
+./release\ninjascene.o
+./release\ogrebulletmanager.o
+./release\moc_ogrebulletwindows.o
+./release\moc_ogrewidget.o
+./release\moc_ogremanager.o
+./release\moc_scenemanager.o
+./release\moc_ninjascene.o
+./release\moc_ogrebulletmanager.o
+);
