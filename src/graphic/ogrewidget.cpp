@@ -4,6 +4,7 @@
 
 
 namespace GeneLabOgreBullet {
+
     /**
      * @brief init the object
      * @author kito berg-taylor
@@ -25,12 +26,12 @@ namespace GeneLabOgreBullet {
         //Accept input focus
         setFocusPolicy(Qt::StrongFocus);
 
-    #if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
         //positive integer for W32 (HWND handle) - According to Ogre Docs
         externalWindowHandleParams = Ogre::StringConverter::toString((unsigned int)(this->parentWidget()->winId()));
-    #endif
+#endif
 
-    #if defined(Q_WS_X11)
+#if defined(Q_WS_X11)
         //poslong:posint:poslong:poslong (display*:screen:windowHandle:XVisualInfo*) for GLX - According to Ogre Docs
         QX11Info info = x11Info();
         externalWindowHandleParams  = Ogre::StringConverter::toString((unsigned long)(info.display()));
@@ -40,27 +41,27 @@ namespace GeneLabOgreBullet {
         externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(winId()));
         //externalWindowHandleParams += ":";
         //externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(info.visual()));
-    #endif
+#endif
 
         //Add the external window handle parameters to the existing params set.
-    #if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
         params["parentWindowHandle"] = externalWindowHandleParams;
-    #endif
+#endif
 
-    #if defined(Q_WS_X11)
+#if defined(Q_WS_X11)
         params["parentWindowHandle"] = externalWindowHandleParams;
-    #endif
+#endif
 
-    #if defined(Q_WS_MAC)
+#if defined(Q_WS_MAC)
         params["macAPI"] = "cocoa";
         params["macAPICocoaUseNSView"] = "true";
-    #endif
+#endif
 
         qDebug() << "init !";
         //Finally create our window.
         mOgreWindow = this->mOgreRoot->createRenderWindow(
-              "OgreWindow" + QString::number(ogrewidgetCpt++).toStdString()
-                                   , 640, 480, false, &params);
+                "OgreWindow" + QString::number(ogrewidgetCpt++).toStdString()
+                , 640, 480, false, &params);
 
         mOgreWindow->setActive(true);
         WId ogreWinId = 0x0;
@@ -76,6 +77,12 @@ namespace GeneLabOgreBullet {
 
         mIsInit = true;
         resized = true;
+
+
+        // Create the free camera (FIXME no encapsulation)
+        ogreFreeCamera = new OgreFreeCamera(mCamera);
+
+
         qDebug() << "init !";
     }
 
@@ -98,12 +105,52 @@ namespace GeneLabOgreBullet {
          Ogre::RenderSystem *renderSystem = mOgreRoot->getRenderSystem();
          renderSystem->setConfigOption( "Video Mode", dimensions.toStdString() );
        */
-       this->resized = false;
-       assert( mOgreWindow );
-       mOgreWindow->windowMovedOrResized();
-       // Alter the camera aspect ratio to match the viewport
-       mCamera->setAspectRatio(
-           Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
+        this->resized = false;
+        assert( mOgreWindow );
+        mOgreWindow->windowMovedOrResized();
+        // Alter the camera aspect ratio to match the viewport
+        mCamera->setAspectRatio(
+                Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
 
+    }
+
+    void OgreWidget::mousePressEvent(QMouseEvent *e)
+    {
+        ogreFreeCamera->mousePressEvent(e);
+    }
+
+    void OgreWidget::mouseReleaseEvent(QMouseEvent *e)
+    {
+        ogreFreeCamera->mouseReleaseEvent(e);
+    }
+
+    void OgreWidget::mouseMoveEvent(QMouseEvent *e)
+    {
+        ogreFreeCamera->mouseMoveEvent(e);
+    }
+
+    void OgreWidget::keyPressEvent(QKeyEvent *e)
+    {
+        ogreFreeCamera->keyPressEvent(e);
+    }
+
+    void OgreWidget::keyReleaseEvent(QKeyEvent *e)
+    {
+        ogreFreeCamera->keyReleaseEvent(e);
+    }
+
+    void OgreWidget::enterEvent (QEvent *e)
+    {
+        ogreFreeCamera->enterViewPortEvent(e);
+    }
+
+    void OgreWidget::leaveEvent (QEvent *e)
+    {
+        ogreFreeCamera->leaveViewPortEvent(e);
+    }
+
+    void OgreWidget::step()
+    {
+        ogreFreeCamera->step();
     }
 }

@@ -48,7 +48,9 @@ SOURCES += main.cpp\
     ../entity/struct/treeshape.cpp \
     ../entity/struct/fixation.cpp \
     ../entity/struct/bone.cpp \
-    ../entity/sample/snakefamily.cpp
+    ../entity/sample/snakefamily.cpp \
+    ../graphic/ogreinputmanager.cpp \
+    ../graphic/ogrefreecamera.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -73,7 +75,9 @@ HEADERS  += ogrebulletwindows.h \
     ../entity/struct/treeshape.h \
     ../entity/struct/fixation.h \
     ../entity/struct/bone.h \
-    ../entity/sample/snakefamily.h
+    ../entity/sample/snakefamily.h \
+    ../graphic/ogreinputmanager.h \
+    ../graphic/ogrefreecamera.h
 
 FORMS    += ogrebulletwindows.ui
 

@@ -135,6 +135,9 @@ namespace GeneLabOgreBullet {
         ogreRoot->renderOneFrame();
 
         for(int i = 0; i < ogreWidgets.size(); i++) {
+
+            ogreWidgets[i]->step();
+
             if(ogreWidgets[i]->resized)
                 ogreWidgets[i]->resize();
         }

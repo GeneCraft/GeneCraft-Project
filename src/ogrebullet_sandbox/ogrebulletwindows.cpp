@@ -40,11 +40,9 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
                 cam1, this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW1);
 
-    /*QWidget*    oW2 = graphics->createOgreWidget(
-                Ogre::Vector3(0,18,0), Ogre::Vector3(0, 0, 70), this->ui->centralWidget);
-    GeneLabOgreBullet::OgreWidget* oW2 = graphics->createOgreWidget(
-                cam2, this->ui->centralWidget);
-    this->ui->centralWidget->layout()->addWidget(oW2);*/
+
+    QWidget*    oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
+    this->ui->centralWidget->layout()->addWidget(oW2);
 
     physics = new GeneLabOgreBullet::BulletManager();
     physics->init(this->graphics);

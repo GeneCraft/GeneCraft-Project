@@ -44,20 +44,5 @@ namespace GeneLabOgreBullet {
         Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
         entNinja->setCastShadows(true);
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
-
-        Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-
-        Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-
-        Ogre::Entity* entGround = sceneManager->createEntity("GroundEntity", "ground");
-        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
-
-        entGround->setMaterialName("Examples/Rockwall");
-        entGround->setCastShadows(false);
     }
-
-
-
-
 }

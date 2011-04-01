@@ -4,34 +4,39 @@
 #include <QGLWidget>
 #include <QX11Info>
 #include <QMutex>
-
+#include <QMouseEvent>
 #include "classes.h"
+#include "ogrefreecamera.h"
+#include <Ogre.h>
 
 namespace GeneLabOgreBullet {
     class OgreWidget : public QWidget
     {
-       Q_OBJECT
+        Q_OBJECT
 
-       public:
+    public:
         OgreWidget(Ogre::Root* ogreRoot,
                    Ogre::SceneManager* scnManager,
                    Ogre::Camera* camera,
-                   QWidget *parent=0 ):
-          QWidget( parent ),
-          mOgreWindow(NULL)
-          {
+                   QWidget *parent):
+        QWidget( parent ),
+        mOgreWindow(NULL)
+        {
 
             mOgreRoot = ogreRoot;
             mSceneMgr = scnManager;
             mCamera = camera;
             mIsInit = false;
             resized = true;
-          }
+        }
 
         virtual ~OgreWidget()
-          {
+        {
             destroy();
-          }
+        }
+
+        void step();
+
     public:
         bool resized;
     public slots:
@@ -41,7 +46,7 @@ namespace GeneLabOgreBullet {
         void resizeEvent(QResizeEvent* evt);
         QPaintEngine *paintEngine() const
         {
-                return 0;
+            return 0;
         }
 
         void paintEvent(QPaintEvent* evt)
@@ -49,7 +54,9 @@ namespace GeneLabOgreBullet {
         }
 
 
-       protected:
+    protected:
+
+        // Ogre
         Ogre::Root *mOgreRoot;
         Ogre::RenderWindow *mOgreWindow;
         Ogre::Camera *mCamera;
@@ -58,6 +65,19 @@ namespace GeneLabOgreBullet {
 
         bool mIsInit;
         static int ogrewidgetCpt;
+
+        // Events
+        void mousePressEvent(QMouseEvent * e);
+        void mouseReleaseEvent(QMouseEvent * e);
+        void mouseMoveEvent(QMouseEvent * e);
+        void keyPressEvent(QKeyEvent *e);
+        void keyReleaseEvent(QKeyEvent *e);
+        void enterEvent(QEvent * event);
+        void leaveEvent(QEvent * event);
+
+    private:
+
+        OgreFreeCamera *ogreFreeCamera;
     };
 }
 #endif // OGREWIDGET_H
