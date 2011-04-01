@@ -41,7 +41,10 @@ SOURCES += main.cpp\
     ../factory/mainfactory.cpp \
     ../factory/enginefactory.cpp \
     ../factory/entityfactory.cpp \
-    ../factory/worldfactory.cpp
+    ../factory/worldfactory.cpp \
+    ../entity/ogrebulletentity.cpp \
+    ../entity/entityfamily.cpp \
+    ../entity/ogrebulletentityfamily.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -58,7 +61,10 @@ HEADERS  += ogrebulletwindows.h \
     ../factory/mainfactory.h \
     ../factory/enginefactory.h \
     ../factory/entityfactory.h \
-    ../factory/worldfactory.h
+    ../factory/worldfactory.h \
+    ../entity/ogrebulletentity.h \
+    ../entity/entityfamily.h \
+    ../entity/ogrebulletentityfamily.h
 
 FORMS    += ogrebulletwindows.ui
 

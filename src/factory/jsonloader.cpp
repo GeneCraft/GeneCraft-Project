@@ -10,17 +10,11 @@ namespace GeneLabCore {
     {
     }
 
-    void JsonLoader::saveTo(QString ressourceType,
-                       QString id,
-                       QVariant data) {
-
-    }
-
     void JsonLoader::saveTo(QString ressourceType, QString id, QVariant data) {
         if(ressourceType == "file") {
             QFile f(id);
             f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
-            QTextStream out(f);
+            QTextStream out(&f);
             out << QxtJSON::stringify(data);
         }
         else if(ressourceType == "db") {
