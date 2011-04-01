@@ -1,29 +1,28 @@
 #ifndef TREESHAPE_H
 #define TREESHAPE_H
+#include "classes.h"
+#include <QObject>
 
-#include "shape.h"
-#include "fixation.h"
-#include "bone.h"
+namespace GeneLabOgreBullet {
+    class TreeShape : QObject
+    {
+        Q_OBJECT
+    public:
+        explicit TreeShape(QObject *parent = 0);
+        ~TreeShape();
 
-class TreeShape : public Shape
-{
-    Q_OBJECT
-public:
-    explicit TreeShape(QObject *parent = 0);
-    ~TreeShape();
+        Fixation* getRoot();
+        void setRoot(Fixation*);
 
-    Fixation* getRoot();
-    void setRoot(Fixation*);
+        void print();
 
-    void print();
+    signals:
 
-signals:
+    public slots:
 
-public slots:
+    private:
+        Fixation* root;
 
-private:
-    Fixation* root;
-
-};
-
+    };
+}
 #endif // TREESHAPE_H

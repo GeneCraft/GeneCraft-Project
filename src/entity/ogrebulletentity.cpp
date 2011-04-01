@@ -6,4 +6,12 @@ namespace GeneLabOgreBullet {
     {}
 
     void OgreBulletEntity::setup() {}
+
+    void OgreBulletEntity::setShape(TreeShape *shape) {
+        this->shape = shape;
+    }
+
+    TreeShape* OgreBulletEntity::getShape() {
+        return this->shape;
+    }
 }

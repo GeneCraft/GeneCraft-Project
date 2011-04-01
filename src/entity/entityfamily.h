@@ -12,6 +12,8 @@ namespace GeneLabCore {
 
         virtual Entity* createEntity() = 0;
 
+        virtual QVariant serialize() = 0;
+
     signals:
 
     public slots:

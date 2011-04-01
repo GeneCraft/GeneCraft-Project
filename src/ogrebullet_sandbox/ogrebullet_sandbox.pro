@@ -44,7 +44,11 @@ SOURCES += main.cpp\
     ../factory/worldfactory.cpp \
     ../entity/ogrebulletentity.cpp \
     ../entity/entityfamily.cpp \
-    ../entity/ogrebulletentityfamily.cpp
+    ../entity/ogrebulletentityfamily.cpp \
+    ../entity/struct/treeshape.cpp \
+    ../entity/struct/fixation.cpp \
+    ../entity/struct/bone.cpp \
+    ../entity/sample/snakefamily.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -64,7 +68,12 @@ HEADERS  += ogrebulletwindows.h \
     ../factory/worldfactory.h \
     ../entity/ogrebulletentity.h \
     ../entity/entityfamily.h \
-    ../entity/ogrebulletentityfamily.h
+    ../entity/ogrebulletentityfamily.h \
+    ../entity/struct/types.h \
+    ../entity/struct/treeshape.h \
+    ../entity/struct/fixation.h \
+    ../entity/struct/bone.h \
+    ../entity/sample/snakefamily.h
 
 FORMS    += ogrebulletwindows.ui
 

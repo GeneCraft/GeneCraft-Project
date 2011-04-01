@@ -8,7 +8,6 @@ namespace GeneLabCore {
         this->name = name;
         this->family = family;
         this->generation = generation;
-        this->shape = NULL;
     }
 
     void Entity::setup() {
@@ -16,23 +15,6 @@ namespace GeneLabCore {
     }
 
     Entity::~Entity() {
-        delete this->shape;
-    }
 
-
-    void Entity::setShape(Shape *s) {
-        this->shape = s;
-    }
-
-    Shape* Entity::getShape() {
-        return this->shape;
-    }
-
-    void Entity::print() {
-        if(shape != NULL) {
-            qDebug() << "Entite " << name << " family " << family;
-            qDebug() << "Generation " << generation;
-            shape->print();
-        }
     }
 }

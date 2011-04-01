@@ -16,6 +16,11 @@ namespace GeneLabOgreBullet {
 
     public slots:
         void setup();
+        void setShape(TreeShape* shape);
+        TreeShape* getShape();
+
+    private:
+        TreeShape* shape;
 
     };
 

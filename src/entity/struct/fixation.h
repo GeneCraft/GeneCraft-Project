@@ -3,46 +3,45 @@
 
 #include <QObject>
 #include <QList>
-#include "bone.h"
+#include "classes.h"
 
-class Bone;
+namespace GeneLabOgreBullet {
+    class Fixation : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit Fixation(QObject *parent = 0);
+        ~Fixation();
 
-class Fixation : public QObject
-{
-    Q_OBJECT
-public:
-    explicit Fixation(QObject *parent = 0);
-    ~Fixation();
+        Bone* addBone(float alpha,
+                     float beta,
+                     float length);
 
-    Bone* addBone(float alpha,
-                 float beta,
-                 float length);
+        Bone* addBone(float alpha,
+                     float beta_min, float beta_max,
+                     float length);
 
-    Bone* addBone(float alpha,
-                 float beta_min, float beta_max,
-                 float length);
+        Bone* addBone(float alpha,
+                     float beta,
+                     float r_min, float r_max,
+                     float length);
 
-    Bone* addBone(float alpha,
-                 float beta,
-                 float r_min, float r_max,
-                 float length);
+        Bone* addBone(float alpha,
+                     float beta_min, float beta_max,
+                     float r_min, float r_max,
+                     float length);
 
-    Bone* addBone(float alpha,
-                 float beta_min, float beta_max,
-                 float r_min, float r_max,
-                 float length);
+        QList<Bone*> getBones();
 
-    QList<Bone*> getBones();
+        QString toString();
 
-    QString toString();
+    signals:
 
-signals:
+    public slots:
 
-public slots:
+    private:
+        QList<Bone*> bones;
 
-private:
-    QList<Bone*> bones;
-
-};
-
+    };
+}
 #endif // FIXATION_H

@@ -1,3 +1,40 @@
+
+
+// Our namespace
+namespace GeneLabCore {
+    // An engine
+    class Engine;
+
+    // Entity related
+    class Entity;
+    class EntityFamily;
+
+    // World related
+    class World;
+}
+
+namespace GeneLabOgreBullet {
+    // Ogre management
+    class OgreManager;
+    class OgreScene;
+
+    // Bullet management
+    class BulletManager;
+    class BulletScene;
+
+    // Entity and world implementation
+    class OgreBulletWorld;
+    class OgreBulletEntity;
+    class OgreBulletEntityFamily;
+
+    class TreeShape;
+    class Bone;
+    class Fixation;
+
+    // UI utils
+    class OgreWidget;
+}
+
 // Typical used ogre namespace classes
 namespace Ogre {
     class Root;
@@ -16,33 +53,4 @@ namespace OgreBulletDynamics {
 namespace OgreBulletCollisions {
     class DebugDrawer;
     class CollisionShape;
-}
-
-// Our namespace
-namespace GeneLabCore {
-    // An engine
-    class Engine;
-
-    // Entity related
-    class World;
-
-    // World related
-    class Entity;
-}
-
-namespace GeneLabOgreBullet {
-    // Ogre management
-    class OgreManager;
-    class OgreScene;
-
-    // Bullet management
-    class BulletManager;
-    class BulletScene;
-
-    // Entity and world implementation
-    class OgreBulletWorld;
-    class OgreBulletEntity;
-
-    // UI utils
-    class OgreWidget;
 }
