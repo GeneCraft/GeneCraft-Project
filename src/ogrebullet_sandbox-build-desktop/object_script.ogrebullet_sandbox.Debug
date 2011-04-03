@@ -24,6 +24,7 @@ INPUT(
 ./debug\snakefamily.o
 ./debug\ogreinputmanager.o
 ./debug\ogrefreecamera.o
+./debug\generic6dofconstraintcontroller.o
 ./debug\moc_ogrebulletwindows.o
 ./debug\moc_ogrewidget.o
 ./debug\moc_ogremanager.o
@@ -48,4 +49,5 @@ INPUT(
 ./debug\moc_snakefamily.o
 ./debug\moc_ogreinputmanager.o
 ./debug\moc_ogrefreecamera.o
+./debug\moc_generic6dofconstraintcontroller.o
 );

@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     ../entity/struct/bone.cpp \
     ../entity/sample/snakefamily.cpp \
     ../graphic/ogreinputmanager.cpp \
-    ../graphic/ogrefreecamera.cpp
+    ../graphic/ogrefreecamera.cpp \
+    generic6dofconstraintcontroller.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -77,9 +78,11 @@ HEADERS  += ogrebulletwindows.h \
     ../entity/struct/bone.h \
     ../entity/sample/snakefamily.h \
     ../graphic/ogreinputmanager.h \
-    ../graphic/ogrefreecamera.h
+    ../graphic/ogrefreecamera.h \
+    generic6dofconstraintcontroller.h
 
-FORMS    += ogrebulletwindows.ui
+FORMS    += ogrebulletwindows.ui \
+    generic6dofconstraintcontroller.ui
 
 
 CONFIG(Debug) {

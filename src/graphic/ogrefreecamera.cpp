@@ -12,12 +12,12 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
     movementSpeed           = initialMovementSpeed;
     maxMovementSpeed        = 10.0;
     movementAcceleration    = 1.1;
-    movementDeceleration    = 1.01;
+    movementDeceleration    = 1.3;
 
     // Look parameters
-    lookSensibility = 0.5;
+    lookSensibility         = 1.6;
 
-    // Action default status
+    // Default action status
     forwardKeyPressed       = false;
     backwardKeyPressed      = false;
     rightStrafeKeyPressed   = false;
@@ -56,26 +56,21 @@ void OgreFreeCamera::mouseMoveEvent(QMouseEvent * e)
         Ogre::Real deltaX = pos.x() - oldPos.x();
         Ogre::Real deltaY = pos.y() - oldPos.y();
 
-        if(e->modifiers().testFlag(Qt::ControlModifier))
-        {
-            deltaX *= turboModifier;
-            deltaY *= turboModifier;
-        }
+//        if(e->modifiers().testFlag(Qt::ControlModifier))
+//        {
+//            deltaX *= turboModifier;
+//            deltaY *= turboModifier;
+//        }
 
-        //            Ogre::Vector3 camTranslation(deltaX, deltaY, 0);
-        //            const Ogre::Vector3 &actualCamPos = mCamera->getPosition();
-        //            setCameraPosition(actualCamPos + camTranslation);
-
-        ogreCamera->pitch(Ogre::Radian(deltaY * -0.01 * lookSensibility));
-        ogreCamera->yaw(Ogre::Radian(deltaX * -0.01 * lookSensibility));
+        ogreCamera->pitch(Ogre::Radian(deltaY * -0.001 * lookSensibility));
+        ogreCamera->yaw(Ogre::Radian(deltaX * -0.001 * lookSensibility));
 
         oldPos = pos;
+
         e->accept();
     }
     else
-    {
         e->ignore();
-    }
 }
 
 void OgreFreeCamera::keyPressEvent(QKeyEvent *e)
@@ -130,38 +125,45 @@ void OgreFreeCamera::step()
 
         if(movementSpeed > maxMovementSpeed)
             movementSpeed = maxMovementSpeed;
+
+        // compute the direction of the movement
+        Ogre::Vector3 vMovementDirection(0,0,0);
+
+        // add all direction
+        if(forwardKeyPressed)
+            vMovementDirection += ogreCamera->getDirection();
+        if(backwardKeyPressed)
+            vMovementDirection += -ogreCamera->getDirection();
+        if(rightStrafeKeyPressed)
+            vMovementDirection += ogreCamera->getRight();
+        if(leftStrafeKeyPressed)
+            vMovementDirection += -ogreCamera->getRight();
+        if(upKeyPressed)
+            vMovementDirection += ogreCamera->getUp();
+        if(downKeyPressed)
+            vMovementDirection += -ogreCamera->getUp();
+
+        // normalise for applying speed
+        vMovementDirection.normalise();
+
+        // apply speed and move the camera
+        ogreCamera->move(vMovementDirection * movementSpeed);
+
+        // save the direction for deceleration
+        lastMovementDirection = vMovementDirection;
     }
-    // no movement key pressed
-    else
+    else // no movement key pressed
     {
+        // deceleration
         movementSpeed /= movementDeceleration;
 
-        qDebug() << "decelerarion : " << movementSpeed;
-
         if(movementSpeed < initialMovementSpeed)
+            // the minimal speed is reached, don't move
             movementSpeed = initialMovementSpeed;
-
-
-        // continue to move
-        switch(lastMovement)
-        {
-            // ...
-        }
+        else
+            // continue to move in the last direction
+            ogreCamera->move(lastMovementDirection * movementSpeed);
     }
-
-    // move
-    if(forwardKeyPressed)
-        ogreCamera->move(ogreCamera->getDirection().normalisedCopy() * movementSpeed);
-    if(backwardKeyPressed)
-        ogreCamera->move(-ogreCamera->getDirection().normalisedCopy() * movementSpeed);
-    if(rightStrafeKeyPressed)
-        ogreCamera->move(ogreCamera->getRight().normalisedCopy() * movementSpeed);
-    if(leftStrafeKeyPressed)
-        ogreCamera->move(-ogreCamera->getRight().normalisedCopy() * movementSpeed);
-    if(upKeyPressed)
-        ogreCamera->move(ogreCamera->getUp().normalisedCopy() * movementSpeed);
-    if(downKeyPressed)
-        ogreCamera->move(-ogreCamera->getUp().normalisedCopy() * movementSpeed);
 }
 
 void OgreFreeCamera::enterViewPortEvent (QEvent *e)

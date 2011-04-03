@@ -48,7 +48,7 @@ private:
     Ogre::Real movementAcceleration;
     Ogre::Real initialMovementSpeed;
     Ogre::Real movementDeceleration;
-    int lastMovement;
+    Ogre::Vector3 lastMovementDirection;
 
 
     // Angular

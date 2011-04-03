@@ -8,6 +8,7 @@
 #include "classes.h"
 #include "ogrefreecamera.h"
 #include <Ogre.h>
+#include "entity/entity.h"
 
 namespace GeneLabOgreBullet {
     class OgreWidget : public QWidget
