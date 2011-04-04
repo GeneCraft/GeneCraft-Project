@@ -24,12 +24,6 @@ public :
     Snake(btDiscreteDynamicsWorld *dynamicsWorld)
     {
 
-
-
-
-
-
-
         btTransform tr;
         tr.setIdentity();
         tr.setOrigin(btVector3(btScalar(10.), btScalar(-15.), btScalar(0.)));

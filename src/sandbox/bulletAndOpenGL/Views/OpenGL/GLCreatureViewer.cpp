@@ -45,8 +45,8 @@ GLCreatureViewer::GLCreatureViewer()
     //human = new Human(dynamicsWorld);
     //drawableObjects.push_back(human);
 
-    //snake  = new Snake(dynamicsWorld);
-    //drawableObjects.push_back(snake);
+    snake  = new Snake(dynamicsWorld);
+    drawableObjects.push_back(snake);
 
     //arm = new Arm(dynamicsWorld);
     //drawableObjects.push_back(arm);
@@ -54,7 +54,7 @@ GLCreatureViewer::GLCreatureViewer()
 
     motorisedArm = new MotorisedArm();
     motorisedArm->addToWorld(dynamicsWorld);
-    drawableObjects.push_back(motorisedArm);
+    //drawableObjects.push_back(motorisedArm);
 
 
     /*

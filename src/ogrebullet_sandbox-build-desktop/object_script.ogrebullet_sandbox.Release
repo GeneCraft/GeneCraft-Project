@@ -25,6 +25,9 @@ INPUT(
 ./release\ogreinputmanager.o
 ./release\ogrefreecamera.o
 ./release\generic6dofconstraintcontroller.o
+./release\defaulteventmanager.o
+./release\ogrebulletscene.o
+./release\ogrebulletsandboxscene.o
 ./release\moc_ogrebulletwindows.o
 ./release\moc_ogrewidget.o
 ./release\moc_ogremanager.o
@@ -50,4 +53,7 @@ INPUT(
 ./release\moc_ogreinputmanager.o
 ./release\moc_ogrefreecamera.o
 ./release\moc_generic6dofconstraintcontroller.o
+./release\moc_defaulteventmanager.o
+./release\moc_ogrebulletscene.o
+./release\moc_ogrebulletsandboxscene.o
 );

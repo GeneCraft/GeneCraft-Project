@@ -12,9 +12,9 @@ namespace GeneLabOgreBullet {
     public:
         explicit OgreManager(unsigned long winId);
 
-        Ogre::Root*         getRoot();
-        Ogre::SceneManager* getOgreScene();
-        OgreScene*          getGraphicsScene();
+        Ogre::Root*         getOgreRoot();
+        Ogre::SceneManager* getOgreSceneManager();
+        OgreScene*          getOgreScene();
 
         OgreWidget*         createOgreWidget(Ogre::Camera* cam,
                                              QWidget* parent);
@@ -36,8 +36,8 @@ namespace GeneLabOgreBullet {
 
     protected:
         Ogre::Root*         ogreRoot;
-        Ogre::SceneManager* scnOgre;
-        OgreScene*          scnManager;
+        Ogre::SceneManager* scnManager;
+        OgreScene*          scnOgre;
         Ogre::RenderWindow* fakeRender;
 
         void initOgreRoot();

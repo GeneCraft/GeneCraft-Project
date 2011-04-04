@@ -65,6 +65,7 @@ namespace GeneLabOgreBullet {
 #endif
 
         qDebug() << "init !";
+
         //Finally create our window.
         mOgreWindow = this->mOgreRoot->createRenderWindow(
                 "OgreWindow" + QString::number(ogrewidgetCpt++).toStdString()
@@ -89,6 +90,14 @@ namespace GeneLabOgreBullet {
         // Create the free camera (FIXME no encapsulation)
         ogreFreeCamera = new OgreFreeCamera(mCamera);
 
+        connect(this,SIGNAL(keyPressed(QKeyEvent*)),ogreFreeCamera,SLOT(keyPressEvent(QKeyEvent*)));
+        connect(this,SIGNAL(keyReleased(QKeyEvent*)),ogreFreeCamera,SLOT(keyReleaseEvent(QKeyEvent*)));
+        connect(this,SIGNAL(mouseMoved(QMouseEvent*)),ogreFreeCamera,SLOT(mouseMoveEvent(QMouseEvent*)));
+        connect(this,SIGNAL(mousePressed(QMouseEvent*)),ogreFreeCamera,SLOT(mousePressEvent(QMouseEvent*)));
+        connect(this,SIGNAL(mouseReleased(QMouseEvent*)),ogreFreeCamera,SLOT(mouseReleaseEvent(QMouseEvent*)));
+        connect(this,SIGNAL(entered(QEvent*)),ogreFreeCamera,SLOT(enterViewPortEvent(QEvent*)));
+        connect(this,SIGNAL(leaved(QEvent*)),ogreFreeCamera,SLOT(leaveViewPortEvent(QEvent*)));
+        connect(this,SIGNAL(stepped()),ogreFreeCamera,SLOT(step()));
 
         qDebug() << "init !";
     }
@@ -123,110 +132,49 @@ namespace GeneLabOgreBullet {
 
     void OgreWidget::mousePressEvent(QMouseEvent *e)
     {
-
-        // Catch Camera events
-        ogreFreeCamera->mousePressEvent(e);
-
-
-//        qDebug() << "adding a box !";
-
-//        Ogre::Vector3 size = Ogre::Vector3::ZERO;	// size of the box
-
-//        // starting position of the box
-//        Ogre::Vector3 position = (mCamera->getDerivedPosition() + mCamera->getDerivedDirection().normalisedCopy() * 10);
-
-//        // create an ordinary, Ogre mesh with texture
-//        Entity *entity = mSceneMgr->createEntity(
-//                        "Box_" + StringConverter::toString(1),
-//                        "cube.mesh");
-
-//        entity->setCastShadows(true);
-
-//        qDebug() << "entity created";
-
-//        // we need the bounding box of the box to be able to set the size of the Bullet-box
-//        AxisAlignedBox boundingB = entity->getBoundingBox();
-//        size = boundingB.getSize(); size /= 2.0f; // only the half needed
-//        size *= 0.95f;	// Bullet margin is a bit bigger so we need a smaller size
-//                                                        // (Bullet 2.76 Physics SDK Manual page 18)
-//        entity->setMaterialName("Examples/Rockwall");
-//        entity->setCastShadows(true);
-
-//        qDebug() << "material too";
-
-//        SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-//        node->attachObject(entity);
-//        node->scale(0.05f, 0.05f, 0.05f); // the cube is too big for us
-//        size *= 0.05f;			  // don't forget to scale down the Bullet-box too
-
-//        qDebug() << "attached !";
-
-//        // after that create the Bullet shape with the calculated size
-//        OgreBulletCollisions::BoxCollisionShape *sceneBoxShape = new OgreBulletCollisions::BoxCollisionShape(size);
-
-//        // and the Bullet rigid body
-//        OgreBulletDynamics::RigidBody *defaultBody = new OgreBulletDynamics::RigidBody(
-//                        "defaultBoxRigid_" + StringConverter::toString(1),
-//                        mWorld);
-
-//        defaultBody->setShape(	node,
-//                                sceneBoxShape,
-//                                0.6f,			// dynamic body restitution
-//                                0.6f,			// dynamic body friction
-//                                1.0f, 			// dynamic bodymass
-//                                position,		// starting position of the box
-//                                Quaternion(0,0,0,1));// orientation of the box
-
-//        mNumEntitiesInstanced++;
-
-//        qDebug() << "shape ok";
-
-//        defaultBody->setLinearVelocity(
-//                                mCamera->getDerivedDirection().normalisedCopy() * 7.0f ); // shooting speed
-
-
-//        qDebug() << "velocity too";
-
-//        // push the created objects to the dequese
-//        mShapes.push_back(sceneBoxShape);
-//        mBodies.push_back(defaultBody);
-
-//        qDebug() << "end";
-
+        //ogreFreeCamera->mousePressEvent(e);
+        emit mousePressed(e);
     }
 
     void OgreWidget::mouseReleaseEvent(QMouseEvent *e)
     {
-        ogreFreeCamera->mouseReleaseEvent(e);
+        //ogreFreeCamera->mouseReleaseEvent(e);
+        emit mouseReleased(e);
     }
 
     void OgreWidget::mouseMoveEvent(QMouseEvent *e)
     {
-        ogreFreeCamera->mouseMoveEvent(e);
+        //ogreFreeCamera->mouseMoveEvent(e);
+        emit mouseMoved(e);
     }
 
     void OgreWidget::keyPressEvent(QKeyEvent *e)
     {
-        ogreFreeCamera->keyPressEvent(e);
+        //ogreFreeCamera->keyPressEvent(e);
+        emit keyPressed(e);
     }
 
     void OgreWidget::keyReleaseEvent(QKeyEvent *e)
     {
-        ogreFreeCamera->keyReleaseEvent(e);
+        //ogreFreeCamera->keyReleaseEvent(e);
+        emit keyReleased(e);
     }
 
     void OgreWidget::enterEvent (QEvent *e)
     {
-        ogreFreeCamera->enterViewPortEvent(e);
+        //ogreFreeCamera->enterViewPortEvent(e);
+        emit entered(e);
     }
 
     void OgreWidget::leaveEvent (QEvent *e)
     {
-        ogreFreeCamera->leaveViewPortEvent(e);
+        //ogreFreeCamera->leaveViewPortEvent(e);
+        emit leaved(e);
     }
 
     void OgreWidget::step()
     {
-        ogreFreeCamera->step();
+        //ogreFreeCamera->step();
+        emit stepped();
     }
 }

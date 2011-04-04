@@ -15,6 +15,12 @@ namespace GeneLabCore {
 
     public slots:
         virtual void setup() = 0;
+
+        // added by ADC
+        // the world manager the time
+        virtual void start() = 0;
+        virtual void stop() = 0;
+        virtual void update() = 0;
     };
 }
 

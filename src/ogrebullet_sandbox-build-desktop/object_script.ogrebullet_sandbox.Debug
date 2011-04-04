@@ -25,6 +25,9 @@ INPUT(
 ./debug\ogreinputmanager.o
 ./debug\ogrefreecamera.o
 ./debug\generic6dofconstraintcontroller.o
+./debug\defaulteventmanager.o
+./debug\ogrebulletscene.o
+./debug\ogrebulletsandboxscene.o
 ./debug\moc_ogrebulletwindows.o
 ./debug\moc_ogrewidget.o
 ./debug\moc_ogremanager.o
@@ -50,4 +53,7 @@ INPUT(
 ./debug\moc_ogreinputmanager.o
 ./debug\moc_ogrefreecamera.o
 ./debug\moc_generic6dofconstraintcontroller.o
+./debug\moc_defaulteventmanager.o
+./debug\moc_ogrebulletscene.o
+./debug\moc_ogrebulletsandboxscene.o
 );

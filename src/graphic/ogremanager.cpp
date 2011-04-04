@@ -19,17 +19,18 @@ namespace GeneLabOgreBullet {
 
     void OgreManager::init() {
         this->initOgreRoot();
-        this->initRenderingSystem(winId);
+ this->initRenderingSystem(winId);
         this->initResources();
         this->initSceneManager();
+
     }
 
-    Ogre::Root* OgreManager::getRoot() {
+    Ogre::Root* OgreManager::getOgreRoot() {
         return ogreRoot;
     }
 
-    OgreScene* OgreManager::getGraphicsScene() {
-        return scnManager;
+    OgreScene* OgreManager::getOgreScene() {
+        return scnOgre;
     }
 
     void OgreManager::initOgreRoot() {
@@ -103,14 +104,13 @@ namespace GeneLabOgreBullet {
         qDebug() << "ogre ok";
         Ogre::SceneType scene_manager_type = Ogre::ST_INTERIOR;
 
-        scnOgre = ogreRoot->createSceneManager( scene_manager_type );
-        scnManager = new OgreScene(ogreRoot, scnOgre);
+        scnManager = ogreRoot->createSceneManager( scene_manager_type );
+        scnOgre = new OgreScene(ogreRoot, scnManager);
     }
 
-    OgreWidget* OgreManager::createOgreWidget(
-        Ogre::Camera* cam, QWidget* parent) {
+    OgreWidget* OgreManager::createOgreWidget(Ogre::Camera* cam, QWidget* parent) {
 
-        OgreWidget* ow = new OgreWidget(ogreRoot, scnOgre, cam, parent);
+        OgreWidget* ow = new OgreWidget(ogreRoot, scnManager, cam, parent);
         ow->init();
 
         ogreWidgets.append(ow);
@@ -118,8 +118,8 @@ namespace GeneLabOgreBullet {
         return ow;
     }
 
-    Ogre::SceneManager* OgreManager::getOgreScene() {
-        return this->scnOgre;
+    Ogre::SceneManager* OgreManager::getOgreSceneManager() {
+        return this->scnManager;
     }
 
     void OgreManager::beforeStep() {

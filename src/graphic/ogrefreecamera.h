@@ -26,6 +26,8 @@ public:
     // Donc pour le moment c'est juste une encapsulation... :(
     OgreFreeCamera (Ogre::Camera *ogreCamera);
 
+public slots:
+
     // Events
     void mousePressEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent * e);
@@ -49,7 +51,6 @@ private:
     Ogre::Real initialMovementSpeed;
     Ogre::Real movementDeceleration;
     Ogre::Vector3 lastMovementDirection;
-
 
     // Angular
     Ogre::Real lookSensibility;

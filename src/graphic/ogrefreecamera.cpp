@@ -28,6 +28,8 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
 
 void OgreFreeCamera::mousePressEvent(QMouseEvent * e)
 {
+    qDebug() << "OgreFreeCamera::mousePressEvent";
+
     if(e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = e->pos();
@@ -39,6 +41,9 @@ void OgreFreeCamera::mousePressEvent(QMouseEvent * e)
 
 void OgreFreeCamera::mouseReleaseEvent(QMouseEvent * e)
 {
+    qDebug() << "OgreFreeCamera::mousePressEvent";
+
+
     if(!e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = QPoint(invalidMousePoint);

@@ -23,6 +23,7 @@ namespace GeneLabOgreBullet {
     class BulletScene;
 
     // Entity and world implementation
+    //class OgreBulletScene;
     class OgreBulletWorld;
     class OgreBulletEntity;
     class OgreBulletEntityFamily;

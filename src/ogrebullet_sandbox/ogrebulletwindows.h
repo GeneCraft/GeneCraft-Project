@@ -21,7 +21,6 @@ public:
 private:
     Ui::OgreBulletWindows *ui;
 
-
     QTimer* timerGraphic;
     Ogre::Root* ogreRoot;
     GeneLabOgreBullet::OgreWidget* oW1;

@@ -12,6 +12,7 @@ TEMPLATE = app
 #genelab
 INCLUDEPATH += ../entity/
 INCLUDEPATH += ../graphic/
+INCLUDEPATH += ../physics/
 INCLUDEPATH += ..
 #library related
 INCLUDEPATH += ../lib/ogre/include/OGRE
@@ -51,7 +52,10 @@ SOURCES += main.cpp\
     ../entity/sample/snakefamily.cpp \
     ../graphic/ogreinputmanager.cpp \
     ../graphic/ogrefreecamera.cpp \
-    generic6dofconstraintcontroller.cpp
+    generic6dofconstraintcontroller.cpp \
+    ../graphic/defaulteventmanager.cpp \
+    ../world/ogrebulletscene.cpp \
+    ogrebulletsandboxscene.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -79,7 +83,10 @@ HEADERS  += ogrebulletwindows.h \
     ../entity/sample/snakefamily.h \
     ../graphic/ogreinputmanager.h \
     ../graphic/ogrefreecamera.h \
-    generic6dofconstraintcontroller.h
+    generic6dofconstraintcontroller.h \
+    ../graphic/defaulteventmanager.h \
+    ../world/ogrebulletscene.h \
+    ogrebulletsandboxscene.h
 
 FORMS    += ogrebulletwindows.ui \
     generic6dofconstraintcontroller.ui

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'generic6dofconstraintcontroller.ui'
 **
-** Created: Fri 1. Apr 20:10:28 2011
+** Created: Mon 4. Apr 11:34:28 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

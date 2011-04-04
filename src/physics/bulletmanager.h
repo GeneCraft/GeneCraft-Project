@@ -15,6 +15,8 @@ namespace GeneLabOgreBullet {
 
         BulletScene* getPhysicsScene();
 
+        OgreBulletDynamics::DynamicsWorld *getWorld();
+
     signals:
 
     public slots:

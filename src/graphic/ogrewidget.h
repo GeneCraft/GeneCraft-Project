@@ -54,6 +54,16 @@ namespace GeneLabOgreBullet {
         {
         }
 
+    signals:
+        // Events
+        void mousePressed(QMouseEvent * e);
+        void mouseReleased(QMouseEvent * e);
+        void mouseMoved(QMouseEvent * e);
+        void keyPressed(QKeyEvent *e);
+        void keyReleased(QKeyEvent *e);
+        void entered(QEvent * event);
+        void leaved(QEvent * event);
+        void stepped();
 
     protected:
 
