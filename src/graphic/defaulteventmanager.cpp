@@ -87,8 +87,8 @@ void DefaultEventManager::throwCube()
 {
 
     qDebug() << "adding a box !";
-    Vector3 size = Vector3::ZERO;	// size of the box
-    // starting position of the box
+
+    // Position
     Camera* mCamera = this->ogre->getOgreSceneManager()->getCamera("first");
     Vector3 position = (mCamera->getDerivedPosition() + mCamera->getDerivedDirection().normalisedCopy() * 10);
 
@@ -104,7 +104,7 @@ void DefaultEventManager::throwCube()
 
     // we need the bounding box of the box to be able to set the size of the Bullet-box
     AxisAlignedBox boundingB = entity->getBoundingBox();
-    size = boundingB.getSize(); size /= 2.0f; // only the half needed
+    Vector3 size = boundingB.getSize(); size /= 2.0f; // only the half needed
     size *= 0.95f;	// Bullet margin is a bit bigger so we need a smaller size
     // (Bullet 2.76 Physics SDK Manual page 18)
     entity->setMaterialName("Examples/Rockwall");

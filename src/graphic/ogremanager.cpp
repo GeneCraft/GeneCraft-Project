@@ -19,7 +19,7 @@ namespace GeneLabOgreBullet {
 
     void OgreManager::init() {
         this->initOgreRoot();
- this->initRenderingSystem(winId);
+        this->initRenderingSystem(winId);
         this->initResources();
         this->initSceneManager();
 

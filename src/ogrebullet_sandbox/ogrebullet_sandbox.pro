@@ -55,7 +55,8 @@ SOURCES += main.cpp\
     generic6dofconstraintcontroller.cpp \
     ../graphic/defaulteventmanager.cpp \
     ../world/ogrebulletscene.cpp \
-    ogrebulletsandboxscene.cpp
+    ogrebulletsandboxscene.cpp \
+    sandboxtools.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -86,7 +87,8 @@ HEADERS  += ogrebulletwindows.h \
     generic6dofconstraintcontroller.h \
     ../graphic/defaulteventmanager.h \
     ../world/ogrebulletscene.h \
-    ogrebulletsandboxscene.h
+    ogrebulletsandboxscene.h \
+    sandboxtools.h
 
 FORMS    += ogrebulletwindows.ui \
     generic6dofconstraintcontroller.ui

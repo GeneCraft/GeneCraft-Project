@@ -28,6 +28,7 @@ INPUT(
 ./debug\defaulteventmanager.o
 ./debug\ogrebulletscene.o
 ./debug\ogrebulletsandboxscene.o
+./debug\sandboxtools.o
 ./debug\moc_ogrebulletwindows.o
 ./debug\moc_ogrewidget.o
 ./debug\moc_ogremanager.o
@@ -56,4 +57,5 @@ INPUT(
 ./debug\moc_defaulteventmanager.o
 ./debug\moc_ogrebulletscene.o
 ./debug\moc_ogrebulletsandboxscene.o
+./debug\moc_sandboxtools.o
 );

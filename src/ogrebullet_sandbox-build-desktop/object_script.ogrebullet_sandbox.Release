@@ -28,6 +28,7 @@ INPUT(
 ./release\defaulteventmanager.o
 ./release\ogrebulletscene.o
 ./release\ogrebulletsandboxscene.o
+./release\sandboxtools.o
 ./release\moc_ogrebulletwindows.o
 ./release\moc_ogrewidget.o
 ./release\moc_ogremanager.o
@@ -56,4 +57,5 @@ INPUT(
 ./release\moc_defaulteventmanager.o
 ./release\moc_ogrebulletscene.o
 ./release\moc_ogrebulletsandboxscene.o
+./release\moc_sandboxtools.o
 );

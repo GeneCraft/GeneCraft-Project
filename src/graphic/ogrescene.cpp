@@ -16,7 +16,7 @@ namespace GeneLabOgreBullet {
         this->ogreRoot = ogreRoot;
         this->sceneManager = sceneManager;
         sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
-        //sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
