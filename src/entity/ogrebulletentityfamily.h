@@ -12,6 +12,12 @@ namespace GeneLabOgreBullet {
     public:
         explicit OgreBulletEntityFamily(QObject *parent = 0);
 
+        virtual OgreBulletEntity* createOgreBulletEntity() = 0;
+
+        virtual GeneLabCore::Entity* createEntity() {
+            return (GeneLabCore::Entity*)createOgreBulletEntity();
+        }
+
     signals:
 
     public slots:

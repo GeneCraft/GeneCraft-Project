@@ -12,10 +12,10 @@ namespace GeneLabOgreBullet {
     public:
         explicit SnakeFamily(QVariant data, QObject *parent = 0);
 
-        OgreBulletEntity* build();
+        OgreBulletEntity* createOgreBulletEntity();
 
         virtual GeneLabCore::Entity* createEntity() {
-            return (GeneLabCore::Entity*) build();
+            return (GeneLabCore::Entity*) createOgreBulletEntity();
         }
 
         QVariant serialize();

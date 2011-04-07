@@ -21,7 +21,8 @@
 #include "graphic/ogrewidget.h"
 #include "graphic/ogrescene.h"
 #include "physics/bulletmanager.h"
-#include "world/ogrebulletworld.h"
+#include "simulation/simulationmanager.h"
+#include "simulation/ogrebulletsimulationmanager.h".h"
 #include "factory/jsonloader.h"
 #include "defaulteventmanager.h"
 #include "sample/snakefamily.h"
@@ -164,7 +165,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // --
     qDebug() << "Init Events Manager";
     // Events
-    DefaultEventManager *em = new DefaultEventManager(graphics,physics->getWorld());
+    GeneLabOgreBullet::DefaultEventManager *em = new GeneLabOgreBullet::DefaultEventManager(graphics,physics->getWorld());
     connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
     connect(oW1,SIGNAL(mouseReleased(QMouseEvent*)),em,SLOT(mouseReleaseEvent(QMouseEvent*)));
     connect(oW1,SIGNAL(mouseMoved(QMouseEvent*)),em,SLOT(mouseMoveEvent(QMouseEvent*)));
@@ -209,7 +210,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 
     // Create snake
     GeneLabOgreBullet::SnakeFamily * snakeFamily = new GeneLabOgreBullet::SnakeFamily(QVariant());
-    GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->build();
+    GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
     snake->setup(graphics,physics);
 
 
@@ -217,7 +218,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // -- World : RENAME TO SimulationManager or SimulationEngine
     // --
     qDebug() << "Init World";
-    GeneLabCore::World* world = new GeneLabOgreBullet::OgreBulletWorld(physics,graphics,em);
+    GeneLabCore::SimulationManager* world = new GeneLabOgreBullet::OgreBulletSimulationManager(physics,graphics,em);
     world->setup();
     qDebug() << "[OK]\n";
 

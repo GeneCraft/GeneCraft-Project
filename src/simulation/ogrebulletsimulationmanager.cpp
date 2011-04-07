@@ -1,54 +1,51 @@
-#include "ogrebulletworld.h"
+#include "ogrebulletsimulationmanager.h"
+#include "graphic/ogreinputmanager.h"
+#include "graphic/ogremanager.h"
+#include "graphic/defaulteventmanager.h"
+#include "physics/bulletmanager.h"
 
 namespace GeneLabOgreBullet {
-    using namespace GeneLabCore;
 
-    OgreBulletWorld::OgreBulletWorld(QObject *parent) :
-            World(parent)
-    {
-    }
-
-    OgreBulletWorld::OgreBulletWorld(BulletManager* bulletManager, OgreManager* ogreManager, DefaultEventManager *eventsManager, QObject *parent):
-            World(parent)
+    OgreBulletSimulationManager::OgreBulletSimulationManager(BulletManager* bulletManager, OgreManager* ogreManager, DefaultEventManager *eventsManager, QObject *parent)
     {
         this->bulletManager = bulletManager;
         this->ogreManager = ogreManager;
         this->eventsManager = eventsManager;
     }
 
-    void OgreBulletWorld::setBulletManager(BulletManager* bulletManager){
+    void OgreBulletSimulationManager::setBulletManager(BulletManager* bulletManager){
         this->bulletManager = bulletManager;
     }
 
-    void OgreBulletWorld::setOgreManager(OgreManager* ogreManager){
+    void OgreBulletSimulationManager::setOgreManager(OgreManager* ogreManager){
         this->ogreManager = ogreManager;
     }
 
-    BulletManager* OgreBulletWorld::getBulletManager() {
+    BulletManager* OgreBulletSimulationManager::getBulletManager() {
         return bulletManager;
     }
 
-    OgreManager* OgreBulletWorld::getOgreManager() {
+    OgreManager* OgreBulletSimulationManager::getOgreManager() {
         return ogreManager;
     }
 
-    void OgreBulletWorld::setup() {
+    void OgreBulletSimulationManager::setup() {
         stepTimer = new QTimer();
         stepTimer->setInterval(1000/30); // 30fps
         connect(stepTimer, SIGNAL(timeout()), this, SLOT(update()));
     }
 
-    void  OgreBulletWorld::start()
+    void  OgreBulletSimulationManager::start()
     {
         stepTimer->start();
     }
 
-    void OgreBulletWorld::stop()
+    void OgreBulletSimulationManager::stop()
     {
         stepTimer->stop();
     }
 
-    void OgreBulletWorld::update()
+    void OgreBulletSimulationManager::update()
     {
         eventsManager->beforeStep();
         ogreManager->beforeStep();
@@ -63,3 +60,4 @@ namespace GeneLabOgreBullet {
         bulletManager->afterStep();
     }
 }
+

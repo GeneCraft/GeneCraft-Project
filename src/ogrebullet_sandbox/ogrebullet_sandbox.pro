@@ -15,16 +15,16 @@ INCLUDEPATH += ../graphic/
 INCLUDEPATH += ../physics/
 INCLUDEPATH += ..
 #library related
-INCLUDEPATH += ../lib/ogre/include/OGRE
-INCLUDEPATH += ../lib/ogre/include/OIS
-INCLUDEPATH += ../lib/ogre/include
-INCLUDEPATH += ../lib/ogre/boost_1_44
-INCLUDEPATH += ../lib/ogrebullet-build/include/Collisions
-INCLUDEPATH += ../lib/ogrebullet-build/include/Dynamics
-INCLUDEPATH += ../lib/ogrebullet-build/include
-INCLUDEPATH += ../lib/bullet/src
-INCLUDEPATH += ../lib/bullet/Extra/ConvexDecomposition
-INCLUDEPATH += ../lib/qxt/src/core/
+QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
+QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
+QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
+QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
+QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Collisions
+QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Dynamics
+QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include
+QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
+QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
+QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core/
 
 
 SOURCES += main.cpp\
@@ -35,7 +35,6 @@ SOURCES += main.cpp\
     ../world/world.cpp \
     ../graphic/ogrescene.cpp \
     ../physics/bulletmanager.cpp \
-    ../world/ogrebulletworld.cpp \
     ../physics/bulletscene.cpp \
     ../engine/engine.cpp \
     ../factory/jsonloader.cpp \
@@ -56,7 +55,9 @@ SOURCES += main.cpp\
     ../graphic/defaulteventmanager.cpp \
     ../world/ogrebulletscene.cpp \
     ogrebulletsandboxscene.cpp \
-    sandboxtools.cpp
+    sandboxtools.cpp \
+    ../simulation/simulationmanager.cpp \
+    ../simulation/ogrebulletsimulationmanager.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -66,7 +67,6 @@ HEADERS  += ogrebulletwindows.h \
     ../world/world.h \
     ../graphic/ogrescene.h \
     ../physics/bulletmanager.h \
-    ../world/ogrebulletworld.h \
     ../physics/bulletscene.h \
     ../engine/engine.h \
     ../factory/jsonloader.h \
@@ -88,7 +88,9 @@ HEADERS  += ogrebulletwindows.h \
     ../graphic/defaulteventmanager.h \
     ../world/ogrebulletscene.h \
     ogrebulletsandboxscene.h \
-    sandboxtools.h
+    sandboxtools.h \
+    ../simulation/simulationmanager.h \
+    ../simulation/ogrebulletsimulationmanager.h
 
 FORMS    += ogrebulletwindows.ui \
     generic6dofconstraintcontroller.ui

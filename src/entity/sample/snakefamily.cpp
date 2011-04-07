@@ -15,7 +15,7 @@ namespace GeneLabOgreBullet {
         this->pieceLength = data.toMap()["piecelength"].toFloat();
     }
 
-    OgreBulletEntity* SnakeFamily::build() {
+    OgreBulletEntity* SnakeFamily::createOgreBulletEntity() {
         OgreBulletEntity* snake = new OgreBulletEntity("Snaky"+QString::number(length), "Snake", 1);
         TreeShape* snakeShape = new TreeShape();
         Fixation* root = new Fixation();

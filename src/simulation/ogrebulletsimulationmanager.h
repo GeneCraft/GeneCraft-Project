@@ -1,31 +1,24 @@
-#ifndef OGREBULLETWORLD_H
-#define OGREBULLETWORLD_H
+#ifndef OGREBULLETSIMULATIONMANAGER_H
+#define OGREBULLETSIMULATIONMANAGER_H
 
 #include "classes.h"
-#include "world/world.h"
-#include <QTimer>
-#include <QDebug>
-#include "graphic/ogremanager.h"
-#include "physics/bulletmanager.h"
-#include "world/ogrebulletscene.h"
-#include "graphic/defaulteventmanager.h"
+#include "simulation/simulationmanager.h"
+#include <QObject>
 
 namespace GeneLabOgreBullet {
 
-    class OgreBulletWorld : public GeneLabCore::World
+    class OgreBulletSimulationManager : public GeneLabCore::SimulationManager
     {
         Q_OBJECT
     public:
 
-        OgreBulletWorld(QObject *parent = 0);
+        OgreBulletSimulationManager(QObject *parent = 0) : GeneLabCore::SimulationManager(parent) {}
 
-        // added by ADC
-        OgreBulletWorld(BulletManager* bulletManager, OgreManager* ogreManager, DefaultEventManager *eventsManager, QObject *parent = 0);
+        OgreBulletSimulationManager(BulletManager* bulletManager, OgreManager* ogreManager, DefaultEventManager *eventsManager, QObject *parent = 0);
 
         void setBulletManager(BulletManager* bulletManager);
         void setOgreManager(OgreManager* ogreManager);
 
-        // added by ADC
         BulletManager* getBulletManager();
         OgreManager* getOgreManager();
 
@@ -45,7 +38,6 @@ namespace GeneLabOgreBullet {
         OgreManager*   ogreManager;
         DefaultEventManager *eventsManager;
 
-        OgreBulletScene* scene;
 
         // Execution timer
         QTimer *stepTimer;
@@ -53,4 +45,4 @@ namespace GeneLabOgreBullet {
 
 }
 
-#endif // OGREBULLETWORLD_H
+#endif // OGREBULLETSIMULATIONMANAGER_H

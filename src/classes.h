@@ -11,6 +11,24 @@ namespace GeneLabCore {
 
     // World related
     class World;
+
+    // Generic simulation manager
+    class SimulationManager;
+
+}
+
+namespace GeneLabFactory {
+    // Creation
+    class MainFactory;
+    class EntityFactory;
+    class EngineFactory;
+    class WorldFactory;
+
+    // Ressource (file, db, etc.)
+    class Ressource;
+
+    // Ressource management
+    class JsonLoader;
 }
 
 namespace GeneLabOgreBullet {
@@ -24,7 +42,6 @@ namespace GeneLabOgreBullet {
 
     // Entity and world implementation
     //class OgreBulletScene;
-    class OgreBulletWorld;
     class OgreBulletEntity;
     class OgreBulletEntityFamily;
 
@@ -36,6 +53,13 @@ namespace GeneLabOgreBullet {
 
     // UI utils
     class OgreWidget;
+
+    // UI Event
+    class DefaultEventManager;
+
+    // Simulation
+    class OgreBulletSimulationManager;
+
 }
 
 // Typical used ogre namespace classes
