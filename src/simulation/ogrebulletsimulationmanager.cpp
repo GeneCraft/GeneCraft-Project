@@ -31,7 +31,7 @@ namespace GeneLabOgreBullet {
 
     void OgreBulletSimulationManager::setup() {
         stepTimer = new QTimer();
-        stepTimer->setInterval(1000/30); // 30fps
+        stepTimer->setInterval(1000/60.0); // 30fps
         connect(stepTimer, SIGNAL(timeout()), this, SLOT(update()));
     }
 

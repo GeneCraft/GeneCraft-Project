@@ -191,14 +191,14 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 //                SandboxTools::addBox(graphics,physics,Ogre::Vector3(i*size,k*size+size/2,j*size),Ogre::Vector3(size,size,size));
 
     // Six dof constraint
-//    OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(graphics,physics,Ogre::Vector3(0,10,0),Ogre::Vector3(1,1,1));
-//    OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(graphics,physics,Ogre::Vector3(4,10,0),Ogre::Vector3(1,1,1));
+    OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(graphics,physics,Ogre::Vector3(0,10,0),Ogre::Vector3(1,1,1));
+    OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(graphics,physics,Ogre::Vector3(4,10,0),Ogre::Vector3(1,1,1));
 
 
-//    OgreBulletDynamics::SixDofConstraint *ct = new OgreBulletDynamics::SixDofConstraint(boxA,boxB,Ogre::Vector3(1,0,0),Ogre::Quaternion(),Ogre::Vector3(-1,0,0),Ogre::Quaternion());
-//    physics->getWorld()->addConstraint(ct);
+    OgreBulletDynamics::SixDofConstraint *ct = new OgreBulletDynamics::SixDofConstraint(boxA,boxB,Ogre::Vector3(1,0,0),Ogre::Quaternion(),Ogre::Vector3(-1,0,0),Ogre::Quaternion());
+    physics->getWorld()->addConstraint(ct);
 
-//    g6DofCC->setConstraint((btGeneric6DofConstraint*) ct->getBulletTypedConstraint());
+    g6DofCC->setConstraint((btGeneric6DofConstraint*) ct->getBulletTypedConstraint());
 
 
 

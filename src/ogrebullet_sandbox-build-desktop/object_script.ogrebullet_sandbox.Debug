@@ -7,7 +7,6 @@ INPUT(
 ./debug\world.o
 ./debug\ogrescene.o
 ./debug\bulletmanager.o
-./debug\ogrebulletworld.o
 ./debug\bulletscene.o
 ./debug\engine.o
 ./debug\jsonloader.o
@@ -29,6 +28,8 @@ INPUT(
 ./debug\ogrebulletscene.o
 ./debug\ogrebulletsandboxscene.o
 ./debug\sandboxtools.o
+./debug\simulationmanager.o
+./debug\ogrebulletsimulationmanager.o
 ./debug\moc_ogrebulletwindows.o
 ./debug\moc_ogrewidget.o
 ./debug\moc_ogremanager.o
@@ -36,7 +37,6 @@ INPUT(
 ./debug\moc_world.o
 ./debug\moc_ogrescene.o
 ./debug\moc_bulletmanager.o
-./debug\moc_ogrebulletworld.o
 ./debug\moc_bulletscene.o
 ./debug\moc_engine.o
 ./debug\moc_jsonloader.o
@@ -58,4 +58,6 @@ INPUT(
 ./debug\moc_ogrebulletscene.o
 ./debug\moc_ogrebulletsandboxscene.o
 ./debug\moc_sandboxtools.o
+./debug\moc_simulationmanager.o
+./debug\moc_ogrebulletsimulationmanager.o
 );

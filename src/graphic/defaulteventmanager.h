@@ -19,6 +19,10 @@
 
 namespace GeneLabOgreBullet {
 
+    // TODO:
+    // A renomer en EventManager(Ou engine)
+    // Contiendra des inputliestener
+    // Stoque les evenements et les envoies aux différents listener durant le beforestep !
     class DefaultEventManager : public GeneLabCore::Engine
     {
         Q_OBJECT

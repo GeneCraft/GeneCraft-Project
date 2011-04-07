@@ -147,6 +147,6 @@ namespace GeneLabOgreBullet {
 
     void BulletManager::step() {
         //qDebug() << "physic step";
-        mWorld->stepSimulation(1000/30, 3);
+        mWorld->stepSimulation(1/60.0);
     }
 }

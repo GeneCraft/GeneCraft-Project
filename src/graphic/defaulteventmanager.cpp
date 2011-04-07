@@ -65,6 +65,7 @@ namespace GeneLabOgreBullet {
             case QEvent::MouseButtonPress :
 
                 me = (QMouseEvent*) e;
+                qDebug() << "button " << me->button();
                 if(me->button() == Qt::RightButton)
                     throwCube();
 
@@ -79,9 +80,13 @@ namespace GeneLabOgreBullet {
                         for(int i=0;i<100;i++)
                             throwCube();
                     break;
+                default:
+                    ;
                 }
 
                 break;
+             default:
+                ;
             }
         }
     }

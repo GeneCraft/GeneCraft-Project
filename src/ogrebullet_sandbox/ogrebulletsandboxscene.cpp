@@ -72,7 +72,7 @@ OgreBulletSandBoxScene::OgreBulletSandBoxScene(GeneLabOgreBullet::BulletManager*
     mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
 
 
-    // TODO: Move in world !
+    // TODO: Move in map !
     Ogre::SceneNode *node = sceneManager->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
     node->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
 

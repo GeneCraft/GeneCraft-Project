@@ -14,6 +14,7 @@ INCLUDEPATH += ../entity/
 INCLUDEPATH += ../graphic/
 INCLUDEPATH += ../physics/
 INCLUDEPATH += ..
+
 #library related
 QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
 QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS

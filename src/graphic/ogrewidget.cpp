@@ -133,43 +133,43 @@ namespace GeneLabOgreBullet {
     void OgreWidget::mousePressEvent(QMouseEvent *e)
     {
         //ogreFreeCamera->mousePressEvent(e);
-        emit mousePressed(e);
+        emit mousePressed(new QMouseEvent(*e));
     }
 
     void OgreWidget::mouseReleaseEvent(QMouseEvent *e)
     {
         //ogreFreeCamera->mouseReleaseEvent(e);
-        emit mouseReleased(e);
+        emit mouseReleased(new QMouseEvent(*e));
     }
 
     void OgreWidget::mouseMoveEvent(QMouseEvent *e)
     {
         //ogreFreeCamera->mouseMoveEvent(e);
-        emit mouseMoved(e);
+        emit mouseMoved(new QMouseEvent(*e));
     }
 
     void OgreWidget::keyPressEvent(QKeyEvent *e)
     {
         //ogreFreeCamera->keyPressEvent(e);
-        emit keyPressed(e);
+        emit keyPressed(new QKeyEvent(*e));
     }
 
     void OgreWidget::keyReleaseEvent(QKeyEvent *e)
     {
         //ogreFreeCamera->keyReleaseEvent(e);
-        emit keyReleased(e);
+        emit keyReleased(new QKeyEvent(*e));
     }
 
     void OgreWidget::enterEvent (QEvent *e)
     {
         //ogreFreeCamera->enterViewPortEvent(e);
-        emit entered(e);
+        emit entered(new QEvent(*e));
     }
 
     void OgreWidget::leaveEvent (QEvent *e)
     {
         //ogreFreeCamera->leaveViewPortEvent(e);
-        emit leaved(e);
+        emit leaved(new QEvent(*e));
     }
 
     void OgreWidget::step()
