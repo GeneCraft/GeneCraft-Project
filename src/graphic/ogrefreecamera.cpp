@@ -43,7 +43,6 @@ void OgreFreeCamera::mouseReleaseEvent(QMouseEvent * e)
 {
     qDebug() << "OgreFreeCamera::mousePressEvent";
 
-
     if(!e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = QPoint(invalidMousePoint);
@@ -94,7 +93,6 @@ void OgreFreeCamera::keyPressEvent(QKeyEvent *e)
         break;
     case Qt::Key_Control : downKeyPressed = true;
         break;
-
     }
 }
 

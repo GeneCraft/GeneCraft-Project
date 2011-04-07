@@ -13,6 +13,9 @@
 #include "OgreBulletDynamicsConstraint.h"
 #include "Dynamics/Constraints/OgreBulletDynamics6DofConstraint.h"
 
+// Core
+#include "entity/entity.h"
+
 // GeneLab
 #include "graphic/ogremanager.h"
 #include "graphic/ogrewidget.h"
@@ -21,12 +24,15 @@
 #include "world/ogrebulletworld.h"
 #include "factory/jsonloader.h"
 #include "defaulteventmanager.h"
+#include "sample/snakefamily.h"
+#include "ogrebulletentity.h"
 
 // App
 #include "ogrebulletwindows.h"
 #include "ui_ogrebulletwindows.h"
 #include "sandboxtools.h"
 #include "generic6dofconstraintcontroller.h"
+#include "sample/snakefamily.h"
 
 OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QMainWindow(parent),
@@ -184,15 +190,27 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 //                SandboxTools::addBox(graphics,physics,Ogre::Vector3(i*size,k*size+size/2,j*size),Ogre::Vector3(size,size,size));
 
     // Six dof constraint
+//    OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(graphics,physics,Ogre::Vector3(0,10,0),Ogre::Vector3(1,1,1));
+//    OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(graphics,physics,Ogre::Vector3(4,10,0),Ogre::Vector3(1,1,1));
 
-    OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(graphics,physics,Ogre::Vector3(0,10,0),Ogre::Vector3(1,1,1));
-    OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(graphics,physics,Ogre::Vector3(4,10,0),Ogre::Vector3(1,1,1));
+
+//    OgreBulletDynamics::SixDofConstraint *ct = new OgreBulletDynamics::SixDofConstraint(boxA,boxB,Ogre::Vector3(1,0,0),Ogre::Quaternion(),Ogre::Vector3(-1,0,0),Ogre::Quaternion());
+//    physics->getWorld()->addConstraint(ct);
+
+//    g6DofCC->setConstraint((btGeneric6DofConstraint*) ct->getBulletTypedConstraint());
 
 
-    OgreBulletDynamics::SixDofConstraint *ct = new OgreBulletDynamics::SixDofConstraint(boxA,boxB,Ogre::Vector3(1,0,0),Ogre::Quaternion(),Ogre::Vector3(-1,0,0),Ogre::Quaternion());
-    physics->getWorld()->addConstraint(ct);
 
-    g6DofCC->setConstraint((btGeneric6DofConstraint*) ct->getBulletTypedConstraint());
+
+    // Family params
+    //QMap<QString, QString> map;
+    //map.insert("length","10");
+    //map.insert("piecelength","10");
+
+    // Create snake
+    GeneLabOgreBullet::SnakeFamily * snakeFamily = new GeneLabOgreBullet::SnakeFamily(QVariant());
+    GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->build();
+    snake->setup(graphics,physics);
 
 
     // --

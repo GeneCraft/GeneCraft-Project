@@ -15,7 +15,7 @@ namespace GeneLabOgreBullet {
         OgreBulletEntity* build();
 
         virtual GeneLabCore::Entity* createEntity() {
-            return (GeneLabCore::Entity*)build();
+            return (GeneLabCore::Entity*) build();
         }
 
         QVariant serialize();

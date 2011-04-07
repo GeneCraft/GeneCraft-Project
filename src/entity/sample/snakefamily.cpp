@@ -30,7 +30,6 @@ namespace GeneLabOgreBullet {
         }
 
         return snake;
-
     }
 
     QVariant SnakeFamily::serialize() {

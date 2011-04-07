@@ -28,6 +28,8 @@ namespace GeneLabOgreBullet {
     class OgreBulletEntity;
     class OgreBulletEntityFamily;
 
+    class SnakeFamily;
+
     class TreeShape;
     class Bone;
     class Fixation;

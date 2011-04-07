@@ -31,6 +31,8 @@ void DefaultEventManager::mouseMoveEvent(QMouseEvent * e)
 
 void DefaultEventManager::keyPressEvent(QKeyEvent *e)
 {
+    qDebug() << "DefaultEventManager::keyPressEvent";
+
     eventsQueue.enqueue(e);
 }
 
