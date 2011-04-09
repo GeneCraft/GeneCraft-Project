@@ -24,7 +24,7 @@
 #include "simulation/simulationmanager.h"
 #include "simulation/ogrebulletsimulationmanager.h".h"
 #include "factory/jsonloader.h"
-#include "defaulteventmanager.h"
+#include "eventmanager.h"
 #include "sample/snakefamily.h"
 #include "ogrebulletentity.h"
 
@@ -34,6 +34,7 @@
 #include "sandboxtools.h"
 #include "generic6dofconstraintcontroller.h"
 #include "sample/snakefamily.h"
+#include "creatureviewerinputmanager.h"
 
 OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QMainWindow(parent),
@@ -136,20 +137,20 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     cam1->setNearClipDistance(5);
 
     // camera 2
-    Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("second");
-    cam2->setPosition(Ogre::Vector3(0, 18, 0));
-    cam2->lookAt(Ogre::Vector3(0, 0, 70));
-    cam2->setNearClipDistance(5);
-    qDebug() << "[OK]\n";
+    // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("second");
+    // cam2->setPosition(Ogre::Vector3(0, 18, 0));
+    // cam2->lookAt(Ogre::Vector3(0, 0, 70));
+    // cam2->setNearClipDistance(5);
+    // qDebug() << "[OK]\n";
 
     qDebug() << "Init Widgets";
     // widget 1
     QWidget*    oW1 = graphics->createOgreWidget(cam1, this->ui->centralWidget);
-    QWidget*    oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
+    this->ui->centralWidget->layout()->addWidget(oW1);
 
     // widget 2
-    this->ui->centralWidget->layout()->addWidget(oW1);
-    this->ui->centralWidget->layout()->addWidget(oW2);
+    // this->ui->centralWidget->layout()->addWidget(oW2);
+    // QWidget*    oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
 
     // --
     // -- Physics : Bullet
@@ -164,8 +165,15 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // -- Events
     // --
     qDebug() << "Init Events Manager";
+
     // Events
-    GeneLabOgreBullet::DefaultEventManager *em = new GeneLabOgreBullet::DefaultEventManager(graphics,physics->getWorld());
+    GeneLabOgreBullet::EventManager *em = new GeneLabOgreBullet::EventManager();
+
+
+    CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
+    cvim->initOgreBullet(graphics,physics,cam1);
+    em->addListener(cvim);
+
     connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
     connect(oW1,SIGNAL(mouseReleased(QMouseEvent*)),em,SLOT(mouseReleaseEvent(QMouseEvent*)));
     connect(oW1,SIGNAL(mouseMoved(QMouseEvent*)),em,SLOT(mouseMoveEvent(QMouseEvent*)));
@@ -211,7 +219,8 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // Create snake
     GeneLabOgreBullet::SnakeFamily * snakeFamily = new GeneLabOgreBullet::SnakeFamily(QVariant());
     GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
-    snake->setup(graphics,physics);
+    snake->initOgreBullet(graphics,physics);
+    snake->setup();
 
 
     // --
@@ -230,14 +239,4 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 OgreBulletWindows::~OgreBulletWindows()
 {
     delete ui;
-}
-
-void OgreBulletWindows::updateGraphics() {
-//    qDebug() << "update graphics..";
-//    graphics->beforeStep();
-//    physics->beforeStep();
-//    graphics->step();
-//    physics ->step();
-//    graphics->afterStep();
-//    physics->afterStep();
 }

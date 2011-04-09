@@ -5,7 +5,13 @@ namespace GeneLabOgreBullet {
         GeneLabCore::Entity(name, f, gen)
     {}
 
-    void OgreBulletEntity::setup(OgreManager* ogreManager, BulletManager* bulletManager)
+    void OgreBulletEntity::initOgreBullet(OgreManager* ogreManager, BulletManager* bulletManager)
+    {
+        this->ogreManager = ogreManager;
+        this->bulletManager = bulletManager;
+    }
+
+    void OgreBulletEntity::setup()
     {
         GeneLabOgreBullet::TreeShape *shape = this->getShape();
 

@@ -7,9 +7,10 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <Ogre.h>
-#include <QDebug>
+#include "classes.h"
+//#include "inputlistener.h"
 
-class OgreFreeCamera : public QObject
+class OgreFreeCamera : public QObject /*, public GeneLabOgreBullet::InputListener*/
 {
     Q_OBJECT
 public:

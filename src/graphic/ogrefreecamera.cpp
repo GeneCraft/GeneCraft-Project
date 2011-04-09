@@ -1,4 +1,6 @@
 #include "ogrefreecamera.h"
+#include <QDebug>
+
 
 const QPoint     OgreFreeCamera::invalidMousePoint(-1,-1);
 const Ogre::Real OgreFreeCamera::turboModifier(10);
@@ -15,7 +17,7 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
     movementDeceleration    = 1.3;
 
     // Look parameters
-    lookSensibility         = 1.6;
+    lookSensibility         = 1.3;
 
     // Default action status
     forwardKeyPressed       = false;

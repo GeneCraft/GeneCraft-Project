@@ -40,6 +40,10 @@ namespace GeneLabOgreBullet {
     class BulletManager;
     class BulletScene;
 
+    // Event management
+    class EventManager;
+    class InputListener;
+
     // Entity and world implementation
     //class OgreBulletScene;
     class OgreBulletEntity;
@@ -55,7 +59,7 @@ namespace GeneLabOgreBullet {
     class OgreWidget;
 
     // UI Event
-    class DefaultEventManager;
+    class EventManager;
 
     // Simulation
     class OgreBulletSimulationManager;

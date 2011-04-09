@@ -23,13 +23,15 @@ namespace GeneLabOgreBullet {
     signals:
 
     public slots:
-        void setup(OgreManager* ogreManager, BulletManager* bulletManager);
+        void initOgreBullet(OgreManager* ogreManager, BulletManager* bulletManager);
+        void setup();
         void setShape(TreeShape* shape);
         TreeShape* getShape();
 
     private:
         TreeShape* shape;
-
+        OgreManager *ogreManager;
+        BulletManager *bulletManager;
     };
 
 }

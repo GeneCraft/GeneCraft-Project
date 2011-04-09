@@ -29,7 +29,6 @@ private:
     GeneLabOgreBullet::BulletManager*  physics;
 
 private slots:
-    void updateGraphics();
 
 };
 

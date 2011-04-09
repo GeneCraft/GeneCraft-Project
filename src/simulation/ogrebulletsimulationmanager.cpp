@@ -1,12 +1,12 @@
 #include "ogrebulletsimulationmanager.h"
 #include "graphic/ogreinputmanager.h"
 #include "graphic/ogremanager.h"
-#include "graphic/defaulteventmanager.h"
+#include "graphic/eventmanager.h"
 #include "physics/bulletmanager.h"
 
 namespace GeneLabOgreBullet {
 
-    OgreBulletSimulationManager::OgreBulletSimulationManager(BulletManager* bulletManager, OgreManager* ogreManager, DefaultEventManager *eventsManager, QObject *parent)
+    OgreBulletSimulationManager::OgreBulletSimulationManager(BulletManager* bulletManager, OgreManager* ogreManager, EventManager *eventsManager, QObject *parent)
     {
         this->bulletManager = bulletManager;
         this->ogreManager = ogreManager;

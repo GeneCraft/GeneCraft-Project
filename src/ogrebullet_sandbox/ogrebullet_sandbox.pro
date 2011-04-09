@@ -53,12 +53,14 @@ SOURCES += main.cpp\
     ../graphic/ogreinputmanager.cpp \
     ../graphic/ogrefreecamera.cpp \
     generic6dofconstraintcontroller.cpp \
-    ../graphic/defaulteventmanager.cpp \
     ../world/ogrebulletscene.cpp \
     ogrebulletsandboxscene.cpp \
     sandboxtools.cpp \
     ../simulation/simulationmanager.cpp \
-    ../simulation/ogrebulletsimulationmanager.cpp
+    ../simulation/ogrebulletsimulationmanager.cpp \
+    ../graphic/eventmanager.cpp \
+    ../graphic/inputlistener.cpp \
+    creatureviewerinputmanager.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -86,12 +88,14 @@ HEADERS  += ogrebulletwindows.h \
     ../graphic/ogreinputmanager.h \
     ../graphic/ogrefreecamera.h \
     generic6dofconstraintcontroller.h \
-    ../graphic/defaulteventmanager.h \
     ../world/ogrebulletscene.h \
     ogrebulletsandboxscene.h \
     sandboxtools.h \
     ../simulation/simulationmanager.h \
-    ../simulation/ogrebulletsimulationmanager.h
+    ../simulation/ogrebulletsimulationmanager.h \
+    ../graphic/eventmanager.h \
+    ../graphic/inputlistener.h \
+    creatureviewerinputmanager.h
 
 FORMS    += ogrebulletwindows.ui \
     generic6dofconstraintcontroller.ui

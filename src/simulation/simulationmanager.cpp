@@ -2,7 +2,7 @@
 
 #include "graphic/ogremanager.h"
 #include "physics/bulletmanager.h"
-#include "graphic/defaulteventmanager.h"
+#include "graphic/eventmanager.h"
 
 namespace GeneLabCore {
 

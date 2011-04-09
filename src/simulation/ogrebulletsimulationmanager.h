@@ -14,7 +14,7 @@ namespace GeneLabOgreBullet {
 
         OgreBulletSimulationManager(QObject *parent = 0) : GeneLabCore::SimulationManager(parent) {}
 
-        OgreBulletSimulationManager(BulletManager* bulletManager, OgreManager* ogreManager, DefaultEventManager *eventsManager, QObject *parent = 0);
+        OgreBulletSimulationManager(BulletManager* bulletManager, OgreManager* ogreManager, EventManager *eventsManager, QObject *parent = 0);
 
         void setBulletManager(BulletManager* bulletManager);
         void setOgreManager(OgreManager* ogreManager);
@@ -36,7 +36,7 @@ namespace GeneLabOgreBullet {
     private:
         BulletManager* bulletManager;
         OgreManager*   ogreManager;
-        DefaultEventManager *eventsManager;
+        EventManager *eventsManager;
 
 
         // Execution timer
