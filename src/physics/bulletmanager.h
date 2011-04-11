@@ -17,6 +17,11 @@ namespace GeneLabOgreBullet {
 
         OgreBulletDynamics::DynamicsWorld *getWorld();
 
+
+        void setPhysicsEnable(bool physicsEnable);
+        bool getPhysicsEnable();
+
+
     signals:
 
     public slots:
@@ -40,7 +45,7 @@ namespace GeneLabOgreBullet {
         std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
         std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
 
-
+        bool physicsEnable;
     };
 }
 #endif // OGREBULLETMANAGER_H

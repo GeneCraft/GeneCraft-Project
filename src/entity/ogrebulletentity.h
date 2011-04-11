@@ -3,14 +3,6 @@
 
 #include "classes.h"
 #include "entity/entity.h"
-#include "struct/treeshape.h"
-#include "struct/fixation.h"
-#include "struct/bone.h"
-#include "struct/types.h"
-#include <QList>
-#include <QStack>
-#include "graphic/ogremanager.h"
-#include "physics/bulletmanager.h"
 
 namespace GeneLabOgreBullet {
 
@@ -32,6 +24,8 @@ namespace GeneLabOgreBullet {
         TreeShape* shape;
         OgreManager *ogreManager;
         BulletManager *bulletManager;
+
+        void setupFixation(GeneLabOgreBullet::Fixation *fix);
     };
 
 }

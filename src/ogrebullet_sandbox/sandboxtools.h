@@ -26,6 +26,9 @@ public:
     static OgreBulletDynamics::RigidBody *addBox(GeneLabOgreBullet::OgreManager* ogre, GeneLabOgreBullet::BulletManager *bulletMgr,
                                                  Ogre::Vector3 position, Ogre::Vector3 size_2);
 
+    static OgreBulletDynamics::RigidBody *addSphere(GeneLabOgreBullet::OgreManager* ogre, GeneLabOgreBullet::BulletManager *bulletMgr,
+                                                        Ogre::Vector3 position, double rayon);
+
 private:
     static int mNumEntitiesInstanced;
 

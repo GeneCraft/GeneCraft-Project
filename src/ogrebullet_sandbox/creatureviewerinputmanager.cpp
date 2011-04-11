@@ -5,6 +5,12 @@
 #include "sandboxtools.h"
 #include "OGRE/Ogre.h"
 
+/// ---
+/// AHAHA J'AI PAS TROUVE MIEUX POUR L'AUTO COMPLETION !!! HELP !
+/// ---
+
+#include "lib/ogrebullet-build/include/Dynamics/OgreBulletDynamicsWorld.h"
+
 CreatureViewerInputManager::CreatureViewerInputManager()
 {
 }
@@ -25,8 +31,17 @@ void CreatureViewerInputManager::keyPressEvent(QKeyEvent *e)
             for(int i=0;i<100;i++)
                 throwCube();
         break;
-        case Qt::Key_F :
-
+        case Qt::Key_P :
+            bulletManager->setPhysicsEnable(!bulletManager->getPhysicsEnable());
+        break;
+        case Qt::Key_1 :
+            camera->setPolygonMode(Ogre::PM_POINTS );
+        break;
+        case Qt::Key_2 :
+            camera->setPolygonMode(Ogre::PM_WIREFRAME);
+        break;
+        case Qt::Key_3 :
+            camera->setPolygonMode(Ogre::PM_SOLID);
         break;
     }
 }
@@ -47,6 +62,6 @@ void CreatureViewerInputManager::throwCube()
     OgreBulletDynamics::RigidBody * box = SandboxTools::addBox(ogreManager,bulletManager,camera->getPosition(),Ogre::Vector3(1,1,1));
 
     // apply impulse from the center of the box
-    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy() * 100;
+    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy() * 200;
     box->getBulletRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
 }

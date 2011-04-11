@@ -51,9 +51,11 @@ namespace GeneLabOgreBullet {
 
     class SnakeFamily;
 
+
     class TreeShape;
-    class Bone;
+    class ArticulatedBone;
     class Fixation;
+    class Articulation;
 
     // UI utils
     class OgreWidget;

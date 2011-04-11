@@ -19,7 +19,6 @@ INPUT(
 ./release\ogrebulletentityfamily.o
 ./release\treeshape.o
 ./release\fixation.o
-./release\bone.o
 ./release\snakefamily.o
 ./release\ogreinputmanager.o
 ./release\ogrefreecamera.o
@@ -32,6 +31,8 @@ INPUT(
 ./release\eventmanager.o
 ./release\inputlistener.o
 ./release\creatureviewerinputmanager.o
+./release\articulation.o
+./release\articulatedbone.o
 ./release\moc_ogrebulletwindows.o
 ./release\moc_ogrewidget.o
 ./release\moc_ogremanager.o
@@ -51,7 +52,6 @@ INPUT(
 ./release\moc_ogrebulletentityfamily.o
 ./release\moc_treeshape.o
 ./release\moc_fixation.o
-./release\moc_bone.o
 ./release\moc_snakefamily.o
 ./release\moc_ogreinputmanager.o
 ./release\moc_ogrefreecamera.o
@@ -63,4 +63,6 @@ INPUT(
 ./release\moc_ogrebulletsimulationmanager.o
 ./release\moc_eventmanager.o
 ./release\moc_inputlistener.o
+./release\moc_articulation.o
+./release\moc_articulatedbone.o
 );

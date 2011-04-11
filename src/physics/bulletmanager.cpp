@@ -4,7 +4,6 @@
 #include "Shapes/OgreBulletCollisionsBoxShape.h"
 #include "OGRE/Ogre.h"
 #include "graphic/ogremanager.h"
-
 #include <QDebug>
 
 namespace GeneLabOgreBullet {
@@ -13,6 +12,7 @@ namespace GeneLabOgreBullet {
     BulletManager::BulletManager(QObject *parent) :
         Engine(parent)
     {
+        physicsEnable = true;
     }
 
     BulletScene* BulletManager::getPhysicsScene() {
@@ -41,7 +41,6 @@ namespace GeneLabOgreBullet {
         debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
         mWorld->setDebugDrawer(debugDrawer);
         mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
-
 
         // TODO: Move in map !
         Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
@@ -146,7 +145,21 @@ namespace GeneLabOgreBullet {
     }
 
     void BulletManager::step() {
+
         //qDebug() << "physic step";
-        mWorld->stepSimulation(1/60.0);
+        if(physicsEnable)
+            mWorld->stepSimulation(1/60.0);
     }
+
+
+    void BulletManager::setPhysicsEnable(bool physicsEnable)
+    {
+        this->physicsEnable = physicsEnable;
+    }
+
+    bool BulletManager::getPhysicsEnable()
+    {
+        return physicsEnable;
+    }
+
 }

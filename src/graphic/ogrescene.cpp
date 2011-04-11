@@ -40,9 +40,9 @@ namespace GeneLabOgreBullet {
         spotLight->setDirection(-1, -1, 0);
         spotLight->setPosition(Ogre::Vector3(300, 300, 0));
 
-        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
+        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));/*
         Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
         entNinja->setCastShadows(true);
-        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
+        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);*/
     }
 }

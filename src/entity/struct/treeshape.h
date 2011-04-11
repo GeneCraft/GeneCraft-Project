@@ -3,6 +3,9 @@
 #include "classes.h"
 #include <QObject>
 
+
+// TODO: CREATE CLASS SHAPE with method setup AND print
+
 namespace GeneLabOgreBullet {
     class TreeShape : QObject
     {

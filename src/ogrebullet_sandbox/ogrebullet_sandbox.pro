@@ -16,17 +16,31 @@ INCLUDEPATH += ../physics/
 INCLUDEPATH += ..
 
 #library related
-QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
-QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
-QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
-QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
-QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Collisions
-QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Dynamics
-QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include
-QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
-QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
-QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core/
 
+CONFIG(Debug) {
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
+    QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Collisions
+    QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Dynamics
+    QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include
+    QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
+    QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
+    QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core/
+}
+
+#library related
+INCLUDEPATH  += ../lib/ogre/include/OGRE
+INCLUDEPATH  += ../lib/ogre/include/OIS
+INCLUDEPATH  += ../lib/ogre/include
+INCLUDEPATH  += ../lib/ogre/boost_1_44
+INCLUDEPATH  += ../lib/ogrebullet-build/include/Collisions
+INCLUDEPATH  += ../lib/ogrebullet-build/include/Dynamics
+INCLUDEPATH  += ../lib/ogrebullet-build/include
+INCLUDEPATH  += ../lib/bullet/src
+INCLUDEPATH  += ../lib/bullet/Extra/ConvexDecomposition
+INCLUDEPATH  += ../lib/qxt/src/core/
 
 SOURCES += main.cpp\
         ogrebulletwindows.cpp \
@@ -48,7 +62,6 @@ SOURCES += main.cpp\
     ../entity/ogrebulletentityfamily.cpp \
     ../entity/struct/treeshape.cpp \
     ../entity/struct/fixation.cpp \
-    ../entity/struct/bone.cpp \
     ../entity/sample/snakefamily.cpp \
     ../graphic/ogreinputmanager.cpp \
     ../graphic/ogrefreecamera.cpp \
@@ -60,7 +73,9 @@ SOURCES += main.cpp\
     ../simulation/ogrebulletsimulationmanager.cpp \
     ../graphic/eventmanager.cpp \
     ../graphic/inputlistener.cpp \
-    creatureviewerinputmanager.cpp
+    creatureviewerinputmanager.cpp \
+    ../entity/struct/articulation.cpp \
+    ../entity/struct/articulatedbone.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -83,7 +98,6 @@ HEADERS  += ogrebulletwindows.h \
     ../entity/struct/types.h \
     ../entity/struct/treeshape.h \
     ../entity/struct/fixation.h \
-    ../entity/struct/bone.h \
     ../entity/sample/snakefamily.h \
     ../graphic/ogreinputmanager.h \
     ../graphic/ogrefreecamera.h \
@@ -95,7 +109,9 @@ HEADERS  += ogrebulletwindows.h \
     ../simulation/ogrebulletsimulationmanager.h \
     ../graphic/eventmanager.h \
     ../graphic/inputlistener.h \
-    creatureviewerinputmanager.h
+    creatureviewerinputmanager.h \
+    ../entity/struct/articulation.h \
+    ../entity/struct/articulatedbone.h
 
 FORMS    += ogrebulletwindows.ui \
     generic6dofconstraintcontroller.ui

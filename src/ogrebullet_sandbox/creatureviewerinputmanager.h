@@ -1,7 +1,7 @@
 #ifndef CREATUREVIEWERINPUTMANAGER_H
 #define CREATUREVIEWERINPUTMANAGER_H
 
-#include <classes.h>
+#include "classes.h"
 #include "inputlistener.h"
 
 class CreatureViewerInputManager : public GeneLabOgreBullet::InputListener

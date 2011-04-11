@@ -1,5 +1,6 @@
 #ifndef ENTITYFAMILY_H
 #define ENTITYFAMILY_H
+
 #include "classes.h"
 #include <QObject>
 namespace GeneLabCore {

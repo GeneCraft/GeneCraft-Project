@@ -12,12 +12,12 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
     // Movement parameters
     initialMovementSpeed    = 1.0;
     movementSpeed           = initialMovementSpeed;
-    maxMovementSpeed        = 10.0;
-    movementAcceleration    = 1.1;
-    movementDeceleration    = 1.3;
+    maxMovementSpeed        = 5.0;
+    movementAcceleration    = 1.02;
+    movementDeceleration    = 1.1;
 
     // Look parameters
-    lookSensibility         = 1.3;
+    lookSensibility         = 1.8;
 
     // Default action status
     forwardKeyPressed       = false;
@@ -30,8 +30,6 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
 
 void OgreFreeCamera::mousePressEvent(QMouseEvent * e)
 {
-    qDebug() << "OgreFreeCamera::mousePressEvent";
-
     if(e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = e->pos();
@@ -43,8 +41,6 @@ void OgreFreeCamera::mousePressEvent(QMouseEvent * e)
 
 void OgreFreeCamera::mouseReleaseEvent(QMouseEvent * e)
 {
-    qDebug() << "OgreFreeCamera::mousePressEvent";
-
     if(!e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = QPoint(invalidMousePoint);
