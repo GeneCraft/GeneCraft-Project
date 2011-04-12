@@ -105,7 +105,6 @@ namespace GeneLabOgreBullet {
         Ogre::SceneType scene_manager_type = Ogre::ST_INTERIOR;
 
         scnManager = ogreRoot->createSceneManager( scene_manager_type );
-        scnOgre = new OgreScene(ogreRoot, scnManager);
     }
 
     OgreWidget* OgreManager::createOgreWidget(Ogre::Camera* cam, QWidget* parent) {
@@ -141,5 +140,10 @@ namespace GeneLabOgreBullet {
             if(ogreWidgets[i]->resized)
                 ogreWidgets[i]->resize();
         }
+    }
+
+    void OgreManager::setOgreScene(GeneLabOgreBullet::OgreScene *ogreScene)
+    {
+        this->scnOgre = ogreScene;
     }
 }

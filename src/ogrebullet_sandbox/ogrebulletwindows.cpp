@@ -29,6 +29,7 @@
 #include "entity/struct/treeshape.h"
 #include "entity/struct/fixation.h"
 #include "ogrebulletentity.h"
+#include "ogrescene.h"
 
 // App
 #include "ogrebulletwindows.h"
@@ -126,6 +127,12 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     qDebug() << "Init Ogre";
     graphics = new GeneLabOgreBullet::OgreManager((unsigned long)this->winId());
     graphics->init();
+
+    // create the scene
+    graphics->setOgreScene(new GeneLabOgreBullet::OgreScene(graphics->getOgreRoot(), graphics->getOgreSceneManager()));
+
+
+
     qDebug() << "[OK]\n";
 
     //qDebug() << "Create Scene";
@@ -134,9 +141,10 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     qDebug() << "Init Cameras";
     // camera 1
     Ogre::Camera* cam1 = graphics->getOgreSceneManager()->createCamera("first");
-    cam1->setPosition(Ogre::Vector3(0, 18, 70));
-    cam1->lookAt(Ogre::Vector3(0, 0, -300));
-    cam1->setNearClipDistance(5);
+    cam1->setPosition(Ogre::Vector3(0, 2, 6));
+    cam1->lookAt(Ogre::Vector3(0, 2, 0));
+    cam1->setNearClipDistance(0.001); // 1 mm
+    cam1->setFarClipDistance(100); // 100m
 
     // camera 2
     // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("second");
@@ -223,10 +231,11 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
     snake->initOgreBullet(graphics,physics);
     snake->setup();
-    snake->getShape()->contractInNormalPosition();
+    //snake->getShape()->contractInNormalPosition();
 
 
     // attach the nose in the air
+    /*
     btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody()->getBulletRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
     ctRoot->setAngularLowerLimit(btVector3(0,0,0));
     ctRoot->setAngularUpperLimit(btVector3(0,0,0));
@@ -249,7 +258,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     physics->getWorld()->getBulletDynamicsWorld()->addConstraint(ctRoot);
 
     g6DofCC->setConstraint(ctRoot);
-
+    */
 
 
 

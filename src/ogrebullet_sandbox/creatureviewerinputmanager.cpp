@@ -62,6 +62,6 @@ void CreatureViewerInputManager::throwCube()
     OgreBulletDynamics::RigidBody * box = SandboxTools::addBox(ogreManager,bulletManager,camera->getPosition(),Ogre::Vector3(1,1,1));
 
     // apply impulse from the center of the box
-    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy() * 200;
+    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy() * 40;
     box->getBulletRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
 }

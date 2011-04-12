@@ -15,32 +15,38 @@ namespace GeneLabOgreBullet {
         qDebug() << "Scene creation";
         this->ogreRoot = ogreRoot;
         this->sceneManager = sceneManager;
-        sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
+        sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
         sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-        Ogre::Light* pointLight = sceneManager->createLight("pointLight");
-        pointLight->setType(Ogre::Light::LT_POINT);
-        pointLight->setPosition(Ogre::Vector3(0, 150, 250));
 
-        pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-        pointLight->setSpecularColour(1.0, 0.0, 0.0);
+        sceneManager->setSkyBox(true, "Examples/SpaceSkyBox");
+        //sceneManager->setSkyDome(true, "Examples/CloudySky", 5, 8);
 
+//        Ogre::Light* pointLight = sceneManager->createLight("pointLight");
+//        pointLight->setType(Ogre::Light::LT_POINT);
+//        pointLight->setPosition(Ogre::Vector3(0, 0, 0));
+//        pointLight->setDiffuseColour(1.0, 0.0, 0.0);
+//        pointLight->setSpecularColour(1.0, 0.0, 0.0);
+
+        // directional
         Ogre::Light* directionalLight = sceneManager->createLight("directionalLight");
         directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-        directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, 0));
-        directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, 0));
-
+        directionalLight->setDiffuseColour(Ogre::ColourValue(.1,.1,.1));
+        directionalLight->setSpecularColour(Ogre::ColourValue(.1,.1,.1));
         directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
 
-        Ogre::Light* spotLight = sceneManager->createLight("spotLight");
-        spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
-        spotLight->setDiffuseColour(0, 0, 1.0);
-        spotLight->setSpecularColour(0, 0, 1.0);
+        // spot light
+//        Ogre::Light* spotLight = sceneManager->createLight("spotLight");
+//        spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
+//        spotLight->setDiffuseColour(0, 0, 1.0);
+//        spotLight->setSpecularColour(0, 0, 1.0);
+//        spotLight->setDirection(-1, -1, 0);
+//        spotLight->setPosition(Ogre::Vector3(0, 200, 200));
+//        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
 
-        spotLight->setDirection(-1, -1, 0);
-        spotLight->setPosition(Ogre::Vector3(300, 300, 0));
 
-        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));/*
+
+        /*
         Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
         entNinja->setCastShadows(true);
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);*/

@@ -23,7 +23,7 @@ namespace GeneLabOgreBullet {
         void setRoot(Fixation*);
 
         /**
-          * Init Ogre and Bullet instances
+          * Init Ogre and Bullet references
           */
         void initOgreBullet(GeneLabOgreBullet::OgreManager* ogreManager, GeneLabOgreBullet::BulletManager *bulletManager);
 

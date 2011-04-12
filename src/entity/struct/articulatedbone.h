@@ -42,16 +42,25 @@ namespace GeneLabOgreBullet {
     public slots:
 
     private:
-        float alpha, beta_min, beta_max;
+
+        // Articulation properties
+        float alpha; // , alpha_min;
+        float beta_min, beta_max;
         float r_min, r_max;
-        float length;
+
+        // Bone properties
+        float boneRadius;
+        float boneLength;
+        float boneMass;
+        OgreBulletDynamics::RigidBody *rigidBody;
+
+        // End Fixation (totally limited on each axis)
         Fixation* end;
 
         // Six dof constraint
-        OgreBulletDynamics::RigidBody *rigidBody;
         OgreBulletDynamics::SixDofConstraint *parentSixDofConstraint;
 
-
+        // Ogre and Bullet
         GeneLabOgreBullet::OgreManager* ogreManager;
         GeneLabOgreBullet::BulletManager *bulletManager;
     };

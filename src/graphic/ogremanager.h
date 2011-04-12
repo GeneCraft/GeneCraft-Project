@@ -25,6 +25,7 @@ namespace GeneLabOgreBullet {
             return true;
         }
 
+        void setOgreScene(GeneLabOgreBullet::OgreScene *ogreScene);
 
     signals:
 

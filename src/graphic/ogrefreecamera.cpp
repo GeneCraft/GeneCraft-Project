@@ -10,10 +10,10 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
     this->ogreCamera = ogreCamera;
 
     // Movement parameters
-    initialMovementSpeed    = 1.0;
+    initialMovementSpeed    = 0.05;
     movementSpeed           = initialMovementSpeed;
-    maxMovementSpeed        = 5.0;
-    movementAcceleration    = 1.02;
+    maxMovementSpeed        = 1.0;
+    movementAcceleration    = 1.05;
     movementDeceleration    = 1.1;
 
     // Look parameters

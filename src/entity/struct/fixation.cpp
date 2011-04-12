@@ -7,6 +7,7 @@ namespace GeneLabOgreBullet {
     Fixation::Fixation(QObject *parent) :
         QObject(parent)
     {
+        radius = 0.1;
     }
 
     Fixation::~Fixation() {
@@ -52,7 +53,7 @@ namespace GeneLabOgreBullet {
 
     void Fixation::setup()
     {
-        this->rigidBody = SandboxTools::addSphere(ogreManager,bulletManager,Ogre::Vector3(0,30,0),1);
+        this->rigidBody = SandboxTools::addSphere(ogreManager,bulletManager,Ogre::Vector3(0,3,0),radius);
     }
 
     QString Fixation::toString() {
@@ -71,5 +72,11 @@ namespace GeneLabOgreBullet {
             b += articulatedBones.first()->toString();
         b += "";
         return b;
+    }
+
+
+    float Fixation::getRadius()
+    {
+        return radius;
     }
 }

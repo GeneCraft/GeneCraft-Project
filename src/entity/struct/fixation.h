@@ -43,6 +43,8 @@ namespace GeneLabOgreBullet {
         QList<ArticulatedBone*> getArticulatedBones();
         QString toString();
 
+        float getRadius();
+
     signals:
 
     public slots:
@@ -53,6 +55,8 @@ namespace GeneLabOgreBullet {
 
         GeneLabOgreBullet::OgreManager* ogreManager;
         GeneLabOgreBullet::BulletManager *bulletManager;
+
+        float radius;
     };
 }
 #endif // FIXATION_H

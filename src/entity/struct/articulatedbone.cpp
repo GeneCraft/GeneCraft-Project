@@ -23,13 +23,15 @@ namespace GeneLabOgreBullet {
         this->beta_max = beta_max;
         this->r_min = r_min;
         this->r_max = r_max;
-        this->length = length;
+        this->boneLength = length;
+        this->boneRadius = 0.05;
+        this->boneMass = 0.1;
 
         end = new Fixation();
     }
 
     float ArticulatedBone::getLength() {
-        return this->length;
+        return this->boneLength;
     }
 
     float ArticulatedBone::rotationCapacity() {
@@ -66,7 +68,7 @@ namespace GeneLabOgreBullet {
     void ArticulatedBone::setup()
     {
         // create the bones
-        this->rigidBody = SandboxTools::addBox(ogreManager,bulletManager,Ogre::Vector3(0,9,0),Ogre::Vector3(0.2,this->length,0.2));
+        this->rigidBody = SandboxTools::addBox(ogreManager,bulletManager,Ogre::Vector3(0,9,0),Ogre::Vector3(this->boneRadius,this->boneLength,this->boneRadius));
 
         // attach fixation to bones
         end->initOgreBullet(ogreManager,bulletManager);
@@ -74,7 +76,7 @@ namespace GeneLabOgreBullet {
 
         // attach articulatedBone to its fixation
         OgreBulletDynamics::SixDofConstraint *ctBoneToSonFix = new OgreBulletDynamics::SixDofConstraint(
-                end->getRigidBody(),getRigidBody(),Ogre::Vector3(0,0,0),Ogre::Quaternion(),Ogre::Vector3(0, -getLength(),0),Ogre::Quaternion());
+                end->getRigidBody(),getRigidBody(),Ogre::Vector3(0,0,0),Ogre::Quaternion(),Ogre::Vector3(0,-(getLength()/2.0+end->getRadius()/2.0),0),Ogre::Quaternion());
 
         // constraint articulation
         static_cast<btGeneric6DofConstraint* > (ctBoneToSonFix->getBulletTypedConstraint())->setAngularLowerLimit(OgreBulletCollisions::OgreBtConverter::to (Ogre::Vector3(0,0,0)));
@@ -84,7 +86,7 @@ namespace GeneLabOgreBullet {
     }
 
     QString ArticulatedBone::toString() {
-        return "-" + QString::number(length) + "-" + this->end->toString();
+        return "-" + QString::number(boneLength) + "-" + this->end->toString();
     }
 
     void ArticulatedBone::attachToParentFixation(Fixation* parentFix)
@@ -94,7 +96,7 @@ namespace GeneLabOgreBullet {
                                                                           getRigidBody(),
                                                                           Ogre::Vector3(0,0,0),
                                                                           Ogre::Quaternion(),
-                                                                          Ogre::Vector3(0,getLength(),0),
+                                                                          Ogre::Vector3(0,getLength()/2.0+end->getRadius()/2.0,0),
                                                                           Ogre::Quaternion());
 
         bulletManager->getWorld()->addConstraint(parentSixDofConstraint);
@@ -113,8 +115,8 @@ namespace GeneLabOgreBullet {
 
             btRotationalLimitMotor *motor = ctParentFixToBone_b->getRotationalLimitMotor(i);
             motor->m_enableMotor = true;
-            motor->m_targetVelocity = 4;
-            motor->m_maxMotorForce = 100;
+            motor->m_targetVelocity = 20;
+            motor->m_maxMotorForce = 1000;
         }
     }
 
@@ -140,8 +142,5 @@ namespace GeneLabOgreBullet {
             motor->m_targetVelocity = 0;
             motor->m_maxMotorForce = 1;
         }
-
-
-
     }
 }
