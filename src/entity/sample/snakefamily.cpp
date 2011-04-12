@@ -12,10 +12,10 @@ namespace GeneLabOgreBullet {
         OgreBulletEntityFamily(parent)
     {
         this->length = data.toMap()["length"].toInt();
-        this->length = 10; // TODO: DELETE
+        this->length = 20; // TODO: DELETE
 
         this->pieceLength = data.toMap()["piecelength"].toFloat();
-        this->pieceLength = 2;
+        this->pieceLength = 1;
     }
 
     OgreBulletEntity* SnakeFamily::createOgreBulletEntity() {

@@ -48,7 +48,7 @@ OgreBulletDynamics::RigidBody *SandboxTools::addBox(GeneLabOgreBullet::OgreManag
                                 sceneBoxShape,
                                 0.6f,			// dynamic body restitution
                                 100.6f,			// dynamic body friction
-                                5.0f, 			// dynamic bodymass
+                                1.0f, 			// dynamic bodymass
                                 position,		// starting position of the box
                                 Quaternion(0,0,0,1));   // orientation of the box
 

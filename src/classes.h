@@ -82,6 +82,7 @@ namespace Ogre {
 namespace OgreBulletDynamics {
     class DynamicsWorld;
     class RigidBody;
+    class SixDofConstraint;
 }
 namespace OgreBulletCollisions {
     class DebugDrawer;

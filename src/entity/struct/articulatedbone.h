@@ -21,14 +21,22 @@ namespace GeneLabOgreBullet {
         float getAlpha();
         float getBeta();
 
-        Fixation* getFixation();
+        /**
+          * Fixe aticulation between angle_min and angle_max
+          */
+        void contractInNormalPosition();
 
+        Fixation* getFixation();
 
         void initOgreBullet(GeneLabOgreBullet::OgreManager* ogreManager, GeneLabOgreBullet::BulletManager *bulletManager);
         void setup();
+        void attachToParentFixation(Fixation* parentFix);
+
+
         OgreBulletDynamics::RigidBody *getRigidBody();
 
         QString toString();
+
     signals:
 
     public slots:
@@ -41,6 +49,8 @@ namespace GeneLabOgreBullet {
 
         // Six dof constraint
         OgreBulletDynamics::RigidBody *rigidBody;
+        OgreBulletDynamics::SixDofConstraint *parentSixDofConstraint;
+
 
         GeneLabOgreBullet::OgreManager* ogreManager;
         GeneLabOgreBullet::BulletManager *bulletManager;

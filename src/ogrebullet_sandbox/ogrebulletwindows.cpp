@@ -26,6 +26,8 @@
 #include "factory/jsonloader.h"
 #include "eventmanager.h"
 #include "sample/snakefamily.h"
+#include "entity/struct/treeshape.h"
+#include "entity/struct/fixation.h"
 #include "ogrebulletentity.h"
 
 // App
@@ -221,6 +223,39 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
     snake->initOgreBullet(graphics,physics);
     snake->setup();
+    snake->getShape()->contractInNormalPosition();
+
+
+    // attach the nose in the air
+    btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody()->getBulletRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
+    ctRoot->setAngularLowerLimit(btVector3(0,0,0));
+    ctRoot->setAngularUpperLimit(btVector3(0,0,0));
+
+    //for(int i=0;i<3;i++)
+    {
+    //    btRotationalLimitMotor *motor = ctRoot->getRotationalLimitMotor(i);
+
+        btRotationalLimitMotor *motor = ctRoot->getRotationalLimitMotor(0);
+
+        motor->m_hiLimit = 0;
+        motor->m_loLimit = 1;
+        //motor->m_maxLimitForce = 100000;
+        motor->m_enableMotor = true;
+        motor->m_targetVelocity = 200;
+        motor->m_maxMotorForce = 1000;
+    }
+
+    //btPoint2PointConstraint *ctRoot = new btPoint2PointConstraint(*getRoot()->getRigidBody()->getBulletRigidBody(),btVector3(0,0,0));
+    physics->getWorld()->getBulletDynamicsWorld()->addConstraint(ctRoot);
+
+    g6DofCC->setConstraint(ctRoot);
+
+
+
+
+
+
+
 
 
     // --
