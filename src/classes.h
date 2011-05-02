@@ -9,11 +9,25 @@ namespace GeneLabCore {
     class Entity;
     class EntityFamily;
 
+    // Neural network and brain engine
+    class NeuralNetwork;
+    class NeuralIn;
+    class NeuralOut;
+    class BrainEngine;
+
     // World related
     class World;
 
     // Generic simulation manager
     class SimulationManager;
+
+
+}
+
+namespace GeneLabWidget {
+
+    // Neural network
+    class NeuralNetworkVisualizer;
 
 }
 
@@ -23,6 +37,7 @@ namespace GeneLabFactory {
     class EntityFactory;
     class EngineFactory;
     class WorldFactory;
+    class NeuralNetworkFactory;
 
     // Ressource (file, db, etc.)
     class Ressource;
