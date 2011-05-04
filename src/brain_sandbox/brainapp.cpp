@@ -21,7 +21,7 @@ BrainApp::BrainApp(QWidget *parent) :
 
     qDebug() << "Creation !";
 
-    engine->addNetwork(4); // 10x10 network
+    engine->addNetwork(5); // 10x10 network
 
     qDebug() << "Creation !";
 
@@ -30,14 +30,18 @@ BrainApp::BrainApp(QWidget *parent) :
     qDebug() << "Creation !";
     this->setCentralWidget(w);
     this->timer = new QTimer();
-    timer->setInterval(10);
+    timer->setInterval(50);
     connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
     timer->start();
 
 }
 
+int cpt = 0;
 void BrainApp::tick()  {
-    qDebug() << "tick !";
+    cpt++;
+    if(!(cpt % 10000)) {
+        qDebug() << cpt;
+    }
    engine->beforeStep();
    engine->step();
    engine->afterStep();

@@ -32,9 +32,13 @@ namespace GeneLabCore {
           */
         void  setValue(float value) {
             // Un noramlization
-            qDebug() << "in " << value;
             this->value = (value + 1.0f) / 2.0f * (max - min) + min;
-            qDebug() << this->value;
+            if(this->value > 1) {
+                this->value = 1;
+            }
+            if(this->value < -1) {
+                this->value = -1;
+            }
             emit newValue(this->value);
         }
 

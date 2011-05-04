@@ -45,6 +45,9 @@ namespace GeneLabCore {
         void afterStep();
 
 
+        // Activation function
+        float activation(float value);
+
     private:
         QList<NeuralIn*> inputs;
         QList<NeuralOut*> outputs;
@@ -54,8 +57,6 @@ namespace GeneLabCore {
         // size-squared neurons matrice
         float* neurons;
 
-        // Activation function
-        float activation(float value);
     };
 
 }

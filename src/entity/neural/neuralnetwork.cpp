@@ -49,16 +49,16 @@ namespace GeneLabCore {
         // On crée quelques outputs
         for(int i = 0; i < 3; i++) {
             NeuralOut* out = new NeuralOut(-1, 1);
-            for(int j = 0; j < 5; j++) {
-                out->connectTo(qrand()%this->size, qrand()%this->size, (float)qrand()/RAND_MAX * 2 - 1);
+            for(int j = 0; j < 10; j++) {
+                out->connectTo(qrand()%this->size, qrand()%this->size, (float)qrand()/RAND_MAX * 1.5 - 0.5);
             }
             this->outputs.append(out);
         }
 
         // Pour les tests :P
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 4; i++) {
             SinusIn* sin = new SinusIn();
-            for(int j = 0; j < 5; j++) {
+            for(int j = 0; j < 10; j++) {
                 sin->connectTo(qrand()%this->size, qrand()%this->size, (float)qrand()/RAND_MAX * 2 - 1);
             }
             this->inputs.append(sin);
@@ -66,15 +66,14 @@ namespace GeneLabCore {
     }
 
     void NeuralNetwork::neuralStep() {
-        qDebug() << " DO STUFF !";
 
         // For each ouputs
         foreach(NeuralOut* out, this->outputs) {
             float value = 0;
             foreach(NeuralConnexion connexion, out->getConnexions()) {
                 // If it fit in the network size
-                if(connexion.x > 0 && connexion.x < size &&
-                   connexion.y > 0 && connexion.y < size) {
+                if(connexion.x >= 0 && connexion.x < size &&
+                   connexion.y >= 0 && connexion.y < size) {
                     // Adding this value to the cell
                     // Do the activation function
                     value += activation(
@@ -90,18 +89,18 @@ namespace GeneLabCore {
     }
 
     void NeuralNetwork::beforeStep() {
-        qDebug() << " before ... !";
 
         // For each inputs
         foreach(NeuralIn* in, this->inputs) {
             // For each connexion of this synapse
             foreach(NeuralConnexion connexion, in->getConnexions()) {
                 // If it fit in the network size
-                if(connexion.x > 0 && connexion.x < size &&
-                   connexion.y > 0 && connexion.y < size) {
+                float value = in->getValue();
+                if(connexion.x >= 0 && connexion.x < size &&
+                   connexion.y >= 0 && connexion.y < size) {
                     // Adding this value to the cell
                     this->neurons[connexion.x + connexion.y*size]
-                            += connexion.weight*in->getValue();
+                            += connexion.weight*value;
 
                 }
             }
@@ -109,7 +108,6 @@ namespace GeneLabCore {
     }
 
     void NeuralNetwork::afterStep() {
-        qDebug() << " after !";
 
         // Clean the neurons
         for(int i = 0; i < size*size; i++) {

@@ -24,6 +24,8 @@ namespace GeneLabWidget {
     private:
         GeneLabCore::BrainEngine* networks;
         QGraphicsView* view;
+        float* neurons;
+        bool init;
     };
 
 }

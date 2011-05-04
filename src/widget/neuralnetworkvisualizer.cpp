@@ -21,7 +21,7 @@ namespace GeneLabWidget {
         this->networks = networks;
         this->view = new QGraphicsView(this);
         this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight));
-        this->view->setFixedSize(500, 500);
+        this->view->setFixedSize(1000, 1000);
         this->view->setScene(new QGraphicsScene(0, 0, SCENE_SIZE, SCENE_SIZE + 140, this));
 
         this->layout()->addWidget(this->view);
@@ -50,13 +50,12 @@ namespace GeneLabWidget {
         // On dessine les neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                b.setColor(QColor( 0,0,0,  (n->getNeurons()[i + j * size] + 1) * 255/2.0f));
+                b.setColor(QColor( 0,0,0,  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
                 this->view->scene()->addEllipse(SCENE_SIZE/size * 0.5 - 10 + SCENE_SIZE/size * i,
                                                 SCENE_SIZE/size * 0.5 - 10 + SCENE_SIZE/size * j + 70, 20, 20, QPen(), b);
             }
         }
 
-        QPen p;
 
         for(int i = 0; i < n->getInputs().size(); i++) {
 
@@ -66,9 +65,8 @@ namespace GeneLabWidget {
 
             // The input point
             NeuralIn* in = n->getInputs().at(i);
-
+            QPen p;
             p.setColor(QColor(0, 255/n->getInputs().size()*i, 255 - 255/n->getInputs().size()*i));
-
             b.setColor(QColor( p.color().red(), p.color().green(), p.color().blue(), (in->getValue() + 1) * 255/2.0f));
 
             this->view->scene()->addEllipse(startingPoint.x(), startingPoint.y(), 20, 20, p, b);
@@ -97,9 +95,9 @@ namespace GeneLabWidget {
 
             // The input point
             NeuralOut* out = n->getOutputs().at(i);
+            QPen p;
             p.setColor(QColor(255, 255/n->getOutputs().size()*i, 0));
-            qDebug() << out->getValue();
-            b.setColor(QColor( p.color().red(), p.color().green(), p.color().blue(), (out->getValue() + 1) * 255/2.0f));
+            b.setColor(QColor( p.color().red(), p.color().green(), p.color().blue(), (out->getValue() + 1) * 255/2));
 
             this->view->scene()->addEllipse(startingPoint.x(), startingPoint.y(), 20, 20, p, b);
 

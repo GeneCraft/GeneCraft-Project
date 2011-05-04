@@ -17,12 +17,13 @@ namespace GeneLabCore {
     public slots:
 
         virtual float getValue() {
-            deg++;
+            deg+=inc;
             return sin(deg * M_PI / 180.0f );
         }
 
     private:
         int deg;
+        int inc;
 
     };
 }
