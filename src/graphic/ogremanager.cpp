@@ -2,9 +2,7 @@
 #include "OGRE/Ogre.h"
 #include <QDebug>
 #include <QApplication>
-
 #include "graphic/ogrewidget.h"
-#include "graphic/ogrescene.h"
 
 namespace GeneLabOgreBullet {
 
@@ -27,10 +25,6 @@ namespace GeneLabOgreBullet {
 
     Ogre::Root* OgreManager::getOgreRoot() {
         return ogreRoot;
-    }
-
-    OgreScene* OgreManager::getOgreScene() {
-        return scnOgre;
     }
 
     void OgreManager::initOgreRoot() {
@@ -140,10 +134,5 @@ namespace GeneLabOgreBullet {
             if(ogreWidgets[i]->resized)
                 ogreWidgets[i]->resize();
         }
-    }
-
-    void OgreManager::setOgreScene(GeneLabOgreBullet::OgreScene *ogreScene)
-    {
-        this->scnOgre = ogreScene;
     }
 }

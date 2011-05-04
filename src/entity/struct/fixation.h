@@ -36,7 +36,7 @@ namespace GeneLabOgreBullet {
         // OgreBullet
         /** create entity in Ogre and Bullet and attach all bones */
         void initOgreBullet(GeneLabOgreBullet::OgreManager* ogreManager, GeneLabOgreBullet::BulletManager *bulletManager);
-        void setup();
+        void setup(Ogre::Vector3 position);
         OgreBulletDynamics::RigidBody *getRigidBody();
 
 

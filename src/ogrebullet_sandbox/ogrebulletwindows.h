@@ -25,8 +25,8 @@ private:
     Ogre::Root* ogreRoot;
     GeneLabOgreBullet::OgreWidget* oW1;
     GeneLabOgreBullet::OgreWidget* oW2;
-    GeneLabOgreBullet::OgreManager* graphics;
-    GeneLabOgreBullet::BulletManager*  physics;
+    GeneLabOgreBullet::OgreManager* ogreEngine;
+    GeneLabOgreBullet::BulletManager*  bulletEngine;
 
 private slots:
 

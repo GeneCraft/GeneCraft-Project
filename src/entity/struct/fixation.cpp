@@ -50,10 +50,9 @@ namespace GeneLabOgreBullet {
         this->bulletManager = bulletManager;
     }
 
-
-    void Fixation::setup()
+    void Fixation::setup(Ogre::Vector3 position)
     {
-        this->rigidBody = SandboxTools::addSphere(ogreManager,bulletManager,Ogre::Vector3(0,3,0),radius);
+        this->rigidBody = SandboxTools::addSphere(ogreManager,bulletManager,position,radius);
     }
 
     QString Fixation::toString() {

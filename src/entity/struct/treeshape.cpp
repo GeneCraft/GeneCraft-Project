@@ -57,7 +57,7 @@ namespace GeneLabOgreBullet {
         }
 
         getRoot()->initOgreBullet(ogreManager,bulletManager);
-        getRoot()->setup();
+        getRoot()->setup(Ogre::Vector3(0,3,0));
 
         // setup recurcively the tree shape
         setupFixation(getRoot());

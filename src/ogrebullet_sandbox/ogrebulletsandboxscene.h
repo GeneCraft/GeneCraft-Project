@@ -22,7 +22,10 @@ class OgreBulletSandBoxScene : public OgreBulletScene
 {
     Q_OBJECT
 public:
-    OgreBulletSandBoxScene(GeneLabOgreBullet::BulletManager* bulletManager, GeneLabOgreBullet::OgreManager* ogreManager, QObject *parent);
+
+    OgreBulletSandBoxScene(GeneLabOgreBullet::BulletManager* bulletManager, GeneLabOgreBullet::OgreManager* ogreManager, QObject *parent=0);
+
+    void init();
 
 signals:
 

@@ -10,7 +10,7 @@ namespace GeneLabOgreBullet {
         Q_OBJECT
     public:
         explicit ArticulatedBone(QObject *parent = 0);
-        ArticulatedBone(float alpha, float beta_min, float beta_max, float r_min, float r_max, float length);
+        ArticulatedBone(float alpha_max, float beta_min, float beta_max, float r_min, float r_max, float length);
         ~ArticulatedBone();
 
         float getLength();
@@ -19,7 +19,7 @@ namespace GeneLabOgreBullet {
         float hingeCapacity();
 
         float getAlpha();
-        float getBeta();
+        float getBetaMin();
 
         /**
           * Fixe aticulation between angle_min and angle_max
@@ -44,7 +44,7 @@ namespace GeneLabOgreBullet {
     private:
 
         // Articulation properties
-        float alpha; // , alpha_min;
+        float alpha_min, alpha_max;
         float beta_min, beta_max;
         float r_min, r_max;
 

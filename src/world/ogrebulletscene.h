@@ -8,7 +8,10 @@ namespace GeneLabOgreBullet {
     {
         Q_OBJECT
     public:
+
         OgreBulletScene(BulletManager* bulletManager, OgreManager* ogreManager, QObject *parent = 0);
+
+        void init();
 
     signals:
 

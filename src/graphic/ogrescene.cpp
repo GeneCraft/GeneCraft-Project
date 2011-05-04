@@ -12,14 +12,17 @@ namespace GeneLabOgreBullet {
     OgreScene::OgreScene(Ogre::Root* ogreRoot,
                          Ogre::SceneManager* sceneManager)
     {
-        qDebug() << "Scene creation";
-        this->ogreRoot = ogreRoot;
-        this->sceneManager = sceneManager;
-        sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
-        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+        // TODO MOVE TO OgreBulletSandboxScene !!!
+
+//        qDebug() << "Scene creation";
+//        this->ogreRoot = ogreRoot;
+//        this->sceneManager = sceneManager;
+//        sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+//        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
 
-        sceneManager->setSkyBox(true, "Examples/SpaceSkyBox");
+//        sceneManager->setSkyBox(true, "Examples/SpaceSkyBox");
         //sceneManager->setSkyDome(true, "Examples/CloudySky", 5, 8);
 
 //        Ogre::Light* pointLight = sceneManager->createLight("pointLight");
@@ -29,11 +32,11 @@ namespace GeneLabOgreBullet {
 //        pointLight->setSpecularColour(1.0, 0.0, 0.0);
 
         // directional
-        Ogre::Light* directionalLight = sceneManager->createLight("directionalLight");
-        directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-        directionalLight->setDiffuseColour(Ogre::ColourValue(.1,.1,.1));
-        directionalLight->setSpecularColour(Ogre::ColourValue(.1,.1,.1));
-        directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
+//        Ogre::Light* directionalLight = sceneManager->createLight("directionalLight");
+//        directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
+//        directionalLight->setDiffuseColour(Ogre::ColourValue(.1,.1,.1));
+//        directionalLight->setSpecularColour(Ogre::ColourValue(.1,.1,.1));
+//        directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
 
         // spot light
 //        Ogre::Light* spotLight = sceneManager->createLight("spotLight");

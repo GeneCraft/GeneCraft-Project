@@ -14,8 +14,6 @@ namespace GeneLabOgreBullet {
 
         Ogre::Root*         getOgreRoot();
         Ogre::SceneManager* getOgreSceneManager();
-        OgreScene*          getOgreScene();
-
         OgreWidget*         createOgreWidget(Ogre::Camera* cam,
                                              QWidget* parent);
 
@@ -24,8 +22,6 @@ namespace GeneLabOgreBullet {
         bool isRenderable() {
             return true;
         }
-
-        void setOgreScene(GeneLabOgreBullet::OgreScene *ogreScene);
 
     signals:
 
@@ -38,7 +34,6 @@ namespace GeneLabOgreBullet {
     protected:
         Ogre::Root*         ogreRoot;
         Ogre::SceneManager* scnManager;
-        OgreScene*          scnOgre;
         Ogre::RenderWindow* fakeRender;
 
         void initOgreRoot();

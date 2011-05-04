@@ -6,6 +6,10 @@ namespace GeneLabOgreBullet {
             QObject(parent)
     {
         this->bulletManager = bulletManager;
-        this->ogreManager = ogreManager;
+        this->ogreManager   = ogreManager;
+    }
+
+    void OgreBulletScene::init()
+    {
     }
 }

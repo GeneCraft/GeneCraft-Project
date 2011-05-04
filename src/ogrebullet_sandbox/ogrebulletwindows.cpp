@@ -35,9 +35,9 @@
 #include "ogrebulletwindows.h"
 #include "ui_ogrebulletwindows.h"
 #include "sandboxtools.h"
-#include "generic6dofconstraintcontroller.h"
-#include "sample/snakefamily.h"
 #include "creatureviewerinputmanager.h"
+#include "ogrebulletsandboxscene.h"
+#include "generic6dofconstraintcontroller.h"
 
 OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QMainWindow(parent),
@@ -45,16 +45,13 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
-    // --
-    // -- GUI : Qt
-    // --
+    // --------------
+    // -- GUI : Qt --
+    // --------------
 
     // TOOL BOX
-
     // boxe
     QToolBox *tbInspector = new QToolBox(this);
-
 
     // group G6Dof
     QWidget *tbG6DofC = new QWidget();
@@ -66,15 +63,11 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QPushButton*  bPlaySimulation = new QPushButton("Play",tbSimulation);
     tbInspector->addItem(tbSimulation,"Simulation");
 
-    //connect(bPlaySimulation,SIGNAL(clicked()),simulationScene,SLOT(refresh()));
-
     // group 2
-
     QComboBox *cbRenderMode = new QComboBox();
     cbRenderMode->addItem("Fill");
     cbRenderMode->addItem("Line");
     cbRenderMode->addItem("Point");
-    //QPushButton*   but2=new QPushButton("Render",this);
     tbInspector->addItem(cbRenderMode,"Render");
 
     // group 3
@@ -84,9 +77,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // add to main win
     tbInspector->setStyleSheet("* { padding: 7px; width:100px}");
 
-
     // DOCKS
-
     // Createque
     QDockWidget *dwCreateque = new QDockWidget("Creatheque");
     QWidget *wCreatheque = new QWidget();
@@ -105,12 +96,6 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     dwInspector->setWidget(tbInspector);
     addDockWidget(Qt::RightDockWidgetArea,dwInspector);
 
-    // Scene
-    //setCentralWidget(simulationScene);
-    //QDockWidget *dwScene = new QDockWidget("Scene");
-    //dwScene->setWidget(w);
-    //addDockWidget(Qt::LeftDockWidgetArea,dwScene);
-
     // Console
     QDockWidget *dwConsole = new QDockWidget("Console");
     dwConsole->setWidget(new QTextEdit(">> GeneLab Launched!"));
@@ -121,33 +106,38 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     dwGenome->setWidget(new QTextEdit("{blablabla...}"));
     addDockWidget(Qt::BottomDockWidgetArea,dwGenome);
 
-    // --
-    // -- Graphics : Ogre
-    // --
+
+
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // !! It's really the windows that must do this ??? !!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // I think to create a wrap named GeneLabEngine which contains
+    // all engines is a good idea... no ?
+    // GeneLabEngine geneLabEngine = new GeneLabEngine();
+    // geneLabEngine->getOgreWidget();
+
+
+    // ---------------------
+    // -- Graphics : Ogre --
+    // ---------------------
+
     qDebug() << "Init Ogre";
-    graphics = new GeneLabOgreBullet::OgreManager((unsigned long)this->winId());
-    graphics->init();
-
-    // create the scene
-    graphics->setOgreScene(new GeneLabOgreBullet::OgreScene(graphics->getOgreRoot(), graphics->getOgreSceneManager()));
-
-
-
+    ogreEngine = new GeneLabOgreBullet::OgreManager((unsigned long)this->winId());
+    ogreEngine->init();
     qDebug() << "[OK]\n";
 
-    //qDebug() << "Create Scene";
-    //GeneLabOgreBullet::OgreScene* scn = new GeneLabOgreBullet::OgreScene();
-
     qDebug() << "Init Cameras";
+
     // camera 1
-    Ogre::Camera* cam1 = graphics->getOgreSceneManager()->createCamera("first");
+    Ogre::Camera* cam1 = ogreEngine->getOgreSceneManager()->createCamera("firstCamera");
     cam1->setPosition(Ogre::Vector3(0, 2, 6));
     cam1->lookAt(Ogre::Vector3(0, 2, 0));
     cam1->setNearClipDistance(0.001); // 1 mm
     cam1->setFarClipDistance(100); // 100m
 
     // camera 2
-    // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("second");
+    // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("secondCamera");
     // cam2->setPosition(Ogre::Vector3(0, 18, 0));
     // cam2->lookAt(Ogre::Vector3(0, 0, 70));
     // cam2->setNearClipDistance(5);
@@ -155,33 +145,34 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 
     qDebug() << "Init Widgets";
     // widget 1
-    QWidget*    oW1 = graphics->createOgreWidget(cam1, this->ui->centralWidget);
+    QWidget* oW1 = ogreEngine->createOgreWidget(cam1, this->ui->centralWidget);
     this->ui->centralWidget->layout()->addWidget(oW1);
 
     // widget 2
     // this->ui->centralWidget->layout()->addWidget(oW2);
-    // QWidget*    oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
+    // QWidget* oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
 
-    // --
-    // -- Physics : Bullet
-    // --
-    qDebug() << "Init Physics";
-    physics = new GeneLabOgreBullet::BulletManager();
-    physics->init(this->graphics);
+
+    // ----------------------
+    // -- Physics : Bullet --
+    // ----------------------
+
+    qDebug() << "Init Bullet";
+    bulletEngine = new GeneLabOgreBullet::BulletManager();
+    bulletEngine->init(this->ogreEngine);
     qDebug() << "[OK]\n";
 
 
-    // --
-    // -- Events
-    // --
+    // ------------
+    // -- Events --
+    // ------------
     qDebug() << "Init Events Manager";
 
     // Events
     GeneLabOgreBullet::EventManager *em = new GeneLabOgreBullet::EventManager();
 
-
     CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
-    cvim->initOgreBullet(graphics,physics,cam1);
+    cvim->initOgreBullet(ogreEngine,bulletEngine,cam1);
     em->addListener(cvim);
 
     connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
@@ -197,86 +188,25 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     qDebug() << "[OK]\n";
 
 
-    // --
-    // -- Content (Sandbox) : OgreBullet
-    // --
-
-    // Cube of cubes
-//    float size = 10.0f;
-//    for(int i=0;i<10;i++)
-//        for(int j=0;j<10;j++)
-//            for(int k=0;k<10;k++)
-//                SandboxTools::addBox(graphics,physics,Ogre::Vector3(i*size,k*size+size/2,j*size),Ogre::Vector3(size,size,size));
-
-    // Six dof constraint
-    OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(graphics,physics,Ogre::Vector3(0,10,0),Ogre::Vector3(1,1,1));
-    OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(graphics,physics,Ogre::Vector3(4,10,0),Ogre::Vector3(1,1,1));
-
-
-    OgreBulletDynamics::SixDofConstraint *ct = new OgreBulletDynamics::SixDofConstraint(boxA,boxB,Ogre::Vector3(1,0,0),Ogre::Quaternion(),Ogre::Vector3(-1,0,0),Ogre::Quaternion());
-    physics->getWorld()->addConstraint(ct);
-
-    g6DofCC->setConstraint((btGeneric6DofConstraint*) ct->getBulletTypedConstraint());
-
-
-
-
-    // Family params
-    //QMap<QString, QString> map;
-    //map.insert("length","10");
-    //map.insert("piecelength","10");
-
-    // Create snake
-    GeneLabOgreBullet::SnakeFamily * snakeFamily = new GeneLabOgreBullet::SnakeFamily(QVariant());
-    GeneLabOgreBullet::OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
-    snake->initOgreBullet(graphics,physics);
-    snake->setup();
-    //snake->getShape()->contractInNormalPosition();
-
-
-    // attach the nose in the air
-    /*
-    btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody()->getBulletRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
-    ctRoot->setAngularLowerLimit(btVector3(0,0,0));
-    ctRoot->setAngularUpperLimit(btVector3(0,0,0));
-
-    //for(int i=0;i<3;i++)
-    {
-    //    btRotationalLimitMotor *motor = ctRoot->getRotationalLimitMotor(i);
-
-        btRotationalLimitMotor *motor = ctRoot->getRotationalLimitMotor(0);
-
-        motor->m_hiLimit = 0;
-        motor->m_loLimit = 1;
-        //motor->m_maxLimitForce = 100000;
-        motor->m_enableMotor = true;
-        motor->m_targetVelocity = 200;
-        motor->m_maxMotorForce = 1000;
-    }
-
-    //btPoint2PointConstraint *ctRoot = new btPoint2PointConstraint(*getRoot()->getRigidBody()->getBulletRigidBody(),btVector3(0,0,0));
-    physics->getWorld()->getBulletDynamicsWorld()->addConstraint(ctRoot);
-
-    g6DofCC->setConstraint(ctRoot);
-    */
-
-
-
-
-
-
-
-
-    // --
-    // -- World : RENAME TO SimulationManager or SimulationEngine
-    // --
-    qDebug() << "Init World";
-    GeneLabCore::SimulationManager* world = new GeneLabOgreBullet::OgreBulletSimulationManager(physics,graphics,em);
-    world->setup();
+    // ---------------------
+    // -- Scene (Content) --
+    // ---------------------
+    qDebug() << "Scene creation";
+    OgreBulletSandBoxScene *scene = new OgreBulletSandBoxScene(bulletEngine, ogreEngine);
+    scene->init();
     qDebug() << "[OK]\n";
 
-    qDebug() << "Start World";
-    world->start();
+
+    // ------------------------
+    // -- Simulation Manager --
+    // ------------------------
+    qDebug() << "Init Simulation Manager";
+    GeneLabCore::SimulationManager* simulationManager = new GeneLabOgreBullet::OgreBulletSimulationManager(bulletEngine,ogreEngine,em);
+    simulationManager->setup();
+    qDebug() << "[OK]\n";
+
+    qDebug() << "Start simulation";
+    simulationManager->start();
     qDebug() << "[OK]\n";
 }
 

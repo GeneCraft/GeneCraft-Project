@@ -16,9 +16,11 @@ namespace GeneLabOgreBullet {
         delete end;
     }
 
+    // TODO alpha min and max
     ArticulatedBone::ArticulatedBone(float alpha, float beta_min, float beta_max, float r_min, float r_max, float length) {
 
-        this->alpha = alpha;
+        this->alpha_min = alpha;
+        this->alpha_max = -alpha;
         this->beta_min = beta_min;
         this->beta_max = beta_max;
         this->r_min = r_min;
@@ -43,10 +45,10 @@ namespace GeneLabOgreBullet {
     }
 
     float ArticulatedBone::getAlpha() {
-        return alpha;
+        return alpha_max;
     }
 
-    float ArticulatedBone::getBeta() {
+    float ArticulatedBone::getBetaMin() {
         return beta_min;
     }
 
@@ -72,7 +74,7 @@ namespace GeneLabOgreBullet {
 
         // attach fixation to bones
         end->initOgreBullet(ogreManager,bulletManager);
-        end->setup();
+        end->setup(Ogre::Vector3(0,3,0)); // TODO
 
         // attach articulatedBone to its fixation
         OgreBulletDynamics::SixDofConstraint *ctBoneToSonFix = new OgreBulletDynamics::SixDofConstraint(

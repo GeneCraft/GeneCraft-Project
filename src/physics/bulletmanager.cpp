@@ -12,7 +12,7 @@ namespace GeneLabOgreBullet {
     BulletManager::BulletManager(QObject *parent) :
         Engine(parent)
     {
-        physicsEnable = true;
+        physicsEnable = false;
     }
 
     BulletScene* BulletManager::getPhysicsScene() {
@@ -23,18 +23,16 @@ namespace GeneLabOgreBullet {
         return mWorld;
     }
 
-    void BulletManager::init(OgreManager* ogre) {
-        Ogre::Vector3 gravityVector(0,-9.81,0); // gravity vector for Bullet
-        Ogre::AxisAlignedBox bounds(Ogre::Vector3 (-10000, -10000, -10000), //aligned box for Bullet
-                                   Ogre::Vector3 (10000,  10000,  10000));
-        this->ogre = ogre;
-        mOgreRoot = ogre->getOgreRoot();
-        mSceneMgr = ogre->getOgreSceneManager();
+    void BulletManager::init(OgreManager* ogreEngine) {
 
-        mMoveSpeed = 50;   // defined in ExampleFrameListener
-        mNumEntitiesInstanced = 0; // how many shapes are created
-        // Start Bullet
-        mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, bounds, gravityVector);
+        this->ogreEngine = ogreEngine;
+
+        Ogre::Vector3 gravityVector(0,-9.81,0); // gravity vector for Bullet
+        Ogre::AxisAlignedBox bounds(Ogre::Vector3 (-1000, -1000, -1000), //aligned box for Bullet
+                                   Ogre::Vector3 (1000,  1000,  1000));
+
+        // start Bullet
+        mWorld = new OgreBulletDynamics::DynamicsWorld(ogreEngine->getOgreSceneManager(), bounds, gravityVector);
 
         // add Debug info display tool
         debugDrawer = new OgreBulletCollisions::DebugDrawer();
@@ -42,35 +40,39 @@ namespace GeneLabOgreBullet {
         mWorld->setDebugDrawer(debugDrawer);
         mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
 
-        // TODO: Move in map !
-        Ogre::SceneNode *node = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
+        Ogre::SceneNode *node = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
         node->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
 
-        // Define a floor plane mesh
-        Entity *ent;
-        Plane p;
-        p.normal = Vector3(0,1,0); p.d = 0;
-        MeshManager::getSingleton().createPlane("FloorPlane",
-                                                ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-                                                p, 200000, 200000, 20, 20, true, 1, 9000, 9000,
-                                                Vector3::UNIT_Z);
-        // Create an entity (the floor)
-        ent = mSceneMgr->createEntity("floor", "FloorPlane");
-        ent->setMaterialName("Examples/BumpyMetal");
-        mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
 
-        // add collision detection to it
-        OgreBulletCollisions::CollisionShape *Shape;
-        Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
-        // a body is needed for the shape
-        OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
-                                                                                            mWorld);
-        defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
-        // push the created objects to the deques
-        mShapes.push_back(Shape);
-        mBodies.push_back(defaultPlaneBody);
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !! CODE BELLOW MOVED TO OGREBULLETSANDBOXSCENE !!! IT'S THE CONTENT OF THE SCENE !!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+//        // Define a floor plane mesh
+//        Entity *ent;
+//        Plane p;
+//        p.normal = Vector3(0,1,0); p.d = 0;
+//        MeshManager::getSingleton().createPlane("FloorPlane",
+//                                                ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+//                                                p, 200000, 200000, 20, 20, true, 1, 9000, 9000,
+//                                                Vector3::UNIT_Z);
+//        // Create an entity (the floor)
+//        ent = mSceneMgr->createEntity("floor", "FloorPlane");
+//        ent->setMaterialName("Examples/BumpyMetal");
+//        mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+
+//        // add collision detection to it
+//        OgreBulletCollisions::CollisionShape *Shape;
+//        Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
+//        // a body is needed for the shape
+//        OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
+//                                                                                            mWorld);
+//        defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
+
+//        // push the created objects to the deques
+//        mShapes.push_back(Shape);
+//        mBodies.push_back(defaultPlaneBody);
     }
-
 
     int cpt = 99;
 
@@ -141,16 +143,12 @@ namespace GeneLabOgreBullet {
     }
 
     void BulletManager::afterStep() {
-
     }
 
     void BulletManager::step() {
-
-        //qDebug() << "physic step";
         if(physicsEnable)
             mWorld->stepSimulation(1/60.0);
     }
-
 
     void BulletManager::setPhysicsEnable(bool physicsEnable)
     {
@@ -161,5 +159,4 @@ namespace GeneLabOgreBullet {
     {
         return physicsEnable;
     }
-
 }
