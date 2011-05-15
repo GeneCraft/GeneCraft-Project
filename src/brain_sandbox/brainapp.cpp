@@ -21,7 +21,7 @@ BrainApp::BrainApp(QWidget *parent) :
 
     qDebug() << "Creation !";
 
-    engine->addNetwork(5); // 10x10 network
+    engine->addNetwork(51); // 10x10 network
 
     qDebug() << "Creation !";
 
@@ -29,8 +29,9 @@ BrainApp::BrainApp(QWidget *parent) :
 
     qDebug() << "Creation !";
     this->setCentralWidget(w);
+
     this->timer = new QTimer();
-    timer->setInterval(50);
+    timer->setInterval(0);
     connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
     timer->start();
 

@@ -14,7 +14,7 @@
 #include "graphic/ogrescene.h"
 #include "physics/bulletmanager.h"
 #include "simulation/simulationmanager.h"
-#include "simulation/ogrebulletsimulationmanager.h".h"
+#include "simulation/ogrebulletsimulationmanager.h"
 #include "factory/jsonloader.h"
 #include "eventmanager.h"
 #include "sample/snakefamily.h"
@@ -128,11 +128,13 @@ void OgreBulletSandBoxScene::init()
 //    transform.setRotation(btQuaternion(btVector3(0,1,0),30));
 //
 
+    /* UNUSED !
     Ogre::Quaternion *q1 = new Ogre::Quaternion(Ogre::Radian(1.57),Ogre::Vector3(1,1,0));
     Ogre::Quaternion *q2 = new Ogre::Quaternion(Ogre::Radian(1.57),Ogre::Vector3(0,1,0));
 
     OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(ogreManager,bulletManager,Ogre::Vector3(1,10,1),Ogre::Vector3(1,2,1),*q1);
     OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(ogreManager,bulletManager,Ogre::Vector3(1,12,1),Ogre::Vector3(1,2,1),*q1);
+    */
 
     // Snake
     //QMap<QString, QString> map;

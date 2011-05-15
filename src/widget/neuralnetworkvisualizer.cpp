@@ -11,7 +11,7 @@
 #include <QBoxLayout>
 #include <QDebug>
 
-#define SCENE_SIZE 500
+#define SCENE_SIZE 51*10
 
 namespace GeneLabWidget {
     using namespace GeneLabCore;
@@ -21,14 +21,17 @@ namespace GeneLabWidget {
         this->networks = networks;
         this->view = new QGraphicsView(this);
         this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight));
-        this->view->setFixedSize(1000, 1000);
+        this->view->setFixedSize(300, 300 + 140);
         this->view->setScene(new QGraphicsScene(0, 0, SCENE_SIZE, SCENE_SIZE + 140, this));
 
         this->layout()->addWidget(this->view);
     }
 
+    int cpt = 0;
     void NeuralNetworkVisualizer::step() {
-        this->repaint();
+        cpt++;
+        if(!(cpt % 10))
+        this->update();
     }
 
     void NeuralNetworkVisualizer::paintEvent(QPaintEvent * e) {
@@ -46,16 +49,20 @@ namespace GeneLabWidget {
         int size = n->getSize();
 
         QBrush b;
+        QPen p;
+        p.setStyle(Qt::NoPen);
         b.setStyle(Qt::SolidPattern);
+        float width = SCENE_SIZE/size;
         // On dessine les neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
                 b.setColor(QColor( 0,0,0,  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
-                this->view->scene()->addEllipse(SCENE_SIZE/size * 0.5 - 10 + SCENE_SIZE/size * i,
-                                                SCENE_SIZE/size * 0.5 - 10 + SCENE_SIZE/size * j + 70, 20, 20, QPen(), b);
+                this->view->scene()->addRect(width * i,
+                                             width * j + 70, width, width, p, b);
+                //this->view->scene()->addEllipse();
             }
         }
-
+/*
 
         for(int i = 0; i < n->getInputs().size(); i++) {
 
@@ -86,7 +93,8 @@ namespace GeneLabWidget {
             }
         }
 
-
+*/
+        /*
         for(int i = 0; i < n->getOutputs().size(); i++) {
 
             // On dessine les entrées
@@ -114,7 +122,7 @@ namespace GeneLabWidget {
                                              SCENE_SIZE/size*c.y + SCENE_SIZE/size * 0.5 + 70, p);
             }
         }
-
+*/
         // On dessine les sorties
 
 

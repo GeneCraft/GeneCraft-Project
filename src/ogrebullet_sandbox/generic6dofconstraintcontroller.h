@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QDebug>
-#include "btBulletDynamicsCommon.h";
+#include "btBulletDynamicsCommon.h"
 
 namespace Ui {
     class Generic6DofConstraintController;

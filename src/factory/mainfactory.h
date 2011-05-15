@@ -11,13 +11,14 @@ namespace GeneLabFactory {
     {
         Q_OBJECT
     public:
-        explicit MainFactory(QObject *parent = 0);
+        explicit MainFactory(QWidget* sceneWidget, unsigned long winId, QObject *parent = 0);
 
         bool create(Ressource r);
 
         QMap<QString, GeneLabCore::Engine*>        getEngines();
         QMap<QString, GeneLabCore::EntityFamily*>  getFamilys();
         QMap<QString, GeneLabCore::World*>         getWorlds();
+        QMap<QString, QWidget*>                    getWidgets();
 
         // Vérifie que les dépendances sont assurées
         bool isValid();
@@ -33,6 +34,7 @@ namespace GeneLabFactory {
         QMap<QString, GeneLabCore::Engine*>         engines;
         QMap<QString, GeneLabCore::EntityFamily*>   familys;
         QMap<QString, GeneLabCore::World*>          worlds;
+        QMap<QString, QWidget*>                     widgets;
 
     };
 

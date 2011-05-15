@@ -15,7 +15,7 @@ namespace GeneLabCore {
         explicit BrainEngine(QObject *parent = 0);
 
         bool isRenderable() {
-            return false;
+            return true;
         }
 
         QWidget* getRenderWidget(QWidget* parent);

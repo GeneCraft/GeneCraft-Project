@@ -18,12 +18,13 @@ namespace GeneLabCore {
 
         virtual float getValue() {
             deg+=inc;
-            return sin(deg * M_PI / 180.0f );
+            return sin((deg+offset) * M_PI / 180.0f  );
         }
 
     private:
-        int deg;
-        int inc;
+        float deg;
+        float inc;
+        float offset;
 
     };
 }

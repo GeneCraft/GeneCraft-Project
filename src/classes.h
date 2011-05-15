@@ -77,10 +77,6 @@ namespace GeneLabOgreBullet {
 
     // UI Event
     class EventManager;
-
-    // Simulation
-    class OgreBulletSimulationManager;
-
 }
 
 // Typical used ogre namespace classes

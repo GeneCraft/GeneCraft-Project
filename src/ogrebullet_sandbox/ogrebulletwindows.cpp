@@ -13,6 +13,9 @@
 #include "OgreBulletDynamicsConstraint.h"
 #include "Dynamics/Constraints/OgreBulletDynamics6DofConstraint.h"
 
+// Factory
+#include "factory/mainfactory.h"
+
 // Core
 #include "entity/entity.h"
 
@@ -22,7 +25,6 @@
 #include "graphic/ogrescene.h"
 #include "physics/bulletmanager.h"
 #include "simulation/simulationmanager.h"
-#include "simulation/ogrebulletsimulationmanager.h".h"
 #include "factory/jsonloader.h"
 #include "eventmanager.h"
 #include "sample/snakefamily.h"
@@ -39,6 +41,11 @@
 #include "ogrebulletsandboxscene.h"
 #include "generic6dofconstraintcontroller.h"
 
+
+using namespace GeneLabOgreBullet;
+using namespace GeneLabCore;
+using namespace GeneLabFactory;
+
 OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::OgreBulletWindows)
@@ -54,13 +61,12 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QToolBox *tbInspector = new QToolBox(this);
 
     // group G6Dof
-    QWidget *tbG6DofC = new QWidget();
     Generic6DofConstraintController*  g6DofCC = new Generic6DofConstraintController();
     tbInspector->addItem(g6DofCC,"g6DofCC");
 
     // group 1
     QWidget *tbSimulation = new QWidget();
-    QPushButton*  bPlaySimulation = new QPushButton("Play",tbSimulation);
+    //QPushButton*  bPlaySimulation = new QPushButton("Play",tbSimulation);
     tbInspector->addItem(tbSimulation,"Simulation");
 
     // group 2
@@ -114,100 +120,35 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // I think to create a wrap named GeneLabEngine which contains
     // all engines is a good idea... no ?
-    // GeneLabEngine geneLabEngine = new GeneLabEngine();
-    // geneLabEngine->getOgreWidget();
 
-
-    // ---------------------
-    // -- Graphics : Ogre --
-    // ---------------------
-
-    qDebug() << "Init Ogre";
-    ogreEngine = new GeneLabOgreBullet::OgreManager((unsigned long)this->winId());
-    ogreEngine->init();
-    qDebug() << "[OK]\n";
-
-    qDebug() << "Init Cameras";
-
-    // camera 1
-    Ogre::Camera* cam1 = ogreEngine->getOgreSceneManager()->createCamera("firstCamera");
-    cam1->setPosition(Ogre::Vector3(0, 2, 6));
-    cam1->lookAt(Ogre::Vector3(0, 2, 0));
-    cam1->setNearClipDistance(0.001); // 1 mm
-    cam1->setFarClipDistance(100); // 100m
-
-    // camera 2
-    // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("secondCamera");
-    // cam2->setPosition(Ogre::Vector3(0, 18, 0));
-    // cam2->lookAt(Ogre::Vector3(0, 0, 70));
-    // cam2->setNearClipDistance(5);
-    // qDebug() << "[OK]\n";
-
-    qDebug() << "Init Widgets";
-    // widget 1
-    QWidget* oW1 = ogreEngine->createOgreWidget(cam1, this->ui->centralWidget);
-    this->ui->centralWidget->layout()->addWidget(oW1);
-
-    // widget 2
-    // this->ui->centralWidget->layout()->addWidget(oW2);
-    // QWidget* oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
-
-
-    // ----------------------
-    // -- Physics : Bullet --
-    // ----------------------
-
-    qDebug() << "Init Bullet";
-    bulletEngine = new GeneLabOgreBullet::BulletManager();
-    bulletEngine->init(this->ogreEngine);
-    qDebug() << "[OK]\n";
-
-
-    // ------------
-    // -- Events --
-    // ------------
-    qDebug() << "Init Events Manager";
-
-    // Events
-    GeneLabOgreBullet::EventManager *em = new GeneLabOgreBullet::EventManager();
-
-    CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
-    cvim->initOgreBullet(ogreEngine,bulletEngine,cam1);
-    em->addListener(cvim);
-
-    connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
-    connect(oW1,SIGNAL(mouseReleased(QMouseEvent*)),em,SLOT(mouseReleaseEvent(QMouseEvent*)));
-    connect(oW1,SIGNAL(mouseMoved(QMouseEvent*)),em,SLOT(mouseMoveEvent(QMouseEvent*)));
-
-    connect(oW1,SIGNAL(keyPressed(QKeyEvent*)),em,SLOT(keyPressEvent(QKeyEvent*)));
-    connect(oW1,SIGNAL(keyReleased(QKeyEvent*)),em,SLOT(keyReleaseEvent(QKeyEvent*)));
-
-    connect(oW1,SIGNAL(entered(QEvent*)),em,SLOT(enterViewPortEvent(QEvent*)));
-    connect(oW1,SIGNAL(leaved(QEvent*)),em,SLOT(leaveViewPortEvent(QEvent*)));
-
-    qDebug() << "[OK]\n";
+    MainFactory* factory = new MainFactory(this->ui->centralWidget, (unsigned long) this->winId() );
 
 
     // ---------------------
     // -- Scene (Content) --
     // ---------------------
     qDebug() << "Scene creation";
-    OgreBulletSandBoxScene *scene = new OgreBulletSandBoxScene(bulletEngine, ogreEngine);
+    OgreBulletSandBoxScene *scene = new OgreBulletSandBoxScene((BulletManager*)factory->getEngines().find("Bullet").value(),
+                                                               (OgreManager*)factory->getEngines().find("Ogre").value());
     scene->init();
     qDebug() << "[OK]\n";
+
 
 
     // ------------------------
     // -- Simulation Manager --
     // ------------------------
     qDebug() << "Init Simulation Manager";
-    GeneLabCore::SimulationManager* simulationManager = new GeneLabOgreBullet::OgreBulletSimulationManager(bulletEngine,ogreEngine,em);
+    SimulationManager* simulationManager
+            = new SimulationManager(factory->getEngines().values());
+
     simulationManager->setup();
     qDebug() << "[OK]\n";
 
     qDebug() << "Start simulation";
     simulationManager->start();
     qDebug() << "[OK]\n";
+
 }
 
 OgreBulletWindows::~OgreBulletWindows()

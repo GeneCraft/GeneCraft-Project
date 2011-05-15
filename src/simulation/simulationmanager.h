@@ -1,34 +1,47 @@
-#ifndef SIMULATIONMANAGER_H
-#define SIMULATIONMANAGER_H
+#ifndef SimulationManager_H
+#define SimulationManager_H
 
 #include "classes.h"
+#include "simulation/simulationmanager.h"
+#include <QObject>
+
 #include <QTimer>
-#include <QDebug>
 
 namespace GeneLabCore {
 
-    class SimulationManager : public QObject
+    class SimulationManager : QObject
     {
         Q_OBJECT
+
     public:
 
-        SimulationManager(QObject *parent = 0): QObject(parent) {}
+        SimulationManager(QObject *parent = 0);
+        SimulationManager(QList<GeneLabCore::Engine*> engines, QObject *parent = 0);
 
+
+        // TODO
+        void addEngine(GeneLabCore::Engine *engine);
+        void removeEngine(GeneLabCore::Engine *engine);
 
     signals:
 
     public slots:
-        virtual void setup() = 0;
 
-        // added by ADC
+        // init timer
+        void setup();
+
         // the world manager the time
-        virtual void start() = 0;
-        virtual void stop() = 0;
-        virtual void update() = 0;
+        void start();
+        void stop();
+        void update();
 
     private:
+        QList<GeneLabCore::Engine*> engines;
+
+        // Execution timer
+        QTimer *stepTimer;
     };
 
 }
 
-#endif // SIMULATIONMANAGER_H
+#endif // SimulationManager_H

@@ -17,7 +17,7 @@ INCLUDEPATH += ..
 
 #library related
 
-CONFIG(Debug) {
+#CONFIG(Debug) {
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
@@ -28,7 +28,7 @@ CONFIG(Debug) {
     QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
     QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
     QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core/
-}
+#}
 
 #library related
 INCLUDEPATH  += ../lib/ogre/include/OGRE
@@ -69,13 +69,20 @@ SOURCES += main.cpp\
     ../world/ogrebulletscene.cpp \
     ogrebulletsandboxscene.cpp \
     sandboxtools.cpp \
-    ../simulation/simulationmanager.cpp \
-    ../simulation/ogrebulletsimulationmanager.cpp \
     ../graphic/eventmanager.cpp \
     ../graphic/inputlistener.cpp \
-    creatureviewerinputmanager.cpp \
     ../entity/struct/articulation.cpp \
-    ../entity/struct/articulatedbone.cpp
+    ../entity/struct/articulatedbone.cpp \
+    ../engine/brainengine.cpp \
+    ../entity/neural/synapse.cpp \
+    ../entity/neural/neuralin.cpp \
+    ../entity/neural/neuralout.cpp \
+    ../entity/neural/neuralnetwork.cpp \
+    ../entity/neural/sinusin.cpp \
+    ../factory/neuralnetworkfactory.cpp \
+    ../widget/neuralnetworkvisualizer.cpp \
+    ../simulation/simulationmanager.cpp \
+    ../input/creatureviewerinputmanager.cpp
 
 HEADERS  += ogrebulletwindows.h \
     ../graphic/ogrewidget.h \
@@ -105,13 +112,20 @@ HEADERS  += ogrebulletwindows.h \
     ../world/ogrebulletscene.h \
     ogrebulletsandboxscene.h \
     sandboxtools.h \
-    ../simulation/simulationmanager.h \
-    ../simulation/ogrebulletsimulationmanager.h \
     ../graphic/eventmanager.h \
     ../graphic/inputlistener.h \
-    creatureviewerinputmanager.h \
     ../entity/struct/articulation.h \
-    ../entity/struct/articulatedbone.h
+    ../entity/struct/articulatedbone.h \
+    ../engine/brainengine.h \
+    ../entity/neural/synapse.h \
+    ../entity/neural/neuralin.h \
+    ../entity/neural/neuralnetwork.h \
+    ../entity/neural/neuralout.h \
+    ../entity/neural/sinusin.h \
+    ../factory/neuralnetworkfactory.h \
+    ../widget/neuralnetworkvisualizer.h \
+    ../simulation/simulationmanager.h \
+    ../input/creatureviewerinputmanager.h
 
 FORMS    += ogrebulletwindows.ui \
     generic6dofconstraintcontroller.ui
