@@ -14,7 +14,6 @@
 #include "graphic/ogrescene.h"
 #include "physics/bulletmanager.h"
 #include "simulation/simulationmanager.h"
-#include "simulation/ogrebulletsimulationmanager.h"
 #include "factory/jsonloader.h"
 #include "eventmanager.h"
 #include "sample/snakefamily.h"

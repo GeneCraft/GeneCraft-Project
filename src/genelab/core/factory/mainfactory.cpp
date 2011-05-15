@@ -3,26 +3,25 @@
 
 #include "OGRE/Ogre.h"
 
-#include "graphic/ogremanager.h"
-#include "graphic/ogrewidget.h"
-#include "graphic/ogreinputmanager.h"
-#include "graphic/ogrescene.h"
+#include "core/engine/ogremanager.h"
+#include "ui/widget/ogrewidget.h"
 
-#include "physics/bulletmanager.h"
-#include "physics/bulletscene.h"
+#include "core/engine/bulletmanager.h"
 
-#include "graphic/eventmanager.h"
+#include "core/engine/eventmanager.h"
 
-#include "input/creatureviewerinputmanager.h"
+#include "core/engine/input/creatureviewerinputmanager.h"
 
-#include "factory/ressource.h"
+#include "ressource.h"
 
-#include "engine/brainengine.h"
+#include "core/engine/brainengine.h"
+
+#include "core/world/ogrebulletworld.h"
+#include "core/world/world.h"
 
 #include <QLayout>
 
-namespace GeneLabFactory {
-
+namespace GeneLabCore {
     MainFactory::MainFactory(QWidget* sceneWidget, unsigned long winId, QObject *parent) :
         QObject(parent)
     {
@@ -33,7 +32,7 @@ namespace GeneLabFactory {
 
         // Création des différents engines
         qDebug() << "Init Ogre";
-        GeneLabOgreBullet::OgreManager* ogreEngine = new GeneLabOgreBullet::OgreManager(winId);
+        OgreManager* ogreEngine = new OgreManager(winId);
         ogreEngine->init();
 
 
@@ -73,7 +72,7 @@ namespace GeneLabFactory {
         // ----------------------
 
         qDebug() << "Init Bullet";
-        GeneLabOgreBullet::BulletManager* bulletEngine = new GeneLabOgreBullet::BulletManager();
+        BulletManager* bulletEngine = new BulletManager();
         bulletEngine->init(ogreEngine);
 
         this->engines.insert("Bullet", bulletEngine);
@@ -86,7 +85,7 @@ namespace GeneLabFactory {
         // ----------------------
 
         qDebug() << "Init Brain Engine";
-        GeneLabCore::BrainEngine* brainEngine = new GeneLabCore::BrainEngine();
+        BrainEngine* brainEngine = new BrainEngine();
 
 
         this->engines.insert("Brain", brainEngine);
@@ -100,7 +99,7 @@ namespace GeneLabFactory {
         qDebug() << "Init Events Manager";
 
         // Events
-        GeneLabOgreBullet::EventManager *em = new GeneLabOgreBullet::EventManager();
+        EventManager *em = new EventManager();
 
         CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
         cvim->initOgreBullet(ogreEngine,bulletEngine,cam1);
@@ -118,7 +117,20 @@ namespace GeneLabFactory {
 
         this->engines.insert("Event", em);
 
+
+
         qDebug() << "[OK]\n";
+
+        // ---------------------
+        // -- Scene (Content) --
+        // ---------------------
+        qDebug() << "World creation";
+        World *world = new OgreBulletWorld(ogreEngine, bulletEngine);
+        world->setup();
+
+        this->worlds.insert("BasicWorld", world);
+        qDebug() << "[OK]\n";
+
 
     }
 
@@ -126,16 +138,16 @@ namespace GeneLabFactory {
         return true;
     }
 
-    QMap<QString, GeneLabCore::Engine*>        MainFactory::getEngines() {
+    QMap<QString, Engine*>        MainFactory::getEngines() {
         return engines;
 
     }
 
-    QMap<QString, GeneLabCore::EntityFamily*>  MainFactory::getFamilys() {
+    QMap<QString, EntityFamily*>  MainFactory::getFamilys() {
         return familys;
     }
 
-    QMap<QString, GeneLabCore::World*>         MainFactory::getWorlds() {
+    QMap<QString, World*>         MainFactory::getWorlds() {
         return worlds;
     }
 
