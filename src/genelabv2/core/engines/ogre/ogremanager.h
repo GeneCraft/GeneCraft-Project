@@ -1,0 +1,49 @@
+#ifndef OGREMANAGER_H
+#define OGREMANAGER_H
+
+#include <QObject>
+#include "genelabcoreclasses.h"
+#include "engine.h"
+
+namespace GeneLabCore {
+    class OgreManager : public GeneLabCore::Engine
+    {
+        Q_OBJECT
+    public:
+        explicit OgreManager(unsigned long winId);
+
+        Ogre::Root*         getOgreRoot();
+        Ogre::SceneManager* getOgreSceneManager();
+        OgreWidget*         createOgreWidget(Ogre::Camera* cam,
+                                             QWidget* parent);
+
+        QWidget*            getRender(QWidget* parent);
+
+        bool isRenderable() {
+            return true;
+        }
+
+    signals:
+
+    public slots:
+        void init();
+        void beforeStep();
+        void step();
+        void afterStep();
+
+    protected:
+        Ogre::Root*         ogreRoot;
+        Ogre::SceneManager* scnManager;
+        Ogre::RenderWindow* fakeRender;
+
+        void initOgreRoot();
+        void initResources();
+        void initSceneManager();
+        void initRenderingSystem(unsigned long winId);
+
+        QList<OgreWidget*> ogreWidgets;
+        int winId;
+
+    };
+}
+#endif // OGREMANAGER_H
