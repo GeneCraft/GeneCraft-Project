@@ -52,8 +52,8 @@ namespace GeneLabCore {
             return;
         }
 
-        getRoot()->initOgreBullet(ogreManager,bulletManager);
-        getRoot()->setup(Ogre::Vector3(0,3,0));
+        //getRoot()->initOgreBullet(ogreManager,bulletManager);
+        getRoot()->setup(bulletManager);
 
         // setup recurcively the tree shape
         setupFixation(getRoot());
@@ -61,22 +61,29 @@ namespace GeneLabCore {
 
     void TreeShape::setupFixation(Fixation *fix)
     {
-        // For each bones...
-        QList<ArticulatedBone*> articulatedBones = fix->getArticulatedBones();
-        ArticulatedBone *aBone;
-        for(int i=0;i<articulatedBones.length();i++)
-        {
-            // --
-            // -- setup the bone
-            // --
-            aBone = articulatedBones.at(i);
-            aBone->initOgreBullet(ogreManager,bulletManager);
-            aBone->setup();                     // create bone and attach the end fixation
-            aBone->attachToParentFixation(fix); // attach the bone to the parent fixation
+//        // For each bones...
+//        QList<Bone*> articulatedBones = fix->getArticulatedBones();
+//        Bone *aBone;
+//        for(int i=0;i<articulatedBones.length();i++)
+//        {
+//            // --
+//            // -- setup the bone
+//            // --
 
-            // setup recurcively
-            setupFixation(aBone->getFixation());
-        }
+
+//            aBone = articulatedBones.at(i);
+//            //aBone->initOgreBullet();
+//            aBone->setup(/*ogreManager,*/bulletManager);                     // create bone and attach the end fixation
+
+
+
+//            //fix->addBone(aBone);
+
+//            //aBone->attachToParentFixation(fix); // attach the bone to the parent fixation
+
+//            // setup recurcively
+//            setupFixation(aBone->getEndFixation());
+//        }
     }
 
     void TreeShape::print() {
@@ -84,22 +91,22 @@ namespace GeneLabCore {
         if(root == NULL)
             qDebug() << " empty ";
         else {
-            qDebug() << root->toString();
+            //qDebug() << root->toString();
         }
     }
 
     void limitFix(Fixation *fix)
     {
         // For each bones...
-        QList<ArticulatedBone*> articulatedBones = fix->getArticulatedBones();
-        ArticulatedBone *aBone;
-        for(int i=0;i<articulatedBones.length();i++)
+        QList<Bone*> bones = fix->getBones();
+        Bone *aBone;
+        for(int i=0;i<bones.length();i++)
         {
-             aBone = articulatedBones.at(i);
-             aBone->contractInNormalPosition();
+             aBone = bones.at(i);
+             //aBone->contractInNormalPosition();
 
              // setup recurcively
-             limitFix(aBone->getFixation());
+             limitFix(aBone->getEndFixation());
         }
     }
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>563</width>
-    <height>429</height>
+    <width>365</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pbSaveChanges">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>390</y>
+     <x>10</x>
+     <y>460</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -30,9 +30,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>531</width>
-     <height>371</height>
+     <y>50</y>
+     <width>342</width>
+     <height>401</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -45,36 +45,36 @@
     <enum>Qt::ScrollBarAlwaysOn</enum>
    </property>
    <property name="widgetResizable">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <widget class="QWidget" name="scrollAreaWidgetContents_2">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>412</width>
-      <height>419</height>
+      <width>313</width>
+      <height>389</height>
      </rect>
     </property>
     <widget class="QGroupBox" name="gbAngularLimits">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>391</width>
-       <height>111</height>
+       <x>0</x>
+       <y>80</y>
+       <width>311</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="title">
-      <string>Angular Limits</string>
+      <string>Parent fixation limits</string>
      </property>
      <widget class="QWidget" name="gridLayoutWidget_2">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>381</width>
-        <height>81</height>
+        <width>290</width>
+        <height>61</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="glAngularLimits">
@@ -99,30 +99,69 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="leAngularLowerLimit_x"/>
+        <widget class="QLineEdit" name="leAngularLowerLimit_x">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
         <widget class="QLineEdit" name="leAngularUpperLimit_x">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QLineEdit" name="leAngularLowerLimit_y"/>
+        <widget class="QLineEdit" name="leAngularLowerLimit_y">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="1" column="2">
         <widget class="QLineEdit" name="leAngularUpperLimit_y">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QLineEdit" name="leAngularLowerLimit_z"/>
+        <widget class="QLineEdit" name="leAngularLowerLimit_z">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="1" column="3">
         <widget class="QLineEdit" name="leAngularUpperLimit_z">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -134,10 +173,10 @@
     <widget class="QGroupBox" name="gbAngularMotors">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>391</width>
-       <height>291</height>
+       <x>0</x>
+       <y>180</y>
+       <width>311</width>
+       <height>201</height>
       </rect>
      </property>
      <property name="title">
@@ -147,9 +186,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
-        <width>380</width>
-        <height>251</height>
+        <y>20</y>
+        <width>290</width>
+        <height>171</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="glAngularMotors">
@@ -162,14 +201,14 @@
        <item row="0" column="3">
         <widget class="QLabel" name="l_m3">
          <property name="text">
-          <string>motor 3</string>
+          <string>local yaw</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
         <widget class="QLabel" name="l_m2">
          <property name="text">
-          <string>motor 2</string>
+          <string>local roll</string>
          </property>
         </widget>
        </item>
@@ -251,7 +290,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -267,7 +306,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -277,7 +316,7 @@
         <widget class="QLineEdit" name="leTargetVelocity_m3">
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -312,7 +351,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -322,7 +361,7 @@
         <widget class="QLineEdit" name="leMaxMotorForce_m2">
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -332,7 +371,7 @@
         <widget class="QLineEdit" name="leMaxMotorForce_m3">
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -341,7 +380,7 @@
        <item row="0" column="1">
         <widget class="QLabel" name="l_m1">
          <property name="text">
-          <string>motor 1</string>
+          <string>local pitch</string>
          </property>
         </widget>
        </item>
@@ -355,7 +394,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -365,7 +404,7 @@
         <widget class="QLineEdit" name="leMaxLimitForce_m2">
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -375,7 +414,7 @@
         <widget class="QLineEdit" name="leMaxLimitForce_m3">
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -429,7 +468,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -445,7 +484,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -461,7 +500,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -496,7 +535,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -512,7 +551,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -528,7 +567,75 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="gbAngularLimits_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>311</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Local transform</string>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>290</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="glAngularLimits_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lEulerRot">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Euler Rotation ZXY</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="leEulerRotX">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="leEulerRotY">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="leEulerRotZ">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
            <height>16777215</height>
           </size>
          </property>
@@ -538,6 +645,681 @@
      </widget>
     </widget>
    </widget>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Bone properties</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Bone properties</string>
+   </property>
+  </widget>
+  <widget class="QScrollArea" name="scrollArea_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>30</y>
+     <width>342</width>
+     <height>401</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::VLine</enum>
+   </property>
+   <property name="lineWidth">
+    <number>6</number>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOn</enum>
+   </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>313</width>
+      <height>389</height>
+     </rect>
+    </property>
+    <widget class="QGroupBox" name="gbAngularLimits_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>80</y>
+       <width>311</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Parent fixation limits</string>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>290</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="glAngularLimits_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lAngularLowerLimit_title_2">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>AngularLowerLimit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lAngularUpperLimit_title_2">
+         <property name="text">
+          <string>AngularUpperLimit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="leAngularLowerLimit_x_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="leAngularUpperLimit_x_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="leAngularLowerLimit_y_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="leAngularUpperLimit_y_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="leAngularLowerLimit_z_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="leAngularUpperLimit_z_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="gbAngularMotors_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>180</y>
+       <width>311</width>
+       <height>201</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Rotational Motors</string>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>290</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="glAngularMotors_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item row="0" column="3">
+        <widget class="QLabel" name="l_m3_2">
+         <property name="text">
+          <string>local yaw</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="l_m2_2">
+         <property name="text">
+          <string>local roll</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="cbEnable_m1_2">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QCheckBox" name="cbEnable_m2_2">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QCheckBox" name="cbEnable_m3_2">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="l_enable_title_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m_enable</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="l_targetVelocity_title_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m_targetVelocity</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="leTargetVelocity_m1_2">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="leTargetVelocity_m2_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="leTargetVelocity_m3_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="l_maxMotorForce_title_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m_maxMotorForce</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="leMaxMotorForce_m1_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="leMaxMotorForce_m2_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="leMaxMotorForce_m3_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="l_m1_2">
+         <property name="text">
+          <string>local pitch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="leMaxLimitForce_m1_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="leMaxLimitForce_m2_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="leMaxLimitForce_m3_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="l_maxMotorForce_title_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m_maxLimitForce</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="l_maxMotorForce_title_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m_bounce</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="leBounce_m1_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="leBounce_m2_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="leBounce_m3_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="l_maxMotorForce_title_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>m_damping</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="leDamping_m1_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLineEdit" name="leDamping_m2_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLineEdit" name="leDamping_m3_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="gbAngularLimits_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>311</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Local transform</string>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>290</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="glAngularLimits_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lEulerRot_2">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Euler Rotation ZXY</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="leEulerRotX_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="leEulerRotY_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="leEulerRotZ_2">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pbSaveChanges_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>440</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Apply</string>
+   </property>
   </widget>
  </widget>
  <resources/>

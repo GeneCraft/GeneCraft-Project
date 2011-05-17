@@ -135,7 +135,11 @@ SOURCES += \
     ../genelab/apps/sandbox/brainsandbox/brainapp.cpp \
     ../genelab/core/engines/world/world.cpp \
     ../genelab/core/engines/world/ogrebulletworld.cpp \
-    main.cpp
+    main.cpp \
+    ../genelab/core/engines/bullet/rigidbodyorigin.cpp \
+    ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
+    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
+    ../genelab/core/utils/tools.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -176,11 +180,19 @@ HEADERS += \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
     ../genelab/core/engines/world/world.h \
     ../genelab/core/engines/world/ogrebulletworld.h \
-    ../genelab/core/genelabcoreclasses.h
-
+    ../genelab/core/genelabcoreclasses.h \
+    ../genelab/core/engines/bullet/rigidbodyorigin.h \
+    ../genelab/core/ui/widgets/entities/fixationproperties.h \
+    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
+    ../genelab/core/utils/tools.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.ui \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.ui \
-    ../genelab/apps/sandbox/brainsandbox/brainapp.ui
+    ../genelab/apps/sandbox/brainsandbox/brainapp.ui \
+    ../genelab/core/ui/widgets/entities/fixationproperties.ui \
+    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui
+
+RESOURCES += \
+    ../genelab/core/ressources/ressources.qrc

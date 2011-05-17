@@ -3,15 +3,67 @@
 
 #include <QObject>
 #include "genelabcoreclasses.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
 namespace GeneLabCore {
-    class ArticulatedBone : public QObject
+
+
+class Bone : public QObject
+{
+  Q_OBJECT
+
+public:
+
+   Bone(btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position);
+   ~Bone();
+
+   void setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine);
+
+   inline btRigidBody* getRigidBody()                             { return rigidBody;             }
+   inline void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
+   inline btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
+   inline btScalar getLength()                                    { return lenght;                }
+   inline Fixation *getEndFixation()                              { return endFix;                }
+   //inline void setSelected(bool isSelected)                       { body->setSelected(isSelected);}
+   inline Entity *getEntity()                                     { return entity;                }
+   void setEntity(Entity *entity);
+
+   BonePropertiesController *getInspectorWidget();
+
+   void setRandomMotors();
+   void resetMotors();
+
+protected:
+
+   btRigidBody *rigidBody;
+   RigidBodyOrigin *origin;
+   Fixation *endFix;
+   btGeneric6DofConstraint *parentCt;
+   btGeneric6DofConstraint *endFixConstraint;
+
+   //Cylinder *body;
+
+   btScalar radius;
+   btScalar lenght;
+
+   //OpenGLEngine *openGLEngine;
+   OgreManager* ogreManager; // AHAHAHAHAHAAHAHAHAHAHAH
+   BulletManager *bulletEngine;
+
+   static BonePropertiesController *inspectorWidget;
+
+   Entity *entity;
+};
+
+/*
+    class Bone : public QObject
     {
         Q_OBJECT
     public:
-        explicit ArticulatedBone(QObject *parent = 0);
-        ArticulatedBone(float alpha_max, float beta_min, float beta_max, float r_min, float r_max, float length);
-        ~ArticulatedBone();
+        explicit Bone(QObject *parent = 0);
+        Bone(float alpha_max, float beta_min, float beta_max, float r_min, float r_max, float length);
+        ~Bone();
 
         float getLength();
 
@@ -21,9 +73,8 @@ namespace GeneLabCore {
         float getAlpha();
         float getBetaMin();
 
-        /**
-          * Fixe aticulation between angle_min and angle_max
-          */
+        //Fixe aticulation between angle_min and angle_max
+
         void contractInNormalPosition();
 
         Fixation* getFixation();
@@ -64,5 +115,7 @@ namespace GeneLabCore {
         OgreManager* ogreManager;
         BulletManager *bulletManager;
     };
+*/
+
 }
 #endif // BONE_H

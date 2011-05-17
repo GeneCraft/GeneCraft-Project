@@ -22,16 +22,15 @@ namespace GeneLabCore {
 
         OgreBulletEntity* snake = new OgreBulletEntity("Snaky"+QString::number(length), "Snake", 1);
         TreeShape* snakeShape = new TreeShape();
-        Fixation* root = new Fixation();
+        Fixation* root = new Fixation(0.5,btVector3(0,10,0));
         snakeShape->setRoot(root);
         snake->setShape(snakeShape);
 
-        for(int i = 0; i < length; i++) {
-            ArticulatedBone* b = root->addBone(0., M_PI/2., M_PI + M_PI/2., 0, M_PI,
-               pieceLength/(1+1.6180339887 * (i) / 10));
-
-            root = b->getFixation();
-        }
+//        for(int i = 0; i < length; i++) {
+//            Bone* b = root->addBone(0., M_PI/2., M_PI + M_PI/2., 0, M_PI,
+//               pieceLength/(1+1.6180339887 * (i) / 10));
+//            root = b->getFixation();
+//        }
 
         return snake;
     }

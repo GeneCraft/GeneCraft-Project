@@ -15,7 +15,7 @@ namespace GeneLabCore {
         physicsEnable = false;
     }
 
-    OgreBulletDynamics::DynamicsWorld* BulletManager::getWorld() {
+    OgreBulletDynamics::DynamicsWorld* BulletManager::getDynamicsWorld() {
         return mWorld;
     }
 

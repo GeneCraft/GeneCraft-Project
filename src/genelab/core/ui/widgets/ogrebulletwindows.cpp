@@ -131,10 +131,10 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     snake->setup(); // position
 
     // attach the nose in the air
-    btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody()->getBulletRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
+    btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
     ctRoot->setAngularLowerLimit(btVector3(0,0,0));
     ctRoot->setAngularUpperLimit(btVector3(0,0,0));
-    ((BulletManager*)factory->getEngines().find("Bullet").value())->getWorld()->getBulletDynamicsWorld()->addConstraint(ctRoot);
+    ((BulletManager*)factory->getEngines().find("Bullet").value())->getDynamicsWorld()->getBulletDynamicsWorld()->addConstraint(ctRoot);
 
     // ------------------------
     // -- Simulation Manager --

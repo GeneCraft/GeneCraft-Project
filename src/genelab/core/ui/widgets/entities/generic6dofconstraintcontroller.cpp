@@ -17,6 +17,10 @@ Generic6DofConstraintController::~Generic6DofConstraintController()
 
 void Generic6DofConstraintController::saveChanges()
 {
+    this->constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->leEulerRotX->text().toFloat(),
+                                                               this->ui->leEulerRotY->text().toFloat(),
+                                                               this->ui->leEulerRotZ->text().toFloat());
+
     btRotationalLimitMotor *motor;
     for(int i=0;i<3;i++)
     {
@@ -35,7 +39,6 @@ void Generic6DofConstraintController::saveChanges()
 
                 motor->m_loLimit = this->ui->leAngularLowerLimit_x->text().toFloat();
                 motor->m_hiLimit = this->ui->leAngularUpperLimit_x->text().toFloat();
-
                 break;
 
             case 1 :
@@ -68,6 +71,13 @@ void Generic6DofConstraintController::saveChanges()
 void Generic6DofConstraintController::setConstraint(btGeneric6DofConstraint * ct)
 {
     this->constraint = ct;
+
+    // Local transform
+    btScalar eulerYaw,eulerRoll,eulerPitch;
+    this->constraint->getFrameOffsetA().getBasis().getEulerZYX(eulerYaw,eulerRoll,eulerPitch);
+    this->ui->leEulerRotX->setText(QString().setNum(eulerPitch));
+    this->ui->leEulerRotY->setText(QString().setNum(eulerRoll));
+    this->ui->leEulerRotZ->setText(QString().setNum(eulerYaw));
 
     // Angular Limit Motors
     btRotationalLimitMotor *motor;

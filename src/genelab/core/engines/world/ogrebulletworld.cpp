@@ -80,7 +80,7 @@ namespace GeneLabCore {
         Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
         // a body is needed for the shape
         OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
-                                                                                            bulletManager->getWorld());
+                                                                                            bulletManager->getDynamicsWorld());
         defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
 
         // push the created objects to the deques

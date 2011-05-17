@@ -6,6 +6,8 @@ namespace GeneLabCore {
     // Entity related
     class Entity;
     class EntityFamily;
+    class Bone;
+    class Fixation;
 
     // Neural network and brain engine
     class NeuralNetwork;
@@ -54,7 +56,7 @@ namespace GeneLabCore {
 
 
     class TreeShape;
-    class ArticulatedBone;
+    class Bone;
     class Fixation;
     class Articulation;
 
@@ -66,7 +68,15 @@ namespace GeneLabCore {
 
     class OgreBulletWindows;
 
+    // Bullet user
+    class RigidBodyOrigin;
+
+    class Tools;
 }
+
+// UI Entities
+class BonePropertiesController;
+class FixationProperties;
 
 // Typical used ogre namespace classes
 namespace Ogre {

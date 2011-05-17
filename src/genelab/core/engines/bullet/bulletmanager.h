@@ -14,7 +14,7 @@ namespace GeneLabCore {
 
         explicit BulletManager(QObject *parent = 0);
 
-        OgreBulletDynamics::DynamicsWorld *getWorld();
+        OgreBulletDynamics::DynamicsWorld *getDynamicsWorld();
 
         void setPhysicsEnable(bool physicsEnable);
         bool getPhysicsEnable();

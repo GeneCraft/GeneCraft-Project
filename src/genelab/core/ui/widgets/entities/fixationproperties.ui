@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FixationProperties</class>
+ <widget class="QWidget" name="FixationProperties">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>370</width>
+    <height>206</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>331</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+     <underline>false</underline>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(85, 85, 255);</string>
+   </property>
+   <property name="text">
+    <string>Fixation properties controller</string>
+   </property>
+  </widget>
+  <widget class="QToolBox" name="toolBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>351</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(77, 71, 255);</string>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>351</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <attribute name="icon">
+     <iconset resource="../../ressources.qrc">
+      <normaloff>:/img/icons/bone_add</normaloff>:/img/icons/bone_add</iconset>
+    </attribute>
+    <attribute name="label">
+     <string>Add Bone</string>
+    </attribute>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>10</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>End fix radius</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leAddBoneEndFixRadius">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>10</y>
+       <width>40</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0.4</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leAddBoneRadius">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>10</y>
+       <width>40</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0.3</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>40</y>
+       <width>46</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Lenght</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>10</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Radius</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leAddBoneLenght">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>40</y>
+       <width>40</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>2.0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbAddBone">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>61</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>351</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <attribute name="icon">
+     <iconset resource="../../ressources.qrc">
+      <normaloff>:/img/icons/img/icons/feed_add.png</normaloff>:/img/icons/img/icons/feed_add.png</iconset>
+    </attribute>
+    <attribute name="label">
+     <string>Add Sensor</string>
+    </attribute>
+    <widget class="QPushButton" name="pbAddSensor">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>61</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>10</y>
+       <width>101</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Position sensor</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Gyroscope sensor</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Contact sensor</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>351</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <attribute name="icon">
+     <iconset resource="../../ressources.qrc">
+      <normaloff>:/img/icons/img/icons/wrench.png</normaloff>:/img/icons/img/icons/wrench.png</iconset>
+    </attribute>
+    <attribute name="label">
+     <string>Tools</string>
+    </attribute>
+    <widget class="QPushButton" name="pbSetPosition">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>30</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Set position</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbFixInTheAir">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Fix / unfix in the air</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leX">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leZ">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>0</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leY">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>0</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../ressources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

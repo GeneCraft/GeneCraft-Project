@@ -46,7 +46,7 @@ OgreBulletDynamics::RigidBody *SandboxTools::addBox(OgreManager* ogre, BulletMan
     OgreBulletCollisions::BoxCollisionShape *sceneBoxShape = new OgreBulletCollisions::BoxCollisionShape(sizeBB);
     OgreBulletDynamics::RigidBody *defaultBody = new OgreBulletDynamics::RigidBody(
             "SandboxToolsRigidBody_" + StringConverter::toString(SandboxTools::mNumEntitiesInstanced),
-            bulletMgr->getWorld());
+            bulletMgr->getDynamicsWorld());
 
     // Finally create OgreBullet entity
     defaultBody->setShape(	node,
@@ -95,7 +95,7 @@ OgreBulletDynamics::RigidBody *SandboxTools::addSphere(OgreManager* ogre,
     OgreBulletCollisions::SphereCollisionShape *shape = new OgreBulletCollisions::SphereCollisionShape(rayon);
     OgreBulletDynamics::RigidBody *defaultBody = new OgreBulletDynamics::RigidBody(
             "SandboxToolsRigidBody_" + StringConverter::toString(SandboxTools::mNumEntitiesInstanced),
-            bulletMgr->getWorld());
+            bulletMgr->getDynamicsWorld());
 
     // Finally create OgreBullet entity
     defaultBody->setShape(	node,
@@ -141,7 +141,7 @@ OgreBulletDynamics::RigidBody *SandboxTools::addCylinder(OgreManager* ogre, Bull
     OgreBulletCollisions::CylinderCollisionShape *shape = new OgreBulletCollisions::CylinderCollisionShape(size,Ogre::Vector3(0,1,0));
     OgreBulletDynamics::RigidBody *defaultBody = new OgreBulletDynamics::RigidBody(
             "SandboxToolsRigidBody_" + StringConverter::toString(SandboxTools::mNumEntitiesInstanced),
-            bulletMgr->getWorld());
+            bulletMgr->getDynamicsWorld());
 
     // Finally create OgreBullet entity
     defaultBody->setShape(	node,

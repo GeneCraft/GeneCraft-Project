@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/img/icons">
+        <file>img/icons/add.png</file>
+        <file>img/icons/control_play_blue.png</file>
+        <file alias="close">img/icons/door_out.png</file>
+        <file alias="sensor_add">img/icons/feed.png</file>
+        <file alias="help">img/icons/help.png</file>
+        <file>img/icons/wrench.png</file>
+        <file alias="bone">img/icons/bone.png</file>
+        <file alias="fixation">img/icons/fixation.png</file>
+        <file>img/icons/feed_add.png</file>
+        <file alias="bone_add">img/icons/bone_add.png</file>
+    </qresource>
+</RCC>
