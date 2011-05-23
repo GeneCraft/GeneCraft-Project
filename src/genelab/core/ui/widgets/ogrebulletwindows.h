@@ -26,8 +26,8 @@ private:
     Ogre::Root* ogreRoot;
     OgreWidget* oW1;
     OgreWidget* oW2;
-    OgreManager* ogreEngine;
-    BulletManager*  bulletEngine;
+    OgreEngine* ogreEngine;
+    BulletEngine*  bulletEngine;
 
 private slots:
 

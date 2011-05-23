@@ -6,11 +6,11 @@
 #include "engine.h"
 
 namespace GeneLabCore {
-    class OgreManager : public GeneLabCore::Engine
+    class OgreEngine : public GeneLabCore::Engine
     {
         Q_OBJECT
     public:
-        explicit OgreManager(unsigned long winId);
+        explicit OgreEngine(unsigned long winId);
 
         Ogre::Root*         getOgreRoot();
         Ogre::SceneManager* getOgreSceneManager();

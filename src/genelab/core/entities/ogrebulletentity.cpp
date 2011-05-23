@@ -4,8 +4,8 @@
 #include "bone.h"
 #include <QList>
 #include <QStack>
-#include "ogremanager.h"
-#include "bulletmanager.h"
+#include "ogreengine.h"
+#include "bulletengine.h"
 #include "brainengine.h"
 #include "neuralnetwork.h"
 
@@ -14,7 +14,7 @@ namespace GeneLabCore {
         GeneLabCore::Entity(name, f, gen)
     {}
 
-    void OgreBulletEntity::init(OgreManager* ogreManager, BulletManager* bulletManager,
+    void OgreBulletEntity::init(OgreEngine* ogreManager, BulletEngine* bulletManager,
                                           BrainEngine* brainEngine)
     {
         this->ogreManager = ogreManager;

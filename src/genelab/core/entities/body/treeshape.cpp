@@ -6,8 +6,8 @@
 #include "bone.h"
 #include <QList>
 #include <QStack>
-#include "ogremanager.h"
-#include "bulletmanager.h"
+#include "ogreengine.h"
+#include "bulletengine.h"
 
 #include "OGRE/Ogre.h"
 
@@ -30,7 +30,7 @@ namespace GeneLabCore {
         return this->root;
     }
 
-    void TreeShape::initOgreBullet(OgreManager* ogreManager, BulletManager *bulletManager)
+    void TreeShape::initOgreBullet(OgreEngine* ogreManager, BulletEngine *bulletManager)
     {
         this->ogreManager = ogreManager;
         this->bulletManager = bulletManager;

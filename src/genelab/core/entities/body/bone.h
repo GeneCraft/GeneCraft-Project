@@ -8,7 +8,6 @@
 
 namespace GeneLabCore {
 
-
 class Bone : public QObject
 {
   Q_OBJECT
@@ -18,7 +17,7 @@ public:
    Bone(btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position);
    ~Bone();
 
-   void setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine);
+   void setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine);
 
    inline btRigidBody* getRigidBody()                             { return rigidBody;             }
    inline void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
@@ -48,8 +47,8 @@ protected:
    btScalar lenght;
 
    //OpenGLEngine *openGLEngine;
-   OgreManager* ogreManager; // AHAHAHAHAHAAHAHAHAHAHAH
-   BulletManager *bulletEngine;
+   OgreEngine* ogreManager; // AHAHAHAHAHAAHAHAHAHAHAH
+   BulletEngine *bulletEngine;
 
    static BonePropertiesController *inspectorWidget;
 

@@ -1,4 +1,4 @@
-#include "ogremanager.h"
+#include "ogreengine.h"
 #include "OGRE/Ogre.h"
 #include <QDebug>
 #include <QApplication>
@@ -9,25 +9,24 @@ namespace GeneLabCore {
     // We use genelab core for code productivity
     using namespace GeneLabCore;
 
-    OgreManager::OgreManager(unsigned long winId) :
+    OgreEngine::OgreEngine(unsigned long winId) :
         Engine()
     {
         this->winId = winId;
     }
 
-    void OgreManager::init() {
+    void OgreEngine::init() {
         this->initOgreRoot();
         this->initRenderingSystem(winId);
         this->initResources();
         this->initSceneManager();
-
     }
 
-    Ogre::Root* OgreManager::getOgreRoot() {
+    Ogre::Root* OgreEngine::getOgreRoot() {
         return ogreRoot;
     }
 
-    void OgreManager::initOgreRoot() {
+    void OgreEngine::initOgreRoot() {
         ogreRoot = new Ogre::Root();
         bool ok = ogreRoot->showConfigDialog();
         if(!ok)
@@ -38,7 +37,7 @@ namespace GeneLabCore {
         ogreRoot->initialise(false); // don't create a window
     }
 
-    void OgreManager::initRenderingSystem(unsigned long winId) {
+    void OgreEngine::initRenderingSystem(unsigned long winId) {
         // Get the parameters of the window QT created
         Ogre::String winHandle;
         #ifdef WIN32
@@ -67,7 +66,7 @@ namespace GeneLabCore {
         fakeRender->setVisible(false);
     }
 
-    void OgreManager::initResources() {
+    void OgreEngine::initResources() {
         // Load resource paths from config file
         Ogre::ConfigFile cf;
         cf.load("resources.cfg");
@@ -93,7 +92,7 @@ namespace GeneLabCore {
         Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
     }
 
-    void OgreManager::initSceneManager() {
+    void OgreEngine::initSceneManager() {
         //== Ogre Initialization ==//
         qDebug() << "ogre ok";
         Ogre::SceneType scene_manager_type = Ogre::ST_INTERIOR;
@@ -101,7 +100,7 @@ namespace GeneLabCore {
         scnManager = ogreRoot->createSceneManager( scene_manager_type );
     }
 
-    OgreWidget* OgreManager::createOgreWidget(Ogre::Camera* cam, QWidget* parent) {
+    OgreWidget* OgreEngine::createOgreWidget(Ogre::Camera* cam, QWidget* parent) {
 
         OgreWidget* ow = new OgreWidget(ogreRoot, scnManager, cam, parent);
         ow->init();
@@ -111,19 +110,19 @@ namespace GeneLabCore {
         return ow;
     }
 
-    Ogre::SceneManager* OgreManager::getOgreSceneManager() {
+    Ogre::SceneManager* OgreEngine::getOgreSceneManager() {
         return this->scnManager;
     }
 
-    void OgreManager::beforeStep() {
+    void OgreEngine::beforeStep() {
 
     }
 
-    void OgreManager::afterStep() {
+    void OgreEngine::afterStep() {
 
     }
 
-    void OgreManager::step() {
+    void OgreEngine::step() {
 
         ogreRoot->renderOneFrame();
 

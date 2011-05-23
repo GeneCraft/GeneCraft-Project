@@ -1,7 +1,7 @@
 #include "ogrebulletworld.h"
 
-#include "ogremanager.h"
-#include "bulletmanager.h"
+#include "ogreengine.h"
+#include "bulletengine.h"
 
 #include "snakefamily.h"
 #include "ogrebulletentity.h"
@@ -14,22 +14,30 @@
 
 #include "OGRE/Ogre.h"
 
+#include "bulletogreengine.h"
+#include "btosphere.h"
+#include "btobox.h"
+#include "btocylinder.h"
+
 #include <QVariant>
 
 namespace GeneLabCore {
-    OgreBulletWorld::OgreBulletWorld(OgreManager *ogreManager, BulletManager *bulletManager, QObject *parent) :
+    OgreBulletWorld::OgreBulletWorld(BulletOgreEngine *btoEngine, QObject *parent) :
         World(parent)
     {
-        this->ogreManager = ogreManager;
-        this->bulletManager = bulletManager;
+        this->btoEngine = btoEngine;
     }
 
     void OgreBulletWorld::setup() {
+
+        OgreEngine* ogreEngine = btoEngine->getOgreEngine();
+        BulletEngine* btEngine = btoEngine->getBulletEngine();
+
         // ---------------------
         // -- OGRE PROPERTIES --
         // ---------------------
 
-        Ogre::SceneManager* sceneManager = ogreManager->getOgreSceneManager();
+        Ogre::SceneManager* sceneManager = ogreEngine->getOgreSceneManager();
 
         // skybox
         sceneManager->setSkyBox(true, "Examples/SpaceSkyBox");
@@ -62,7 +70,7 @@ namespace GeneLabCore {
         // -- Content of the scene --
         // --------------------------
 
-        // Define a floor plane mesh
+        // Static Floor
         Ogre::Entity *ent;
         Ogre::Plane p;
         p.normal = Ogre::Vector3(0,1,0); p.d = 0;
@@ -70,27 +78,67 @@ namespace GeneLabCore {
                                                 Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
                                                 p, 200000, 200000, 20, 20, true, 1, 9000, 9000,
                                                 Ogre::Vector3::UNIT_Z);
-        // Create an entity (the floor)
+
         ent = sceneManager->createEntity("floor", "FloorPlane");
         ent->setMaterialName("Examples/BumpyMetal");
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
 
-        // add collision detection to it
-        OgreBulletCollisions::CollisionShape *Shape;
-        Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
-        // a body is needed for the shape
-        OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
-                                                                                            bulletManager->getDynamicsWorld());
-        defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
+        // physics
+        btStaticPlaneShape *collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
+        btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(),btVector3(0,0,0)));
+        btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,collisionShape,btVector3(0,0,0));
 
-        // push the created objects to the deques
-        mShapes.push_back(Shape);
-        mBodies.push_back(defaultPlaneBody);
+        btRigidBody *rigidBody = new btRigidBody(groundRigidBodyCI);
+        rigidBody->setActivationState(DISABLE_DEACTIVATION);
+        btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
+        // rigidBody->setFriction(0.9);
+        // rigidBody->setDamping(0.1,0.0);
+        // rigidBody->setRestitution(0.5);
+
+
+        btoSphere * sphere = new btoSphere(btoEngine,1,btVector3(0,5,0));
+        sphere->setup();
+
+        btoBox * box = new btoBox(btoEngine,btVector3(1,1,1),btVector3(0,10,0));
+        box->setup();
+
+        btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
+        cylinder->setup();
+
+        // Snake
+        // Move into EntityFactory
+        // Discussion about entity management to do...
+        //    SnakeFamily * snakeFamily = new SnakeFamily(QVariant());
+        //    OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
+        //    snake->init((OgreEngine*)factory->getEngines().find("Ogre").value(),
+        //                (BulletEngine*)factory->getEngines().find("Bullet").value(),
+        //                (BrainEngine*)factory->getEngines().find("Brain").value());
+
+        //    snake->setup(); // position
+
+        //    // attach the nose in the air
+        //    btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
+        //    ctRoot->setAngularLowerLimit(btVector3(0,0,0));
+        //    ctRoot->setAngularUpperLimit(btVector3(0,0,0));
+        //    ((BulletEngine*)factory->getEngines().find("Bullet").value())->getBulletDynamicsWorld()->addConstraint(ctRoot);
+
+
+//        // add collision detection to it
+//        OgreBulletCollisions::CollisionShape *Shape;
+//        Shape = new OgreBulletCollisions::StaticPlaneCollisionShape(Ogre::Vector3(0,1,0), 0); // (normal vector, distance)
+//        // a body is needed for the shape
+//        OgreBulletDynamics::RigidBody *defaultPlaneBody = new OgreBulletDynamics::RigidBody("BasePlane",
+//                                                                                            bulletManager->getDynamicsWorld());
+//        defaultPlaneBody->setStaticShape(Shape, 0.1, 0.8);// (shape, restitution, friction)
+
+//        // push the created objects to the deques
+//        mShapes.push_back(Shape);
+//        mBodies.push_back(defaultPlaneBody);
 
         // Ninja
-    //    Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
-    //    entNinja->setCastShadows(true);
-    //    sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
+        Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
+        entNinja->setCastShadows(true);
+        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
 
         // Cube of cubes
     //    float size = 10.0f;
@@ -105,7 +153,6 @@ namespace GeneLabCore {
     //    OgreBulletDynamics::SixDofConstraint *ct = new OgreBulletDynamics::SixDofConstraint(boxA,boxB,Ogre::Vector3(1,0,0),Ogre::Quaternion(),Ogre::Vector3(-1,0,0),Ogre::Quaternion());
     //    bulletManager->getWorld()->addConstraint(ct);
     //    //g6DofCC->setConstraint((btGeneric6DofConstraint*) ct->getBulletTypedConstraint());
-
 
 
     //    btTransform transform;

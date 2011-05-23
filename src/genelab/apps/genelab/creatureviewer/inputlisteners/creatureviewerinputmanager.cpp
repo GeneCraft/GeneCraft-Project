@@ -1,10 +1,13 @@
 #include "creatureviewerinputmanager.h"
 #include <QDebug>
-#include "ogremanager.h"
-#include "bulletmanager.h"
+#include "ogreengine.h"
+#include "bulletengine.h"
 #include "sandboxtools.h"
 #include "OGRE/Ogre.h"
 #include "Dynamics/OgreBulletDynamicsWorld.h"
+#include "btobox.h"
+#include "bulletogreengine.h"
+
 namespace GeneLabCore {
 CreatureViewerInputManager::CreatureViewerInputManager()
 {
@@ -27,7 +30,7 @@ void CreatureViewerInputManager::keyPressEvent(QKeyEvent *e)
                 throwCube();
         break;
         case Qt::Key_P :
-            bulletManager->setPhysicsEnable(!bulletManager->getPhysicsEnable());
+            btoEngine->getBulletEngine()->setPhysicsEnable(!btoEngine->getBulletEngine()->getPhysicsEnable());
         break;
         case Qt::Key_1 :
             camera->setPolygonMode(Ogre::PM_POINTS);
@@ -45,19 +48,21 @@ void CreatureViewerInputManager::keyReleaseEvent(QKeyEvent *e){}
 void CreatureViewerInputManager::enterViewPortEvent(QEvent *e){}
 void CreatureViewerInputManager::leaveViewPortEvent(QEvent *e){}
 
-void CreatureViewerInputManager::initOgreBullet(OgreManager* ogreManager,BulletManager *bulletManager, Ogre::Camera *camera)
+void CreatureViewerInputManager::initBulletOgre(BulletOgreEngine *btoEngine, Ogre::Camera *camera)
 {
     this->camera = camera;
-    this->ogreManager = ogreManager;
-    this->bulletManager = bulletManager;
+    this->btoEngine = btoEngine;
 }
 
 void CreatureViewerInputManager::throwCube()
 {
-    OgreBulletDynamics::RigidBody * box = SandboxTools::addBox(ogreManager,bulletManager,camera->getPosition(),Ogre::Vector3(1,1,1));
+    Ogre::Vector3 camPos = camera->getPosition();
+    btoBox *box = new btoBox(btoEngine,btVector3(1,1,1),btVector3(camPos.x,camPos.y,camPos.z));
+    box->setup();
 
     // apply impulse from the center of the box
-    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy() * 40;
-    box->getBulletRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
+    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy();
+    initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
+    box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
 }
 }

@@ -22,9 +22,9 @@ namespace GeneLabCore {
     signals:
 
     public slots:
-        virtual void beforeStep() = 0;
-        virtual void step()       = 0;
-        virtual void afterStep()  = 0;
+        virtual void beforeStep()   {};
+        virtual void step()         {};
+        virtual void afterStep()    {};
     };
 
 }

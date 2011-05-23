@@ -1,5 +1,4 @@
 #include "fixationproperties.h"
-
 #include <QDebug>
 #include "ui_fixationproperties.h"
 #include "fixation.h"

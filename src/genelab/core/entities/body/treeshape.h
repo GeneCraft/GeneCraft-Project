@@ -25,7 +25,7 @@ namespace GeneLabCore {
         /**
           * Init Ogre and Bullet references
           */
-        void initOgreBullet(OgreManager* ogreManager, BulletManager *bulletManager);
+        void initOgreBullet(OgreEngine* ogreManager, BulletEngine *bulletManager);
 
         /**
           * Setup the shape : add all entities in Ogre and Bullet
@@ -51,8 +51,8 @@ namespace GeneLabCore {
         Fixation* root;
 
         // Ogre & Bullet
-        OgreManager* ogreManager;
-        BulletManager *bulletManager;
+        OgreEngine* ogreManager;
+        BulletEngine *bulletManager;
 
         /** for recurcive browsing */
         void setupFixation(Fixation *fix);

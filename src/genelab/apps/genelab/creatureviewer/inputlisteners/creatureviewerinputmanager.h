@@ -19,14 +19,13 @@ namespace GeneLabCore {
         void enterViewPortEvent(QEvent *e);
         void leaveViewPortEvent(QEvent *e);
 
-        void initOgreBullet(OgreManager* ogreManager,BulletManager *bulletManager,Ogre::Camera *camera);
+        void initBulletOgre(BulletOgreEngine *btoEngine,Ogre::Camera *camera);
 
     private:
 
         void throwCube();
         Ogre::Camera *camera;
-        OgreManager* ogreManager;
-        BulletManager *bulletManager;
+        BulletOgreEngine* btoEngine;
         int mNumEntitiesInstanced;
 
     };

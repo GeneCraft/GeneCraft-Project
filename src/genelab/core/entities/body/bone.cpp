@@ -7,7 +7,7 @@
 #include "rigidbodyorigin.h"
 //#include "openglengine.h"
 //#include "openglscene.h"
-#include "bulletmanager.h"
+#include "bulletengine.h"
 #include "bonepropertiescontroller.h"
 #include "BulletCollision/CollisionShapes/btCylinderShape.h"
 #include "tools.h"
@@ -27,20 +27,20 @@ Bone::Bone(btScalar radius, btScalar lenght, btScalar endFixRadius, const btVect
 Bone::~Bone()
 {
     //openGLEngine->getScene()->removeDrawableObject(body); TODO
-    bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
+    bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
 
     // constraint
-    bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->removeConstraint(endFixConstraint);
+    bulletEngine->getBulletDynamicsWorld()->removeConstraint(endFixConstraint);
     delete endFixConstraint;
 
-    bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->removeConstraint(parentCt);
+    bulletEngine->getBulletDynamicsWorld()->removeConstraint(parentCt);
     delete parentCt;
 
     //delete body; TODO
     delete endFix;
 }
 
-void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine)
+void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine)
 {
     // this->openGLEngine = openGLEngine; TODO
     this->bulletEngine = bulletEngine;
@@ -54,7 +54,7 @@ void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine)
     // tmp
     this->rigidBody = new btRigidBody(5.0,new btDefaultMotionState(),new btCylinderShape(btVector3(0,1,0)));
     this->rigidBody->setUserPointer(origin);
-    bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->addRigidBody(this->rigidBody);
+    bulletEngine->getBulletDynamicsWorld()->addRigidBody(this->rigidBody);
 
     // default bone parameters
     //this->rigidBody->setDeactivationTime(100.0);
@@ -71,7 +71,7 @@ void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine)
     }
 
     // attach to its parent
-    bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->addConstraint(parentCt,true);
+    bulletEngine->getBulletDynamicsWorld()->addConstraint(parentCt,true);
 
     // attach and setup end fixation TODO btCompoundShape !!!
     btTransform localBone; localBone.setIdentity();
@@ -83,7 +83,7 @@ void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine)
     endFixConstraint->setAngularLowerLimit(btVector3(0,0,0));
     endFixConstraint->setAngularUpperLimit(btVector3(0,0,0));
 
-    bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->addConstraint(endFixConstraint/*,true*/); // TODO OgreBullet doesn't manage the second arg
+    bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint/*,true*/); // TODO OgreBullet doesn't manage the second arg
 
     endFix->setup(/*openGLEngine,*/bulletEngine);
 }

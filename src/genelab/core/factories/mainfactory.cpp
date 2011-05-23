@@ -2,9 +2,10 @@
 #include <QDebug>
 
 #include "OGRE/Ogre.h"
-#include "ogremanager.h"
+#include "ogreengine.h"
 #include "ogrewidget.h"
-#include "bulletmanager.h"
+#include "bulletengine.h"
+#include "bulletogreengine.h"
 #include "eventmanager.h"
 #include "creatureviewerinputmanager.h"
 #include "ressource.h"
@@ -24,9 +25,8 @@ namespace GeneLabCore {
 
         // Création des différents engines
         qDebug() << "Init Ogre";
-        OgreManager* ogreEngine = new OgreManager(winId);
+        OgreEngine* ogreEngine = new OgreEngine(winId);
         ogreEngine->init();
-
 
         this->engines.insert("Ogre", ogreEngine);
 
@@ -50,7 +50,6 @@ namespace GeneLabCore {
         QWidget* oW1 = ogreEngine->createOgreWidget(cam1, sceneWidget);
         this->widgets.insert("OgreWidget", oW1);
 
-
         sceneWidget->layout()->addWidget(oW1);
         //this->ui->centralWidget->layout()->addWidget(oW1);
 
@@ -62,26 +61,28 @@ namespace GeneLabCore {
         // ----------------------
         // -- Physics : Bullet --
         // ----------------------
-
         qDebug() << "Init Bullet";
-        BulletManager* bulletEngine = new BulletManager();
-        bulletEngine->init(ogreEngine);
-
+        BulletEngine* bulletEngine = new BulletEngine();
+        bulletEngine->init();
         this->engines.insert("Bullet", bulletEngine);
-
         qDebug() << "[OK]\n";
 
 
-        // ----------------------
-        // -- Brain : Neural Network --
-        // ----------------------
+        // ----------------------------
+        // -- Bullet and Ogre linker --
+        // ----------------------------
+        qDebug() << "Bullet and Ogre linker";
+        BulletOgreEngine* bulletOgreEngine = new BulletOgreEngine(bulletEngine,ogreEngine);
+        this->engines.insert("BulletOgre", bulletOgreEngine);
+        qDebug() << "[OK]\n";
 
+
+        // -------------------
+        // -- Brains engine --
+        // -------------------
         qDebug() << "Init Brain Engine";
         BrainEngine* brainEngine = new BrainEngine();
-
-
         this->engines.insert("Brain", brainEngine);
-
         qDebug() << "[OK]\n";
 
 
@@ -89,41 +90,29 @@ namespace GeneLabCore {
         // -- Events --
         // ------------
         qDebug() << "Init Events Manager";
-
-        // Events
         EventManager *em = new EventManager();
-
         CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
-        cvim->initOgreBullet(ogreEngine,bulletEngine,cam1);
+        cvim->initBulletOgre(bulletOgreEngine,cam1);
         em->addListener(cvim);
-
         connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
         connect(oW1,SIGNAL(mouseReleased(QMouseEvent*)),em,SLOT(mouseReleaseEvent(QMouseEvent*)));
         connect(oW1,SIGNAL(mouseMoved(QMouseEvent*)),em,SLOT(mouseMoveEvent(QMouseEvent*)));
-
         connect(oW1,SIGNAL(keyPressed(QKeyEvent*)),em,SLOT(keyPressEvent(QKeyEvent*)));
         connect(oW1,SIGNAL(keyReleased(QKeyEvent*)),em,SLOT(keyReleaseEvent(QKeyEvent*)));
-
         connect(oW1,SIGNAL(entered(QEvent*)),em,SLOT(enterViewPortEvent(QEvent*)));
         connect(oW1,SIGNAL(leaved(QEvent*)),em,SLOT(leaveViewPortEvent(QEvent*)));
-
         this->engines.insert("Event", em);
-
-
-
         qDebug() << "[OK]\n";
+
 
         // ---------------------
         // -- Scene (Content) --
         // ---------------------
         qDebug() << "World creation";
-        World *world = new OgreBulletWorld(ogreEngine, bulletEngine);
+        World *world = new OgreBulletWorld(bulletOgreEngine);
         world->setup();
-
         this->worlds.insert("BasicWorld", world);
         qDebug() << "[OK]\n";
-
-
     }
 
     bool MainFactory::create(Ressource r) {

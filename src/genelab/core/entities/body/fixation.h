@@ -26,7 +26,7 @@ namespace GeneLabCore {
         /**
          * Used to set default parameters of fixation and add it into engines
          */
-        void setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine);
+        void setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine);
 
         /**
          * Used to create and attach a bone to the fixation
@@ -41,7 +41,7 @@ namespace GeneLabCore {
         // GETTERS AND SETTERS
         inline QList<Bone *> &getBones()               { return bones; }
         //inline OpenGLEngine *getOpenGLEngine()       { return openGLEngine; }
-        inline BulletManager *getBulletEngine()        { return bulletEngine; }
+        inline BulletEngine *getBulletEngine()        { return bulletEngine; }
         inline btScalar getRadius()                    { return radius; }
         inline void setEntity(Entity *entity)          { this->entity = entity; }
         inline Entity *getEntity()                     { return entity; }
@@ -65,7 +65,7 @@ namespace GeneLabCore {
         //Sphere *sphere;
 
         //OpenGLEngine *openGLEngine;
-        BulletManager *bulletEngine;
+        BulletEngine *bulletEngine;
 
         btTypedConstraint *airFixation;
 

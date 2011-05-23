@@ -15,15 +15,15 @@ namespace GeneLabCore {
     signals:
 
     public slots:
-        void init(OgreManager* ogreManager, BulletManager* bulletManager, BrainEngine* brainEngine);
+        void init(OgreEngine* ogreManager, BulletEngine* bulletManager, BrainEngine* brainEngine);
         void setup();
         void setShape(TreeShape* shape);
         TreeShape* getShape();
 
     private:
         TreeShape* shape;
-        OgreManager *ogreManager;
-        BulletManager *bulletManager;
+        OgreEngine *ogreManager;
+        BulletEngine *bulletManager;
         BrainEngine* brainEngine;
         NeuralNetwork* brain;
 

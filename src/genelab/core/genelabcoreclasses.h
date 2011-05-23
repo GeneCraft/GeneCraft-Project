@@ -1,80 +1,109 @@
 // Our namespace
 namespace GeneLabCore {
-    // An engine
+
+    // -------------
+    // -- engines --
+    // -------------
     class Engine;
 
-    // Entity related
-    class Entity;
-    class EntityFamily;
-    class Bone;
-    class Fixation;
-
-    // Neural network and brain engine
-    class NeuralNetwork;
-    class NeuralIn;
-    class NeuralOut;
-    class BrainEngine;
-
-    // World related
-    class World;
-
-    // Generic simulation manager
-    class SimulationManager;
-
-    // Creation
-    class MainFactory;
-    class EntityFactory;
-    class EngineFactory;
-    class WorldFactory;
-    class NeuralNetworkFactory;
-
-    // Ressource (file, db, etc.)
-    class Ressource;
-
-    // Ressource management
-    class JsonLoader;
-
-    // Neural network
-    class NeuralNetworkVisualizer;
+    // Bullet management
+    class BulletEngine;
+    class RigidBodyOrigin; // user pointer
 
     // Ogre management
-    class OgreManager;
+    class OgreEngine;
 
-    // Bullet management
-    class BulletManager;
+    // Bullet & Ogre linker
+    class BulletOgreEngine;
 
     // Event management
     class EventManager;
     class InputListener;
+
+    // OpenGL
+    class OpenGLEngine;
+
+    // Brain
+    class BrainEngine;
+
+    // Generic simulation manager
+    class SimulationManager;
+
+
+    // --------------
+    // -- entities --
+    // --------------
+    class Entity;
+
+    // Families
+    class EntityFamily;
+    class SnakeFamily;
+
+    // Body
+    class TreeShape;
+    class Bone;
+    class Fixation;
+
+    // Brain
+    // Neural network
+    class NeuralNetwork;
+    class NeuralIn;
+    class NeuralOut;
+
+
+    // ---------------
+    // -- Factories --
+    // ---------------
+    class MainFactory;
+    class EntityFactory;
+    class EngineFactory;
+    class WorldFactory;
+
+    // Neural
+    class NeuralNetworkFactory;
+
+    // Shapes
+    class btShapesFactory;
+    class btglShapesFactory;
+    class btoShapesFactory;
+
+
+    // ----------------
+    // -- Ressources --
+    // ----------------
+    class Ressource;    // (file, db, etc.)
+    class JsonLoader;   // Ressource management
+
+
+    // --------
+    // -- UI --
+    // --------
+    // UI utils
+    class OgreWidget;
+    class OgreBulletWindows;
+
+    // Neural network
+    class NeuralNetworkVisualizer;
+
+
+
+    // -----------------------
+    // -- DELETE OR NOT ??? --
+    // -----------------------
+
+    // World related
+    class World;
 
     // Entity and world implementation
     //class OgreBulletScene;
     class OgreBulletEntity;
     class OgreBulletEntityFamily;
 
-    class SnakeFamily;
-
-
-    class TreeShape;
-    class Bone;
-    class Fixation;
-    class Articulation;
-
-    // UI utils
-    class OgreWidget;
-
-    // UI Event
-    class EventManager;
-
-    class OgreBulletWindows;
-
-    // Bullet user
-    class RigidBodyOrigin;
-
+    // Tools (random, ...)
     class Tools;
 }
 
-// UI Entities
+// Entities
 class BonePropertiesController;
 class FixationProperties;
 
@@ -94,6 +123,7 @@ namespace OgreBulletDynamics {
     class RigidBody;
     class SixDofConstraint;
 }
+
 namespace OgreBulletCollisions {
     class DebugDrawer;
     class CollisionShape;

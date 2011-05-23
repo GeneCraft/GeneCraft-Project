@@ -15,9 +15,12 @@ INCLUDEPATH += \
     ../genelab/core/engines \
     ../genelab/core/engines/brains \
     ../genelab/core/engines/bullet \
+    ../genelab/core/engines/bullet/shapes \
     ../genelab/core/engines/events \
     ../genelab/core/engines/ogre \
     ../genelab/core/engines/ogre/entities \
+    ../genelab/core/engines/bulletogre \
+    ../genelab/core/engines/bulletogre/shapes \
     ../genelab/core/engines/world \
     ../genelab/core/entities \
     ../genelab/core/entities/body \
@@ -98,12 +101,12 @@ LIBS += -lOpenGLSupport
 
 SOURCES += \
     ../genelab/core/engines/simulationmanager.cpp \
-    ../genelab/core/engines/ogre/ogremanager.cpp \
+    ../genelab/core/engines/ogre/ogreengine.cpp \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.cpp \
     ../genelab/core/engines/events/inputlistener.cpp \
     ../genelab/core/engines/events/eventmanager.cpp \
     ../genelab/core/engines/engine.cpp \
-    ../genelab/core/engines/bullet/bulletmanager.cpp \
+    ../genelab/core/engines/bullet/bulletengine.cpp \
     ../genelab/core/engines/brains/brainengine.cpp \
     ../genelab/core/engines/ogre/ogrewidget.cpp \
     ../genelab/core/entities/body/treeshape.cpp \
@@ -139,15 +142,23 @@ SOURCES += \
     ../genelab/core/engines/bullet/rigidbodyorigin.cpp \
     ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
-    ../genelab/core/utils/tools.cpp
+    ../genelab/core/utils/tools.cpp \
+    ../genelab/core/engines/bullet/shapes/btshape.cpp \
+    ../genelab/core/engines/bullet/shapes/btbox.cpp \
+    ../genelab/core/engines/bullet/shapes/btsphere.cpp \
+    ../genelab/core/engines/bulletogre/shapes/btobox.cpp \
+    ../genelab/core/engines/bulletogre/shapes/btosphere.cpp \
+    ../genelab/core/engines/bulletogre/bulletogreengine.cpp \
+    ../genelab/core/engines/bullet/shapes/btcylinder.cpp \
+    ../genelab/core/engines/bulletogre/shapes/btocylinder.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
-    ../genelab/core/engines/ogre/ogremanager.h \
+    ../genelab/core/engines/ogre/ogreengine.h \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.h \
     ../genelab/core/engines/events/eventmanager.h \
     ../genelab/core/engines/engine.h \
-    ../genelab/core/engines/bullet/bulletmanager.h \
+    ../genelab/core/engines/bullet/bulletengine.h \
     ../genelab/core/engines/brains/brainengine.h \
     ../genelab/core/engines/ogre/ogrewidget.h \
     ../genelab/core/engines/events/inputlistener.h \
@@ -184,7 +195,15 @@ HEADERS += \
     ../genelab/core/engines/bullet/rigidbodyorigin.h \
     ../genelab/core/ui/widgets/entities/fixationproperties.h \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
-    ../genelab/core/utils/tools.h
+    ../genelab/core/utils/tools.h \
+    ../genelab/core/engines/bullet/shapes/btshape.h \
+    ../genelab/core/engines/bullet/shapes/btbox.h \
+    ../genelab/core/engines/bullet/shapes/btsphere.h \
+    ../genelab/core/engines/bulletogre/shapes/btobox.h \
+    ../genelab/core/engines/bulletogre/shapes/btosphere.h \
+    ../genelab/core/engines/bulletogre/bulletogreengine.h \
+    ../genelab/core/engines/bullet/shapes/btcylinder.h \
+    ../genelab/core/engines/bulletogre/shapes/btocylinder.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

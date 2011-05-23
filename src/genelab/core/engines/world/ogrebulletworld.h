@@ -12,17 +12,15 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit OgreBulletWorld(OgreManager* ogreManager, BulletManager* bulletManager,
-                                 QObject *parent = 0);
+        OgreBulletWorld(BulletOgreEngine *btoEngine, QObject *parent = 0);
 
     signals:
 
     public slots:
         virtual void setup();
     private:
-        OgreManager* ogreManager;
-        BulletManager* bulletManager;
 
+        BulletOgreEngine *btoEngine;
 
         // OgreBullet World
         OgreBulletDynamics::DynamicsWorld *mWorld;

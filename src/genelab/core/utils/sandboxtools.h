@@ -8,10 +8,10 @@
 #include <QQueue>
 #include <QDebug>
 #include "genelabcoreclasses.h"
-#include "bulletmanager.h"
+#include "bulletengine.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "OGRE/Ogre.h"
-#include "ogremanager.h"
+#include "ogreengine.h"
 #include "engine.h"
 
 namespace GeneLabCore {
@@ -21,13 +21,13 @@ class SandboxTools : public QObject
 public:
     explicit SandboxTools(QObject *parent = 0);
 
-    static OgreBulletDynamics::RigidBody *addBox(OgreManager* ogre, BulletManager *bulletMgr,
+    static OgreBulletDynamics::RigidBody *addBox(OgreEngine* ogre, BulletEngine *bulletMgr,
                                                  const Ogre::Vector3 &position,const Ogre::Vector3 &size, const Ogre::Quaternion &rotation = Ogre::Quaternion::IDENTITY);
 
-    static OgreBulletDynamics::RigidBody *addSphere(OgreManager* ogre, BulletManager *bulletMgr,
+    static OgreBulletDynamics::RigidBody *addSphere(OgreEngine* ogre, BulletEngine *bulletMgr,
                                                  const Ogre::Vector3 &position, double rayon);
 
-    static OgreBulletDynamics::RigidBody *addCylinder(OgreManager* ogre, BulletManager *bulletMgr,
+    static OgreBulletDynamics::RigidBody *addCylinder(OgreEngine* ogre, BulletEngine *bulletMgr,
                                                  const Ogre::Vector3 &position, const Ogre::Vector3 &size);
 
 private:

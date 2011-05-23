@@ -3,7 +3,7 @@
 #include <QStringBuilder>
 #include "sandboxtools.h"
 #include "fixationproperties.h"
-#include "bulletmanager.h"
+#include "bulletengine.h"
 #include "rigidbodyorigin.h"
 
 namespace GeneLabCore {
@@ -30,12 +30,12 @@ namespace GeneLabCore {
         }
 
         //this->openGLEngine->getScene()->removeDrawableObject(sphere);
-        bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
+        bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
 
         //delete sphere; // TODO
     }
 
-    void Fixation::setup(/*OpenGLEngine *openGLEngine, */BulletManager *bulletEngine)
+    void Fixation::setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine)
     {
         //this->openGLEngine = openGLEngine;
         this->bulletEngine = bulletEngine;
@@ -50,7 +50,7 @@ namespace GeneLabCore {
         // tmp
         this->rigidBody = new btRigidBody(5.0,new btDefaultMotionState(),new btSphereShape(btScalar(0.5)));
         this->rigidBody->setUserPointer(origin);
-        bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->addRigidBody(this->rigidBody);
+        bulletEngine->getBulletDynamicsWorld()->addRigidBody(this->rigidBody);
         //this->rigidBody->setUserPointer(origin);
         //bulletEngine->getDynamicsWorld()->addRigidBody(this->rigidBody);
 
@@ -84,7 +84,7 @@ namespace GeneLabCore {
         airFixation = ct;
 
         if(bulletEngine)
-            bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->addConstraint(ct);
+            bulletEngine->getBulletDynamicsWorld()->addConstraint(ct);
         else
             qDebug() << "set before (bulletEngine is null)";
     }
@@ -93,7 +93,7 @@ namespace GeneLabCore {
     {
         if(bulletEngine != 0 && airFixation != 0)
         {
-            bulletEngine->getDynamicsWorld()->getBulletDynamicsWorld()->removeConstraint(airFixation);
+            bulletEngine->getBulletDynamicsWorld()->removeConstraint(airFixation);
             delete airFixation;
         }
     }

@@ -20,9 +20,9 @@
 #include "entity.h"
 
 // GeneLab
-#include "ogremanager.h"
+#include "ogreengine.h"
 #include "ogrewidget.h"
-#include "bulletmanager.h"
+#include "bulletengine.h"
 #include "simulationmanager.h"
 #include "jsonloader.h"
 #include "eventmanager.h"
@@ -30,6 +30,8 @@
 #include "treeshape.h"
 #include "fixation.h"
 #include "ogrebulletentity.h"
+#include "btosphere.h"
+#include "btobox.h"
 
 // App
 #include "ogrebulletwindows.h"
@@ -118,23 +120,6 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     MainFactory* factory = new MainFactory(this->ui->centralWidget, (unsigned long) this->winId() );
 
 
-    // TODO :
-    // Move into EntityFactory
-    // Discussion about entity management to do...
-    SnakeFamily * snakeFamily = new SnakeFamily(QVariant());
-    OgreBulletEntity* snake = snakeFamily->createOgreBulletEntity();
-
-    snake->init((OgreManager*)factory->getEngines().find("Ogre").value(),
-                (BulletManager*)factory->getEngines().find("Bullet").value(),
-                (BrainEngine*)factory->getEngines().find("Brain").value());
-
-    snake->setup(); // position
-
-    // attach the nose in the air
-    btGeneric6DofConstraint *ctRoot = new btGeneric6DofConstraint(*snake->getShape()->getRoot()->getRigidBody(),btTransform(btQuaternion(),btVector3(0,0,0)),true);
-    ctRoot->setAngularLowerLimit(btVector3(0,0,0));
-    ctRoot->setAngularUpperLimit(btVector3(0,0,0));
-    ((BulletManager*)factory->getEngines().find("Bullet").value())->getDynamicsWorld()->getBulletDynamicsWorld()->addConstraint(ctRoot);
 
     // ------------------------
     // -- Simulation Manager --
