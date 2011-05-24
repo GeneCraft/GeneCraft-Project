@@ -14,10 +14,10 @@ class Bone : public QObject
 
 public:
 
-   Bone(btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position);
+   Bone(btShapesFactory *shapesFactory, btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position);
    ~Bone();
 
-   void setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine);
+   void setup();
 
    inline btRigidBody* getRigidBody()                             { return rigidBody;             }
    inline void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
@@ -41,7 +41,7 @@ protected:
    btGeneric6DofConstraint *parentCt;
    btGeneric6DofConstraint *endFixConstraint;
 
-   //Cylinder *body;
+   btCylinder *body;
 
    btScalar radius;
    btScalar lenght;

@@ -19,14 +19,14 @@ namespace GeneLabCore {
          *
          * Think to call setup method to add objects in the world.
          */
-        Fixation(btScalar radius, btVector3 position);
+        Fixation(btShapesFactory *shapesFactory, btScalar radius, btVector3 position);
 
         ~Fixation();
 
         /**
          * Used to set default parameters of fixation and add it into engines
          */
-        void setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine);
+        void setup();
 
         /**
          * Used to create and attach a bone to the fixation
@@ -56,13 +56,14 @@ namespace GeneLabCore {
 
     protected:
 
+        btShapesFactory *shapesFactory;
 
         btRigidBody *rigidBody;
         RigidBodyOrigin *origin;
         QList<Bone *> bones;
 
         btScalar radius;
-        //Sphere *sphere;
+        btSphere *sphere;
 
         //OpenGLEngine *openGLEngine;
         BulletEngine *bulletEngine;

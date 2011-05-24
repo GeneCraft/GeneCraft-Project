@@ -53,7 +53,7 @@ namespace GeneLabCore {
         }
 
         //getRoot()->initOgreBullet(ogreManager,bulletManager);
-        getRoot()->setup(bulletManager);
+        getRoot()->setup();
 
         // setup recurcively the tree shape
         setupFixation(getRoot());

@@ -5,6 +5,8 @@
 #include "fixationproperties.h"
 #include "bulletengine.h"
 #include "rigidbodyorigin.h"
+#include "btshapesfactory.h"
+#include "btsphere.h"
 
 namespace GeneLabCore {
 
@@ -14,11 +16,13 @@ namespace GeneLabCore {
     #define FIXATION_DENSITY 5.0f
     #define FIXATION_FRICTION 0.6f
 
-    Fixation::Fixation(btScalar radius, btVector3 position) : QObject(), radius(radius), airFixation(0), entity(0)
+    Fixation::Fixation(btShapesFactory *shapesFactory, btScalar radius, btVector3 position) : QObject(), radius(radius), airFixation(0), entity(0)
     {
-        // TODO
-        //sphere = new Sphere(radius,position,btScalar(FIXATION_DENSITY));
-        //this->rigidBody->setFriction(FIXATION_FRICTION);
+        this->shapesFactory = shapesFactory;
+
+        sphere = shapesFactory->createSphere(radius,position); // btScalar(FIXATION_DENSITY)
+        rigidBody = sphere->getRigidBody();
+        rigidBody->setFriction(FIXATION_FRICTION);
     }
 
     Fixation::~Fixation()
@@ -29,36 +33,24 @@ namespace GeneLabCore {
             bones.removeAt(0);
         }
 
-        //this->openGLEngine->getScene()->removeDrawableObject(sphere);
-        bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
-
-        //delete sphere; // TODO
+        delete sphere;
     }
 
-    void Fixation::setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine)
+    void Fixation::setup()
     {
-        //this->openGLEngine = openGLEngine;
-        this->bulletEngine = bulletEngine;
+        // shape
+        sphere->setup();
 
-        // graphic
-        //sphere->setColor(.9,.9,.9);
-        //openGLEngine->getScene()->addDrawableObject(sphere);
-
-        // physics
+        // origins
         origin = new RigidBodyOrigin(RigidBodyOrigin::FIXATION,(QObject *)this);
+        rigidBody->setUserPointer(origin);
 
-        // tmp
-        this->rigidBody = new btRigidBody(5.0,new btDefaultMotionState(),new btSphereShape(btScalar(0.5)));
-        this->rigidBody->setUserPointer(origin);
-        bulletEngine->getBulletDynamicsWorld()->addRigidBody(this->rigidBody);
-        //this->rigidBody->setUserPointer(origin);
-        //bulletEngine->getDynamicsWorld()->addRigidBody(this->rigidBody);
-
-        //this->rigidBody->setDeactivationTime(100.0);
-        //this->rigidBody->setActivationState(DISABLE_DEACTIVATION);
+        // state
+        //rigidBody->setDeactivationTime(100.0);
+        //rigidBody->setActivationState(DISABLE_DEACTIVATION);
 
         for(int i=0;i<bones.size();++i)
-            bones.at(i)->setup(/*openGLEngine,*/bulletEngine);
+            bones.at(i)->setup();
     }
 
     btRigidBody* Fixation::getRigidBody()
@@ -74,33 +66,33 @@ namespace GeneLabCore {
 
     void Fixation::fixeInTheAir(const btVector3 &position)
     {
-        this->rigidBody->getWorldTransform().setOrigin(position);
+//        this->rigidBody->getWorldTransform().setOrigin(position);
 
-        // fixe root in the air
-        btTransform local; local.setIdentity();
-        btGeneric6DofConstraint *ct = new btGeneric6DofConstraint(*this->rigidBody,local,true);
-        ct->setAngularLowerLimit(btVector3(0,0,0));
-        ct->setAngularUpperLimit(btVector3(0,0,0));
-        airFixation = ct;
+//        // fixe root in the air
+//        btTransform local; local.setIdentity();
+//        btGeneric6DofConstraint *ct = new btGeneric6DofConstraint(*this->rigidBody,local,true);
+//        ct->setAngularLowerLimit(btVector3(0,0,0));
+//        ct->setAngularUpperLimit(btVector3(0,0,0));
+//        airFixation = ct;
 
-        if(bulletEngine)
-            bulletEngine->getBulletDynamicsWorld()->addConstraint(ct);
-        else
-            qDebug() << "set before (bulletEngine is null)";
+//        if(bulletEngine)
+//            bulletEngine->getBulletDynamicsWorld()->addConstraint(ct);
+//        else
+//            qDebug() << "set before (bulletEngine is null)";
     }
 
     void Fixation::unfixInTheAir()
     {
-        if(bulletEngine != 0 && airFixation != 0)
-        {
-            bulletEngine->getBulletDynamicsWorld()->removeConstraint(airFixation);
-            delete airFixation;
-        }
+//        if(bulletEngine != 0 && airFixation != 0)
+//        {
+//            bulletEngine->getBulletDynamicsWorld()->removeConstraint(airFixation);
+//            delete airFixation;
+//        }
     }
 
     Bone *Fixation::addBone(const btTransform &localFix, btScalar boneRadius, btScalar boneLenght, btScalar endFixRadius, const btVector3 &lowerLimits, const btVector3 &upperLimits)
     {
-        Bone * bone = new Bone(boneRadius,boneLenght,endFixRadius,btVector3(this->rigidBody->getWorldTransform().getOrigin()));
+        Bone * bone = new Bone(shapesFactory, boneRadius, boneLenght, endFixRadius, btVector3(this->rigidBody->getWorldTransform().getOrigin()));
 
         btTransform localBone; localBone.setIdentity();
         localBone.getBasis().setEulerZYX(0,0,0);
@@ -130,9 +122,6 @@ namespace GeneLabCore {
 
         return inspectorWidget;
     }
-
-
-
 
 //    Fixation::Fixation(QObject *parent) :
 //        QObject(parent)

@@ -5,6 +5,8 @@
 #include "btcylinder.h"
 #include "OGRE/Ogre.h"
 
+namespace GeneLabCore {
+
 class btoCylinder : public btCylinder
 {
 public:
@@ -21,5 +23,7 @@ protected:
 private:
     static int mNumEntitiesInstanced;
 };
+
+}
 
 #endif // BTOCYLINDER_H

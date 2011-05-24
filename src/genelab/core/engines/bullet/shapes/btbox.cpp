@@ -3,6 +3,8 @@
 #include "bulletengine.h"
 #include "rigidbodyorigin.h"
 
+namespace GeneLabCore {
+
 btBox::btBox(BulletEngine *btEngine, btVector3 size, btVector3 position, btVector3 rotation)
 {
     this->btEngine = btEngine;
@@ -44,4 +46,6 @@ void btBox::setup()
         btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
     else
         qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
+}
+
 }

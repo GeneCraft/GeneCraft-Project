@@ -22,7 +22,7 @@ namespace GeneLabCore {
 
         OgreBulletEntity* snake = new OgreBulletEntity("Snaky"+QString::number(length), "Snake", 1);
         TreeShape* snakeShape = new TreeShape();
-        Fixation* root = new Fixation(0.5,btVector3(0,10,0));
+        Fixation* root = NULL;//new Fixation(0.5,btVector3(0,10,0));
         snakeShape->setRoot(root);
         snake->setShape(snakeShape);
 

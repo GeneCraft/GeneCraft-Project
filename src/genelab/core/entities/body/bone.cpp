@@ -12,53 +12,52 @@
 #include "BulletCollision/CollisionShapes/btCylinderShape.h"
 #include "tools.h"
 
-using namespace GeneLabCore;
+// shape
+#include "btcylinder.h"
+#include "btshapesfactory.h"
+
+namespace GeneLabCore {
 
 BonePropertiesController* Bone::inspectorWidget = 0;
 
-namespace GeneLabCore {
-Bone::Bone(btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position) : QObject(),
+Bone::Bone(btShapesFactory *shapesFactory, btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position) : QObject(),
     radius(radius), lenght(lenght)
 {
-    //body    = new Cylinder(radius,lenght,position,32);
-    endFix  = new Fixation(endFixRadius,position);
+    bulletEngine = shapesFactory->getBulletEngine();
+
+    body        = shapesFactory->createCylinder(radius,lenght,position);
+    rigidBody   = body->getRigidBody();
+    endFix      = new Fixation(shapesFactory,endFixRadius,position);
 }
 
 Bone::~Bone()
 {
     //openGLEngine->getScene()->removeDrawableObject(body); TODO
-    bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
+    //bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
 
     // constraint
-    bulletEngine->getBulletDynamicsWorld()->removeConstraint(endFixConstraint);
+    //bulletEngine->getBulletDynamicsWorld()->removeConstraint(endFixConstraint);
     delete endFixConstraint;
 
-    bulletEngine->getBulletDynamicsWorld()->removeConstraint(parentCt);
+    //bulletEngine->getBulletDynamicsWorld()->removeConstraint(parentCt);
     delete parentCt;
 
-    //delete body; TODO
+    delete body;
     delete endFix;
 }
 
-void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine)
+void Bone::setup()
 {
-    // this->openGLEngine = openGLEngine; TODO
-    this->bulletEngine = bulletEngine;
+    // shape
+    body->setup();
 
-    // graphic
-    //body->setColor(0.06,0.27,0.47);
-    //openGLEngine->getScene()->addDrawableObject(body);
-
-    // physics
+    // origins
     origin = new RigidBodyOrigin(RigidBodyOrigin::BONE,(QObject *)this);
-    // tmp
-    this->rigidBody = new btRigidBody(5.0,new btDefaultMotionState(),new btCylinderShape(btVector3(0,1,0)));
-    this->rigidBody->setUserPointer(origin);
-    bulletEngine->getBulletDynamicsWorld()->addRigidBody(this->rigidBody);
+    rigidBody->setUserPointer(origin);
 
-    // default bone parameters
+    // state
     //this->rigidBody->setDeactivationTime(100.0);
-    this->rigidBody->setActivationState(DISABLE_DEACTIVATION);
+    //this->rigidBody->setActivationState(DISABLE_DEACTIVATION);
     for(int i=0;i<3;i++)
     {
         btRotationalLimitMotor * motor = parentCt->getRotationalLimitMotor(i);
@@ -85,7 +84,7 @@ void Bone::setup(/*OpenGLEngine *openGLEngine, */BulletEngine *bulletEngine)
 
     bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint/*,true*/); // TODO OgreBullet doesn't manage the second arg
 
-    endFix->setup(/*openGLEngine,*/bulletEngine);
+    endFix->setup();
 }
 
 

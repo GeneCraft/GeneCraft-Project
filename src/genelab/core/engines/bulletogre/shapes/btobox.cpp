@@ -3,6 +3,8 @@
 #include "bulletogreengine.h"
 #include "ogreengine.h"
 
+namespace GeneLabCore {
+
 using namespace Ogre;
 
 int btoBox::mNumEntitiesInstanced = 0;
@@ -45,4 +47,6 @@ void btoBox::setup()
 
     node->attachObject(entity);
     btoEngine->addBody(rigidBody,entity,node);
+}
+
 }

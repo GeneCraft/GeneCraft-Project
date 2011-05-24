@@ -5,6 +5,9 @@
 #include "OgreSceneManager.h"
 #include "bulletogreengine.h"
 
+
+namespace GeneLabCore {
+
 using namespace Ogre;
 
 int btoSphere::mNumSpheresInstanced = 0;
@@ -48,6 +51,10 @@ void btoSphere::setup()
 {
     btSphere::setup();
 
+    qDebug() << "btoSphere::setup()";
+
     node->attachObject(entity);
     btoEngine->addBody(rigidBody,entity,node);
+}
+
 }

@@ -6,7 +6,7 @@
 #include "BulletCollision/CollisionShapes/btSphereShape.h"
 #include "LinearMath/btDefaultMotionState.h"
 
-using namespace GeneLabCore;
+namespace GeneLabCore {
 
 class btSphere : public btShape
 {
@@ -23,5 +23,7 @@ protected:
     btSphereShape* shape;
     btDefaultMotionState* motionState;
 };
+
+}
 
 #endif // BTSPHERE_H

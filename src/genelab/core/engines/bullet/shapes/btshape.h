@@ -5,7 +5,7 @@
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-using namespace GeneLabCore;
+namespace GeneLabCore {
 
 class btShape : public QObject
 {
@@ -30,5 +30,7 @@ protected:
     //btCollisionShape *collisionShape;
 
 };
+
+}
 
 #endif // BTSHAPE_H

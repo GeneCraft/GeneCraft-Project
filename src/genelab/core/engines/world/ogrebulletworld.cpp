@@ -1,27 +1,31 @@
 #include "ogrebulletworld.h"
 
+// Qt
+#include <QVariant>
+#include <QTest>
+#include <QDebug>
+
+// Engines
+#include "OGRE/Ogre.h"
 #include "ogreengine.h"
 #include "bulletengine.h"
+#include "bulletogreengine.h"
 
+// Shapes
+#include "BulletCollision/CollisionShapes/btStaticPlaneShape.h"
+#include "btosphere.h"
+#include "btobox.h"
+#include "btocylinder.h"
+#include "btoshapesfactory.h"
+
+// Entity
 #include "snakefamily.h"
 #include "ogrebulletentity.h"
 #include "treeshape.h"
 #include "fixation.h"
 
-#include "OgreBulletDynamicsRigidBody.h"
-#include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
-#include "Shapes/OgreBulletCollisionsBoxShape.h"
-
-#include "OGRE/Ogre.h"
-
-#include "bulletogreengine.h"
-#include "btosphere.h"
-#include "btobox.h"
-#include "btocylinder.h"
-
-#include <QVariant>
-
 namespace GeneLabCore {
+
     OgreBulletWorld::OgreBulletWorld(BulletOgreEngine *btoEngine, QObject *parent) :
         World(parent)
     {
@@ -79,6 +83,8 @@ namespace GeneLabCore {
                                                 p, 200000, 200000, 20, 20, true, 1, 9000, 9000,
                                                 Ogre::Vector3::UNIT_Z);
 
+//        ent = sceneManager->createEntity("cubic", "cube.mesh");
+
         ent = sceneManager->createEntity("floor", "FloorPlane");
         ent->setMaterialName("Examples/BumpyMetal");
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
@@ -95,15 +101,30 @@ namespace GeneLabCore {
         // rigidBody->setDamping(0.1,0.0);
         // rigidBody->setRestitution(0.5);
 
+        QTest::qWait(1000);
 
-        btoSphere * sphere = new btoSphere(btoEngine,1,btVector3(0,5,0));
+        btoShapesFactory *shapesFactory = new btoShapesFactory(btoEngine);
+
+        btSphere *sphere = shapesFactory->createSphere(1,btVector3(0,5,0));
+        //btoSphere * sphere = new btoSphere(btoEngine,1,btVector3(0,5,0));
         sphere->setup();
 
-        btoBox * box = new btoBox(btoEngine,btVector3(1,1,1),btVector3(0,10,0));
+        btBox * box = shapesFactory->createBox(btVector3(1,1,1),btVector3(0,10,0));
+        //btoBox * box = new btoBox(btoEngine,btVector3(1,1,1),btVector3(0,10,0));
         box->setup();
 
-        btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
+        btCylinder * cylinder = shapesFactory->createCylinder(0.5,4,btVector3(0,15,0));
+        //btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
         cylinder->setup();
+
+        Fixation *f = new Fixation(shapesFactory,1,btVector3(0,1,1));
+
+        // entity
+        btTransform transform; transform.setIdentity();
+        f->addBone(transform,0.5,2,1,btVector3(0,0,0),btVector3(0,0,0));
+        f->addBone(transform,0.5,2,1,btVector3(0,0,0),btVector3(0,0,0));
+        f->setup();
+
 
         // Snake
         // Move into EntityFactory
@@ -135,10 +156,11 @@ namespace GeneLabCore {
 //        mShapes.push_back(Shape);
 //        mBodies.push_back(defaultPlaneBody);
 
-        // Ninja
-        Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
-        entNinja->setCastShadows(true);
-        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
+//        // Ninja
+//        int* a = new int[10000];
+//        Ogre::Entity* entNinja = sceneManager->createEntity("Ninja", "ninja.mesh");
+//        entNinja->setCastShadows(true);
+//        sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
 
         // Cube of cubes
     //    float size = 10.0f;

@@ -1,10 +1,14 @@
 #include "btsphere.h"
+
+#include <QDebug>
 #include "bulletengine.h"
 #include "rigidbodyorigin.h"
 #include "OgreBulletDynamicsWorld.h" // TODO TRY TO DELETE !!!
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 #define PI 3.14159265
+
+namespace GeneLabCore {
 
 btSphere::btSphere(BulletEngine *btEngine, btScalar radius, btVector3 position, btVector3 rotation)
 {
@@ -44,8 +48,12 @@ void btSphere::init(btScalar radius, btVector3 position, btScalar density, btVec
 
 void btSphere::setup()
 {
+    qDebug() << "btSphere::setup()";
+
     if(btEngine != NULL && rigidBody != NULL)
         btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
     else
         qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
+}
+
 }

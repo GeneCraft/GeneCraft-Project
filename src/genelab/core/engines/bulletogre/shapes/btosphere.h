@@ -5,6 +5,8 @@
 #include "btsphere.h"
 #include "OGRE/Ogre.h" // AHAHAHAHAHAHAHAHAHAAHAH mettre la classe dans genelabcoreclasses.h
 
+namespace GeneLabCore {
+
 class btoSphere : public btSphere
 {
 public:
@@ -20,5 +22,7 @@ protected:
 private:
     static int mNumSpheresInstanced;
 };
+
+}
 
 #endif // BTOSPHERE_H

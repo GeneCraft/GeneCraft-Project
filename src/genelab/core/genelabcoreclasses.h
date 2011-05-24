@@ -9,12 +9,18 @@ namespace GeneLabCore {
     // Bullet management
     class BulletEngine;
     class RigidBodyOrigin; // user pointer
+    class btBox;
+    class btSphere;
+    class btCylinder;
 
     // Ogre management
     class OgreEngine;
 
     // Bullet & Ogre linker
     class BulletOgreEngine;
+    class btoBox;
+    class btoSphere;
+    class btoCylinder;
 
     // Event management
     class EventManager;
@@ -66,7 +72,6 @@ namespace GeneLabCore {
     class btShapesFactory;
     class btglShapesFactory;
     class btoShapesFactory;
-
 
     // ----------------
     // -- Ressources --

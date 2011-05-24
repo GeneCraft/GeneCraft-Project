@@ -5,6 +5,8 @@
 
 #define PI 3.14159265
 
+namespace GeneLabCore {
+
 btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, btVector3 position, btVector3 rotation)
 {
     this->btEngine = btEngine;
@@ -43,4 +45,6 @@ void btCylinder::setup()
         btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
     else
         qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
+}
+
 }

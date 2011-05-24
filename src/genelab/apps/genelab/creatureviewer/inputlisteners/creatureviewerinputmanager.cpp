@@ -9,6 +9,7 @@
 #include "bulletogreengine.h"
 
 namespace GeneLabCore {
+
 CreatureViewerInputManager::CreatureViewerInputManager()
 {
 }

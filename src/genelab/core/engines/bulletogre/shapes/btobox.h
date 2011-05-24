@@ -5,6 +5,8 @@
 #include "btbox.h"
 #include "OGRE/Ogre.h"
 
+namespace GeneLabCore {
+
 class btoBox : public btBox
 {
 public:
@@ -22,4 +24,5 @@ private:
     static int mNumEntitiesInstanced;
 };
 
+}
 #endif // BTOBOX_H

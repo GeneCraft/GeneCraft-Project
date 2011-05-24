@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT       += core gui opengl testlib
 
 TARGET = genelab_global
 TEMPLATE = app
@@ -150,7 +150,9 @@ SOURCES += \
     ../genelab/core/engines/bulletogre/shapes/btosphere.cpp \
     ../genelab/core/engines/bulletogre/bulletogreengine.cpp \
     ../genelab/core/engines/bullet/shapes/btcylinder.cpp \
-    ../genelab/core/engines/bulletogre/shapes/btocylinder.cpp
+    ../genelab/core/engines/bulletogre/shapes/btocylinder.cpp \
+    ../genelab/core/factories/btshapesfactory.cpp \
+    ../genelab/core/factories/btoshapesfactory.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -203,7 +205,9 @@ HEADERS += \
     ../genelab/core/engines/bulletogre/shapes/btosphere.h \
     ../genelab/core/engines/bulletogre/bulletogreengine.h \
     ../genelab/core/engines/bullet/shapes/btcylinder.h \
-    ../genelab/core/engines/bulletogre/shapes/btocylinder.h
+    ../genelab/core/engines/bulletogre/shapes/btocylinder.h \
+    ../genelab/core/factories/btshapesfactory.h \
+    ../genelab/core/factories/btoshapesfactory.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
