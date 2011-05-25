@@ -23,6 +23,7 @@
 #include "ogrebulletentity.h"
 #include "treeshape.h"
 #include "fixation.h"
+#include "spider/spider.h"
 
 namespace GeneLabCore {
 
@@ -83,9 +84,6 @@ namespace GeneLabCore {
                                                 p, 200000, 200000, 20, 20, true, 1, 9000, 9000,
                                                 Ogre::Vector3::UNIT_Z);
 
-        for(int i = 0; i < 100; i++)
-            ent = sceneManager->createEntity(QString(QString("cubic")+QString::number(i)).toStdString().c_str(), "cube.mesh");
-
         ent = sceneManager->createEntity("floor", "FloorPlane");
         ent->setMaterialName("Examples/BumpyMetal");
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
@@ -104,8 +102,14 @@ namespace GeneLabCore {
         // rigidBody->setDamping(0.1,0.0);
         // rigidBody->setRestitution(0.5);
 
-        QTest::qWait(1000);
+        // test bug memory
+        //QTest::qWait(1000);
+        //        for(int i = 0; i < 100; i++)
+        //            ent = sceneManager->createEntity(QString(QString("cubic")+QString::number(i)).toStdString().c_str(), "cube.mesh");
 
+        // ------------------
+        // -- Basic shapes --
+        // ------------------
         btoShapesFactory *shapesFactory = new btoShapesFactory(btoEngine);
 
         btSphere *sphere = shapesFactory->createSphere(1,btVector3(0,5,0));
@@ -120,13 +124,19 @@ namespace GeneLabCore {
         //btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
         cylinder->setup();
 
-        Fixation *f = new Fixation(shapesFactory,1,btVector3(0,1,1));
+        // --------------
+        // -- Entities --
+        // --------------
+        //no family entity
+//        Fixation *f = new Fixation(shapesFactory,1,btVector3(0,1,1));
+//        btTransform transform; transform.setIdentity();
+//        f->addBone(transform,0.5,2,1,btVector3(0,0,0),btVector3(0,0,0));
+//        f->addBone(transform,0.5,2,1,btVector3(0,0,0),btVector3(0,0,0));
+//        f->setup();
 
-        // entity
-        btTransform transform; transform.setIdentity();
-        f->addBone(transform,0.5,2,1,btVector3(0,0,0),btVector3(0,0,0));
-        f->addBone(transform,0.5,2,1,btVector3(0,0,0),btVector3(0,0,0));
-        f->setup();
+        // Spider
+        Spider *spider = new Spider(shapesFactory,btVector3(0,10,10));
+        spider->setup();
 
 
         // Snake

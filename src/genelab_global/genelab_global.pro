@@ -152,7 +152,10 @@ SOURCES += \
     ../genelab/core/engines/bullet/shapes/btcylinder.cpp \
     ../genelab/core/engines/bulletogre/shapes/btocylinder.cpp \
     ../genelab/core/factories/btshapesfactory.cpp \
-    ../genelab/core/factories/btoshapesfactory.cpp
+    ../genelab/core/factories/btoshapesfactory.cpp \
+    ../genelab/core/entities/families/spider/spider.cpp \
+    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -207,7 +210,10 @@ HEADERS += \
     ../genelab/core/engines/bullet/shapes/btcylinder.h \
     ../genelab/core/engines/bulletogre/shapes/btocylinder.h \
     ../genelab/core/factories/btshapesfactory.h \
-    ../genelab/core/factories/btoshapesfactory.h
+    ../genelab/core/factories/btoshapesfactory.h \
+    ../genelab/core/entities/families/spider/spider.h \
+    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -215,7 +221,9 @@ FORMS += \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.ui \
     ../genelab/apps/sandbox/brainsandbox/brainapp.ui \
     ../genelab/core/ui/widgets/entities/fixationproperties.ui \
-    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui
+    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui \
+    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.ui \
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

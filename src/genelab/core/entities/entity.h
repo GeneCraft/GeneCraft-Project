@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include <QObject>
+#include "genelabcoreclasses.h"
 
 namespace GeneLabCore {
     class Entity : public QObject
@@ -11,19 +12,31 @@ namespace GeneLabCore {
     public:
         explicit Entity(QString name, QString family, int generation, QObject *parent = 0);
         ~Entity();
-        /*Shape* getShape();
+
+        inline const QString &getName() { return name; }
+
+   //     static CreaturePropertiesController *getInspectorWidget(Creature * selectedCreature = 0, btRigidBody *selectedBody = 0);
+
+        inline void setRootFixation(Fixation *rootFix) { this->rootFix = rootFix; }
+        inline Fixation *getRootFixation() { return rootFix; }
+
+        /*
+        Shape* getShape();
         void   setShape(Shape*);
         void print();
         */
+
     signals:
 
     public slots:
-        void setup();
+        virtual void setup();
 
-    private:
-        /*
-        Shape* shape;
-        */
+    protected:
+
+        // shape root
+        Fixation *rootFix;
+
+        // entity
         QString name;
         QString family;
         int generation;
