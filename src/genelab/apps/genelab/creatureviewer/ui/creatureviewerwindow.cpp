@@ -1,6 +1,11 @@
 #include "creatureviewerwindow.h"
 #include "ui_creatureviewerwindow.h"
+
+// Qt
 #include <QDebug>
+#include <QLabel>
+#include <QVBoxLayout>
+
 #include "fixation.h"
 #include "bone.h"
 #include "entity.h"
@@ -9,7 +14,12 @@
 #include "bonepropertiescontroller.h"
 #include "entitypropertiescontroller.h"
 
-#include <QLabel>
+// Engine
+#include "mainfactory.h"
+#include "simulationmanager.h"
+
+#include <QMap>
+
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,10 +28,27 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // Connection to Inspectors
-    //connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+    connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 
-    inspector = 0;
-    openGLWidget = 0;
+    MainFactory* factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+
+    // ------------------------
+    // -- Simulation Manager --
+    // ------------------------
+    qDebug() << "Init Simulation Manager";
+    SimulationManager* simulationManager
+            = new SimulationManager(factory->getEngines().values());
+
+    simulationManager->setup();
+    qDebug() << "[OK]\n";
+
+    qDebug() << "Start simulation";
+    simulationManager->start();
+    qDebug() << "[OK]\n";
+
+
+    inspector = NULL;
+    openGLWidget = NULL;
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()
@@ -44,10 +71,10 @@ void CreatureViewerWindow::setOpenGLWidget(QWidget * openGLWidget)
 
 void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 {
-//    if(entity != NULL)
-//        ui->dwCreature->setWidget(Entity::getInspectorWidget(entity,selectedBody));
-//    else
-//        ui->dwCreature->setWidget(new QLabel("No creature selected.")); // TODO NOT new !!!
+    if(entity != NULL)
+        ui->dwCreature->setWidget(Entity::getInspectorWidget(entity,selectedBody));
+    else
+        ui->dwCreature->setWidget(new QLabel("No creature selected.")); // TODO NOT new !!!
 }
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)

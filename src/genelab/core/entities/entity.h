@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "genelabcoreclasses.h"
+#include "entitypropertiescontroller.h"
 
 namespace GeneLabCore {
     class Entity : public QObject
@@ -15,7 +16,7 @@ namespace GeneLabCore {
 
         inline const QString &getName() { return name; }
 
-   //     static CreaturePropertiesController *getInspectorWidget(Creature * selectedCreature = 0, btRigidBody *selectedBody = 0);
+        static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
         inline void setRootFixation(Fixation *rootFix) { this->rootFix = rootFix; }
         inline Fixation *getRootFixation() { return rootFix; }
@@ -40,6 +41,8 @@ namespace GeneLabCore {
         QString name;
         QString family;
         int generation;
+
+        static EntityPropertiesController *inspectorWidget;
 
     };
 }

@@ -114,6 +114,7 @@
    </property>
   </action>
  </widget>
+ <resources/>
  <connections>
   <connection>
    <sender>actionQuit</sender>

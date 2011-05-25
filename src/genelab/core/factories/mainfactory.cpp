@@ -1,5 +1,8 @@
 #include "mainfactory.h"
+
+// Qt
 #include <QDebug>
+#include <QVBoxLayout>
 
 #include "OGRE/Ogre.h"
 #include "ogreengine.h"
@@ -12,9 +15,9 @@
 #include "brainengine.h"
 #include "ogrebulletworld.h"
 #include "world.h"
-#include <QLayout>
 
 namespace GeneLabCore {
+
     MainFactory::MainFactory(QWidget* sceneWidget, unsigned long winId, QObject *parent) :
         QObject(parent)
     {
@@ -50,7 +53,11 @@ namespace GeneLabCore {
         QWidget* oW1 = ogreEngine->createOgreWidget(cam1, sceneWidget);
         this->widgets.insert("OgreWidget", oW1);
 
+        if(sceneWidget->layout() == NULL)
+           sceneWidget->setLayout(new QVBoxLayout(sceneWidget));
+
         sceneWidget->layout()->addWidget(oW1);
+
         //this->ui->centralWidget->layout()->addWidget(oW1);
 
         // widget 2

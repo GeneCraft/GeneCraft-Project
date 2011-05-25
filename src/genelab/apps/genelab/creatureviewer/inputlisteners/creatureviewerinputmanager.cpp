@@ -14,12 +14,25 @@ CreatureViewerInputManager::CreatureViewerInputManager()
 {
 }
 
+
 void CreatureViewerInputManager::mousePressEvent(QMouseEvent * e)
 {
-    if(e->button() == Qt::RightButton)
+    switch(e->button())
+    {
+    case Qt::RightButton :
         throwCube();
+        break;
+
+    case Qt::LeftButton :
+        pickBody();
+        break;
+
+    default:
+        break;
+    }
 }
 void CreatureViewerInputManager::mouseReleaseEvent(QMouseEvent * e){}
+
 void CreatureViewerInputManager::mouseMoveEvent(QMouseEvent * e){}
 
 void CreatureViewerInputManager::keyPressEvent(QKeyEvent *e)
@@ -66,4 +79,37 @@ void CreatureViewerInputManager::throwCube()
     initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
     box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
 }
+
+
+void CreatureViewerInputManager::pickBody()
+{
+    bool m_ortho = false;
+    btVector3 rayTo, rayFrom;
+
+    if (m_ortho)
+    {
+        rayFrom = rayTo;
+        rayFrom.setZ(-100.f);
+    }
+    else
+    {
+        Ogre::Vector3 ogreRayFrom = camera->getPosition();
+        rayFrom = btVector3(ogreRayFrom.x,ogreRayFrom.y,ogreRayFrom.z);
+
+        Ogre::Vector3 ogreRayTo = camera->getPosition() + camera->getDirection() * 1000;
+        rayTo = btVector3(ogreRayTo.x,ogreRayTo.y,ogreRayTo.z);
+    }
+
+    btCollisionWorld::ClosestRayResultCallback rayCallback(rayFrom,rayTo);
+    btoEngine->getBulletEngine()->getBulletDynamicsWorld()->rayTest(rayFrom,rayTo,rayCallback);
+
+    if (rayCallback.hasHit())
+    {
+        btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+
+        if (body)
+            emit rigidBodySelected(body);
+    }
+}
+
 }
