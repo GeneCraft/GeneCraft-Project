@@ -83,7 +83,8 @@ namespace GeneLabCore {
                                                 p, 200000, 200000, 20, 20, true, 1, 9000, 9000,
                                                 Ogre::Vector3::UNIT_Z);
 
-//        ent = sceneManager->createEntity("cubic", "cube.mesh");
+        for(int i = 0; i < 100; i++)
+            ent = sceneManager->createEntity(QString(QString("cubic")+QString::number(i)).toStdString().c_str(), "cube.mesh");
 
         ent = sceneManager->createEntity("floor", "FloorPlane");
         ent->setMaterialName("Examples/BumpyMetal");
@@ -91,7 +92,9 @@ namespace GeneLabCore {
 
         // physics
         btStaticPlaneShape *collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
-        btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(),btVector3(0,0,0)));
+        btTransform worldTransform;
+        worldTransform.setIdentity();
+        btDefaultMotionState* groundMotionState = new btDefaultMotionState(worldTransform);
         btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,collisionShape,btVector3(0,0,0));
 
         btRigidBody *rigidBody = new btRigidBody(groundRigidBodyCI);
