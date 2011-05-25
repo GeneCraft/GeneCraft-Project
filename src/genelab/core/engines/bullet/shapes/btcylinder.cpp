@@ -10,7 +10,7 @@ namespace GeneLabCore {
 btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, btVector3 position, btVector3 rotation)
 {
     this->btEngine = btEngine;
-    init(radius,height,position,2500.0,rotation);
+    init(radius,height,position,5.0,rotation);
 }
 
 void btCylinder::init(btScalar radius, btScalar height, btVector3 position, btScalar density, btVector3 EulerRotation)

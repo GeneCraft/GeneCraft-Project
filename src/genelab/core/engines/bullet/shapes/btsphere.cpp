@@ -14,7 +14,7 @@ btSphere::btSphere(BulletEngine *btEngine, btScalar radius, btVector3 position, 
 {
     this->btEngine = btEngine;
 
-    init(radius,position,2500.0,rotation);
+    init(radius,position,5.0,rotation);
 }
 
 void btSphere::init(btScalar radius, btVector3 position, btScalar density, btVector3 EulerRotation)

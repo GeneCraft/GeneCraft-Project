@@ -98,9 +98,6 @@ namespace GeneLabCore {
         // ------------
         qDebug() << "Init Events Manager";
         EventManager *em = new EventManager();
-        CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
-        cvim->initBulletOgre(bulletOgreEngine,cam1);
-        em->addListener(cvim);
         connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
         connect(oW1,SIGNAL(mouseReleased(QMouseEvent*)),em,SLOT(mouseReleaseEvent(QMouseEvent*)));
         connect(oW1,SIGNAL(mouseMoved(QMouseEvent*)),em,SLOT(mouseMoveEvent(QMouseEvent*)));

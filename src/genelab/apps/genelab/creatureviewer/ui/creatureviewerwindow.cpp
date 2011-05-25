@@ -15,11 +15,20 @@
 #include "entitypropertiescontroller.h"
 
 // Engine
+#include "OGRE/Ogre.h"
+#include "ogreengine.h"
 #include "mainfactory.h"
 #include "simulationmanager.h"
+#include "eventmanager.h"
+#include "bulletogreengine.h"
+
+// Listeners
+#include "creatureviewerinputmanager.h"
 
 #include <QMap>
 
+
+using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -31,6 +40,25 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 
     MainFactory* factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+
+
+    // ----------------------
+    // -- Events Listeners --
+    // ----------------------
+    CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
+
+    // TODO move to constructor !
+    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    cvim->initBulletOgre(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
+
+    // add listener in events manager
+    EventManager *eventsManager =  static_cast<EventManager*>(factory->getEngines().find("Event").value());
+    eventsManager->addListener(cvim);
+
+    // connect listener to window
+    connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+
 
     // ------------------------
     // -- Simulation Manager --

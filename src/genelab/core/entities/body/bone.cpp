@@ -57,7 +57,7 @@ void Bone::setup()
 
     // state
     //this->rigidBody->setDeactivationTime(100.0);
-    //this->rigidBody->setActivationState(DISABLE_DEACTIVATION);
+    rigidBody->setActivationState(DISABLE_DEACTIVATION);
     for(int i=0;i<3;i++)
     {
         btRotationalLimitMotor * motor = parentCt->getRotationalLimitMotor(i);

@@ -1,5 +1,7 @@
 #include "ogrebulletworld.h"
 
+#include <string.h>
+
 // Qt
 #include <QVariant>
 #include <QTest>
@@ -45,7 +47,7 @@ namespace GeneLabCore {
         Ogre::SceneManager* sceneManager = ogreEngine->getOgreSceneManager();
 
         // skybox
-        sceneManager->setSkyBox(true, "Examples/SpaceSkyBox");
+        sceneManager->setSkyDome(true, "Examples/CloudySky");
 
         // lights
         sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
@@ -54,22 +56,38 @@ namespace GeneLabCore {
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
         pointLight->setPosition(Ogre::Vector3(0, 150, 250));
-        pointLight->setDiffuseColour(1.0, 0.0, 0.0);
-        pointLight->setSpecularColour(1.0, 0.0, 0.0);
+        pointLight->setDiffuseColour(0.8, 0.8, 1.0);
+        pointLight->setSpecularColour(0.8, 0.8, 1.0);
 
         Ogre::Light* directionalLight = sceneManager->createLight("directionalLight");
         directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
-        directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, 0));
-        directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, 0));
+        directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, .25));
+        directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
 
         Ogre::Light* spotLight = sceneManager->createLight("spotLight");
         spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
-        spotLight->setDiffuseColour(0, 0, 1.0);
-        spotLight->setSpecularColour(0, 0, 1.0);
+        spotLight->setDiffuseColour(1.0, 1.0, 1.0);
+        spotLight->setSpecularColour(1.0, 1.0, 1.0);
         spotLight->setDirection(-1, -1, 0);
         spotLight->setPosition(Ogre::Vector3(300, 300, 0));
         spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
+
+        // -------------------------
+        // -- List of Material :) --
+        // -------------------------
+        Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
+        while (materialIterator.hasMoreElements())
+        {
+            QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
+
+            if(matName.contains("Grass"))
+                qDebug() << "****************************************************" ;
+
+            qDebug() << matName;
+
+            materialIterator.moveNext();
+        }
 
         // --------------------------
         // -- Content of the scene --
@@ -85,7 +103,7 @@ namespace GeneLabCore {
                                                 Ogre::Vector3::UNIT_Z);
 
         ent = sceneManager->createEntity("floor", "FloorPlane");
-        ent->setMaterialName("Examples/BumpyMetal");
+        ent->setMaterialName("Examples/GrassFloor");
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
 
         // physics
