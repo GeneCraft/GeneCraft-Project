@@ -119,7 +119,7 @@ namespace GeneLabCore {
         initTransform *= localFixation;
         initTransform.setRotation(initTransform.getRotation()*localOrientation);
 
-        btVector3 newPos(0, btScalar((boneLenght*0.5 + radius - radius*PERCENT_BONE_INSIDE_FIX)), 0);
+        btVector3 newPos(0, btScalar((boneLenght*0.5 + radius)), 0);
         btVector3 transposedPos = initTransform*newPos;
         btTransform boneTransform(initTransform.getRotation(), transposedPos);
 
