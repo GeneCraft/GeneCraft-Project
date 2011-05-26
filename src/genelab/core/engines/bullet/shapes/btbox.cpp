@@ -5,14 +5,14 @@
 
 namespace GeneLabCore {
 
-btBox::btBox(BulletEngine *btEngine, btVector3 size, btVector3 position, btVector3 rotation)
+btBox::btBox(BulletEngine *btEngine, btVector3 size, const btTransform &transform)
 {
     this->btEngine = btEngine;
 
-    init(size,position,2500.0,rotation);
+    init(size, 5.0, transform);
 }
 
-void btBox::init(btVector3 size, btVector3 position, btScalar density, btVector3 EulerRotation)
+void btBox::init(btVector3 size, btScalar density, const btTransform &transform)
 {
 //    this->size = size;
 //    this->initialPosition = position;
@@ -23,11 +23,7 @@ void btBox::init(btVector3 size, btVector3 position, btScalar density, btVector3
     // shape
     this->shape = new btBoxShape(btVector3(size.x()/2.0,size.y()/2.0,size.z()/2.0));
 
-    // rotation with euler method :) (warning order Z-Y-X)
-    btTransform tFinal; tFinal.setIdentity();
-    tFinal.getBasis().setEulerZYX(EulerRotation.x(),EulerRotation.y(),EulerRotation.z());
-    tFinal.setOrigin(position); // set position
-    this->motionState = new btDefaultMotionState(tFinal);
+    this->motionState = new btDefaultMotionState(transform);
 
     // body
     btScalar mass = size.x()*size.y()*size.z()*density; // volumic mass = 1500kg/m3

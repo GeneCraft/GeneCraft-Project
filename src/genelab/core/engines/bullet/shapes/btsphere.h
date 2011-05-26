@@ -11,12 +11,12 @@ namespace GeneLabCore {
 class btSphere : public btShape
 {
 public:
-    btSphere(BulletEngine *btEngine, btScalar radius, btVector3 position, btVector3 rotation = btVector3(0,0,0));
+    btSphere(BulletEngine *btEngine, btScalar radius, const btTransform &transform);
     virtual void setup();
 
 private:
 
-    void init(btScalar radius, btVector3 position, btScalar density, btVector3 EulerRotation);
+    void init(btScalar radius, btScalar density, const btTransform &transform);
 
 protected:
 

@@ -11,9 +11,9 @@ class btoShapesFactory : public btShapesFactory
 public:
     btoShapesFactory(BulletOgreEngine *btoEngine);
 
-    virtual btBox *createBox(btVector3 size, btVector3 position, btVector3 rotation = btVector3(0,0,0));
-    virtual btSphere *createSphere(btScalar radius, btVector3 position, btVector3 rotation = btVector3(0,0,0));
-    virtual btCylinder *createCylinder(btScalar radius, btScalar height, btVector3 position, btVector3 rotation = btVector3(0,0,0));
+    virtual btBox *createBox(btVector3 size, const btTransform &transform);
+    virtual btSphere *createSphere(btScalar radius, const btTransform &transform);
+    virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform);
 protected:
     BulletOgreEngine *btoEngine;
 };

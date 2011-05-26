@@ -1,7 +1,6 @@
 #include "fixation.h"
 #include "bone.h"
 #include <QStringBuilder>
-#include "sandboxtools.h"
 #include "fixationproperties.h"
 #include "bulletengine.h"
 #include "rigidbodyorigin.h"
@@ -16,11 +15,11 @@ namespace GeneLabCore {
     #define FIXATION_DENSITY 5.0f
     #define FIXATION_FRICTION 0.6f
 
-    Fixation::Fixation(btShapesFactory *shapesFactory, btScalar radius, btVector3 position) : QObject(), radius(radius), airFixation(0), entity(0)
+    Fixation::Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform) : QObject(), radius(radius), airFixation(0), entity(0)
     {
         this->shapesFactory = shapesFactory;
 
-        sphere = shapesFactory->createSphere(radius,position); // btScalar(FIXATION_DENSITY)
+        sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         rigidBody = sphere->getRigidBody();
         rigidBody->setFriction(FIXATION_FRICTION);
     }
@@ -90,21 +89,33 @@ namespace GeneLabCore {
 //        }
     }
 
-    Bone *Fixation::addBone(const btTransform &localFix, btScalar boneRadius, btScalar boneLenght, btScalar endFixRadius, const btVector3 &lowerLimits, const btVector3 &upperLimits)
+    Bone *Fixation::addBone(const btQuaternion &localOrientation,
+                            btScalar boneRadius,
+                            btScalar boneLenght,
+                            btScalar endFixRadius,
+                            const btVector3 &lowerLimits,
+                            const btVector3 &upperLimits)
     {
-        Bone * bone = new Bone(shapesFactory, boneRadius, boneLenght, endFixRadius, btVector3(this->rigidBody->getWorldTransform().getOrigin()));
+        // Get the initial transform
+        btTransform initTransform = this->rigidBody->getWorldTransform();
+        initTransform.setRotation(initTransform.getRotation()*localOrientation);
+        btVector3 newPos(0, btScalar((boneLenght*0.5 + radius - radius*PERCENT_BONE_INSIDE_FIX)), 0);
+        btVector3 transposedPos = initTransform*newPos;
+        btTransform boneTransform(initTransform.getRotation(), transposedPos);
+
+        Bone * bone = new Bone(shapesFactory, boneRadius, boneLenght, endFixRadius, boneTransform);
 
         btTransform localBone; localBone.setIdentity();
-        localBone.getBasis().setEulerZYX(0,0,0);
-        localBone.setOrigin(btVector3(btScalar(0.), btScalar(-(bone->getLength()*0.5 + radius - radius*PERCENT_BONE_INSIDE_FIX)), btScalar(0.)));
+        //localBone.getBasis().setEulerZYX(0,0,0);
+        localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 -radius), btScalar(0.)));
 
+        btTransform localFix(localOrientation);
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
-                                                                   localFix, localBone,true);
+                                                                   localFix, localBone, true);
 
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
 
-        //bulletEngine->getDynamicsWorld()->addConstraint(ct);
         bone->setParentConstraint(ct);
         bone->setEntity(entity);
 

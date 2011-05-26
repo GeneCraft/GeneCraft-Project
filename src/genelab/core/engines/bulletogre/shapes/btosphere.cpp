@@ -12,8 +12,8 @@ using namespace Ogre;
 
 int btoSphere::mNumSpheresInstanced = 0;
 
-btoSphere::btoSphere(BulletOgreEngine *btoEngine, btScalar radius, btVector3 position, btVector3 rotation)
-    :btSphere(btoEngine->getBulletEngine(),radius,position,rotation)
+btoSphere::btoSphere(BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform)
+    :btSphere(btoEngine->getBulletEngine(),radius,transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();

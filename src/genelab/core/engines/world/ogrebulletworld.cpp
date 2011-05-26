@@ -53,7 +53,7 @@ namespace GeneLabCore {
         sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
         sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-        Ogre::Light* pointLight = sceneManager->createLight("pointLight");
+        /*Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
         pointLight->setPosition(Ogre::Vector3(0, 150, 250));
         pointLight->setDiffuseColour(0.8, 0.8, 1.0);
@@ -71,7 +71,7 @@ namespace GeneLabCore {
         spotLight->setSpecularColour(1.0, 1.0, 1.0);
         spotLight->setDirection(-1, -1, 0);
         spotLight->setPosition(Ogre::Vector3(300, 300, 0));
-        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
+        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));*/
 
         // -------------------------
         // -- List of Material :) --
@@ -130,15 +130,22 @@ namespace GeneLabCore {
         // ------------------
         btoShapesFactory *shapesFactory = new btoShapesFactory(btoEngine);
 
-        btSphere *sphere = shapesFactory->createSphere(1,btVector3(0,5,0));
+
+        btTransform transformSphere; transformSphere.setIdentity();
+        transformSphere.setOrigin(btVector3(0,5,0));
+        btSphere *sphere = shapesFactory->createSphere(1,transformSphere);
         //btoSphere * sphere = new btoSphere(btoEngine,1,btVector3(0,5,0));
         sphere->setup();
 
-        btBox * box = shapesFactory->createBox(btVector3(1,1,1),btVector3(0,10,0));
+        btTransform transformBox; transformBox.setIdentity();
+        transformBox.setOrigin(btVector3(0,10,0));
+        btBox * box = shapesFactory->createBox(btVector3(1,1,1),transformBox);
         //btoBox * box = new btoBox(btoEngine,btVector3(1,1,1),btVector3(0,10,0));
         box->setup();
 
-        btCylinder * cylinder = shapesFactory->createCylinder(0.5,4,btVector3(0,15,0));
+        btTransform transformCylinder; transformCylinder.setIdentity();
+        transformCylinder.setOrigin(btVector3(0,15,0));
+        btCylinder * cylinder = shapesFactory->createCylinder(0.5,4,transformCylinder);
         //btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
         cylinder->setup();
 

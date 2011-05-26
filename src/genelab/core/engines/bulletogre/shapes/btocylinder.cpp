@@ -9,8 +9,8 @@ using namespace Ogre;
 
 int btoCylinder::mNumEntitiesInstanced = 0;
 
-btoCylinder::btoCylinder(BulletOgreEngine *btoEngine, btScalar radius, btScalar height, btVector3 position, btVector3 rotation)
-    : btCylinder(btoEngine->getBulletEngine(),radius,height,position,rotation)
+btoCylinder::btoCylinder(BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform)
+    : btCylinder(btoEngine->getBulletEngine(),radius,height,transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();

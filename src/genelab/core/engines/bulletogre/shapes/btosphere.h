@@ -10,7 +10,7 @@ namespace GeneLabCore {
 class btoSphere : public btSphere
 {
 public:
-    btoSphere(BulletOgreEngine *btoEngine, btScalar radius, btVector3 position, btVector3 rotation = btVector3(0,0,0));
+    btoSphere(BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
     void setup();
 
 protected:

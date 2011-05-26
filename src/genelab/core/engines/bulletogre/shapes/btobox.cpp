@@ -9,8 +9,8 @@ using namespace Ogre;
 
 int btoBox::mNumEntitiesInstanced = 0;
 
-btoBox::btoBox(BulletOgreEngine *btoEngine, btVector3 size, btVector3 position, btVector3 rotation)
-    : btBox(btoEngine->getBulletEngine(),size,position,rotation)
+btoBox::btoBox(BulletOgreEngine *btoEngine, btVector3 size, const btTransform &transform)
+    : btBox(btoEngine->getBulletEngine(),size,transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();

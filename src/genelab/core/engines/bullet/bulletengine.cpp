@@ -57,6 +57,6 @@ namespace GeneLabCore {
 
     void BulletEngine::step() {
         if(physicsEnable)
-            bulletDynamicsWorld->stepSimulation(1/60.0);
+            bulletDynamicsWorld->stepSimulation(1/60.0, 10);
     }
 }

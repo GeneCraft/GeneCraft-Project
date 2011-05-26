@@ -12,19 +12,19 @@ btoShapesFactory::btoShapesFactory(BulletOgreEngine *btoEngine) : btShapesFactor
     this->btoEngine = btoEngine;
 }
 
-btBox *btoShapesFactory::createBox(btVector3 size, btVector3 position, btVector3 rotation)
+btBox *btoShapesFactory::createBox(btVector3 size, const btTransform &transform)
 {
-    return new btoBox(btoEngine,size,position,rotation);
+    return new btoBox(btoEngine,size,transform);
 }
 
-btSphere *btoShapesFactory::createSphere(btScalar radius, btVector3 position, btVector3 rotation)
+btSphere *btoShapesFactory::createSphere(btScalar radius, const btTransform &transform)
 {
-    return new btoSphere(btoEngine,radius,position,rotation);
+    return new btoSphere(btoEngine,radius,transform);
 }
 
-btCylinder *btoShapesFactory::createCylinder(btScalar radius, btScalar height, btVector3 position, btVector3 rotation)
+btCylinder *btoShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform)
 {
-    return new btoCylinder(btoEngine,radius,height,position,rotation);
+    return new btoCylinder(btoEngine,radius,height,transform);
 }
 
 }

@@ -19,7 +19,7 @@ namespace GeneLabCore {
          *
          * Think to call setup method to add objects in the world.
          */
-        Fixation(btShapesFactory *shapesFactory, btScalar radius, btVector3 position);
+        Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform);
 
         ~Fixation();
 
@@ -31,7 +31,7 @@ namespace GeneLabCore {
         /**
          * Used to create and attach a bone to the fixation
          */
-        Bone *addBone(const btTransform &localFix, btScalar boneRadius, btScalar boneLenght, btScalar endFixRadius, const btVector3 &lowerLimits, const btVector3 &upperLimits);
+        Bone *addBone(const btQuaternion &localOrientation, btScalar boneRadius, btScalar boneLenght, btScalar endFixRadius, const btVector3 &lowerLimits, const btVector3 &upperLimits);
 
         // TOOLS
         void fixeInTheAir(const btVector3 &position);

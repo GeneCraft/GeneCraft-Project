@@ -14,7 +14,7 @@ class Bone : public QObject
 
 public:
 
-   Bone(btShapesFactory *shapesFactory, btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position);
+   Bone(btShapesFactory *shapesFactory, btScalar radius, btScalar lenght, btScalar endFixRadius, const btTransform &initTransform);
    ~Bone();
 
    void setup();
@@ -22,7 +22,7 @@ public:
    inline btRigidBody* getRigidBody()                             { return rigidBody;             }
    inline void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
    inline btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
-   inline btScalar getLength()                                    { return lenght;                }
+   inline btScalar getLength()                                    { return length;                }
    inline Fixation *getEndFixation()                              { return endFix;                }
    //inline void setSelected(bool isSelected)                       { body->setSelected(isSelected);}
    inline Entity *getEntity()                                     { return entity;                }
@@ -44,7 +44,7 @@ protected:
    btCylinder *body;
 
    btScalar radius;
-   btScalar lenght;
+   btScalar length;
 
    //OpenGLEngine *openGLEngine;
    OgreEngine* ogreManager; // AHAHAHAHAHAAHAHAHAHAHAH

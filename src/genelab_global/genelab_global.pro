@@ -132,7 +132,6 @@ SOURCES += \
     ../genelab/core/ui/widgets/ogrebulletwindows.cpp \
     ../genelab/core/ui/widgets/entities/neuralnetworkvisualizer.cpp \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
-    ../genelab/core/utils/sandboxtools.cpp \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.cpp \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
     ../genelab/apps/sandbox/brainsandbox/brainapp.cpp \
@@ -190,7 +189,6 @@ HEADERS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.h \
     ../genelab/core/ui/widgets/entities/neuralnetworkvisualizer.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
-    ../genelab/core/utils/sandboxtools.h \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.h \
     ../genelab/apps/sandbox/brainsandbox/brainapp.h \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \

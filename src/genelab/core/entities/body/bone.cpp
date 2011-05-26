@@ -1,6 +1,5 @@
 #include "bone.h"
 #include "fixation.h"
-#include "sandboxtools.h"
 //#include "OgreBulletDynamicsConstraint.h"
 //#include "Dynamics/Constraints/OgreBulletDynamics6DofConstraint.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
@@ -20,14 +19,37 @@ namespace GeneLabCore {
 
 BonePropertiesController* Bone::inspectorWidget = 0;
 
-Bone::Bone(btShapesFactory *shapesFactory, btScalar radius, btScalar lenght, btScalar endFixRadius, const btVector3 &position) : QObject(),
-    radius(radius), lenght(lenght)
+Bone::Bone(btShapesFactory *shapesFactory,
+           btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
+    radius(radius), length(length)
 {
     bulletEngine = shapesFactory->getBulletEngine();
 
-    body        = shapesFactory->createCylinder(radius,lenght,position);
+    body        = shapesFactory->createCylinder(radius,length,initTransform);
     rigidBody   = body->getRigidBody();
-    endFix      = new Fixation(shapesFactory,endFixRadius,position);
+
+    btVector3 position(btScalar(0), length/2 + endFixRadius, btScalar(0));
+    position = initTransform*position;
+    btTransform endTransform(initTransform.getRotation(), position);
+
+    // TODO Decaler position
+    //btVector3 positionFixation = position;
+    //btVector3 thisOrientation  = btVector3(length, 0, 0);
+    //positionFixation.
+    //positionFixation.rotate()
+
+    endFix      = new Fixation(shapesFactory,endFixRadius,endTransform);
+
+    // attach and setup end fixation TODO btCompoundShape !!!
+    btTransform localBone; localBone.setIdentity();
+    btTransform localFix; localFix.setIdentity();
+    localBone.setOrigin(btVector3(0,length/2 + endFix->getRadius(),0));
+
+    endFixConstraint = new btGeneric6DofConstraint(*this->rigidBody,*endFix->getRigidBody(),
+                                                               localBone, localFix, true);
+
+    endFixConstraint->setAngularLowerLimit(btVector3(0,0,0));
+    endFixConstraint->setAngularUpperLimit(btVector3(0,0,0));
 }
 
 Bone::~Bone()
@@ -63,27 +85,31 @@ void Bone::setup()
         btRotationalLimitMotor * motor = parentCt->getRotationalLimitMotor(i);
         motor->m_enableMotor = true;
         motor->m_stopERP = 0.01f; // Error tolerance factor when joint is at limit.
-        motor->m_stopCFM = 0.01f; // Constraint force mixing factor when joint is at limit.
+        motor->m_stopCFM = 1.f; // Constraint force mixing factor when joint is at limit.
         motor->m_maxMotorForce = 1000.f;
         motor->m_maxLimitForce = 300.f;
         motor->m_targetVelocity = 0;
+        motor->m_bounce = 0;
+        motor->m_damping = 1;
+    }
+
+
+    for(int i=0;i<3;i++)
+    {
+        btRotationalLimitMotor * motor = endFixConstraint->getRotationalLimitMotor(i);
+        motor->m_enableMotor = true;
+        motor->m_stopERP = 0.01f; // Error tolerance factor when joint is at limit.
+        motor->m_stopCFM = 1.f; // Constraint force mixing factor when joint is at limit.
+        motor->m_maxMotorForce = 1000.f;
+        motor->m_maxLimitForce = 300.f;
+        motor->m_targetVelocity = 0;
+        motor->m_bounce = 0;
+        motor->m_damping = 1;
     }
 
     // attach to its parent
     bulletEngine->getBulletDynamicsWorld()->addConstraint(parentCt,true);
-
-    // attach and setup end fixation TODO btCompoundShape !!!
-    btTransform localBone; localBone.setIdentity();
-    btTransform localFix; localFix.setIdentity();
-    localBone.setOrigin(btVector3(0,lenght/2 + endFix->getRadius() - endFix->getRadius()*Fixation::PERCENT_BONE_INSIDE_FIX,0));
-
-    endFixConstraint = new btGeneric6DofConstraint(*this->rigidBody,*endFix->getRigidBody(),
-                                                               localBone, localFix,true);
-    endFixConstraint->setAngularLowerLimit(btVector3(0,0,0));
-    endFixConstraint->setAngularUpperLimit(btVector3(0,0,0));
-
-    bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint/*,true*/); // TODO OgreBullet doesn't manage the second arg
-
+    bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint, false);
     endFix->setup();
 }
 

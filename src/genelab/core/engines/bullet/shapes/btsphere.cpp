@@ -10,14 +10,14 @@
 
 namespace GeneLabCore {
 
-btSphere::btSphere(BulletEngine *btEngine, btScalar radius, btVector3 position, btVector3 rotation)
+btSphere::btSphere(BulletEngine *btEngine, btScalar radius, const btTransform &transform)
 {
     this->btEngine = btEngine;
 
-    init(radius,position,5.0,rotation);
+    init(radius,5.0, transform);
 }
 
-void btSphere::init(btScalar radius, btVector3 position, btScalar density, btVector3 EulerRotation)
+void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
 {
 //    this->size = size;
 //    this->initialPosition = position;
@@ -29,13 +29,10 @@ void btSphere::init(btScalar radius, btVector3 position, btScalar density, btVec
     this->shape = new btSphereShape(radius);
 
     // rotation with euler method :) (warning order Z-Y-X)
-    btTransform tFinal; tFinal.setIdentity();
-    tFinal.getBasis().setEulerZYX(EulerRotation.x(),EulerRotation.y(),EulerRotation.z());
-    tFinal.setOrigin(position); // set position
-    this->motionState = new btDefaultMotionState(tFinal);
+    this->motionState = new btDefaultMotionState(transform);
 
     // body
-    btScalar vol = 4*PI*radius*radius;
+    btScalar vol = 4/3.*PI*radius*radius*radius;
     btScalar mass = vol*density;
     btVector3 fallInertia(0,0,0);
     this->shape->calculateLocalInertia(mass,fallInertia);

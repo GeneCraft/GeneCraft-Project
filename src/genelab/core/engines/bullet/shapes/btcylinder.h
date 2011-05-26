@@ -11,12 +11,12 @@ namespace GeneLabCore {
 class btCylinder : public btShape
 {
 public:
-    btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, btVector3 position, btVector3 rotation = btVector3(0,0,0));
+    btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, const btTransform &transform);
     virtual void setup();
 
 private:
 
-    void init(btScalar radius, btScalar height, btVector3 position, btScalar density, btVector3 EulerRotation);
+    void init(btScalar radius, btScalar height, btScalar density, const btTransform &transform);
 
 protected:
 

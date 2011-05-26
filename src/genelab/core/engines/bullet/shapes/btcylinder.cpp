@@ -7,13 +7,13 @@
 
 namespace GeneLabCore {
 
-btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, btVector3 position, btVector3 rotation)
+btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, const btTransform &transform)
 {
     this->btEngine = btEngine;
-    init(radius,height,position,5.0,rotation);
+    init(radius,height,5.0,transform);
 }
 
-void btCylinder::init(btScalar radius, btScalar height, btVector3 position, btScalar density, btVector3 EulerRotation)
+void btCylinder::init(btScalar radius, btScalar height, btScalar density, const btTransform &transform)
 {
     this->radius = radius;
     this->height = height;
@@ -31,8 +31,6 @@ void btCylinder::init(btScalar radius, btScalar height, btVector3 position, btSc
     shape->calculateLocalInertia(mass,localInertia);
 
     // motion state
-    btTransform transform; transform.setIdentity();
-    transform.setOrigin(btVector3(position.x(),position.y(),position.z()));
     motionState = new btDefaultMotionState(transform);
 
     this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);

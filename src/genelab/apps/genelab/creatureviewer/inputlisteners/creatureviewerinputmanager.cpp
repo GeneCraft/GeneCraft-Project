@@ -2,7 +2,7 @@
 #include <QDebug>
 #include "ogreengine.h"
 #include "bulletengine.h"
-#include "sandboxtools.h"
+//#include "sandboxtools.h"
 #include "OGRE/Ogre.h"
 #include "Dynamics/OgreBulletDynamicsWorld.h"
 #include "btobox.h"
@@ -71,7 +71,10 @@ void CreatureViewerInputManager::initBulletOgre(BulletOgreEngine *btoEngine, Ogr
 void CreatureViewerInputManager::throwCube()
 {
     Ogre::Vector3 camPos = camera->getPosition();
-    btoBox *box = new btoBox(btoEngine,btVector3(1,1,1),btVector3(camPos.x,camPos.y,camPos.z));
+
+    btTransform transform; transform.setIdentity();
+    transform.setOrigin(btVector3(camPos.x,camPos.y,camPos.z));
+    btoBox *box = new btoBox(btoEngine,btVector3(1,1,1),transform);
     box->setup();
 
     // apply impulse from the center of the box

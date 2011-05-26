@@ -11,19 +11,19 @@ btShapesFactory::btShapesFactory(BulletEngine *btEngine)
     this->btEngine = btEngine;
 }
 
-btBox *btShapesFactory::createBox(btVector3 size, btVector3 position, btVector3 rotation)
+btBox *btShapesFactory::createBox(btVector3 size, const btTransform &transform)
 {
-    return new btBox(btEngine,size,position,rotation);
+    return new btBox(btEngine,size, transform);
 }
 
-btSphere *btShapesFactory::createSphere(btScalar radius, btVector3 position, btVector3 rotation)
+btSphere *btShapesFactory::createSphere(btScalar radius, const btTransform &transform)
 {
-    return new btSphere(btEngine,radius,position,rotation);
+    return new btSphere(btEngine,radius, transform);
 }
 
-btCylinder *btShapesFactory::createCylinder(btScalar radius, btScalar height, btVector3 position, btVector3 rotation)
+btCylinder *btShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform)
 {
-    return new btCylinder(btEngine,radius,height,position,rotation);
+    return new btCylinder(btEngine,radius,height, transform);
 }
 
 }
