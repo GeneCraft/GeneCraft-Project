@@ -13,7 +13,11 @@
 
 // shape
 #include "btcylinder.h"
+#include "btbone.h"
 #include "btshapesfactory.h"
+#include "BulletCollision/CollisionShapes/btCompoundShape.h"
+
+#include <QDebug>
 
 namespace GeneLabCore {
 
@@ -23,33 +27,24 @@ Bone::Bone(btShapesFactory *shapesFactory,
            btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
     radius(radius), length(length)
 {
+    qDebug() << "starting Bone created !";
     bulletEngine = shapesFactory->getBulletEngine();
 
-    body        = shapesFactory->createCylinder(radius,length,initTransform);
+    qDebug() << "starting Bone created !";
+    body        = shapesFactory->createBone(length,radius, endFixRadius, initTransform);
     rigidBody   = body->getRigidBody();
 
+    qDebug() << "starting Bone created !";
+
     btVector3 position(btScalar(0), length/2 + endFixRadius, btScalar(0));
-    position = initTransform*position;
-    btTransform endTransform(initTransform.getRotation(), position);
+    btTransform endTransform;
+    endTransform.setIdentity();
+    endTransform.setOrigin(position);
 
-    // TODO Decaler position
-    //btVector3 positionFixation = position;
-    //btVector3 thisOrientation  = btVector3(length, 0, 0);
-    //positionFixation.
-    //positionFixation.rotate()
+    qDebug() << "starting Bone created !";
+    endFix      = new Fixation(shapesFactory, rigidBody, endTransform);
 
-    endFix      = new Fixation(shapesFactory,endFixRadius,endTransform);
-
-    // attach and setup end fixation TODO btCompoundShape !!!
-    btTransform localBone; localBone.setIdentity();
-    btTransform localFix; localFix.setIdentity();
-    localBone.setOrigin(btVector3(0,length/2 + endFix->getRadius(),0));
-
-    endFixConstraint = new btGeneric6DofConstraint(*this->rigidBody,*endFix->getRigidBody(),
-                                                               localBone, localFix, true);
-
-    endFixConstraint->setAngularLowerLimit(btVector3(0,0,0));
-    endFixConstraint->setAngularUpperLimit(btVector3(0,0,0));
+    qDebug() << "starting Bone created !";
 }
 
 Bone::~Bone()
@@ -92,7 +87,7 @@ void Bone::setup()
         motor->m_bounce = 0;
         motor->m_damping = 1;
     }
-
+/*
 
     for(int i=0;i<3;i++)
     {
@@ -106,10 +101,10 @@ void Bone::setup()
         motor->m_bounce = 0;
         motor->m_damping = 1;
     }
-
+*/
     // attach to its parent
-    bulletEngine->getBulletDynamicsWorld()->addConstraint(parentCt,true);
-    bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint, false);
+    bulletEngine->getBulletDynamicsWorld()->addConstraint(parentCt, true);
+    //bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint, true);
     endFix->setup();
 }
 

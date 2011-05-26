@@ -77,7 +77,7 @@ namespace GeneLabCore {
         // -- List of Material :) --
         // -------------------------
         Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
-        while (materialIterator.hasMoreElements())
+        /*while (materialIterator.hasMoreElements())
         {
             QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
 
@@ -87,7 +87,7 @@ namespace GeneLabCore {
             qDebug() << matName;
 
             materialIterator.moveNext();
-        }
+        }*/
 
         // --------------------------
         // -- Content of the scene --
@@ -131,7 +131,7 @@ namespace GeneLabCore {
         btoShapesFactory *shapesFactory = new btoShapesFactory(btoEngine);
 
 
-        btTransform transformSphere; transformSphere.setIdentity();
+        /*btTransform transformSphere; transformSphere.setIdentity();
         transformSphere.setOrigin(btVector3(0,5,0));
         btSphere *sphere = shapesFactory->createSphere(1,transformSphere);
         //btoSphere * sphere = new btoSphere(btoEngine,1,btVector3(0,5,0));
@@ -147,7 +147,7 @@ namespace GeneLabCore {
         transformCylinder.setOrigin(btVector3(0,15,0));
         btCylinder * cylinder = shapesFactory->createCylinder(0.5,4,transformCylinder);
         //btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
-        cylinder->setup();
+        cylinder->setup();*/
 
         // --------------
         // -- Entities --
@@ -160,7 +160,9 @@ namespace GeneLabCore {
 //        f->setup();
 
         // Spider
+        qDebug() << "Spider creation !";
         Spider *spider = new Spider(shapesFactory,btVector3(0,10,10));
+        qDebug() << "spider setup !";
         spider->setup();
 
 

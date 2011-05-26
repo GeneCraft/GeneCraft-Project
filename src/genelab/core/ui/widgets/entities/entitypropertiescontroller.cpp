@@ -98,6 +98,7 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
         boneItem->setText(0,QString("bone ").append(QString().setNum(i)));
         boneItem->setIcon(0,QIcon(":/img/icons/bone"));
 
+        qDebug() << "1";
         if(bone->getRigidBody() == selectedBody)
              ui->twBodyTree->setCurrentItem(boneItem);
 

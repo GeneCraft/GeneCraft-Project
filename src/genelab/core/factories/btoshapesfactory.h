@@ -14,6 +14,7 @@ public:
     virtual btBox *createBox(btVector3 size, const btTransform &transform);
     virtual btSphere *createSphere(btScalar radius, const btTransform &transform);
     virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform);
+    virtual btBone *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
 protected:
     BulletOgreEngine *btoEngine;
 };

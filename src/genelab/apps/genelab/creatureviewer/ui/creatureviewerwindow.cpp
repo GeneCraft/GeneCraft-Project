@@ -36,11 +36,7 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Connection to Inspectors
-    connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
-
     MainFactory* factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
-
 
     // ----------------------
     // -- Events Listeners --
@@ -77,6 +73,12 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
     inspector = NULL;
     openGLWidget = NULL;
+
+
+    // Connection to Inspectors
+    connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+
+
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()
@@ -124,6 +126,7 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                             Bone *bone = dynamic_cast<Bone*>(origin->getObject());
                             //bone->setSelected(true); // TODO stock selection into rigidbody origin
                             setInspector(bone->getInspectorWidget());
+                            qDebug() << "2";
                             setEntity(bone->getEntity(),bone->getRigidBody());
                             }
                             break;

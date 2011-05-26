@@ -93,6 +93,19 @@ namespace GeneLabCore {
         qDebug() << "[OK]\n";
 
 
+
+        // ---------------------
+        // -- Scene (Content) --
+        // ---------------------
+        qDebug() << "World creation";
+        World *world = new OgreBulletWorld(bulletOgreEngine);
+        world->setup();
+        this->worlds.insert("BasicWorld", world);
+        qDebug() << "[OK]\n";
+
+
+
+
         // ------------
         // -- Events --
         // ------------
@@ -106,16 +119,6 @@ namespace GeneLabCore {
         connect(oW1,SIGNAL(entered(QEvent*)),em,SLOT(enterViewPortEvent(QEvent*)));
         connect(oW1,SIGNAL(leaved(QEvent*)),em,SLOT(leaveViewPortEvent(QEvent*)));
         this->engines.insert("Event", em);
-        qDebug() << "[OK]\n";
-
-
-        // ---------------------
-        // -- Scene (Content) --
-        // ---------------------
-        qDebug() << "World creation";
-        World *world = new OgreBulletWorld(bulletOgreEngine);
-        world->setup();
-        this->worlds.insert("BasicWorld", world);
         qDebug() << "[OK]\n";
     }
 

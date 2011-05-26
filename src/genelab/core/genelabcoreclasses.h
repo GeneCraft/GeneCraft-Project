@@ -12,6 +12,7 @@ namespace GeneLabCore {
     class btBox;
     class btSphere;
     class btCylinder;
+    class btBone;
 
     // Ogre management
     class OgreEngine;

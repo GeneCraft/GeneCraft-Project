@@ -68,14 +68,14 @@ INCLUDEPATH  += \
     QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
 #}
 
-CONFIG(Debug) {
-    LIBS += -L../lib/ogre/bin/Debug
-    LIBS += -lOgreMain_d -lOIS_d
-}
-CONFIG(Release) {
+#CONFIG(Debug) {
+#    LIBS += -L../lib/ogre/bin/Debug
+#    LIBS += -lOgreMain_d -lOIS_d
+#}
+#CONFIG(Release) {
     LIBS += -L../lib/ogre/bin/Release
     LIBS += -lOgreMain -lOIS
-}
+#}
 
 LIBS += -L../lib/ogrebullet-build/lib
 LIBS += -L../lib/bullet/lib
@@ -154,7 +154,9 @@ SOURCES += \
     ../genelab/core/factories/btoshapesfactory.cpp \
     ../genelab/core/entities/families/spider/spider.cpp \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
-    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.cpp
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.cpp \
+    ../genelab/core/engines/bullet/shapes/btbone.cpp \
+    ../genelab/core/engines/bulletogre/shapes/btobone.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -211,7 +213,9 @@ HEADERS += \
     ../genelab/core/factories/btoshapesfactory.h \
     ../genelab/core/entities/families/spider/spider.h \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
-    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h \
+    ../genelab/core/engines/bullet/shapes/btbone.h \
+    ../genelab/core/engines/bulletogre/shapes/btobone.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

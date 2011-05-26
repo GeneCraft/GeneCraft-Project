@@ -20,7 +20,11 @@ namespace GeneLabCore {
          * Think to call setup method to add objects in the world.
          */
         Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform);
-
+        /**
+          *
+          * Surchrged constructor, called to create a fixation from a existant rigidbody
+          */
+        Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btTransform localFixation);
         ~Fixation();
 
         /**
@@ -58,6 +62,7 @@ namespace GeneLabCore {
 
         btShapesFactory *shapesFactory;
 
+        btTransform localFixation;
         btRigidBody *rigidBody;
         RigidBodyOrigin *origin;
         QList<Bone *> bones;
@@ -73,6 +78,8 @@ namespace GeneLabCore {
         static FixationProperties *inspectorWidget;
 
         Entity *entity;
+
+        bool delegatedSetup;
 
     };
 

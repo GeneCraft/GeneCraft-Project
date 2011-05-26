@@ -2,6 +2,7 @@
 #define BONE_H
 
 #include <QObject>
+#include <QDebug>
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
@@ -19,11 +20,11 @@ public:
 
    void setup();
 
-   inline btRigidBody* getRigidBody()                             { return rigidBody;             }
+   inline btRigidBody* getRigidBody()                             {qDebug() << "GET THE RIGID BODY !"; return rigidBody;             }
    inline void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
-   inline btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
+   inline btGeneric6DofConstraint * getParentConstraint()         {qDebug() << "GET THE PARENTCT !"; return parentCt;              }
    inline btScalar getLength()                                    { return length;                }
-   inline Fixation *getEndFixation()                              { return endFix;                }
+   inline Fixation *getEndFixation()                              {qDebug() << "GET THE END FIX !"; return endFix;                }
    //inline void setSelected(bool isSelected)                       { body->setSelected(isSelected);}
    inline Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
@@ -41,7 +42,7 @@ protected:
    btGeneric6DofConstraint *parentCt;
    btGeneric6DofConstraint *endFixConstraint;
 
-   btCylinder *body;
+   btBone *body;
 
    btScalar radius;
    btScalar length;

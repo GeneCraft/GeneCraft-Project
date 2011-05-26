@@ -7,6 +7,8 @@
 #include "btshapesfactory.h"
 #include "btsphere.h"
 
+#include <QDebug>s
+
 namespace GeneLabCore {
 
     FixationProperties* Fixation::inspectorWidget = 0;
@@ -15,13 +17,25 @@ namespace GeneLabCore {
     #define FIXATION_DENSITY 5.0f
     #define FIXATION_FRICTION 0.6f
 
+    Fixation::Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btTransform localFixation) {
+        this->shapesFactory = shapesFactory;
+        this->rigidBody = body;
+        this->localFixation = localFixation;
+        delegatedSetup = true;
+        qDebug() << "fixation created !";
+    }
+
     Fixation::Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform) : QObject(), radius(radius), airFixation(0), entity(0)
     {
         this->shapesFactory = shapesFactory;
+        btTransform local;
+        local.setIdentity();
+        this->localFixation = local;
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         rigidBody = sphere->getRigidBody();
         rigidBody->setFriction(FIXATION_FRICTION);
+        delegatedSetup = false;
     }
 
     Fixation::~Fixation()
@@ -37,16 +51,20 @@ namespace GeneLabCore {
 
     void Fixation::setup()
     {
-        // shape
-        sphere->setup();
+        if(!delegatedSetup) {
 
-        // origins
-        origin = new RigidBodyOrigin(RigidBodyOrigin::FIXATION,(QObject *)this);
-        rigidBody->setUserPointer(origin);
+            // shape
+            sphere->setup();
 
-        // state
-        //rigidBody->setDeactivationTime(100.0);
-        rigidBody->setActivationState(DISABLE_DEACTIVATION);
+            // origins
+            origin = new RigidBodyOrigin(RigidBodyOrigin::FIXATION,(QObject *)this);
+            rigidBody->setUserPointer(origin);
+
+            // state
+            //rigidBody->setDeactivationTime(100.0);
+            rigidBody->setActivationState(DISABLE_DEACTIVATION);
+        }
+
 
         for(int i=0;i<bones.size();++i)
             bones.at(i)->setup();
@@ -98,27 +116,38 @@ namespace GeneLabCore {
     {
         // Get the initial transform
         btTransform initTransform = this->rigidBody->getWorldTransform();
+        initTransform *= localFixation;
         initTransform.setRotation(initTransform.getRotation()*localOrientation);
+
         btVector3 newPos(0, btScalar((boneLenght*0.5 + radius - radius*PERCENT_BONE_INSIDE_FIX)), 0);
         btVector3 transposedPos = initTransform*newPos;
         btTransform boneTransform(initTransform.getRotation(), transposedPos);
 
         Bone * bone = new Bone(shapesFactory, boneRadius, boneLenght, endFixRadius, boneTransform);
 
+        qDebug() << "bone created !";
         btTransform localBone; localBone.setIdentity();
         //localBone.getBasis().setEulerZYX(0,0,0);
         localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 -radius), btScalar(0.)));
 
-        btTransform localFix(localOrientation);
+        btTransform localFix(localOrientation, localFixation.getOrigin());
+
+        qDebug() << "3";
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                    localFix, localBone, true);
 
+        qDebug() << "3";
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
 
+        qDebug() << "3";
         bone->setParentConstraint(ct);
+
+        qDebug() << "3";
         bone->setEntity(entity);
 
+
+        qDebug() << "3";
         bones.append(bone);
 
         return bone;

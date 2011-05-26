@@ -3,6 +3,7 @@
 #include "btbox.h"
 #include "btsphere.h"
 #include "btcylinder.h"
+#include "btbone.h"
 
 namespace GeneLabCore {
 
@@ -24,6 +25,10 @@ btSphere *btShapesFactory::createSphere(btScalar radius, const btTransform &tran
 btCylinder *btShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform)
 {
     return new btCylinder(btEngine,radius,height, transform);
+}
+
+btBone* btShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) {
+    return new btBone(btEngine, length, radius, radiusArticulation, transform);
 }
 
 }
