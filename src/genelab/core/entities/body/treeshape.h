@@ -9,7 +9,7 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit TreeShape(QObject *parent = 0);
+        explicit TreeShape(btShapesFactory* shapeFactories, QObject *parent = 0);
         ~TreeShape();
 
         /**
@@ -23,24 +23,10 @@ namespace GeneLabCore {
         void setRoot(Fixation*);
 
         /**
-          * Init Ogre and Bullet references
-          */
-        void initOgreBullet(OgreEngine* ogreManager, BulletEngine *bulletManager);
-
-        /**
           * Setup the shape : add all entities in Ogre and Bullet
           */
         void setup();
 
-        /**
-          * Contract all articulations in the middle of min and max
-          */
-        void contractInNormalPosition();
-
-        /**
-          * Print the shape in default output
-          */
-        void print();
 
     signals:
 
@@ -51,11 +37,7 @@ namespace GeneLabCore {
         Fixation* root;
 
         // Ogre & Bullet
-        OgreEngine* ogreManager;
-        BulletEngine *bulletManager;
-
-        /** for recurcive browsing */
-        void setupFixation(Fixation *fix);
+        btShapesFactory* shapeFactories;
     };
 }
 #endif // TREESHAPE_H

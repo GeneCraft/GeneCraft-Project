@@ -1,6 +1,7 @@
 #include "brainengine.h"
-#include "neuralnetworkvisualizer.h"
-#include "neuralnetwork.h"
+#include "pluggridvisualizer.h"
+#include "brainpluggrid.h"
+#include "brain.h"
 
 #include <QLabel>
 
@@ -13,49 +14,52 @@ namespace GeneLabCore {
 
 
     QWidget* BrainEngine::getRenderWidget(QWidget* parent) {
-        NeuralNetworkVisualizer* w = new NeuralNetworkVisualizer(this);
-        this->visualizers.append(w);
+        PlugGridVisualizer* w = new PlugGridVisualizer(this);
+        this->gridVisualizers.append(w);
         return w;
     }
 
     void BrainEngine::beforeStep() {
-        // Maybe nothing to do
-        foreach(NeuralNetwork* n, this->networks) {
+        // Filling the interconnexion layer
+        foreach(BrainPlugGrid* n, this->grids) {
             n->beforeStep();
         }
     }
 
     void BrainEngine::step() {
-        // Get In and calculate weights / etc...
-        foreach(NeuralNetwork* n, this->networks) {
-            n->neuralStep();
+        // Using the interconnexion layer
+        foreach(Brain* brain, this->brains) {
+            brain->step();
         }
 
-
-        foreach(NeuralNetworkVisualizer* viz, this->visualizers) {
+        foreach(PlugGridVisualizer* viz, this->gridVisualizers) {
             viz->step();
         }
     }
 
     void BrainEngine::afterStep() {
-        // Set out, but we'll see if we don't do this in step...
-        foreach(NeuralNetwork* n, this->networks) {
+        // Reseting the interconnexion layer
+        foreach(BrainPlugGrid* n, this->grids) {
             n->afterStep();
         }
     }
 
-    NeuralNetwork* BrainEngine::addNetwork(int size) {
-        NeuralNetwork* n = new NeuralNetwork(size);
-        this->networks.append(n);
+    BrainPlugGrid* BrainEngine::createGrid(int size) {
+        BrainPlugGrid* n = new BrainPlugGrid(size);
+        this->grids.append(n);
         return n;
     }
 
-    void BrainEngine::addNetwork(NeuralNetwork* network) {
-        this->networks.append(network);
+    void BrainEngine::addGrid(BrainPlugGrid* grid) {
+        this->grids.append(grid);
     }
 
-    QList<NeuralNetwork*> BrainEngine::getNetworks() {
-        return this->networks;
+    QList<BrainPlugGrid*> BrainEngine::getGrids() {
+        return this->grids;
+    }
+
+    QList<Brain*> BrainEngine::getBrains() {
+        return brains;
     }
 
 }

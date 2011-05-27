@@ -3,18 +3,21 @@
 
 #include "genelabcoreclasses.h"
 #include "LinearMath/btTransform.h"
-#include "entity.h"
+#include "entityfamily.h"
 
 namespace GeneLabCore {
 
-class Spider : public Entity
+class Spider : public EntityFamily
 {
     Q_OBJECT
 
 public:
 
-    Spider(btShapesFactory *shapesFactory, const btVector3 &position);
+    Spider();
+    virtual Entity* createEntity(btShapesFactory *shapesFactory,
+                                 const btVector3 &position);
 
+    virtual QVariant serialize();
 protected:
 
     btVector3 initialPosition;

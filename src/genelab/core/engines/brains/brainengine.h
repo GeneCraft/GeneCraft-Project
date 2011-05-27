@@ -19,21 +19,23 @@ namespace GeneLabCore {
         }
 
         QWidget* getRenderWidget(QWidget* parent);
-        QList<NeuralNetwork*> getNetworks();
+        QList<BrainPlugGrid*> getGrids();
+        QList<Brain*> getBrains();
 
     signals:
 
     public slots:
-        NeuralNetwork* addNetwork(int size);
-        void addNetwork(NeuralNetwork* network);
+        BrainPlugGrid* createGrid(int size);
+        void addGrid(BrainPlugGrid* grid);
 
         void beforeStep();
         void step();
         void afterStep();
 
     private:
-        QList<NeuralNetwork*> networks;
-        QList<NeuralNetworkVisualizer*> visualizers;
+        QList<BrainPlugGrid*> grids;
+        QList<Brain*> brains;
+        QList<PlugGridVisualizer*> gridVisualizers;
 
     };
 }

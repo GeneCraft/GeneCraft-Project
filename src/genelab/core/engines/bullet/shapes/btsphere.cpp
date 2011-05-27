@@ -32,7 +32,7 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
     this->motionState = new btDefaultMotionState(transform);
 
     // body
-    btScalar vol = 4/3.*PI*radius*radius*radius;
+    btScalar vol = 4/3.*M_PI*radius*radius*radius;
     btScalar mass = vol*density;
     btVector3 fallInertia(0,0,0);
     this->shape->calculateLocalInertia(mass,fallInertia);

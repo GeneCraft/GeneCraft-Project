@@ -18,6 +18,7 @@
 #include "BulletCollision/CollisionShapes/btCompoundShape.h"
 
 #include <QDebug>
+#include <QTest>
 
 namespace GeneLabCore {
 
@@ -27,24 +28,24 @@ Bone::Bone(btShapesFactory *shapesFactory,
            btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
     radius(radius), length(length)
 {
-    qDebug() << "starting Bone created !";
+
+    qDebug() << initTransform.getOrigin().x()
+             << initTransform.getOrigin().y()
+             << initTransform.getOrigin().z() ;
+
     bulletEngine = shapesFactory->getBulletEngine();
 
-    qDebug() << "starting Bone created !";
     body        = shapesFactory->createBone(length,radius, endFixRadius, initTransform);
     rigidBody   = body->getRigidBody();
 
-    qDebug() << "starting Bone created !";
 
     btVector3 position(btScalar(0), length/2 + endFixRadius, btScalar(0));
     btTransform endTransform;
     endTransform.setIdentity();
     endTransform.setOrigin(position);
 
-    qDebug() << "starting Bone created !";
-    endFix      = new Fixation(shapesFactory, rigidBody, endTransform);
+    endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
 
-    qDebug() << "starting Bone created !";
 }
 
 Bone::~Bone()

@@ -1,6 +1,7 @@
 #include "entity.h"
 #include <QDebug>
 #include "fixation.h"
+#include "treeshape.h"
 
 namespace GeneLabCore {
 
@@ -15,8 +16,7 @@ namespace GeneLabCore {
     }
 
     void Entity::setup() {
-        if(rootFix != NULL)
-            rootFix->setup();
+        this->treeShape->setup();
     }
 
     Entity::~Entity() {
@@ -31,5 +31,15 @@ namespace GeneLabCore {
             inspectorWidget->setEntity(selectedCreature,selectedBody);
 
         return inspectorWidget;
+    }
+
+
+    TreeShape* Entity::getShape() {
+        return this->treeShape;
+    }
+
+    void   Entity::setShape(TreeShape* shape) {
+        this->treeShape = shape;
+        this->treeShape->getRoot()->setEntity(this);
     }
 }

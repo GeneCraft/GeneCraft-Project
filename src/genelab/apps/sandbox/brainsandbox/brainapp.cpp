@@ -20,7 +20,7 @@ BrainApp::BrainApp(QWidget *parent) :
 
     qDebug() << "Creation !";
 
-    engine->addNetwork(51); // 10x10 network
+    engine->createGrid(51); // 10x10 network
 
     qDebug() << "Creation !";
 

@@ -18,14 +18,12 @@ namespace GeneLabCore {
 
         static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
-        inline void setRootFixation(Fixation *rootFix) { this->rootFix = rootFix; }
-        inline Fixation *getRootFixation() { return rootFix; }
+        /*inline void setRootFixation(Fixation *rootFix) { this->rootFix = rootFix; }
+        inline Fixation *getRootFixation() { return rootFix; }*/
 
-        /*
-        Shape* getShape();
-        void   setShape(Shape*);
-        void print();
-        */
+        TreeShape* getShape();
+        void   setShape(TreeShape* shape);
+
 
     signals:
 
@@ -35,7 +33,8 @@ namespace GeneLabCore {
     protected:
 
         // shape root
-        Fixation *rootFix;
+        //Fixation *rootFix;
+        TreeShape* treeShape;
 
         // entity
         QString name;

@@ -52,11 +52,17 @@ namespace GeneLabCore {
     class Fixation;
 
     // Brain
-    // Neural network
-    class NeuralNetwork;
-    class NeuralIn;
-    class NeuralOut;
-
+    // Interconnexion classes
+    class BrainIn;
+    class BrainOut;
+    // Interconnexion layer
+    class BrainPlugGrid;
+    // Generic brain classe
+    class Brain;
+    // Functionnal like brain style
+    class BrainFunctional;
+    // Function bloc of the functionalbrain
+    class BrainNode;
 
     // ---------------
     // -- Factories --
@@ -89,7 +95,7 @@ namespace GeneLabCore {
     class OgreBulletWindows;
 
     // Neural network
-    class NeuralNetworkVisualizer;
+    class PlugGridVisualizer;
 
 
 
@@ -99,11 +105,6 @@ namespace GeneLabCore {
 
     // World related
     class World;
-
-    // Entity and world implementation
-    //class OgreBulletScene;
-    class OgreBulletEntity;
-    class OgreBulletEntityFamily;
 
     // Tools (random, ...)
     class Tools;

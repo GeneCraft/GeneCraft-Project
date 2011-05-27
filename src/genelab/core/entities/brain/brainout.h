@@ -9,11 +9,11 @@
 
 namespace GeneLabCore {
 
-    class NeuralOut : public Synapse
+    class BrainOut : QObject
     {
         Q_OBJECT
     public:
-        explicit NeuralOut(float min = 0.0f, float max = 0.0f, QObject *parent = 0);
+        explicit BrainOut(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
 
     signals:
         void newValue(float value);

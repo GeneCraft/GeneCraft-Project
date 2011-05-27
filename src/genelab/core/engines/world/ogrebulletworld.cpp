@@ -22,7 +22,6 @@
 
 // Entity
 #include "snakefamily.h"
-#include "ogrebulletentity.h"
 #include "treeshape.h"
 #include "fixation.h"
 #include "spider/spider.h"
@@ -50,8 +49,8 @@ namespace GeneLabCore {
         sceneManager->setSkyDome(true, "Examples/CloudySky");
 
         // lights
-        sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
-        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+        sceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
+        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_MODULATIVE);
 
         /*Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
@@ -63,7 +62,7 @@ namespace GeneLabCore {
         directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
         directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, .25));
-        directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
+        directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));*/
 
         Ogre::Light* spotLight = sceneManager->createLight("spotLight");
         spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
@@ -71,7 +70,7 @@ namespace GeneLabCore {
         spotLight->setSpecularColour(1.0, 1.0, 1.0);
         spotLight->setDirection(-1, -1, 0);
         spotLight->setPosition(Ogre::Vector3(300, 300, 0));
-        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));*/
+        spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
 
         // -------------------------
         // -- List of Material :) --
@@ -161,9 +160,14 @@ namespace GeneLabCore {
 
         // Spider
         qDebug() << "Spider creation !";
-        Spider *spider = new Spider(shapesFactory,btVector3(0,10,10));
-        qDebug() << "spider setup !";
-        spider->setup();
+        Spider *spider = new Spider();
+        for(int i = 0; i < 1; i++) {
+            for(int j = 0; j < 1; j++) {
+                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,20,i*30));
+                qDebug() << "spider setup !";
+                e->setup();
+            }
+        }
 
 
         // Snake

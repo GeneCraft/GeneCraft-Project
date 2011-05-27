@@ -8,11 +8,11 @@
 
 namespace GeneLabCore {
 
-    class NeuralIn : public Synapse
+    class BrainIn : public Synapse
     {
         Q_OBJECT
     public:
-        explicit NeuralIn(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
+        explicit BrainIn(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
 
     signals:
 

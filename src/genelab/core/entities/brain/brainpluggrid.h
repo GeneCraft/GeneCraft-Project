@@ -7,25 +7,26 @@
 namespace GeneLabCore {
 
 
-    class NeuralNetwork : public QObject
+    class BrainPlugGrid : public QObject
     {
         Q_OBJECT
     public:
-        explicit NeuralNetwork(int size, QObject *parent = 0);
+        explicit BrainPlugGrid(int size, QObject *parent = 0);
 
-        void animate(TreeShape* shape);
-
+        // Size of the edge of the grid
         int getSize() {
             return this->size;
         }
-        QList<NeuralIn*> getInputs() {
+
+        // Input connected to the grid
+        QList<BrainIn*> getInputs() {
             return this->inputs;
         }
 
-        QList<NeuralOut*> getOutputs() {
-            return this->outputs;
-        }
+        // Return the value from the grid in x/y
+        float getValue(int x, int y);
 
+        // Return the entire grid
         float* getNeurons() {
             return this->neurons;
         }
@@ -33,25 +34,24 @@ namespace GeneLabCore {
     signals:
 
     public slots:
-        void connectInput(NeuralIn* in) {
+        // Adding an input
+        void connectInput(BrainIn* in) {
             this->inputs.append(in);
         }
 
-        void connectOutput(NeuralOut* out) {
-            this->outputs.append(out);
-        }
+        // Get value must be called in between those two call
 
+        // Fill the grid
         void beforeStep();
-        void neuralStep();
-        void afterStep();
 
+        // Empty the grid
+        void afterStep();
 
         // Activation function
         float activation(float value);
 
     private:
-        QList<NeuralIn*> inputs;
-        QList<NeuralOut*> outputs;
+        QList<BrainIn*> inputs;
 
         int size;
 

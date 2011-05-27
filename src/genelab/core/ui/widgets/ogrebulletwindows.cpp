@@ -29,7 +29,6 @@
 #include "snakefamily.h"
 #include "treeshape.h"
 #include "fixation.h"
-#include "ogrebulletentity.h"
 #include "btosphere.h"
 #include "btobox.h"
 

@@ -2,14 +2,13 @@
 #include "treeshape.h"
 #include "fixation.h"
 #include "bone.h"
-#include "ogrebulletentity.h"
 #include <QVariant>
 #include <cmath>
 
 
 namespace GeneLabCore {
     SnakeFamily::SnakeFamily(QVariant data, QObject *parent) :
-        OgreBulletEntityFamily(parent)
+        EntityFamily(parent)
     {
         this->length = data.toMap()["length"].toInt();
         this->length = 10; // TODO: DELETE
@@ -18,10 +17,10 @@ namespace GeneLabCore {
         this->pieceLength = 0.5;
     }
 
-    OgreBulletEntity* SnakeFamily::createOgreBulletEntity() {
+    Entity* SnakeFamily::createEntity(btShapesFactory* factory) {
 
-        OgreBulletEntity* snake = new OgreBulletEntity("Snaky"+QString::number(length), "Snake", 1);
-        TreeShape* snakeShape = new TreeShape();
+        Entity* snake = new Entity("Snaky"+QString::number(length), "Snake", 1);
+        TreeShape* snakeShape = new TreeShape(factory);
         Fixation* root = NULL;//new Fixation(0.5,btVector3(0,10,0));
         snakeShape->setRoot(root);
         snake->setShape(snakeShape);

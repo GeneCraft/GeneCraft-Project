@@ -21,7 +21,6 @@ namespace GeneLabCore {
         this->bulletManager = bulletManager;
         this->brainEngine = brainEngine;
 
-        // TODO add ogreManager and bulletManager to all fixation...
     }
 
     void OgreBulletEntity::setup()

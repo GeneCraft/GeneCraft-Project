@@ -3,11 +3,11 @@
 
 #include "genelabcoreclasses.h"
 #include <math.h>
-#include "neuralin.h"
+#include "brainin.h"
 
 namespace GeneLabCore {
 
-    class SinusIn : public NeuralIn
+    class SinusIn : public BrainIn
     {
         Q_OBJECT
     public:

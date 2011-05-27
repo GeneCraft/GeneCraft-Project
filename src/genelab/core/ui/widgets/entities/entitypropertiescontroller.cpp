@@ -2,6 +2,7 @@
 #include "ui_entitypropertiescontroller.h"
 #include "entity.h"
 #include "fixation.h"
+#include "treeshape.h"
 #include "bone.h"
 #include <QVariant>
 #include <QMetaType>
@@ -35,8 +36,8 @@ void setupRandomBonesProperties(Fixation *fixation)
 
 void EntityPropertiesController::setRandomBonesProperties()
 {
-    if(entity != 0 && entity->getRootFixation() != 0)
-       setupRandomBonesProperties(entity->getRootFixation());
+    if(entity != 0 && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
+       setupRandomBonesProperties(entity->getShape()->getRoot());
 }
 
 void recurciveResetBonesProperties(Fixation *fixation)
@@ -52,8 +53,8 @@ void recurciveResetBonesProperties(Fixation *fixation)
 
 void EntityPropertiesController::resetBonesProperties()
 {
-    if(entity != 0 && entity->getRootFixation() != 0)
-       recurciveResetBonesProperties(entity->getRootFixation());
+    if(entity != 0 && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
+       recurciveResetBonesProperties(entity->getShape()->getRoot());
 }
 
 
@@ -67,8 +68,8 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
     {
         ui->lName->setText(entity->getName());
 
-        if(entity->getRootFixation() != 0)
-            setupBodyTree(entity->getRootFixation(),selectedBody);
+        if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
+            setupBodyTree(entity->getShape()->getRoot(),selectedBody);
     }
 }
 

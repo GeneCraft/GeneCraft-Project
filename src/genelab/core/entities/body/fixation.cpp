@@ -7,7 +7,7 @@
 #include "btshapesfactory.h"
 #include "btsphere.h"
 
-#include <QDebug>s
+#include <QDebug>
 
 namespace GeneLabCore {
 
@@ -17,20 +17,27 @@ namespace GeneLabCore {
     #define FIXATION_DENSITY 5.0f
     #define FIXATION_FRICTION 0.6f
 
-    Fixation::Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btTransform localFixation) {
+    Fixation::Fixation(btShapesFactory *shapesFactory,
+                       btRigidBody* body,
+                       btScalar radius,
+                       btTransform localFixation) {
         this->shapesFactory = shapesFactory;
         this->rigidBody = body;
+        this->localFixation.setIdentity();
         this->localFixation = localFixation;
+        this->radius = radius;
+        airFixation = 0;
+        entity = 0;
         delegatedSetup = true;
         qDebug() << "fixation created !";
     }
 
-    Fixation::Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform) : QObject(), radius(radius), airFixation(0), entity(0)
+    Fixation::Fixation(btShapesFactory *shapesFactory,
+                       btScalar radius,
+                       btTransform initTransform) : QObject(), radius(radius), airFixation(0), entity(0)
     {
         this->shapesFactory = shapesFactory;
-        btTransform local;
-        local.setIdentity();
-        this->localFixation = local;
+        this->localFixation.setIdentity();
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         rigidBody = sphere->getRigidBody();
@@ -116,38 +123,39 @@ namespace GeneLabCore {
     {
         // Get the initial transform
         btTransform initTransform = this->rigidBody->getWorldTransform();
+        if(initTransform.getOrigin().getX() > 1000) {
+            qDebug() << initTransform.getOrigin().x() << " " << initTransform.getOrigin().y() << " " << initTransform.getOrigin().z();
+            int toto;
+        }
         initTransform *= localFixation;
         initTransform.setRotation(initTransform.getRotation()*localOrientation);
 
         btVector3 newPos(0, btScalar((boneLenght*0.5 + radius)), 0);
         btVector3 transposedPos = initTransform*newPos;
-        btTransform boneTransform(initTransform.getRotation(), transposedPos);
+
+        btTransform boneTransform;
+        boneTransform.setIdentity();
+
+        boneTransform.setRotation(initTransform.getRotation());
+        boneTransform.setOrigin(transposedPos);
 
         Bone * bone = new Bone(shapesFactory, boneRadius, boneLenght, endFixRadius, boneTransform);
 
-        qDebug() << "bone created !";
-        btTransform localBone; localBone.setIdentity();
-        //localBone.getBasis().setEulerZYX(0,0,0);
+        btTransform localBone;
+        localBone.setIdentity();
         localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 -radius), btScalar(0.)));
 
-        btTransform localFix(localOrientation, localFixation.getOrigin());
+        btTransform localFix;
+        localFix.setIdentity();
+        localFix.setRotation(localOrientation);
+        localFix.setOrigin(localFixation.getOrigin());
 
-        qDebug() << "3";
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                    localFix, localBone, true);
-
-        qDebug() << "3";
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
-
-        qDebug() << "3";
         bone->setParentConstraint(ct);
-
-        qDebug() << "3";
         bone->setEntity(entity);
-
-
-        qDebug() << "3";
         bones.append(bone);
 
         return bone;

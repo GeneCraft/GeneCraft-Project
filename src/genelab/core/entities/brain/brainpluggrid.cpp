@@ -1,8 +1,8 @@
-#include "neuralnetwork.h"
-#include "neuralin.h"
+#include "brainpluggrid.h"
+#include "brainin.h"
 #include "sinusin.h"
 #include "synapse.h"
-#include "neuralout.h"
+#include "brainout.h"
 #include "treeshape.h"
 #include <QDebug>
 #include <cstdlib>
@@ -28,7 +28,7 @@ float sigmoid(float x)
 
 namespace GeneLabCore {
 
-    NeuralNetwork::NeuralNetwork(const int size, QObject *parent) :
+    BrainPlugGrid::BrainPlugGrid(const int size, QObject *parent) :
         QObject(parent)
     {
         this->size = size;
@@ -48,13 +48,7 @@ namespace GeneLabCore {
 
 
         // On crée quelques outputs
-        for(int i = 0; i < 10; i++) {
-            NeuralOut* out = new NeuralOut(-1, 1);
-            for(int j = 0; j < 3; j++) {
-                out->connectTo(qrand()%this->size, qrand()%this->size, (float)qrand()/RAND_MAX * 1.5 - 0.5);
-            }
-            this->outputs.append(out);
-        }
+
 
         // Pour les tests :P
         for(int i = 0; i < 200; i++) {
@@ -69,30 +63,11 @@ namespace GeneLabCore {
         }
     }
 
-    void NeuralNetwork::neuralStep() {
-        // For each ouputs
-        foreach(NeuralOut* out, this->outputs) {
-            float value = 0;
-            foreach(NeuralConnexion connexion, out->getConnexions()) {
-                // If it fit in the network size
-                if(connexion.x >= 0 && connexion.x < size &&
-                   connexion.y >= 0 && connexion.y < size) {
-                    // Adding this value to the cell
-                    // Do the activation function
-
-                    value += activation(
-                        this->neurons[connexion.x + connexion.y*size]
-                                      ) * connexion.weight;
-
-                }
-            }
-
-            out->setValue(value);
-        }
-
+    float BrainPlugGrid::getValue(int x, int y) {
+        return this->neurons[x + y * size];
     }
 
-    void NeuralNetwork::beforeStep() {
+    void BrainPlugGrid::beforeStep() {
 
 
         // Clean the neurons
@@ -101,7 +76,7 @@ namespace GeneLabCore {
         }
 
         // For each inputs
-        foreach(NeuralIn* in, this->inputs) {
+        foreach(BrainIn* in, this->inputs) {
             // For each connexion of this synapse
             foreach(NeuralConnexion connexion, in->getConnexions()) {
                 // If it fit in the network size
@@ -123,14 +98,10 @@ namespace GeneLabCore {
         }
     }
 
-    void NeuralNetwork::afterStep() {
+    void BrainPlugGrid::afterStep() {
     }
 
-    float NeuralNetwork::activation(float value) {
+    float BrainPlugGrid::activation(float value) {
         return sigmoid(value)*2.0f - 1.0f;
-    }
-
-    void NeuralNetwork::animate(TreeShape *shape) {
-
     }
 }

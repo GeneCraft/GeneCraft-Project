@@ -2,21 +2,18 @@
 #define SNAKEBUILDER_H
 
 #include "genelabcoreclasses.h"
-#include "ogrebulletentityfamily.h"
+#include "entityfamily.h"
 #include "entity.h"
 
 namespace GeneLabCore {
-    class SnakeFamily : OgreBulletEntityFamily
+    class SnakeFamily : EntityFamily
     {
         Q_OBJECT
     public:
         explicit SnakeFamily(QVariant data, QObject *parent = 0);
 
-        OgreBulletEntity* createOgreBulletEntity();
+        Entity* createEntity(btShapesFactory*);
 
-        virtual Entity* createEntity() {
-            return (Entity*) createOgreBulletEntity();
-        }
 
         QVariant serialize();
         void load(QVariant data);

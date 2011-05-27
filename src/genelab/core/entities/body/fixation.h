@@ -24,7 +24,7 @@ namespace GeneLabCore {
           *
           * Surchrged constructor, called to create a fixation from a existant rigidbody
           */
-        Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btTransform localFixation);
+        Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btScalar radius, btTransform localFixation);
         ~Fixation();
 
         /**

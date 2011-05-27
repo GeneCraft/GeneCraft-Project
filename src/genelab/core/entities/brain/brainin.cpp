@@ -1,8 +1,8 @@
-#include "neuralin.h"
+#include "brainin.h"
 
 namespace GeneLabCore {
 
-    NeuralIn::NeuralIn(float min, float max, QObject *parent) :
+    BrainIn::BrainIn(float min, float max, QObject *parent) :
         Synapse(parent), min(min), max(max)
     {
     }
