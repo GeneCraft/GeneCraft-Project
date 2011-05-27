@@ -113,11 +113,6 @@ SOURCES += \
     ../genelab/core/entities/brain/synapse.cpp \
     ../genelab/core/entities/families/snakefamily.cpp \
     ../genelab/core/entities/brain/sinusin.cpp \
-    ../genelab/core/entities/ogrebulletentityfamily.cpp \
-    ../genelab/core/entities/ogrebulletentity.cpp \
-    ../genelab/core/entities/brain/neuralout.cpp \
-    ../genelab/core/entities/brain/neuralnetwork.cpp \
-    ../genelab/core/entities/brain/neuralin.cpp \
     ../genelab/core/entities/body/fixation.cpp \
     ../genelab/core/entities/entityfamily.cpp \
     ../genelab/core/entities/entity.cpp \
@@ -130,7 +125,6 @@ SOURCES += \
     ../genelab/core/factories/entityfactory.cpp \
     ../genelab/core/factories/enginefactory.cpp \
     ../genelab/core/ui/widgets/ogrebulletwindows.cpp \
-    ../genelab/core/ui/widgets/entities/neuralnetworkvisualizer.cpp \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.cpp \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
@@ -156,7 +150,14 @@ SOURCES += \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.cpp \
     ../genelab/core/engines/bullet/shapes/btbone.cpp \
-    ../genelab/core/engines/bulletogre/shapes/btobone.cpp
+    ../genelab/core/engines/bulletogre/shapes/btobone.cpp \
+    ../genelab/core/entities/brain/brainpluggrid.cpp \
+    ../genelab/core/entities/brain/brainnode.cpp \
+    ../genelab/core/entities/brain/brain.cpp \
+    ../genelab/core/entities/brain/brainfunctional.cpp \
+    ../genelab/core/entities/brain/brainin.cpp \
+    ../genelab/core/entities/brain/brainout.cpp \
+    ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -172,11 +173,6 @@ HEADERS += \
     ../genelab/core/entities/brain/synapse.h \
     ../genelab/core/entities/families/snakefamily.h \
     ../genelab/core/entities/brain/sinusin.h \
-    ../genelab/core/entities/ogrebulletentityfamily.h \
-    ../genelab/core/entities/ogrebulletentity.h \
-    ../genelab/core/entities/brain/neuralout.h \
-    ../genelab/core/entities/brain/neuralnetwork.h \
-    ../genelab/core/entities/brain/neuralin.h \
     ../genelab/core/entities/body/fixation.h \
     ../genelab/core/entities/entityfamily.h \
     ../genelab/core/entities/entity.h \
@@ -189,7 +185,6 @@ HEADERS += \
     ../genelab/core/factories/enginefactory.h \
     ../genelab/core/factories/mainfactory.h \
     ../genelab/core/ui/widgets/ogrebulletwindows.h \
-    ../genelab/core/ui/widgets/entities/neuralnetworkvisualizer.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.h \
     ../genelab/apps/sandbox/brainsandbox/brainapp.h \
@@ -215,7 +210,14 @@ HEADERS += \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h \
     ../genelab/core/engines/bullet/shapes/btbone.h \
-    ../genelab/core/engines/bulletogre/shapes/btobone.h
+    ../genelab/core/engines/bulletogre/shapes/btobone.h \
+    ../genelab/core/entities/brain/brainpluggrid.h \
+    ../genelab/core/entities/brain/brainnode.h \
+    ../genelab/core/entities/brain/brain.h \
+    ../genelab/core/entities/brain/brainfunctional.h \
+    ../genelab/core/entities/brain/brainin.h \
+    ../genelab/core/entities/brain/brainout.h \
+    ../genelab/core/ui/widgets/entities/pluggridvisualizer.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

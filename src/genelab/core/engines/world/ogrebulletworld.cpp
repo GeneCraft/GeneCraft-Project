@@ -62,7 +62,7 @@ namespace GeneLabCore {
         directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
         directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, .25));
-        directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));*/
+        directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
 
         Ogre::Light* spotLight = sceneManager->createLight("spotLight");
         spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
