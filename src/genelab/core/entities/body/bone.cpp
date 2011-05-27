@@ -132,11 +132,11 @@ void Bone::setRandomMotors()
     float minTargetVelocity = -8.0;
     float maxTargetVelocity = 8.0;
 
-    int minMaxMotorForce = 100;
-    int maxMaxMotorForce = 1000;
+    int minMaxMotorForce = 10;
+    int maxMaxMotorForce = 100;
 
-    int minMaxLimitForce = 100;
-    int maxMaxLimitForce = 1000;
+    int minMaxLimitForce = 10;
+    int maxMaxLimitForce = 50;
 
     float minAngularLowerLimit = -3.14;
     float maxAngularLowerLimit = 3.14;

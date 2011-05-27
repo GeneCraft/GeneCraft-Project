@@ -108,17 +108,8 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     addDockWidget(Qt::BottomDockWidgetArea,dwGenome);
 
 
-
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !! It's really the windows that must do this ??? !!
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // I think to create a wrap named GeneLabEngine which contains
-    // all engines is a good idea... no ?
-
+    // Make all :)
     MainFactory* factory = new MainFactory(this->ui->centralWidget, (unsigned long) this->winId() );
-
-
 
     // ------------------------
     // -- Simulation Manager --

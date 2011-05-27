@@ -2,6 +2,8 @@
 #define OGREMANAGER_H
 
 #include <QObject>
+#include <QMap>
+
 #include "genelabcoreclasses.h"
 #include "engine.h"
 
@@ -14,14 +16,17 @@ namespace GeneLabCore {
 
         Ogre::Root*         getOgreRoot();
         Ogre::SceneManager* getOgreSceneManager();
-        OgreWidget*         createOgreWidget(Ogre::Camera* cam,
+        OgreWidget*         createOgreWidget(QString widgetName,
+                                             Ogre::Camera* cam,
                                              QWidget* parent);
 
-        QWidget*            getRender(QWidget* parent);
+        //QWidget*            getRender(QWidget* parent);
 
         bool isRenderable() {
             return true;
         }
+
+        OgreWidget*         getOgreWidget(QString widgetName);
 
     signals:
 
@@ -41,7 +46,9 @@ namespace GeneLabCore {
         void initSceneManager();
         void initRenderingSystem(unsigned long winId);
 
-        QList<OgreWidget*> ogreWidgets;
+
+        QMap<QString, OgreWidget*> ogreWidgets;
+        //QList<OgreWidget*> ogreWidgets;
         int winId;
 
     };

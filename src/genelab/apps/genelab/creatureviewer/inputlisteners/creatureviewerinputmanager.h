@@ -38,6 +38,8 @@ namespace GeneLabCore {
         BulletOgreEngine* btoEngine;
         int mNumEntitiesInstanced;
 
+        QPoint mousePos;
+
     };
 }
 

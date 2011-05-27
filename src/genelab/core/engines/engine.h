@@ -15,9 +15,9 @@ namespace GeneLabCore {
             return false;
         }
 
-        virtual QWidget* getRenderWidget(QWidget* parent) {
-            return NULL;
-        }
+//        virtual QWidget* getRenderWidget(QWidget* parent) {
+//            return NULL;
+//        }
 
     signals:
 

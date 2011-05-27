@@ -100,14 +100,19 @@ namespace GeneLabCore {
         scnManager = ogreRoot->createSceneManager( scene_manager_type );
     }
 
-    OgreWidget* OgreEngine::createOgreWidget(Ogre::Camera* cam, QWidget* parent) {
+    OgreWidget* OgreEngine::createOgreWidget(QString widgetName, Ogre::Camera* cam, QWidget* parent) {
 
         OgreWidget* ow = new OgreWidget(ogreRoot, scnManager, cam, parent);
         ow->init();
 
-        ogreWidgets.append(ow);
+        ogreWidgets.insert(widgetName,ow);
 
         return ow;
+    }
+
+    OgreWidget * OgreEngine::getOgreWidget(QString widgetName)
+    {
+        return ogreWidgets.find(widgetName).value();
     }
 
     Ogre::SceneManager* OgreEngine::getOgreSceneManager() {
@@ -126,12 +131,12 @@ namespace GeneLabCore {
 
         ogreRoot->renderOneFrame();
 
-        for(int i = 0; i < ogreWidgets.size(); i++) {
+        foreach(OgreWidget *ow, ogreWidgets)
+        {
+            ow->step();
 
-            ogreWidgets[i]->step();
-
-            if(ogreWidgets[i]->resized)
-                ogreWidgets[i]->resize();
+            if(ow->resized)
+                ow->resize();
         }
     }
 }

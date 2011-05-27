@@ -1,12 +1,21 @@
 #include "creatureviewerinputmanager.h"
+
+// Qt
 #include <QDebug>
+
+// Ogre
 #include "ogreengine.h"
-#include "bulletengine.h"
-//#include "sandboxtools.h"
 #include "OGRE/Ogre.h"
+#include "ogrewidget.h"
+
+// Bullet
+#include "bulletengine.h"
 #include "Dynamics/OgreBulletDynamicsWorld.h"
+
+// Bullet & Ogre
 #include "btobox.h"
 #include "bulletogreengine.h"
+
 
 namespace GeneLabCore {
 
@@ -14,9 +23,11 @@ CreatureViewerInputManager::CreatureViewerInputManager()
 {
 }
 
-
 void CreatureViewerInputManager::mousePressEvent(QMouseEvent * e)
 {
+    mousePos.setX(e->pos().x());
+    mousePos.setY(e->pos().y());
+
     switch(e->button())
     {
     case Qt::RightButton :
@@ -31,6 +42,7 @@ void CreatureViewerInputManager::mousePressEvent(QMouseEvent * e)
         break;
     }
 }
+
 void CreatureViewerInputManager::mouseReleaseEvent(QMouseEvent * e){}
 
 void CreatureViewerInputManager::mouseMoveEvent(QMouseEvent * e){}
@@ -83,7 +95,6 @@ void CreatureViewerInputManager::throwCube()
     box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
 }
 
-
 void CreatureViewerInputManager::pickBody()
 {
     bool m_ortho = false;
@@ -96,11 +107,25 @@ void CreatureViewerInputManager::pickBody()
     }
     else
     {
-        Ogre::Vector3 ogreRayFrom = camera->getPosition();
+        // TODO static ?
+        const float lenghtOfRay = 1000.0;
+
+        // TODO pass this widget in constructor or not ?
+        OgreWidget *ogreWidget = btoEngine->getOgreEngine()->getOgreWidget("MainWidget");
+
+        float normalisedMouseX = mousePos.x() / (float) ogreWidget->width();
+        float normalisedMouseY = mousePos.y() / (float) ogreWidget->height();
+
+        Ogre::Ray ogreRay = camera->getCameraToViewportRay (normalisedMouseX,normalisedMouseY); // under mouse
+        //Ogre::Vector3 ogreRayFrom = camera->getPosition(); // fps
+        Ogre::Vector3 ogreRayFrom = ogreRay.getOrigin(); // under mouse
         rayFrom = btVector3(ogreRayFrom.x,ogreRayFrom.y,ogreRayFrom.z);
 
-        Ogre::Vector3 ogreRayTo = camera->getPosition() + camera->getDirection() * 1000;
+        //Ogre::Vector3 ogreRayTo = camera->getPosition() + camera->getDirection() * lenghtOfRay; // fps
+        Ogre::Vector3 ogreRayTo = ogreRay.getOrigin() +  ogreRay.getDirection() * lenghtOfRay; // under mouse
         rayTo = btVector3(ogreRayTo.x,ogreRayTo.y,ogreRayTo.z);
+
+        //qDebug() << "rayFrom : " << rayFrom.x() << rayFrom.y() << rayFrom.z() << ", rayTo : " << rayTo.x() << rayTo.y() << rayTo.z();
     }
 
     btCollisionWorld::ClosestRayResultCallback rayCallback(rayFrom,rayTo);
@@ -111,7 +136,9 @@ void CreatureViewerInputManager::pickBody()
         btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
 
         if (body)
+        {
             emit rigidBodySelected(body);
+        }
     }
 }
 

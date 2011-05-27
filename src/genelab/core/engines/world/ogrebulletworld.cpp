@@ -52,7 +52,7 @@ namespace GeneLabCore {
         sceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
         sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_MODULATIVE);
 
-        /*Ogre::Light* pointLight = sceneManager->createLight("pointLight");
+        Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
         pointLight->setPosition(Ogre::Vector3(0, 150, 250));
         pointLight->setDiffuseColour(0.8, 0.8, 1.0);

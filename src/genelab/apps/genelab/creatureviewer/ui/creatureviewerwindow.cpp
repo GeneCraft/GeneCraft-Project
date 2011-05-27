@@ -109,8 +109,10 @@ void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
 {
+    qDebug() << Q_FUNC_INFO;
+
     //other exclusions ?
-    //if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
+    if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
     {
         if(rigidBody->getUserPointer() != NULL)
         {
@@ -126,7 +128,6 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                             Bone *bone = dynamic_cast<Bone*>(origin->getObject());
                             //bone->setSelected(true); // TODO stock selection into rigidbody origin
                             setInspector(bone->getInspectorWidget());
-                            qDebug() << "2";
                             setEntity(bone->getEntity(),bone->getRigidBody());
                             }
                             break;

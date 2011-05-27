@@ -50,7 +50,7 @@ namespace GeneLabCore {
         // qDebug() << "[OK]\n";
 
         // widget 1
-        QWidget* oW1 = ogreEngine->createOgreWidget(cam1, sceneWidget);
+        QWidget* oW1 = ogreEngine->createOgreWidget("MainWidget",cam1, sceneWidget);
         this->widgets.insert("OgreWidget", oW1);
 
         if(sceneWidget->layout() == NULL)
@@ -62,7 +62,7 @@ namespace GeneLabCore {
 
         // widget 2
         // this->ui->centralWidget->layout()->addWidget(oW2);
-        // QWidget* oW2 = graphics->createOgreWidget(cam2, this->ui->centralWidget);
+        // QWidget* oW2 = graphics->createOgreWidget("SecondWidget",cam2, this->ui->centralWidget);
 
 
         // ----------------------

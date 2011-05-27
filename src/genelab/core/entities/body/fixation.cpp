@@ -6,6 +6,7 @@
 #include "rigidbodyorigin.h"
 #include "btshapesfactory.h"
 #include "btsphere.h"
+#include <QDebug>
 
 #include <QDebug>
 
