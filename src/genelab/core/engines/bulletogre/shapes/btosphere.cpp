@@ -51,8 +51,6 @@ void btoSphere::setup()
 {
     btSphere::setup();
 
-    qDebug() << "btoSphere::setup()";
-
     node->attachObject(entity);
     btoEngine->addBody(rigidBody,entity,node);
 }

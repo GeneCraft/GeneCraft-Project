@@ -11,6 +11,14 @@ namespace Ui {
 
 using namespace GeneLabCore;
 
+/**
+ * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
+ *
+ * Main window of the creature viewer sub-app.
+ *
+ * @version 1.0 | May 2011
+ * @author Aurelien Da Campo & Cyprien Huissoud
+ */
 class CreatureViewerWindow : public QMainWindow
 {
     Q_OBJECT

@@ -169,7 +169,6 @@ namespace GeneLabCore {
             }
         }
 
-
         // Snake
         // Move into EntityFactory
         // Discussion about entity management to do...

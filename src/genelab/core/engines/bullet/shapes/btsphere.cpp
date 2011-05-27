@@ -45,8 +45,6 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
 
 void btSphere::setup()
 {
-    qDebug() << "btSphere::setup()";
-
     if(btEngine != NULL && rigidBody != NULL)
         btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
     else

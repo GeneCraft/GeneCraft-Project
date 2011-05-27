@@ -41,12 +41,9 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     // ----------------------
     // -- Events Listeners --
     // ----------------------
-    CreatureViewerInputManager *cvim = new CreatureViewerInputManager();
-
-    // TODO move to constructor !
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
-    cvim->initBulletOgre(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
+    CreatureViewerInputManager *cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
 
     // add listener in events manager
     EventManager *eventsManager =  static_cast<EventManager*>(factory->getEngines().find("Event").value());
@@ -54,7 +51,6 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
     // connect listener to window
     connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
-
 
     // ------------------------
     // -- Simulation Manager --
@@ -70,15 +66,11 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     simulationManager->start();
     qDebug() << "[OK]\n";
 
-
     inspector = NULL;
     openGLWidget = NULL;
 
-
     // Connection to Inspectors
     connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
-
-
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()

@@ -61,14 +61,11 @@ btoBone::btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
 
 void btoBone::setup()
 {
-    qDebug() << "btoBone setup !";
     btBone::setup();
-
 
     nodeC->attachObject(entityC);
     nodeS->attachObject(entityS);
     btoEngine->addBody(rigidBody,entityC,parentNode);
-
 }
 }
 

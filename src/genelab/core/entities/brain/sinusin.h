@@ -3,6 +3,7 @@
 
 #include "genelabcoreclasses.h"
 #include <math.h>
+
 #include "brainin.h"
 
 namespace GeneLabCore {
