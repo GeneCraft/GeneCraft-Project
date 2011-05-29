@@ -21,10 +21,12 @@ INCLUDEPATH += \
     ../genelab/core/engines/ogre/entities \
     ../genelab/core/engines/bulletogre \
     ../genelab/core/engines/bulletogre/shapes \
+    ../genelab/core/engines/entities \
     ../genelab/core/engines/world \
     ../genelab/core/entities \
     ../genelab/core/entities/body \
     ../genelab/core/entities/brain \
+    ../genelab/core/entities/sensors \
     ../genelab/core/entities/families \
     ../genelab/core/entities/factories \
     ../genelab/core/entities/ui \
@@ -157,7 +159,11 @@ SOURCES += \
     ../genelab/core/entities/brain/brainfunctional.cpp \
     ../genelab/core/entities/brain/brainin.cpp \
     ../genelab/core/entities/brain/brainout.cpp \
-    ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp
+    ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp \
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.cpp \
+    ../genelab/core/entities/sensors/sensor.cpp \
+    ../genelab/core/entities/sensors/positionsensor.cpp \
+    ../genelab/core/engines/entities/entitiesengine.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -217,7 +223,11 @@ HEADERS += \
     ../genelab/core/entities/brain/brainfunctional.h \
     ../genelab/core/entities/brain/brainin.h \
     ../genelab/core/entities/brain/brainout.h \
-    ../genelab/core/ui/widgets/entities/pluggridvisualizer.h
+    ../genelab/core/ui/widgets/entities/pluggridvisualizer.h \
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.h \
+    ../genelab/core/entities/sensors/sensor.h \
+    ../genelab/core/entities/sensors/positionsensor.h \
+    ../genelab/core/engines/entities/entitiesengine.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -227,7 +237,8 @@ FORMS += \
     ../genelab/core/ui/widgets/entities/fixationproperties.ui \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.ui \
-    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui \
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

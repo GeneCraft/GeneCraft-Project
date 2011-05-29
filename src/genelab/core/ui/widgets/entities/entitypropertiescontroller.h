@@ -15,6 +15,7 @@ using namespace GeneLabCore;
 class FixationTreeWidgetItem : public QTreeWidgetItem
 {
 public:
+
     FixationTreeWidgetItem(Fixation * fixation)
     {
         this->fixation = fixation;

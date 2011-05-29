@@ -12,7 +12,6 @@ namespace GeneLabCore {
     {
     }
 
-
     QWidget* BrainEngine::getRenderWidget(QWidget* parent) {
         PlugGridVisualizer* w = new PlugGridVisualizer(this);
         this->gridVisualizers.append(w);

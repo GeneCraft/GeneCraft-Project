@@ -31,7 +31,8 @@ namespace GeneLabCore {
     class OpenGLEngine;
 
     // Brain
-    class BrainEngine;
+    class BrainEngine; // TODO DELETE !
+    class EntitiesEngine;
 
     // Generic simulation manager
     class SimulationManager;
@@ -63,6 +64,12 @@ namespace GeneLabCore {
     class BrainFunctional;
     // Function bloc of the functionalbrain
     class BrainNode;
+
+    // Sensors
+    class Sensor;
+    class PositionSensor;
+    class GyroscopeSensor;
+    class ContactSensor;
 
     // ---------------
     // -- Factories --

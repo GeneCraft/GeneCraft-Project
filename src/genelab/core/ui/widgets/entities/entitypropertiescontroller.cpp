@@ -80,14 +80,14 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
     if(rootItem == 0)
     {
         rootItem = new FixationTreeWidgetItem(fixation);
-        rootItem->setText(0,QString("root fixation : ").append(QString().setNum(bones.size()).append(" bone(s)")));
+        rootItem->setText(0,QString("Root fixation : ").append(QString().setNum(bones.size()).append(" bone(s)")));
         rootItem->setIcon(0,QIcon(":/img/icons/fixation"));
         ui->twBodyTree->addTopLevelItem(rootItem);
     }
     else
     {
-        rootItem->setText(0,QString("fixation : ").append(QString().setNum(bones.size()).append(" bone(s)")));
-        rootItem->setIcon(0,QIcon(":/img/icons/fixation"));
+//        rootItem->setText(0,QString("Fixation : ").append(QString().setNum(bones.size()).append(" bone(s)")));
+//        rootItem->setIcon(0,QIcon(":/img/icons/fixation"));
     }
 
     Bone *bone;
@@ -96,18 +96,17 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
         bone = bones.at(i);
 
         QTreeWidgetItem *boneItem = new BoneTreeWidgetItem(rootItem,bone);
-        boneItem->setText(0,QString("bone ").append(QString().setNum(i)));
-        boneItem->setIcon(0,QIcon(":/img/icons/bone"));
+        boneItem->setText(0,QString("Bone + Fix")); //.append(QString().setNum(i)));
+        boneItem->setIcon(0,QIcon(":/img/icons/bone_and_fixation"));
 
-        qDebug() << "1";
         if(bone->getRigidBody() == selectedBody)
              ui->twBodyTree->setCurrentItem(boneItem);
 
-        QTreeWidgetItem *fixItem = new FixationTreeWidgetItem(boneItem,bone->getEndFixation());
-        if(bone->getEndFixation()->getRigidBody() == selectedBody)
-             ui->twBodyTree->setCurrentItem(fixItem);
+//        QTreeWidgetItem *fixItem = new FixationTreeWidgetItem(boneItem,bone->getEndFixation());
+//        if(bone->getEndFixation()->getRigidBody() == selectedBody)
+//             ui->twBodyTree->setCurrentItem(fixItem);
 
-        setupBodyTree(bones.at(i)->getEndFixation(),selectedBody,fixItem);
+        setupBodyTree(bones.at(i)->getEndFixation(),selectedBody,boneItem);
     }
 }
 

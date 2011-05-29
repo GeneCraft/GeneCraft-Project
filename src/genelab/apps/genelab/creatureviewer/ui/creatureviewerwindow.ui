@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Creature Viewer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../../../core/ressources/ressources.qrc">
+    <normaloff>:/img/icons/entity</normaloff>:/img/icons/entity</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -30,6 +34,10 @@
     <widget class="QMenu" name="menuAdd_Creature">
      <property name="title">
       <string>Add creature</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../core/ressources/ressources.qrc">
+       <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
      </property>
      <addaction name="actionSpider"/>
     </widget>
@@ -50,12 +58,35 @@
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QDockWidget" name="dwInspector">
+  <widget class="QDockWidget" name="dwCreature">
    <property name="minimumSize">
     <size>
      <width>380</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="windowIcon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/entity</normaloff>:/img/icons/entity</iconset>
+   </property>
+   <property name="windowTitle">
+    <string>Creature</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2"/>
+  </widget>
+  <widget class="QDockWidget" name="dwInspector">
+   <property name="minimumSize">
+    <size>
+     <width>400</width>
      <height>200</height>
     </size>
+   </property>
+   <property name="windowIcon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/inspector</normaloff>:/img/icons/inspector</iconset>
    </property>
    <property name="floating">
     <bool>false</bool>
@@ -68,27 +99,20 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents"/>
   </widget>
-  <widget class="QDockWidget" name="dwCreature">
-   <property name="minimumSize">
-    <size>
-     <width>380</width>
-     <height>300</height>
-    </size>
-   </property>
-   <property name="windowTitle">
-    <string>Creature</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2"/>
-  </widget>
   <action name="actionSave_selected_creature">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/entity_save</normaloff>:/img/icons/entity_save</iconset>
+   </property>
    <property name="text">
     <string>Save selected creature</string>
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/close</normaloff>:/img/icons/close</iconset>
+   </property>
    <property name="text">
     <string>Quit</string>
    </property>
@@ -104,17 +128,27 @@
    </property>
   </action>
   <action name="actionNew_creature">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
+   </property>
    <property name="text">
     <string>New creature</string>
    </property>
   </action>
   <action name="actionAbout_CreatureViewer">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/help</normaloff>:/img/icons/help</iconset>
+   </property>
    <property name="text">
     <string>About CreatureViewer</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../core/ressources/ressources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionQuit</sender>

@@ -33,6 +33,7 @@ public slots:
     void setEntity(Entity *entity, btRigidBody *selectedBody);
     void setOpenGLWidget(QWidget * openGLWidget);
     void rigidBodySelected(btRigidBody *rigidBody);
+    void showAbout();
 
 private:
 

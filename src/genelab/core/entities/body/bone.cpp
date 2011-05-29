@@ -26,12 +26,12 @@ BonePropertiesController* Bone::inspectorWidget = 0;
 
 Bone::Bone(btShapesFactory *shapesFactory,
            btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
-    radius(radius), length(length)
+    radius(radius), length(length), endFix(NULL)
 {
 
-    qDebug() << initTransform.getOrigin().x()
-             << initTransform.getOrigin().y()
-             << initTransform.getOrigin().z() ;
+//    qDebug() << initTransform.getOrigin().x()
+//             << initTransform.getOrigin().y()
+//             << initTransform.getOrigin().z() ;
 
     bulletEngine = shapesFactory->getBulletEngine();
 

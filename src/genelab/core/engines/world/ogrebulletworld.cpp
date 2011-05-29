@@ -25,13 +25,15 @@
 #include "treeshape.h"
 #include "fixation.h"
 #include "spider/spider.h"
+#include "entitiesengine.h"
 
 namespace GeneLabCore {
 
-    OgreBulletWorld::OgreBulletWorld(BulletOgreEngine *btoEngine, QObject *parent) :
+    OgreBulletWorld::OgreBulletWorld(BulletOgreEngine *btoEngine, EntitiesEngine* entitiesEngine, QObject *parent) :
         World(parent)
     {
         this->btoEngine = btoEngine;
+        this->entitiesEngine = entitiesEngine;
     }
 
     void OgreBulletWorld::setup() {
@@ -49,8 +51,8 @@ namespace GeneLabCore {
         sceneManager->setSkyDome(true, "Examples/CloudySky");
 
         // lights
-        sceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
-        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_MODULATIVE);
+        sceneManager->setAmbientLight(Ogre::ColourValue(.9,.9,.9));
+        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
@@ -66,8 +68,8 @@ namespace GeneLabCore {
 
         Ogre::Light* spotLight = sceneManager->createLight("spotLight");
         spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
-        spotLight->setDiffuseColour(1.0, 1.0, 1.0);
-        spotLight->setSpecularColour(1.0, 1.0, 1.0);
+        spotLight->setDiffuseColour(.9,.9,.9);
+        spotLight->setSpecularColour(.9,.9,.9);
         spotLight->setDirection(-1, -1, 0);
         spotLight->setPosition(Ogre::Vector3(300, 300, 0));
         spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
@@ -166,6 +168,7 @@ namespace GeneLabCore {
                 Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,20,i*30));
                 qDebug() << "spider setup !";
                 e->setup();
+                entitiesEngine->addEntity(e);
             }
         }
 

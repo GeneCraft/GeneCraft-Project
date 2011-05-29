@@ -5,7 +5,9 @@
 #include <QDebug>
 #include <QLabel>
 #include <QVBoxLayout>
+#include "creatureviewerabout.h"
 
+// Entity
 #include "fixation.h"
 #include "bone.h"
 #include "entity.h"
@@ -51,6 +53,9 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
     // connect listener to window
     connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+
+    connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
+
 
     // ------------------------
     // -- Simulation Manager --
@@ -220,4 +225,10 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
 
 //                gOldPickingDist  = (pickPos-rayFrom).length();
     }
+}
+
+void CreatureViewerWindow::showAbout()
+{
+    CreatureViewerAbout *cwa = new CreatureViewerAbout();
+    cwa->show();
 }

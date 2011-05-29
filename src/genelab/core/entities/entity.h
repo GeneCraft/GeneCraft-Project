@@ -14,16 +14,23 @@ namespace GeneLabCore {
         explicit Entity(QString name, QString family, int generation, QObject *parent = 0);
         ~Entity();
 
+        // Origins
         inline const QString &getName() { return name; }
+        inline const QString &getFamily() { return family; }
 
-        static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
-
-        /*inline void setRootFixation(Fixation *rootFix) { this->rootFix = rootFix; }
-        inline Fixation *getRootFixation() { return rootFix; }*/
-
+        // Shape
         TreeShape* getShape();
-        void   setShape(TreeShape* shape);
+        void setShape(TreeShape* shape);
 
+        // Sensors links
+        inline void addLinkToSensor(Sensor *sensor) { sensors.append(sensor); }
+        inline QList<Sensor *> &getSensors() { return sensors;  }
+
+        // Brain
+        inline Brain *getBrain() { return brain; }
+
+        // Qt Render
+        static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
     signals:
 
@@ -32,15 +39,20 @@ namespace GeneLabCore {
 
     protected:
 
-        // shape root
-        //Fixation *rootFix;
-        TreeShape* treeShape;
-
-        // entity
+        // Origins
         QString name;
         QString family;
         int generation;
 
+        // Shape
+        TreeShape* treeShape;
+
+        // Brain
+        QList<Sensor *> sensors;
+        //QList<Modifier *> modifiers;
+        Brain *brain;
+
+        // Qt Render
         static EntityPropertiesController *inspectorWidget;
 
     };

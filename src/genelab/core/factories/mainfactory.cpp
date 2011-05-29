@@ -13,6 +13,7 @@
 #include "creatureviewerinputmanager.h"
 #include "ressource.h"
 #include "brainengine.h"
+#include "entitiesengine.h"
 #include "ogrebulletworld.h"
 #include "world.h"
 
@@ -87,18 +88,25 @@ namespace GeneLabCore {
         // -------------------
         // -- Brains engine --
         // -------------------
-        qDebug() << "Init Brain Engine";
-        BrainEngine* brainEngine = new BrainEngine();
-        this->engines.insert("Brain", brainEngine);
-        qDebug() << "[OK]\n";
+//        qDebug() << "Init Brain Engine";
+//        BrainEngine* brainEngine = new BrainEngine();
+//        this->engines.insert("Brain", brainEngine);
+//        qDebug() << "[OK]\n";
 
+        // ---------------------
+        // -- Entities engine --
+        // ---------------------
+        qDebug() << "Init Entities Engine";
+        EntitiesEngine* entitiesEngine = new EntitiesEngine();
+        this->engines.insert("Entities", entitiesEngine);
+        qDebug() << "[OK]\n";
 
 
         // ---------------------
         // -- Scene (Content) --
         // ---------------------
         qDebug() << "World creation";
-        World *world = new OgreBulletWorld(bulletOgreEngine);
+        World *world = new OgreBulletWorld(bulletOgreEngine,entitiesEngine);
         world->setup();
         this->worlds.insert("BasicWorld", world);
         qDebug() << "[OK]\n";

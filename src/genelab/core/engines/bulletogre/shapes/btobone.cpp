@@ -26,7 +26,7 @@ btoBone::btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
             "Barrel.mesh");
 
     // Material
-    entityC->setMaterialName("Examples/Rockwall");
+    entityC->setMaterialName("Sinbad/Teeth");
     entityC->setCastShadows(true);
 
     // Attach
@@ -45,7 +45,7 @@ btoBone::btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
             "sphere.mesh");
 
     // Material
-    entityS->setMaterialName("Examples/Rockwall");
+    entityS->setMaterialName("Sinbad/Eyes");
     entityS->setCastShadows(true);
 
     nodeS = parentNode->createChildSceneNode(Vector3(0, length/2+radiusArticulation, 0));

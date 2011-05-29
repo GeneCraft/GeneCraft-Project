@@ -32,7 +32,7 @@ btoSphere::btoSphere(BulletOgreEngine *btoEngine, btScalar radius, const btTrans
             "sphere.mesh");
 
     // Material
-    entity->setMaterialName("Examples/Rockwall");
+    entity->setMaterialName("Sinbad/Eyes");
     entity->setCastShadows(true);
 
     node = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();

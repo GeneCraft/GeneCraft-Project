@@ -1,14 +1,24 @@
 <RCC>
     <qresource prefix="/img/icons">
-        <file>img/icons/add.png</file>
-        <file>img/icons/control_play_blue.png</file>
+        <file alias="add">img/icons/add.png</file>
+        <file alias="control_play_blue">img/icons/control_play_blue.png</file>
         <file alias="close">img/icons/door_out.png</file>
-        <file alias="sensor_add">img/icons/feed.png</file>
+        <file alias="sensor">img/icons/feed.png</file>
         <file alias="help">img/icons/help.png</file>
-        <file>img/icons/wrench.png</file>
+        <file alias="wrench">img/icons/wrench.png</file>
         <file alias="bone">img/icons/bone.png</file>
-        <file alias="fixation">img/icons/fixation.png</file>
-        <file>img/icons/feed_add.png</file>
+        <file alias="sensor_add">img/icons/feed_add.png</file>
         <file alias="bone_add">img/icons/bone_add.png</file>
+        <file alias="entity">img/icons/bug.png</file>
+        <file alias="entity_add">img/icons/bug_add.png</file>
+        <file alias="entity_delete">img/icons/bug_delete.png</file>
+        <file alias="motor_test">img/icons/cog_go.png</file>
+        <file alias="anchor">img/icons/anchor.png</file>
+        <file alias="inspector">img/icons/magnifier.png</file>
+        <file alias="entity_save">img/icons/bug_save.png</file>
+        <file alias="random">img/icons/arrow_switch.png</file>
+        <file alias="entity_vcard">img/icons/entity_vcard.png</file>
+        <file alias="fixation">img/icons/fixation.png</file>
+        <file alias="bone_and_fixation">img/icons/bone_and_fixation.png</file>
     </qresource>
 </RCC>
