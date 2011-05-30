@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl testlib
+QT       += core gui opengl testlib network
 
 TARGET = genelab_global
 TEMPLATE = app
@@ -56,9 +56,10 @@ INCLUDEPATH  += \
     ../lib/ogrebullet-build/include \
     ../lib/bullet/src \
     ../lib/bullet/Extra/ConvexDecomposition \
-    ../lib/qxt/src/core
+    ../lib/qxt/src/core \
+    ../lib/qwt/src
 
-#CONFIG(Debug) {
+
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
@@ -69,23 +70,18 @@ INCLUDEPATH  += \
     QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
     QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
     QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
-#}
+    QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
 
 #CONFIG(Debug) {
 #    LIBS += -L../lib/ogre/bin/Debug
 #    LIBS += -lOgreMain_d -lOIS_d
 #}
 #CONFIG(Release) {
-    LIBS += -L../lib/ogre/bin/Release
+    LIBS += -L../lib/bin
     LIBS += -lOgreMain -lOIS
 #}
 
-LIBS += -L../lib/ogrebullet-build/lib
-LIBS += -L../lib/bullet/lib
-LIBS += -L../lib/qxt/lib
-
 LIBS += -lQxtCore
-LIBS += -lOgreBulletCol -lOgreBulletDyn
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
@@ -101,6 +97,7 @@ LIBS += -lGLUI
 LIBS += -lMiniCL
 #LIBS += -lmui
 LIBS += -lOpenGLSupport
+LIBS += -lqwt
 
 SOURCES += \
     ../genelab/core/engines/simulationmanager.cpp \
@@ -121,10 +118,9 @@ SOURCES += \
     ../genelab/core/entities/entity.cpp \
     ../genelab/core/entities/body/bone.cpp \
     ../genelab/core/factories/worldfactory.cpp \
-    ../genelab/core/factories/ressource.cpp \
+    ../genelab/core/factories/ressources/ressource.cpp \
     ../genelab/core/factories/neuralnetworkfactory.cpp \
     ../genelab/core/factories/mainfactory.cpp \
-    ../genelab/core/factories/jsonloader.cpp \
     ../genelab/core/factories/entityfactory.cpp \
     ../genelab/core/factories/enginefactory.cpp \
     ../genelab/core/ui/widgets/ogrebulletwindows.cpp \
@@ -168,7 +164,9 @@ SOURCES += \
     ../genelab/core/entities/sensors/gyroscopicsensor.cpp \
     ../genelab/core/entities/sensors/accelerometersensor.cpp \
     ../genelab/core/entities/modifiers/modifier.cpp \
-    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.cpp
+    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.cpp \
+    ../genelab/core/factories/ressources/jsonfile.cpp \
+    ../genelab/core/factories/ressources/dbrecord.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -189,9 +187,8 @@ HEADERS += \
     ../genelab/core/entities/entity.h \
     ../genelab/core/entities/body/bone.h \
     ../genelab/core/factories/worldfactory.h \
-    ../genelab/core/factories/ressource.h \
+    ../genelab/core/factories/ressources/ressource.h \
     ../genelab/core/factories/neuralnetworkfactory.h \
-    ../genelab/core/factories/jsonloader.h \
     ../genelab/core/factories/entityfactory.h \
     ../genelab/core/factories/enginefactory.h \
     ../genelab/core/factories/mainfactory.h \
@@ -236,7 +233,9 @@ HEADERS += \
     ../genelab/core/entities/sensors/gyroscopicsensor.h \
     ../genelab/core/entities/sensors/accelerometersensor.h \
     ../genelab/core/entities/modifiers/modifier.h \
-    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.h
+    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.h \
+    ../genelab/core/factories/ressources/jsonfile.h \
+    ../genelab/core/factories/ressources/dbrecord.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

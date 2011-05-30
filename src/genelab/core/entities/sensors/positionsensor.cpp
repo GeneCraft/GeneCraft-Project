@@ -23,8 +23,13 @@ PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(
 
 void PositionSensor::step()
 {
-    btVector3 distance = fixation->getRigidBody()->getWorldTransform().getOrigin()
+    btTransform inverseRootTransform = rootFix->getRigidBody()->getWorldTransform().inverse();
+    btVector3 distance = inverseRootTransform(fixation->getRigidBody()->getWorldTransform().getOrigin());
+
+    // Small fixe, now use the rootTransform orientation !!!
+    /* btVector3 distance = fixation->getRigidBody()->getWorldTransform().getOrigin()
             - rootFix->getRigidBody()->getWorldTransform().getOrigin();
+    */
 
     qDebug() << "PositionSensor::step() x = " << distance.x() << " y = " << distance.y() << " z = " << distance.z();
 

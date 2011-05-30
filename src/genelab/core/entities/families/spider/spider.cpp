@@ -58,8 +58,8 @@ void Spider::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVec
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
-        btVector3 lowerLimits(0,0,-M_PI/4);
-        btVector3 upperLimits(0,0,M_PI/4);
+        btVector3 lowerLimits(0,0,-M_PI/10);
+        btVector3 upperLimits(0,0,M_PI/10);
         btQuaternion local;
         local.setEulerZYX(M_PI/6.0,0,0);
         rootBone = rootBone->getEndFixation()->addBone(local,

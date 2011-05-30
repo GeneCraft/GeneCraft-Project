@@ -50,8 +50,8 @@ void RotationalMotorsModifier::step()
             //motor->m_enableMotor = true;
 
 
-           motor->m_maxMotorForce = (sinusIn[0]->getValue() + sinusIn[1]->getValue())*100 + 200;
-           motor->m_targetVelocity = (sinusIn[0]->getValue() - sinusIn[1]->getValue())*10;
+           motor->m_maxMotorForce = ( sinusIn[1]->getValue())*400 + 400;
+           motor->m_targetVelocity = (sinusIn[0]->getValue())*10;
         }
     }
     else
