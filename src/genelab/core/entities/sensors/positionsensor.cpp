@@ -24,7 +24,7 @@ PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(
 void PositionSensor::step()
 {
     btVector3 distance = fixation->getRigidBody()->getWorldTransform().getOrigin()
-                       - rootFix->getRigidBody()->getWorldTransform().getOrigin();
+            - rootFix->getRigidBody()->getWorldTransform().getOrigin();
 
     qDebug() << "PositionSensor::step() x = " << distance.x() << " y = " << distance.y() << " z = " << distance.z();
 

@@ -163,7 +163,9 @@ SOURCES += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.cpp \
     ../genelab/core/entities/sensors/sensor.cpp \
     ../genelab/core/entities/sensors/positionsensor.cpp \
-    ../genelab/core/engines/entities/entitiesengine.cpp
+    ../genelab/core/engines/entities/entitiesengine.cpp \
+    ../genelab/core/entities/sensors/gyroscopicsensor.cpp \
+    ../genelab/core/entities/sensors/accelerometersensor.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -227,7 +229,9 @@ HEADERS += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.h \
     ../genelab/core/entities/sensors/sensor.h \
     ../genelab/core/entities/sensors/positionsensor.h \
-    ../genelab/core/engines/entities/entitiesengine.h
+    ../genelab/core/engines/entities/entitiesengine.h \
+    ../genelab/core/entities/sensors/gyroscopicsensor.h \
+    ../genelab/core/entities/sensors/accelerometersensor.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

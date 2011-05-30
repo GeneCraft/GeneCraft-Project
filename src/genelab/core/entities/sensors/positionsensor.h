@@ -13,7 +13,7 @@ namespace GeneLabCore {
  * first fixation is the root fixation of the entity.
  *
  * We don't use global position because basiquely an entity can't know its position
- * into the world and using this value can make different behavious between two same entities in
+ * into the world. Using this value can make different behavious between two same entities in
  * a different position in the world.
  *
  * @version 1.0 | May 2011

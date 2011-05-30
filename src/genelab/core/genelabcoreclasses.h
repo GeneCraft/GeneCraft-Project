@@ -68,7 +68,8 @@ namespace GeneLabCore {
     // Sensors
     class Sensor;
     class PositionSensor;
-    class GyroscopeSensor;
+    class GyroscopicSensor;
+    class AccelerometerSensor;
     class ContactSensor;
 
     // ---------------

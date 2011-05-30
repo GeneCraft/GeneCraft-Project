@@ -12,9 +12,9 @@ Spider::Spider() :
     EntityFamily()
 {
     nbLegs      = 8;
-    nbBoneInLeg = 3;
+    nbBoneInLeg = 6;
     legRadius   = 0.1;
-    legLenght   = 6;
+    legLenght   = 8;
     kneeRadius  = 0.35;
 
 }

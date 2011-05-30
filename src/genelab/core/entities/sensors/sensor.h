@@ -11,8 +11,8 @@ namespace GeneLabCore {
 /**
  * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
  *
- * A sensor is a captor that is attached to a fixation. It contrains a
- * collection of brain inputs and it's stepped to update the value of their brain inputs.
+ * A sensor is attached to a fixation and contrains a collection of brain inputs.
+ * Its step method is used to update the value of their brain inputs.
  *
  * @version 1.0 | May 2011
  * @author Aurelien Da Campo & Cyprien Huissoud

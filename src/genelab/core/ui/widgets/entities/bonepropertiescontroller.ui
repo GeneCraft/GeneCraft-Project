@@ -1014,7 +1014,12 @@
      </item>
      <item>
       <property name="text">
-       <string>Gyroscope sensor</string>
+       <string>Gyroscopic sensor</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Accelerometer sensor</string>
       </property>
      </item>
      <item>

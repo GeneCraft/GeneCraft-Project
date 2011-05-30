@@ -1,12 +1,19 @@
 #include "bonepropertiescontroller.h"
 #include "ui_bonepropertiescontroller.h"
+
+// Entity
+#include "entity.h"
+
+// Shape
 #include "bone.h"
 #include "fixation.h"
-#include "generic6dofconstraintcontroller.h"
+#include "treeshape.h"
+
+// Sensors
 #include "sensor.h"
 #include "positionsensor.h"
-#include "entity.h"
-#include "treeshape.h"
+#include "gyroscopicsensor.h"
+#include "accelerometersensor.h"
 
 BonePropertiesController::BonePropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::BonePropertiesController), bone(0)
@@ -252,13 +259,32 @@ void BonePropertiesController::addSensor()
 
     switch(this->ui->cbSensors->currentIndex())
     {
-        case 0 :
+    case 0 : // Egocentric position sensor
 
-            if(bone->getEntity())
-            {
-                qDebug() << "BonePropertiesController::addSensor : position";
-                sensor = new PositionSensor(bone->getEntity()->getShape()->getRoot(),bone->getEndFixation());
-            }
+        if(bone->getEntity())
+        {
+            qDebug() << "BonePropertiesController::addSensor : Egocentric position sensor";
+            sensor = new PositionSensor(bone->getEntity()->getShape()->getRoot(),bone->getEndFixation());
+        }
+        break;
+
+    case 1 : // Gyroscopic sensor
+
+        if(bone->getEntity())
+        {
+            qDebug() << "BonePropertiesController::addSensor : Gyroscopic sensor";
+            sensor = new GyroscopicSensor(bone->getEndFixation());
+        }
+        break;
+
+    case 2 : // Accelerometer sensor
+
+        if(bone->getEntity())
+        {
+            qDebug() << "BonePropertiesController::addSensor : Accelerometer sensor";
+            // TODO get step time from sulation manager !!!
+            sensor = new AccelerometerSensor(1000/60.0,bone->getEndFixation());
+        }
         break;
     }
 
