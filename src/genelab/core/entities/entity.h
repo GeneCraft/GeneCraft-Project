@@ -26,6 +26,10 @@ namespace GeneLabCore {
         inline void addLinkToSensor(Sensor *sensor) { sensors.append(sensor); }
         inline QList<Sensor *> &getSensors() { return sensors;  }
 
+        // Modifiers links
+        inline void addLinkToModifier(Modifier *modifier) { modifiers.append(modifier); }
+        inline QList<Modifier *> &getModifiers() { return modifiers;  }
+
         // Brain
         inline Brain *getBrain() { return brain; }
 
@@ -49,7 +53,7 @@ namespace GeneLabCore {
 
         // Brain
         QList<Sensor *> sensors;
-        //QList<Modifier *> modifiers;
+        QList<Modifier *> modifiers;
         Brain *brain;
 
         // Qt Render

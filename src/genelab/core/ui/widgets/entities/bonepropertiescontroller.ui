@@ -324,7 +324,7 @@
       <normaloff>:/img/icons/motor_test</normaloff>:/img/icons/motor_test</iconset>
     </attribute>
     <attribute name="title">
-     <string>Motors test</string>
+     <string>Motors effector</string>
     </attribute>
     <widget class="QGroupBox" name="gbAngularMotors">
      <property name="enabled">
@@ -339,7 +339,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>Rotational Motors</string>
+      <string>Rotational motors effector</string>
      </property>
      <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">

@@ -27,6 +27,7 @@ INCLUDEPATH += \
     ../genelab/core/entities/body \
     ../genelab/core/entities/brain \
     ../genelab/core/entities/sensors \
+    ../genelab/core/entities/modifiers \
     ../genelab/core/entities/families \
     ../genelab/core/entities/factories \
     ../genelab/core/entities/ui \
@@ -165,7 +166,9 @@ SOURCES += \
     ../genelab/core/entities/sensors/positionsensor.cpp \
     ../genelab/core/engines/entities/entitiesengine.cpp \
     ../genelab/core/entities/sensors/gyroscopicsensor.cpp \
-    ../genelab/core/entities/sensors/accelerometersensor.cpp
+    ../genelab/core/entities/sensors/accelerometersensor.cpp \
+    ../genelab/core/entities/modifiers/modifier.cpp \
+    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -231,7 +234,9 @@ HEADERS += \
     ../genelab/core/entities/sensors/positionsensor.h \
     ../genelab/core/engines/entities/entitiesengine.h \
     ../genelab/core/entities/sensors/gyroscopicsensor.h \
-    ../genelab/core/entities/sensors/accelerometersensor.h
+    ../genelab/core/entities/sensors/accelerometersensor.h \
+    ../genelab/core/entities/modifiers/modifier.h \
+    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

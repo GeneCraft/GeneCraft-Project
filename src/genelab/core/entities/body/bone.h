@@ -36,86 +36,29 @@ public:
 
 protected:
 
+   // Shape
    btRigidBody *rigidBody;
    RigidBodyOrigin *origin;
    Fixation *endFix;
    btGeneric6DofConstraint *parentCt;
    btGeneric6DofConstraint *endFixConstraint;
-
    btBone *body;
-
    btScalar radius;
    btScalar length;
 
-   //OpenGLEngine *openGLEngine;
-   OgreEngine* ogreManager; // AHAHAHAHAHAAHAHAHAHAHAH
+   // Modifier
+   RotationalMotorsModifier *motorsModifier;
+
+   // Related Entity
+   Entity *entity;
+
+   // Engine
    BulletEngine *bulletEngine;
 
+   // Qt Render
    static BonePropertiesController *inspectorWidget;
 
-   Entity *entity;
 };
-
-/*
-    class Bone : public QObject
-    {
-        Q_OBJECT
-    public:
-        explicit Bone(QObject *parent = 0);
-        Bone(float alpha_max, float beta_min, float beta_max, float r_min, float r_max, float length);
-        ~Bone();
-
-        float getLength();
-
-        float rotationCapacity();
-        float hingeCapacity();
-
-        float getAlpha();
-        float getBetaMin();
-
-        //Fixe aticulation between angle_min and angle_max
-
-        void contractInNormalPosition();
-
-        Fixation* getFixation();
-
-        void initOgreBullet(OgreManager* ogreManager, BulletManager *bulletManager);
-        void setup();
-        void attachToParentFixation(Fixation* parentFix);
-
-
-        OgreBulletDynamics::RigidBody *getRigidBody();
-
-        QString toString();
-
-    signals:
-
-    public slots:
-
-    private:
-
-        // Articulation properties
-        float alpha_min, alpha_max;
-        float beta_min, beta_max;
-        float r_min, r_max;
-
-        // Bone properties
-        float boneRadius;
-        float boneLength;
-        float boneMass;
-        OgreBulletDynamics::RigidBody *rigidBody;
-
-        // End Fixation (totally limited on each axis)
-        Fixation* end;
-
-        // Six dof constraint
-        OgreBulletDynamics::SixDofConstraint *parentSixDofConstraint;
-
-        // Ogre and Bullet
-        OgreManager* ogreManager;
-        BulletManager *bulletManager;
-    };
-*/
 
 }
 #endif // BONE_H

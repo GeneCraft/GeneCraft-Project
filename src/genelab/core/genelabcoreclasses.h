@@ -72,6 +72,10 @@ namespace GeneLabCore {
     class AccelerometerSensor;
     class ContactSensor;
 
+    // Modifier
+    class Modifier;
+    class RotationalMotorsModifier;
+
     // ---------------
     // -- Factories --
     // ---------------
