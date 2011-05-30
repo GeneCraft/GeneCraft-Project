@@ -53,11 +53,12 @@ private:
     btGeneric6DofConstraint * constraint;
 
     bool random;
-    int randomIncr;
+    float randomIncr;
 
     // Six outputs from brain
     // Two by motors
     BrainOutMotor * brainOutputs[3];
+    SinusIn* sinusIn[2];
 };
 
 }

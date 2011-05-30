@@ -64,6 +64,8 @@ namespace GeneLabCore {
     class BrainFunctional;
     // Function bloc of the functionalbrain
     class BrainNode;
+    // Testing purpose
+    class SinusIn;
 
     // Sensors
     class Sensor;

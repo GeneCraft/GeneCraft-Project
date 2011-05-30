@@ -131,10 +131,7 @@ namespace GeneLabCore {
     {
         // Get the initial transform
         btTransform initTransform = this->rigidBody->getWorldTransform();
-        if(initTransform.getOrigin().getX() > 1000) {
-            qDebug() << initTransform.getOrigin().x() << " " << initTransform.getOrigin().y() << " " << initTransform.getOrigin().z();
-            int toto;
-        }
+
         initTransform *= localFixation;
         initTransform.setRotation(initTransform.getRotation()*localOrientation);
 
@@ -159,7 +156,7 @@ namespace GeneLabCore {
         localFix.setOrigin(localFixation.getOrigin());
 
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
-                                                                   localFix, localBone, true);
+                                                                   localFix, localBone, false);
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);

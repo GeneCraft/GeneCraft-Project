@@ -34,10 +34,6 @@ Bone::Bone(btShapesFactory *shapesFactory,
     radius(radius), length(length), endFix(NULL), motorsModifier(NULL), parentCt(NULL)
 {
 
-//    qDebug() << initTransform.getOrigin().x()
-//             << initTransform.getOrigin().y()
-//             << initTransform.getOrigin().z() ;
-
     bulletEngine = shapesFactory->getBulletEngine();
 
     body        = shapesFactory->createBone(length,radius, endFixRadius, initTransform);

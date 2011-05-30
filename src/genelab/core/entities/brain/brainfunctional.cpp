@@ -5,4 +5,21 @@ namespace GeneLabCore {
         Brain(plugGridSize, parent)
     {
     }
+
+    void BrainFunctional::addOut(BrainOut *out, QVariantMap treeData) {
+
+    }
+
+    void BrainFunctional::step() {
+
+    }
+
+    void BrainFunctional::doNode(BrainNode *node, BrainOut *out) {
+
+    }
+
+    float BrainFunctional::value(BrainNode *node) {
+
+    }
+
 }

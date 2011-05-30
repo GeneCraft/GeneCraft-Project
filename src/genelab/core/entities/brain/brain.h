@@ -26,7 +26,6 @@ public slots:
 
 protected:
     BrainPlugGrid* plugGrid;
-
 };
 }
 

@@ -39,7 +39,7 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
 
     for(int i=0;i<nbLegs;++i)
     {
-        legLocal.setEulerZYX(M_PI/2.0,0,i*(2.0*M_PI/nbLegs));
+        legLocal.setEulerZYX(M_PI / 2.0f,0,i*(2.0*M_PI/nbLegs));
         addLeg(rootFix,legLocal,lowerLimits,upperLimits);
     }
 
@@ -58,11 +58,13 @@ void Spider::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVec
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
+        btVector3 lowerLimits(0,0,-M_PI/4);
+        btVector3 upperLimits(0,0,M_PI/4);
         btQuaternion local;
-        local.setEulerZYX(M_PI/3.0,0,0);
+        local.setEulerZYX(M_PI/6.0,0,0);
         rootBone = rootBone->getEndFixation()->addBone(local,
-                                                       btScalar(legRadius - legRadius*(i*.2)),
-                                                       btScalar(legLenght - legLenght*(i*.2)),
+                                                       btScalar(legRadius - legRadius*(i/nbBoneInLeg)),
+                                                       btScalar(legLenght - legLenght*(i/nbBoneInLeg)),
                                                        btScalar(kneeRadius),
                                                        lowerLimits,
                                                        upperLimits);

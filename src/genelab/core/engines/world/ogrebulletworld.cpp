@@ -51,9 +51,10 @@ namespace GeneLabCore {
         sceneManager->setSkyDome(true, "Examples/CloudySky");
 
         // lights
-        sceneManager->setAmbientLight(Ogre::ColourValue(.9,.9,.9));
+        sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
         sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+        /*
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
         pointLight->setPosition(Ogre::Vector3(0, 150, 250));
@@ -65,6 +66,7 @@ namespace GeneLabCore {
         directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
+ */
 
         Ogre::Light* spotLight = sceneManager->createLight("spotLight");
         spotLight->setType(Ogre::Light::LT_SPOTLIGHT);

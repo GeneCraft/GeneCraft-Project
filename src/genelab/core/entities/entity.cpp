@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "fixation.h"
 #include "treeshape.h"
+#include "brainfunctional.h"
 
 namespace GeneLabCore {
 
