@@ -20,5 +20,6 @@
         <file alias="entity_vcard">img/icons/entity_vcard.png</file>
         <file alias="fixation">img/icons/fixation.png</file>
         <file alias="bone_and_fixation">img/icons/bone_and_fixation.png</file>
+        <file alias="sensor_delete">img/icons/feed_delete.png</file>
     </qresource>
 </RCC>

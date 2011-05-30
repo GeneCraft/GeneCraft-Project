@@ -106,8 +106,6 @@ void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
 {
-    qDebug() << Q_FUNC_INFO;
-
     //other exclusions ?
     if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
     {
@@ -145,12 +143,6 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                             //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
                             setInspector(new QLabel("BASIC_SHAPE"));
 
-                            }
-                            break;
-
-                        case RigidBodyOrigin::PLAYER_CHARACTER:{
-
-                            qDebug() << "PLAYER_CHARACTER find !!!";
                             }
                             break;
 
