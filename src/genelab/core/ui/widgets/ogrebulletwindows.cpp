@@ -24,7 +24,6 @@
 #include "ogrewidget.h"
 #include "bulletengine.h"
 #include "simulationmanager.h"
-#include "jsonloader.h"
 #include "eventmanager.h"
 #include "snakefamily.h"
 #include "treeshape.h"

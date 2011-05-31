@@ -12,7 +12,7 @@ namespace GeneLabCore {
     public:
         explicit MainFactory(QWidget* sceneWidget, unsigned long winId, QObject *parent = 0);
 
-        bool create(Ressource r);
+        bool create(Ressource* r);
 
         // TODO REFACTORING : inline QMap<QString, Engine*> getEngines() { return engines; }
         QMap<QString, Engine*>        getEngines();

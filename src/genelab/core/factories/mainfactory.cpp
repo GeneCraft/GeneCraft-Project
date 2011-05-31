@@ -11,7 +11,7 @@
 #include "bulletogreengine.h"
 #include "eventmanager.h"
 #include "creatureviewerinputmanager.h"
-#include "ressource.h"
+#include "ressources/ressource.h"
 #include "brainengine.h"
 #include "entitiesengine.h"
 #include "ogrebulletworld.h"
@@ -130,7 +130,7 @@ namespace GeneLabCore {
         qDebug() << "[OK]\n";
     }
 
-    bool MainFactory::create(Ressource r) {
+    bool MainFactory::create(Ressource* r) {
         return true;
     }
 
