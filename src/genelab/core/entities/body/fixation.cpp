@@ -48,8 +48,10 @@ namespace GeneLabCore {
         this->localFixation.setIdentity();
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
-        rigidBody = sphere->getRigidBody();
-        rigidBody->setFriction(FIXATION_FRICTION);
+        this->rigidBody = sphere->getRigidBody();
+        //this->rigidBody->setFriction(FIXATION_FRICTION);
+        entity = 0;
+        airFixation = 0;
         delegatedSetup = false;
     }
 
@@ -120,6 +122,22 @@ namespace GeneLabCore {
             bulletEngine->getBulletDynamicsWorld()->removeConstraint(airFixation);
             delete airFixation;
         }
+    }
+
+    Bone *Fixation::addBone(btScalar yAxis, btScalar zAxis,
+                            btScalar boneRadius,
+                            btScalar boneLength,
+                            btScalar endFixRadius,
+                            const btVector3 &lowerLimits,
+                            const btVector3 &upperLimits) {
+        btQuaternion local1;
+        local1.setRotation(btVector3(0, 1, 0), yAxis);
+        btQuaternion local2;
+        local2.setRotation(btVector3(0, 0, 1), zAxis);
+        local1 *= local2;
+
+        return this->addBone(local1, boneRadius, boneLength, endFixRadius, lowerLimits, upperLimits);
+
     }
 
     Bone *Fixation::addBone(const btQuaternion &localOrientation,

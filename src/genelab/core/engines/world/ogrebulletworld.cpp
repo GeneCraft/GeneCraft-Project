@@ -54,7 +54,7 @@ namespace GeneLabCore {
         cam->setDirection(Ogre::Vector3(20,-5,0));
 
         // skybox
-        sceneManager->setSkyDome(true, "Examples/CloudySky");
+        sceneManager->setSkyDome(true, "Examples/CloudySky", 10, 8, 1000);
 
         // lights
         sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
@@ -183,8 +183,8 @@ namespace GeneLabCore {
         // Ant
         qDebug() << "Ant creation !";
         Ant *ant = new Ant();
-        for(int i = 0; i < 1; i++) {
-            for(int j = 0; j < 1; j++) {
+        for(int i = 0; i < 5; i++) {
+            for(int j = 0; j < 5; j++) {
                 Entity* e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "ant setup !";
                 e->setup();

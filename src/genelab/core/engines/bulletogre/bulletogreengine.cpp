@@ -24,15 +24,22 @@ namespace GeneLabCore {
     {
         OgreBody *body;
         QListIterator<OgreBody *> it( bodies );
+        qDebug() << bodies.length() << "rigid bodys !";
         while( it.hasNext() )
         {
             body = it.next();
 
             //qDebug() << "BulletOgreEngine::step(), adapte position and oriotation of object";
 
+
             btTransform transform = body->rigidBody->getWorldTransform();
+            //if(transform.getOrigin().getX() != transform.getOrigin().getX()) // nan ?
+            //    qDebug() << transform.getOrigin().getX() << transform.getOrigin().getY() << transform.getOrigin().getZ();
+
             body->node->setPosition(transform.getOrigin().x(),transform.getOrigin().y(),transform.getOrigin().z());
             body->node->setOrientation(transform.getRotation().w(),transform.getRotation().x(),transform.getRotation().y(),transform.getRotation().z());
         }
+        //int bidon;
+        //scanf("%d", &bidon);
     }
 }

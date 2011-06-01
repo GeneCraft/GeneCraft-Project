@@ -130,3 +130,6 @@ public slots:
 }
 
 #endif // BRAINNODE_H
+
+
+// +, +, IN 3 5, CONST 3.14, INTEGRATE 10, IN 10 10

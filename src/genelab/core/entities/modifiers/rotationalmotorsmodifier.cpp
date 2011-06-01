@@ -13,6 +13,7 @@ RotationalMotorsModifier::RotationalMotorsModifier(btGeneric6DofConstraint *cons
     {
         brainOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
         brainOutputs[i]->motor->m_enableMotor = true;
+        brainOutputs[i]->motor->m_currentPosition = 0;
     }
 
     for(int i = 0; i < 2; i++) {
@@ -45,8 +46,10 @@ void RotationalMotorsModifier::setOutputsFrom(int outputsFrom)
         {
             btRotationalLimitMotor * motor = brainOutputs[i]->motor;
             motor->m_enableMotor = true;
-            motor->m_maxMotorForce = 1000.0;
+            motor->m_maxMotorForce = 10.0;
             motor->m_targetVelocity = 0;
+            motor->m_currentPosition = 0;
+
         }
         break;
     }
@@ -85,6 +88,7 @@ void RotationalMotorsModifier::step()
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
                 btScalar max_error = 0.001;
                 btScalar factor    = 10.0;
+
                 if(motor->m_currentPosition < max_error || motor->m_currentPosition > max_error)
                     motor->m_targetVelocity = -factor * motor->m_currentPosition;
             }

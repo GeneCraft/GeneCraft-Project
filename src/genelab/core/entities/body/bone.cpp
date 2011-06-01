@@ -46,6 +46,7 @@ Bone::Bone(btShapesFactory *shapesFactory,
     endTransform.setOrigin(position);
 
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
+    parentCt = 0;
 }
 
 Bone::~Bone()

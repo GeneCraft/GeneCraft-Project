@@ -14,7 +14,7 @@ Spider::Spider() :
     nbLegs      = 8;
     nbBoneInLeg = 3;
     legRadius   = 0.3;
-    legLenght   = 2.0;
+    legLenght   = 3.0;
     kneeRadius  = 0.25;
 }
 
@@ -32,22 +32,25 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     ent->setShape(shape);
     // legs
     btQuaternion legLocal;
-    legLocal.setEulerZYX(0,0,0);
+    btQuaternion legLocal2;
     btVector3 lowerLimits(0,0,0);
     btVector3 upperLimits(0,0,0);
 
     for(int i=0;i<nbLegs;++i)
     {
-        legLocal.setEulerZYX(M_PI / 2.0f,0,i*(2.0*M_PI/nbLegs));
-        addLeg(rootFix,legLocal,lowerLimits,upperLimits);
+        legLocal.setRotation(btVector3(0, 0, 1), M_PI / 3.0);
+        legLocal2.setRotation(btVector3(0, 1, 0), i*(2.0*M_PI/nbLegs));
+        legLocal2 *= legLocal;
+        //legLocal = legLocal2;
+        addLeg(rootFix,i*(2.0*M_PI/nbLegs), M_PI / 3.0f,lowerLimits,upperLimits);
     }
 
     return ent;
 }
 
-void Spider::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVector3 &lowerLimits, const btVector3 &upperLimits)
+void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVector3 &lowerLimits, const btVector3 &upperLimits)
 {
-    Bone *rootBone = fixBody->addBone(localFix,
+    Bone *rootBone = fixBody->addBone(yAxis, zAxis,
                                       btScalar(legRadius),
                                       btScalar(legLenght),
                                       btScalar(kneeRadius),
@@ -57,11 +60,9 @@ void Spider::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVec
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
-        btVector3 lowerLimits(0,0,-M_PI/4);
-        btVector3 upperLimits(0,0,M_PI/4);
-        btQuaternion local;
-        local.setEulerZYX(M_PI/6.0,0,0);
-        rootBone = rootBone->getEndFixation()->addBone(local,
+        btVector3 lowerLimits(0,0,-M_PI/10);
+        btVector3 upperLimits(0,0,M_PI/6);
+        rootBone = rootBone->getEndFixation()->addBone(0, M_PI / 3.5f,
                                                        btScalar(legRadius - legRadius*(i/nbBoneInLeg)),
                                                        btScalar(legLenght - legLenght*(i/nbBoneInLeg)),
                                                        btScalar(kneeRadius),
