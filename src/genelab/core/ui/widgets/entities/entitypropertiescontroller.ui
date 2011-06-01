@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>381</width>
-    <height>664</height>
+    <width>380</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
      <x>10</x>
      <y>40</y>
      <width>361</width>
-     <height>80</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="title">
@@ -55,7 +55,7 @@
       <x>10</x>
       <y>20</y>
       <width>46</width>
-      <height>13</height>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -65,9 +65,9 @@
    <widget class="QLabel" name="lName">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>60</x>
       <y>20</y>
-      <width>271</width>
+      <width>101</width>
       <height>16</height>
      </rect>
     </property>
@@ -75,47 +75,106 @@
      <string>name_value</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>46</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Family :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lFamily">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>40</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>family_value</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>600</y>
+     <y>550</y>
      <width>361</width>
-     <height>61</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="title">
-    <string>Tools</string>
+    <string>Motors update from</string>
    </property>
-   <widget class="QPushButton" name="pbRandomBonesProperties">
+   <widget class="QRadioButton" name="rbOutFrom_Disable">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>151</width>
-      <height>31</height>
+      <y>40</y>
+      <width>101</width>
+      <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>Random bones properties</string>
+     <string>None (disable)</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rbOutFrom_Brain">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>20</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Brain</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../../../ressources/ressources.qrc">
+      <normaloff>:/img/icons/brain</normaloff>:/img/icons/brain</iconset>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rbOutFrom_Random">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>40</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Random outputs</string>
     </property>
     <property name="icon">
      <iconset resource="../../../ressources/ressources.qrc">
       <normaloff>:/img/icons/random</normaloff>:/img/icons/random</iconset>
     </property>
    </widget>
-   <widget class="QPushButton" name="pbResetBonesProperties">
+   <widget class="QRadioButton" name="rbOutFrom_NormalPosition">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>10</x>
       <y>20</y>
-      <width>141</width>
-      <height>31</height>
+      <width>101</width>
+      <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>Reset bones properties</string>
+     <string>Normal Position</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -148,7 +207,7 @@
      <x>10</x>
      <y>370</y>
      <width>361</width>
-     <height>221</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="title">

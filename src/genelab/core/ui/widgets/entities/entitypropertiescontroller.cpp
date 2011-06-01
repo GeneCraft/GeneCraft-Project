@@ -13,9 +13,12 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->pbRandomBonesProperties,SIGNAL(pressed()),this,SLOT(setRandomBonesProperties()));
-    connect(ui->pbResetBonesProperties,SIGNAL(pressed()),this,SLOT(resetBonesProperties()));
     connect(ui->twBodyTree,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(itemClicked(QTreeWidgetItem *,int)));
+
+    connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->rbOutFrom_Brain,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->rbOutFrom_Disable,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
 }
 
 EntityPropertiesController::~EntityPropertiesController()
@@ -23,21 +26,47 @@ EntityPropertiesController::~EntityPropertiesController()
     delete ui;
 }
 
-void setupRandomBonesProperties(Fixation *fixation)
+void setupBonesProperties(Fixation *fixation, int action)
 {
     QList<Bone *> bones = fixation->getBones();
     for(int i=0;i<bones.size();++i)
     {
         Bone *bone = bones.at(i);
-        bone->setRandomMotors();
-        setupRandomBonesProperties(bone->getEndFixation());
+
+        switch(action)
+        {
+            case 0:
+                bone->disableMotors();
+            break;
+            case 1:
+                bone->setBrainMotors();
+            break;
+            case 2:
+                bone->setRandomMotors();
+            break;
+            case 3:
+                bone->setNormalPositionMotors();
+            break;
+        }
+
+        setupBonesProperties(bone->getEndFixation(),action);
     }
 }
 
-void EntityPropertiesController::setRandomBonesProperties()
+void EntityPropertiesController::setOutFrom()
 {
     if(entity != 0 && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
-       setupRandomBonesProperties(entity->getShape()->getRoot());
+    {
+        if(ui->rbOutFrom_Random->isChecked())
+            setupBonesProperties(entity->getShape()->getRoot(),2);
+        else if(ui->rbOutFrom_Brain->isChecked())
+            setupBonesProperties(entity->getShape()->getRoot(),1);
+        else if(ui->rbOutFrom_Disable->isChecked())
+            setupBonesProperties(entity->getShape()->getRoot(),0);
+        else if(ui->rbOutFrom_NormalPosition->isChecked())
+            setupBonesProperties(entity->getShape()->getRoot(),3);
+
+    }
 }
 
 void recurciveResetBonesProperties(Fixation *fixation)
@@ -46,7 +75,7 @@ void recurciveResetBonesProperties(Fixation *fixation)
     for(int i=0;i<bones.size();++i)
     {
         Bone *bone = bones.at(i);
-        bone->resetMotors();
+        bone->disableMotors();
         recurciveResetBonesProperties(bone->getEndFixation());
     }
 }
@@ -67,6 +96,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
     if(entity != 0)
     {
         ui->lName->setText(entity->getName());
+        ui->lFamily->setText(entity->getFamily());
 
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
             setupBodyTree(entity->getShape()->getRoot(),selectedBody);

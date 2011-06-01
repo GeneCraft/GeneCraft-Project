@@ -47,6 +47,7 @@ private slots:
     void deleteBone();
     void randomValues();
     void resetMotors();
+    void setOutFrom();
 
     void addBone();
     void addSensor();

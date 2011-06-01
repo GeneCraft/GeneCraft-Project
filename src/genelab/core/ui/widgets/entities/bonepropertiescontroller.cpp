@@ -15,6 +15,9 @@
 #include "gyroscopicsensor.h"
 #include "accelerometersensor.h"
 
+// Effector
+#include "rotationalmotorsmodifier.h"
+
 BonePropertiesController::BonePropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::BonePropertiesController), bone(0)
 {
@@ -22,17 +25,41 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
 
     connect(this->ui->pbSaveChanges,SIGNAL(pressed()),this,SLOT(saveChanges()));
     connect(this->ui->pbDelete,SIGNAL(pressed()),this,SLOT(deleteBone()));
-    connect(this->ui->pbRandomValues,SIGNAL(pressed()),this,SLOT(randomValues()));
-    connect(this->ui->pbResetMotors,SIGNAL(pressed()),this,SLOT(resetMotors()));
+    //connect(this->ui->pbRandomValues,SIGNAL(pressed()),this,SLOT(randomValues()));
+    //connect(this->ui->pbResetMotors,SIGNAL(pressed()),this,SLOT(resetMotors()));
+    connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->rbOutFrom_Brain,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->rbOutFrom_Disable,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
 
-    connect(this->ui->sEulerRotX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->sEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->sEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dEulerRotX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+    connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+    connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
     connect(this->ui->pbAddBone,SIGNAL(pressed()),this,SLOT(addBone()));
     connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
     connect(this->ui->pbFixInTheAir,SIGNAL(pressed()),this,SLOT(fixInTheAir()));
     connect(this->ui->pbSetPosition,SIGNAL(pressed()),this,SLOT(setPosition()));
+}
+
+void BonePropertiesController::setOutFrom()
+{
+    if(ui->rbOutFrom_Random->isChecked())
+        bone->setRandomMotors();
+    else if(ui->rbOutFrom_Brain->isChecked())
+        bone->setBrainMotors();
+    else if(ui->rbOutFrom_Disable->isChecked())
+        bone->disableMotors();
+    else if(ui->rbOutFrom_NormalPosition->isChecked())
+        bone->setNormalPositionMotors();
 }
 
 BonePropertiesController::~BonePropertiesController()
@@ -75,9 +102,9 @@ void BonePropertiesController::saveChanges()
 //                                                                   this->ui->leEulerRotY->text().toFloat(),
 //                                                                   this->ui->leEulerRotZ->text().toFloat());
 
-        constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->sEulerRotX->value() / 100.0,
-                                                                   this->ui->sEulerRotY->value() / 100.0,
-                                                                   this->ui->sEulerRotZ->value() / 100.0);
+        constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->dEulerRotX->value() / 100.0,
+                                                                   this->ui->dEulerRotY->value() / 100.0,
+                                                                   this->ui->dEulerRotZ->value() / 100.0);
 
 
         btRotationalLimitMotor *motor;
@@ -92,36 +119,36 @@ void BonePropertiesController::saveChanges()
                     motor->m_enableMotor = this->ui->cbEnable_m1->isChecked();
                     motor->m_targetVelocity = this->ui->leTargetVelocity_m1->text().toFloat();
                     motor->m_maxMotorForce = this->ui->leMaxMotorForce_m1->text().toFloat();
-                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m1->text().toFloat();
-                    motor->m_bounce = this->ui->leBounce_m1->text().toFloat();
-                    motor->m_damping = this->ui->leDamping_m1->text().toFloat();
+//                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m1->text().toFloat();
+//                    motor->m_bounce = this->ui->leBounce_m1->text().toFloat();
+//                    motor->m_damping = this->ui->leDamping_m1->text().toFloat();
 
-                    motor->m_loLimit = this->ui->leAngularLowerLimit_x->text().toFloat();
-                    motor->m_hiLimit = this->ui->leAngularUpperLimit_x->text().toFloat();
+                    motor->m_loLimit = this->ui->dAngularLowerLimitX->value() / 100.0;
+                    motor->m_hiLimit = this->ui->dAngularUpperLimitX->value() / 100.0;
                     break;
 
                 case 1 :
                     motor->m_enableMotor = this->ui->cbEnable_m2->isChecked();
                     motor->m_targetVelocity = this->ui->leTargetVelocity_m2->text().toFloat();
                     motor->m_maxMotorForce = this->ui->leMaxMotorForce_m2->text().toFloat();
-                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m2->text().toFloat();
-                    motor->m_bounce = this->ui->leBounce_m2->text().toFloat();
-                    motor->m_damping = this->ui->leDamping_m2->text().toFloat();
+//                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m2->text().toFloat();
+//                    motor->m_bounce = this->ui->leBounce_m2->text().toFloat();
+//                    motor->m_damping = this->ui->leDamping_m2->text().toFloat();
 
-                    motor->m_loLimit = this->ui->leAngularLowerLimit_y->text().toFloat();
-                    motor->m_hiLimit = this->ui->leAngularUpperLimit_y->text().toFloat();
+                    motor->m_loLimit = this->ui->dAngularLowerLimitY->value() / 100.0;
+                    motor->m_hiLimit = this->ui->dAngularUpperLimitY->value() / 100.0;
                     break;
 
                 case 2 :
                     motor->m_enableMotor = this->ui->cbEnable_m3->isChecked();
                     motor->m_targetVelocity = this->ui->leTargetVelocity_m3->text().toFloat();
                     motor->m_maxMotorForce = this->ui->leMaxMotorForce_m3->text().toFloat();
-                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m3->text().toFloat();
-                    motor->m_bounce = this->ui->leBounce_m3->text().toFloat();
-                    motor->m_damping = this->ui->leDamping_m3->text().toFloat();
+//                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m3->text().toFloat();
+//                    motor->m_bounce = this->ui->leBounce_m3->text().toFloat();
+//                    motor->m_damping = this->ui->leDamping_m3->text().toFloat();
 
-                    motor->m_loLimit = this->ui->leAngularLowerLimit_z->text().toFloat();
-                    motor->m_hiLimit = this->ui->leAngularUpperLimit_z->text().toFloat();
+                    motor->m_loLimit = this->ui->dAngularLowerLimitZ->value() / 100.0;
+                    motor->m_hiLimit = this->ui->dAngularUpperLimitZ->value() / 100.0;
                     break;
             }
         }
@@ -137,22 +164,36 @@ void BonePropertiesController::setBone(Bone * bone)
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
         // Local transform
-        disconnect(this->ui->sEulerRotX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-        disconnect(this->ui->sEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-        disconnect(this->ui->sEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        disconnect(this->ui->dEulerRotX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        disconnect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        disconnect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
         btScalar eulerYaw,eulerRoll,eulerPitch;
         constraint->getFrameOffsetA().getBasis().getEulerZYX(eulerYaw,eulerRoll,eulerPitch);
         // this->ui->leEulerRotX->setText(QString().setNum(eulerPitch));
         // this->ui->leEulerRotY->setText(QString().setNum(eulerRoll));
         // this->ui->leEulerRotZ->setText(QString().setNum(eulerYaw));
-        this->ui->sEulerRotX->setValue(eulerPitch * 100);
-        this->ui->sEulerRotY->setValue(eulerRoll * 100);
-        this->ui->sEulerRotZ->setValue(eulerYaw * 100);
+        this->ui->dEulerRotX->setValue(eulerPitch * 100);
+        this->ui->dEulerRotY->setValue(eulerRoll * 100);
+        this->ui->dEulerRotZ->setValue(eulerYaw * 100);
 
-        connect(this->ui->sEulerRotX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-        connect(this->ui->sEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-        connect(this->ui->sEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        connect(this->ui->dEulerRotX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        connect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        connect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+        // Motors Effector
+        if(!bone->getRotationalMotorsModifier()->isDisable())
+        {
+            switch(bone->getRotationalMotorsModifier()->getOutPutsFrom())
+            {
+            case 1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/ : this->ui->rbOutFrom_Brain->setChecked(true);  break;
+            case 2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/: this->ui->rbOutFrom_Random->setChecked(true); break;
+            case 0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/ : this->ui->rbOutFrom_NormalPosition->setChecked(true); break;
+            }
+        }
+        else
+            this->ui->rbOutFrom_Disable->setChecked(true);
+
 
         // Angular Limit Motors
         btRotationalLimitMotor *motor;
@@ -163,38 +204,55 @@ void BonePropertiesController::setBone(Bone * bone)
             switch(i)
             {
             case 0 :
+
                 this->ui->cbEnable_m1->setChecked(motor->m_enableMotor);
                 this->ui->leTargetVelocity_m1->setText(QString().setNum(motor->m_targetVelocity));
                 this->ui->leMaxMotorForce_m1->setText(QString().setNum(motor->m_maxMotorForce));
-                this->ui->leMaxLimitForce_m1->setText(QString().setNum(motor->m_maxLimitForce));
-                this->ui->leBounce_m1->setText(QString().setNum(motor->m_bounce));
-                this->ui->leDamping_m1->setText(QString().setNum(motor->m_damping));
+//                this->ui->leMaxLimitForce_m1->setText(QString().setNum(motor->m_maxLimitForce));
+//                this->ui->leBounce_m1->setText(QString().setNum(motor->m_bounce));
+//                this->ui->leDamping_m1->setText(QString().setNum(motor->m_damping));
 
-                this->ui->leAngularLowerLimit_x->setText(QString().setNum(btNormalizeAngle(motor->m_loLimit)));
-                this->ui->leAngularUpperLimit_x->setText(QString().setNum(btNormalizeAngle(motor->m_hiLimit)));
+                // Init motor X
+                disconnect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                disconnect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                this->ui->dAngularLowerLimitX->setValue(btNormalizeAngle(motor->m_loLimit) * 100);
+                this->ui->dAngularUpperLimitX->setValue(btNormalizeAngle(motor->m_hiLimit) * 100);
+                connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
                 break;
             case 1 :
                 this->ui->cbEnable_m2->setChecked(motor->m_enableMotor);
                 this->ui->leTargetVelocity_m2->setText(QString().setNum(motor->m_targetVelocity));
                 this->ui->leMaxMotorForce_m2->setText(QString().setNum(motor->m_maxMotorForce));
-                this->ui->leMaxLimitForce_m2->setText(QString().setNum(motor->m_maxLimitForce));
-                this->ui->leBounce_m2->setText(QString().setNum(motor->m_bounce));
-                this->ui->leDamping_m2->setText(QString().setNum(motor->m_damping));
+//                this->ui->leMaxLimitForce_m2->setText(QString().setNum(motor->m_maxLimitForce));
+//                this->ui->leBounce_m2->setText(QString().setNum(motor->m_bounce));
+//                this->ui->leDamping_m2->setText(QString().setNum(motor->m_damping));
 
-                this->ui->leAngularLowerLimit_y->setText(QString().setNum(btNormalizeAngle(motor->m_loLimit)));
-                this->ui->leAngularUpperLimit_y->setText(QString().setNum(btNormalizeAngle(motor->m_hiLimit)));
+                // Init motor Y
+                disconnect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                disconnect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                this->ui->dAngularLowerLimitY->setValue(btNormalizeAngle(motor->m_loLimit) * 100);
+                this->ui->dAngularUpperLimitY->setValue(btNormalizeAngle(motor->m_hiLimit) * 100);
+                connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
                 break;
             case 2 :
                 this->ui->cbEnable_m3->setChecked(motor->m_enableMotor);
                 this->ui->leTargetVelocity_m3->setText(QString().setNum(motor->m_targetVelocity));
                 this->ui->leMaxMotorForce_m3->setText(QString().setNum(motor->m_maxMotorForce));
-                this->ui->leMaxLimitForce_m3->setText(QString().setNum(motor->m_maxLimitForce));
-                this->ui->leBounce_m3->setText(QString().setNum(motor->m_bounce));
-                this->ui->leDamping_m3->setText(QString().setNum(motor->m_damping));
+//                this->ui->leMaxLimitForce_m3->setText(QString().setNum(motor->m_maxLimitForce));
+//                this->ui->leBounce_m3->setText(QString().setNum(motor->m_bounce));
+//                this->ui->leDamping_m3->setText(QString().setNum(motor->m_damping));
 
-                this->ui->leAngularLowerLimit_z->setText(QString().setNum(btNormalizeAngle(motor->m_loLimit)));
-                this->ui->leAngularUpperLimit_z->setText(QString().setNum(btNormalizeAngle(motor->m_hiLimit)));
+                // Init motor Z
+                disconnect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                disconnect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                this->ui->dAngularLowerLimitZ->setValue(btNormalizeAngle(motor->m_loLimit) * 100);
+                this->ui->dAngularUpperLimitZ->setValue(btNormalizeAngle(motor->m_hiLimit) * 100);
+                connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 break;
             }
         }

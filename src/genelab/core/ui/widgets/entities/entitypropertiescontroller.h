@@ -64,7 +64,7 @@ signals:
 
 public slots:
 
-    void setRandomBonesProperties();
+    void setOutFrom();
     void resetBonesProperties();
     void itemClicked(QTreeWidgetItem *,int);
 

@@ -39,11 +39,24 @@
       <iconset resource="../../../../core/ressources/ressources.qrc">
        <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
      </property>
-     <addaction name="actionSpider"/>
+     <addaction name="actionFrom_file"/>
+     <addaction name="actionFrom_database"/>
+    </widget>
+    <widget class="QMenu" name="menuSave_selected_creature_to">
+     <property name="title">
+      <string>Save selected creature to</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../core/ressources/ressources.qrc">
+       <normaloff>:/img/icons/entity_save</normaloff>:/img/icons/entity_save</iconset>
+     </property>
+     <addaction name="actionFile"/>
+     <addaction name="actionDatabase"/>
     </widget>
     <addaction name="actionNew_creature"/>
     <addaction name="separator"/>
     <addaction name="actionSave_selected_creature"/>
+    <addaction name="menuSave_selected_creature_to"/>
     <addaction name="menuAdd_Creature"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -54,7 +67,16 @@
     </property>
     <addaction name="actionAbout_CreatureViewer"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionOgre_properties"/>
+    <addaction name="actionInspector"/>
+    <addaction name="actionCreature_Inspector"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -143,6 +165,69 @@
    </property>
    <property name="text">
     <string>About CreatureViewer</string>
+   </property>
+  </action>
+  <action name="actionFrom_file">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/entity_file</normaloff>:/img/icons/entity_file</iconset>
+   </property>
+   <property name="text">
+    <string>From file...</string>
+   </property>
+  </action>
+  <action name="actionFrom_database">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/database</normaloff>:/img/icons/database</iconset>
+   </property>
+   <property name="text">
+    <string>From database...</string>
+   </property>
+  </action>
+  <action name="actionFile">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/entity_file</normaloff>:/img/icons/entity_file</iconset>
+   </property>
+   <property name="text">
+    <string>File...</string>
+   </property>
+  </action>
+  <action name="actionDatabase">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/database</normaloff>:/img/icons/database</iconset>
+   </property>
+   <property name="text">
+    <string>Database...</string>
+   </property>
+  </action>
+  <action name="actionOgre_properties">
+   <property name="text">
+    <string>Options...</string>
+   </property>
+  </action>
+  <action name="actionInspector">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Inspector</string>
+   </property>
+  </action>
+  <action name="actionCreature_Inspector">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Creature Inspector</string>
    </property>
   </action>
  </widget>

@@ -29,9 +29,13 @@ public:
    inline Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
 
+   inline RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier;        }
    BonePropertiesController *getInspectorWidget();
 
+   void setBrainMotors();
    void setRandomMotors();
+   void disableMotors();
+   void setNormalPositionMotors();
    void resetMotors();
 
 protected:

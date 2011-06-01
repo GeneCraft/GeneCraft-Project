@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>612</height>
+    <height>599</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
      <x>10</x>
      <y>40</y>
      <width>381</width>
-     <height>311</height>
+     <height>301</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -57,99 +57,13 @@
     <attribute name="title">
      <string>Position &amp;&amp; limits</string>
     </attribute>
-    <widget class="QGroupBox" name="gbAngularLimits_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>361</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Local transform</string>
-     </property>
-     <widget class="QWidget" name="gridLayoutWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>341</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="glAngularLimits_2">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lEulerRot">
-         <property name="minimumSize">
-          <size>
-           <width>140</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Euler Rotation ZXY</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QSlider" name="sEulerRotX">
-         <property name="minimum">
-          <number>-314</number>
-         </property>
-         <property name="maximum">
-          <number>314</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QSlider" name="sEulerRotY">
-         <property name="minimum">
-          <number>-314</number>
-         </property>
-         <property name="maximum">
-          <number>314</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QSlider" name="sEulerRotZ">
-         <property name="minimum">
-          <number>-314</number>
-         </property>
-         <property name="maximum">
-          <number>314</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
     <widget class="QGroupBox" name="gbAngularLimits">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>100</y>
+       <y>10</y>
        <width>361</width>
-       <height>171</height>
+       <height>251</height>
       </rect>
      </property>
      <property name="title">
@@ -161,108 +75,337 @@
         <x>10</x>
         <y>20</y>
         <width>341</width>
-        <height>61</height>
+        <height>153</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="glAngularLimits">
-       <item row="0" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="lAngularLowerLimit_title">
          <property name="text">
           <string>Angular Lower Limits</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="lAngularUpperLimit_title">
          <property name="text">
           <string>Angular Upper Limits</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="leAngularLowerLimit_x">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lEulerRot">
+         <property name="text">
+          <string>Init Transform (Euler ZXY)</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="leAngularUpperLimit_x">
+        <widget class="QDial" name="dEulerRotX">
          <property name="maximumSize">
           <size>
-           <width>50</width>
-           <height>16777215</height>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
-         <property name="text">
-          <string/>
+         <property name="minimum">
+          <number>-314</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <property name="maximum">
+          <number>314</number>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="leAngularLowerLimit_y">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
+         <property name="singleStep">
+          <number>10</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="tracking">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="leAngularUpperLimit_y">
+        <widget class="QDial" name="dEulerRotY">
          <property name="maximumSize">
           <size>
-           <width>50</width>
-           <height>16777215</height>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
-         <property name="text">
-          <string/>
+         <property name="minimum">
+          <number>-314</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <property name="maximum">
+          <number>314</number>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLineEdit" name="leAngularLowerLimit_z">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
+         <property name="singleStep">
+          <number>10</number>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QLineEdit" name="leAngularUpperLimit_z">
+        <widget class="QDial" name="dEulerRotZ">
          <property name="maximumSize">
           <size>
-           <width>50</width>
-           <height>16777215</height>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDial" name="dAngularLowerLimitX">
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QDial" name="dAngularLowerLimitY">
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QDial" name="dAngularLowerLimitZ">
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QDial" name="dAngularUpperLimitX">
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QDial" name="dAngularUpperLimitY">
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QDial" name="dAngularUpperLimitZ">
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="minimum">
+          <number>-314</number>
+         </property>
+         <property name="maximum">
+          <number>314</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="pageStep">
+          <number>10</number>
+         </property>
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="notchTarget">
+          <double>6.699999999999999</double>
+         </property>
+         <property name="notchesVisible">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_9">
          <property name="text">
-          <string/>
+          <string>X</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Y</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Z</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -272,7 +415,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>130</y>
+        <y>220</y>
         <width>351</width>
         <height>16</height>
        </rect>
@@ -288,7 +431,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>110</y>
+        <y>200</y>
         <width>351</width>
         <height>16</height>
        </rect>
@@ -304,7 +447,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>90</y>
+        <y>180</y>
         <width>351</width>
         <height>16</height>
        </rect>
@@ -326,28 +469,98 @@
     <attribute name="title">
      <string>Motors effector</string>
     </attribute>
-    <widget class="QGroupBox" name="gbAngularMotors">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
-       <width>361</width>
-       <height>201</height>
+       <y>190</y>
+       <width>351</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="title">
-      <string>Rotational motors effector</string>
+      <string>Outputs from</string>
+     </property>
+     <widget class="QRadioButton" name="rbOutFrom_Random">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>40</y>
+        <width>131</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Random outputs</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/random</normaloff>:/img/icons/random</iconset>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rbOutFrom_Brain">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>20</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Brain</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/brain</normaloff>:/img/icons/brain</iconset>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rbOutFrom_Disable">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>None (disable)</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rbOutFrom_NormalPosition">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Normal position</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>351</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Motors test</string>
      </property>
      <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>341</width>
-        <height>171</height>
+        <width>331</width>
+        <height>95</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="glAngularMotors">
@@ -368,46 +581,6 @@
         <widget class="QLabel" name="l_m2">
          <property name="text">
           <string>local roll</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="cbEnable_m1">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QCheckBox" name="cbEnable_m2">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QCheckBox" name="cbEnable_m3">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="l_enable_title">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>m_enable</string>
          </property>
         </widget>
        </item>
@@ -528,19 +701,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="leMaxMotorForce_m2">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="3">
         <widget class="QLineEdit" name="leMaxMotorForce_m3">
          <property name="maximumSize">
@@ -561,14 +721,8 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="leMaxLimitForce_m1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="leMaxMotorForce_m2">
          <property name="maximumSize">
           <size>
            <width>50</width>
@@ -580,235 +734,78 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="leMaxLimitForce_m2">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
-        <widget class="QLineEdit" name="leMaxLimitForce_m3">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="l_maxMotorForce_title_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
+       <item row="1" column="3">
+        <widget class="QCheckBox" name="cbEnable_m3">
          <property name="text">
-          <string>m_maxLimitForce</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="l_maxMotorForce_title_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
+       <item row="1" column="2">
+        <widget class="QCheckBox" name="cbEnable_m2">
          <property name="text">
-          <string>m_bounce</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="leBounce_m1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="leBounce_m2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="3">
-        <widget class="QLineEdit" name="leBounce_m3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="l_maxMotorForce_title_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>16777215</height>
-          </size>
-         </property>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="cbEnable_m1">
          <property name="text">
-          <string>m_damping</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="leDamping_m1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QLineEdit" name="leDamping_m2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QLineEdit" name="leDamping_m3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="l_enable_title">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>m_enable</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
-    </widget>
-    <widget class="QPushButton" name="pbRandomValues">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>240</y>
-       <width>81</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>All random</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../ressources/ressources.qrc">
-       <normaloff>:/img/icons/random</normaloff>:/img/icons/random</iconset>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pbResetMotors">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>240</y>
-       <width>81</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Reset</string>
-     </property>
+     <widget class="QPushButton" name="pbSaveChanges">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>120</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -816,7 +813,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>410</y>
+     <y>400</y>
      <width>371</width>
      <height>21</height>
     </rect>
@@ -840,7 +837,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>440</y>
+     <y>430</y>
      <width>381</width>
      <height>161</height>
     </rect>
@@ -1051,11 +1048,6 @@
        <string>Accelerometer sensor</string>
       </property>
      </item>
-     <item>
-      <property name="text">
-       <string>Contact sensor</string>
-      </property>
-     </item>
     </widget>
     <widget class="QListWidget" name="listSensors">
      <property name="geometry">
@@ -1175,19 +1167,6 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pbSaveChanges">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>360</y>
-     <width>81</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Apply</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pbDelete">
    <property name="enabled">
     <bool>false</bool>
@@ -1195,7 +1174,7 @@
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>360</y>
+     <y>350</y>
      <width>141</width>
      <height>31</height>
     </rect>

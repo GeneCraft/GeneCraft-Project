@@ -46,7 +46,6 @@ Bone::Bone(btShapesFactory *shapesFactory,
     endTransform.setOrigin(position);
 
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
-
 }
 
 Bone::~Bone()
@@ -94,8 +93,6 @@ void Bone::setup()
 
         // add motor modifier
         motorsModifier = new RotationalMotorsModifier(parentCt);
-        motorsModifier->setRandom(true); ///////////////////////////////////////////////// TEST ///
-
         if(entity)
            entity->addLinkToModifier(motorsModifier);
 
@@ -124,37 +121,24 @@ void Bone::setEntity(Entity *entity)
     endFix->setEntity(entity);
 }
 
+void Bone::disableMotors()
+{
+    motorsModifier->disable();
+}
+
+void Bone::setBrainMotors()
+{
+    motorsModifier->setOutputsFrom(RotationalMotorsModifier::OUTPUTS_FROM_BRAIN);
+}
+
+void Bone::setNormalPositionMotors()
+{
+    motorsModifier->setOutputsFrom(RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION);
+}
+
 void Bone::setRandomMotors()
 {
-    // random limits
-    float minTargetVelocity = -8.0;
-    float maxTargetVelocity = 8.0;
-
-    int minMaxMotorForce = 10;
-    int maxMaxMotorForce = 100;
-
-    int minMaxLimitForce = 10;
-    int maxMaxLimitForce = 50;
-
-    float minAngularLowerLimit = -3.14;
-    float maxAngularLowerLimit = 3.14;
-
-    float minAngularUpperLimit = -3.14;
-    float maxAngularUpperLimit = 3.14;
-
-    // Angular Limit Motors
-    btRotationalLimitMotor *motor;
-    for(int i=0;i<3;i++)
-    {
-        motor = parentCt->getRotationalLimitMotor(i);
-
-        motor->m_enableMotor    = true;
-        motor->m_targetVelocity = btScalar(Tools::random(minTargetVelocity,maxTargetVelocity));
-        motor->m_maxMotorForce  = btScalar(Tools::random(minMaxMotorForce,maxMaxMotorForce));
-        motor->m_maxLimitForce  = btScalar(Tools::random(minMaxLimitForce,maxMaxLimitForce));
-        motor->m_loLimit        = btScalar(Tools::random(minAngularLowerLimit,maxAngularLowerLimit));
-        motor->m_hiLimit        = btScalar(Tools::random(minAngularUpperLimit,maxAngularUpperLimit));
-    }
+    motorsModifier->setOutputsFrom(RotationalMotorsModifier::OUTPUTS_FROM_RANDOM);
 }
 
 void Bone::resetMotors()

@@ -47,6 +47,13 @@ namespace GeneLabCore {
 
         Ogre::SceneManager* sceneManager = ogreEngine->getOgreSceneManager();
 
+
+        // camera
+
+        Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
+        cam->setPosition(Ogre::Vector3(-20,10,0));
+        cam->setDirection(Ogre::Vector3(20,-5,0));
+
         // skybox
         sceneManager->setSkyDome(true, "Examples/CloudySky");
 
@@ -167,7 +174,7 @@ namespace GeneLabCore {
         Spider *spider = new Spider();
         for(int i = 0; i < 1; i++) {
             for(int j = 0; j < 1; j++) {
-                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,20,i*30));
+                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "spider setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);

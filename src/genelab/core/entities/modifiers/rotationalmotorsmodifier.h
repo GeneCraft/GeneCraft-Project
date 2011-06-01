@@ -1,7 +1,6 @@
 #ifndef ROTATIONALMOTORS_H
 #define ROTATIONALMOTORS_H
 
-
 #include <QString>
 #include "genelabcoreclasses.h"
 #include "modifier.h"
@@ -39,27 +38,40 @@ public:
 class RotationalMotorsModifier : public Modifier
 {
 public:
-    RotationalMotorsModifier(btGeneric6DofConstraint * constraint);
 
-    void setRandom(bool random);
+    RotationalMotorsModifier(btGeneric6DofConstraint * constraint);
+    bool isDisable()        { return m_isDisable; }
+    int getOutPutsFrom()    { return outputsFrom; }
+
+//    static const int OUTPUTS_FROM_NORMAL_POSITION;
+//    static const int OUTPUTS_FROM_BRAIN;
+//    static const int OUTPUTS_FROM_RANDOM;
 
 signals:
 
 public slots:
 
+    void setOutputsFrom(int outputsFrom);
+    void disable();
     void step();
 
 private:
     btGeneric6DofConstraint * constraint;
 
     bool random;
+    bool m_isDisable;
     float randomIncr;
+    int outputsFrom;
 
     // Six outputs from brain
     // Two by motors
     BrainOutMotor * brainOutputs[3];
     SinusIn* sinusIn[2];
 };
+
+//const int RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION = 0;
+//const int RotationalMotorsModifier::OUTPUTS_FROM_BRAIN = 1;
+//const int RotationalMotorsModifier::OUTPUTS_FROM_RANDOM = 2;
 
 }
 

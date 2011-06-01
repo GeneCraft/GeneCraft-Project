@@ -21,5 +21,8 @@
         <file alias="fixation">img/icons/fixation.png</file>
         <file alias="bone_and_fixation">img/icons/bone_and_fixation.png</file>
         <file alias="sensor_delete">img/icons/feed_delete.png</file>
+        <file alias="brain">img/icons/brain.png</file>
+        <file alias="database">img/icons/database.png</file>
+        <file alias="entity_file">img/icons/page_green.png</file>
     </qresource>
 </RCC>
