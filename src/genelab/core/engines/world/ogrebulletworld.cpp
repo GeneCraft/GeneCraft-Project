@@ -25,6 +25,7 @@
 #include "treeshape.h"
 #include "fixation.h"
 #include "spider/spider.h"
+#include "ant/ant.h"
 #include "entitiesengine.h"
 
 namespace GeneLabCore {
@@ -47,9 +48,7 @@ namespace GeneLabCore {
 
         Ogre::SceneManager* sceneManager = ogreEngine->getOgreSceneManager();
 
-
         // camera
-
         Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
         cam->setPosition(Ogre::Vector3(-20,10,0));
         cam->setDirection(Ogre::Vector3(20,-5,0));
@@ -59,7 +58,7 @@ namespace GeneLabCore {
 
         // lights
         sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
-        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
 
         /*
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
@@ -170,12 +169,24 @@ namespace GeneLabCore {
 //        f->setup();
 
         // Spider
-        qDebug() << "Spider creation !";
-        Spider *spider = new Spider();
+//        qDebug() << "Spider creation !";
+//        Spider *spider = new Spider();
+//        for(int i = 0; i < 3; i++) {
+//            for(int j = 0; j < 3; j++) {
+//                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
+//                qDebug() << "spider setup !";
+//                e->setup();
+//                entitiesEngine->addEntity(e);
+//            }
+//        }
+
+        // Ant
+        qDebug() << "Ant creation !";
+        Ant *ant = new Ant();
         for(int i = 0; i < 1; i++) {
             for(int j = 0; j < 1; j++) {
-                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
-                qDebug() << "spider setup !";
+                Entity* e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
+                qDebug() << "ant setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
             }

@@ -40,8 +40,8 @@ namespace GeneLabCore {
         Ogre::Camera* cam1 = ogreEngine->getOgreSceneManager()->createCamera("firstCamera");
         cam1->setPosition(Ogre::Vector3(0, 2, 6));
         cam1->lookAt(Ogre::Vector3(0, 2, 0));
-        cam1->setNearClipDistance(0.001); // 1 mm
-        cam1->setFarClipDistance(100); // 100m
+        cam1->setNearClipDistance(0.01); // 10 mm
+        cam1->setFarClipDistance(1000); // 1km
 
         // camera 2
         // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("secondCamera");

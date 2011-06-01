@@ -95,7 +95,7 @@ namespace GeneLabCore {
     void OgreEngine::initSceneManager() {
         //== Ogre Initialization ==//
         qDebug() << "ogre ok";
-        Ogre::SceneType scene_manager_type = Ogre::ST_INTERIOR;
+        Ogre::SceneType scene_manager_type = Ogre::ST_EXTERIOR_REAL_FAR;
 
         scnManager = ogreRoot->createSceneManager( scene_manager_type );
     }

@@ -1,4 +1,5 @@
-#include "spider.h"
+#include "ant.h"
+
 #include "btshapesfactory.h"
 #include "fixation.h"
 #include "bone.h"
@@ -8,22 +9,22 @@
 
 namespace GeneLabCore {
 
-Spider::Spider() :
-    EntityFamily()
+Ant::Ant() : EntityFamily()
 {
-    nbLegs      = 8;
+    nbLegs      = 6;
     nbBoneInLeg = 3;
     legRadius   = 0.3;
     legLenght   = 2.0;
     kneeRadius  = 0.35;
-
 }
 
-Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
+Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
     this->shapesFactory = shapesFactory;
     this->initialPosition = position;
+
+    Entity* ent = new Entity("Ant", "AntFamily", 1);
+
     // root fixation
-    Entity* ent = new Entity("Spider !", "SpiderFamily", 1);
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(initialPosition);
@@ -31,11 +32,17 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(1),initTransform);
     shape->setRoot(rootFix);
     ent->setShape(shape);
+
     // legs
     btQuaternion legLocal;
     legLocal.setEulerZYX(0,0,0);
     btVector3 lowerLimits(0,0,0);
     btVector3 upperLimits(0,0,0);
+
+    btQuaternion local;
+    local.setEulerZYX(M_PI/2.0,0,0);
+
+    Bone * bone = rootFix->addBone(local,0.5,0.5,0.5,lowerLimits,upperLimits);
 
     for(int i=0;i<nbLegs;++i)
     {
@@ -46,7 +53,7 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     return ent;
 }
 
-void Spider::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVector3 &lowerLimits, const btVector3 &upperLimits)
+void Ant::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVector3 &lowerLimits, const btVector3 &upperLimits)
 {
     Bone *rootBone = fixBody->addBone(localFix,
                                       btScalar(legRadius),
@@ -74,8 +81,7 @@ void Spider::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVec
     }
 }
 
-QVariant Spider::serialize() {
+QVariant Ant::serialize() {
     return QVariant();
 }
-
 }

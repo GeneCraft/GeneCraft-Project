@@ -77,9 +77,13 @@ INCLUDEPATH  += \
 #    LIBS += -lOgreMain_d -lOIS_d
 #}
 #CONFIG(Release) {
-    LIBS += -L../lib/bin
+    LIBS += -L../lib/ogre/bin/Release
     LIBS += -lOgreMain -lOIS
 #}
+
+LIBS += -L../lib/ogrebullet-build/lib
+LIBS += -L../lib/bullet/lib
+LIBS += -L../lib/qxt/lib
 
 LIBS += -lQxtCore
 LIBS += -lBulletDynamics
@@ -97,7 +101,6 @@ LIBS += -lGLUI
 LIBS += -lMiniCL
 #LIBS += -lmui
 LIBS += -lOpenGLSupport
-LIBS += -lqwt
 
 SOURCES += \
     ../genelab/core/engines/simulationmanager.cpp \
@@ -166,7 +169,8 @@ SOURCES += \
     ../genelab/core/entities/modifiers/modifier.cpp \
     ../genelab/core/entities/modifiers/rotationalmotorsmodifier.cpp \
     ../genelab/core/factories/ressources/jsonfile.cpp \
-    ../genelab/core/factories/ressources/dbrecord.cpp
+    ../genelab/core/factories/ressources/dbrecord.cpp \
+    ../genelab/core/entities/families/ant/ant.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -235,7 +239,8 @@ HEADERS += \
     ../genelab/core/entities/modifiers/modifier.h \
     ../genelab/core/entities/modifiers/rotationalmotorsmodifier.h \
     ../genelab/core/factories/ressources/jsonfile.h \
-    ../genelab/core/factories/ressources/dbrecord.h
+    ../genelab/core/factories/ressources/dbrecord.h \
+    ../genelab/core/entities/families/ant/ant.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
