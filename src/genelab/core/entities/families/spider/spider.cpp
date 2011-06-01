@@ -15,8 +15,7 @@ Spider::Spider() :
     nbBoneInLeg = 3;
     legRadius   = 0.3;
     legLenght   = 2.0;
-    kneeRadius  = 0.35;
-
+    kneeRadius  = 0.25;
 }
 
 Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {

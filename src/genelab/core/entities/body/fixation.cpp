@@ -22,7 +22,7 @@ namespace GeneLabCore {
     FixationProperties* Fixation::inspectorWidget = 0;
     const btScalar Fixation::PERCENT_BONE_INSIDE_FIX = 0.15f;
 
-    #define FIXATION_DENSITY 5.0f
+    #define FIXATION_DENSITY 1.0f
     #define FIXATION_FRICTION 0.6f
 
     Fixation::Fixation(btShapesFactory *shapesFactory,

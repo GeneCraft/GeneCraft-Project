@@ -169,16 +169,16 @@ namespace GeneLabCore {
 //        f->setup();
 
         // Spider
-//        qDebug() << "Spider creation !";
-//        Spider *spider = new Spider();
-//        for(int i = 0; i < 3; i++) {
-//            for(int j = 0; j < 3; j++) {
-//                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
-//                qDebug() << "spider setup !";
-//                e->setup();
-//                entitiesEngine->addEntity(e);
-//            }
-//        }
+        qDebug() << "Spider creation !";
+        Spider *spider = new Spider();
+        for(int i = 0; i < 1; i++) {
+            for(int j = 0; j < 1; j++) {
+                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30+30,7,i*30));
+                qDebug() << "spider setup !";
+                e->setup();
+                entitiesEngine->addEntity(e);
+            }
+        }
 
         // Ant
         qDebug() << "Ant creation !";
