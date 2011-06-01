@@ -128,17 +128,17 @@ void Bone::disableMotors()
 
 void Bone::setBrainMotors()
 {
-    motorsModifier->setOutputsFrom(RotationalMotorsModifier::OUTPUTS_FROM_BRAIN);
+    motorsModifier->setOutputsFrom(1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/);
 }
 
 void Bone::setNormalPositionMotors()
 {
-    motorsModifier->setOutputsFrom(RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION);
+    motorsModifier->setOutputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/);
 }
 
 void Bone::setRandomMotors()
 {
-    motorsModifier->setOutputsFrom(RotationalMotorsModifier::OUTPUTS_FROM_RANDOM);
+    motorsModifier->setOutputsFrom(2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/);
 }
 
 void Bone::resetMotors()

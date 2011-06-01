@@ -70,8 +70,10 @@ void RotationalMotorsModifier::step()
             for(int i=0;i<3;i++)
             {
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
-                motor->m_maxMotorForce = (sinusIn[0]->getValue() + sinusIn[1]->getValue())*100 + 200;
-                motor->m_targetVelocity = (sinusIn[0]->getValue() - sinusIn[1]->getValue())*10;
+//                motor->m_maxMotorForce = (sinusIn[0]->getValue() + sinusIn[1]->getValue())*100 + 200;
+//                motor->m_targetVelocity = (sinusIn[0]->getValue() - sinusIn[1]->getValue())*10;
+                motor->m_maxMotorForce = ( sinusIn[1]->getValue())*400 + 400;
+                motor->m_targetVelocity = (sinusIn[0]->getValue())*10;
             }
             break;
 
@@ -88,8 +90,7 @@ void RotationalMotorsModifier::step()
             }
 
             break;
-           motor->m_maxMotorForce = ( sinusIn[1]->getValue())*400 + 400;
-           motor->m_targetVelocity = (sinusIn[0]->getValue())*10;
+
         }
     }
 }
