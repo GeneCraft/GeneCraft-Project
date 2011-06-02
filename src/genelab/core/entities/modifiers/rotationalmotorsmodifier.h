@@ -17,8 +17,8 @@ class BrainOutMotor
 public:
 
     BrainOutMotor(btRotationalLimitMotor * motor,
-                  float min_MaxMotorForce = 0.0f, float max_MaxMotorForce = 100.0f,
-                  float min_TargetVelocity = 0.0f, float max_TargetVelocity = 100.0f) : motor(motor)
+                  float min_MaxMotorForce = 0.0f, float max_MaxMotorForce = 1000.0f,
+                  float min_TargetVelocity = -10.0f, float max_TargetVelocity = 10.0f) : motor(motor)
     {
         boMaxMotorForce = new BrainOut(min_MaxMotorForce,max_MaxMotorForce);
         boTargetVelocity = new BrainOut(min_TargetVelocity,max_TargetVelocity);

@@ -51,7 +51,7 @@ namespace GeneLabCore {
 
 
         // Pour les tests :P
-        for(int i = 0; i < 200; i++) {
+        for(int i = 0; i < 0; i++) {
             SinusIn* sin = new SinusIn();
             for(int j = 0; j < 1; j++) {
                 int x = qrand()%this->size;
@@ -64,7 +64,8 @@ namespace GeneLabCore {
     }
 
     float BrainPlugGrid::getValue(int x, int y) {
-        return this->neurons[x + y * size];
+        float v = this->neurons[x + y * size];
+        return v;
     }
 
     void BrainPlugGrid::beforeStep() {

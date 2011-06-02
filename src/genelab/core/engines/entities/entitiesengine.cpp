@@ -24,11 +24,11 @@ void EntitiesEngine::beforeStep()
 
 void EntitiesEngine::step()
 {
-//    foreach(Entity* e, entities) {
-//        // step brains
-//        if(e->getBrain() != NULL)
-//            e->getBrain()->step();
-//    }
+    foreach(Entity* e, entities) {
+        // step brains
+        if(e->getBrain() != NULL)
+            e->getBrain()->step();
+    }
 }
 
 void EntitiesEngine::afterStep()

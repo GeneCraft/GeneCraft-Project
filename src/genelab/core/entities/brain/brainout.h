@@ -33,10 +33,10 @@ namespace GeneLabCore {
             // Un noramlization
             this->value = (value + 1.0f) / 2.0f * (max - min) + min;
             if(this->value > 1) {
-                this->value = 1;
+                this->value = max;
             }
             if(this->value < -1) {
-                this->value = -1;
+                this->value = min;
             }
             emit newValue(this->value);
         }

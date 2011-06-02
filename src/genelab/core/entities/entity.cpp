@@ -3,6 +3,10 @@
 #include "fixation.h"
 #include "treeshape.h"
 #include "brainfunctional.h"
+#include "brainin.h"
+#include "brainpluggrid.h"
+#include "sensor.h"
+#include "modifier.h"
 
 namespace GeneLabCore {
 
@@ -14,6 +18,7 @@ namespace GeneLabCore {
         this->name          = name;
         this->family        = family;
         this->generation    = generation;
+        this->brain         = new BrainFunctional(10);
     }
 
     void Entity::setup() {
@@ -63,5 +68,24 @@ namespace GeneLabCore {
         entityVariant.insert("body",treeShape->serialize());
 
         return entityVariant;
+    }
+
+
+    void Entity::addLinkToSensor(Sensor *sensor) {
+        sensors.append(sensor);
+        // Connexion de l'input au plug grid !
+        for(int i = 0; i < sensor->getInputs().size(); i++) {
+            brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
+        }
+    }
+
+    // Modifiers links
+    void Entity::addLinkToModifier(Modifier *modifier) {
+        modifiers.append(modifier);
+        // Connexion de l'output au cerveau
+        for(int i = 0; i < modifier->getOutputs().size(); i++) {
+            QString randomFunc = brain->createRandomFunc(4);
+            brain->addOut(modifier->getOutputs()[i], randomFunc);
+        }
     }
 }

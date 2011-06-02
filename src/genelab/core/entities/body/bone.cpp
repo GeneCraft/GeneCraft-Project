@@ -36,9 +36,7 @@ Bone::Bone(btShapesFactory *shapesFactory,
 
     parentCt = 0;
     bulletEngine = shapesFactory->getBulletEngine();
-    //qDebug() << "LIL" << shapesFactory;
     body        = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
-    //qDebug() << "LOL" << body->getRigidBody();
     rigidBody   = body->getRigidBody();
 
 
@@ -47,9 +45,7 @@ Bone::Bone(btShapesFactory *shapesFactory,
     endTransform.setIdentity();
     endTransform.setOrigin(position);
 
-    //qDebug() << "add sub fix !" << shapesFactory << rigidBody << endFixRadius;
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
-    //qDebug() << "end fix : " << endFix;
 }
 
 Bone::~Bone()

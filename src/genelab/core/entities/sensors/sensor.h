@@ -25,6 +25,7 @@ public:
     explicit Sensor(Fixation * fixation, QObject *parent = 0);
 
     inline const QString &getTypeName() { return typeName; }
+    inline const QList<BrainIn *> getInputs() { return brainInputs; }
 
 signals:
 

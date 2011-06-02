@@ -38,7 +38,6 @@ namespace GeneLabCore {
         airFixation = 0;
         entity = 0;
         delegatedSetup = true;
-        //qDebug() << "fixation created ! " << shapesFactory;
     }
 
     Fixation::Fixation(btShapesFactory *shapesFactory,
@@ -55,7 +54,6 @@ namespace GeneLabCore {
         entity = 0;
         airFixation = 0;
         delegatedSetup = false;
-        //qDebug() << "fixation created (from scratch) ! " << shapesFactory;
     }
 
     Fixation::~Fixation()
@@ -133,7 +131,6 @@ namespace GeneLabCore {
                             const btVector3 &lowerLimits,
                             const btVector3 &upperLimits) {
 
-        //qDebug() << "add bone ! " << shapesFactory;
         btQuaternion local1;
         local1.setRotation(btVector3(0, 1, 0), yAxis);
         btQuaternion local2;
@@ -157,10 +154,8 @@ namespace GeneLabCore {
         boneTransform.setRotation(initTransform.getRotation());
         boneTransform.setOrigin(transposedPos);
 
-        //qDebug() << "about to create bone " << shapesFactory;
         Bone * bone = new Bone(shapesFactory, yAxis, zAxis, boneRadius, boneLength, endFixRadius, boneTransform);
 
-        //qDebug() << "bone created ! " << shapesFactory;
         btTransform localBone;
         localBone.setIdentity();
         localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 -radius), btScalar(0.)));
@@ -173,15 +168,12 @@ namespace GeneLabCore {
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                    localFix, localBone, false);
 
-
-        //qDebug() << "bone created2 ! " << shapesFactory;
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);
         bone->setEntity(entity);
         bones.append(bone);
 
-        //qDebug() << "bone created3 ! " << shapesFactory;
         return bone;
     }
 

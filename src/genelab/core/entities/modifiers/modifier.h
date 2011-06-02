@@ -14,6 +14,7 @@ public:
     explicit Modifier(QObject *parent = 0);
 
     inline const QString &getTypeName() { return typeName; }
+    inline const QList<BrainOut*> getOutputs() { return outs; }
 
 signals:
 
@@ -26,6 +27,7 @@ public slots:
 
 protected:
     QString typeName;
+    QList<BrainOut*> outs;
 
 };
 }

@@ -4,6 +4,7 @@
 #include <QObject>
 #include "genelabcoreclasses.h"
 #include "entitypropertiescontroller.h"
+#include "brainfunctional.h"
 
 namespace GeneLabCore {
     class Entity : public QObject
@@ -25,11 +26,11 @@ namespace GeneLabCore {
         void setShape(TreeShape* shape);
 
         // Sensors links
-        inline void addLinkToSensor(Sensor *sensor) { sensors.append(sensor); }
+        void addLinkToSensor(Sensor *sensor);
         inline QList<Sensor *> &getSensors() { return sensors;  }
 
         // Modifiers links
-        inline void addLinkToModifier(Modifier *modifier) { modifiers.append(modifier); }
+        void addLinkToModifier(Modifier *modifier);
         inline QList<Modifier *> &getModifiers() { return modifiers;  }
 
         // Brain
@@ -60,7 +61,7 @@ namespace GeneLabCore {
         // Brain
         QList<Sensor *> sensors;
         QList<Modifier *> modifiers;
-        Brain *brain;
+        BrainFunctional *brain;
 
         // Qt Render
         static EntityPropertiesController *inspectorWidget;

@@ -4,6 +4,7 @@
 #include <QObject>
 #include "genelabcoreclasses.h"
 
+#include <QDebug>
 
 
 namespace GeneLabCore {
@@ -59,6 +60,10 @@ public:
 
     explicit BrainNode(NodeType type) {
         this->type = type;
+        if(type != 2) {
+            qDebug() << type;
+            qDebug() << fromType(type);
+        }
     }
 
     NodeType type;
@@ -75,13 +80,11 @@ protected:
 class BrainNodeIn : public BrainNode {
     Q_OBJECT
 public:
-    explicit BrainNodeIn(int x, int y) {
-        this->type = IN;
+    explicit BrainNodeIn(int x, int y) : BrainNode(IN) {
         this->x = x;
         this->y = y;
     }
 
-    NodeType type;
     int x, y;
 
 signals:
@@ -92,12 +95,10 @@ public slots:
 class BrainNodeConst : public BrainNode {
     Q_OBJECT
 public:
-    explicit BrainNodeConst(float constant) {
-        this->type = CONST;
+    explicit BrainNodeConst(float constant) : BrainNode(CONST) {
         this->value = constant;
     }
 
-    NodeType type;
     float value;
 
 signals:
@@ -109,18 +110,25 @@ public slots:
 class BrainMemory : public BrainNode {
     Q_OBJECT
 public:
-    explicit BrainMemory(int size) {
-        this->type = MEMORY_SPACE;
+    explicit BrainMemory(int size) : BrainNode(MEMORY_SPACE){
         this->size = size;
-        this->mem = new float[size];
-    }
-    ~BrainMemory() {
-        delete this->mem;
+        for(int i = 0; i < size; i++) {
+            this->insert(0);
+        }
     }
 
-    NodeType type;
+    void insert(float value) {
+        mem.append(value);
+        if(mem.size() > size)
+            mem.removeFirst();
+    }
+
+    ~BrainMemory() {
+    }
+
     int size;
-    float* mem;
+    int cpt;
+    QList<float> mem;
 
 signals:
 

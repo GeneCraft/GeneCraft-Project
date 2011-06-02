@@ -16,7 +16,7 @@ public:
     explicit BrainFunctional(int plugGridSize, QObject *parent = 0);
 
     void addOut(BrainOut* out, QString treeFunc);
-    void createRandomFunc(int depth);
+    QString createRandomFunc(int depth);
 
 signals:
 
