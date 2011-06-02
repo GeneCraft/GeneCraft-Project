@@ -38,12 +38,13 @@ namespace GeneLabCore {
         airFixation = 0;
         entity = 0;
         delegatedSetup = true;
-        qDebug() << "fixation created ! " << shapesFactory;
+        //qDebug() << "fixation created ! " << shapesFactory;
     }
 
     Fixation::Fixation(btShapesFactory *shapesFactory,
                        btScalar radius,
-                       btTransform initTransform) : QObject(), radius(radius), entity(0), airFixation(0)
+                       btTransform initTransform) : QObject(),
+        radius(radius), entity(0), airFixation(0)
     {
         this->shapesFactory = shapesFactory;
         this->localFixation.setIdentity();
@@ -54,7 +55,7 @@ namespace GeneLabCore {
         entity = 0;
         airFixation = 0;
         delegatedSetup = false;
-        qDebug() << "fixation created (from scratch) ! " << shapesFactory;
+        //qDebug() << "fixation created (from scratch) ! " << shapesFactory;
     }
 
     Fixation::~Fixation()
@@ -133,7 +134,7 @@ namespace GeneLabCore {
                             const btVector3 &lowerLimits,
                             const btVector3 &upperLimits) {
 
-        qDebug() << "add bone ! " << shapesFactory;
+        //qDebug() << "add bone ! " << shapesFactory;
         btQuaternion local1;
         local1.setRotation(btVector3(0, 1, 0), yAxis);
         btQuaternion local2;
@@ -141,7 +142,6 @@ namespace GeneLabCore {
         local1 *= local2;
 
         btQuaternion localOrientation = local1;
-
 
         // Get the initial transform
         btTransform initTransform = this->rigidBody->getWorldTransform();
@@ -158,10 +158,10 @@ namespace GeneLabCore {
         boneTransform.setRotation(initTransform.getRotation());
         boneTransform.setOrigin(transposedPos);
 
-        qDebug() << "about to create bone " << shapesFactory;
+        //qDebug() << "about to create bone " << shapesFactory;
         Bone * bone = new Bone(shapesFactory, yAxis, zAxis, boneRadius, boneLength, endFixRadius, boneTransform);
 
-        qDebug() << "bone created ! " << shapesFactory;
+        //qDebug() << "bone created ! " << shapesFactory;
         btTransform localBone;
         localBone.setIdentity();
         localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 -radius), btScalar(0.)));
@@ -175,14 +175,14 @@ namespace GeneLabCore {
                                                                    localFix, localBone, false);
 
 
-        qDebug() << "bone created2 ! " << shapesFactory;
+        //qDebug() << "bone created2 ! " << shapesFactory;
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);
         bone->setEntity(entity);
         bones.append(bone);
 
-        qDebug() << "bone created3 ! " << shapesFactory;
+        //qDebug() << "bone created3 ! " << shapesFactory;
         return bone;
     }
 
@@ -204,17 +204,25 @@ namespace GeneLabCore {
         return inspectorWidget;
     }
 
+    void Fixation::setEntity(Entity * entity)
+    {
+        this->entity = entity;
+
+        foreach(Bone *bone, bones)
+            bone->setEntity(entity);
+    }
+
     QVariant Fixation::serialize()
     {
         QVariantMap fixation;
-        QVariantList bonesVariant;
+        QVariantList bonesVariantList;
 
-        fixation.insert("Radius",QVariant((double)radius));
+        fixation.insert("radius",QVariant((double)radius));
 
         foreach(Bone *bone, bones)
-            bonesVariant.append(bone->seralize());
+            bonesVariantList.append(bone->serialize());
 
-        fixation.insert("Bones",bonesVariant);
+        fixation.insert("bones",bonesVariantList);
 
         return fixation;
     }

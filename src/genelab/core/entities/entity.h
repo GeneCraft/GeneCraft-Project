@@ -11,7 +11,9 @@ namespace GeneLabCore {
         Q_OBJECT
 
     public:
-        explicit Entity(QString name, QString family, int generation, QObject *parent = 0);
+
+        Entity(QString name, QString family, int generation, QObject *parent = 0);
+
         ~Entity();
 
         // Origins
@@ -38,6 +40,7 @@ namespace GeneLabCore {
 
         // serialisation
         QVariant serialize();
+        QVariant serializeOrigins();
 
     signals:
 

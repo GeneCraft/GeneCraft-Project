@@ -36,9 +36,9 @@ Bone::Bone(btShapesFactory *shapesFactory,
 
     parentCt = 0;
     bulletEngine = shapesFactory->getBulletEngine();
-    qDebug() << "LIL" << shapesFactory;
+    //qDebug() << "LIL" << shapesFactory;
     body        = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
-    qDebug() << "LOL" << body->getRigidBody();
+    //qDebug() << "LOL" << body->getRigidBody();
     rigidBody   = body->getRigidBody();
 
 
@@ -47,9 +47,9 @@ Bone::Bone(btShapesFactory *shapesFactory,
     endTransform.setIdentity();
     endTransform.setOrigin(position);
 
-    qDebug() << "add sub fix !" << shapesFactory << rigidBody << endFixRadius;
+    //qDebug() << "add sub fix !" << shapesFactory << rigidBody << endFixRadius;
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
-    qDebug() << "end fix : " << endFix;
+    //qDebug() << "end fix : " << endFix;
 }
 
 Bone::~Bone()
@@ -122,6 +122,7 @@ BonePropertiesController *Bone::getInspectorWidget()
 void Bone::setEntity(Entity *entity)
 {
     this->entity = entity;
+
     endFix->setEntity(entity);
 }
 
@@ -174,13 +175,19 @@ void Bone::setyAxis(btScalar yAxis) {
     parentCt->getFrameOffsetA().setRotation(local1);
 }
 
-QVariant Bone::seralize()
+QVariant Bone::serialize()
 {
     QVariantMap bone;
 
     // Length & radius
-    bone.insert("l",QVariant((double)length));
-    bone.insert("r",QVariant((double)radius));
+    bone.insert("length",QVariant((double)length));
+    bone.insert("radius",QVariant((double)radius));
+
+    // Yaw & Roll
+    QVariantMap localRotation;
+    localRotation.insert("y",QVariant((double)getYAxis()));
+    localRotation.insert("z",QVariant((double)getZAxis()));
+    bone.insert("localRotation",localRotation);
 
     // Limits
     QVariantMap lowerlimits, upperlimits;
@@ -200,7 +207,7 @@ QVariant Bone::seralize()
     bone.insert("upperLimits",upperlimits);
 
     // End fixation
-    bone.insert("endfix",endFix->serialize());
+    bone.insert("endFix",endFix->serialize());
 
     return bone;
 }

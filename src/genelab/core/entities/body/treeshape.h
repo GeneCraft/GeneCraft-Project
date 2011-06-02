@@ -2,6 +2,7 @@
 #define TREESHAPE_H
 #include "genelabcoreclasses.h"
 #include <QObject>
+#include "LinearMath/btTransform.h"
 
 // TODO: INHERIT : Shape, -> CREATE CLASS SHAPE with method setup AND print
 namespace GeneLabCore {
@@ -9,7 +10,8 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit TreeShape(btShapesFactory* shapeFactories, QObject *parent = 0);
+        explicit TreeShape(btShapesFactory* shapesFactory, QObject *parent = 0);
+        TreeShape(btShapesFactory* shapesFactory, QVariant genotype, btTransform initTransform, QObject *parent = 0);
         ~TreeShape();
 
         /**
@@ -28,6 +30,7 @@ namespace GeneLabCore {
         void setup();
 
         QVariant serialize();
+        void buildFixFromGenotype(Fixation *fix, QVariant fixGenotype);
 
     signals:
 
@@ -38,7 +41,7 @@ namespace GeneLabCore {
         Fixation* root;
 
         // Ogre & Bullet
-        btShapesFactory* shapeFactories;
+        btShapesFactory* shapesFactory;
     };
 }
 #endif // TREESHAPE_H

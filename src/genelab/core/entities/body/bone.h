@@ -2,7 +2,6 @@
 #define BONE_H
 
 #include <QObject>
-#include <QDebug>
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
@@ -38,7 +37,7 @@ public:
    void setNormalPositionMotors();
    void resetMotors();
 
-   QVariant seralize();
+   QVariant serialize();
    btScalar getYAxis() { return yAxis; }
    btScalar getZAxis() { return zAxis; }
 

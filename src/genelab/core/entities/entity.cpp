@@ -44,11 +44,21 @@ namespace GeneLabCore {
         this->treeShape->getRoot()->setEntity(this);
     }
 
+    QVariant Entity::serializeOrigins()
+    {
+        QVariantMap origins;
+
+        origins.insert("name",name);
+        origins.insert("family",family);
+
+        return origins;
+    }
+
     QVariant Entity::serialize()
     {
         QVariantMap entityVariant;
 
-        //entityVariant.insert("origins",serializeOrigins());
+        entityVariant.insert("origins",serializeOrigins());
         //entityVariant.insert("brain",brain->serialize());
         entityVariant.insert("body",treeShape->serialize());
 

@@ -37,6 +37,7 @@ namespace GeneLabCore {
          */
         //Bone *addBone(const btQuaternion &localOrientation, btScalar boneRadius, btScalar boneLenght, btScalar endFixRadius, const btVector3 &lowerLimits, const btVector3 &upperLimits);
         Bone *addBone(btScalar yAxis, btScalar zAxis, btScalar boneRadius, btScalar boneLength, btScalar endFixRadius, const btVector3& lo, const btVector3 &up);
+
         /**
          * Used to add a sensor
          */
@@ -48,7 +49,7 @@ namespace GeneLabCore {
 
         inline BulletEngine *getBulletEngine()         { return bulletEngine; }
         inline btScalar getRadius()                    { return radius; }
-        inline void setEntity(Entity *entity)          { this->entity = entity; }
+        void setEntity(Entity *entity);
         inline Entity *getEntity()                     { return entity; }
         btRigidBody *getRigidBody();
         FixationProperties *getInspectorWidget();

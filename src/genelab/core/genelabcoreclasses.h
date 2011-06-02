@@ -46,6 +46,7 @@ namespace GeneLabCore {
     // Families
     class EntityFamily;
     class SnakeFamily;
+    class GenericFamily;
 
     // Body
     class TreeShape;

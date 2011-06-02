@@ -27,6 +27,7 @@
 #include "spider/spider.h"
 #include "ant/ant.h"
 #include "entitiesengine.h"
+#include "genericfamily.h"
 
 // Ressources
 #include "ressources/ressource.h"
@@ -191,14 +192,24 @@ namespace GeneLabCore {
         for(int i = 0; i < 5; i++) {
             for(int j = 0; j < 5; j++) {
                 e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
-                qDebug() << "ant setup !";
+                //qDebug() << "ant setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
             }
         }
 
-        Ressource* r = new JsonFile("ant.json");
-        r->save(e->serialize());
+        // Save Generic entity
+        Ressource* to = new JsonFile("ant.genome");
+        to->save(e->serialize());
+        qDebug() << "ant save !";
+
+        // Load Generic Entity
+        Ressource* from = new JsonFile("ant.genome");
+        QVariant genotype = from->load();
+        e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(0,10,0));
+        e->setup();
+        entitiesEngine->addEntity(e);
+
 
         // Snake
         // Move into EntityFactory
