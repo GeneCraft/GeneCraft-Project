@@ -40,7 +40,6 @@ float sigmoid(float x)
             QString node = nodes[i];
             QStringList nodePart = node.split(" ", QString::SkipEmptyParts);
             NodeType t = fromString(nodePart[0]);
-            qDebug() << t;
             switch(t) {
             // 2 operands
             case SUM:
@@ -91,9 +90,6 @@ float sigmoid(float x)
             }
         }
 
-        for(int i = 0; i < tree.size(); i++) {
-            qDebug() << fromType(tree[i]->type);
-        }
         this->trees.append(tree);
         this->outputs.append(out);
     }
@@ -110,8 +106,6 @@ float sigmoid(float x)
     void BrainFunctional::doNode(QList<BrainNode*> tree, BrainOut* out) {
         QList<BrainNode*>::iterator it = tree.begin();
         float value = apply(it, tree.end());
-        //if(value != 0)
-        //    qDebug() << value;
         out->setValue(value);
     }
 

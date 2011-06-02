@@ -60,10 +60,6 @@ public:
 
     explicit BrainNode(NodeType type) {
         this->type = type;
-        if(type != 2) {
-            qDebug() << type;
-            qDebug() << fromType(type);
-        }
     }
 
     NodeType type;
