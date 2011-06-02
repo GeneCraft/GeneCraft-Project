@@ -33,7 +33,7 @@ protected:
 private:
 
     // use to create the spider
-    void addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVector3 &lowerLimits, const btVector3 &upperLimits);
+    void addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVector3 &lowerLimits, const btVector3 &upperLimits);
 };
 }
 

@@ -6,6 +6,7 @@
 
 #include <QMap>
 #include <QVariant>
+#include <QList>
 
 namespace GeneLabCore {
 class BrainFunctional : public Brain
@@ -14,7 +15,8 @@ class BrainFunctional : public Brain
 public:
     explicit BrainFunctional(int plugGridSize, QObject *parent = 0);
 
-    void addOut(BrainOut* out, QString treeData);
+    void addOut(BrainOut* out, QString treeFunc);
+    void createRandomFunc(int depth);
 
 signals:
 
@@ -23,7 +25,7 @@ public slots:
 
 protected:
     void doNode(QList<BrainNode*> tree, BrainOut* out);
-    float value(BrainNode* node);
+    float apply(QList<BrainNode*>::iterator it, QList<BrainNode*>::const_iterator end);
 
     QList<BrainOut*> outputs;
     QList<QList<BrainNode*> > trees;

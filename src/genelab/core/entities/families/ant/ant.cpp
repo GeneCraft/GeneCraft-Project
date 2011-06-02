@@ -14,7 +14,7 @@ Ant::Ant() : EntityFamily()
     nbLegs      = 6;
     nbBoneInLeg = 3;
     legRadius   = 0.2;
-    legLenght   = 1.5;
+    legLenght   = 1.0;
     kneeRadius  = 0.35;
 }
 
@@ -42,31 +42,33 @@ Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &posit
     btQuaternion local;
 
     local.setEulerZYX(M_PI/2.0,0,0);
-    Bone * bone = rootFix->addBone(local,0.5,0.5,0.5,lowerLimits,upperLimits);
+    Bone * bone = rootFix->addBone(0, M_PI/2.0f, 0.5, 0.5, 0.5, lowerLimits, upperLimits);
 
     for(int i=0;i<3;++i)
     {
         legLocal.setEulerZYX(0,0, M_PI / 6.0f * i + M_PI / 3.0);
-        addLeg(bone->getEndFixation(),legLocal,lowerLimits,upperLimits);
+        addLeg(bone->getEndFixation(),M_PI / 2.0f, M_PI / 6.0f * i + M_PI / 3.0,lowerLimits,upperLimits);
     }
+
 
     for(int i=0;i<3;++i)
     {
         legLocal.setEulerZYX(0,0, - M_PI / 6.0f * i - M_PI / 3.0);
-        addLeg(bone->getEndFixation(),legLocal,lowerLimits,upperLimits);
+        addLeg(bone->getEndFixation(),M_PI / 2.0, -M_PI / 6.0f * i - M_PI / 3.0,lowerLimits,upperLimits);
     }
 
+
     local.setEulerZYX(0,0,0);
-    bone = bone->getEndFixation()->addBone(local,0.5,0.5,1,lowerLimits,upperLimits);
+    bone = bone->getEndFixation()->addBone(0,0,0.5,0.5,1,lowerLimits,upperLimits);
 
 
 
     return ent;
 }
 
-void Ant::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVector3 &lowerLimits, const btVector3 &upperLimits)
+void Ant::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVector3 &lowerLimits, const btVector3 &upperLimits)
 {
-    Bone *rootBone = fixBody->addBone(localFix,
+    Bone *rootBone = fixBody->addBone(yAxis, zAxis,
                                       btScalar(legRadius),
                                       btScalar(legLenght),
                                       btScalar(kneeRadius),
@@ -74,19 +76,21 @@ void Ant::addLeg(Fixation *fixBody, const btQuaternion &localFix, const btVector
 
 
 
+
     for(int i=1;i<nbBoneInLeg;++i)
     {
-        btVector3 lowerLimits(0,0,-M_PI/4);
-        btVector3 upperLimits(0,0,M_PI/4);
+        btVector3 lowerLimits(-M_PI/4,0,-M_PI/12);
+        btVector3 upperLimits(M_PI/4,0,M_PI/12);
         btQuaternion local;
         local.setEulerZYX(M_PI/6.0,0,0);
-        rootBone = rootBone->getEndFixation()->addBone(local,
+
+        rootBone = rootBone->getEndFixation()->addBone(-yAxis, M_PI / 6,
                                                        btScalar(legRadius - legRadius*(i/nbBoneInLeg)),
                                                        btScalar(legLenght - legLenght*(i/nbBoneInLeg)),
                                                        btScalar(kneeRadius),
                                                        lowerLimits,
                                                        upperLimits);
-
+        yAxis = 0;
         //rootBone->getParentConstraint()->setAngularLowerLimit(btVector3(0,0,0));
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));
     }

@@ -1,5 +1,11 @@
 #include "creatureviewerinputmanager.h"
 
+#include "spider/spider.h"
+#include "btoshapesfactory.h"
+#include "entity.h"
+#include "treeshape.h"
+#include "fixation.h"
+
 // Qt
 #include <QDebug>
 
@@ -17,7 +23,7 @@
 #include "bulletogreengine.h"
 
 CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngine,Ogre::Camera *camera) :
-    btoEngine(btoEngine), camera(camera)
+    camera(camera), btoEngine(btoEngine)
 {
 }
 
@@ -50,7 +56,7 @@ void CreatureViewerInputManager::keyPressEvent(QKeyEvent *e)
     switch(e->key())
     {
     case Qt::Key_B :
-        for(int i=0;i<100;i++)
+        for(int i=0;i<10;i++)
             throwCube();
         break;
     case Qt::Key_P :
@@ -75,17 +81,27 @@ void CreatureViewerInputManager::leaveViewPortEvent(QEvent *e){}
 
 void CreatureViewerInputManager::throwCube()
 {
+
     // create a box in the camera position
     Ogre::Vector3 camPos = camera->getPosition();
     btTransform transform; transform.setIdentity();
     transform.setOrigin(btVector3(camPos.x,camPos.y,camPos.z));
-    btoBox *box = new btoBox(btoEngine,btVector3(1,1,1),transform);
+
+
+    /*Spider f;
+    btoShapesFactory *shapesFactory = new btoShapesFactory(btoEngine);
+
+    Entity* e = f.createEntity(shapesFactory, transform.getOrigin());
+    e->setup();
+*/
+   btoBox *box = new btoBox(btoEngine,btVector3(1,1,1),transform);
     box->setup();
 
     // apply impulse from the center of the box in direction of the camera
     Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy();
     initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
     box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
+
 }
 
 void CreatureViewerInputManager::pickBody()

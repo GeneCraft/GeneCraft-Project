@@ -1,5 +1,7 @@
 #include "brainfunctional.h"
 #include "brainnode.h"
+#include "brainout.h"
+
 #include <QStringList>
 
 #include <QDebug>
@@ -73,11 +75,19 @@ namespace GeneLabCore {
     }
 
     void BrainFunctional::doNode(QList<BrainNode*> tree, BrainOut* out) {
-
+        QList<BrainNode*>::iterator it = tree.begin();
+        out->setValue(apply(it, tree.end()));
     }
 
-    float BrainFunctional::value(BrainNode *node) {
+    float BrainFunctional::apply(QList<BrainNode*>::iterator it, QList<BrainNode*>::const_iterator end) {
+        if(it == end) {
+            qDebug() << "end of func !";
+            return 0;
+        }
+        BrainNode* n = *it;
+        switch(n->type) {
 
+        }
     }
 
 }

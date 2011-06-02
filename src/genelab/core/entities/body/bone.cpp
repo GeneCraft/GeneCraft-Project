@@ -30,13 +30,15 @@ namespace GeneLabCore {
 BonePropertiesController* Bone::inspectorWidget = 0;
 
 Bone::Bone(btShapesFactory *shapesFactory,
-           btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
-    radius(radius), length(length), endFix(NULL), motorsModifier(NULL), parentCt(NULL)
+           btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
+    yAxis(yAxis), zAxis(zAxis), radius(radius), length(length), motorsModifier(NULL)
 {
 
+    parentCt = 0;
     bulletEngine = shapesFactory->getBulletEngine();
-
-    body        = shapesFactory->createBone(length,radius, endFixRadius, initTransform);
+    qDebug() << "LIL" << shapesFactory;
+    body        = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
+    qDebug() << "LOL" << body->getRigidBody();
     rigidBody   = body->getRigidBody();
 
 
@@ -45,8 +47,9 @@ Bone::Bone(btShapesFactory *shapesFactory,
     endTransform.setIdentity();
     endTransform.setOrigin(position);
 
+    qDebug() << "add sub fix !" << shapesFactory << rigidBody << endFixRadius;
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
-    parentCt = 0;
+    qDebug() << "end fix : " << endFix;
 }
 
 Bone::~Bone()
@@ -159,6 +162,18 @@ void Bone::resetMotors()
     }
 }
 
+
+void Bone::setyAxis(btScalar yAxis) {
+    this->yAxis = yAxis;
+    btQuaternion local1;
+    local1.setRotation(btVector3(0, 1, 0), yAxis);
+    btQuaternion local2;
+    local2.setRotation(btVector3(0, 0, 1), zAxis);
+    local1 *= local2;
+
+    parentCt->getFrameOffsetA().setRotation(local1);
+}
+
 QVariant Bone::seralize()
 {
     QVariantMap bone;
@@ -189,4 +204,16 @@ QVariant Bone::seralize()
 
     return bone;
 }
+
+void Bone::setZAxis(btScalar zAxis) {
+    this->zAxis = zAxis;
+    btQuaternion local1;
+    local1.setRotation(btVector3(0, 1, 0), yAxis);
+    btQuaternion local2;
+    local2.setRotation(btVector3(0, 0, 1), zAxis);
+    local1 *= local2;
+
+    parentCt->getFrameOffsetA().setRotation(local1);
+}
+
 }

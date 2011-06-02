@@ -2,6 +2,7 @@
 #include "bulletengine.h"
 #include "rigidbodyorigin.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include <QDebug>
 namespace GeneLabCore {
 btBone::btBone(BulletEngine *btEngine, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
     btShape()
@@ -44,6 +45,7 @@ void btBone::init(btScalar length,
 
     this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);
     this->rigidBody->setFriction(friction);
+    qDebug() << "bien !" << this->rigidBody;
 }
 
 

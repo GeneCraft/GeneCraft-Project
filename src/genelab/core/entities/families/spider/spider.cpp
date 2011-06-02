@@ -50,6 +50,8 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
 
 void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVector3 &lowerLimits, const btVector3 &upperLimits)
 {
+
+    qDebug() << "on ajoute le premier bone !";
     Bone *rootBone = fixBody->addBone(yAxis, zAxis,
                                       btScalar(legRadius),
                                       btScalar(legLenght),
@@ -58,8 +60,10 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
 
 
 
-    for(int i=1;i<nbBoneInLeg;++i)
+    qDebug() << "on ajoute les suivants !";
+        for(int i=1;i<nbBoneInLeg;++i)
     {
+        qDebug() << "next one !";
         btVector3 lowerLimits(0,0,-M_PI/10);
         btVector3 upperLimits(0,0,M_PI/6);
         rootBone = rootBone->getEndFixation()->addBone(0, M_PI / 3.5f,

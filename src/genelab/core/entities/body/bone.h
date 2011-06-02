@@ -15,7 +15,7 @@ class Bone : public QObject
 
 public:
 
-   Bone(btShapesFactory *shapesFactory, btScalar radius, btScalar lenght, btScalar endFixRadius, const btTransform &initTransform);
+   Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar lenght, btScalar endFixRadius, const btTransform &initTransform);
    ~Bone();
 
    void setup();
@@ -39,21 +39,29 @@ public:
    void resetMotors();
 
    QVariant seralize();
+   btScalar getYAxis() { return yAxis; }
+   btScalar getZAxis() { return zAxis; }
+
+   void setyAxis(btScalar yAxis);
+   void setZAxis(btScalar zAxis);
 
 protected:
 
    // Shape
+   btScalar yAxis, zAxis;
+   btBone *body;
+   btScalar radius;
+   btScalar length;
+   // Modifier
+   RotationalMotorsModifier *motorsModifier;
+
    btRigidBody *rigidBody;
    RigidBodyOrigin *origin;
    Fixation *endFix;
    btGeneric6DofConstraint *parentCt;
    btGeneric6DofConstraint *endFixConstraint;
-   btBone *body;
-   btScalar radius;
-   btScalar length;
 
-   // Modifier
-   RotationalMotorsModifier *motorsModifier;
+
 
    // Related Entity
    Entity *entity;
