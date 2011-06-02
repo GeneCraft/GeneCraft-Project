@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "spider.h"
 #include "btshapesfactory.h"
 #include "fixation.h"

@@ -2,6 +2,7 @@
 
 #include "entity.h"
 #include "treeshape.h"
+#include "fixation.h"
 #include <QDebug>
 
 namespace GeneLabCore {
@@ -35,5 +36,22 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     // entity->setBrain(new Brain(entityMap.value("brain")))
 
     return entity;
+}
+
+
+Entity *GenericFamily::createViginEntity(btShapesFactory *shapesFactory,
+                                                btScalar rootFixRadius,
+                                                const btVector3 &initialPosition)
+{
+    Entity * entity = new Entity("no name", "no family", 0);
+
+    TreeShape *shape = new TreeShape(shapesFactory);
+
+    btTransform initTransform;
+    initTransform.setIdentity();
+    initTransform.setOrigin(initialPosition);
+
+    shape->setRoot(new Fixation(shapesFactory,rootFixRadius,initTransform));
+    entity->setShape(shape);
 }
 }

@@ -5,6 +5,11 @@
 #include <QDebug>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QSettings>
+#include <QFileDialog>
+#include <QDir>
+#include <QMessageBox>
+#include <QMap>
 #include "creatureviewerabout.h"
 
 // Entity
@@ -15,6 +20,8 @@
 #include "fixationproperties.h"
 #include "bonepropertiescontroller.h"
 #include "entitypropertiescontroller.h"
+#include "genericfamily.h"
+#include "treeshape.h"
 
 // Engine
 #include "OGRE/Ogre.h"
@@ -23,22 +30,34 @@
 #include "simulationmanager.h"
 #include "eventmanager.h"
 #include "bulletogreengine.h"
+#include "entitiesengine.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
 
-#include <QMap>
+// Ressources
+#include "ressources/ressource.h"
+#include "ressources/jsonfile.h"
 
 
 using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CreatureViewer)
+    ui(new Ui::CreatureViewer), selectedEntity(NULL), inspector(NULL), openGLWidget(NULL)
 {
     ui->setupUi(this);
 
-    MainFactory* factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+    factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+
+    // ----------
+    // -- Menu --
+    // ----------
+    connect(this->ui->actionFrom_file,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
+    connect(this->ui->actionTo_file,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
+    connect(this->ui->actionNew_creature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
+
+    connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
 
     // ----------------------
     // -- Events Listeners --
@@ -54,9 +73,6 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     // connect listener to window
     connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 
-    connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
-
-
     // ------------------------
     // -- Simulation Manager --
     // ------------------------
@@ -70,9 +86,6 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     qDebug() << "Start simulation";
     simulationManager->start();
     qDebug() << "[OK]\n";
-
-    inspector = NULL;
-    openGLWidget = NULL;
 
     // Connection to Inspectors
     connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
@@ -106,6 +119,8 @@ void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
 {
+    selectedEntity = NULL;
+
     //other exclusions ?
     if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
     {
@@ -123,6 +138,7 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                             Bone *bone = dynamic_cast<Bone*>(origin->getObject());
                             //bone->setSelected(true); // TODO stock selection into rigidbody origin
                             setInspector(bone->getInspectorWidget());
+                            selectedEntity = bone->getEntity();
                             setEntity(bone->getEntity(),bone->getRigidBody());
                             }
                             break;
@@ -132,6 +148,7 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                             Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
                             //fix->setSelected(true); // TODO stock selection into rigidbody origin
                             setInspector(fix->getInspectorWidget());
+                            selectedEntity = fix->getEntity();
                             setEntity(fix->getEntity(),fix->getRigidBody());
                             }
                             break;
@@ -223,4 +240,55 @@ void CreatureViewerWindow::showAbout()
 {
     CreatureViewerAbout *cwa = new CreatureViewerAbout();
     cwa->show();
+}
+
+void CreatureViewerWindow::createNewEntity()
+{
+//    Entity * e = GenericFamily::createViginEntity(factory->getShapesFactory(), btScalar(1.0), btVector3(0,10,0));
+//    e->setup();
+//    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+//    entitiesEngine->addEntity(e);
+//    setEntity(e,e->getShape()->getRoot()->getRigidBody());
+}
+
+void CreatureViewerWindow::loadEntityFromFile()
+{
+    const QString DEFAULT_DIR_KEY("default_dir"); // TODO static
+    QSettings mySettings;
+    QString selectedFile = QFileDialog::getOpenFileName(this, "Select a genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
+
+    if (!selectedFile.isEmpty()) {
+        QDir CurrentDir;
+        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+
+        // Load Generic Entity
+        Ressource* from = new JsonFile(selectedFile);
+        QVariant genotype = from->load();
+        Entity *e = GenericFamily::createEntity(genotype, factory->getShapesFactory(), btVector3(0,10,0));
+        e->setup();
+        EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+        entitiesEngine->addEntity(e);
+
+    }
+}
+
+void CreatureViewerWindow::saveEntityToFile()
+{
+    if(selectedEntity != NULL)
+    {
+        const QString DEFAULT_DIR_KEY("default_dir");  // TODO static
+        QSettings mySettings;
+        QString selectedFile = QFileDialog::getSaveFileName(this, "Save your genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
+
+        if (!selectedFile.isEmpty()) {
+            QDir CurrentDir;
+            mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+
+            // Load Generic Entity
+            Ressource* to = new JsonFile(selectedFile);
+            to->save(selectedEntity->serialize());
+        }
+    }
+    else
+        QMessageBox::warning(this, "No entity selected.", "No entity selected.");
 }

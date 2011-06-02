@@ -50,14 +50,14 @@
       <iconset resource="../../../../core/ressources/ressources.qrc">
        <normaloff>:/img/icons/entity_save</normaloff>:/img/icons/entity_save</iconset>
      </property>
-     <addaction name="actionFile"/>
+     <addaction name="actionTo_file"/>
      <addaction name="actionDatabase"/>
     </widget>
     <addaction name="actionNew_creature"/>
     <addaction name="separator"/>
+    <addaction name="menuAdd_Creature"/>
     <addaction name="actionSave_selected_creature"/>
     <addaction name="menuSave_selected_creature_to"/>
-    <addaction name="menuAdd_Creature"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -185,7 +185,7 @@
     <string>From database...</string>
    </property>
   </action>
-  <action name="actionFile">
+  <action name="actionTo_file">
    <property name="icon">
     <iconset resource="../../../../core/ressources/ressources.qrc">
      <normaloff>:/img/icons/entity_file</normaloff>:/img/icons/entity_file</iconset>

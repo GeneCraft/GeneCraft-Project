@@ -12,7 +12,7 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        OgreBulletWorld(BulletOgreEngine *btoEngine, EntitiesEngine* entitiesEngine, QObject *parent = 0);
+        OgreBulletWorld(MainFactory *mainFactory, QObject *parent = 0);
 
     signals:
 
@@ -20,6 +20,7 @@ namespace GeneLabCore {
         virtual void setup();
     private:
 
+        MainFactory *mainFactory;
         BulletOgreEngine *btoEngine;
         EntitiesEngine* entitiesEngine;
 

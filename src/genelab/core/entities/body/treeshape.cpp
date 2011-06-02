@@ -85,9 +85,7 @@ namespace GeneLabCore {
         return this->root;
     }
 
-    void TreeShape::setup()
-    {
-        //getRoot()->initOgreBullet(ogreManager,bulletManager);
+    void TreeShape::setup() {
         getRoot()->setup();
     }
 

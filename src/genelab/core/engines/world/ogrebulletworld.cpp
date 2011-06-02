@@ -8,6 +8,7 @@
 #include <QDebug>
 
 // Engines
+#include "mainfactory.h"
 #include "OGRE/Ogre.h"
 #include "ogreengine.h"
 #include "bulletengine.h"
@@ -35,11 +36,12 @@
 
 namespace GeneLabCore {
 
-    OgreBulletWorld::OgreBulletWorld(BulletOgreEngine *btoEngine, EntitiesEngine* entitiesEngine, QObject *parent) :
+    OgreBulletWorld::OgreBulletWorld(MainFactory *mainFactory, QObject *parent) :
         World(parent)
     {
-        this->btoEngine = btoEngine;
-        this->entitiesEngine = entitiesEngine;
+        this->mainFactory = mainFactory;
+        btoEngine = static_cast<BulletOgreEngine*>(mainFactory->getEngines().find("BulletOgre").value());
+        entitiesEngine = static_cast<EntitiesEngine*>(mainFactory->getEngines().find("Entities").value());
     }
 
     void OgreBulletWorld::setup() {
@@ -139,10 +141,10 @@ namespace GeneLabCore {
         //        for(int i = 0; i < 100; i++)
         //            ent = sceneManager->createEntity(QString(QString("cubic")+QString::number(i)).toStdString().c_str(), "cube.mesh");
 
-        // ------------------
-        // -- Basic shapes --
-        // ------------------
-        btoShapesFactory *shapesFactory = new btoShapesFactory(btoEngine);
+        // --------------------
+        // -- Shapes Factory --
+        // --------------------
+        btShapesFactory *shapesFactory = mainFactory->getShapesFactory();
 
 
         /*btTransform transformSphere; transformSphere.setIdentity();

@@ -15,6 +15,10 @@ public:
     static Entity *createEntity(QVariant genotype,
                                 btShapesFactory *shapesFactory,
                                 const btVector3 &initialPosition);
+
+    static Entity *createViginEntity(btShapesFactory *shapesFactory,
+                                     btScalar rootFixRadius,
+                                     const btVector3 &initialPosition);
 };
 }
 #endif // GENERICFAMILY_H

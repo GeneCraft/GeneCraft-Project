@@ -35,11 +35,18 @@ public slots:
     void rigidBodySelected(btRigidBody *rigidBody);
     void showAbout();
 
+    // new / load / save entity
+    void createNewEntity();
+    void loadEntityFromFile();
+    void saveEntityToFile();
+
 private:
 
+    Entity *selectedEntity;
     Ui::CreatureViewer *ui;
     QWidget *inspector;
     QWidget *openGLWidget;
+    MainFactory* factory;
 };
 
 #endif // CREATUREVIEWER_H

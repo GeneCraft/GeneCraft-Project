@@ -16,6 +16,7 @@
 #include "entitiesengine.h"
 #include "ogrebulletworld.h"
 #include "world.h"
+#include "btoshapesfactory.h"
 
 namespace GeneLabCore {
 
@@ -84,6 +85,10 @@ namespace GeneLabCore {
         this->engines.insert("BulletOgre", bulletOgreEngine);
         qDebug() << "[OK]\n";
 
+        // --------------------
+        // -- Shapes Factory --
+        // --------------------
+        shapesFactory = new btoShapesFactory(bulletOgreEngine);
 
         // -------------------
         // -- Brains engine --
@@ -101,18 +106,14 @@ namespace GeneLabCore {
         this->engines.insert("Entities", entitiesEngine);
         qDebug() << "[OK]\n";
 
-
         // ---------------------
         // -- Scene (Content) --
         // ---------------------
         qDebug() << "World creation";
-        World *world = new OgreBulletWorld(bulletOgreEngine,entitiesEngine);
+        World *world = new OgreBulletWorld(this);
         world->setup();
         this->worlds.insert("BasicWorld", world);
         qDebug() << "[OK]\n";
-
-
-
 
         // ------------
         // -- Events --
@@ -134,22 +135,27 @@ namespace GeneLabCore {
         return true;
     }
 
-    QMap<QString, Engine*>        MainFactory::getEngines() {
+    QMap<QString, Engine*> MainFactory::getEngines() {
         return engines;
 
     }
 
-    QMap<QString, EntityFamily*>  MainFactory::getFamilys() {
+    QMap<QString, EntityFamily*> MainFactory::getFamilys() {
         return familys;
     }
 
-    QMap<QString, World*>         MainFactory::getWorlds() {
+    QMap<QString, World*> MainFactory::getWorlds() {
         return worlds;
     }
 
 
-    QMap<QString, QWidget*>                    MainFactory::getWidgets() {
+    QMap<QString, QWidget*> MainFactory::getWidgets() {
         return widgets;
+    }
+
+    btShapesFactory* MainFactory::getShapesFactory()
+    {
+        return shapesFactory;
     }
 
     // Vérifie que les dépendances sont assurées

@@ -85,7 +85,6 @@ namespace GeneLabCore {
             rigidBody->setActivationState(DISABLE_DEACTIVATION);
         }
 
-
         for(int i=0;i<bones.size();++i)
             bones.at(i)->setup();
     }
