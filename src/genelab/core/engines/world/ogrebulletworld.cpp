@@ -28,6 +28,10 @@
 #include "ant/ant.h"
 #include "entitiesengine.h"
 
+// Ressources
+#include "ressources/ressource.h"
+#include "ressources/jsonfile.h"
+
 namespace GeneLabCore {
 
     OgreBulletWorld::OgreBulletWorld(BulletOgreEngine *btoEngine, EntitiesEngine* entitiesEngine, QObject *parent) :
@@ -183,14 +187,18 @@ namespace GeneLabCore {
         // Ant
         qDebug() << "Ant creation !";
         Ant *ant = new Ant();
+        Entity* e;
         for(int i = 0; i < 5; i++) {
             for(int j = 0; j < 5; j++) {
-                Entity* e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
+                e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "ant setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
             }
         }
+
+        Ressource* r = new JsonFile("ant.json");
+        r->save(e->serialize());
 
         // Snake
         // Move into EntityFactory

@@ -27,6 +27,7 @@ namespace GeneLabCore {
           */
         void setup();
 
+        QVariant serialize();
 
     signals:
 

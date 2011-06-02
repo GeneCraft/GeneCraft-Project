@@ -36,6 +36,9 @@ namespace GeneLabCore {
         // Qt Render
         static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
+        // serialisation
+        QVariant serialize();
+
     signals:
 
     public slots:

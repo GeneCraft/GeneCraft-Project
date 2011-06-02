@@ -39,8 +39,19 @@ namespace GeneLabCore {
         return this->treeShape;
     }
 
-    void   Entity::setShape(TreeShape* shape) {
+    void Entity::setShape(TreeShape* shape) {
         this->treeShape = shape;
         this->treeShape->getRoot()->setEntity(this);
+    }
+
+    QVariant Entity::serialize()
+    {
+        QVariantMap entityVariant;
+
+        //entityVariant.insert("origins",serializeOrigins());
+        //entityVariant.insert("brain",brain->serialize());
+        entityVariant.insert("body",treeShape->serialize());
+
+        return entityVariant;
     }
 }

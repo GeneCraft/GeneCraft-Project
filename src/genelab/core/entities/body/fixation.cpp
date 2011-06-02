@@ -3,6 +3,7 @@
 // Qt
 #include <QStringBuilder>
 #include <QDebug>
+#include <QVariantList>
 
 // Engine
 #include "bulletengine.h"
@@ -200,5 +201,20 @@ namespace GeneLabCore {
         inspectorWidget->setFixation(this);
 
         return inspectorWidget;
+    }
+
+    QVariant Fixation::serialize()
+    {
+        QVariantMap fixation;
+        QVariantList bonesVariant;
+
+        fixation.insert("Radius",QVariant((double)radius));
+
+        foreach(Bone *bone, bones)
+            bonesVariant.append(bone->seralize());
+
+        fixation.insert("Bones",bonesVariant);
+
+        return fixation;
     }
 }

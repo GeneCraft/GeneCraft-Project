@@ -38,6 +38,8 @@ public:
    void setNormalPositionMotors();
    void resetMotors();
 
+   QVariant seralize();
+
 protected:
 
    // Shape

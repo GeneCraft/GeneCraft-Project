@@ -158,4 +158,35 @@ void Bone::resetMotors()
         motor->m_hiLimit        = btScalar(0); // TODO initial value
     }
 }
+
+QVariant Bone::seralize()
+{
+    QVariantMap bone;
+
+    // Length & radius
+    bone.insert("l",QVariant((double)length));
+    bone.insert("r",QVariant((double)radius));
+
+    // Limits
+    QVariantMap lowerlimits, upperlimits;
+    btVector3 angularLowerLimits, angularUpperLimits;
+    parentCt->getAngularLowerLimit(angularLowerLimits);
+    parentCt->getAngularUpperLimit(angularUpperLimits);
+
+    lowerlimits.insert("x",QVariant((double)angularLowerLimits.x()));
+    lowerlimits.insert("y",QVariant((double)angularLowerLimits.y()));
+    lowerlimits.insert("z",QVariant((double)angularLowerLimits.z()));
+
+    upperlimits.insert("x",QVariant((double)angularUpperLimits.x()));
+    upperlimits.insert("y",QVariant((double)angularUpperLimits.y()));
+    upperlimits.insert("z",QVariant((double)angularUpperLimits.z()));
+
+    bone.insert("lowerLimits",lowerlimits);
+    bone.insert("upperLimits",upperlimits);
+
+    // End fixation
+    bone.insert("endfix",endFix->serialize());
+
+    return bone;
+}
 }

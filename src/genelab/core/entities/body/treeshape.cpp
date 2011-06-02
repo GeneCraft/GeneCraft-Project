@@ -1,4 +1,8 @@
 #include "treeshape.h"
+
+#include <QVariant>
+#include <QVariantMap>
+
 #include "fixation.h"
 #include <QDebug>
 #include <QStringBuilder>
@@ -36,5 +40,15 @@ namespace GeneLabCore {
     {
         //getRoot()->initOgreBullet(ogreManager,bulletManager);
         getRoot()->setup();
+    }
+
+    QVariant TreeShape::serialize()
+    {
+        QVariantMap shape;
+
+        shape.insert("ShapeType", QVariant("TreeShape"));
+        shape.insert("RootFix", root->serialize());
+
+        return shape;
     }
 }

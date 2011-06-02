@@ -24,7 +24,7 @@ namespace GeneLabCore {
     {
         OgreBody *body;
         QListIterator<OgreBody *> it( bodies );
-        qDebug() << bodies.length() << "rigid bodys !";
+        //qDebug() << bodies.length() << "rigid bodys !";
         while( it.hasNext() )
         {
             body = it.next();

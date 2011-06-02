@@ -59,6 +59,8 @@ namespace GeneLabCore {
         void unfixInTheAir();
         inline bool isFixedInTheAir(){ return airFixation != 0; }
 
+        QVariant serialize();
+
         /**
          * The percent of penetration of bone into fixation (percent of fixation radius)
          */
