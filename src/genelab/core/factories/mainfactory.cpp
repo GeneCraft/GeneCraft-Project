@@ -93,10 +93,10 @@ namespace GeneLabCore {
         // -------------------
         // -- Brains engine --
         // -------------------
-//        qDebug() << "Init Brain Engine";
-//        BrainEngine* brainEngine = new BrainEngine();
-//        this->engines.insert("Brain", brainEngine);
-//        qDebug() << "[OK]\n";
+        qDebug() << "Init Brain Engine";
+        BrainEngine* brainEngine = new BrainEngine();
+        this->engines.insert("Brain", brainEngine);
+        qDebug() << "[OK]\n";
 
         // ---------------------
         // -- Entities engine --

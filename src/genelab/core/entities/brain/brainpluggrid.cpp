@@ -23,7 +23,7 @@ float sigmoid(float x)
 }
 
 
-#define PROPAGATION 5
+#define PROPAGATION 3
 #define PROPAGATION_DIMINUTION 1.f
 
 namespace GeneLabCore {
@@ -51,9 +51,9 @@ namespace GeneLabCore {
 
 
         // Pour les tests :P
-        for(int i = 0; i < 0; i++) {
+        for(int i = 0; i < 1; i++) {
             SinusIn* sin = new SinusIn();
-            for(int j = 0; j < 1; j++) {
+            for(int j = 0; j < 0; j++) {
                 int x = qrand()%this->size;
                 int y = qrand()%this->size;
                 sin->connectTo(x, y, 1);

@@ -4,15 +4,18 @@
 #include "fixation.h"
 #include "treeshape.h"
 #include "bone.h"
+#include "pluggridvisualizer.h"
 #include <QVariant>
 #include <QMetaType>
+#include <QLayout>
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EntityPropertiesController)
 {
     ui->setupUi(this);
-
+    QLayout* layoutBrain = new QBoxLayout(QBoxLayout::TopToBottom);
+    this->ui->grbBrain->setLayout(layoutBrain);
     connect(ui->twBodyTree,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(itemClicked(QTreeWidgetItem *,int)));
 
     connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
@@ -101,6 +104,8 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
             setupBodyTree(entity->getShape()->getRoot(),selectedBody);
     }
+
+    this->brainViz->setBrain(entity->getBrain());
 }
 
 void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem)
@@ -155,4 +160,9 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int column)
         emit rigidBodySelected(boneItem->bone->getRigidBody());
         return;
     }
+}
+
+void EntityPropertiesController::setBrainViz(PlugGridVisualizer *brainViz) {
+       this->brainViz = brainViz;
+       this->ui->grbBrain->layout()->addWidget(brainViz);
 }

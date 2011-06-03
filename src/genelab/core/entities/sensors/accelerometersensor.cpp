@@ -9,10 +9,9 @@ AccelerometerSensor::AccelerometerSensor(long stepTime, Fixation *fixation) : Se
 {
     typeName = "Accelerometer sensor";
 
-    // WARNING : max acceleration of an entity is 100 in this case ! FIXME
-    inputX = new BrainIn(-100.0,100.0);
-    inputY = new BrainIn(-100.0,100.0);
-    inputZ = new BrainIn(-100.0,100.0);
+    inputX = new BrainIn(-3.0,3.0);
+    inputY = new BrainIn(-3.0,3.0);
+    inputZ = new BrainIn(-3.0,3.0);
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
@@ -31,7 +30,7 @@ void AccelerometerSensor::step()
     oldPosition = position;
     oldSpeed    = speed;
 
-    qDebug() << "AccelerometerSensor::step() x = " << acceleration.x() << " y = " << acceleration.y() << " z = " << acceleration.z();
+    //qDebug() << "AccelerometerSensor::step() x = " << acceleration.x() << " y = " << acceleration.y() << " z = " << acceleration.z();
 
     inputX->setValue(acceleration.x());
     inputY->setValue(acceleration.y());

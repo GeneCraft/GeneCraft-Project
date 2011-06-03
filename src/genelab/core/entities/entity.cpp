@@ -18,7 +18,7 @@ namespace GeneLabCore {
         this->name          = name;
         this->family        = family;
         this->generation    = generation;
-        this->brain         = new BrainFunctional(10);
+        this->brain         = new BrainFunctional(20);
     }
 
     void Entity::setup() {
@@ -85,6 +85,7 @@ namespace GeneLabCore {
         // Connexion de l'output au cerveau
         for(int i = 0; i < modifier->getOutputs().size(); i++) {
             QString randomFunc = brain->createRandomFunc(4);
+            qDebug() << randomFunc;
             brain->addOut(modifier->getOutputs()[i], randomFunc);
         }
     }

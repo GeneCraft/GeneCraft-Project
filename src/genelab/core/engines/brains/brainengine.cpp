@@ -4,16 +4,18 @@
 #include "brain.h"
 
 #include <QLabel>
+#include <QList>
 
 namespace GeneLabCore {
 
     BrainEngine::BrainEngine(QObject *parent) :
         Engine(parent)
     {
+        this->gridVisualizers = QList<PlugGridVisualizer*>();
     }
 
     QWidget* BrainEngine::getRenderWidget(QWidget* parent) {
-        PlugGridVisualizer* w = new PlugGridVisualizer(this);
+        PlugGridVisualizer* w = new PlugGridVisualizer();
         this->gridVisualizers.append(w);
         return w;
     }
@@ -23,17 +25,17 @@ namespace GeneLabCore {
         foreach(BrainPlugGrid* n, this->grids) {
             n->beforeStep();
         }
+        foreach(PlugGridVisualizer* viz, this->gridVisualizers) {
+            viz->step();
+        }
     }
 
     void BrainEngine::step() {
         // Using the interconnexion layer
-        foreach(Brain* brain, this->brains) {
-            brain->step();
-        }
+        //foreach(Brain* brain, this->brains) {
+         //   brain->step();
+        //}
 
-        foreach(PlugGridVisualizer* viz, this->gridVisualizers) {
-            viz->step();
-        }
     }
 
     void BrainEngine::afterStep() {

@@ -14,9 +14,9 @@ PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(
     // WARNING : max size of an entity is 200 in this case ! FIXME
     // 200 c'est grand de toute façon :D
     // Je dirais plutot 20 !
-    inputX = new BrainIn(-100.0,100.0);
-    inputY = new BrainIn(-100.0,100.0);
-    inputZ = new BrainIn(-100.0,100.0);
+    inputX = new BrainIn(-20.0,20.0);
+    inputY = new BrainIn(-20.0,20.0);
+    inputZ = new BrainIn(-20.0,20.0);
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
@@ -33,7 +33,7 @@ void PositionSensor::step()
             - rootFix->getRigidBody()->getWorldTransform().getOrigin();
     */
 
-    qDebug() << "PositionSensor::step() x = " << distance.x() << " y = " << distance.y() << " z = " << distance.z();
+    //qDebug() << "PositionSensor::step() x = " << distance.x() << " y = " << distance.y() << " z = " << distance.z();
 
     inputX->setValue(distance.x());
     inputY->setValue(distance.y());

@@ -34,6 +34,7 @@ namespace GeneLabCore {
         inline QList<Modifier *> &getModifiers() { return modifiers;  }
 
         // Brain
+        void setBrain(BrainFunctional* brain) { this->brain = brain; }
         inline Brain *getBrain() { return brain; }
 
         // Qt Render

@@ -31,6 +31,8 @@
 #include "eventmanager.h"
 #include "bulletogreengine.h"
 #include "entitiesengine.h"
+#include "brainengine.h"
+#include "pluggridvisualizer.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -83,12 +85,18 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     simulationManager->setup();
     qDebug() << "[OK]\n";
 
+
+    ui->dwCreature->setWidget(Entity::getInspectorWidget());
+    BrainEngine* bEngine = (BrainEngine*)(factory->getEngines().find("Brain").value());
+    PlugGridVisualizer* bViz = (PlugGridVisualizer*)bEngine->getRenderWidget(Entity::getInspectorWidget());
+    Entity::getInspectorWidget()->setBrainViz(bViz);
+    // Connection to Inspectors
+    connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+
     qDebug() << "Start simulation";
     simulationManager->start();
     qDebug() << "[OK]\n";
 
-    // Connection to Inspectors
-    connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()

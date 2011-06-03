@@ -18,6 +18,7 @@ public:
     void addOut(BrainOut* out, QString treeFunc);
     QString createRandomFunc(int depth);
 
+
 signals:
 
 public slots:
@@ -29,6 +30,8 @@ protected:
 
     QList<BrainOut*> outputs;
     QList<QList<BrainNode*> > trees;
+
+    PlugGridVisualizer * viz;
 
 };
 }

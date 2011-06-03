@@ -95,11 +95,9 @@ float sigmoid(float x)
     }
 
     void BrainFunctional::step() {
-        this->plugGrid->beforeStep();
         for(int i = 0; i < trees.size(); i++) {
             this->doNode(trees[i], outputs[i]);
         }
-        this->plugGrid->afterStep();
 
     }
 
@@ -293,12 +291,22 @@ float sigmoid(float x)
 
         int rand = qrand()%100;
         if(rand < 50 && depth > 1) {
-            func += "+ ,";
-            func += this->createRandomFunc(depth -1);
-            func += this->createRandomFunc(depth -1);
+            int subChoix = qrand()%2;
+            if(subChoix) {
+                func += "+ ,";
+                func += this->createRandomFunc(depth -1);
+                func += this->createRandomFunc(depth -1);
+            } else {
+                func += "* ,";
+                func += "CONST -1,";
+                func += this->createRandomFunc(depth -1);
+            }
         }
-        else if(rand > 50 && rand < 60) {
-            func += "SINUS,";
+        else if(rand > 50 && rand < 60 && depth > 1) {
+            func += "MEM ";
+            func += QString::number(qrand()%5+1);
+            func += ",";
+            func += this->createRandomFunc(depth -1);
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
         else {

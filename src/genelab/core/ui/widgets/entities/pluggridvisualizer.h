@@ -13,7 +13,10 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit PlugGridVisualizer(GeneLabCore::BrainEngine* network, QWidget *parent = 0);
+        explicit PlugGridVisualizer(QWidget *parent = 0);
+        void setBrain(Brain* b) {
+            this->brain = b;
+        }
 
     signals:
 
@@ -22,7 +25,7 @@ namespace GeneLabCore {
         void paintEvent(QPaintEvent* e);
 
     private:
-        GeneLabCore::BrainEngine* brainEngine;
+        Brain* brain;
         QGraphicsView* view;
         float* neurons;
         bool init;

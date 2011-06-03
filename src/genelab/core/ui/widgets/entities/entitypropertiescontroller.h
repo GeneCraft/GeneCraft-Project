@@ -57,6 +57,7 @@ public:
 
     // GETTERS / SETTERS
     void setEntity(Entity *entity, btRigidBody * selectedBody = 0);
+    void setBrainViz(PlugGridVisualizer* brainViz);
 
 signals:
 
@@ -71,6 +72,8 @@ public slots:
 private:
 
     Ui::EntityPropertiesController *ui;
+
+    PlugGridVisualizer* brainViz;
 
     void setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem = 0);
 

@@ -29,6 +29,7 @@
 #include "ant/ant.h"
 #include "entitiesengine.h"
 #include "genericfamily.h"
+#include "brainengine.h"
 
 // Ressources
 #include "ressources/ressource.h"
@@ -42,6 +43,7 @@ namespace GeneLabCore {
         this->mainFactory = mainFactory;
         btoEngine = static_cast<BulletOgreEngine*>(mainFactory->getEngines().find("BulletOgre").value());
         entitiesEngine = static_cast<EntitiesEngine*>(mainFactory->getEngines().find("Entities").value());
+        brainEngine = (BrainEngine*)mainFactory->getEngines().find("Brain").value();
     }
 
     void OgreBulletWorld::setup() {
@@ -184,6 +186,7 @@ namespace GeneLabCore {
                 qDebug() << "spider setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
+                brainEngine->addGrid(e->getBrain()->getPlugGrid());
             }
         }
 
@@ -197,6 +200,7 @@ namespace GeneLabCore {
                 //qDebug() << "ant setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
+                brainEngine->addGrid(e->getBrain()->getPlugGrid());
             //}
         }
 
@@ -210,6 +214,7 @@ namespace GeneLabCore {
         QVariant genotype = from->load();
         e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(0,10,0));
         e->setup();
+        brainEngine->addGrid(e->getBrain()->getPlugGrid());
         entitiesEngine->addEntity(e);
 
 
