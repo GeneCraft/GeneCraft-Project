@@ -35,8 +35,6 @@ namespace GeneLabCore {
 
     void PlugGridVisualizer::paintEvent(QPaintEvent * e) {
 
-        qDebug() << "step pluggrid !";
-
         if(this->brain == 0)
             return;
 
