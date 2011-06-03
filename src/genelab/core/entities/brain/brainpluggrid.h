@@ -57,6 +57,7 @@ namespace GeneLabCore {
 
         // size-squared neurons matrice
         float* neurons;
+        int propagation;
 
     };
 

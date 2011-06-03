@@ -3,6 +3,7 @@
 #include "entity.h"
 #include "treeshape.h"
 #include "fixation.h"
+#include "brainfunctional.h"
 #include <QDebug>
 
 namespace GeneLabCore {
@@ -21,6 +22,8 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     Entity * entity = new Entity(origins.value("name").toString(),
                                   origins.value("family").toString()
                                   ,0);
+    // Brain
+    entity->setBrain(new BrainFunctional(entityMap.value("brain")));
 
     // Body
     QVariantMap body = entityMap.value("body").toMap();
@@ -32,8 +35,6 @@ Entity *GenericFamily::createEntity(QVariant genotype,
         entity->setShape(new TreeShape(shapesFactory,body.value("shape"),initTransform));
     }
 
-    // Brain
-    // entity->setBrain(new Brain(entityMap.value("brain")))
 
     return entity;
 }
@@ -44,6 +45,7 @@ Entity *GenericFamily::createViginEntity(btShapesFactory *shapesFactory,
                                                 const btVector3 &initialPosition)
 {
     Entity * entity = new Entity("no name", "no family", 0);
+    entity->setBrain(new BrainFunctional(10));
 
     TreeShape *shape = new TreeShape(shapesFactory);
 

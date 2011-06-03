@@ -63,7 +63,7 @@ namespace GeneLabCore {
         }
 
 
-        for(int i = 0; i < n->getInputs().size(); i++) {
+        /*for(int i = 0; i < n->getInputs().size(); i++) {
 
             // On dessine les entrées
             QPointF startingPoint(SCENE_SIZE/n->getInputs().size() * i + SCENE_SIZE/n->getInputs().size() * 0.5 - 10,
@@ -90,7 +90,7 @@ namespace GeneLabCore {
                                              SCENE_SIZE/size*c.x + SCENE_SIZE/size * 0.5,
                                              SCENE_SIZE/size*c.y + SCENE_SIZE/size * 0.5 + 70, p);
             }
-        }
+        }*/
 
 
         // On dessine les sorties

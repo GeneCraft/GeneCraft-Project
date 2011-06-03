@@ -23,9 +23,6 @@ float sigmoid(float x)
 }
 
 
-#define PROPAGATION 3
-#define PROPAGATION_DIMINUTION 1.f
-
 namespace GeneLabCore {
 
     BrainPlugGrid::BrainPlugGrid(const int size, QObject *parent) :
@@ -51,16 +48,8 @@ namespace GeneLabCore {
 
 
         // Pour les tests :P
-        for(int i = 0; i < 1; i++) {
-            SinusIn* sin = new SinusIn();
-            for(int j = 0; j < 0; j++) {
-                int x = qrand()%this->size;
-                int y = qrand()%this->size;
-                sin->connectTo(x, y, 1);
-                sin->connectTo(size - x, y, 1);
-            }
-            this->inputs.append(sin);
-        }
+
+        this->propagation = size/10;
     }
 
     float BrainPlugGrid::getValue(int x, int y) {
@@ -85,12 +74,12 @@ namespace GeneLabCore {
                 if(connexion.x >= 0 && connexion.x < size &&
                    connexion.y >= 0 && connexion.y < size) {
                     // Adding this value to the cell
-                    for(int i = qMax(0, connexion.x-PROPAGATION); i <= qMin( size-1, connexion.x + PROPAGATION); i++) {
-                        for(int j = qMax(0, connexion.y -PROPAGATION); j <= qMin(size-1, PROPAGATION + connexion.y); j++) {
+                    for(int i = qMax(0, connexion.x-propagation); i <= qMin( size-1, connexion.x + propagation); i++) {
+                        for(int j = qMax(0, connexion.y -propagation); j <= qMin(size-1, propagation + connexion.y); j++) {
                              this->neurons[i + j*size]
                                     += connexion.weight * value
-                                    * (1 - PROPAGATION_DIMINUTION * ((float)qAbs(i - connexion.x) / (PROPAGATION+1)))
-                                    * (1 - PROPAGATION_DIMINUTION * ((float)qAbs(j - connexion.y) / (PROPAGATION+1))) ;
+                                    * (1 - 1 * ((float)qAbs(i - connexion.x) / (propagation+1)))
+                                    * (1 - 1 * ((float)qAbs(j - connexion.y) / (propagation+1))) ;
 
                         }
                     }

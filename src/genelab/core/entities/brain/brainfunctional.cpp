@@ -2,6 +2,7 @@
 #include "brainnode.h"
 #include "brainout.h"
 #include "brainpluggrid.h"
+#include "sinusin.h"
 
 #include <math.h>
 #include <cstdlib>
@@ -31,9 +32,23 @@ float sigmoid(float x)
     BrainFunctional::BrainFunctional(int plugGridSize, QObject *parent) :
         Brain(plugGridSize, parent)
     {
+        // Heartbeat !
+        /*for(int i = 0; i < plugGridSize/10; i++) {
+            SinusIn* sin = new SinusIn();
+            int x = qrand()%plugGridSize;
+            int y = qrand()%plugGridSize;
+            sin->connectTo(x, y, 1);
+            sin->connectTo(y, x, 1);
+            this->plugGrid->connectInput(sin);
+        }*/
     }
 
-    void BrainFunctional::addOut(BrainOut *out, QString treeData) {
+    BrainFunctional::BrainFunctional(QVariant data) : Brain(data) {
+
+    }
+
+    void BrainFunctional::addOut(BrainOut *out) {
+        QString treeData = out->getConnexionInfo().toString();
         QList<BrainNode*> tree = QList<BrainNode*>();
         QStringList nodes = treeData.split(",", QString::SkipEmptyParts);
         for(int i = 0; i < nodes.length(); i++) {
@@ -131,7 +146,7 @@ float sigmoid(float x)
             if(b != 0)
                 return a/b;
             else
-                return -999;
+                return a;
 
         case ATAN:
             return atan2(apply(it, end), apply(it, end));
@@ -273,6 +288,8 @@ float sigmoid(float x)
             max = m->mem.last();
             max++;
             m->mem.append(max);
+            max *= apply(it, end);
+            max += apply(it, end);
             return sin(max * M_PI / 180.);
             break;
         case MEMORY_SPACE:
@@ -290,23 +307,62 @@ float sigmoid(float x)
         QString func;
 
         int rand = qrand()%100;
-        if(rand < 50 && depth > 1) {
-            int subChoix = qrand()%2;
-            if(subChoix) {
+        if(rand < 40 && depth > 1) {
+            int subChoix = qrand()%4;
+            if(subChoix == 3) {
                 func += "+ ,";
                 func += this->createRandomFunc(depth -1);
                 func += this->createRandomFunc(depth -1);
-            } else {
-                func += "* ,";
-                func += "CONST -1,";
+            } else if(subChoix == 2) {
+                func += "+ ,";
+                func += this->createRandomFunc(depth -1);
+                func += this->createRandomFunc(depth -1);
+            }else if(subChoix == 1) {
+                func += "IF ,";
+                func += this->createRandomFunc(depth -1);
+                func += this->createRandomFunc(depth -1);
+                func += this->createRandomFunc(depth -1);
+            }else {
+                func += "> ,";
+                func += this->createRandomFunc(depth -1);
+                func += this->createRandomFunc(depth -1);
                 func += this->createRandomFunc(depth -1);
             }
         }
-        else if(rand > 50 && rand < 60 && depth > 1) {
-            func += "MEM ";
-            func += QString::number(qrand()%5+1);
-            func += ",";
+        else if(rand > 40 &&rand < 60 && depth > 1) {
+            func += "SINUS ,";
             func += this->createRandomFunc(depth -1);
+            func += this->createRandomFunc(depth -1);
+            //func += QString::number(((float)qrand())/RAND_MAX) + ",";
+        }
+        else if(rand > 60  && rand < 80  && depth > 1) {
+            int subchoix = qrand()%5;
+            if(subchoix == 3) {
+                func += "MEM ";
+                func += QString::number(qrand()%5+1);
+                func += ",";
+                func += this->createRandomFunc(depth -1);
+            } else if(subchoix == 2) {
+                func += "SMOOTH ";
+                func += QString::number(qrand()%5+1);
+                func += ",";
+                func += this->createRandomFunc(depth -1);
+            } else if(subchoix == 1) {
+                func += "INT ";
+                func += QString::number(qrand()%5+1);
+                func += ",";
+                func += this->createRandomFunc(depth -1);
+            } else if(subchoix == 0) {
+               func += "INTERPOLATE ";
+               func += QString::number(qrand()%5+1);
+               func += ",";
+               func += this->createRandomFunc(depth -1);
+           } else if(subchoix == 4) {
+                func += "MAX ";
+                func += QString::number(qrand()%5+1);
+                func += ",";
+                func += this->createRandomFunc(depth -1);
+            }
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
         else {
@@ -317,6 +373,11 @@ float sigmoid(float x)
         }
 
         return func;
+    }
+
+    QVariant BrainFunctional::serialize() {
+        QVariantMap data = Brain::serialize().toMap();
+        return data;
     }
 
 }

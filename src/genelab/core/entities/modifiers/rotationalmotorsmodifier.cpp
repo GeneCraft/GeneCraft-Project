@@ -14,6 +14,7 @@ RotationalMotorsModifier::RotationalMotorsModifier(btGeneric6DofConstraint *cons
         brainOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
         brainOutputs[i]->motor->m_enableMotor = true;
         brainOutputs[i]->motor->m_currentPosition = 0;
+        this->outputsFrom = 1;
         this->outs.append(brainOutputs[i]->boMaxMotorForce);
         this->outs.append(brainOutputs[i]->boTargetVelocity);
     }

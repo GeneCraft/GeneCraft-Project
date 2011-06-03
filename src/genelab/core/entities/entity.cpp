@@ -4,7 +4,9 @@
 #include "treeshape.h"
 #include "brainfunctional.h"
 #include "brainin.h"
+
 #include "brainpluggrid.h"
+#include "brainout.h"
 #include "sensor.h"
 #include "modifier.h"
 
@@ -18,7 +20,6 @@ namespace GeneLabCore {
         this->name          = name;
         this->family        = family;
         this->generation    = generation;
-        this->brain         = new BrainFunctional(20);
     }
 
     void Entity::setup() {
@@ -64,7 +65,7 @@ namespace GeneLabCore {
         QVariantMap entityVariant;
 
         entityVariant.insert("origins",serializeOrigins());
-        //entityVariant.insert("brain",brain->serialize());
+        entityVariant.insert("brain",brain->serialize());
         entityVariant.insert("body",treeShape->serialize());
 
         return entityVariant;
@@ -75,6 +76,12 @@ namespace GeneLabCore {
         sensors.append(sensor);
         // Connexion de l'input au plug grid !
         for(int i = 0; i < sensor->getInputs().size(); i++) {
+            // little cheat
+            for(int j = 0; j < 1; j++) {
+                qDebug() << "ajout d'une connexion de l'input !";
+                sensor->getInputs()[i]->connectTo(qrand()%brain->getPlugGrid()->getSize(),
+                                                  qrand()%brain->getPlugGrid()->getSize(), ((float)qrand())/RAND_MAX*2 -1);
+            }
             brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
         }
     }
@@ -84,9 +91,10 @@ namespace GeneLabCore {
         modifiers.append(modifier);
         // Connexion de l'output au cerveau
         for(int i = 0; i < modifier->getOutputs().size(); i++) {
-            QString randomFunc = brain->createRandomFunc(4);
+            QString randomFunc = brain->createRandomFunc(5);
             qDebug() << randomFunc;
-            brain->addOut(modifier->getOutputs()[i], randomFunc);
+            modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
+            brain->addOut(modifier->getOutputs()[i]);
         }
     }
 }

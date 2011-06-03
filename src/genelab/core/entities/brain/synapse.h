@@ -30,6 +30,8 @@ namespace GeneLabCore {
         Q_OBJECT
     public:
         explicit Synapse(QObject *parent = 0);
+        Synapse(QVariant data);
+        QVariant serialize();
 
         QList<NeuralConnexion> getConnexions() {
             return this->connexions;

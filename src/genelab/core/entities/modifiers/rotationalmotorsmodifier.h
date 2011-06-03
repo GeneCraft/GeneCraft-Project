@@ -60,7 +60,6 @@ private:
 
     bool random;
     bool m_isDisable;
-    float randomIncr;
     int outputsFrom;
 
     // Six outputs from brain

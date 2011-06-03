@@ -6,15 +6,19 @@
 #include "treeshape.h"
 #include "entity.h"
 #include "LinearMath/btQuaternion.h"
+#include "sensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/accelerometersensor.h"
+#include "sensors/positionsensor.h"
 
 namespace GeneLabCore {
 
 Ant::Ant() : EntityFamily()
 {
     nbLegs      = 6;
-    nbBoneInLeg = 3;
+    nbBoneInLeg = 2;
     legRadius   = 0.2;
-    legLenght   = 1.0;
+    legLenght   = 1.5;
     kneeRadius  = 0.35;
 }
 
@@ -23,6 +27,7 @@ Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &posit
     this->initialPosition = position;
 
     Entity* ent = new Entity("Ant", "AntFamily", 1);
+    ent->setBrain(new BrainFunctional(30));
 
     // root fixation
     btTransform initTransform;
@@ -30,6 +35,7 @@ Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &posit
     initTransform.setOrigin(initialPosition);
     TreeShape* shape = new TreeShape(shapesFactory);
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(0.6),initTransform);
+    rootFix->addSensor(new GyroscopicSensor(rootFix));
     shape->setRoot(rootFix);
     ent->setShape(shape);
 
@@ -42,7 +48,7 @@ Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &posit
     btQuaternion local;
 
     local.setEulerZYX(M_PI/2.0,0,0);
-    Bone * bone = rootFix->addBone(0, M_PI/2.0f, 0.5, 0.5, 0.5, lowerLimits, upperLimits);
+    Bone * bone = rootFix->addBone(0, M_PI/2.0f, 0.5, 0.5, 0.7, lowerLimits, upperLimits);
 
     for(int i=0;i<3;++i)
     {
@@ -74,13 +80,14 @@ void Ant::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVect
                                       btScalar(kneeRadius),
                                       lowerLimits,upperLimits);
 
+    rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60.0, rootBone->getEndFixation()));
 
 
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
-        btVector3 lowerLimits(-M_PI/4,0,-M_PI/12);
-        btVector3 upperLimits(M_PI/4,0,M_PI/12);
+        btVector3 lowerLimits(0,0,-M_PI/4);
+        btVector3 upperLimits(M_PI / 12,0,M_PI/4);
         btQuaternion local;
         local.setEulerZYX(M_PI/6.0,0,0);
 
@@ -90,6 +97,9 @@ void Ant::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVect
                                                        btScalar(kneeRadius),
                                                        lowerLimits,
                                                        upperLimits);
+
+        rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
+        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60., rootBone->getEndFixation()));
         yAxis = 0;
         //rootBone->getParentConstraint()->setAngularLowerLimit(btVector3(0,0,0));
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));

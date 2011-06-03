@@ -7,6 +7,10 @@
 #include "entity.h"
 #include "LinearMath/btQuaternion.h"
 #include "brainfunctional.h"
+#include "sensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/accelerometersensor.h"
+#include "sensors/positionsensor.h"
 
 namespace GeneLabCore {
 
@@ -25,11 +29,13 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     this->initialPosition = position;
     // root fixation
     Entity* ent = new Entity("Spider !", "SpiderFamily", 1);
+    ent->setBrain(new BrainFunctional(25));
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(initialPosition);
     TreeShape* shape = new TreeShape(shapesFactory);
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(1),initTransform);
+    rootFix->addSensor(new GyroscopicSensor(rootFix));
     shape->setRoot(rootFix);
     ent->setShape(shape);
     // legs
@@ -58,6 +64,8 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
                                       btScalar(kneeRadius),
                                       lowerLimits,upperLimits);
 
+    rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
+
 
 
     for(int i=1;i<nbBoneInLeg;++i)
@@ -70,6 +78,9 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
                                                        btScalar(kneeRadius),
                                                        lowerLimits,
                                                        upperLimits);
+
+        rootBone->getEndFixation()->addSensor(new GyroscopicSensor(rootBone->getEndFixation()));
+        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60., rootBone->getEndFixation()));
 
         //rootBone->getParentConstraint()->setAngularLowerLimit(btVector3(0,0,0));
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));

@@ -13,6 +13,8 @@ namespace GeneLabCore {
         Q_OBJECT
     public:
         explicit BrainIn(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
+        BrainIn(QVariant data);
+        QVariant serialize();
 
     signals:
 

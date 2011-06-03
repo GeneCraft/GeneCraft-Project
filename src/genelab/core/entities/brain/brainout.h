@@ -5,7 +5,7 @@
 #include <QDebug>
 
 #include "genelabcoreclasses.h"
-#include "synapse.h"
+#include <QVariant>
 
 namespace GeneLabCore {
 
@@ -14,7 +14,8 @@ namespace GeneLabCore {
         Q_OBJECT
     public:
         explicit BrainOut(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
-
+        BrainOut(QVariant data);
+        QVariant serialize();
     signals:
         void newValue(float value);
 
@@ -41,10 +42,19 @@ namespace GeneLabCore {
             emit newValue(this->value);
         }
 
+        void setConnexionInfo(QVariant info) {
+            this->connexionInfo = info;
+        }
+
+        QVariant getConnexionInfo() {
+            return this->connexionInfo;
+        }
+
     private:
         float min;
         float max;
         float value;
+        QVariant connexionInfo;
 
     };
 

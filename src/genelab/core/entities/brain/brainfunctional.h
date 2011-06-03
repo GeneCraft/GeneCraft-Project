@@ -14,10 +14,12 @@ class BrainFunctional : public Brain
     Q_OBJECT
 public:
     explicit BrainFunctional(int plugGridSize, QObject *parent = 0);
+    BrainFunctional(QVariant data);
 
-    void addOut(BrainOut* out, QString treeFunc);
+    void addOut(BrainOut* out);
     QString createRandomFunc(int depth);
 
+    virtual QVariant serialize();
 
 signals:
 
