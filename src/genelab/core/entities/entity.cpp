@@ -78,7 +78,7 @@ namespace GeneLabCore {
         for(int i = 0; i < sensor->getInputs().size(); i++) {
             // little cheat
             for(int j = 0; j < 1; j++) {
-                qDebug() << "ajout d'une connexion de l'input !";
+                //qDebug() << "ajout d'une connexion de l'input !";
                 sensor->getInputs()[i]->connectTo(qrand()%brain->getPlugGrid()->getSize(),
                                                   qrand()%brain->getPlugGrid()->getSize(), ((float)qrand())/RAND_MAX*2 -1);
             }
@@ -92,7 +92,7 @@ namespace GeneLabCore {
         // Connexion de l'output au cerveau
         for(int i = 0; i < modifier->getOutputs().size(); i++) {
             QString randomFunc = brain->createRandomFunc(5);
-            qDebug() << randomFunc;
+            //qDebug() << randomFunc;
             modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
             brain->addOut(modifier->getOutputs()[i]);
         }
