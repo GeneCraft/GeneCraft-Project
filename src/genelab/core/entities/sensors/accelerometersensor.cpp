@@ -28,7 +28,7 @@ void AccelerometerSensor::step()
     btVector3 speed = (position - oldPosition) * stepTime;
     btVector3 acceleration = speed - oldSpeed;
 
-    float factor  = 0.1;
+    float factor  = 0.01;
     /*)
     factor = 0.1
     value = new_value*factor + old_value*(1 - factor)

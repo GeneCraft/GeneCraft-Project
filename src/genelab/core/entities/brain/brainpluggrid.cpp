@@ -68,15 +68,24 @@ namespace GeneLabCore {
         // For each inputs
         foreach(BrainIn* in, this->inputs) {
             // For each connexion of this synapse
+            // If it fit in the network size
+            float value = in->getValue();
+            if(value != value) {
+                qDebug() << "prob 1";
+            }
             foreach(NeuralConnexion connexion, in->getConnexions()) {
-                // If it fit in the network size
-                float value = in->getValue();
                 if(connexion.x >= 0 && connexion.x < size &&
                    connexion.y >= 0 && connexion.y < size) {
                     // Adding this value to the cell
                     for(int i = qMax(0, connexion.x-propagation); i <= qMin( size-1, connexion.x + propagation); i++) {
                         for(int j = qMax(0, connexion.y -propagation); j <= qMin(size-1, propagation + connexion.y); j++) {
-                             this->neurons[i + j*size]
+                            float b = connexion.weight * value
+                                        * (1 - 1 * ((float)qAbs(i - connexion.x) / (propagation+1)))
+                                        * (1 - 1 * ((float)qAbs(j - connexion.y) / (propagation+1))) ;
+                            if(b != b) {
+                                qDebug() << "prob 2";
+                            }
+                                this->neurons[i + j*size]
                                     += connexion.weight * value
                                     * (1 - 1 * ((float)qAbs(i - connexion.x) / (propagation+1)))
                                     * (1 - 1 * ((float)qAbs(j - connexion.y) / (propagation+1))) ;

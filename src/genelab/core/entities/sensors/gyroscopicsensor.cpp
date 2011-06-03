@@ -10,9 +10,9 @@ GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation)
 {
     typeName = "Gyroscopic sensor";
 
-    inputYaw = new BrainIn(-M_PI*2, M_PI*2);
-    inputPitch = new BrainIn(-M_PI*2,M_PI*2);
-    inputRoll = new BrainIn(-M_PI*2,M_PI*2);
+    inputYaw = new BrainIn(-M_PI, M_PI);
+    inputPitch = new BrainIn(-M_PI,M_PI);
+    inputRoll = new BrainIn(-M_PI,M_PI);
 
     brainInputs.append(inputYaw);
     brainInputs.append(inputPitch);

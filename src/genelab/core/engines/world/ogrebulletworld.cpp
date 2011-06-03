@@ -181,7 +181,7 @@ namespace GeneLabCore {
         qDebug() << "Spider creation !";
         Spider *spider = new Spider();
         for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
+            for(int j = 0; j < 1; j++) {
                 Entity* e = spider->createEntity(shapesFactory, btVector3(j*30+100,7,i*30));
                 qDebug() << "spider setup !";
                 e->setup();
@@ -195,7 +195,7 @@ namespace GeneLabCore {
         Ant *ant = new Ant();
         Entity* e;
         for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
+            for(int j = 0; j < 1; j++) {
                 e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 //qDebug() << "ant setup !";
                 e->setup();

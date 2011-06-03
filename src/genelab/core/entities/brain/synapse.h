@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "genelabcoreclasses.h"
+#include <QDebug>
 
 namespace GeneLabCore {
 

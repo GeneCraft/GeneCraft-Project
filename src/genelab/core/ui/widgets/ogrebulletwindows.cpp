@@ -115,7 +115,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     // ------------------------
     qDebug() << "Init Simulation Manager";
     SimulationManager* simulationManager
-            = new SimulationManager(factory->getEngines().values());
+            = new SimulationManager(factory->getEngines());
 
     simulationManager->setup();
     qDebug() << "[OK]\n";

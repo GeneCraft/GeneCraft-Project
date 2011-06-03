@@ -51,6 +51,7 @@ private:
     QWidget *inspector;
     QWidget *openGLWidget;
     MainFactory* factory;
+    SimulationManager* simulationManager;
 
     // components
     QAction *aTogglePhysics;

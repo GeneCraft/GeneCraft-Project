@@ -28,7 +28,7 @@ public slots:
 
 protected:
     void doNode(QList<BrainNode*> tree, BrainOut* out);
-    float apply(QList<BrainNode*>::iterator it, QList<BrainNode*>::const_iterator end);
+    float apply(QList<BrainNode*>::iterator& it, QList<BrainNode*>::const_iterator end);
 
     QList<BrainOut*> outputs;
     QList<QList<BrainNode*> > trees;

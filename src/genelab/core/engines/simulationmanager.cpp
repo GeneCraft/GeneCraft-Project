@@ -6,12 +6,13 @@
 #include "engine.h"
 
 #include <QTimer>
+#include <ctime>
 
 namespace GeneLabCore {
 
-    SimulationManager::SimulationManager(QList<Engine*> engines, QObject *parent)
+    SimulationManager::SimulationManager(QMap<QString, Engine*> engines, QObject *parent)
     {
-        this->engines.append(engines);
+        this->engines = engines;
     }
 
     void SimulationManager::setup() {
@@ -20,13 +21,13 @@ namespace GeneLabCore {
         connect(stepTimer, SIGNAL(timeout()), this, SLOT(update()));
     }
 
-    void SimulationManager::addEngine(Engine *engine) {
-        if(!this->engines.contains(engine))
-            this->engines.append(engine);
+    void SimulationManager::addEngine(QString name, Engine *engine) {
+        if(!this->engines.contains(name))
+            this->engines.insert(name, engine);
     }
 
-    void SimulationManager::removeEngine(Engine *engine) {
-        this->engines.removeOne(engine);
+    void SimulationManager::removeEngine(QString name) {
+        this->engines.remove(name);
     }
 
     void  SimulationManager::start()
@@ -41,13 +42,16 @@ namespace GeneLabCore {
 
     void SimulationManager::update()
     {
-        foreach(Engine* e, engines) {
+        for(int i = 0; i < engines.size(); i++) {
+            Engine* e = engines[engines.keys()[i]];
             e->beforeStep();
         }
-        foreach(Engine* e, engines) {
+        for(int i = 0; i < engines.size(); i++) {
+            Engine* e = engines[engines.keys()[i]];
             e->step();
         }
-        foreach(Engine* e, engines) {
+        for(int i = 0; i < engines.size(); i++) {
+            Engine* e = engines[engines.keys()[i]];
             e->afterStep();
         }
     }

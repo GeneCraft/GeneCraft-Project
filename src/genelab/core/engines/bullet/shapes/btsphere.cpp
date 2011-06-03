@@ -14,7 +14,7 @@ btSphere::btSphere(BulletEngine *btEngine, btScalar radius, const btTransform &t
 {
     this->btEngine = btEngine;
 
-    init(radius,5.0, transform);
+    init(radius, 2, transform);
 }
 
 void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
@@ -23,7 +23,7 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
 //    this->initialPosition = position;
 //    this->initiaEulerlRotation = EulerRotation;
 
-    btScalar friction = 0.9;
+    btScalar friction = 1;
 
     // shape
     this->shape = new btSphereShape(radius);

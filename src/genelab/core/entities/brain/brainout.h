@@ -33,10 +33,10 @@ namespace GeneLabCore {
         void  setValue(float value) {
             // Un noramlization
             this->value = (value + 1.0f) / 2.0f * (max - min) + min;
-            if(this->value > 1) {
+            if(this->value > max) {
                 this->value = max;
             }
-            if(this->value < -1) {
+            if(this->value < min) {
                 this->value = min;
             }
             emit newValue(this->value);

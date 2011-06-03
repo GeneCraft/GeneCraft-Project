@@ -3,6 +3,7 @@
 
 #include "genelabcoreclasses.h"
 #include <QObject>
+#include <QMap>
 
 #include <QTimer>
 
@@ -15,12 +16,12 @@ namespace GeneLabCore {
     public:
 
         SimulationManager(QObject *parent = 0);
-        SimulationManager(QList<Engine*> engines, QObject *parent = 0);
+        SimulationManager(QMap<QString, Engine*>, QObject *parent = 0);
 
 
         // TODO
-        void addEngine(Engine *engine);
-        void removeEngine(Engine *engine);
+        void addEngine(QString name, Engine *engine);
+        void removeEngine(QString name);
 
     signals:
 
@@ -35,7 +36,7 @@ namespace GeneLabCore {
         void update();
 
     private:
-        QList<GeneLabCore::Engine*> engines;
+        QMap<QString, Engine*> engines;
 
         // Execution timer
         QTimer *stepTimer;

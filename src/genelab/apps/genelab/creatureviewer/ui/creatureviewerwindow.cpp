@@ -101,8 +101,7 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     // -- Simulation Manager --
     // ------------------------
     qDebug() << "Init Simulation Manager";
-    SimulationManager* simulationManager
-            = new SimulationManager(factory->getEngines().values());
+    simulationManager = new SimulationManager(factory->getEngines());
 
     simulationManager->setup();
     qDebug() << "[OK]\n";
@@ -230,6 +229,7 @@ void CreatureViewerWindow::createNewEntity()
 
 void CreatureViewerWindow::loadEntityFromFile()
 {
+    simulationManager->stop();
     const QString DEFAULT_DIR_KEY("default_dir"); // TODO static
     QSettings mySettings;
     QString selectedFile = QFileDialog::getOpenFileName(this, "Select a genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
@@ -254,10 +254,13 @@ void CreatureViewerWindow::loadEntityFromFile()
         entitiesEngine->addEntity(e);
 
     }
+
+    simulationManager->start();
 }
 
 void CreatureViewerWindow::saveEntityToFile()
 {
+    simulationManager->stop();
     if(selectedEntity != NULL)
     {
         const QString DEFAULT_DIR_KEY("default_dir");  // TODO static
@@ -275,6 +278,7 @@ void CreatureViewerWindow::saveEntityToFile()
     }
     else
         QMessageBox::warning(this, "No entity selected.", "No entity selected.");
+    simulationManager->start();
 }
 
 void CreatureViewerWindow::togglePhysics()

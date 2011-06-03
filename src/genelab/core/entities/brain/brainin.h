@@ -5,6 +5,7 @@
 
 #include "genelabcoreclasses.h"
 #include "synapse.h"
+#include <QDebug>
 
 namespace GeneLabCore {
 
@@ -25,6 +26,9 @@ namespace GeneLabCore {
         virtual void setValue(float value) {
             // Normalisation
             this->value = (value - min) / (max - min) * 2.0f - 1.0f;
+            if(this->value != this->value) {
+                qDebug() << "NAN IN INPUT ";
+            }
         }
 
         /**

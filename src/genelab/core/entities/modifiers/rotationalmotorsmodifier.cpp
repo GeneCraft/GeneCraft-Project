@@ -49,7 +49,7 @@ void RotationalMotorsModifier::setOutputsFrom(int outputsFrom)
         {
             btRotationalLimitMotor * motor = brainOutputs[i]->motor;
             motor->m_enableMotor = true;
-            motor->m_maxMotorForce = 10.0;
+            motor->m_maxMotorForce = 1000.0;
             motor->m_targetVelocity = 0;
             motor->m_currentPosition = 0;
 
