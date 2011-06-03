@@ -24,5 +24,11 @@
         <file alias="brain">img/icons/brain.png</file>
         <file alias="database">img/icons/database.png</file>
         <file alias="entity_file">img/icons/page_green.png</file>
+        <file alias="entity_new">img/icons/entity_new.png</file>
+        <file alias="bullet_physics_library">img/icons/bullet_physics_library.png</file>
+        <file alias="bullet_physics_library_play">img/icons/bullet_physics_library_play.png</file>
+        <file alias="bullet_physics_library_stop">img/icons/bullet_physics_library_stop.png</file>
+        <file alias="bug_error">img/icons/bug_error.png</file>
+        <file alias="bullet_feed">img/icons/bullet_feed.png</file>
     </qresource>
 </RCC>

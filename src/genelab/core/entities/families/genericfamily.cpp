@@ -53,5 +53,7 @@ Entity *GenericFamily::createViginEntity(btShapesFactory *shapesFactory,
 
     shape->setRoot(new Fixation(shapesFactory,rootFixRadius,initTransform));
     entity->setShape(shape);
+
+    return entity;
 }
 }

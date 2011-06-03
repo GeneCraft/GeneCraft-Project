@@ -1,8 +1,19 @@
 #include "fixationproperties.h"
+
+// Qt
 #include <QDebug>
 #include "ui_fixationproperties.h"
+
+// Entity
 #include "fixation.h"
 #include "bone.h"
+#include "entity.h"
+#include "treeshape.h"
+
+// Sensors
+#include "positionsensor.h"
+#include "gyroscopicsensor.h"
+#include "accelerometersensor.h"
 
 FixationProperties::FixationProperties(QWidget *parent) :
     QWidget(parent),
@@ -14,6 +25,7 @@ FixationProperties::FixationProperties(QWidget *parent) :
     connect(this->ui->pbAddBone,SIGNAL(pressed()),this,SLOT(addBone()));
     connect(this->ui->pbFixInTheAir,SIGNAL(pressed()),this,SLOT(fixInTheAir()));
     connect(this->ui->pbSetPosition,SIGNAL(pressed()),this,SLOT(setPosition()));
+    connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
 }
 
 FixationProperties::~FixationProperties()
@@ -21,9 +33,19 @@ FixationProperties::~FixationProperties()
     delete ui;
 }
 
+void FixationProperties::setFormTitle(QString title)
+{
+    this->ui->lFormTitle->setText(title);
+}
+
 void FixationProperties::setFixation(Fixation *fixation)
 {
     this->fixation = fixation;
+
+    // Sensors
+    this->ui->listSensors->clear();
+    foreach(Sensor *s, fixation->getSensors())
+        this->ui->listSensors->addItem(new SensorListWidgetItem(s));
 }
 
 void FixationProperties::addBone()
@@ -68,3 +90,44 @@ void FixationProperties::setPosition()
                                                             ui->leZ->text().toFloat()));
 }
 
+void FixationProperties::addSensor()
+{
+    Sensor *sensor = NULL;
+
+    switch(this->ui->cbSensors->currentIndex())
+    {
+    case 0 : // Egocentric position sensor
+
+        if(fixation->getEntity())
+        {
+            qDebug() << "BonePropertiesController::addSensor : Egocentric position sensor";
+            sensor = new PositionSensor(fixation->getEntity()->getShape()->getRoot(),fixation);
+        }
+        break;
+
+    case 1 : // Gyroscopic sensor
+
+        if(fixation->getEntity())
+        {
+            qDebug() << "BonePropertiesController::addSensor : Gyroscopic sensor";
+            sensor = new GyroscopicSensor(fixation);
+        }
+        break;
+
+    case 2 : // Accelerometer sensor
+
+        if(fixation->getEntity())
+        {
+            qDebug() << "BonePropertiesController::addSensor : Accelerometer sensor";
+            // TODO get step time from sulation manager !!!
+            sensor = new AccelerometerSensor(1000/60.0,fixation);
+        }
+        break;
+    }
+
+    if(sensor != NULL)
+    {
+        fixation->addSensor(sensor);
+        setFixation(fixation); // refresh widget
+    }
+}

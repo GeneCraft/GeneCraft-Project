@@ -39,6 +39,10 @@ public slots:
     void createNewEntity();
     void loadEntityFromFile();
     void saveEntityToFile();
+    void removeEntity();
+
+    // physics
+    void togglePhysics();
 
 private:
 
@@ -47,6 +51,9 @@ private:
     QWidget *inspector;
     QWidget *openGLWidget;
     MainFactory* factory;
+
+    // components
+    QAction *aTogglePhysics;
 };
 
 #endif // CREATUREVIEWER_H

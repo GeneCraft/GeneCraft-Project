@@ -7,18 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>290</height>
+    <height>240</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="lFormTitle">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>331</width>
+     <width>381</width>
      <height>21</height>
     </rect>
    </property>
@@ -35,7 +35,7 @@
     <string notr="true">color: rgb(81, 119, 145);</string>
    </property>
    <property name="text">
-    <string>Fixation properties controller</string>
+    <string>Fixation controller</string>
    </property>
   </widget>
   <widget class="QTabWidget" name="tabWidget_2">
@@ -44,7 +44,7 @@
      <x>10</x>
      <y>40</y>
      <width>381</width>
-     <height>241</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -58,17 +58,111 @@
     <attribute name="title">
      <string>Bones</string>
     </attribute>
+    <widget class="QListWidget" name="listWidget_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>271</width>
+       <height>101</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbAddBone">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>50</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../ressources/ressources.qrc">
+       <normaloff>:/img/icons/bone_add</normaloff>:/img/icons/bone_add</iconset>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbSelectBone">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>80</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>20</y>
+       <width>61</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bone radius</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
     <widget class="QLineEdit" name="leAddBoneRadius">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>199</x>
        <y>20</y>
-       <width>40</width>
+       <width>31</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>0.3</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leAddBoneLenght">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>2.0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bone lenght</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -80,9 +174,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>80</y>
-       <width>40</width>
+       <x>330</x>
+       <y>20</y>
+       <width>31</width>
        <height>20</height>
       </rect>
      </property>
@@ -93,45 +187,13 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>50</y>
-       <width>51</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Lenght</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="leAddBoneLenght">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>50</y>
-       <width>40</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>2.0</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>80</y>
+       <x>250</x>
+       <y>20</y>
        <width>71</width>
-       <height>16</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -141,37 +203,20 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QPushButton" name="pbRemoveBone">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>20</y>
-       <width>41</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Radius</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pbAddBone">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
+       <x>290</x>
+       <y>110</y>
        <width>71</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Add</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../ressources/ressources.qrc">
-       <normaloff>:/img/icons/bone_add</normaloff>:/img/icons/bone_add</iconset>
+      <string>Delete</string>
      </property>
     </widget>
    </widget>
@@ -186,8 +231,8 @@
     <widget class="QPushButton" name="pbAddSensor">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>20</y>
+       <x>290</x>
+       <y>50</y>
        <width>71</width>
        <height>31</height>
       </rect>
@@ -200,30 +245,60 @@
        <normaloff>:/img/icons/sensor_add</normaloff>:/img/icons/sensor_add</iconset>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="cbSensors">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>20</y>
-       <width>271</width>
+       <x>10</x>
+       <y>10</y>
+       <width>351</width>
        <height>31</height>
       </rect>
      </property>
      <item>
       <property name="text">
-       <string>Position sensor</string>
+       <string>Egocentric position sensor</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Gyroscope sensor</string>
+       <string>Gyroscopic sensor</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Contact sensor</string>
+       <string>Accelerometer sensor</string>
       </property>
      </item>
+    </widget>
+    <widget class="QListWidget" name="listSensors">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>271</width>
+       <height>101</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbRemoveSensor">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>80</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Delete</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../ressources/ressources.qrc">
+       <normaloff>:/img/icons/sensor_delete</normaloff>:/img/icons/sensor_delete</iconset>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
@@ -235,6 +310,9 @@
      <string>Tools</string>
     </attribute>
     <widget class="QPushButton" name="pbFixInTheAir">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>

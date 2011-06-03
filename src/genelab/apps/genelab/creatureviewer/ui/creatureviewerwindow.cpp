@@ -24,6 +24,7 @@
 #include "treeshape.h"
 
 // Engine
+#include "bulletengine.h"
 #include "OGRE/Ogre.h"
 #include "ogreengine.h"
 #include "mainfactory.h"
@@ -58,8 +59,29 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     connect(this->ui->actionFrom_file,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
     connect(this->ui->actionTo_file,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
     connect(this->ui->actionNew_creature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
-
+    connect(this->ui->actionRemove_creature,SIGNAL(triggered()),this,SLOT(removeEntity()));
     connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
+
+
+    // --------------
+    // -- Tool bar --
+    // --------------
+
+    // create actions & add to bar
+    QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString("New creature"));
+    QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString("Add creature"));
+    QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString("Save creature"));
+    QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString("Remove creature"));
+    ui->toolBar->addSeparator();
+    aTogglePhysics = ui->toolBar->addAction(QIcon(":img/icons/bullet_physics_library_play"),QString("Toggle physics"));
+
+    // connections
+    connect(aNewCreature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
+    connect(aAddCreature,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
+    connect(aSaveCreature,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
+    connect(aRemoveCreature,SIGNAL(triggered()),this,SLOT(removeEntity()));
+    connect(aTogglePhysics,SIGNAL(triggered()),this,SLOT(togglePhysics()));
+
 
     // ----------------------
     // -- Events Listeners --
@@ -181,66 +203,6 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
             else
                 qDebug() << "CreatureViewer::rigidBodySelected : RigidBodyOrigin NULL";
         }
-
-        //pickedBody = body;
-        //pickedrigidBody->setActivationState(DISABLE_DEACTIVATION);
-//                btVector3 pickPos = rayCallback.m_hitPointWorld;
-//                qDebug() << "pickPos=" << pickPos.getX() << pickPos.getY() << pickPos.getZ();
-
-
-//                btVector3 localPivot = rigidBody->getCenterOfMassTransform().inverse() * pickPos;
-
-//                if (use6Dof)
-//                {
-//                    btTransform tr;
-//                    tr.setIdentity();
-//                    tr.setOrigin(localPivot);
-//                    btGeneric6DofConstraint* dof6 = new btGeneric6DofConstraint(*body, tr,false);
-//                    dof6->setLinearLowerLimit(btVector3(0,0,0));
-//                    dof6->setLinearUpperLimit(btVector3(0,0,0));
-//                    dof6->setAngularLowerLimit(btVector3(0,0,0));
-//                    dof6->setAngularUpperLimit(btVector3(0,0,0));
-
-//                    game->getBulletEngine()->getDynamicsWorld()->addConstraint(dof6);
-//                    m_pickConstraint = dof6;
-
-//                    dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,0);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,1);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,2);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,3);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,4);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_CFM,0.8,5);
-
-//                    dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,0);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,1);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,2);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,3);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,4);
-//                    dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,5);
-//                } else
-//                {
-//                    btPoint2PointConstraint* p2p = new btPoint2PointConstraint(*body,localPivot);
-//                    game->getBulletEngine()->getDynamicsWorld()->addConstraint(p2p);
-//                    m_pickConstraint = p2p;
-//                    p2p->m_setting.m_impulseClamp = mousePickClamping;
-//                    //very weak constraint for picking
-//                    p2p->m_setting.m_tau = 0.001f;
-//                    /*
-//                                            p2p->setParam(BT_CONSTRAINT_CFM,0.8,0);
-//                                            p2p->setParam(BT_CONSTRAINT_CFM,0.8,1);
-//                                            p2p->setParam(BT_CONSTRAINT_CFM,0.8,2);
-//                                            p2p->setParam(BT_CONSTRAINT_ERP,0.1,0);
-//                                            p2p->setParam(BT_CONSTRAINT_ERP,0.1,1);
-//                                            p2p->setParam(BT_CONSTRAINT_ERP,0.1,2);
-//                                            */
-//                }
-//                use6Dof = !use6Dof;
-
-//                //save mouse position for dragging
-//                gOldPickingPos = rayTo;
-//                gHitPos = pickPos;
-
-//                gOldPickingDist  = (pickPos-rayFrom).length();
     }
 }
 
@@ -252,11 +214,18 @@ void CreatureViewerWindow::showAbout()
 
 void CreatureViewerWindow::createNewEntity()
 {
-//    Entity * e = GenericFamily::createViginEntity(factory->getShapesFactory(), btScalar(1.0), btVector3(0,10,0));
-//    e->setup();
-//    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-//    entitiesEngine->addEntity(e);
-//    setEntity(e,e->getShape()->getRoot()->getRigidBody());
+    // get initial position
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
+    Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
+    btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
+
+    // TODO choice of radius root
+    Entity * e = GenericFamily::createViginEntity(factory->getShapesFactory(), btScalar(1.0), initPosition);
+    e->setup();
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+    entitiesEngine->addEntity(e);
+    setEntity(e,e->getShape()->getRoot()->getRigidBody());
 }
 
 void CreatureViewerWindow::loadEntityFromFile()
@@ -303,6 +272,31 @@ void CreatureViewerWindow::saveEntityToFile()
             Ressource* to = new JsonFile(selectedFile);
             to->save(selectedEntity->serialize());
         }
+    }
+    else
+        QMessageBox::warning(this, "No entity selected.", "No entity selected.");
+}
+
+void CreatureViewerWindow::togglePhysics()
+{
+    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
+    btoEngine->getBulletEngine()->setPhysicsEnable(!btoEngine->getBulletEngine()->getPhysicsEnable());
+
+    if(btoEngine->getBulletEngine()->getPhysicsEnable())
+        aTogglePhysics->setIcon(QIcon(":img/icons/bullet_physics_library_stop"));
+    else
+        aTogglePhysics->setIcon(QIcon(":img/icons/bullet_physics_library_play"));
+}
+
+void CreatureViewerWindow::removeEntity()
+{
+    if(selectedEntity != NULL)
+    {
+        //EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+        //entitiesEngine->removeEntity(e);
+
+        delete selectedEntity;
+        selectedEntity = NULL;
     }
     else
         QMessageBox::warning(this, "No entity selected.", "No entity selected.");

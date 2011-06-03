@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
+    <width>388</width>
     <height>668</height>
    </rect>
   </property>
@@ -25,10 +25,10 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(85, 85, 255);</string>
+      <string notr="true">color: rgb(81, 119, 145);</string>
      </property>
      <property name="text">
-      <string>Creature properties controller</string>
+      <string>Creature controller</string>
      </property>
     </widget>
    </item>
@@ -37,13 +37,20 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>80</height>
+       <height>200</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab_5">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/entity_vcard</normaloff>:/img/icons/entity_vcard</iconset>
+      </attribute>
       <attribute name="title">
        <string>Origins</string>
       </attribute>
@@ -55,6 +62,13 @@
          <width>151</width>
          <height>16</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <italic>true</italic>
+         <bold>false</bold>
+        </font>
        </property>
        <property name="text">
         <string>family_value</string>
@@ -71,9 +85,12 @@
        </property>
        <property name="font">
         <font>
-         <weight>75</weight>
-         <bold>true</bold>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(81, 119, 145);</string>
        </property>
        <property name="text">
         <string>Name :</string>
@@ -87,6 +104,13 @@
          <width>151</width>
          <height>16</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <italic>true</italic>
+         <bold>false</bold>
+        </font>
        </property>
        <property name="text">
         <string>name_value</string>
@@ -103,25 +127,25 @@
        </property>
        <property name="font">
         <font>
-         <weight>75</weight>
-         <bold>true</bold>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(81, 119, 145);</string>
        </property>
        <property name="text">
         <string>Family :</string>
        </property>
       </widget>
      </widget>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>2</number>
-     </property>
      <widget class="QWidget" name="tab">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/bone_and_fixation</normaloff>:/img/icons/bone_and_fixation</iconset>
+      </attribute>
       <attribute name="title">
-       <string>Shape</string>
+       <string>Body</string>
       </attribute>
       <widget class="QTreeWidget" name="twBodyTree">
        <property name="geometry">
@@ -129,7 +153,7 @@
          <x>10</x>
          <y>10</y>
          <width>341</width>
-         <height>232</height>
+         <height>151</height>
         </rect>
        </property>
        <property name="autoExpandDelay">
@@ -137,22 +161,32 @@
        </property>
        <column>
         <property name="text">
-         <string>Body browser</string>
+         <string>Shape browser</string>
         </property>
        </column>
-       <item>
-        <property name="text">
-         <string>Nouvel élément</string>
-        </property>
-       </item>
       </widget>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
      <widget class="QWidget" name="tab_2">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/bullet_feed</normaloff>:/img/icons/bullet_feed</iconset>
+      </attribute>
       <attribute name="title">
        <string>In / Out</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="tabBrain">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/brain</normaloff>:/img/icons/brain</iconset>
+      </attribute>
       <attribute name="title">
        <string>Brain</string>
       </attribute>
@@ -257,6 +291,9 @@
         <property name="icon">
          <iconset resource="../../../ressources/ressources.qrc">
           <normaloff>:/img/icons/brain</normaloff>:/img/icons/brain</iconset>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
         </property>
        </widget>
        <widget class="QRadioButton" name="rbOutFrom_Random">

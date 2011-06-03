@@ -42,11 +42,6 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-
-    connect(this->ui->pbAddBone,SIGNAL(pressed()),this,SLOT(addBone()));
-    connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
-    connect(this->ui->pbFixInTheAir,SIGNAL(pressed()),this,SLOT(fixInTheAir()));
-    connect(this->ui->pbSetPosition,SIGNAL(pressed()),this,SLOT(setPosition()));
 }
 
 void BonePropertiesController::setOutFrom()
@@ -287,98 +282,9 @@ void BonePropertiesController::setBone(Bone * bone)
             }
         }
 
-        // Sensors
-        this->ui->listSensors->clear();
-        foreach(Sensor *s, bone->getEndFixation()->getSensors())
-            this->ui->listSensors->addItem(new SensorListWidgetItem(s));
+        // init promoted fixation properties
+        ui->fixationProperties->setFixation(bone->getEndFixation());
+        ui->fixationProperties->setFormTitle("End fixation controller");
     }
 }
 
-void BonePropertiesController::addBone()
-{
-    Fixation *fixation = bone->getEndFixation();
-
-    if(fixation != NULL)
-    {
-        btTransform local; local.setIdentity();
-
-        Bone *bone = fixation->addBone(0,0,ui->leAddBoneRadius->text().toFloat(),
-                                        ui->leAddBoneLenght->text().toFloat(),
-                                        ui->leAddBoneEndFixRadius->text().toFloat(),
-                                        btVector3(0,0,0),
-                                        btVector3(0,0,0));
-
-        bone->setup();
-
-        setBone(bone);
-    }
-}
-
-void BonePropertiesController::fixInTheAir()
-{
-    Fixation *fixation = bone->getEndFixation();
-
-    if(fixation != NULL)
-    {
-        if(fixation->isFixedInTheAir())
-            fixation->unfixInTheAir();
-        else
-            fixation->fixeInTheAir(btVector3(ui->leX->text().toFloat(),
-                                             ui->leY->text().toFloat(),
-                                             ui->leZ->text().toFloat()));
-    }
-}
-
-void BonePropertiesController::setPosition()
-{
-    Fixation *fixation = bone->getEndFixation();
-
-    if(fixation != NULL)
-        fixation->getRigidBody()->getWorldTransform().setOrigin(btVector3(ui->leX->text().toFloat(),
-                                                            ui->leY->text().toFloat(),
-                                                            ui->leZ->text().toFloat()));
-}
-
-void BonePropertiesController::addSensor()
-{
-    qDebug() << "BonePropertiesController::addSensor";
-
-    Sensor *sensor = NULL;
-
-    switch(this->ui->cbSensors->currentIndex())
-    {
-    case 0 : // Egocentric position sensor
-
-        if(bone->getEntity())
-        {
-            qDebug() << "BonePropertiesController::addSensor : Egocentric position sensor";
-            sensor = new PositionSensor(bone->getEntity()->getShape()->getRoot(),bone->getEndFixation());
-        }
-        break;
-
-    case 1 : // Gyroscopic sensor
-
-        if(bone->getEntity())
-        {
-            qDebug() << "BonePropertiesController::addSensor : Gyroscopic sensor";
-            sensor = new GyroscopicSensor(bone->getEndFixation());
-        }
-        break;
-
-    case 2 : // Accelerometer sensor
-
-        if(bone->getEntity())
-        {
-            qDebug() << "BonePropertiesController::addSensor : Accelerometer sensor";
-            // TODO get step time from sulation manager !!!
-            sensor = new AccelerometerSensor(1000/60.0,bone->getEndFixation());
-        }
-        break;
-    }
-
-    if(sensor != NULL)
-    {
-        this->bone->getEndFixation()->addSensor(sensor);
-        setBone(bone); // refresh widget
-    }
-}
