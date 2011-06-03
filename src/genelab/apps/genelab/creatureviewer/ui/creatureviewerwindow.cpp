@@ -272,7 +272,14 @@ void CreatureViewerWindow::loadEntityFromFile()
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);
         QVariant genotype = from->load();
-        Entity *e = GenericFamily::createEntity(genotype, factory->getShapesFactory(), btVector3(0,10,0));
+
+        // get initial position
+        OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+        Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
+        Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
+        btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
+
+        Entity *e = GenericFamily::createEntity(genotype, factory->getShapesFactory(), initPosition);
         e->setup();
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
         entitiesEngine->addEntity(e);

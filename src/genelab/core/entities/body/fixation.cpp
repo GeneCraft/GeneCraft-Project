@@ -32,12 +32,13 @@ namespace GeneLabCore {
                        btTransform localFixation) {
         this->shapesFactory = shapesFactory;
         this->rigidBody = body;
+        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
         this->localFixation.setIdentity();
         this->localFixation = localFixation;
         this->radius = radius;
         airFixation = 0;
         entity = 0;
-        delegatedSetup = true;
+        delegatedSetup = true; 
     }
 
     Fixation::Fixation(btShapesFactory *shapesFactory,
@@ -50,7 +51,7 @@ namespace GeneLabCore {
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         this->rigidBody = sphere->getRigidBody();
-        //this->rigidBody->setFriction(FIXATION_FRICTION);
+        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
         entity = 0;
         airFixation = 0;
         delegatedSetup = false;
