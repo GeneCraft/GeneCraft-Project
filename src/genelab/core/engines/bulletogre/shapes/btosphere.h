@@ -12,6 +12,7 @@ class btoSphere : public btSphere
 public:
     btoSphere(BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
     void setup();
+    void setSelected(bool selected);
 
 protected:
 

@@ -219,4 +219,8 @@ void Bone::setZAxis(btScalar zAxis) {
     parentCt->getFrameOffsetA().setRotation(local1);
 }
 
+void Bone::setSelected(bool selected)
+{
+    body->setSelected(selected);
+}
 }

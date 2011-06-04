@@ -47,7 +47,7 @@ using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CreatureViewer), selectedEntity(NULL), inspector(NULL), openGLWidget(NULL)
+    ui(new Ui::CreatureViewer), selectedEntity(NULL), inspector(NULL), openGLWidget(NULL), boneSelected(NULL), fixSelected(NULL)
 {
     ui->setupUi(this);
 
@@ -148,7 +148,18 @@ void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
 {
+    // unselection
     selectedEntity = NULL;
+
+    if(boneSelected != NULL){
+        boneSelected->setSelected(false);
+        boneSelected = NULL;
+    }
+
+    if(fixSelected != NULL) {
+        fixSelected->setSelected(false);
+        fixSelected = NULL;
+    }
 
     //other exclusions ?
     if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
@@ -165,7 +176,8 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                         case RigidBodyOrigin::BONE:{
 
                             Bone *bone = dynamic_cast<Bone*>(origin->getObject());
-                            //bone->setSelected(true); // TODO stock selection into rigidbody origin
+                            bone->setSelected(true); // TODO stock selection into rigidbody origin
+                            boneSelected = bone;
                             setInspector(bone->getInspectorWidget());
                             selectedEntity = bone->getEntity();
                             setEntity(bone->getEntity(),bone->getRigidBody());
@@ -175,7 +187,8 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                         case RigidBodyOrigin::FIXATION:{
 
                             Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
-                            //fix->setSelected(true); // TODO stock selection into rigidbody origin
+                            fix->setSelected(true); // TODO stock selection into rigidbody origin
+                            fixSelected = fix;
                             setInspector(fix->getInspectorWidget());
                             selectedEntity = fix->getEntity();
                             setEntity(fix->getEntity(),fix->getRigidBody());

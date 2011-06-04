@@ -96,7 +96,7 @@ namespace GeneLabCore {
 
     void Fixation::setSelected(bool isSelected)
     {
-        //sphere->setSelected(isSelected);
+        sphere->setSelected(isSelected);
     }
 
     void Fixation::fixeInTheAir(const btVector3 &position)

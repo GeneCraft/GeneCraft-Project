@@ -44,6 +44,8 @@ public:
    void setyAxis(btScalar yAxis);
    void setZAxis(btScalar zAxis);
 
+   void setSelected(bool selected);
+
 protected:
 
    // Shape

@@ -204,18 +204,18 @@ namespace GeneLabCore {
             }
         }
 
-        // Save Generic entity
-        Ressource* to = new JsonFile("ant.genome");
-        to->save(e->serialize());
-        qDebug() << "ant save !";
+//        // Save Generic entity
+//        Ressource* to = new JsonFile("ant.genome");
+//        to->save(e->serialize());
+//        qDebug() << "ant save !";
 
-        // Load Generic Entity
-        Ressource* from = new JsonFile("ant.genome");
-        QVariant genotype = from->load();
-        e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(0,10,0));
-        e->setup();
-        brainEngine->addGrid(e->getBrain()->getPlugGrid());
-        entitiesEngine->addEntity(e);
+//        // Load Generic Entity
+//        Ressource* from = new JsonFile("ant.genome");
+//        QVariant genotype = from->load();
+//        e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(0,10,0));
+//        e->setup();
+//        brainEngine->addGrid(e->getBrain()->getPlugGrid());
+//        entitiesEngine->addEntity(e);
 
 
         // Snake

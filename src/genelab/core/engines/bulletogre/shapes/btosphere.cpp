@@ -55,4 +55,12 @@ void btoSphere::setup()
     btoEngine->addBody(rigidBody,entity,node);
 }
 
+void btoSphere::setSelected(bool selected)
+{
+    if(selected)
+        entity->setMaterialName("BaseWhite");
+    else
+        entity->setMaterialName("Sinbad/Eyes");
+}
+
 }

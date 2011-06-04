@@ -46,6 +46,9 @@ public slots:
 
 private:
 
+    Bone *boneSelected;
+    Fixation *fixSelected;
+
     Entity *selectedEntity;
     Ui::CreatureViewer *ui;
     QWidget *inspector;

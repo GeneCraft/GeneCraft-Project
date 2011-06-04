@@ -67,5 +67,17 @@ void btoBone::setup()
     nodeS->attachObject(entityS);
     btoEngine->addBody(rigidBody,entityC,parentNode);
 }
+
+void btoBone::setSelected(bool selected)
+{
+    if(selected) {
+        entityC->setMaterialName("BaseWhite");
+        entityS->setMaterialName("BaseWhite");
+    }
+    else {
+        entityC->setMaterialName("Sinbad/Teeth");
+        entityS->setMaterialName("Sinbad/Teeth");
+    }
+}
 }
 

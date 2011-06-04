@@ -16,6 +16,8 @@ public:
                      btScalar radiusArticulation, const btTransform &transform);
     void setup();
 
+    void setSelected(bool selected);
+
     protected:
 
         BulletOgreEngine *btoEngine;
