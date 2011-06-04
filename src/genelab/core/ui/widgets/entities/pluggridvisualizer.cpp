@@ -53,9 +53,9 @@ namespace GeneLabCore {
         // On dessine les neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                b.setColor(QColor( 0,0,0,  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
+                b.setColor(QColor( 188,15,65,  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
                 this->view->scene()->addRect(width * i,
-                                             width * j + 70, width, width, p, b);
+                                             width * j /*+ 70*/, width, width, p, b);
                 //this->view->scene()->addEllipse();
                 //if( n->getNeurons()[i + j * size] != 0)
                 //qDebug() << n->getNeurons()[i + j * size];
