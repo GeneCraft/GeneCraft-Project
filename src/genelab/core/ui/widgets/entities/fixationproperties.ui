@@ -58,19 +58,6 @@
     <attribute name="title">
      <string>Bones</string>
     </attribute>
-    <widget class="QListWidget" name="listWidget_2">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>271</width>
-       <height>101</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pbAddBone">
      <property name="geometry">
       <rect>
@@ -217,6 +204,16 @@
      </property>
      <property name="text">
       <string>Delete</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="lwBones">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>271</width>
+       <height>101</height>
+      </rect>
      </property>
     </widget>
    </widget>

@@ -113,8 +113,6 @@ namespace GeneLabCore {
     class PlugGridVisualizer;
     class PlugGridDesignVisualizer;
 
-
-
     // -----------------------
     // -- DELETE OR NOT ??? --
     // -----------------------

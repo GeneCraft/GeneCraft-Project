@@ -2,7 +2,7 @@
 #define BONEPROPERTIESCONTROLLER_H
 
 #include <QWidget>
-#include <QListWidgetItem>
+#include "bodyitems.h"
 #include "genelabcoreclasses.h"
 #include "sensor.h"
 

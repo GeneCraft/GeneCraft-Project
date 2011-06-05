@@ -138,7 +138,6 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
 
         QTreeWidgetItem *boneItem = new BoneTreeWidgetItem(rootItem,bone);
         boneItem->setText(0,QString("Bone + Fix")); //.append(QString().setNum(i)));
-        boneItem->setIcon(0,QIcon(":/img/icons/bone_and_fixation"));
 
         if(bone->getRigidBody() == selectedBody) {
              this->brainDezViz->setSelectedSensors(bone->getEndFixation()->getSensors());

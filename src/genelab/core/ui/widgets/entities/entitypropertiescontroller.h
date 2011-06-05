@@ -2,7 +2,7 @@
 #define CREATUREPROPERTIESCONTROLLER_H
 
 #include <QWidget>
-#include <QTreeWidgetItem>
+#include "bodyitems.h"
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
@@ -11,40 +11,6 @@ namespace Ui {
 }
 
 using namespace GeneLabCore;
-
-class FixationTreeWidgetItem : public QTreeWidgetItem
-{
-public:
-
-    FixationTreeWidgetItem(Fixation * fixation)
-    {
-        this->fixation = fixation;
-    }
-
-    FixationTreeWidgetItem(QTreeWidgetItem * parent, Fixation * fixation) : QTreeWidgetItem(parent)
-    {
-        this->fixation = fixation;
-    }
-
-    Fixation *fixation;
-};
-
-class BoneTreeWidgetItem : public QTreeWidgetItem
-{
-public:
-    BoneTreeWidgetItem(Bone * bone)
-    {
-        this->bone = bone;
-    }
-
-    BoneTreeWidgetItem(QTreeWidgetItem * parent, Bone * bone) : QTreeWidgetItem(parent)
-    {
-        this->bone = bone;
-    }
-
-    Bone *bone;
-};
-
 
 class EntityPropertiesController : public QWidget
 {

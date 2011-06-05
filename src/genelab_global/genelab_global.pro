@@ -243,7 +243,8 @@ HEADERS += \
     ../genelab/core/factories/ressources/dbrecord.h \
     ../genelab/core/entities/families/ant/ant.h \
     ../genelab/core/entities/families/genericfamily.h \
-    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h
+    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h \
+    ../genelab/core/ui/widgets/entities/bodyitems.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

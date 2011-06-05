@@ -6,25 +6,13 @@
 
 #include "genelabcoreclasses.h"
 #include "sensor.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 
 using namespace GeneLabCore;
 
 namespace Ui {
     class FixationProperties;
 }
-
-class SensorListWidgetItem : public QListWidgetItem
-{
-public:
-
-    SensorListWidgetItem(Sensor * sensor)
-    {
-        this->sensor = sensor;
-        this->setText(sensor->getTypeName());
-    }
-
-    Sensor *sensor;
-};
 
 class FixationProperties : public QWidget
 {
@@ -36,6 +24,10 @@ public:
 
     void setFixation(Fixation *fixation);
     void setFormTitle(QString title);
+
+signals:
+
+    void rigidBodySelected(btRigidBody *);
 
 public slots:
 

@@ -42,6 +42,11 @@ void FixationProperties::setFixation(Fixation *fixation)
 {
     this->fixation = fixation;
 
+    // Bones
+    this->ui->lwBones->clear();
+    foreach(Bone *b, fixation->getBones())
+        this->ui->lwBones->addItem(new BoneListWidgetItem(b));
+
     // Sensors
     this->ui->listSensors->clear();
     foreach(Sensor *s, fixation->getSensors())
@@ -61,6 +66,8 @@ void FixationProperties::addBone()
                                         btVector3(0,0,0));
 
         bone->setup();
+
+        emit rigidBodySelected(bone->getRigidBody());
     }
 
     setFixation(fixation);
@@ -70,9 +77,6 @@ void FixationProperties::fixInTheAir()
 {
     if(fixation != 0)
     {
-        qDebug() << fixation->isFixedInTheAir();
-
-
         if(fixation->isFixedInTheAir())
             fixation->unfixInTheAir();
         else
