@@ -28,6 +28,9 @@ namespace GeneLabCore {
         foreach(PlugGridVisualizer* viz, this->gridVisualizers) {
             viz->step();
         }
+        foreach(PlugGridDesignVisualizer* viz, this->gridDezVisualizers) {
+            viz->step();
+        }
     }
 
     void BrainEngine::step() {

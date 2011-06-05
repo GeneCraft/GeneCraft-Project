@@ -18,8 +18,8 @@ namespace GeneLabCore {
         ~Entity();
 
         // Origins
-        inline const QString &getName() { return name; }
-        inline const QString &getFamily() { return family; }
+        const QString &getName() { return name; }
+        const QString &getFamily() { return family; }
 
         // Shape
         TreeShape* getShape();
@@ -27,15 +27,15 @@ namespace GeneLabCore {
 
         // Sensors links
         void addLinkToSensor(Sensor *sensor);
-        inline QList<Sensor *> &getSensors() { return sensors;  }
+        QList<Sensor *> &getSensors() { return sensors;  }
 
         // Modifiers links
         void addLinkToModifier(Modifier *modifier);
-        inline QList<Modifier *> &getModifiers() { return modifiers;  }
+        QList<Modifier *> &getModifiers() { return modifiers;  }
 
         // Brain
         void setBrain(BrainFunctional* brain) { this->brain = brain; }
-        inline Brain *getBrain() { return brain; }
+        Brain *getBrain() { return brain; }
 
         // Qt Render
         static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);

@@ -15,7 +15,7 @@ namespace GeneLabCore {
         foreach(QVariant v, l) {
             int x = v.toMap()["x"].toInt();
             int y = v.toMap()["y"].toInt();
-            float w = v.toMap()["w"].toFloat();
+            float w = v.toMap()["w"].toDouble();
             this->connectTo(x, y, w);
         }
 

@@ -16,6 +16,7 @@ Modifier::Modifier(QVariant data) {
 QVariant Modifier::serialize() {
     QVariantMap data;
     data.insert("type", this->typeName);
+    return data;
 }
 
 }

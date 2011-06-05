@@ -44,13 +44,13 @@ namespace GeneLabCore {
         void addSensor(Sensor * sensor);
 
         // GETTERS AND SETTERS
-        inline QList<Bone *> &getBones()               { return bones; }
-        inline QList<Sensor *> &getSensors()           { return sensors; }
+        QList<Bone *> &getBones()               { return bones; }
+        QList<Sensor *> &getSensors()           { return sensors; }
 
-        inline BulletEngine *getBulletEngine()         { return bulletEngine; }
-        inline btScalar getRadius()                    { return radius; }
+        BulletEngine *getBulletEngine()         { return bulletEngine; }
+        btScalar getRadius()                    { return radius; }
         void setEntity(Entity *entity);
-        inline Entity *getEntity()                     { return entity; }
+        Entity *getEntity()                     { return entity; }
         btRigidBody *getRigidBody();
         FixationProperties *getInspectorWidget();
         void setSelected(bool isSelected);
@@ -58,7 +58,7 @@ namespace GeneLabCore {
         // TOOLS
         void fixeInTheAir(const btVector3 &position);
         void unfixInTheAir();
-        inline bool isFixedInTheAir(){ return airFixation != 0; }
+        bool isFixedInTheAir(){ return airFixation != 0; }
 
         QVariant serialize();
 

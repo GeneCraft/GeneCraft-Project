@@ -20,6 +20,8 @@ class AccelerometerSensor : public Sensor
 public:
 
     AccelerometerSensor(long stepTime, Fixation * fixation);
+    AccelerometerSensor(QVariant data, Fixation * fixation);
+    virtual QVariant serialize();
 
 public slots:
 

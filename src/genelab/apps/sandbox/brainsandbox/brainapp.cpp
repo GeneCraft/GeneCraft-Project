@@ -15,18 +15,11 @@ BrainApp::BrainApp(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    qDebug() << "Creation !";
     engine = new BrainEngine();
 
-    qDebug() << "Creation !";
-
     engine->createGrid(51); // 10x10 network
-
-    qDebug() << "Creation !";
-
     QWidget* w = engine->getRenderWidget(ui->centralWidget);
 
-    qDebug() << "Creation !";
     this->setCentralWidget(w);
 
     this->timer = new QTimer();
@@ -36,12 +29,7 @@ BrainApp::BrainApp(QWidget *parent) :
 
 }
 
-int cpt = 0;
 void BrainApp::tick()  {
-    cpt++;
-    if(!(cpt % 10000)) {
-        qDebug() << cpt;
-    }
    engine->beforeStep();
    engine->step();
    engine->afterStep();

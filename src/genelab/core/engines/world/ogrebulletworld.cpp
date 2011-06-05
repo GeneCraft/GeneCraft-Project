@@ -180,9 +180,10 @@ namespace GeneLabCore {
         // Spider
         qDebug() << "Spider creation !";
         Spider *spider = new Spider();
-        for(int i = 0; i < 3; i++) {
+        Entity* e;
+        for(int i = 0; i < 1; i++) {
             for(int j = 0; j < 1; j++) {
-                Entity* e = spider->createEntity(shapesFactory, btVector3(j*30+100,7,i*30));
+                e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "spider setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
@@ -193,9 +194,8 @@ namespace GeneLabCore {
         // Ant
         qDebug() << "Ant creation !";
         Ant *ant = new Ant();
-        Entity* e;
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 1; j++) {
+        for(int i = 0; i < 0; i++) {
+            for(int j = 0; j < 0; j++) {
                 e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 //qDebug() << "ant setup !";
                 e->setup();
@@ -204,18 +204,20 @@ namespace GeneLabCore {
             }
         }
 
-//        // Save Generic entity
-//        Ressource* to = new JsonFile("ant.genome");
-//        to->save(e->serialize());
-//        qDebug() << "ant save !";
+        // Save Generic entity
+        for(int i = 0; i < 10; i++) {
+            Ressource* to = new JsonFile("ant"+QString::number(i)+".genome");
+            to->save(e->serialize());
+            qDebug() << "ant save !";
 
-//        // Load Generic Entity
-//        Ressource* from = new JsonFile("ant.genome");
-//        QVariant genotype = from->load();
-//        e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(0,10,0));
-//        e->setup();
-//        brainEngine->addGrid(e->getBrain()->getPlugGrid());
-//        entitiesEngine->addEntity(e);
+            // Load Generic Entity
+            Ressource* from = new JsonFile("ant"+QString::number(i)+".genome");
+            QVariant genotype = from->load();
+            e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(30 + i * 30,7,0));
+            e->setup();
+            brainEngine->addGrid(e->getBrain()->getPlugGrid());
+            entitiesEngine->addEntity(e);
+        }
 
 
         // Snake

@@ -45,7 +45,6 @@ void btBone::init(btScalar length,
 
     this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);
     this->rigidBody->setFriction(friction);
-    //qDebug() << "bien !" << this->rigidBody;
 }
 
 

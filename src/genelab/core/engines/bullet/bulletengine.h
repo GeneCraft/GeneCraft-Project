@@ -17,7 +17,7 @@ namespace GeneLabCore {
 
         //OgreBulletDynamics::DynamicsWorld *getDynamicsWorld();
 
-        inline btDynamicsWorld *getBulletDynamicsWorld()
+        btDynamicsWorld *getBulletDynamicsWorld()
         {
             return bulletDynamicsWorld;
         }

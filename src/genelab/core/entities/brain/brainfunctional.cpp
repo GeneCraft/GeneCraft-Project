@@ -141,7 +141,9 @@ float sigmoid(float x)
             return apply(it, end) + apply(it, end);
 
         case PRODUCT:
-            return apply(it, end) * apply(it, end);
+            a = apply(it, end);
+            b = apply(it, end);
+            return a*b;
 
         case DIVIDE:
             a = apply(it, end);
@@ -216,10 +218,6 @@ float sigmoid(float x)
 
         case IN: {
             float v = plugGrid->getValue(((BrainNodeIn*)n)->x, ((BrainNodeIn*)n)->y);
-            if(v != v) {
-                qDebug() << plugGrid->getNeurons()[((BrainNodeIn*)n)->x + ((BrainNodeIn*)n)->y*plugGrid->getSize()];
-                qDebug() << v << ((BrainNodeIn*)n)->x << ((BrainNodeIn*)n)->y;
-            }
             return v;
             }
         case CONST:
@@ -369,9 +367,9 @@ float sigmoid(float x)
                func += QString::number(qrand()%maxMem+1);
                func += ",";
                func += this->createRandomFunc(depth -1);
-           } else if(subchoix == 4) {
-                func += "MAX ";
-                func += QString::number(qrand()%maxMem+1);
+           } else {
+                func += "MIN ";
+                func += QString::number(1);
                 func += ",";
                 func += this->createRandomFunc(depth -1);
             }

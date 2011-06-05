@@ -11,7 +11,7 @@ namespace GeneLabCore {
         Q_OBJECT
     public:
         explicit TreeShape(btShapesFactory* shapesFactory, QObject *parent = 0);
-        TreeShape(btShapesFactory* shapesFactory, QVariant genotype, btTransform initTransform, QObject *parent = 0);
+        void createRootFromGenotype(QVariant genotype, btTransform initTransform);
         ~TreeShape();
 
         /**

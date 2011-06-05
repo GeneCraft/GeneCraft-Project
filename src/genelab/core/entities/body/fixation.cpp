@@ -208,13 +208,20 @@ namespace GeneLabCore {
     {
         QVariantMap fixation;
         QVariantList bonesVariantList;
+        QVariantList sensorsVariantList;
 
         fixation.insert("radius",QVariant((double)radius));
 
-        foreach(Bone *bone, bones)
+        foreach(Bone *bone, bones) {
             bonesVariantList.append(bone->serialize());
+        }
 
-        fixation.insert("bones",bonesVariantList);
+        foreach(Sensor *sensor, this->sensors) {
+            sensorsVariantList.append(sensor->serialize());
+        }
+
+        fixation.insert("bones", bonesVariantList);
+        fixation.insert("sensors", sensorsVariantList);
 
         return fixation;
     }

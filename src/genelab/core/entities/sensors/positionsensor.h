@@ -24,6 +24,8 @@ class PositionSensor : public Sensor
 public:
 
     PositionSensor(Fixation * rootFix, Fixation * fixation);
+    PositionSensor(QVariant data, Fixation* rootFix, Fixation* fixation);
+    virtual QVariant serialize();
 
 public slots:
 

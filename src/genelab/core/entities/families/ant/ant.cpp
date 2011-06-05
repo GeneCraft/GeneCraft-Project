@@ -35,9 +35,9 @@ Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &posit
     initTransform.setOrigin(initialPosition);
     TreeShape* shape = new TreeShape(shapesFactory);
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(0.6),initTransform);
-    rootFix->addSensor(new GyroscopicSensor(rootFix));
     shape->setRoot(rootFix);
     ent->setShape(shape);
+    rootFix->addSensor(new GyroscopicSensor(rootFix));
 
     // legs
     btQuaternion legLocal;

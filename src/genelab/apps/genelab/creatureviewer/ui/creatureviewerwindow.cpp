@@ -115,6 +115,7 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     BrainEngine* bEngine = (BrainEngine*)(factory->getEngines().find("Brain").value());
     PlugGridVisualizer* bViz = (PlugGridVisualizer*)bEngine->getRenderWidget(Entity::getInspectorWidget());
     PlugGridDesignVisualizer* bDezViz = new PlugGridDesignVisualizer();
+    bEngine->addPlugGridDez(bDezViz);
     Entity::getInspectorWidget()->setBrainViz(bViz);
     Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
     // Connection to Inspectors

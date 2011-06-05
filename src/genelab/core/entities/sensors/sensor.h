@@ -8,6 +8,8 @@
 
 namespace GeneLabCore {
 
+enum SensorType { gyroscopic, accelerometer, position };
+
 /**
  * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
  *
@@ -23,11 +25,11 @@ class Sensor : public QObject
 
 public:
     explicit Sensor(Fixation * fixation, QObject *parent = 0);
-    Sensor(QVariant data);
+    Sensor(QVariant data, Fixation* fixation);
     virtual QVariant serialize();
 
-    inline const QString &getTypeName() { return typeName; }
-    inline const QList<BrainIn *> getInputs() { return brainInputs; }
+    const QString &getTypeName() { return typeName; }
+    const QList<BrainIn *> getInputs() { return brainInputs; }
 
 signals:
 
@@ -41,6 +43,7 @@ public slots:
 protected:
 
     QString typeName;
+    SensorType type;
 
     Fixation * fixation;
     QList<BrainIn *> brainInputs;

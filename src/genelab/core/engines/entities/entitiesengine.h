@@ -24,7 +24,7 @@ class EntitiesEngine : public Engine
     Q_OBJECT
 public:
     EntitiesEngine();
-    inline void addEntity(Entity * entity) { entities.append(entity); }
+    void addEntity(Entity * entity) { entities.append(entity); }
 
 public slots:
     void beforeStep();

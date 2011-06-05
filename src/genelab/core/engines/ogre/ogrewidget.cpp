@@ -18,7 +18,6 @@ namespace GeneLabCore {
      */
     int OgreWidget::ogrewidgetCpt = 0;
     void OgreWidget::init() {
-        qDebug() << "init !";
         //These attributes are the same as those use in a QGLWidget
         setAttribute(Qt::WA_PaintOnScreen);
         setAttribute(Qt::WA_NoSystemBackground);
@@ -63,10 +62,7 @@ namespace GeneLabCore {
         params["macAPI"] = "cocoa";
         params["macAPICocoaUseNSView"] = "true";
 #endif
-
-        qDebug() << "init !";
-
-        //Finally create our window.
+         //Finally create our window.
         mOgreWindow = this->mOgreRoot->createRenderWindow(
                 "OgreWindow" + QString::number(ogrewidgetCpt++).toStdString()
                 , 640, 480, false, &params);
@@ -75,7 +71,6 @@ namespace GeneLabCore {
         WId ogreWinId = 0x0;
         mOgreWindow->getCustomAttribute( "WINDOW", &ogreWinId );
 
-        qDebug() << "init !";
         assert( ogreWinId );
 
         this->create( ogreWinId );
@@ -99,7 +94,6 @@ namespace GeneLabCore {
         connect(this,SIGNAL(leaved(QEvent*)),ogreFreeCamera,SLOT(leaveViewPortEvent(QEvent*)));
         connect(this,SIGNAL(stepped()),ogreFreeCamera,SLOT(step()));
 
-        qDebug() << "init !";
     }
 
     /**

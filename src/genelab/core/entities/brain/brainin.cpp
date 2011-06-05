@@ -9,7 +9,7 @@ namespace GeneLabCore {
     {
     }
 
-    BrainIn::BrainIn(QVariant data) : Synapse(data.toMap()["connexions"]) {
+    BrainIn::BrainIn(QVariant data) : Synapse(data.toMap()["connexions"]), value(0) {
         min = data.toMap()["min"].toFloat();
         max = data.toMap()["max"].toFloat();
     }

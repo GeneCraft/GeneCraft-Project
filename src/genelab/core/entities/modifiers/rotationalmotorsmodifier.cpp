@@ -1,6 +1,10 @@
 #include "rotationalmotorsmodifier.h"
 
 #include <QDebug>
+#include <QVariant>
+#include <QList>
+#include <QVariantList>
+#include <QVariantMap>
 #include "tools.h"
 #include "sinusin.h"
 
@@ -23,6 +27,37 @@ RotationalMotorsModifier::RotationalMotorsModifier(btGeneric6DofConstraint *cons
     for(int i = 0; i < 2; i++) {
         this->sinusIn[i] = new SinusIn();
     }
+}
+
+
+RotationalMotorsModifier::RotationalMotorsModifier(QVariant data, btGeneric6DofConstraint* ct) : Modifier(data),
+    constraint(ct), random(false), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
+{
+    QVariantMap outsMap = data.toMap();
+    for(int i = 0; i < 3; i++) {
+        brainOutputs[i] = new BrainOutMotor(outsMap["outs"].toList()[i], constraint->getRotationalLimitMotor(i));
+        brainOutputs[i]->motor->m_enableMotor = true;
+        brainOutputs[i]->motor->m_currentPosition = 0;
+        this->outputsFrom = 1;
+        this->outs.append(brainOutputs[i]->boMaxMotorForce);
+        this->outs.append(brainOutputs[i]->boTargetVelocity);
+    }
+
+
+    for(int i = 0; i < 2; i++) {
+        this->sinusIn[i] = new SinusIn();
+    }
+}
+
+QVariant RotationalMotorsModifier::serialize() {
+    QVariantMap data = Modifier::serialize().toMap();
+    QVariantList bOuts;
+    for(int i = 0; i < 3; i++) {
+        bOuts.append(brainOutputs[i]->serialize());
+    }
+    data.insert("outs", bOuts);
+
+    return data;
 }
 
 void RotationalMotorsModifier::setOutputsFrom(int outputsFrom)

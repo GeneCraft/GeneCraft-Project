@@ -18,6 +18,9 @@ class GyroscopicSensor : public Sensor
 {
 public:
     GyroscopicSensor(Fixation * fixation);
+    GyroscopicSensor(QVariant data, Fixation* fixation);
+
+    virtual QVariant serialize();
 
 public slots:
     void step();

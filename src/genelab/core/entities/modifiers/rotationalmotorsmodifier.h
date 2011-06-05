@@ -24,6 +24,22 @@ public:
         boTargetVelocity = new BrainOut(min_TargetVelocity,max_TargetVelocity);
     }
 
+    BrainOutMotor(QVariant data, btRotationalLimitMotor* motor) : motor(motor){
+        QVariantMap outMap = data.toMap();
+        QVariantList dataL = outMap["brainOuts"].toList();
+        boMaxMotorForce = new BrainOut(dataL[0]);
+        boTargetVelocity = new BrainOut(dataL[1]);
+    }
+
+    QVariant serialize()  {
+        QVariantMap data;
+        QVariantList outs;
+        outs.append(boMaxMotorForce->serialize());
+        outs.append(boTargetVelocity->serialize());
+        data.insert("brainOuts", (QVariantList)outs);
+        return data;
+    }
+
     void update()
     {
         motor->m_maxMotorForce = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*500;
@@ -40,6 +56,9 @@ class RotationalMotorsModifier : public Modifier
 public:
 
     RotationalMotorsModifier(btGeneric6DofConstraint * constraint);
+    RotationalMotorsModifier(QVariant data, btGeneric6DofConstraint* ct);
+    virtual QVariant serialize();
+
     bool isDisable()        { return m_isDisable; }
     int getOutPutsFrom()    { return outputsFrom; }
 

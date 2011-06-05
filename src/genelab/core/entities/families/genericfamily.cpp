@@ -29,10 +29,15 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     QVariantMap body = entityMap.value("body").toMap();
     if(body.value("shapeType").toString().compare(QString("TreeShape")) == 0)
     {
+        TreeShape* treeShape = new TreeShape(shapesFactory);
+
         btTransform initTransform;
         initTransform.setIdentity();
         initTransform.setOrigin(initialPosition);
-        entity->setShape(new TreeShape(shapesFactory,body.value("shape"),initTransform));
+
+        treeShape->createRootFromGenotype(body.value("shape"), initTransform);
+        entity->setShape(treeShape);
+        treeShape->buildFixFromGenotype(treeShape->getRoot(),body.value("shape").toMap().value("rootFix"));
     }
 
 

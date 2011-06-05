@@ -34,6 +34,7 @@ Bone::Bone(btShapesFactory *shapesFactory,
     yAxis(yAxis), zAxis(zAxis), radius(radius), length(length), motorsModifier(NULL)
 {
 
+    motorModifierData = QVariant(0);
     parentCt = 0;
     bulletEngine = shapesFactory->getBulletEngine();
     body        = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
@@ -92,7 +93,11 @@ void Bone::setup()
         }
 
         // add motor modifier
-        motorsModifier = new RotationalMotorsModifier(parentCt);
+        if(motorModifierData != QVariant(0))
+            motorsModifier = new RotationalMotorsModifier(motorModifierData, parentCt);
+        else
+            motorsModifier = new RotationalMotorsModifier(parentCt);
+
         if(entity)
            entity->addLinkToModifier(motorsModifier);
 
@@ -204,6 +209,8 @@ QVariant Bone::serialize()
 
     // End fixation
     bone.insert("endFix",endFix->serialize());
+
+    bone.insert("muscle", this->motorsModifier->serialize());
 
     return bone;
 }

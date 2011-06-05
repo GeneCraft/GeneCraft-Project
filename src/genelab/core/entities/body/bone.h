@@ -5,6 +5,7 @@
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+#include <QVariant>
 
 namespace GeneLabCore {
 
@@ -19,16 +20,17 @@ public:
 
    void setup();
 
-   inline btRigidBody* getRigidBody()                             { return rigidBody;             }
-   inline void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
-   inline btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
-   inline btScalar getLength()                                    { return length;                }
-   inline Fixation *getEndFixation()                              { return endFix;                }
+   btRigidBody* getRigidBody()                             { return rigidBody;             }
+   void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
+   btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
+   btScalar getLength()                                    { return length;                }
+   Fixation *getEndFixation()                              { return endFix;                }
    //inline void setSelected(bool isSelected)                       { body->setSelected(isSelected);}
-   inline Entity *getEntity()                                     { return entity;                }
+   Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
 
-   inline RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier;        }
+   RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier;        }
+   void setMotorModifierData(QVariant data) { this->motorModifierData = data; }
    BonePropertiesController *getInspectorWidget();
 
    void setBrainMotors();
@@ -63,6 +65,8 @@ protected:
    btGeneric6DofConstraint *endFixConstraint;
 
 
+   // MotorModifier data
+   QVariant motorModifierData;
 
    // Related Entity
    Entity *entity;

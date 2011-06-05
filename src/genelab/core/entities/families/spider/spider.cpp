@@ -35,10 +35,10 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     initTransform.setOrigin(initialPosition);
     TreeShape* shape = new TreeShape(shapesFactory);
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(1),initTransform);
-    rootFix->addSensor(new GyroscopicSensor(rootFix));
-    rootFix->addSensor(new AccelerometerSensor(1000/60., rootFix));
     shape->setRoot(rootFix);
     ent->setShape(shape);
+    rootFix->addSensor(new GyroscopicSensor(rootFix));
+    rootFix->addSensor(new AccelerometerSensor(1000/60., rootFix));
     // legs
     btQuaternion legLocal;
     btQuaternion legLocal2;
@@ -65,6 +65,8 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
                                       btScalar(kneeRadius),
                                       lowerLimits,upperLimits);
 
+    rootBone->getEndFixation()->addSensor(new GyroscopicSensor(rootBone->getEndFixation()));
+
 
 
     for(int i=1;i<nbBoneInLeg;++i)
@@ -78,10 +80,9 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
                                                        lowerLimits,
                                                        upperLimits);
 
-        rootBone->getEndFixation()->addSensor(new GyroscopicSensor(rootBone->getEndFixation()));
         rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60., rootBone->getEndFixation()));
 
-        rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
+        //rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
 
         //rootBone->getParentConstraint()->setAngularLowerLimit(btVector3(0,0,0));
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));

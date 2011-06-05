@@ -22,6 +22,13 @@ PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
     this->layout()->addWidget(this->view);
 }
 
+int cptD = 0;
+void PlugGridDesignVisualizer::step() {
+    cptD++;
+    if(cptD%15 == 0)
+    this->update();
+}
+
 void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
 
     if(this->brain == 0)
@@ -44,8 +51,8 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
     // On dessine les neurones
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < size; j++) {
-            int bleu  = 1;//qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
-            int rouge = 0;//qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
+            int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
+            int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
             int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
             b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
             this->view->scene()->addRect(width * i,
@@ -67,7 +74,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
         foreach(NeuralConnexion c, in->getConnexions()) {
             int bleu  = qMin(255., qMax(0., -c.weight * 255.));
             int rouge = qMin(255., qMax(0., c.weight * 255.));
-            int vert  = qMin(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
+            int vert  = 0;//Min(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
             p.setColor(QColor(rouge, vert, bleu));
             b.setColor(QColor(rouge, vert, bleu));
 
@@ -102,7 +109,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
                 p.setColor(QColor(rouge, vert, bleu));
                 bleu  = qMin(255., qMax(0., -c.weight * 255.));
                 rouge = qMin(255., qMax(0., c.weight * 255.));
-                vert  = qMin(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
+                vert  = 0;//qMin(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
                 b.setColor(QColor(rouge, vert, bleu));
 
                 p.setWidthF(2);

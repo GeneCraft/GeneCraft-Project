@@ -7,6 +7,8 @@
 
 namespace GeneLabCore {
 
+enum ModifierType { rotationalMotor };
+
 class Modifier : public QObject
 {
     Q_OBJECT
@@ -15,8 +17,8 @@ public:
     Modifier(QVariant data);
     virtual QVariant serialize();
 
-    inline const QString &getTypeName() { return typeName; }
-    inline const QList<BrainOut*> getOutputs() { return outs; }
+    const QString &getTypeName() { return typeName; }
+    const QList<BrainOut*> getOutputs() { return outs; }
 
 signals:
 

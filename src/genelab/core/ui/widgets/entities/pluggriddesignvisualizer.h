@@ -20,12 +20,12 @@ namespace GeneLabCore {
         void setSelectedSensors(QList<Sensor*> s) {
             selectedSensors = s;
             this->update();
-            qDebug() << s.size() << "sensors to display !";
         }
 
     signals:
 
     public slots:
+        void step();
         void paintEvent(QPaintEvent* e);
 
     private:

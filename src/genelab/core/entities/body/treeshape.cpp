@@ -9,6 +9,10 @@
 #include "ogreengine.h"
 #include "bulletengine.h"
 #include "btshapesfactory.h"
+#include "sensor.h"
+#include "sensors/accelerometersensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/positionsensor.h"
 
 #include "OGRE/Ogre.h"
 
@@ -20,23 +24,40 @@ namespace GeneLabCore {
         this->root = NULL;
     }
 
-    TreeShape::TreeShape(btShapesFactory* shapeFactories, QVariant genotype, btTransform initTransform, QObject *parent) :
-        QObject(parent)
-    {
-        this->shapesFactory = shapesFactory;
-
+    void TreeShape::createRootFromGenotype(QVariant genotype, btTransform initTransform) {
         QVariantMap treeShapeMap = genotype.toMap();
 
         // Root fix
         QVariantMap rootFixMap = treeShapeMap.value("rootFix").toMap();
 
-        root = new Fixation(shapeFactories, rootFixMap.value("radius").toDouble(), initTransform);
-
-        buildFixFromGenotype(root,treeShapeMap.value("rootFix"));
+        root = new Fixation(shapesFactory, rootFixMap.value("radius").toDouble(), initTransform);
     }
 
     void TreeShape::buildFixFromGenotype(Fixation *fix, QVariant fixGenotype)
     {
+        foreach(QVariant sensor, fixGenotype.toMap()["sensors"].toList()) {
+           QVariantMap sensorMap = sensor.toMap();
+           switch((SensorType)sensorMap["type"].toInt()) {
+           case accelerometer: {
+               AccelerometerSensor* s = new AccelerometerSensor(sensor, fix);
+               fix->addSensor(s);
+           }
+               break;
+           case gyroscopic: {
+
+               GyroscopicSensor* s = new GyroscopicSensor(sensor, fix);
+               fix->addSensor(s);
+           }
+               break;
+           case position:{
+
+               PositionSensor* s = new PositionSensor(sensor, this->root, fix);
+               fix->addSensor(s);
+           }
+               break;
+           }
+        }
+
         QVariantList bonesVariantList = fixGenotype.toMap().value("bones").toList();
 
         foreach(QVariant bone, bonesVariantList)
@@ -67,7 +88,7 @@ namespace GeneLabCore {
                                  upperLimitsMap.value("z").toDouble());
 
             Bone *bone = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
-
+            bone->setMotorModifierData(boneMap["muscle"]);
             // Add bone recurcively
             buildFixFromGenotype(bone->getEndFixation(),boneMap.value("endFix"));
         }

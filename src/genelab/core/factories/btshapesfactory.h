@@ -12,7 +12,7 @@ public:
 
     btShapesFactory(BulletEngine *btEngine);
 
-    inline BulletEngine *getBulletEngine()
+    BulletEngine *getBulletEngine()
     {
         return btEngine;
     }

@@ -47,7 +47,8 @@ namespace GeneLabCore {
 
     void Entity::setShape(TreeShape* shape) {
         this->treeShape = shape;
-        this->treeShape->getRoot()->setEntity(this);
+        if(this->treeShape->getRoot() != NULL)
+            this->treeShape->getRoot()->setEntity(this);
     }
 
     QVariant Entity::serializeOrigins()
@@ -77,8 +78,7 @@ namespace GeneLabCore {
         // Connexion de l'input au plug grid !
         for(int i = 0; i < sensor->getInputs().size(); i++) {
             // little cheat
-            for(int j = 0; j < 1; j++) {
-                //qDebug() << "ajout d'une connexion de l'input !";
+            for(int j = sensor->getInputs()[i]->getConnexions().size(); j < 1; j++) {
                 sensor->getInputs()[i]->connectTo(qrand()%brain->getPlugGrid()->getSize(),
                                                   qrand()%brain->getPlugGrid()->getSize(), ((float)qrand())/RAND_MAX*2 -1);
             }
@@ -91,9 +91,11 @@ namespace GeneLabCore {
         modifiers.append(modifier);
         // Connexion de l'output au cerveau
         for(int i = 0; i < modifier->getOutputs().size(); i++) {
-            QString randomFunc = brain->createRandomFunc(5);
-            //qDebug() << randomFunc;
-            modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
+            if(modifier->getOutputs()[i]->getConnexionInfo() == "") {
+                QString randomFunc = brain->createRandomFunc(5);
+                modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
+            }
+
             brain->addOut(modifier->getOutputs()[i]);
         }
     }

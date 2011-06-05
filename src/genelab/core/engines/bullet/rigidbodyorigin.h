@@ -28,7 +28,7 @@ public:
         return typeOrigin;
     }
 
-    inline QObject * getObject()
+    QObject * getObject()
     {
         return object;
     }
