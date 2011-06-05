@@ -9,6 +9,7 @@ namespace GeneLabCore {
 RotationalMotorsModifier::RotationalMotorsModifier(btGeneric6DofConstraint *constraint) :
     constraint(constraint), random(false), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
 {
+    this->typeName = "RotationalMotor";
     for(int i=0;i<3;i++)
     {
         brainOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));

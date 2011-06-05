@@ -8,7 +8,7 @@ namespace GeneLabCore {
 
 GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation)
 {
-    typeName = "Gyroscopic sensor";
+    typeName = "Gyroscopic";
 
     inputYaw = new BrainIn(-M_PI, M_PI);
     inputPitch = new BrainIn(-M_PI,M_PI);

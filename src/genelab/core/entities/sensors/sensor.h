@@ -23,6 +23,8 @@ class Sensor : public QObject
 
 public:
     explicit Sensor(Fixation * fixation, QObject *parent = 0);
+    Sensor(QVariant data);
+    virtual QVariant serialize();
 
     inline const QString &getTypeName() { return typeName; }
     inline const QList<BrainIn *> getInputs() { return brainInputs; }

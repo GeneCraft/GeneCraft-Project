@@ -12,6 +12,8 @@ class Modifier : public QObject
     Q_OBJECT
 public:
     explicit Modifier(QObject *parent = 0);
+    Modifier(QVariant data);
+    virtual QVariant serialize();
 
     inline const QString &getTypeName() { return typeName; }
     inline const QList<BrainOut*> getOutputs() { return outs; }
