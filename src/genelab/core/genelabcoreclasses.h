@@ -111,6 +111,7 @@ namespace GeneLabCore {
 
     // Neural network
     class PlugGridVisualizer;
+    class PlugGridDesignVisualizer;
 
 
 

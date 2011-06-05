@@ -5,6 +5,7 @@
 #include "treeshape.h"
 #include "bone.h"
 #include "pluggridvisualizer.h"
+#include "pluggriddesignvisualizer.h"
 #include <QVariant>
 #include <QMetaType>
 #include <QLayout>
@@ -15,7 +16,11 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
 {
     ui->setupUi(this);
     QLayout* layoutBrain = new QBoxLayout(QBoxLayout::TopToBottom);
-    this->ui->grbBrain->setLayout(layoutBrain);
+    this->ui->tabBrain->setLayout(layoutBrain);
+
+    QLayout* layoutBrainD = new QBoxLayout(QBoxLayout::TopToBottom);
+    this->ui->tabBrainStruct->setLayout(layoutBrainD);
+
     connect(ui->twBodyTree,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(itemClicked(QTreeWidgetItem *,int)));
 
     connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
@@ -106,6 +111,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
     }
 
     this->brainViz->setBrain(entity->getBrain());
+    this->brainDezViz->setBrain(entity->getBrain());
 }
 
 void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem)
@@ -134,8 +140,10 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
         boneItem->setText(0,QString("Bone + Fix")); //.append(QString().setNum(i)));
         boneItem->setIcon(0,QIcon(":/img/icons/bone_and_fixation"));
 
-        if(bone->getRigidBody() == selectedBody)
+        if(bone->getRigidBody() == selectedBody) {
+             this->brainDezViz->setSelectedSensors(bone->getEndFixation()->getSensors());
              ui->twBodyTree->setCurrentItem(boneItem);
+        }
 
 //        QTreeWidgetItem *fixItem = new FixationTreeWidgetItem(boneItem,bone->getEndFixation());
 //        if(bone->getEndFixation()->getRigidBody() == selectedBody)
@@ -150,6 +158,7 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int column)
     FixationTreeWidgetItem * fixItem = dynamic_cast<FixationTreeWidgetItem*>(item);
     if (fixItem)
     {
+        this->brainDezViz->setSelectedSensors(fixItem->fixation->getSensors());
         emit rigidBodySelected(fixItem->fixation->getRigidBody());
         return;
     }
@@ -157,6 +166,7 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int column)
     BoneTreeWidgetItem * boneItem = dynamic_cast<BoneTreeWidgetItem*>(item);
     if (boneItem )
     {
+        this->brainDezViz->setSelectedSensors(boneItem->bone->getEndFixation()->getSensors());
         emit rigidBodySelected(boneItem->bone->getRigidBody());
         return;
     }
@@ -164,5 +174,10 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int column)
 
 void EntityPropertiesController::setBrainViz(PlugGridVisualizer *brainViz) {
        this->brainViz = brainViz;
-       this->ui->grbBrain->layout()->addWidget(brainViz);
+       this->ui->tabBrain->layout()->addWidget(brainViz);
+}
+
+void EntityPropertiesController::setBrainDesignViz(PlugGridDesignVisualizer *brainDezViz) {
+       this->brainDezViz = brainDezViz;
+       this->ui->tabBrainStruct->layout()->addWidget(brainDezViz);
 }

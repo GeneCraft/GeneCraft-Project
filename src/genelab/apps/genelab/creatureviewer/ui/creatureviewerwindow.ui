@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>CreatureViewer</class>
  <widget class="QMainWindow" name="CreatureViewer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>798</width>
+    <height>359</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Creature Viewer</string>
   </property>
@@ -16,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>798</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -76,8 +84,8 @@
   <widget class="QDockWidget" name="dwCreature">
    <property name="minimumSize">
     <size>
-     <width>380</width>
-     <height>300</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -122,7 +130,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
   </widget>
   <action name="actionSave_selected_creature">

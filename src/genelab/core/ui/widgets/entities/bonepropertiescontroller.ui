@@ -47,7 +47,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Angular">
     <attribute name="icon">
@@ -75,7 +75,7 @@
         <x>10</x>
         <y>20</y>
         <width>341</width>
-        <height>223</height>
+        <height>238</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="glAngularLimits">
@@ -586,7 +586,7 @@ p, li { white-space: pre-wrap; }
        <x>10</x>
        <y>90</y>
        <width>351</width>
-       <height>161</height>
+       <height>181</height>
       </rect>
      </property>
      <property name="title">
@@ -597,8 +597,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>332</width>
-        <height>99</height>
+        <width>341</width>
+        <height>109</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="glAngularMotors">
@@ -947,6 +947,12 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QLineEdit" name="leTargetVelocity_m3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="maximumSize">
             <size>
              <width>50</width>
@@ -1039,6 +1045,12 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QLineEdit" name="leMaxMotorForce_m3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="maximumSize">
             <size>
              <width>50</width>
@@ -1082,6 +1094,12 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QLineEdit" name="leMaxMotorForce_m2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="maximumSize">
             <size>
              <width>50</width>
@@ -1113,8 +1131,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="pbSaveChanges">
       <property name="geometry">
        <rect>
-        <x>142</x>
-        <y>122</y>
+        <x>140</x>
+        <y>140</y>
         <width>191</width>
         <height>31</height>
        </rect>

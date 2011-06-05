@@ -11,7 +11,6 @@
 #include <QBoxLayout>
 #include <QDebug>
 
-#define SCENE_SIZE 51*10
 
 namespace GeneLabCore {
     PlugGridVisualizer::PlugGridVisualizer(QWidget *parent) :
@@ -20,8 +19,8 @@ namespace GeneLabCore {
         this->brain = 0;
         this->view = new QGraphicsView(this);
         this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight));
-        this->view->setFixedSize(300, 300 + 140);
-        this->view->setScene(new QGraphicsScene(0, 0, SCENE_SIZE, SCENE_SIZE + 140, this));
+        //this->view->setFixedSize(WIDGET_SIZE, WIDGET_SIZE);
+        this->view->setScene(new QGraphicsScene(0, 0, 1000, 1000, this));
 
         this->layout()->addWidget(this->view);
     }
@@ -34,12 +33,15 @@ namespace GeneLabCore {
     }
 
     void PlugGridVisualizer::paintEvent(QPaintEvent * e) {
+        this->view->fitInView(this->view->scene()->sceneRect());
 
         if(this->brain == 0)
             return;
 
         this->view->scene()->clear();
-        this->view->fitInView(0, 0, SCENE_SIZE, SCENE_SIZE + 140);
+        this->view->scene()->setSceneRect(0, 0,brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
+        this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
+
 
         // On récupère le bon réseau de neurone
         BrainPlugGrid* n = brain->getPlugGrid();
@@ -49,16 +51,16 @@ namespace GeneLabCore {
         QPen p;
         p.setStyle(Qt::NoPen);
         b.setStyle(Qt::SolidPattern);
-        float width = SCENE_SIZE/size;
+        float width = 10;
         // On dessine les neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                b.setColor(QColor( 188,15,65,  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
+                int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
+                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
                 this->view->scene()->addRect(width * i,
                                              width * j /*+ 70*/, width, width, p, b);
-                //this->view->scene()->addEllipse();
-                //if( n->getNeurons()[i + j * size] != 0)
-                //qDebug() << n->getNeurons()[i + j * size];
             }
         }
 

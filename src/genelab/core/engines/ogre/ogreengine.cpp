@@ -64,6 +64,8 @@ namespace GeneLabCore {
 
         fakeRender->setActive(false);
         fakeRender->setVisible(false);
+        fakeRender->destroy();
+
     }
 
     void OgreEngine::initResources() {

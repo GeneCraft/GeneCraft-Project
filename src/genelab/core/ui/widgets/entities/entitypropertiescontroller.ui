@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>384</width>
+    <width>400</width>
     <height>726</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -34,10 +46,16 @@
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget_3">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>200</height>
+       <height>600</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -170,10 +188,28 @@
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>400</height>
+      </size>
+     </property>
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tabInOut">
       <attribute name="icon">
        <iconset resource="../../../ressources/ressources.qrc">
         <normaloff>:/img/icons/bullet_feed</normaloff>:/img/icons/bullet_feed</iconset>
@@ -188,44 +224,28 @@
         <normaloff>:/img/icons/brain</normaloff>:/img/icons/brain</iconset>
       </attribute>
       <attribute name="title">
-       <string>Brain</string>
+       <string>Activity</string>
       </attribute>
-      <widget class="QGroupBox" name="grbBrain">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>341</width>
-         <height>300</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>300</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>500</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Viz</string>
-       </property>
-      </widget>
+     </widget>
+     <widget class="QWidget" name="tabBrainStruct">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/brain</normaloff>:/img/icons/brain</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Design</string>
+      </attribute>
      </widget>
     </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget_2">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>70</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>

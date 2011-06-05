@@ -79,7 +79,7 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
                                                        upperLimits);
 
         rootBone->getEndFixation()->addSensor(new GyroscopicSensor(rootBone->getEndFixation()));
-        //rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60., rootBone->getEndFixation()));
+        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60., rootBone->getEndFixation()));
 
         rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
 

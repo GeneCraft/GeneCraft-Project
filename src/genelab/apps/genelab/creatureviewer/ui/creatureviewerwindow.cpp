@@ -17,9 +17,6 @@
 #include "bone.h"
 #include "entity.h"
 #include "rigidbodyorigin.h"
-#include "fixationproperties.h"
-#include "bonepropertiescontroller.h"
-#include "entitypropertiescontroller.h"
 #include "genericfamily.h"
 #include "treeshape.h"
 
@@ -33,7 +30,13 @@
 #include "bulletogreengine.h"
 #include "entitiesengine.h"
 #include "brainengine.h"
+
+// Widget
 #include "pluggridvisualizer.h"
+#include "pluggriddesignvisualizer.h"
+#include "fixationproperties.h"
+#include "bonepropertiescontroller.h"
+#include "entitypropertiescontroller.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -42,6 +45,7 @@
 #include "ressources/ressource.h"
 #include "ressources/jsonfile.h"
 
+#include <QThread>
 
 using namespace GeneLabCore;
 
@@ -110,7 +114,9 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     ui->dwCreature->setWidget(Entity::getInspectorWidget());
     BrainEngine* bEngine = (BrainEngine*)(factory->getEngines().find("Brain").value());
     PlugGridVisualizer* bViz = (PlugGridVisualizer*)bEngine->getRenderWidget(Entity::getInspectorWidget());
+    PlugGridDesignVisualizer* bDezViz = new PlugGridDesignVisualizer();
     Entity::getInspectorWidget()->setBrainViz(bViz);
+    Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
     // Connection to Inspectors
     connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 
@@ -122,6 +128,9 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
 CreatureViewerWindow::~CreatureViewerWindow()
 {
+    simulationManager->stop();
+    // Cheat anti double free
+    ui->dwCreature->setWidget(new QWidget());
     delete ui;
 }
 

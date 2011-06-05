@@ -170,7 +170,8 @@ SOURCES += \
     ../genelab/core/factories/ressources/jsonfile.cpp \
     ../genelab/core/factories/ressources/dbrecord.cpp \
     ../genelab/core/entities/families/ant/ant.cpp \
-    ../genelab/core/entities/families/genericfamily.cpp
+    ../genelab/core/entities/families/genericfamily.cpp \
+    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -241,7 +242,8 @@ HEADERS += \
     ../genelab/core/factories/ressources/jsonfile.h \
     ../genelab/core/factories/ressources/dbrecord.h \
     ../genelab/core/entities/families/ant/ant.h \
-    ../genelab/core/entities/families/genericfamily.h
+    ../genelab/core/entities/families/genericfamily.h \
+    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
