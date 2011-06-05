@@ -1,12 +1,9 @@
 #include "ogrewidget.h"
 #include "OGRE/Ogre.h"
 #include <QDebug>
-#include "bulletengine.h"
-#include "OgreBulletDynamicsRigidBody.h"
-#include "Shapes/OgreBulletCollisionsStaticPlaneShape.h"
-#include "Shapes/OgreBulletCollisionsBoxShape.h"
+#include "bullet/bulletengine.h"
 #include "OGRE/Ogre.h"
-#include "ogreengine.h"
+#include "ogre/ogreengine.h"
 
 using namespace Ogre;
 

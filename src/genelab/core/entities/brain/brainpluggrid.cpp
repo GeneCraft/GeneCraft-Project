@@ -3,7 +3,7 @@
 #include "sinusin.h"
 #include "synapse.h"
 #include "brainout.h"
-#include "treeshape.h"
+#include "body/treeshape.h"
 #include <QDebug>
 #include <cstdlib>
 #include <math.h>

@@ -3,9 +3,10 @@
 #include <QDebug>
 
 #include "entity.h"
-#include "brain.h"
-#include "sensor.h"
-#include "modifier.h"
+#include "brain/brain.h"
+#include "brain/brainpluggrid.h"
+#include "sensors/sensor.h"
+#include "modifiers/modifier.h"
 
 namespace GeneLabCore {
 EntitiesEngine::EntitiesEngine()
@@ -26,8 +27,11 @@ void EntitiesEngine::step()
 {
     foreach(Entity* e, entities) {
         // step brains
-        if(e->getBrain() != NULL)
+        if(e->getBrain() != NULL) {
+            e->getBrain()->getPlugGrid()->beforeStep();
             e->getBrain()->step();
+            e->getBrain()->getPlugGrid()->afterStep();
+        }
     }
 }
 

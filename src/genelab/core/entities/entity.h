@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include "genelabcoreclasses.h"
-#include "entitypropertiescontroller.h"
-#include "brainfunctional.h"
+#include "widgets/entities/entitypropertiescontroller.h"
+#include "brain/brainfunctional.h"
 
 namespace GeneLabCore {
     class Entity : public QObject

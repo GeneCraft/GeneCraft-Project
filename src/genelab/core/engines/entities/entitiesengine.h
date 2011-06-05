@@ -24,7 +24,17 @@ class EntitiesEngine : public Engine
     Q_OBJECT
 public:
     EntitiesEngine();
-    void addEntity(Entity * entity) { entities.append(entity); }
+    void addEntity(Entity * entity) {
+        entities.append(entity);
+    }
+
+    void addPlugGridVisualizer(PlugGridVisualizer* viz) {
+        this->gridVisualizers.append(viz);
+    }
+
+    void addPlugGridDezVisualizer(PlugGridDesignVisualizer* viz) {
+        this->gridDezVisualizers.append(viz);
+    }
 
 public slots:
     void beforeStep();
@@ -33,6 +43,8 @@ public slots:
 
 private:
     QList<Entity *> entities;
+    QList<PlugGridVisualizer*> gridVisualizers;
+    QList<PlugGridDesignVisualizer*> gridDezVisualizers;
 };
 }
 

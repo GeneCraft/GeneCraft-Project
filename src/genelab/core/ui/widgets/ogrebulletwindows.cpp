@@ -9,10 +9,6 @@
 // Ogre
 #include "OGRE/Ogre.h"
 
-// OgreBullet
-#include "OgreBulletDynamicsConstraint.h"
-#include "Dynamics/Constraints/OgreBulletDynamics6DofConstraint.h"
-
 // Factory
 #include "mainfactory.h"
 
@@ -20,23 +16,23 @@
 #include "entity.h"
 
 // GeneLab
-#include "ogreengine.h"
-#include "ogrewidget.h"
-#include "bulletengine.h"
+#include "ogre/ogreengine.h"
+#include "ogre/ogrewidget.h"
+#include "bullet/bulletengine.h"
 #include "simulationmanager.h"
-#include "eventmanager.h"
-#include "snakefamily.h"
-#include "treeshape.h"
-#include "fixation.h"
-#include "btosphere.h"
-#include "btobox.h"
+#include "events/eventmanager.h"
+#include "families/snakefamily.h"
+#include "body/treeshape.h"
+#include "body/fixation.h"
+#include "bulletogre/shapes/btosphere.h"
+#include "bulletogre/shapes/btobox.h"
 
 // App
 #include "ogrebulletwindows.h"
 #include "ui_ogrebulletwindows.h"
 //#include "sandboxtools.h"
 #include "creatureviewerinputmanager.h"
-#include "generic6dofconstraintcontroller.h"
+#include "widgets/entities/generic6dofconstraintcontroller.h"
 
 namespace GeneLabCore {
 

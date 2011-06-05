@@ -1,9 +1,8 @@
 #include "btsphere.h"
 
 #include <QDebug>
-#include "bulletengine.h"
-#include "rigidbodyorigin.h"
-#include "OgreBulletDynamicsWorld.h" // TODO TRY TO DELETE !!!
+#include "bullet/bulletengine.h"
+#include "bullet/rigidbodyorigin.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 #define PI 3.14159265

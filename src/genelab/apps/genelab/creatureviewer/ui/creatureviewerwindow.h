@@ -31,7 +31,6 @@ public slots:
 
     void setInspector(QWidget * inspector);
     void setEntity(Entity *entity, btRigidBody *selectedBody);
-    void setOpenGLWidget(QWidget * openGLWidget);
     void rigidBodySelected(btRigidBody *rigidBody);
     void showAbout();
 
@@ -45,14 +44,13 @@ public slots:
     void togglePhysics();
 
 private:
+    Ui::CreatureViewer *ui;
 
     Bone *boneSelected;
     Fixation *fixSelected;
 
     Entity *selectedEntity;
-    Ui::CreatureViewer *ui;
     QWidget *inspector;
-    QWidget *openGLWidget;
     MainFactory* factory;
     SimulationManager* simulationManager;
 

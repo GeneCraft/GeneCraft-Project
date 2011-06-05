@@ -1,9 +1,9 @@
 #include "btshapesfactory.h"
 
-#include "btbox.h"
-#include "btsphere.h"
-#include "btcylinder.h"
-#include "btbone.h"
+#include "bullet/shapes/btbox.h"
+#include "bullet/shapes/btsphere.h"
+#include "bullet/shapes/btcylinder.h"
+#include "bullet/shapes/btbone.h"
 
 namespace GeneLabCore {
 

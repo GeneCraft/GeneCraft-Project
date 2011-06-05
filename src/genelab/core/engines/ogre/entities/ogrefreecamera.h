@@ -8,7 +8,7 @@
 #include <QKeyEvent>
 #include <Ogre.h>
 #include "genelabcoreclasses.h"
-#include "inputlistener.h"
+#include "events/inputlistener.h"
 
 namespace GeneLabCore {
 
@@ -43,7 +43,7 @@ public slots:
     void leaveViewPortEvent(QEvent *e);
 
     // Compute the new position and angular
-    void step(); // TODO better if the time is in paramater because speed is a distance by time...
+    void step();
 
 private:
 

@@ -6,16 +6,16 @@
 #include <QVariantList>
 
 // Engine
-#include "bulletengine.h"
-#include "rigidbodyorigin.h"
+#include "bullet/bulletengine.h"
+#include "bullet/rigidbodyorigin.h"
 
 // Shape
-#include "bone.h"
+#include "body/bone.h"
 #include "btshapesfactory.h"
-#include "btsphere.h"
+#include "bullet/shapes/btsphere.h"
 
 #include "entity.h"
-#include "fixationproperties.h"
+#include "widgets/entities/fixationproperties.h"
 
 
 namespace GeneLabCore {

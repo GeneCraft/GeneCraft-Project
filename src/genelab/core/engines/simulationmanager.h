@@ -18,8 +18,6 @@ namespace GeneLabCore {
         SimulationManager(QObject *parent = 0);
         SimulationManager(QMap<QString, Engine*>, QObject *parent = 0);
 
-
-        // TODO
         void addEngine(QString name, Engine *engine);
         void removeEngine(QString name);
 

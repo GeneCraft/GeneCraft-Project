@@ -12,30 +12,10 @@ TEMPLATE = app
 INCLUDEPATH += \
     ../genelab/core \
     ../genelab/core/engines \
-    ../genelab/core/engines/brains \
-    ../genelab/core/engines/bullet \
-    ../genelab/core/engines/bullet/shapes \
-    ../genelab/core/engines/events \
-    ../genelab/core/engines/ogre \
-    ../genelab/core/engines/ogre/entities \
-    ../genelab/core/engines/bulletogre \
-    ../genelab/core/engines/bulletogre/shapes \
-    ../genelab/core/engines/entities \
-    ../genelab/core/engines/world \
     ../genelab/core/entities \
-    ../genelab/core/entities/body \
-    ../genelab/core/entities/brain \
-    ../genelab/core/entities/sensors \
-    ../genelab/core/entities/modifiers \
-    ../genelab/core/entities/families \
-    ../genelab/core/entities/factories \
     ../genelab/core/entities/ui \
-    ../genelab/core/entities/ui/widgets \
-    ../genelab/core/entities/ui/utils \
     ../genelab/core/factories \
     ../genelab/core/ui \
-    ../genelab/core/ui/widgets \
-    ../genelab/core/ui/widgets/entities \
     ../genelab/core/utils
 
 # genelab apps
@@ -50,9 +30,6 @@ INCLUDEPATH  += \
     ../lib/ogre/include/OIS \
     ../lib/ogre/include \
     ../lib/ogre/boost_1_44 \
-    ../lib/ogrebullet-build/include/Collisions \
-    ../lib/ogrebullet-build/include/Dynamics \
-    ../lib/ogrebullet-build/include \
     ../lib/bullet/src \
     ../lib/bullet/Extra/ConvexDecomposition \
     ../lib/qxt/src/core \
@@ -63,9 +40,6 @@ INCLUDEPATH  += \
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
-    QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Collisions
-    QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include/Dynamics
-    QMAKE_CXXFLAGS  += -isystem../lib/ogrebullet-build/include
     QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
     QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
     QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
@@ -80,7 +54,6 @@ INCLUDEPATH  += \
     LIBS += -lOgreMain -lOIS
 #}
 
-LIBS += -L../lib/ogrebullet-build/lib
 LIBS += -L../lib/bullet/lib
 LIBS += -L../lib/qxt/lib
 
@@ -109,7 +82,6 @@ SOURCES += \
     ../genelab/core/engines/events/eventmanager.cpp \
     ../genelab/core/engines/engine.cpp \
     ../genelab/core/engines/bullet/bulletengine.cpp \
-    ../genelab/core/engines/brains/brainengine.cpp \
     ../genelab/core/engines/ogre/ogrewidget.cpp \
     ../genelab/core/entities/body/treeshape.cpp \
     ../genelab/core/entities/brain/synapse.cpp \
@@ -121,15 +93,11 @@ SOURCES += \
     ../genelab/core/entities/body/bone.cpp \
     ../genelab/core/factories/worldfactory.cpp \
     ../genelab/core/factories/ressources/ressource.cpp \
-    ../genelab/core/factories/neuralnetworkfactory.cpp \
     ../genelab/core/factories/mainfactory.cpp \
-    ../genelab/core/factories/entityfactory.cpp \
-    ../genelab/core/factories/enginefactory.cpp \
     ../genelab/core/ui/widgets/ogrebulletwindows.cpp \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.cpp \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
-    ../genelab/apps/sandbox/brainsandbox/brainapp.cpp \
     ../genelab/core/engines/world/world.cpp \
     ../genelab/core/engines/world/ogrebulletworld.cpp \
     main.cpp \
@@ -180,7 +148,6 @@ HEADERS += \
     ../genelab/core/engines/events/eventmanager.h \
     ../genelab/core/engines/engine.h \
     ../genelab/core/engines/bullet/bulletengine.h \
-    ../genelab/core/engines/brains/brainengine.h \
     ../genelab/core/engines/ogre/ogrewidget.h \
     ../genelab/core/engines/events/inputlistener.h \
     ../genelab/core/entities/body/treeshape.h \
@@ -193,14 +160,10 @@ HEADERS += \
     ../genelab/core/entities/body/bone.h \
     ../genelab/core/factories/worldfactory.h \
     ../genelab/core/factories/ressources/ressource.h \
-    ../genelab/core/factories/neuralnetworkfactory.h \
-    ../genelab/core/factories/entityfactory.h \
-    ../genelab/core/factories/enginefactory.h \
     ../genelab/core/factories/mainfactory.h \
     ../genelab/core/ui/widgets/ogrebulletwindows.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.h \
-    ../genelab/apps/sandbox/brainsandbox/brainapp.h \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
     ../genelab/core/engines/world/world.h \
     ../genelab/core/engines/world/ogrebulletworld.h \

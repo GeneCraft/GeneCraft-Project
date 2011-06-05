@@ -5,18 +5,18 @@
 #include "entity.h"
 
 // Shape
-#include "bone.h"
-#include "fixation.h"
-#include "treeshape.h"
+#include "body/bone.h"
+#include "body/fixation.h"
+#include "body/treeshape.h"
 
 // Sensors
-#include "sensor.h"
-#include "positionsensor.h"
-#include "gyroscopicsensor.h"
-#include "accelerometersensor.h"
+#include "sensors/sensor.h"
+#include "sensors/positionsensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/accelerometersensor.h"
 
 // Effector
-#include "rotationalmotorsmodifier.h"
+#include "modifiers/rotationalmotorsmodifier.h"
 
 BonePropertiesController::BonePropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::BonePropertiesController), bone(0)

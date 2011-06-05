@@ -5,7 +5,7 @@
 namespace GeneLabCore {
 
     BrainIn::BrainIn(float min, float max, QObject *parent) :
-        Synapse(parent), min(min), max(max), value(0)
+        Synapse(parent), value(0), min(min), max(max)
     {
     }
 

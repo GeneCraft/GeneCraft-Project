@@ -6,15 +6,12 @@
 #include "fixation.h"
 #include "treeshape.h"
 #include "bone.h"
-#include "ogreengine.h"
-#include "bulletengine.h"
+#include "bullet/bulletengine.h"
 #include "btshapesfactory.h"
-#include "sensor.h"
+#include "sensors/sensor.h"
 #include "sensors/accelerometersensor.h"
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/positionsensor.h"
-
-#include "OGRE/Ogre.h"
 
 namespace GeneLabCore {
     TreeShape::TreeShape(btShapesFactory* shapesFactory, QObject *parent) :

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "bodyitems.h"
 #include "genelabcoreclasses.h"
-#include "sensor.h"
+#include "sensors/sensor.h"
 
 using namespace GeneLabCore;
 

@@ -32,15 +32,6 @@ float sigmoid(float x)
     BrainFunctional::BrainFunctional(int plugGridSize, QObject *parent) :
         Brain(plugGridSize, parent)
     {
-        // Heartbeat !
-        /*for(int i = 0; i < plugGridSize/10; i++) {
-            SinusIn* sin = new SinusIn();
-            int x = qrand()%plugGridSize;
-            int y = qrand()%plugGridSize;
-            sin->connectTo(x, y, 1);
-            sin->connectTo(y, x, 1);
-            this->plugGrid->connectInput(sin);
-        }*/
     }
 
     BrainFunctional::BrainFunctional(QVariant data) : Brain(data) {
@@ -368,8 +359,8 @@ float sigmoid(float x)
                func += ",";
                func += this->createRandomFunc(depth -1);
            } else {
-                func += "MIN ";
-                func += QString::number(1);
+                func += "MAX ";
+                func += QString::number(qrand()%maxMem+1);
                 func += ",";
                 func += this->createRandomFunc(depth -1);
             }

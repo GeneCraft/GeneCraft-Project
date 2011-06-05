@@ -31,7 +31,6 @@ namespace GeneLabCore {
     class OpenGLEngine;
 
     // Brain
-    class BrainEngine; // TODO DELETE !
     class EntitiesEngine;
 
     // Generic simulation manager
@@ -83,12 +82,7 @@ namespace GeneLabCore {
     // -- Factories --
     // ---------------
     class MainFactory;
-    class EntityFactory;
-    class EngineFactory;
     class WorldFactory;
-
-    // Neural
-    class NeuralNetworkFactory;
 
     // Shapes
     class btShapesFactory;

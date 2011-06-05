@@ -13,30 +13,29 @@
 #include "creatureviewerabout.h"
 
 // Entity
-#include "fixation.h"
-#include "bone.h"
+#include "body/fixation.h"
+#include "body/bone.h"
 #include "entity.h"
-#include "rigidbodyorigin.h"
-#include "genericfamily.h"
-#include "treeshape.h"
+#include "bullet/rigidbodyorigin.h"
+#include "families/genericfamily.h"
+#include "body/treeshape.h"
 
 // Engine
-#include "bulletengine.h"
+#include "bullet/bulletengine.h"
 #include "OGRE/Ogre.h"
-#include "ogreengine.h"
+#include "ogre/ogreengine.h"
 #include "mainfactory.h"
 #include "simulationmanager.h"
-#include "eventmanager.h"
-#include "bulletogreengine.h"
-#include "entitiesengine.h"
-#include "brainengine.h"
+#include "events/eventmanager.h"
+#include "bulletogre/bulletogreengine.h"
+#include "entities/entitiesengine.h"
 
 // Widget
-#include "pluggridvisualizer.h"
-#include "pluggriddesignvisualizer.h"
-#include "fixationproperties.h"
-#include "bonepropertiescontroller.h"
-#include "entitypropertiescontroller.h"
+#include "widgets/entities/pluggridvisualizer.h"
+#include "widgets/entities/pluggriddesignvisualizer.h"
+#include "widgets/entities/fixationproperties.h"
+#include "widgets/entities/bonepropertiescontroller.h"
+#include "widgets/entities/entitypropertiescontroller.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -51,7 +50,7 @@ using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CreatureViewer), selectedEntity(NULL), inspector(NULL), openGLWidget(NULL), boneSelected(NULL), fixSelected(NULL)
+    ui(new Ui::CreatureViewer), boneSelected(NULL), fixSelected(NULL), selectedEntity(NULL), inspector(NULL)
 {
     ui->setupUi(this);
 
@@ -93,7 +92,7 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
     CreatureViewerInputManager *cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
-
+    EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     // add listener in events manager
     EventManager *eventsManager =  static_cast<EventManager*>(factory->getEngines().find("Event").value());
     eventsManager->addListener(cvim);
@@ -112,10 +111,10 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
 
     ui->dwCreature->setWidget(Entity::getInspectorWidget());
-    BrainEngine* bEngine = (BrainEngine*)(factory->getEngines().find("Brain").value());
-    PlugGridVisualizer* bViz = (PlugGridVisualizer*)bEngine->getRenderWidget(Entity::getInspectorWidget());
+    PlugGridVisualizer* bViz = new PlugGridVisualizer();
     PlugGridDesignVisualizer* bDezViz = new PlugGridDesignVisualizer();
-    bEngine->addPlugGridDez(bDezViz);
+    ee->addPlugGridDezVisualizer(bDezViz);
+    ee->addPlugGridVisualizer(bViz);
     Entity::getInspectorWidget()->setBrainViz(bViz);
     Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
     // Connection to Inspectors
@@ -140,20 +139,16 @@ void CreatureViewerWindow::setInspector(QWidget * inspector)
     if(inspector != 0)
         ui->dwInspector->setWidget(inspector);
     else
-        ui->dwCreature->setWidget(new QLabel("No element selected.")); // TODO NOT new !!!
+        ui->dwCreature->setWidget(new QLabel("No element selected."));
 }
 
-void CreatureViewerWindow::setOpenGLWidget(QWidget * openGLWidget)
-{
-    setCentralWidget(openGLWidget);
-}
 
 void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 {
     if(entity != NULL)
         ui->dwCreature->setWidget(Entity::getInspectorWidget(entity,selectedBody));
     else
-        ui->dwCreature->setWidget(new QLabel("No creature selected.")); // TODO NOT new !!!
+        ui->dwCreature->setWidget(new QLabel("No creature selected."));
 }
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
@@ -253,7 +248,7 @@ void CreatureViewerWindow::createNewEntity()
 void CreatureViewerWindow::loadEntityFromFile()
 {
     simulationManager->stop();
-    const QString DEFAULT_DIR_KEY("default_dir"); // TODO static
+    const QString DEFAULT_DIR_KEY("default_dir");
     QSettings mySettings;
     QString selectedFile = QFileDialog::getOpenFileName(this, "Select a genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
 
@@ -286,7 +281,7 @@ void CreatureViewerWindow::saveEntityToFile()
     simulationManager->stop();
     if(selectedEntity != NULL)
     {
-        const QString DEFAULT_DIR_KEY("default_dir");  // TODO static
+        const QString DEFAULT_DIR_KEY("default_dir");
         QSettings mySettings;
         QString selectedFile = QFileDialog::getSaveFileName(this, "Save your genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
 

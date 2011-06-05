@@ -4,7 +4,7 @@
 #include <QString>
 #include "genelabcoreclasses.h"
 #include "modifier.h"
-#include "brainout.h"
+#include "brain/brainout.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
 namespace GeneLabCore {

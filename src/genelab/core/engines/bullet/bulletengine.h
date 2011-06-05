@@ -39,8 +39,6 @@ namespace GeneLabCore {
 
     protected:
 
-        //OgreEngine* ogreEngine; // TODO delete
-
         btDynamicsWorld *bulletDynamicsWorld;
 
         // OgreBullet World

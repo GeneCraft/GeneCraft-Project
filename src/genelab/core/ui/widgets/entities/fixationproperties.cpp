@@ -5,15 +5,15 @@
 #include "ui_fixationproperties.h"
 
 // Entity
-#include "fixation.h"
-#include "bone.h"
+#include "body/fixation.h"
+#include "body/bone.h"
 #include "entity.h"
-#include "treeshape.h"
+#include "body/treeshape.h"
 
 // Sensors
-#include "positionsensor.h"
-#include "gyroscopicsensor.h"
-#include "accelerometersensor.h"
+#include "sensors/positionsensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/accelerometersensor.h"
 
 FixationProperties::FixationProperties(QWidget *parent) :
     QWidget(parent),

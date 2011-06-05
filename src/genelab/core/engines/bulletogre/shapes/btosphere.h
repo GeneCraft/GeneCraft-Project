@@ -2,8 +2,8 @@
 #define BTOSPHERE_H
 
 #include "genelabcoreclasses.h"
-#include "btsphere.h"
-#include "OGRE/Ogre.h" // AHAHAHAHAHAHAHAHAHAAHAH mettre la classe dans genelabcoreclasses.h
+#include "bullet/shapes/btsphere.h"
+#include "OGRE/Ogre.h"
 
 namespace GeneLabCore {
 

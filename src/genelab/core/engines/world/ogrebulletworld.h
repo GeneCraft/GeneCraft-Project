@@ -23,7 +23,6 @@ namespace GeneLabCore {
         MainFactory *mainFactory;
         BulletOgreEngine *btoEngine;
         EntitiesEngine* entitiesEngine;
-        BrainEngine* brainEngine;
 
         // OgreBullet World
         OgreBulletDynamics::DynamicsWorld *mWorld;

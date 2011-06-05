@@ -1,11 +1,10 @@
 #include "pluggridvisualizer.h"
 
-#include "brainpluggrid.h"
-#include "brainin.h"
-#include "brainout.h"
-#include "synapse.h"
-#include "brainengine.h"
-#include "brain.h"
+#include "brain/brainpluggrid.h"
+#include "brain/brainin.h"
+#include "brain/brainout.h"
+#include "brain/synapse.h"
+#include "brain/brain.h"
 
 #include <QLayout>
 #include <QBoxLayout>

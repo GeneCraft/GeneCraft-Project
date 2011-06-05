@@ -6,7 +6,7 @@
 #include <QVariantList>
 #include <QVariantMap>
 #include "tools.h"
-#include "sinusin.h"
+#include "brain/sinusin.h"
 
 namespace GeneLabCore {
 

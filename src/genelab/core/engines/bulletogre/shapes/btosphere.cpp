@@ -1,9 +1,9 @@
 #include "btosphere.h"
 
 #include <QDebug>
-#include "ogreengine.h"
+#include "ogre/ogreengine.h"
 #include "OgreSceneManager.h"
-#include "bulletogreengine.h"
+#include "bulletogre/bulletogreengine.h"
 
 
 namespace GeneLabCore {

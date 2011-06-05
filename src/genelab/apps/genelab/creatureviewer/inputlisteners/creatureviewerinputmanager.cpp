@@ -1,26 +1,25 @@
 #include "creatureviewerinputmanager.h"
 
-#include "spider/spider.h"
+#include "families/spider/spider.h"
 #include "btoshapesfactory.h"
 #include "entity.h"
-#include "treeshape.h"
-#include "fixation.h"
+#include "body/treeshape.h"
+#include "body/fixation.h"
 
 // Qt
 #include <QDebug>
 
 // Ogre
-#include "ogreengine.h"
+#include "ogre/ogreengine.h"
 #include "OGRE/Ogre.h"
-#include "ogrewidget.h"
+#include "ogre/ogrewidget.h"
 
 // Bullet
-#include "bulletengine.h"
-#include "Dynamics/OgreBulletDynamicsWorld.h"
+#include "bullet/bulletengine.h"
 
 // Bullet & Ogre
-#include "btobox.h"
-#include "bulletogreengine.h"
+#include "bulletogre/shapes/btobox.h"
+#include "bulletogre/bulletogreengine.h"
 
 CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngine,Ogre::Camera *camera) :
     camera(camera), btoEngine(btoEngine)
@@ -106,7 +105,6 @@ void CreatureViewerInputManager::throwCube()
 
 void CreatureViewerInputManager::pickBody()
 {
-    // TODO static ?
     const float RAY_LENGTH = 1000.0;
 
     // front of the camera (fps)

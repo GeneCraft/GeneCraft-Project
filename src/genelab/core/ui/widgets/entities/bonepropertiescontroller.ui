@@ -1131,7 +1131,7 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="pbSaveChanges">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>150</x>
         <y>140</y>
         <width>191</width>
         <height>31</height>
@@ -1227,7 +1227,7 @@ p, li { white-space: pre-wrap; }
   <customwidget>
    <class>FixationProperties</class>
    <extends>QWidget</extends>
-   <header>fixationproperties.h</header>
+   <header>widgets/entities/fixationproperties.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

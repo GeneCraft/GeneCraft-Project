@@ -5,7 +5,6 @@
 
 #include "genelabcoreclasses.h"
 #include "engine.h"
-#include "pluggriddesignvisualizer.h"
 namespace GeneLabCore {
 
     class BrainEngine : public Engine
@@ -18,13 +17,13 @@ namespace GeneLabCore {
             return true;
         }
 
-        void addPlugGridDez(PlugGridDesignVisualizer* dez) {
+        /*void addPlugGridDez(PlugGridDesignVisualizer* dez) {
             this->gridDezVisualizers.append(dez);
         }
 
-        QWidget* getRenderWidget(QWidget* parent);
+        PlugGrid* getRenderWidget(QWidget* parent);
         QList<BrainPlugGrid*> getGrids();
-        QList<Brain*> getBrains();
+        QList<Brain*> getBrains();*/
 
     signals:
 
@@ -37,10 +36,6 @@ namespace GeneLabCore {
         void afterStep();
 
     private:
-        QList<BrainPlugGrid*> grids;
-        QList<Brain*> brains;
-        QList<PlugGridVisualizer*> gridVisualizers;
-        QList<PlugGridDesignVisualizer*> gridDezVisualizers;
 
     };
 }

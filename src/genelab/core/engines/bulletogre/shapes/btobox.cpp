@@ -1,7 +1,7 @@
 #include "btobox.h"
 
-#include "bulletogreengine.h"
-#include "ogreengine.h"
+#include "bulletogre/bulletogreengine.h"
+#include "ogre/ogreengine.h"
 
 namespace GeneLabCore {
 

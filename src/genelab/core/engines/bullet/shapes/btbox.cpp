@@ -1,7 +1,7 @@
 #include "btbox.h"
 
-#include "bulletengine.h"
-#include "rigidbodyorigin.h"
+#include "bullet/bulletengine.h"
+#include "bullet/rigidbodyorigin.h"
 
 namespace GeneLabCore {
 

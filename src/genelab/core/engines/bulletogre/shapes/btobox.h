@@ -2,7 +2,7 @@
 #define BTOBOX_H
 
 #include "genelabcoreclasses.h"
-#include "btbox.h"
+#include "bullet/shapes/btbox.h"
 #include "OGRE/Ogre.h"
 
 namespace GeneLabCore {

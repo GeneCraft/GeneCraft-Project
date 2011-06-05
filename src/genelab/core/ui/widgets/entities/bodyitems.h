@@ -5,7 +5,7 @@
 #include <QListWidgetItem>
 
 #include "genelabcoreclasses.h"
-#include "sensor.h"
+#include "sensors/sensor.h"
 
 namespace GeneLabCore{
 

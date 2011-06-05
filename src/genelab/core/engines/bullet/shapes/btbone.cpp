@@ -1,8 +1,8 @@
 #include "btbone.h"
-#include "bulletengine.h"
-#include "rigidbodyorigin.h"
-#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "bullet/bulletengine.h"
+#include "bullet/rigidbodyorigin.h"
 #include <QDebug>
+
 namespace GeneLabCore {
 btBone::btBone(BulletEngine *btEngine, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
     btShape()

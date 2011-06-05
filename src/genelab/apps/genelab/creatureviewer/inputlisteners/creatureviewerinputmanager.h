@@ -2,7 +2,7 @@
 #define CREATUREVIEWERINPUTMANAGER_H
 
 #include "genelabcoreclasses.h"
-#include "inputlistener.h"
+#include "events/inputlistener.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
 using namespace GeneLabCore;

@@ -10,26 +10,25 @@
 // Engines
 #include "mainfactory.h"
 #include "OGRE/Ogre.h"
-#include "ogreengine.h"
-#include "bulletengine.h"
-#include "bulletogreengine.h"
+#include "ogre/ogreengine.h"
+#include "bullet/bulletengine.h"
+#include "bulletogre/bulletogreengine.h"
 
 // Shapes
 #include "BulletCollision/CollisionShapes/btStaticPlaneShape.h"
-#include "btosphere.h"
-#include "btobox.h"
-#include "btocylinder.h"
+#include "bulletogre/shapes/btosphere.h"
+#include "bulletogre/shapes/btobox.h"
+#include "bulletogre/shapes/btocylinder.h"
 #include "btoshapesfactory.h"
 
 // Entity
-#include "snakefamily.h"
-#include "treeshape.h"
-#include "fixation.h"
-#include "spider/spider.h"
-#include "ant/ant.h"
-#include "entitiesengine.h"
-#include "genericfamily.h"
-#include "brainengine.h"
+#include "families/snakefamily.h"
+#include "body/treeshape.h"
+#include "body/fixation.h"
+#include "families/spider/spider.h"
+#include "families/ant/ant.h"
+#include "entities/entitiesengine.h"
+#include "families/genericfamily.h"
 
 // Ressources
 #include "ressources/ressource.h"
@@ -43,7 +42,6 @@ namespace GeneLabCore {
         this->mainFactory = mainFactory;
         btoEngine = static_cast<BulletOgreEngine*>(mainFactory->getEngines().find("BulletOgre").value());
         entitiesEngine = static_cast<EntitiesEngine*>(mainFactory->getEngines().find("Entities").value());
-        brainEngine = (BrainEngine*)mainFactory->getEngines().find("Brain").value();
     }
 
     void OgreBulletWorld::setup() {
@@ -181,13 +179,12 @@ namespace GeneLabCore {
         qDebug() << "Spider creation !";
         Spider *spider = new Spider();
         Entity* e;
-        for(int i = 0; i < 1; i++) {
-            for(int j = 0; j < 1; j++) {
+        for(int i = 0; i < 0; i++) {
+            for(int j = 0; j < 0; j++) {
                 e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "spider setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
-                brainEngine->addGrid(e->getBrain()->getPlugGrid());
             }
         }
 
@@ -200,12 +197,16 @@ namespace GeneLabCore {
                 //qDebug() << "ant setup !";
                 e->setup();
                 entitiesEngine->addEntity(e);
-                brainEngine->addGrid(e->getBrain()->getPlugGrid());
             }
         }
 
+        e = spider->createEntity(shapesFactory, btVector3(0,7,0));
+        //qDebug() << "ant setup !";
+        e->setup();
+        entitiesEngine->addEntity(e);
         // Save Generic entity
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 40; i++) {
+
             Ressource* to = new JsonFile("ant"+QString::number(i)+".genome");
             to->save(e->serialize());
             qDebug() << "ant save !";
@@ -213,9 +214,8 @@ namespace GeneLabCore {
             // Load Generic Entity
             Ressource* from = new JsonFile("ant"+QString::number(i)+".genome");
             QVariant genotype = from->load();
-            e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(30 + i * 30,7,0));
+            e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(30,7,i*30));
             e->setup();
-            brainEngine->addGrid(e->getBrain()->getPlugGrid());
             entitiesEngine->addEntity(e);
         }
 

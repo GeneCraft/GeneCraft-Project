@@ -1,9 +1,9 @@
 #include "entitypropertiescontroller.h"
 #include "ui_entitypropertiescontroller.h"
 #include "entity.h"
-#include "fixation.h"
-#include "treeshape.h"
-#include "bone.h"
+#include "body/fixation.h"
+#include "body/treeshape.h"
+#include "body/bone.h"
 #include "pluggridvisualizer.h"
 #include "pluggriddesignvisualizer.h"
 #include <QVariant>

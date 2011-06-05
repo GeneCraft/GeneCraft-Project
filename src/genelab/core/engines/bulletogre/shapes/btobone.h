@@ -2,7 +2,7 @@
 #define BTOBONE_H
 
 #include "genelabcoreclasses.h"
-#include "btbone.h"
+#include "bullet/shapes/btbone.h"
 #include "OGRE/Ogre.h"
 
 

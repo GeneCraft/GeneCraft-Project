@@ -20,7 +20,7 @@ namespace GeneLabCore {
       *
       * Thus, the management of events is sequential and avoiding the problems of concurrent access to engine objects.
       *
-      * TODO : AMELIORER LA GESTION DE LA MEMOIRE (QUAND SUPPRIMER LES EVENTS STOCKES ?)
+      *
       *
       * @author Da Campo Aurelien
       * @author Cyprien Huissoud

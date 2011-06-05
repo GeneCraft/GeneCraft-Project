@@ -5,17 +5,17 @@
 #include <QVBoxLayout>
 
 #include "OGRE/Ogre.h"
-#include "ogreengine.h"
-#include "ogrewidget.h"
-#include "bulletengine.h"
-#include "bulletogreengine.h"
-#include "eventmanager.h"
+#include "ogre/ogreengine.h"
+#include "ogre/ogrewidget.h"
+#include "bullet/bulletengine.h"
+#include "bulletogre/bulletogreengine.h"
+#include "events/eventmanager.h"
 #include "creatureviewerinputmanager.h"
 #include "ressources/ressource.h"
-#include "brainengine.h"
-#include "entitiesengine.h"
-#include "ogrebulletworld.h"
-#include "world.h"
+
+#include "entities/entitiesengine.h"
+#include "world/ogrebulletworld.h"
+#include "world/world.h"
 #include "btoshapesfactory.h"
 
 namespace GeneLabCore {
@@ -89,14 +89,6 @@ namespace GeneLabCore {
         // -- Shapes Factory --
         // --------------------
         shapesFactory = new btoShapesFactory(bulletOgreEngine);
-
-        // -------------------
-        // -- Brains engine --
-        // -------------------
-        qDebug() << "Init Brain Engine";
-        BrainEngine* brainEngine = new BrainEngine();
-        this->engines.insert("Brain", brainEngine);
-        qDebug() << "[OK]\n";
 
         // ---------------------
         // -- Entities engine --

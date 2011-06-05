@@ -66,8 +66,6 @@ namespace GeneLabCore {
             {
             case QEvent::MouseButtonPress :
                 me = (QMouseEvent*) e;
-
-                // TODO is for really adapted ? iterator would be better ?
                 for(int i=0;i<inputListeners.length();i++)
                     inputListeners.at(i)->mousePressEvent(me);
                 break;

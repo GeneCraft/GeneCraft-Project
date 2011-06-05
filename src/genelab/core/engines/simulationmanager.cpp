@@ -1,8 +1,5 @@
 #include "simulationmanager.h"
 
-#include "ogreengine.h"
-#include "eventmanager.h"
-#include "bulletengine.h"
 #include "engine.h"
 
 #include <QTimer>

@@ -1,14 +1,14 @@
 #include "entity.h"
 #include <QDebug>
-#include "fixation.h"
-#include "treeshape.h"
-#include "brainfunctional.h"
-#include "brainin.h"
+#include "body/fixation.h"
+#include "body/treeshape.h"
+#include "brain/brainfunctional.h"
+#include "brain/brainin.h"
 
-#include "brainpluggrid.h"
-#include "brainout.h"
-#include "sensor.h"
-#include "modifier.h"
+#include "brain/brainpluggrid.h"
+#include "brain/brainout.h"
+#include "sensors/sensor.h"
+#include "modifiers/modifier.h"
 
 namespace GeneLabCore {
 

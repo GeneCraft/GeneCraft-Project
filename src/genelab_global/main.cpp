@@ -3,7 +3,7 @@
 
 #include "genelabcoreclasses.h"
 
-#include "ogrebulletwindows.h"
+#include "widgets/ogrebulletwindows.h"
 #include "creatureviewer/ui/creatureviewerwindow.h"
 
 #include "ressources/ressource.h"

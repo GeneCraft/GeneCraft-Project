@@ -2,7 +2,7 @@
 #define BTOCYLINDER_H
 
 #include "genelabcoreclasses.h"
-#include "btcylinder.h"
+#include "bullet/shapes/btcylinder.h"
 #include "OGRE/Ogre.h"
 
 namespace GeneLabCore {

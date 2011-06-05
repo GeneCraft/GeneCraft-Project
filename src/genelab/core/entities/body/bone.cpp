@@ -3,21 +3,21 @@
 // Qt
 #include <QDebug>
 #include <QTest>
-#include "bonepropertiescontroller.h"
+#include "widgets/entities/bonepropertiescontroller.h"
 
 // Entity
 #include "entity.h"
-#include "fixation.h"
-#include "rotationalmotorsmodifier.h"
+#include "body/fixation.h"
+#include "modifiers/rotationalmotorsmodifier.h"
 
 // Engine
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
-#include "rigidbodyorigin.h"
-#include "bulletengine.h"
+#include "bullet/rigidbodyorigin.h"
+#include "bullet/bulletengine.h"
 #include "BulletCollision/CollisionShapes/btCylinderShape.h"
 #include "BulletCollision/CollisionShapes/btCompoundShape.h"
-#include "btcylinder.h"
-#include "btbone.h"
+#include "bullet/shapes/btcylinder.h"
+#include "bullet/shapes/btbone.h"
 #include "btshapesfactory.h"
 
 // Others

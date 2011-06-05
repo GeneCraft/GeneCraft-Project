@@ -1,7 +1,7 @@
 #include "gyroscopicsensor.h"
 
-#include "brainin.h"
-#include "fixation.h"
+#include "brain/brainin.h"
+#include "body/fixation.h"
 #include <QDebug>
 #include <QVariant>
 

@@ -6,7 +6,7 @@
 #include <QMutex>
 #include <QMouseEvent>
 #include "genelabcoreclasses.h"
-#include "ogrefreecamera.h"
+#include "ogre/entities/ogrefreecamera.h"
 #include <Ogre.h>
 #include "entity.h"
 

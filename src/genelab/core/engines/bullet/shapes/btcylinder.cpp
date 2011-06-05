@@ -1,7 +1,7 @@
 #include "btcylinder.h"
 
-#include "bulletengine.h"
-#include "rigidbodyorigin.h"
+#include "bullet/bulletengine.h"
+#include "bullet/rigidbodyorigin.h"
 
 #define PI 3.14159265
 

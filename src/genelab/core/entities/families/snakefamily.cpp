@@ -1,7 +1,7 @@
 #include "snakefamily.h"
-#include "treeshape.h"
-#include "fixation.h"
-#include "bone.h"
+#include "body/treeshape.h"
+#include "body/fixation.h"
+#include "body/bone.h"
 #include <QVariant>
 #include <cmath>
 
@@ -11,7 +11,6 @@ namespace GeneLabCore {
         EntityFamily(parent)
     {
         this->length = data.toMap()["length"].toInt();
-        this->length = 10; // TODO: DELETE
 
         this->pieceLength = data.toMap()["piecelength"].toFloat();
         this->pieceLength = 0.5;

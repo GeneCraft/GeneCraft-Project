@@ -1,9 +1,9 @@
 #include "genericfamily.h"
 
 #include "entity.h"
-#include "treeshape.h"
-#include "fixation.h"
-#include "brainfunctional.h"
+#include "body/treeshape.h"
+#include "body/fixation.h"
+#include "brain/brainfunctional.h"
 #include <QDebug>
 
 namespace GeneLabCore {

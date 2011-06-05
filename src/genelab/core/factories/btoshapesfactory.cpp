@@ -1,10 +1,10 @@
 #include "btoshapesfactory.h"
 
-#include "bulletogreengine.h"
-#include "btobox.h"
-#include "btosphere.h"
-#include "btocylinder.h"
-#include "btobone.h"
+#include "bulletogre/bulletogreengine.h"
+#include "bulletogre/shapes/btobox.h"
+#include "bulletogre/shapes/btosphere.h"
+#include "bulletogre/shapes/btocylinder.h"
+#include "bulletogre/shapes/btobone.h"
 
 namespace GeneLabCore {
 

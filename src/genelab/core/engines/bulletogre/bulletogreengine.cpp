@@ -2,7 +2,7 @@
 
 #include <QDebug>
 #include "BulletDynamics/Dynamics/btRigidBody.h"
-#include "bulletengine.h"
+#include "bullet/bulletengine.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "OGRE/Ogre.h"
 

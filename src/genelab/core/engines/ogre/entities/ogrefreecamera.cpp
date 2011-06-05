@@ -115,7 +115,6 @@ void OgreFreeCamera::keyReleaseEvent(QKeyEvent *e)
 
 void OgreFreeCamera::step()
 {
-    // float time = 1.0; TODO (event)
 
     // any movement key are pressed
     if(forwardKeyPressed || backwardKeyPressed

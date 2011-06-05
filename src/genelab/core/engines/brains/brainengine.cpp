@@ -1,5 +1,6 @@
 #include "brainengine.h"
 #include "pluggridvisualizer.h"
+#include "pluggriddesignvisualizer.h"
 #include "brainpluggrid.h"
 #include "brain.h"
 
