@@ -22,17 +22,16 @@ void btBone::init(btScalar length,
     this->shape = new btCompoundShape(true);
 
     // Adding the sphere to the shape !
-    btSphereShape* sphere = new btSphereShape(radiusArticulation);
+    sphereShape = new btSphereShape(radiusArticulation);
     btTransform articulationTransform;
     articulationTransform.setIdentity();
     articulationTransform.setOrigin(btVector3(0,length/2.+ radiusArticulation, 0));
-    shape->addChildShape(articulationTransform, sphere);
+    shape->addChildShape(articulationTransform, sphereShape);
 
     // adding the cylinder to the shape
-    btCylinderShape* cylinder = new btCylinderShape(btVector3(radius,length/2.0,radius));
-    btTransform cylinderTransform;
-    cylinderTransform.setIdentity();
-    shape->addChildShape(cylinderTransform, cylinder);
+    cylinderShape = new btCylinderShape(btVector3(radius,length/2.0,radius));
+    btTransform cylinderTransform; cylinderTransform.setIdentity();
+    shape->addChildShape(cylinderTransform, cylinderShape);
 
     // body
     float vol = M_PI*radius*radius*length + 4/3. * M_PI * radiusArticulation * radiusArticulation * radiusArticulation;
@@ -50,10 +49,28 @@ void btBone::init(btScalar length,
 
 void btBone::setup()
 {
-
     if(btEngine != NULL && rigidBody != NULL)
         btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
+}
 
+void btBone::setSize(btScalar radius, btScalar length)
+{
+    if(cylinderShape != NULL) {
+
+
+        //shape->recalculateLocalAabb();
+        shape->removeChildShape(cylinderShape);
+
+        cylinderShape->setLocalScaling(btVector3(radius*4,length,radius*4));
+        btTransform cylinderTransform; cylinderTransform.setIdentity();
+        shape->addChildShape(cylinderTransform,cylinderShape);
+
+        // body
+        //btVector3 localInertia(0,0,0);
+        //shape->calculateLocalInertia(1.0,localInertia); // TODO mass
+    }
+    else
+        qDebug() << Q_FUNC_INFO << ", shape == NULL";
 }
 
 }

@@ -15,7 +15,7 @@ public:
     explicit btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
                      btScalar radiusArticulation, const btTransform &transform);
     void setup();
-
+    void setSize(btScalar radius, btScalar height);
     void setSelected(bool selected);
 
     protected:
@@ -28,7 +28,9 @@ public:
         Ogre::SceneNode *nodeS;
 
     private:
+
         static int mNumEntitiesInstanced;
+        Ogre::AxisAlignedBox originalCylinderBB;
 };
 }
 

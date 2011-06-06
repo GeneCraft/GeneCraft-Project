@@ -245,7 +245,10 @@ void CreatureViewerWindow::createNewEntity()
     e->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     entitiesEngine->addEntity(e);
+    e->getShape()->getRoot()->fixeInTheAir();
     setEntity(e,e->getShape()->getRoot()->getRigidBody());
+
+    QMessageBox::information(this, "Root fixation fixed in the air", "By default, the root fixation is fixed in the air.\n\nTo unfix it, select it and go to \"Tools\" tab.");
 }
 
 void CreatureViewerWindow::loadEntityFromFile()

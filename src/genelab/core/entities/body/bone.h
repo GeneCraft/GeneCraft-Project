@@ -24,8 +24,8 @@ public:
    void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
    btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
    btScalar getLength()                                    { return length;                }
+   btScalar getRadius()                                    { return radius;                }
    Fixation *getEndFixation()                              { return endFix;                }
-   //inline void setSelected(bool isSelected)                       { body->setSelected(isSelected);}
    Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
 
@@ -48,6 +48,8 @@ public:
    void setZAxis(btScalar zAxis);
 
    void setSelected(bool selected);
+
+   void setSize(btScalar radius, btScalar length);
 
 protected:
 

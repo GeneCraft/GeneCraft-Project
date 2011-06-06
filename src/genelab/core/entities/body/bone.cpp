@@ -238,4 +238,12 @@ void Bone::setSelected(bool selected)
 {
     body->setSelected(selected);
 }
+
+void Bone::setSize(btScalar radius, btScalar length)
+{
+    this->radius = radius;
+    this->length = length;
+    body->setSize(radius,length);
+}
+
 }

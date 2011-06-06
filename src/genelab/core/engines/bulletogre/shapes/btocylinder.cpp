@@ -49,4 +49,18 @@ void btoCylinder::setup()
     btoEngine->addBody(rigidBody,entity,node);
 }
 
+void btoCylinder::setSize(btScalar radius, btScalar height)
+{
+    btoCylinder::setSize(radius,height);
+
+    // Scale
+    AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
+    Vector3 sizeBB = boundingB.getSize();
+    sizeBB /= 2.0f;     // only the half needed
+    sizeBB *= 0.95f;    // Bullet margin is a bit bigger so we need a smaller size (Bullet 2.76 Physics SDK Manual page 18)
+    Vector3 ogreSize(radius*2,height,radius*2);
+    Vector3 scale = ogreSize  / boundingB.getSize();
+    node->scale(scale);	// the cube is too big for us
+}
+
 }

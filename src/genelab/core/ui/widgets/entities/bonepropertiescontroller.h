@@ -41,6 +41,7 @@ private slots:
     void randomValues();
     void resetMotors();
     void setOutFrom();
+    void changeSize();
     void rigidBodySelectedFromFix(btRigidBody*);
 };
 

@@ -20,7 +20,7 @@
 
 namespace GeneLabCore {
 
-    FixationProperties* Fixation::inspectorWidget = 0;
+    FixationProperties* Fixation::inspectorWidget = NULL;
     const btScalar Fixation::PERCENT_BONE_INSIDE_FIX = 0.15f;
 
     #define FIXATION_DENSITY 1.0f
@@ -36,15 +36,15 @@ namespace GeneLabCore {
         this->localFixation.setIdentity();
         this->localFixation = localFixation;
         this->radius = radius;
-        airFixation = 0;
-        entity = 0;
+        airFixation = NULL;
+        entity = NULL;
         delegatedSetup = true; 
     }
 
     Fixation::Fixation(btShapesFactory *shapesFactory,
                        btScalar radius,
                        btTransform initTransform) : QObject(),
-        radius(radius), entity(0), airFixation(0)
+        radius(radius), entity(NULL), airFixation(NULL)
     {
         this->shapesFactory = shapesFactory;
         this->localFixation.setIdentity();
@@ -52,8 +52,6 @@ namespace GeneLabCore {
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         this->rigidBody = sphere->getRigidBody();
         this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
-        entity = 0;
-        airFixation = 0;
         delegatedSetup = false;
     }
 
@@ -99,10 +97,8 @@ namespace GeneLabCore {
         sphere->setSelected(isSelected);
     }
 
-    void Fixation::fixeInTheAir(const btVector3 &position)
+    void Fixation::fixeInTheAir()
     {
-        this->rigidBody->getWorldTransform().setOrigin(position);
-
         // fixe root in the air
         btTransform local; local.setIdentity();
         btGeneric6DofConstraint *ct = new btGeneric6DofConstraint(*this->rigidBody,local,true);
@@ -110,18 +106,16 @@ namespace GeneLabCore {
         ct->setAngularUpperLimit(btVector3(0,0,0));
         airFixation = ct;
 
-        if(bulletEngine)
-            bulletEngine->getBulletDynamicsWorld()->addConstraint(ct);
-        else
-            qDebug() << "set before (bulletEngine is null)";
+        shapesFactory->getBulletEngine()->getBulletDynamicsWorld()->addConstraint(ct);
     }
 
     void Fixation::unfixInTheAir()
     {
-        if(bulletEngine != 0 && airFixation != 0)
+        if(airFixation != NULL)
         {
-            bulletEngine->getBulletDynamicsWorld()->removeConstraint(airFixation);
+            shapesFactory->getBulletEngine()->getBulletDynamicsWorld()->removeConstraint(airFixation);
             delete airFixation;
+            airFixation = NULL;
         }
     }
 
@@ -188,7 +182,7 @@ namespace GeneLabCore {
 
     FixationProperties *Fixation::getInspectorWidget()
     {
-        if(inspectorWidget == 0)
+        if(inspectorWidget == NULL)
             inspectorWidget = new FixationProperties();
 
         inspectorWidget->setFixation(this);
@@ -198,7 +192,7 @@ namespace GeneLabCore {
 
     FixationProperties *Fixation::getEmptyInspectorWidget()
     {
-        if(inspectorWidget == 0)
+        if(inspectorWidget == NULL)
             inspectorWidget = new FixationProperties();
 
         return inspectorWidget;

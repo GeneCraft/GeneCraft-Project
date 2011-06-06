@@ -31,5 +31,6 @@
         <file alias="bug_error">img/icons/bug_error.png</file>
         <file alias="bullet_feed">img/icons/bullet_feed.png</file>
         <file alias="brain_activity">img/icons/brain_activity.png</file>
+        <file alias="thumbtack">img/icons/thumbtack.png</file>
     </qresource>
 </RCC>

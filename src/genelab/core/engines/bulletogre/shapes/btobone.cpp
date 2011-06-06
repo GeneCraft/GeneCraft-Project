@@ -34,6 +34,7 @@ btoBone::btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
     nodeC = parentNode->createChildSceneNode();
 
     // Scale
+    originalCylinderBB = entityC->getBoundingBox();
     AxisAlignedBox boundingB = entityC->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
     Vector3 ogreSize(radius*2,length,radius*2);
     Vector3 scale = ogreSize  / boundingB.getSize();
@@ -67,6 +68,17 @@ void btoBone::setup()
     nodeS->attachObject(entityS);
     btoEngine->addBody(rigidBody,entityC,parentNode);
 }
+
+void btoBone::setSize(btScalar radius, btScalar length)
+{
+    btBone::setSize(radius,length);
+
+    // Scale
+    Vector3 ogreSize(radius*2,length,radius*2);
+    Vector3 scale = ogreSize  / originalCylinderBB.getSize();
+    nodeC->setScale(scale);	// the cube is too big for us
+}
+
 
 void btoBone::setSelected(bool selected)
 {

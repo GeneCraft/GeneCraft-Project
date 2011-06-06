@@ -308,18 +308,22 @@
     </attribute>
     <widget class="QPushButton" name="pbFixInTheAir">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
-       <width>111</width>
+       <y>90</y>
+       <width>171</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Fix / unfix in the air</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../ressources/ressources.qrc">
+       <normaloff>:/img/icons/thumbtack</normaloff>:/img/icons/thumbtack</iconset>
      </property>
     </widget>
     <widget class="QLineEdit" name="leX">
@@ -357,9 +361,9 @@
     <widget class="QPushButton" name="pbSetPosition">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>10</x>
        <y>50</y>
-       <width>111</width>
+       <width>171</width>
        <height>31</height>
       </rect>
      </property>

@@ -2,12 +2,14 @@
 
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
+#include <QDebug>
 
 #define PI 3.14159265
 
 namespace GeneLabCore {
 
-btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, const btTransform &transform)
+btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, const btTransform &transform) :
+    shape(NULL)
 {
     this->btEngine = btEngine;
     init(radius,height,5.0,transform);
@@ -42,7 +44,15 @@ void btCylinder::setup()
     if(btEngine != NULL && rigidBody != NULL)
         btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
     else
-        qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
+         qDebug() << Q_FUNC_INFO << ", btEngine == NULL || rigidBody == NULL";
+}
+
+void btCylinder::setSize(btScalar radius, btScalar height)
+{
+    if(shape != NULL)
+        shape->setLocalScaling(btVector3(radius,height/2.0,radius));
+    else
+        qDebug() << Q_FUNC_INFO << ", shape == NULL";
 }
 
 }

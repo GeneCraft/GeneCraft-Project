@@ -25,6 +25,7 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
 
     connect(this->ui->pbSaveChanges,SIGNAL(pressed()),this,SLOT(saveChanges()));
     connect(this->ui->pbDelete,SIGNAL(pressed()),this,SLOT(deleteBone()));
+    connect(this->ui->pbApplySize,SIGNAL(pressed()),this,SLOT(changeSize()));
     //connect(this->ui->pbRandomValues,SIGNAL(pressed()),this,SLOT(randomValues()));
     //connect(this->ui->pbResetMotors,SIGNAL(pressed()),this,SLOT(resetMotors()));
     connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
@@ -71,8 +72,13 @@ BonePropertiesController::~BonePropertiesController()
 
 void BonePropertiesController::deleteBone()
 {
-    delete bone;
-    bone = 0;
+    //delete bone;
+    //bone = 0;
+}
+
+void BonePropertiesController::changeSize()
+{
+    bone->setSize(this->ui->leRadius->text().toDouble(),this->ui->leLength->text().toDouble());
 }
 
 void BonePropertiesController::randomValues()
@@ -185,6 +191,9 @@ void BonePropertiesController::setBone(Bone * bone)
 
     if(bone != 0)
     {
+        this->ui->leLength->setText(QString::number(bone->getLength()));
+        this->ui->leRadius->setText(QString::number(bone->getRadius()));
+
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
         // Local transform

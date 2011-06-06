@@ -13,6 +13,7 @@ public:
 
     btoCylinder(BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform);
     void setup();
+    void setSize(btScalar radius, btScalar height);
 
 protected:
 

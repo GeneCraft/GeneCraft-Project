@@ -56,7 +56,7 @@ namespace GeneLabCore {
         void setSelected(bool isSelected);
 
         // TOOLS
-        void fixeInTheAir(const btVector3 &position);
+        void fixeInTheAir();
         void unfixInTheAir();
         bool isFixedInTheAir(){ return airFixation != 0; }
 

@@ -82,9 +82,9 @@ void FixationProperties::fixInTheAir()
         if(fixation->isFixedInTheAir())
             fixation->unfixInTheAir();
         else
-            fixation->fixeInTheAir(btVector3(ui->leX->text().toFloat(),
+            fixation->fixeInTheAir(/*btVector3(ui->leX->text().toFloat(),
                                              ui->leY->text().toFloat(),
-                                             ui->leZ->text().toFloat()));
+                                             ui->leZ->text().toFloat())*/);
     }
 }
 

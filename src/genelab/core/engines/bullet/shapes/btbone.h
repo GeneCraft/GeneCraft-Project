@@ -15,6 +15,7 @@ class btBone : public btShape
 public:
     explicit btBone(BulletEngine *btEngine, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
     virtual void setup();
+    virtual void setSize(btScalar radius, btScalar length);
 
 private:
 
@@ -25,6 +26,8 @@ protected:
     BulletEngine* btEngine;
     btCompoundShape* shape;
     btDefaultMotionState* motionState;
+    btCylinderShape* cylinderShape;
+    btSphereShape* sphereShape;
 
 };
 }
