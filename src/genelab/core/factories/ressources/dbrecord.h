@@ -12,7 +12,7 @@ namespace GeneLabCore {
         QString dbName;
     };
 
-    enum RequestType {GET, POST, PUT, DELETE};
+    enum RequestType {RGET, RPOST, RPUT, RDELETE};
 
     class DbRecord : public Ressource
     {

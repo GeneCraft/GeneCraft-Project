@@ -12,19 +12,21 @@
 
 namespace GeneLabCore {
     DbRecord::DbRecord(DataBase db, QString id, QObject *parent) :
-        Ressource(parent), db(db), id(id)
+        Ressource(parent), db(db), id(id), rev("")
     {
     }
 
     QVariant DbRecord::load() {
         QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
-        this->request(url, GET);
+        this->request(url, RGET);
+        qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
             this->id = v.find("_id").value().toString();
             this->rev = v.find("_rev").value().toString();
             return v;
         } else {
+            qDebug() << r->readAll();
             return QVariant();
         }
     }
@@ -33,13 +35,17 @@ namespace GeneLabCore {
         QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
         QVariantMap mData = data.toMap();
         mData.insert("_id", this->id);
-        mData.insert("_rev", this->rev);
+        if(this->rev != "")
+            mData.insert("_rev", this->rev);
 
-        this->request(url, PUT, QxtJSON::stringify(mData));
+        this->request(url, RPUT, QxtJSON::stringify(mData));
+        qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
             this->id = v.find("id").value().toString();
             this->rev = v.find("rev").value().toString();
+        } else {
+            qDebug() << r->readAll();
         }
     }
 
@@ -53,16 +59,16 @@ namespace GeneLabCore {
         QNetworkRequest req = QNetworkRequest(QUrl(url));
 
         switch(verb) {
-        case GET:
+        case RGET:
             pnam->get(req);
             break;
-        case POST:
+        case RPOST:
             pnam->post(req, data.toUtf8());
             break;
-        case PUT:
+        case RPUT:
             pnam->put(req, data.toUtf8());
             break;
-        case DELETE:
+        case RDELETE:
             pnam->deleteResource(req);
             break;
         }

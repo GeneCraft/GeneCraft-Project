@@ -33,6 +33,7 @@
 // Ressources
 #include "ressources/ressource.h"
 #include "ressources/jsonfile.h"
+#include "ressources/dbrecord.h"
 
 namespace GeneLabCore {
 
@@ -200,20 +201,26 @@ namespace GeneLabCore {
             }
         }
 
-        e = spider->createEntity(shapesFactory, btVector3(0,7,0));
+        e = ant->createEntity(shapesFactory, btVector3(0,7,0));
         //qDebug() << "ant setup !";
         e->setup();
         entitiesEngine->addEntity(e);
-        // Save Generic entity
-        for(int i = 0; i < 40; i++) {
 
-            Ressource* to = new JsonFile("ant"+QString::number(i)+".genome");
-            to->save(e->serialize());
+        DataBase db;
+        db.dbName = "genelab";
+        db.url = "http://www.ai-battle.org";
+        db.port = 80;
+
+        Ressource* r = new JsonFile("ant.genome"); // new DbRecord(db, "ant");
+
+        // Save Generic entity
+        for(int i = 0; i < 3; i++) {
+
+            r->save(e->serialize());
             qDebug() << "ant save !";
 
             // Load Generic Entity
-            Ressource* from = new JsonFile("ant"+QString::number(i)+".genome");
-            QVariant genotype = from->load();
+            QVariant genotype = r->load();
             e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(30,7,i*30));
             e->setup();
             entitiesEngine->addEntity(e);

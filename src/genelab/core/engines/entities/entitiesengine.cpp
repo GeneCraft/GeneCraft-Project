@@ -8,6 +8,9 @@
 #include "sensors/sensor.h"
 #include "modifiers/modifier.h"
 
+#include "widgets/entities/pluggriddesignvisualizer.h"
+#include "widgets/entities/pluggridvisualizer.h"
+
 namespace GeneLabCore {
 EntitiesEngine::EntitiesEngine()
 {
@@ -29,7 +32,27 @@ void EntitiesEngine::step()
         // step brains
         if(e->getBrain() != NULL) {
             e->getBrain()->getPlugGrid()->beforeStep();
+        }
+    }
+
+    foreach(PlugGridVisualizer* viz, gridVisualizers) {
+        viz->step();
+    }
+
+    foreach(PlugGridDesignVisualizer* vizD, gridDezVisualizers) {
+        vizD->step();
+    }
+
+    foreach(Entity* e, entities) {
+        // step brains
+        if(e->getBrain() != NULL) {
             e->getBrain()->step();
+        }
+    }
+
+    foreach(Entity* e, entities) {
+        // step brains
+        if(e->getBrain() != NULL) {
             e->getBrain()->getPlugGrid()->afterStep();
         }
     }
