@@ -120,6 +120,14 @@ BonePropertiesController *Bone::getInspectorWidget()
     return inspectorWidget;
 }
 
+BonePropertiesController *Bone::getEmptyInspectorWidget()
+{
+    if(inspectorWidget == 0)
+        inspectorWidget = new BonePropertiesController();
+
+    return inspectorWidget;
+}
+
 void Bone::setEntity(Entity *entity)
 {
     this->entity = entity;

@@ -46,13 +46,13 @@ namespace GeneLabCore {
         // GETTERS AND SETTERS
         QList<Bone *> &getBones()               { return bones; }
         QList<Sensor *> &getSensors()           { return sensors; }
-
         BulletEngine *getBulletEngine()         { return bulletEngine; }
         btScalar getRadius()                    { return radius; }
         void setEntity(Entity *entity);
         Entity *getEntity()                     { return entity; }
         btRigidBody *getRigidBody();
         FixationProperties *getInspectorWidget();
+        static FixationProperties *getEmptyInspectorWidget();
         void setSelected(bool isSelected);
 
         // TOOLS

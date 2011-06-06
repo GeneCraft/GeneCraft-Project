@@ -64,7 +64,7 @@ namespace GeneLabCore {
 
         fakeRender->setActive(false);
         fakeRender->setVisible(false);
-        fakeRender->destroy();
+        //fakeRender->destroy();
 
     }
 

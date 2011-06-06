@@ -196,6 +196,14 @@ namespace GeneLabCore {
         return inspectorWidget;
     }
 
+    FixationProperties *Fixation::getEmptyInspectorWidget()
+    {
+        if(inspectorWidget == 0)
+            inspectorWidget = new FixationProperties();
+
+        return inspectorWidget;
+    }
+
     void Fixation::setEntity(Entity * entity)
     {
         this->entity = entity;

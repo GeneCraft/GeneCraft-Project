@@ -6,6 +6,7 @@
 
 #include "genelabcoreclasses.h"
 #include "sensors/sensor.h"
+#include "modifiers/modifier.h"
 
 namespace GeneLabCore{
 
@@ -76,6 +77,23 @@ public:
 
     Sensor *sensor;
 };
+
+class EffectorListWidgetItem : public QListWidgetItem
+{
+public:
+
+    EffectorListWidgetItem(Modifier * effector)
+    {
+        this->effector = effector;
+        this->setIcon(QIcon(":/img/icons/motor_test"));
+        this->setText(effector->getTypeName());
+    }
+
+    Modifier *effector;
+};
+
+
+
 
 }
 

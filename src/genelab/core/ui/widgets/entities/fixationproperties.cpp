@@ -26,6 +26,8 @@ FixationProperties::FixationProperties(QWidget *parent) :
     connect(this->ui->pbFixInTheAir,SIGNAL(pressed()),this,SLOT(fixInTheAir()));
     connect(this->ui->pbSetPosition,SIGNAL(pressed()),this,SLOT(setPosition()));
     connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
+    connect(this->ui->pbSelectBone,SIGNAL(pressed()),this,SLOT(selectBone()));
+
 }
 
 FixationProperties::~FixationProperties()
@@ -92,6 +94,14 @@ void FixationProperties::setPosition()
         fixation->getRigidBody()->getWorldTransform().setOrigin(btVector3(ui->leX->text().toFloat(),
                                                             ui->leY->text().toFloat(),
                                                             ui->leZ->text().toFloat()));
+}
+
+void FixationProperties::selectBone()
+{
+    BoneListWidgetItem * boneItem = dynamic_cast<BoneListWidgetItem*>(this->ui->lwBones->selectedItems().at(0));
+
+    if (boneItem)
+        emit rigidBodySelected(boneItem->bone->getRigidBody());
 }
 
 void FixationProperties::addSensor()

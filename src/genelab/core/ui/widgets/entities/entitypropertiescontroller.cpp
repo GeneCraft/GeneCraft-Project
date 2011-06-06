@@ -9,6 +9,7 @@
 #include <QVariant>
 #include <QMetaType>
 #include <QLayout>
+#include "modifiers/modifier.h"
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent),
@@ -98,20 +99,43 @@ void EntityPropertiesController::resetBonesProperties()
 void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selectedBody)
 {
     this->entity = entity;
-
     ui->twBodyTree->clear();
 
     if(entity != 0)
     {
+        // Origins
         ui->lName->setText(entity->getName());
         ui->lFamily->setText(entity->getFamily());
 
+        // Bones
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
             setupBodyTree(entity->getShape()->getRoot(),selectedBody);
-    }
 
-    this->brainViz->setBrain(entity->getBrain());
-    this->brainDezViz->setBrain(entity->getBrain());
+        // Sensors
+        this->ui->lwSensors->clear();
+        int nbrBrainIn = 0;
+        foreach(Sensor *s, entity->getSensors()) {
+            this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
+            nbrBrainIn += s->getNbrBrainInputs();
+        }
+        this->ui->lNbrBrainInputs->setText(QString::number(nbrBrainIn));
+        this->ui->lNbrSensors->setText(QString::number(entity->getSensors().size()));
+
+        // Effectors
+        this->ui->lwEffectors->clear();
+        int nbrBrainOut = 0;
+        foreach(Modifier *e, entity->getModifiers()) {
+            this->ui->lwEffectors->addItem(new EffectorListWidgetItem(e));
+            nbrBrainOut += e->getOutputs().size();
+        }
+        this->ui->lNbrBrainOutputs->setText(QString::number(nbrBrainOut));
+        this->ui->lNbrEffectors->setText(QString::number(entity->getModifiers().size()));
+
+
+        // Brain
+        this->brainViz->setBrain(entity->getBrain());
+        this->brainDezViz->setBrain(entity->getBrain());
+    }
 }
 
 void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem)

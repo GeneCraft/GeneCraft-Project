@@ -42,6 +42,8 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+    connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
 }
 
 void BonePropertiesController::setOutFrom()
@@ -89,6 +91,11 @@ void BonePropertiesController::resetMotors()
         bone->resetMotors();
         setBone(bone);
     }
+}
+
+void BonePropertiesController::rigidBodySelectedFromFix(btRigidBody *rigidBody)
+{
+    emit rigidBodySelected(rigidBody);
 }
 
 void BonePropertiesController::saveChanges()

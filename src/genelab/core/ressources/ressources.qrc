@@ -30,5 +30,6 @@
         <file alias="bullet_physics_library_stop">img/icons/bullet_physics_library_stop.png</file>
         <file alias="bug_error">img/icons/bug_error.png</file>
         <file alias="bullet_feed">img/icons/bullet_feed.png</file>
+        <file alias="brain_activity">img/icons/brain_activity.png</file>
     </qresource>
 </RCC>

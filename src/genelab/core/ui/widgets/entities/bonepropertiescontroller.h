@@ -5,6 +5,7 @@
 #include "bodyitems.h"
 #include "genelabcoreclasses.h"
 #include "sensors/sensor.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 
 using namespace GeneLabCore;
 
@@ -19,6 +20,10 @@ class BonePropertiesController : public QWidget
 public:
     explicit BonePropertiesController(QWidget *parent = 0);
     ~BonePropertiesController();
+
+signals:
+
+    void rigidBodySelected(btRigidBody *);
 
 public slots:
 
@@ -36,6 +41,7 @@ private slots:
     void randomValues();
     void resetMotors();
     void setOutFrom();
+    void rigidBodySelectedFromFix(btRigidBody*);
 };
 
 #endif // BONEPROPERTIESCONTROLLER_H

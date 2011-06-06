@@ -35,6 +35,7 @@ public slots:
     void addSensor();
     void fixInTheAir();
     void setPosition();
+    void selectBone();
 
 private:
     Ui::FixationProperties *ui;

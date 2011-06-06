@@ -32,6 +32,7 @@ public:
    RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier;        }
    void setMotorModifierData(QVariant data) { this->motorModifierData = data; }
    BonePropertiesController *getInspectorWidget();
+   static BonePropertiesController *getEmptyInspectorWidget();
 
    void setBrainMotors();
    void setRandomMotors();

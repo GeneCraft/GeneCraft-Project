@@ -97,8 +97,7 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     EventManager *eventsManager =  static_cast<EventManager*>(factory->getEngines().find("Event").value());
     eventsManager->addListener(cvim);
 
-    // connect listener to window
-    connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+
 
     // ------------------------
     // -- Simulation Manager --
@@ -117,7 +116,11 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     ee->addPlugGridVisualizer(bViz);
     Entity::getInspectorWidget()->setBrainViz(bViz);
     Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
-    // Connection to Inspectors
+
+    // connect emitter of rigidBodySelected
+    connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+    connect(Fixation::getEmptyInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+    connect(Bone::getEmptyInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
     connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 
     qDebug() << "Start simulation";
