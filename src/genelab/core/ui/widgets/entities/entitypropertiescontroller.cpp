@@ -28,6 +28,9 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     connect(this->ui->rbOutFrom_Brain,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_Disable,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+
+    connect(this->ui->pbSelectFixation,SIGNAL(clicked()),this,SLOT(selectSensorFixation()));
+
 }
 
 EntityPropertiesController::~EntityPropertiesController()
@@ -106,6 +109,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         // Origins
         ui->lName->setText(entity->getName());
         ui->lFamily->setText(entity->getFamily());
+        ui->lGeneration->setText(QString::number(entity->getGeneration()));
 
         // Bones
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
@@ -116,7 +120,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         int nbrBrainIn = 0;
         foreach(Sensor *s, entity->getSensors()) {
             this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
-            nbrBrainIn += s->getNbrBrainInputs();
+            nbrBrainIn += s->getInputs().size();
         }
         this->ui->lNbrBrainInputs->setText(QString::number(nbrBrainIn));
         this->ui->lNbrSensors->setText(QString::number(entity->getSensors().size()));
@@ -203,4 +207,17 @@ void EntityPropertiesController::setBrainViz(PlugGridVisualizer *brainViz) {
 void EntityPropertiesController::setBrainDesignViz(PlugGridDesignVisualizer *brainDezViz) {
        this->brainDezViz = brainDezViz;
        this->ui->tabBrainStruct->layout()->addWidget(brainDezViz);
+}
+
+void EntityPropertiesController::selectSensorFixation()
+{
+    if(ui->lwSensors->selectedItems().size() > 0)
+    {
+        SensorListWidgetItem * sensorItem = dynamic_cast<SensorListWidgetItem*>(ui->lwSensors->selectedItems()[0]);
+
+        if (sensorItem)
+        {
+            emit rigidBodySelected(sensorItem->sensor->getFixation()->getRigidBody());
+        }
+    }
 }

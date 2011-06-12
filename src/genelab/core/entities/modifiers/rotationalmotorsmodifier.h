@@ -57,10 +57,18 @@ public:
 
     RotationalMotorsModifier(btGeneric6DofConstraint * constraint);
     RotationalMotorsModifier(QVariant data, btGeneric6DofConstraint* ct);
-    virtual QVariant serialize();
 
+    // used to know if the motor is disabled
     bool isDisable()        { return m_isDisable; }
+
+    // used to know the origins of motors actions
     int getOutPutsFrom()    { return outputsFrom; }
+
+    /**
+     * used to get a seralised representation of effector
+     * (don't return the state of the motors but only the structure)
+     */
+    virtual QVariant serialize();
 
 //    static const int OUTPUTS_FROM_NORMAL_POSITION;
 //    static const int OUTPUTS_FROM_BRAIN;
@@ -70,21 +78,35 @@ signals:
 
 public slots:
 
+    // used to set the origins of motors actions
     void setOutputsFrom(int outputsFrom);
+
+    // used to disable effector
     void disable();
+
+    // used to update motors
     void step();
 
 private:
+
+    // origin of motor
     btGeneric6DofConstraint * constraint;
 
-    bool random;
+    // effector is active
     bool m_isDisable;
+
+    // motor action define by : random, brain or normal position
     int outputsFrom;
 
-    // Six outputs from brain
-    // Two by motors
-    BrainOutMotor * brainOutputs[3];
+    // used for random outputs
     SinusIn* sinusIn[2];
+
+    // Three motors by muscle (X,Y,Z)
+    BrainOutMotor * brainOutputs[3];
+
+    // Stabilisation properties
+    btScalar normalPositionMaxError;
+    btScalar normalPositionFactor;
 };
 
 //const int RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION = 0;

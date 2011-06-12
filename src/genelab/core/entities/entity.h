@@ -20,6 +20,7 @@ namespace GeneLabCore {
         // Origins
         const QString &getName() { return name; }
         const QString &getFamily() { return family; }
+        int getGeneration() { return generation; }
 
         // Shape
         TreeShape* getShape();

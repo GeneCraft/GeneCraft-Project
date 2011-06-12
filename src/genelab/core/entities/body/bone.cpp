@@ -172,7 +172,6 @@ void Bone::resetMotors()
     }
 }
 
-
 void Bone::setyAxis(btScalar yAxis) {
     this->yAxis = yAxis;
     btQuaternion local1;

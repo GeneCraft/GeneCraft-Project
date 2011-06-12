@@ -30,8 +30,7 @@ public:
 
     const QString &getTypeName() { return typeName; }
     const QList<BrainIn *> getInputs() { return brainInputs; }
-
-    inline int getNbrBrainInputs() { return brainInputs.size(); }
+    inline Fixation *getFixation() { return fixation; }
 
 signals:
 

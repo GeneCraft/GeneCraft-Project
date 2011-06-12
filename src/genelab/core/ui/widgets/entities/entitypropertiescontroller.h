@@ -35,6 +35,7 @@ public slots:
     void setOutFrom();
     void resetBonesProperties();
     void itemClicked(QTreeWidgetItem *,int);
+    void selectSensorFixation();
 
 private:
 

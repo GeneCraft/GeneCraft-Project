@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>798</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -84,13 +84,16 @@
   <widget class="QDockWidget" name="dwCreature">
    <property name="minimumSize">
     <size>
-     <width>150</width>
+     <width>400</width>
      <height>150</height>
     </size>
    </property>
    <property name="windowIcon">
     <iconset resource="../../../../core/ressources/ressources.qrc">
      <normaloff>:/img/icons/entity</normaloff>:/img/icons/entity</iconset>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Creature</string>
@@ -103,7 +106,7 @@
   <widget class="QDockWidget" name="dwInspector">
    <property name="minimumSize">
     <size>
-     <width>150</width>
+     <width>400</width>
      <height>150</height>
     </size>
    </property>
@@ -113,6 +116,9 @@
    </property>
    <property name="floating">
     <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Inspector</string>
