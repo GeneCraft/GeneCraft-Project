@@ -28,6 +28,7 @@ protected:
     btScalar legRadius;
     btScalar legLenght;
     btScalar kneeRadius;
+    btScalar headRadius;
 
 private:
 

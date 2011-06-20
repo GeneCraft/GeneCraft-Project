@@ -78,7 +78,7 @@ namespace GeneLabCore {
         // Connexion de l'input au plug grid !
         for(int i = 0; i < sensor->getInputs().size(); i++) {
             // little cheat
-            for(int j = sensor->getInputs()[i]->getConnexions().size(); j < 1; j++) {
+            for(int j = sensor->getInputs()[i]->getConnexions().size(); j < 2; j++) {
                 sensor->getInputs()[i]->connectTo(qrand()%brain->getPlugGrid()->getSize(),
                                                   qrand()%brain->getPlugGrid()->getSize(), ((float)qrand())/RAND_MAX*2 -1);
             }

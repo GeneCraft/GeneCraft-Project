@@ -194,7 +194,7 @@ float sigmoid(float x)
             if(a == 0)
                 return 0;
 
-            return qAbs(a)/a;
+            return qAbs(a)/a    ;
 
         case LOG:
             a = apply(it, end);
