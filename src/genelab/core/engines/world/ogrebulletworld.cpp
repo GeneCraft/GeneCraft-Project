@@ -9,7 +9,7 @@
 
 // Engines
 #include "mainfactory.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 #include "ogre/ogreengine.h"
 #include "bullet/bulletengine.h"
 #include "bulletogre/bulletogreengine.h"
@@ -66,7 +66,8 @@ namespace GeneLabCore {
 
         // lights
         sceneManager->setAmbientLight(Ogre::ColourValue(0.4, 0.4, 0.4));
-        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+        //sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+
 
         /*
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
@@ -178,10 +179,19 @@ namespace GeneLabCore {
 
         // Spider
         qDebug() << "Spider creation !";
-        Spider *spider = new Spider();
+        qDebug() << time(NULL);
+        srand(time(NULL));
+        qsrand(time(NULL));
+        int b = 0;
+        for(int i = 0; i < 1000; i++) {
+            int a = rand();
+            b += a;
+        }
+        qDebug() << b;
         Entity* e;
-        for(int i = 0; i < 0; i++) {
-            for(int j = 0; j < 0; j++) {
+        for(int i = 0; i < 5; i++) {
+            for(int j = 0; j < 1; j++) {
+                Spider *spider = new Spider();
                 e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "spider setup !";
                 e->setup();
@@ -194,17 +204,17 @@ namespace GeneLabCore {
         Ant *ant = new Ant();
         for(int i = 0; i < 0; i++) {
             for(int j = 0; j < 0; j++) {
-                e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
+                //e = ant->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 //qDebug() << "ant setup !";
-                e->setup();
-                entitiesEngine->addEntity(e);
+                //e->setup();
+                //entitiesEngine->addEntity(e);
             }
         }
 
-        e = ant->createEntity(shapesFactory, btVector3(0,7,0));
+        //e = ant->createEntity(shapesFactory, btVector3(0,7,0));
         //qDebug() << "ant setup !";
-        e->setup();
-        entitiesEngine->addEntity(e);
+        //e->setup();
+        //entitiesEngine->addEntity(e);
 
         DataBase db;
         db.dbName = "genelab";
@@ -216,14 +226,14 @@ namespace GeneLabCore {
         // Save Generic entity
         for(int i = 0; i < 3; i++) {
 
-            r->save(e->serialize());
+            //r->save(e->serialize());
             qDebug() << "ant save !";
 
             // Load Generic Entity
-            QVariant genotype = r->load();
-            e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(30,7,i*30));
-            e->setup();
-            entitiesEngine->addEntity(e);
+            //QVariant genotype = r->load();
+            //e = GenericFamily::createEntity(genotype, shapesFactory, btVector3(30,7,i*30));
+            //e->setup();
+            //entitiesEngine->addEntity(e);
         }
 
 
