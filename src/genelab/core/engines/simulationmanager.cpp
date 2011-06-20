@@ -39,18 +39,14 @@ namespace GeneLabCore {
 
     void SimulationManager::update()
     {
-        for(int i = 0; i < engines.size(); i++) {
-            Engine* e = engines[engines.keys()[i]];
+        foreach(Engine* e, engines)
             e->beforeStep();
-        }
-        for(int i = 0; i < engines.size(); i++) {
-            Engine* e = engines[engines.keys()[i]];
+
+        foreach(Engine* e, engines)
             e->step();
-        }
-        for(int i = 0; i < engines.size(); i++) {
-            Engine* e = engines[engines.keys()[i]];
+
+        foreach(Engine* e, engines)
             e->afterStep();
-        }
     }
 }
 
