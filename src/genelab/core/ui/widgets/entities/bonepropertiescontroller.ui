@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
-    <height>622</height>
+    <width>370</width>
+    <height>695</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,7 +31,7 @@
      <x>0</x>
      <y>0</y>
      <width>371</width>
-     <height>181</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -45,7 +45,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>260</y>
      <width>351</width>
      <height>17</height>
     </rect>
@@ -69,7 +69,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>290</y>
      <width>350</width>
      <height>389</height>
     </rect>
@@ -118,6 +118,15 @@
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="1">
          <widget class="QLabel" name="lEulerRot">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(107, 128, 166);</string>
+          </property>
           <property name="text">
            <string>Orientation</string>
           </property>
@@ -126,7 +135,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="3" colspan="2">
+        <item row="0" column="4" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
            <widget class="QLabel" name="label_11">
@@ -135,6 +144,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(107, 128, 166);</string>
             </property>
             <property name="text">
              <string>Roll</string>
@@ -146,6 +158,9 @@
           </item>
           <item>
            <widget class="QLabel" name="label_10">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(107, 128, 166);</string>
+            </property>
             <property name="text">
              <string>Yaw</string>
             </property>
@@ -156,7 +171,7 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="3">
+        <item row="1" column="4">
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QDial" name="dEulerRotY">
@@ -198,7 +213,7 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="4">
+        <item row="1" column="5">
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QDial" name="dEulerRotZ">
@@ -237,24 +252,14 @@
           </item>
          </layout>
         </item>
-        <item row="2" column="1" rowspan="2" colspan="4">
+        <item row="2" column="1" rowspan="2" colspan="5">
          <widget class="Line" name="line_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
-         <widget class="QLabel" name="lAngularLowerLimit_title">
-          <property name="text">
-           <string>Lower Limits</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="2">
+        <item row="6" column="3">
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QDial" name="dAngularLowerLimitX">
@@ -293,7 +298,7 @@
           </item>
          </layout>
         </item>
-        <item row="6" column="3">
+        <item row="6" column="4">
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QDial" name="dAngularLowerLimitY">
@@ -332,7 +337,7 @@
           </item>
          </layout>
         </item>
-        <item row="6" column="4">
+        <item row="6" column="5">
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
            <widget class="QDial" name="dAngularLowerLimitZ">
@@ -381,7 +386,7 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="2">
+        <item row="7" column="3">
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <widget class="QDial" name="dAngularUpperLimitX">
@@ -420,7 +425,7 @@
           </item>
          </layout>
         </item>
-        <item row="7" column="3">
+        <item row="7" column="4">
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <widget class="QDial" name="dAngularUpperLimitY">
@@ -459,7 +464,7 @@
           </item>
          </layout>
         </item>
-        <item row="7" column="4">
+        <item row="7" column="5">
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <widget class="QDial" name="dAngularUpperLimitZ">
@@ -501,10 +506,13 @@
           </item>
          </layout>
         </item>
-        <item row="4" column="2" colspan="3">
+        <item row="4" column="3" colspan="3">
          <layout class="QHBoxLayout" name="horizontalLayout_12">
           <item>
            <widget class="QLabel" name="label_6">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(107, 128, 166);</string>
+            </property>
             <property name="text">
              <string>X</string>
             </property>
@@ -515,6 +523,9 @@
           </item>
           <item>
            <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(107, 128, 166);</string>
+            </property>
             <property name="text">
              <string>Y</string>
             </property>
@@ -525,6 +536,9 @@
           </item>
           <item>
            <widget class="QLabel" name="label_4">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(107, 128, 166);</string>
+            </property>
             <property name="text">
              <string>Z</string>
             </property>
@@ -537,8 +551,63 @@
         </item>
         <item row="4" column="1">
          <widget class="QLabel" name="label_7">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(107, 128, 166);</string>
+          </property>
           <property name="text">
            <string>Angular liberty</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="3">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="2">
+         <spacer name="horizontalSpacer_22">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLabel" name="lAngularLowerLimit_title">
+          <property name="text">
+           <string>Lower Limits</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="lAngularLowerLimit_title_2">
+          <property name="text">
+           <string>Initial rotation</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
          </widget>
         </item>
@@ -1192,87 +1261,127 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
      </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Length</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="leLength"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QSlider" name="sLength">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>20000</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-       <property name="tickInterval">
-        <number>1000</number>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Radius</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="leRadius"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QSlider" name="sRadius">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>5000</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-       <property name="tickInterval">
-        <number>1000</number>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_14">
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbApplySize">
-         <property name="text">
-          <string>Resize</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+     </item>
+     <item row="14" column="0">
+      <layout class="QGridLayout" name="gridLayout_3"/>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Size</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="8" column="0">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Length</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLineEdit" name="leLength">
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="leRadius">
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Radius</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSlider" name="sLength">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>20000</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>1000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSlider" name="sRadius">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>1000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="pbApplySize">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Resize</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
     </layout>
    </widget>

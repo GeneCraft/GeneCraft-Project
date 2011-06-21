@@ -21,7 +21,7 @@ namespace GeneLabCore {
     void SimulationManager::setup() {
         stepTimer = new QTimer();
         renderTimer = new QTimer();
-        renderTimer->setInterval(1000/30); // 30fps
+        renderTimer->setInterval(1000/40); // 30fps
         stepTimer->setInterval(1000/stepBySec); // 60 frames by sec
         connect(stepTimer, SIGNAL(timeout()), this, SLOT(update()));
         connect(renderTimer, SIGNAL(timeout()), this, SLOT(renderUpdate()));

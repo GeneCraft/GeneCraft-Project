@@ -9,6 +9,7 @@
 #include <Ogre.h>
 #include "genelabcoreclasses.h"
 #include "events/inputlistener.h"
+#include <QTime>
 
 namespace GeneLabCore {
 
@@ -59,6 +60,7 @@ private:
 
     // Angular
     Ogre::Real lookSensibility;
+    QTime t;
 
     // Action status
     bool forwardKeyPressed;

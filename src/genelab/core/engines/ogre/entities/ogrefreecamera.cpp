@@ -10,10 +10,10 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
     this->ogreCamera = ogreCamera;
 
     // Movement parameters
-    initialMovementSpeed    = 0.05;
+    initialMovementSpeed    = 1.4;
     movementSpeed           = initialMovementSpeed;
-    maxMovementSpeed        = 1.0;
-    movementAcceleration    = 1.05;
+    maxMovementSpeed        = 60.0; // meter / s
+    movementAcceleration    = 1.06;
     movementDeceleration    = 1.1;
 
     // Look parameters
@@ -115,6 +115,11 @@ void OgreFreeCamera::keyReleaseEvent(QKeyEvent *e)
 
 void OgreFreeCamera::step()
 {
+    if(t.elapsed() == 0.0)
+       t.start();
+
+    qDebug() << t.elapsed()/1000.0;
+    Ogre::Real elapsedTime = t.elapsed()/1000.0;
 
     // any movement key are pressed
     if(forwardKeyPressed || backwardKeyPressed
@@ -147,7 +152,7 @@ void OgreFreeCamera::step()
         vMovementDirection.normalise();
 
         // apply speed and move the camera
-        ogreCamera->move(vMovementDirection * movementSpeed);
+        ogreCamera->move(vMovementDirection * movementSpeed * elapsedTime);
 
         // save the direction for deceleration
         lastMovementDirection = vMovementDirection;
@@ -162,8 +167,10 @@ void OgreFreeCamera::step()
             movementSpeed = initialMovementSpeed;
         else
             // continue to move in the last direction
-            ogreCamera->move(lastMovementDirection * movementSpeed);
+            ogreCamera->move(lastMovementDirection * movementSpeed * elapsedTime);
     }
+
+    t.restart();
 }
 
 void OgreFreeCamera::enterViewPortEvent (QEvent *e)
