@@ -62,6 +62,7 @@ QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
 win32 {
     LIBS += -L../lib/bullet/lib
     LIBS += -L../lib/qxt/lib
+    LIBS += -L../lib/ogre/bin/Release
     LIBS += -lQxtCore
     LIBS += -lOgreMain -lOIS
 }
