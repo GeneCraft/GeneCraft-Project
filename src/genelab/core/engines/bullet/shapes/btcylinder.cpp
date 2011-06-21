@@ -1,5 +1,7 @@
 #include "btcylinder.h"
 
+#include "world/btworld.h"
+
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>
@@ -8,10 +10,9 @@
 
 namespace GeneLabCore {
 
-btCylinder::btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, const btTransform &transform) :
-    shape(NULL)
+btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform) :
+        btShape(world), shape(NULL)
 {
-    this->btEngine = btEngine;
     init(radius,height,5.0,transform);
 }
 
@@ -41,8 +42,8 @@ void btCylinder::init(btScalar radius, btScalar height, btScalar density, const 
 
 void btCylinder::setup()
 {
-    if(btEngine != NULL && rigidBody != NULL)
-        btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
+    if(world != NULL && rigidBody != NULL)
+        world->getBulletWorld()->addRigidBody(rigidBody);
     else
          qDebug() << Q_FUNC_INFO << ", btEngine == NULL || rigidBody == NULL";
 }

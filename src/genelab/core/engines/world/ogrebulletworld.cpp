@@ -48,7 +48,7 @@ namespace GeneLabCore {
     void OgreBulletWorld::setup() {
 
         // BTO world
-        OgreEngine* ogreEngine = btoEngine->getOgreEngine();
+        /*OgreEngine* ogreEngine = btoEngine->getOgreEngine();
         // BT world
         BulletEngine* btEngine = btoEngine->getBulletEngine();
 
@@ -86,7 +86,7 @@ namespace GeneLabCore {
         directionalLight->setDiffuseColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setSpecularColour(Ogre::ColourValue(.25, .25, .25));
         directionalLight->setDirection(Ogre::Vector3( 0, -1, 1 ));
- */
+
 
         Ogre::Light* spotLight = sceneManager->createLight("spotLight");
         spotLight->setType(Ogre::Light::LT_SPOTLIGHT);
@@ -110,7 +110,7 @@ namespace GeneLabCore {
             qDebug() << matName;
 
             materialIterator.moveNext();
-        }*/
+        }
 
         // --------------------------
         // -- Content of the scene --
@@ -173,7 +173,7 @@ namespace GeneLabCore {
         transformCylinder.setOrigin(btVector3(0,15,0));
         btCylinder * cylinder = shapesFactory->createCylinder(0.5,4,transformCylinder);
         //btoCylinder * cylinder = new btoCylinder(btoEngine,0.5,4,btVector3(0,15,0));
-        cylinder->setup();*/
+        cylinder->setup();
 
         // --------------
         // -- Entities --
@@ -308,7 +308,7 @@ namespace GeneLabCore {
 
         OgreBulletDynamics::RigidBody *boxA = SandboxTools::addBox(ogreManager,bulletManager,Ogre::Vector3(1,10,1),Ogre::Vector3(1,2,1),*q1);
         OgreBulletDynamics::RigidBody *boxB = SandboxTools::addBox(ogreManager,bulletManager,Ogre::Vector3(1,12,1),Ogre::Vector3(1,2,1),*q1);
-        */
+
 
         // Snake
         //QMap<QString, QString> map;
@@ -327,7 +327,7 @@ namespace GeneLabCore {
     //        motor->m_enableMotor = true;
     //        motor->m_targetVelocity = 200;
     //        motor->m_maxMotorForce = 1000;
-    //    }
+    //    }*/
 
     }
 }

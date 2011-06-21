@@ -13,7 +13,7 @@ class btBone : public btShape
 {
     Q_OBJECT
 public:
-    explicit btBone(BulletEngine *btEngine, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
+    explicit btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
     virtual void setup();
     virtual void setSize(btScalar radius, btScalar length);
 

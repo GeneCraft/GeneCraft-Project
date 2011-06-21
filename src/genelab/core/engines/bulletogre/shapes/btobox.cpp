@@ -1,5 +1,7 @@
 #include "btobox.h"
 
+#include "world/btoworld.h"
+
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
 
@@ -9,8 +11,8 @@ using namespace Ogre;
 
 int btoBox::mNumEntitiesInstanced = 0;
 
-btoBox::btoBox(BulletOgreEngine *btoEngine, btVector3 size, const btTransform &transform)
-    : btBox(btoEngine->getBulletEngine(),size,transform)
+btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, const btTransform &transform)
+    : btBox(world, size, transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();

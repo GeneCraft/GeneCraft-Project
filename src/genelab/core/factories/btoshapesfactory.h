@@ -9,7 +9,7 @@ namespace GeneLabCore {
 class btoShapesFactory : public btShapesFactory
 {
 public:
-    btoShapesFactory(BulletOgreEngine *btoEngine);
+    btoShapesFactory(btoWorld* world, BulletOgreEngine *btoEngine);
 
     virtual btBox *createBox(btVector3 size, const btTransform &transform);
     virtual btSphere *createSphere(btScalar radius, const btTransform &transform);

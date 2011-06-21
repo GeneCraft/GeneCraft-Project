@@ -9,6 +9,9 @@
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
 
+// World
+#include "world/btworld.h"
+
 // Shape
 #include "body/bone.h"
 #include "btshapesfactory.h"
@@ -106,14 +109,14 @@ namespace GeneLabCore {
         ct->setAngularUpperLimit(btVector3(0,0,0));
         airFixation = ct;
 
-        shapesFactory->getBulletEngine()->getBulletDynamicsWorld()->addConstraint(ct);
+        shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct);
     }
 
     void Fixation::unfixInTheAir()
     {
         if(airFixation != NULL)
         {
-            shapesFactory->getBulletEngine()->getBulletDynamicsWorld()->removeConstraint(airFixation);
+            shapesFactory->getWorld()->getBulletWorld()->removeConstraint(airFixation);
             delete airFixation;
             airFixation = NULL;
         }

@@ -34,6 +34,8 @@ public:
     void enterViewPortEvent(QEvent *e);
     void leaveViewPortEvent(QEvent *e);
 
+    void setWorld(btoWorld* world);
+
 signals:
 
     void rigidBodySelected(btRigidBody *rigidBody);
@@ -46,6 +48,7 @@ private:
     BulletOgreEngine* btoEngine;
     int mNumEntitiesInstanced;
     QPoint mousePos;
+    btoWorld* world;
 
 };
 

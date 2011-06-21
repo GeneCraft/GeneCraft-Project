@@ -11,7 +11,7 @@ namespace GeneLabCore {
 class btSphere : public btShape
 {
 public:
-    btSphere(BulletEngine *btEngine, btScalar radius, const btTransform &transform);
+    btSphere(btWorld *btWorld, btScalar radius, const btTransform &transform);
     virtual void setup();
 
 private:

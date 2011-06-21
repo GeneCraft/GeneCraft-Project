@@ -2,8 +2,8 @@
 
 namespace GeneLabCore {
 
-btShape::btShape(QObject *parent) :
-    QObject(parent), btEngine(NULL), rigidBody(NULL)//, collisionShape(NULL)
+btShape::btShape(btWorld* world, QObject *parent) :
+    QObject(parent), world(world), rigidBody(NULL)//, collisionShape(NULL)
 {
 }
 

@@ -5,6 +5,7 @@
 
 #include "genelabcoreclasses.h"
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "LinearMath/btTransform.h"
 
 #include <deque>
@@ -15,12 +16,32 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit btWorld(QObject *parent = 0);
+        explicit btWorld(MainFactory* factory, QObject *parent = 0);
 
         // To create a new creature
-        btTransform getSpawnPosition();
+        virtual btTransform getSpawnPosition();
+
         // To add a created creature to the world
-        void addCreature(Entity* ent);
+        virtual void addCreature(Entity* ent);
+
+        // To set the scene
+        virtual void setScene(btScene* scene) {
+            this->scene = scene;
+        }
+
+        // To set the biome
+        virtual void setBiome(btBiome* biome) {
+            this->biome = biome;
+        }
+
+
+        btScene* getScene() { return scene; }
+        btBiome* getBiome() { return biome; }
+
+        btDynamicsWorld* getBulletWorld() { return world; }
+
+        // To setup the world
+        virtual void setup();
 
     signals:
 
@@ -29,27 +50,21 @@ namespace GeneLabCore {
     protected:
         // Static object (ground, etc..)
         btScene*  scene;
+
         // Static parameters (gravity, etc...)
         btBiome*  biome;
 
         // Bullet engine
-        BulletEngine*     bEngine;
+        BulletEngine*   btEngine;
+
         // Entity engine
-        EntitiesEngine*   entitiesEngine;
+        EntitiesEngine* entitiesEngine;
 
-        // OgreBullet World
-        OgreBulletDynamics::DynamicsWorld *mWorld;
-        OgreBulletCollisions::DebugDrawer *debugDrawer;
+        // Factory in case of
+        MainFactory* factory;
 
-        // for entity "counting"
-        int mNumEntitiesInstanced;
-        // WTF ?
-        int mMoveSpeed;
-
-        // Rigid body created... don't know the purpose right now...
-        std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
-        std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
-
+        // Bullet world
+        btDynamicsWorld* world;
     };
 
 }

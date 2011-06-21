@@ -11,7 +11,7 @@ namespace GeneLabCore {
 class btCylinder : public btShape
 {
 public:
-    btCylinder(BulletEngine *btEngine, btScalar radius, btScalar height, const btTransform &transform);
+    btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform);
     virtual void setup();
     virtual void setSize(btScalar radius, btScalar height);
 

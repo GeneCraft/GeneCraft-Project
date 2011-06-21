@@ -10,11 +10,10 @@ class btShapesFactory
 {
 public:
 
-    btShapesFactory(BulletEngine *btEngine);
+    btShapesFactory(btWorld *world);
 
-    BulletEngine *getBulletEngine()
-    {
-        return btEngine;
+    virtual btWorld* getWorld() {
+        return world;
     }
 
     virtual btBox *createBox(btVector3 size, const btTransform &transform);
@@ -22,7 +21,7 @@ public:
     virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform);
     virtual btBone  *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
 protected:
-    BulletEngine *btEngine;
+    btWorld* world;
 };
 
 }

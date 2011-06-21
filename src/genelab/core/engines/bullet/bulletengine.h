@@ -15,11 +15,17 @@ namespace GeneLabCore {
 
         explicit BulletEngine(QObject *parent = 0);
 
-        //OgreBulletDynamics::DynamicsWorld *getDynamicsWorld();
-
-        btDynamicsWorld *getBulletDynamicsWorld()
+        /*btDynamicsWorld *getBulletDynamicsWorld()
         {
             return bulletDynamicsWorld;
+        }*/
+
+        void addWorld(btDynamicsWorld* world) {
+            this->worldList.append(world);
+        }
+
+        void removeWorld(btDynamicsWorld* world) {
+            this->worldList.removeAll(world);
         }
 
         inline void setPhysicsEnable(bool physicsEnable){
@@ -35,16 +41,10 @@ namespace GeneLabCore {
     public slots:
 
         void step();
-        void init(/*OgreEngine* ogreRoot*/);
 
     protected:
 
-        btDynamicsWorld *bulletDynamicsWorld;
-
-        // OgreBullet World
-        //OgreBulletDynamics::DynamicsWorld *mWorld;
-        //OgreBulletCollisions::DebugDrawer *debugDrawer;
-
+        QList<btDynamicsWorld*> worldList;
         bool physicsEnable;
     };
 }

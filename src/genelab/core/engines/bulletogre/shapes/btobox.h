@@ -11,7 +11,7 @@ class btoBox : public btBox
 {
 public:
 
-    btoBox(BulletOgreEngine *btoEngine, btVector3 size, const btTransform &transform);
+    btoBox(btoWorld *world, BulletOgreEngine *btoEngine, btVector3 size, const btTransform &transform);
     void setup();
 
 protected:

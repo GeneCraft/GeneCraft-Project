@@ -1,6 +1,9 @@
 #include "btsphere.h"
 
 #include <QDebug>
+
+#include "world/btworld.h"
+
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
@@ -9,9 +12,8 @@
 
 namespace GeneLabCore {
 
-btSphere::btSphere(BulletEngine *btEngine, btScalar radius, const btTransform &transform)
+    btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform) : btShape(world)
 {
-    this->btEngine = btEngine;
 
     init(radius, 2, transform);
 }
@@ -44,8 +46,8 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
 
 void btSphere::setup()
 {
-    if(btEngine != NULL && rigidBody != NULL)
-        btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
+    if(world != NULL && rigidBody != NULL)
+        world->getBulletWorld()->addRigidBody(rigidBody);
     else
         qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
 }

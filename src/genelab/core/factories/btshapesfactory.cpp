@@ -7,28 +7,28 @@
 
 namespace GeneLabCore {
 
-btShapesFactory::btShapesFactory(BulletEngine *btEngine)
+btShapesFactory::btShapesFactory(btWorld *world)
 {
-    this->btEngine = btEngine;
+    this->world = world;
 }
 
 btBox *btShapesFactory::createBox(btVector3 size, const btTransform &transform)
 {
-    return new btBox(btEngine,size, transform);
+    return new btBox(world,size, transform);
 }
 
 btSphere *btShapesFactory::createSphere(btScalar radius, const btTransform &transform)
 {
-    return new btSphere(btEngine,radius, transform);
+    return new btSphere(world,radius, transform);
 }
 
 btCylinder *btShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform)
 {
-    return new btCylinder(btEngine,radius,height, transform);
+    return new btCylinder(world,radius,height, transform);
 }
 
 btBone* btShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) {
-    return new btBone(btEngine, length, radius, radiusArticulation, transform);
+    return new btBone(world, length, radius, radiusArticulation, transform);
 }
 
 }

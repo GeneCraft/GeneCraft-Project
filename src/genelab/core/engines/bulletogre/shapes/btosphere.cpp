@@ -1,5 +1,7 @@
 #include "btosphere.h"
 
+#include "world/btoworld.h"
+
 #include <QDebug>
 #include "ogre/ogreengine.h"
 #include "OgreSceneManager.h"
@@ -12,8 +14,8 @@ using namespace Ogre;
 
 int btoSphere::mNumSpheresInstanced = 0;
 
-btoSphere::btoSphere(BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform)
-    :btSphere(btoEngine->getBulletEngine(),radius,transform)
+btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform)
+    :btSphere(world, radius, transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();

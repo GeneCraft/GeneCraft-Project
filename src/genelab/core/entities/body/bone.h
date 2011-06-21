@@ -77,6 +77,9 @@ protected:
    // Engine
    BulletEngine *bulletEngine;
 
+   // Shape factory
+   btShapesFactory* shapesFactory;
+
    // Qt Render
    static BonePropertiesController *inspectorWidget;
 

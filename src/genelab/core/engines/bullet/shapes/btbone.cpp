@@ -1,13 +1,13 @@
 #include "btbone.h"
+#include "world/btworld.h"
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>
 
 namespace GeneLabCore {
-btBone::btBone(BulletEngine *btEngine, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
-    btShape()
+btBone::btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
+    btShape(world)
 {
-    this->btEngine = btEngine;
     this->init(length, radius, radiusArticulation, 5.0, transform);
 }
 
@@ -49,8 +49,8 @@ void btBone::init(btScalar length,
 
 void btBone::setup()
 {
-    if(btEngine != NULL && rigidBody != NULL)
-        btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
+    if(world != NULL && rigidBody != NULL)
+        world->getBulletWorld()->addRigidBody(rigidBody);
 }
 
 void btBone::setSize(btScalar radius, btScalar length)

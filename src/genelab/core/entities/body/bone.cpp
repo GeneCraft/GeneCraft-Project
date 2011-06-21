@@ -23,6 +23,8 @@
 // Others
 #include "tools.h"
 
+// World
+#include "world/btworld.h"
 
 
 namespace GeneLabCore {
@@ -36,9 +38,8 @@ Bone::Bone(btShapesFactory *shapesFactory,
 
     motorModifierData = QVariant(0);
     parentCt = 0;
-    bulletEngine = shapesFactory->getBulletEngine();
-    body        = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
-    rigidBody   = body->getRigidBody();
+    body         = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
+    rigidBody    = body->getRigidBody();
 
 
     btVector3 position(btScalar(0), length/2 + endFixRadius, btScalar(0));
@@ -47,6 +48,8 @@ Bone::Bone(btShapesFactory *shapesFactory,
     endTransform.setOrigin(position);
 
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
+
+    this->shapesFactory = shapesFactory;
 }
 
 Bone::~Bone()
@@ -102,7 +105,7 @@ void Bone::setup()
            entity->addLinkToModifier(motorsModifier);
 
         // attach to its parent
-        bulletEngine->getBulletDynamicsWorld()->addConstraint(parentCt, true);
+        shapesFactory->getWorld()->getBulletWorld()->addConstraint(parentCt, true);
     }
 
     //bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint, true);

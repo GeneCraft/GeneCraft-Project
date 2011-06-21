@@ -11,7 +11,7 @@ class btoCylinder : public btCylinder
 {
 public:
 
-    btoCylinder(BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform);
+    btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform);
     void setup();
     void setSize(btScalar radius, btScalar height);
 

@@ -3,14 +3,14 @@
 
 #include "genelabcoreclasses.h"
 #include "bullet/shapes/btsphere.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 
 namespace GeneLabCore {
 
 class btoSphere : public btSphere
 {
 public:
-    btoSphere(BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
+    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
     void setup();
     void setSelected(bool selected);
 

@@ -1,5 +1,7 @@
 #include "btocylinder.h"
 
+#include "world/btoworld.h"
+
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
 
@@ -9,17 +11,16 @@ using namespace Ogre;
 
 int btoCylinder::mNumEntitiesInstanced = 0;
 
-btoCylinder::btoCylinder(BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform)
-    : btCylinder(btoEngine->getBulletEngine(),radius,height,transform)
+btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform)
+    : btCylinder(world, radius, height, transform)
 {
     this->btoEngine = btoEngine;
-    OgreEngine *ogreEngine = btoEngine->getOgreEngine();
 
     // New entity
     btoCylinder::mNumEntitiesInstanced++;
 
     // Create Ogre Entity
-    entity = ogreEngine->getOgreSceneManager()->createEntity(
+    entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity(
             "CylinderEntity_" + StringConverter::toString(btoCylinder::mNumEntitiesInstanced),
             "Barrel.mesh");
 
@@ -28,7 +29,7 @@ btoCylinder::btoCylinder(BulletOgreEngine *btoEngine, btScalar radius, btScalar 
     entity->setCastShadows(true);
 
     // Attach
-    node = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
+    node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
 
     // Scale
     AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box

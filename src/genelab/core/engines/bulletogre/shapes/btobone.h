@@ -3,7 +3,7 @@
 
 #include "genelabcoreclasses.h"
 #include "bullet/shapes/btbone.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 
 
 namespace GeneLabCore {
@@ -12,7 +12,7 @@ class btoBone : public btBone
 {
     Q_OBJECT
 public:
-    explicit btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
+    explicit btoBone(btoWorld *world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
                      btScalar radiusArticulation, const btTransform &transform);
     void setup();
     void setSize(btScalar radius, btScalar height);

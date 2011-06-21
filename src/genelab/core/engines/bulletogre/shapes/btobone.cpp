@@ -1,4 +1,5 @@
 #include "btobone.h"
+#include "world/btoworld.h"
 
 #include <QDebug>
 #include "ogre/ogreengine.h"
@@ -10,9 +11,9 @@ using namespace Ogre;
 namespace GeneLabCore {
 int btoBone::mNumEntitiesInstanced = 0;
 
-btoBone::btoBone(BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
+btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
                  btScalar radiusArticulation, const btTransform &transform) :
-    btBone(btoEngine->getBulletEngine(), length, radius, radiusArticulation, transform)
+    btBone(world, length, radius, radiusArticulation, transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();

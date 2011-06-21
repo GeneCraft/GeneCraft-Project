@@ -24,16 +24,8 @@ namespace GeneLabCore {
         BulletOgreEngine *btoEngine;
         EntitiesEngine* entitiesEngine;
 
-        // OgreBullet World
-        OgreBulletDynamics::DynamicsWorld *mWorld;
-        OgreBulletCollisions::DebugDrawer *debugDrawer;
-
         int mNumEntitiesInstanced;
         int mMoveSpeed;
-
-        std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
-        std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
-
     };
 
 }

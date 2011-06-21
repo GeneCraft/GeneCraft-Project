@@ -6,12 +6,14 @@
 #include "body/treeshape.h"
 #include "body/fixation.h"
 
+#include "world/btoworld.h"
+
 // Qt
 #include <QDebug>
 
 // Ogre
 #include "ogre/ogreengine.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 #include "ogre/ogrewidget.h"
 
 // Bullet
@@ -22,8 +24,12 @@
 #include "bulletogre/bulletogreengine.h"
 
 CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngine,Ogre::Camera *camera) :
-    camera(camera), btoEngine(btoEngine)
+    camera(camera), btoEngine(btoEngine), world(NULL)
 {
+}
+
+void CreatureViewerInputManager::setWorld(btoWorld *world) {
+    this->world = world;
 }
 
 void CreatureViewerInputManager::mousePressEvent(QMouseEvent * e)
@@ -93,18 +99,22 @@ void CreatureViewerInputManager::throwCube()
     Entity* e = f.createEntity(shapesFactory, transform.getOrigin());
     e->setup();
 */
-   btoBox *box = new btoBox(btoEngine,btVector3(1,1,1),transform);
-    box->setup();
+    if(this->world) {
+        btoBox *box = new btoBox(world, btoEngine,btVector3(1,1,1),transform);
+        box->setup();
 
-    // apply impulse from the center of the box in direction of the camera
-    Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy();
-    initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
-    box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
-
+        // apply impulse from the center of the box in direction of the camera
+        Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy();
+        initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
+        box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
+    }
 }
 
 void CreatureViewerInputManager::pickBody()
 {
+    if(!this->world)
+        return;
+
     const float RAY_LENGTH = 1000.0;
 
     // front of the camera (fps)
@@ -125,7 +135,7 @@ void CreatureViewerInputManager::pickBody()
 
     // find the closest rigidBody with raycast
     btCollisionWorld::ClosestRayResultCallback rayCallback(rayFrom,rayTo);
-    btoEngine->getBulletEngine()->getBulletDynamicsWorld()->rayTest(rayFrom,rayTo,rayCallback);
+    world->getBulletWorld()->rayTest(rayFrom,rayTo,rayCallback);
     if (rayCallback.hasHit())
     {
         btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);

@@ -10,11 +10,15 @@ class btoWorld : public btWorld
 {
     Q_OBJECT
 public:
-    explicit btoWorld(QObject *parent = 0);
+    explicit btoWorld(MainFactory* factory, QObject *parent = 0);
 
 signals:
 
 public slots:
+
+
+protected:
+    BulletOgreEngine *btoEngine;
 
 };
 

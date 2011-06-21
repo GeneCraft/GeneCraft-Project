@@ -2,13 +2,12 @@
 
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
+#include "world/btworld.h"
 
 namespace GeneLabCore {
 
-btBox::btBox(BulletEngine *btEngine, btVector3 size, const btTransform &transform)
+btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform) : btShape(world)
 {
-    this->btEngine = btEngine;
-
     init(size, 5.0, transform);
 }
 
@@ -38,8 +37,8 @@ void btBox::init(btVector3 size, btScalar density, const btTransform &transform)
 
 void btBox::setup()
 {
-    if(btEngine != NULL && rigidBody != NULL)
-        btEngine->getBulletDynamicsWorld()->addRigidBody(rigidBody);
+    if(world != NULL && rigidBody != NULL)
+        world->getBulletWorld()->addRigidBody(rigidBody);
     else
         qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
 }

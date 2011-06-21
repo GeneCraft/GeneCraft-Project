@@ -71,7 +71,6 @@ namespace GeneLabCore {
         // ----------------------
         qDebug() << "Init Bullet";
         BulletEngine* bulletEngine = new BulletEngine();
-        bulletEngine->init();
         this->engines.insert("Bullet", bulletEngine);
         qDebug() << "[OK]\n";
 
@@ -84,11 +83,6 @@ namespace GeneLabCore {
         this->engines.insert("BulletOgre", bulletOgreEngine);
         qDebug() << "[OK]\n";
 
-        // --------------------
-        // -- Shapes Factory --
-        // --------------------
-        shapesFactory = new btoShapesFactory(bulletOgreEngine);
-
         // ---------------------
         // -- Entities engine --
         // ---------------------
@@ -100,11 +94,11 @@ namespace GeneLabCore {
         // ---------------------
         // -- Scene (Content) --
         // ---------------------
-        qDebug() << "World creation";
-        World *world = new OgreBulletWorld(this);
-        world->setup();
-        this->worlds.insert("BasicWorld", world);
-        qDebug() << "[OK]\n";
+        //qDebug() << "World creation";
+        //World *world = new OgreBulletWorld(this);
+        //world->setup();
+        //this->worlds.insert("BasicWorld", world);
+        //qDebug() << "[OK]\n";
 
         // ------------
         // -- Events --
@@ -144,10 +138,10 @@ namespace GeneLabCore {
         return widgets;
     }
 
-    btShapesFactory* MainFactory::getShapesFactory()
+    /*btShapesFactory* MainFactory::getShapesFactory()
     {
         return shapesFactory;
-    }
+    }*/
 
     // Vérifie que les dépendances sont assurées
     bool isValid() {

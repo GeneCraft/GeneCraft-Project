@@ -1,6 +1,8 @@
 #include "creatureviewerwindow.h"
 #include "ui_creatureviewerwindow.h"
 
+#include "world/btworld.h"
+
 // Qt
 #include <QDebug>
 #include <QLabel>
@@ -43,6 +45,12 @@
 // Ressources
 #include "ressources/ressource.h"
 #include "ressources/jsonfile.h"
+
+#include "families/spider/spider.h"
+
+
+#include "world/btoworld.h"
+#include "btoshapesfactory.h"
 
 #include <QThread>
 
@@ -95,6 +103,7 @@ void CreatureViewerWindow::init() {
     // ----------------------
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+
     CreatureViewerInputManager *cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
     EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     // add listener in events manager
@@ -130,6 +139,37 @@ void CreatureViewerWindow::init() {
     qDebug() << "Start simulation";
     simulationManager->start();
     qDebug() << "[OK]\n";
+
+
+    // Création du monde
+    btoWorld* world = new btoWorld(factory);
+    world->setup();
+    cvim->setWorld(world);
+    shapesFactory = new btoShapesFactory(world, btoEngine);
+
+
+    // Spider
+    qDebug() << "Spider creation !";
+    qDebug() << time(NULL);
+    srand(time(NULL));
+    qsrand(time(NULL));
+    int b = 0;
+    for(int i = 0; i < 1000; i++) {
+        int a = rand();
+        b += a;
+    }
+    qDebug() << b;
+    Entity* e;
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
+            Spider *spider = new Spider();
+            e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
+            qDebug() << "spider setup !";
+            e->setup();
+            ee->addEntity(e);
+        }
+    }
+
 
 }
 
@@ -245,7 +285,7 @@ void CreatureViewerWindow::createNewEntity()
     btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
 
     // TODO choice of radius root
-    Entity * e = GenericFamily::createViginEntity(factory->getShapesFactory(), btScalar(1.0), initPosition);
+    Entity * e = GenericFamily::createViginEntity(shapesFactory, btScalar(1.0), initPosition);
     e->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     entitiesEngine->addEntity(e);
@@ -276,7 +316,7 @@ void CreatureViewerWindow::loadEntityFromFile()
         Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
         btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
 
-        Entity *e = GenericFamily::createEntity(genotype, factory->getShapesFactory(), initPosition);
+        Entity *e = GenericFamily::createEntity(genotype, shapesFactory, initPosition);
         e->setup();
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
         entitiesEngine->addEntity(e);

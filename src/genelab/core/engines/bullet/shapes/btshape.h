@@ -12,7 +12,7 @@ class btShape : public QObject
     Q_OBJECT
 
 public:
-    explicit btShape(QObject *parent = 0);
+    explicit btShape(btWorld* world, QObject *parent = 0);
 
     btRigidBody * getRigidBody() { return rigidBody; }
     //btCollisionShape *getCollisionShape(){ return collisionShape; }
@@ -26,7 +26,7 @@ public slots:
 
 protected:
 
-    BulletEngine *btEngine;
+    btWorld *world;
     btRigidBody *rigidBody;
     //btCollisionShape *collisionShape;
 
