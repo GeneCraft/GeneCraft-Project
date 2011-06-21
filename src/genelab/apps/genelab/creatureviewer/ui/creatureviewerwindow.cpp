@@ -138,6 +138,8 @@ void CreatureViewerWindow::init() {
 
     qDebug() << "Start simulation";
     simulationManager->start();
+    connect(this->ui->sliderStep, SIGNAL(valueChanged(int)), this->simulationManager, SLOT(setFreq(int)));
+    connect(this->ui->toggleSimulation, SIGNAL(clicked()), this->simulationManager, SLOT(toggle()));
     qDebug() << "[OK]\n";
 
 
@@ -161,7 +163,7 @@ void CreatureViewerWindow::init() {
     qDebug() << b;
     Entity* e;
     for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
+        for(int j = 0; j < 1; j++) {
             Spider *spider = new Spider();
             e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
             qDebug() << "spider setup !";

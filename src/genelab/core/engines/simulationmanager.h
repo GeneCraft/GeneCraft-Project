@@ -9,7 +9,7 @@
 
 namespace GeneLabCore {
 
-    class SimulationManager : QObject
+    class SimulationManager : public QObject
     {
         Q_OBJECT
 
@@ -31,13 +31,21 @@ namespace GeneLabCore {
         // the world manager the time
         void start();
         void stop();
+        void toggle();
+        void setFreq(int stepBySec);
         void update();
+        void renderUpdate();
 
     private:
         QMap<QString, Engine*> engines;
+        Engine* renderEngine;
+        Engine* translationEngine;
 
         // Execution timer
+        int nbStep;
+        int stepBySec;
         QTimer *stepTimer;
+        QTimer *renderTimer;
     };
 
 }
