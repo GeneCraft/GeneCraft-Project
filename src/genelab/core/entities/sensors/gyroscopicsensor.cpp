@@ -49,7 +49,6 @@ void GyroscopicSensor::step()
     btScalar yaw, pitch, roll;
     fixation->getRigidBody()->getWorldTransform().getBasis().getEulerZYX(yaw, pitch, roll);
 
-
     inputYaw->setValue(yaw);
     inputPitch->setValue(pitch);
     inputRoll->setValue(roll);

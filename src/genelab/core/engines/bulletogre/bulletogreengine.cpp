@@ -20,20 +20,21 @@ namespace GeneLabCore {
         bodies.append(new OgreBody(rigidBody,entity,node));
     }
 
-    void BulletOgreEngine::step()
+void BulletOgreEngine::step()
+{
+    OgreBody *body;
+    QListIterator<OgreBody *> it( bodies );
+    while( it.hasNext() )
     {
-        OgreBody *body;
-        QListIterator<OgreBody *> it( bodies );
-        while( it.hasNext() )
-        {
-            body = it.next();
-
-
-
-            btTransform transform = body->rigidBody->getWorldTransform();
-
-            body->node->setPosition(transform.getOrigin().x(),transform.getOrigin().y(),transform.getOrigin().z());
-            body->node->setOrientation(transform.getRotation().w(),transform.getRotation().x(),transform.getRotation().y(),transform.getRotation().z());
-        }
+        body = it.next();
+        btTransform transform = body->rigidBody->getWorldTransform();
+        body->node->setPosition(transform.getOrigin().x(),
+                                transform.getOrigin().y(),
+                                transform.getOrigin().z());
+        body->node->setOrientation(transform.getRotation().w(),
+                                   transform.getRotation().x(),
+                                   transform.getRotation().y(),
+                                   transform.getRotation().z());
     }
+}
 }

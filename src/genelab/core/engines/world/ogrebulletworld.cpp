@@ -190,7 +190,7 @@ namespace GeneLabCore {
         qDebug() << b;
         Entity* e;
         for(int i = 0; i < 5; i++) {
-            for(int j = 0; j < 1; j++) {
+            for(int j = 0; j < 5; j++) {
                 Spider *spider = new Spider();
                 e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
                 qDebug() << "spider setup !";
