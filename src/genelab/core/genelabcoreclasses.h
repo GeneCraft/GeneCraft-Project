@@ -107,12 +107,26 @@ namespace GeneLabCore {
     class PlugGridVisualizer;
     class PlugGridDesignVisualizer;
 
+
     // -----------------------
-    // -- DELETE OR NOT ??? --
+    // -- World related     --
     // -----------------------
 
     // World related
-    class World;
+    class World; // TO delete and move into btWorld  btScene  btBiome
+                 //                         btoWorld btoScene btoBiome
+
+    class btWorld;
+    class btScene;
+    class btBiome;
+
+    class btoWorld;
+    class btoScene;
+    class btoBiome;
+
+    // -----------------------
+    // -- DELETE OR NOT ??? --
+    // -----------------------
 
     // Tools (random, ...)
     class Tools;

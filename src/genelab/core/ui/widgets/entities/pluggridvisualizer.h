@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPaintEvent>
+#include <QGLWidget>
 #include "genelabcoreclasses.h"
 
 namespace GeneLabCore {

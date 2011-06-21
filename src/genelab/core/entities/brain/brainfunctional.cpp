@@ -124,8 +124,8 @@ float sigmoid(float x)
 
         BrainNode* n = *it;
         BrainMemory* m;
-        it++;
         float min, max, a, b, first, second, c;
+        it++;
         switch(n->type) {
         // 2 operands
         case SUM:

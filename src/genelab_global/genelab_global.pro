@@ -24,55 +24,74 @@ INCLUDEPATH += \
     ../genelab/apps/genelab/creatureviewer \
     ../genelab/apps/genelab/creatureviewer/inputlisteners \
 
+
 #library related
 INCLUDEPATH  += \
-    ../lib/ogre/include/OGRE \
-    ../lib/ogre/include/OIS \
-    ../lib/ogre/include \
     ../lib/ogre/boost_1_44 \
     ../lib/bullet/src \
     ../lib/bullet/Extra/ConvexDecomposition \
     ../lib/qxt/src/core \
     ../lib/qwt/src
 
+ win32 {
+    INCLUDEPATH += ../lib/ogre/include/OGRE \
+                   ../lib/ogre/include/OIS \
+                   ../lib/ogre/include
+
 
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
-    QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
-    QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
-    QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
-    QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
-    QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
-    QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
+ }
+ unix {
+    INCLUDEPATH += ../lib/ogre/Dependencies/include \
+    /Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/OgreMain/include \
+    /Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo/Ogre.framework/Headers
 
-#CONFIG(Debug) {
-#    LIBS += -L../lib/ogre/bin/Debug
-#    LIBS += -lOgreMain_d -lOIS_d
-#}
-#CONFIG(Release) {
-    LIBS += -L../lib/ogre/bin/Release
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/Dependencies/include
+    QMAKE_CXXFLAGS  += -isystem/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo/Ogre.framework/Headers
+    QMAKE_CXXFLAGS  += -isystem/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/OgreMain/include
+ }
+
+QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
+QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
+QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
+QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
+QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
+QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
+
+win32 {
+    LIBS += -L../lib/bullet/lib
+    LIBS += -L../lib/qxt/lib
+    LIBS += -lQxtCore
     LIBS += -lOgreMain -lOIS
-#}
+}
 
-LIBS += -L../lib/bullet/lib
-LIBS += -L../lib/qxt/lib
+unix {
+    LIBS += -L/Users/cyprienhuissoud/Downloads/Dependencies/bin/Release
+    LIBS += -F/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo
+    LIBS += -framework Ogre
+    LIBS += -framework QxtCore
+    LIBS += -lzzip
+    LIBS += -lfreetype
+    LIBS += -lfreeimage
+    LIBS += -lOIS
+}
 
-LIBS += -lQxtCore
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
-LIBS += -lConvexDecomposition
-LIBS += -lBulletWorldImporter -lBulletFileLoader
+#LIBS += -lConvexDecomposition
+#LIBS += -lBulletWorldImporter -lBulletFileLoader
 LIBS += -lBulletMultiThreaded
 LIBS += -lBulletSoftBody
-LIBS += -lGIMPACTUtils
+#LIBS += -lGIMPACTUtils
 #LIBS += -lgle
 #LIBS += -lglsmap
 #LIBS += -lglut32
-LIBS += -lGLUI
+#LIBS += -lGLUI
 LIBS += -lMiniCL
 #LIBS += -lmui
-LIBS += -lOpenGLSupport
+#LIBS += -lOpenGLSupport
 
 SOURCES += \
     ../genelab/core/engines/simulationmanager.cpp \
@@ -139,7 +158,13 @@ SOURCES += \
     ../genelab/core/factories/ressources/dbrecord.cpp \
     ../genelab/core/entities/families/ant/ant.cpp \
     ../genelab/core/entities/families/genericfamily.cpp \
-    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp
+    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp \
+    ../genelab/core/world/btworld.cpp \
+    ../genelab/core/world/btscene.cpp \
+    ../genelab/core/world/btbiome.cpp \
+    ../genelab/core/world/btoworld.cpp \
+    ../genelab/core/world/btoscene.cpp \
+    ../genelab/core/world/btobiome.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -207,7 +232,13 @@ HEADERS += \
     ../genelab/core/entities/families/ant/ant.h \
     ../genelab/core/entities/families/genericfamily.h \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h \
-    ../genelab/core/ui/widgets/entities/bodyitems.h
+    ../genelab/core/ui/widgets/entities/bodyitems.h \
+    ../genelab/core/world/btworld.h \
+    ../genelab/core/world/btscene.h \
+    ../genelab/core/world/btbiome.h \
+    ../genelab/core/world/btoworld.h \
+    ../genelab/core/world/btoscene.h \
+    ../genelab/core/world/btobiome.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

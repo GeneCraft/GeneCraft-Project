@@ -53,6 +53,10 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     ui(new Ui::CreatureViewer), boneSelected(NULL), fixSelected(NULL), selectedEntity(NULL), inspector(NULL)
 {
     ui->setupUi(this);
+    this->init();
+}
+
+void CreatureViewerWindow::init() {
 
     factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
 

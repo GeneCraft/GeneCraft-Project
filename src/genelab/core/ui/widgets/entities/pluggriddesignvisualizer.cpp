@@ -86,7 +86,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
                 p.setStyle(Qt::SolidLine);
 
 
-            this->view->scene()->addEllipse(10*c.x+5, 10*c.y+5, 10, 10, p, b);
+            this->view->scene()->addEllipse(10*c.x, 10*c.y, 10, 10, p, b);
 
             /*this->view->scene()->addLine(startingPoint.x() + 10, startingPoint.y() + 10,
                                          brain->getPlugGrid()->getSize()*10/size*c.x + brain->getPlugGrid()->getSize()*10/size * 0.5,
@@ -115,7 +115,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
                 p.setWidthF(2);
 
 
-                this->view->scene()->addEllipse(10*c.x+5, 10*c.y+5, 10, 10, p, b);
+                this->view->scene()->addEllipse(10*c.x, 10*c.y, 10, 10, p, b);
 
                 /*this->view->scene()->addLine(startingPoint.x() + 10, startingPoint.y() + 10,
                                              brain->getPlugGrid()->getSize()*10/size*c.x + brain->getPlugGrid()->getSize()*10/size * 0.5,

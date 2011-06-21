@@ -24,7 +24,7 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     ui->setupUi(this);
 
     connect(this->ui->pbSaveChanges,SIGNAL(pressed()),this,SLOT(saveChanges()));
-    connect(this->ui->pbDelete,SIGNAL(pressed()),this,SLOT(deleteBone()));
+    //connect(this->ui->pbDelete,SIGNAL(pressed()),this,SLOT(deleteBone()));
     connect(this->ui->pbApplySize,SIGNAL(pressed()),this,SLOT(changeSize()));
     //connect(this->ui->pbRandomValues,SIGNAL(pressed()),this,SLOT(randomValues()));
     //connect(this->ui->pbResetMotors,SIGNAL(pressed()),this,SLOT(resetMotors()));

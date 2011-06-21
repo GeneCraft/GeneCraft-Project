@@ -9,18 +9,22 @@
 #include <QLayout>
 #include <QBoxLayout>
 #include <QDebug>
+#include <QGLWidget>
+#include <QGLContext>
 
 
 namespace GeneLabCore {
     PlugGridVisualizer::PlugGridVisualizer(QWidget *parent) :
         QWidget(parent)
     {
+
+
         this->brain = 0;
         this->view = new QGraphicsView(this);
+
         this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight));
         //this->view->setFixedSize(WIDGET_SIZE, WIDGET_SIZE);
         this->view->setScene(new QGraphicsScene(0, 0, 1000, 1000, this));
-
         this->layout()->addWidget(this->view);
     }
 

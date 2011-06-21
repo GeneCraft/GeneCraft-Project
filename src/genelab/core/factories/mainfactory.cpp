@@ -31,18 +31,24 @@ namespace GeneLabCore {
         // Création des différents engines
         qDebug() << "Init Ogre";
         OgreEngine* ogreEngine = new OgreEngine(winId);
-        ogreEngine->init();
+        ogreEngine->initOgreRoot();
+        ogreEngine->initSceneManager();
+
+        // camera 1
+
+        QWidget* oW1 = ogreEngine->createOgreWidget("MainWidget", NULL, sceneWidget);
+        this->widgets.insert("OgreWidget", oW1);
+
+        if(sceneWidget->layout() == NULL)
+           sceneWidget->setLayout(new QVBoxLayout(sceneWidget));
+
+        sceneWidget->layout()->addWidget(oW1);
+
+        ogreEngine->initResources();
 
         this->engines.insert("Ogre", ogreEngine);
 
-        qDebug() << "[OK]\n";
 
-        // camera 1
-        Ogre::Camera* cam1 = ogreEngine->getOgreSceneManager()->createCamera("firstCamera");
-        cam1->setPosition(Ogre::Vector3(0, 2, 6));
-        cam1->lookAt(Ogre::Vector3(0, 2, 0));
-        cam1->setNearClipDistance(0.01); // 10 mm
-        cam1->setFarClipDistance(5000); // 1km
 
         // camera 2
         // Ogre::Camera* cam2 = graphics->getOgreSceneManager()->createCamera("secondCamera");
@@ -52,14 +58,7 @@ namespace GeneLabCore {
         // qDebug() << "[OK]\n";
 
         // widget 1
-        QWidget* oW1 = ogreEngine->createOgreWidget("MainWidget",cam1, sceneWidget);
-        this->widgets.insert("OgreWidget", oW1);
-
-        if(sceneWidget->layout() == NULL)
-           sceneWidget->setLayout(new QVBoxLayout(sceneWidget));
-
-        sceneWidget->layout()->addWidget(oW1);
-
+        qDebug() << "[OK]\n";
         //this->ui->centralWidget->layout()->addWidget(oW1);
 
         // widget 2

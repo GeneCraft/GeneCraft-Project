@@ -47,21 +47,26 @@ namespace GeneLabCore {
 
     void OgreBulletWorld::setup() {
 
+        // BTO world
         OgreEngine* ogreEngine = btoEngine->getOgreEngine();
+        // BT world
         BulletEngine* btEngine = btoEngine->getBulletEngine();
 
         // ---------------------
         // -- OGRE PROPERTIES --
         // ---------------------
 
+        // BTO BIOME
         Ogre::SceneManager* sceneManager = ogreEngine->getOgreSceneManager();
 
         // camera
+        // BTO SCENE
         Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
         cam->setPosition(Ogre::Vector3(-20,10,0));
         cam->setDirection(Ogre::Vector3(20,-5,0));
 
         // skybox
+        // BTO BIOME
         sceneManager->setSkyDome(true, "Examples/CloudySky", 10, 8, 1000);
 
         // lights
@@ -94,7 +99,7 @@ namespace GeneLabCore {
         // -------------------------
         // -- List of Material :) --
         // -------------------------
-        Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
+        //Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
         /*while (materialIterator.hasMoreElements())
         {
             QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
@@ -112,6 +117,7 @@ namespace GeneLabCore {
         // --------------------------
 
         // Static Floor
+        // BTO SCENE
         Ogre::Entity *ent;
         Ogre::Plane p;
         p.normal = Ogre::Vector3(0,1,0); p.d = 0;
@@ -125,6 +131,8 @@ namespace GeneLabCore {
         sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
 
         // physics
+
+        // BT SCENE
         btStaticPlaneShape *collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
         btTransform worldTransform;
         worldTransform.setIdentity();

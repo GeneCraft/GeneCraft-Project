@@ -14,6 +14,11 @@ namespace GeneLabCore {
     public:
         explicit OgreEngine(unsigned long winId);
 
+
+        void initOgreRoot();
+        void initResources();
+        void initSceneManager();
+
         Ogre::Root*         getOgreRoot();
         Ogre::SceneManager* getOgreSceneManager();
         OgreWidget*         createOgreWidget(QString widgetName,
@@ -41,9 +46,6 @@ namespace GeneLabCore {
         Ogre::SceneManager* scnManager;
         Ogre::RenderWindow* fakeRender;
 
-        void initOgreRoot();
-        void initResources();
-        void initSceneManager();
         void initRenderingSystem(unsigned long winId);
 
 

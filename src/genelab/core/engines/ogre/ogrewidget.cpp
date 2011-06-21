@@ -21,7 +21,7 @@ namespace GeneLabCore {
 
         //Parameters to pass to Ogre::Root::createRenderWindow()
         Ogre::NameValuePairList params;
-        //params["useNVPerfHUD"] = "true";
+        params["useNVPerfHUD"] = "true";
 
         //The external windows handle parameters are platform-specific
         Ogre::String externalWindowHandleParams;
@@ -31,7 +31,7 @@ namespace GeneLabCore {
 
 #if defined(Q_WS_WIN) || defined(Q_WS_MAC)
         //positive integer for W32 (HWND handle) - According to Ogre Docs
-        externalWindowHandleParams = Ogre::StringConverter::toString((unsigned int)(this->parentWidget()->winId()));
+        externalWindowHandleParams = Ogre::StringConverter::toString((size_t)(winId()));
 #endif
 
 #if defined(Q_WS_X11)
@@ -48,7 +48,7 @@ namespace GeneLabCore {
 
         //Add the external window handle parameters to the existing params set.
 #if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-        params["parentWindowHandle"] = externalWindowHandleParams;
+        params["externalWindowHandle"] = externalWindowHandleParams;
 #endif
 
 #if defined(Q_WS_X11)
@@ -68,9 +68,19 @@ namespace GeneLabCore {
         WId ogreWinId = 0x0;
         mOgreWindow->getCustomAttribute( "WINDOW", &ogreWinId );
 
-        assert( ogreWinId );
+        //assert( ogreWinId );
+        //create( ogreWinId );
+        // Create the free camera (FIXME no encapsulation)
+        if(mCamera == NULL){
 
-        this->create( ogreWinId );
+            Ogre::Camera* cam1 = mSceneMgr->createCamera("firstCamera");
+            cam1->setPosition(Ogre::Vector3(0, 2, 6));
+            cam1->lookAt(Ogre::Vector3(0, 2, 0));
+            cam1->setNearClipDistance(0.01); // 10 mm
+            cam1->setFarClipDistance(5000); // 1km
+            mCamera = cam1;
+        }
+
 
         mViewport = mOgreWindow->addViewport( mCamera );
         mViewport->setBackgroundColour( Ogre::ColourValue( 0.8,0.8,1 ) );
@@ -79,7 +89,6 @@ namespace GeneLabCore {
         resized = true;
 
 
-        // Create the free camera (FIXME no encapsulation)
         ogreFreeCamera = new OgreFreeCamera(mCamera);
 
         connect(this,SIGNAL(keyPressed(QKeyEvent*)),ogreFreeCamera,SLOT(keyPressEvent(QKeyEvent*)));

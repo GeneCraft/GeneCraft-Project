@@ -29,6 +29,7 @@ public:
 
 public slots:
 
+    void init();
     void setInspector(QWidget * inspector);
     void setEntity(Entity *entity, btRigidBody *selectedBody);
     void rigidBodySelected(btRigidBody *rigidBody);
