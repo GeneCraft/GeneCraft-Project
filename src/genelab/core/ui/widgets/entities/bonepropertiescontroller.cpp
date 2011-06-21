@@ -44,6 +44,10 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
+
+    connect(this->ui->sLength,SIGNAL(valueChanged(int)),this,SLOT(changeLengthFromSlider(int)));
+    connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+
     connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
 }
 
@@ -68,6 +72,20 @@ void BonePropertiesController::setOutFrom()
 BonePropertiesController::~BonePropertiesController()
 {
     delete ui;
+}
+
+void BonePropertiesController::changeLengthFromSlider(int value)
+{
+    bone->setSize(this->ui->sRadius->value()/1000.0, value/1000.0);
+
+    this->ui->leLength->setText(QString::number(value / 1000.0));
+}
+
+void BonePropertiesController::changeRadiusFromSlider(int value)
+{
+    bone->setSize(value/1000.0, this->ui->sLength->value()/1000.0);
+
+    this->ui->leRadius->setText(QString::number(value / 1000.0));
 }
 
 void BonePropertiesController::deleteBone()
@@ -108,23 +126,18 @@ void BonePropertiesController::saveChanges()
 {
     if(bone != 0)
     {
+
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
+        // ANGULAR PARAMETERS
 
-//        constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->leEulerRotX->text().toFloat(),
-//                                                                   this->ui->leEulerRotY->text().toFloat(),
-//                                                                   this->ui->leEulerRotZ->text().toFloat());
+        // Local transform (Yaw / Roll)
         bone->setyAxis(this->ui->dEulerRotY->value() / 100.0);
         bone->setZAxis(this->ui->dEulerRotZ->value() / 100.0);
-
         this->ui->lInitRot_Yaw->setText(QString::number(this->ui->dEulerRotY->value() / 100.0));
         this->ui->lInitRot_Roll->setText(QString::number(this->ui->dEulerRotZ->value() / 100.0));
 
-//        constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->dEulerRotX->value() / 100.0,
-//                                                                   this->ui->dEulerRotY->value() / 100.0,
-//                                                                   this->ui->dEulerRotZ->value() / 100.0);
-
-
+        // Limits & motor effector
         btRotationalLimitMotor *motor;
         for(int i=0;i<3;i++)
         {
@@ -133,33 +146,21 @@ void BonePropertiesController::saveChanges()
             switch(i)
             {
                 case 0 :
-
                     motor->m_enableMotor = this->ui->cbEnable_m1->isChecked();
                     motor->m_targetVelocity = this->ui->leTargetVelocity_m1->text().toFloat();
                     motor->m_maxMotorForce = this->ui->leMaxMotorForce_m1->text().toFloat();
-//                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m1->text().toFloat();
-//                    motor->m_bounce = this->ui->leBounce_m1->text().toFloat();
-//                    motor->m_damping = this->ui->leDamping_m1->text().toFloat();
-
                     motor->m_loLimit = this->ui->dAngularLowerLimitX->value() / 100.0;
                     motor->m_hiLimit = this->ui->dAngularUpperLimitX->value() / 100.0;
-
                     this->ui->lAngularLowerLimitX->setText(QString::number(motor->m_loLimit));
                     this->ui->lAngularUpperLimitX->setText(QString::number(motor->m_hiLimit));
-
                     break;
 
                 case 1 :
                     motor->m_enableMotor = this->ui->cbEnable_m2->isChecked();
                     motor->m_targetVelocity = this->ui->leTargetVelocity_m2->text().toFloat();
                     motor->m_maxMotorForce = this->ui->leMaxMotorForce_m2->text().toFloat();
-//                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m2->text().toFloat();
-//                    motor->m_bounce = this->ui->leBounce_m2->text().toFloat();
-//                    motor->m_damping = this->ui->leDamping_m2->text().toFloat();
-
                     motor->m_loLimit = this->ui->dAngularLowerLimitY->value() / 100.0;
                     motor->m_hiLimit = this->ui->dAngularUpperLimitY->value() / 100.0;
-
                     this->ui->lAngularLowerLimitY->setText(QString::number(motor->m_loLimit));
                     this->ui->lAngularUpperLimitY->setText(QString::number(motor->m_hiLimit));
 
@@ -169,13 +170,8 @@ void BonePropertiesController::saveChanges()
                     motor->m_enableMotor = this->ui->cbEnable_m3->isChecked();
                     motor->m_targetVelocity = this->ui->leTargetVelocity_m3->text().toFloat();
                     motor->m_maxMotorForce = this->ui->leMaxMotorForce_m3->text().toFloat();
-//                    motor->m_maxLimitForce = this->ui->leMaxLimitForce_m3->text().toFloat();
-//                    motor->m_bounce = this->ui->leBounce_m3->text().toFloat();
-//                    motor->m_damping = this->ui->leDamping_m3->text().toFloat();
-
                     motor->m_loLimit = this->ui->dAngularLowerLimitZ->value() / 100.0;
                     motor->m_hiLimit = this->ui->dAngularUpperLimitZ->value() / 100.0;
-
                     this->ui->lAngularLowerLimitZ->setText(QString::number(motor->m_loLimit));
                     this->ui->lAngularUpperLimitZ->setText(QString::number(motor->m_hiLimit));
 
@@ -191,30 +187,24 @@ void BonePropertiesController::setBone(Bone * bone)
 
     if(bone != 0)
     {
-        this->ui->leLength->setText(QString::number(bone->getLength()));
-        this->ui->leRadius->setText(QString::number(bone->getRadius()));
-
+        // ANGULAR PARAMETERS
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
-        // Local transform
+        // Local transform (Yaw / Roll)
         disconnect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
         disconnect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
         btScalar eulerYaw,eulerRoll,eulerPitch;
         constraint->getFrameOffsetA().getBasis().getEulerZYX(eulerYaw,eulerRoll,eulerPitch);
-        // this->ui->leEulerRotX->setText(QString().setNum(eulerPitch));
-        // this->ui->leEulerRotY->setText(QString().setNum(eulerRoll));
-        // this->ui->leEulerRotZ->setText(QString().setNum(eulerYaw));
-        this->ui->dEulerRotY->setValue(bone->getYAxis() * 100/*eulerRoll * 100*/);
-        this->ui->dEulerRotZ->setValue(bone->getZAxis() * 100/*eulerYaw * 100*/);
-
+        this->ui->dEulerRotY->setValue(bone->getYAxis() * 100);
+        this->ui->dEulerRotZ->setValue(bone->getZAxis() * 100);
         this->ui->lInitRot_Yaw->setText(QString::number(bone->getYAxis()));
         this->ui->lInitRot_Roll->setText(QString::number(bone->getZAxis()));
 
         connect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
         connect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
-        // Motors Effector
+        // MOTOR EFFECTOR
         if(!bone->getRotationalMotorsModifier()->isDisable())
         {
             switch(bone->getRotationalMotorsModifier()->getOutPutsFrom())
@@ -243,9 +233,6 @@ void BonePropertiesController::setBone(Bone * bone)
                 this->ui->cbEnable_m1->setChecked(motor->m_enableMotor);
                 this->ui->leTargetVelocity_m1->setText(QString().setNum(motor->m_targetVelocity));
                 this->ui->leMaxMotorForce_m1->setText(QString().setNum(motor->m_maxMotorForce));
-//                this->ui->leMaxLimitForce_m1->setText(QString().setNum(motor->m_maxLimitForce));
-//                this->ui->leBounce_m1->setText(QString().setNum(motor->m_bounce));
-//                this->ui->leDamping_m1->setText(QString().setNum(motor->m_damping));
 
                 // Init motor X
                 disconnect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
@@ -262,9 +249,6 @@ void BonePropertiesController::setBone(Bone * bone)
                 this->ui->cbEnable_m2->setChecked(motor->m_enableMotor);
                 this->ui->leTargetVelocity_m2->setText(QString().setNum(motor->m_targetVelocity));
                 this->ui->leMaxMotorForce_m2->setText(QString().setNum(motor->m_maxMotorForce));
-//                this->ui->leMaxLimitForce_m2->setText(QString().setNum(motor->m_maxLimitForce));
-//                this->ui->leBounce_m2->setText(QString().setNum(motor->m_bounce));
-//                this->ui->leDamping_m2->setText(QString().setNum(motor->m_damping));
 
                 // Init motor Y
                 disconnect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
@@ -281,9 +265,6 @@ void BonePropertiesController::setBone(Bone * bone)
                 this->ui->cbEnable_m3->setChecked(motor->m_enableMotor);
                 this->ui->leTargetVelocity_m3->setText(QString().setNum(motor->m_targetVelocity));
                 this->ui->leMaxMotorForce_m3->setText(QString().setNum(motor->m_maxMotorForce));
-//                this->ui->leMaxLimitForce_m3->setText(QString().setNum(motor->m_maxLimitForce));
-//                this->ui->leBounce_m3->setText(QString().setNum(motor->m_bounce));
-//                this->ui->leDamping_m3->setText(QString().setNum(motor->m_damping));
 
                 // Init motor Z
                 disconnect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
@@ -297,6 +278,24 @@ void BonePropertiesController::setBone(Bone * bone)
                 break;
             }
         }
+
+
+        // TOOLS
+
+        // Bone Size
+        this->ui->leLength->setText(QString::number(bone->getLength()));
+        this->ui->leRadius->setText(QString::number(bone->getRadius()));
+
+        disconnect(this->ui->sLength,SIGNAL(valueChanged(int)),this,SLOT(changeLengthFromSlider(int)));
+        disconnect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+        this->ui->sLength->setValue(bone->getLength() * 1000);
+        this->ui->sRadius->setValue(bone->getRadius() * 1000);
+        connect(this->ui->sLength,SIGNAL(valueChanged(int)),this,SLOT(changeLengthFromSlider(int)));
+        connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+
+
+
+        // SUB-WIDGET
 
         // init promoted fixation properties
         ui->fixationProperties->setFixation(bone->getEndFixation());

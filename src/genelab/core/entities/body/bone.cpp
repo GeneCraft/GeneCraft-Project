@@ -54,18 +54,14 @@ Bone::Bone(btShapesFactory *shapesFactory,
 
 Bone::~Bone()
 {
-    //openGLEngine->getScene()->removeDrawableObject(body); TODO
     //bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
 
     // constraint
-    //bulletEngine->getBulletDynamicsWorld()->removeConstraint(endFixConstraint);
-    delete endFixConstraint;
-
     //bulletEngine->getBulletDynamicsWorld()->removeConstraint(parentCt);
-    delete parentCt;
+    //delete parentCt;
 
-    delete body;
-    delete endFix;
+    //delete body;
+    //delete endFix;
 }
 
 void Bone::setup()
@@ -243,9 +239,20 @@ void Bone::setSelected(bool selected)
 
 void Bone::setSize(btScalar radius, btScalar length)
 {
-    this->radius = radius;
-    this->length = length;
+    btScalar oldLength  = this->length;
+
+    this->radius        = radius;
+    this->length        = length;
     body->setSize(radius,length);
+
+    // adapt parent connection
+    btVector3 origin = parentCt->getFrameOffsetB().getOrigin();
+    btVector3 newor = origin - btVector3(0, btScalar(-oldLength*0.5),0) + btVector3(0,btScalar(-length*0.5),0);
+    parentCt->getFrameOffsetB().setOrigin(newor);
+
+    // adapt children connections
+    foreach(Bone *b, endFix->getBones())
+        b->getParentConstraint()->getFrameOffsetA().setOrigin(btVector3(btScalar(0.), btScalar(length*0.5 +endFix->getRadius()), btScalar(0.)));
 }
 
 }

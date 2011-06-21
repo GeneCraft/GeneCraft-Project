@@ -17,9 +17,15 @@ public:
     virtual void setup();
     virtual void setSize(btScalar radius, btScalar length);
 
+    btScalar getArticulationRadius() { return sphereShape->getRadius(); }
+
+    static const btScalar DENSITY;
+
 private:
 
     void init(btScalar length, btScalar radius, btScalar radiusArticulation, btScalar density, const btTransform &transform);
+
+
 
 protected:
 
@@ -31,5 +37,7 @@ protected:
 
 };
 }
+
+
 
 #endif // BTBONE_H

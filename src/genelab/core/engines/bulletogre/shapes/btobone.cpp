@@ -74,18 +74,39 @@ void btoBone::setSize(btScalar radius, btScalar length)
 {
     btBone::setSize(radius,length);
 
-    // Scale
+    qDebug()<< getArticulationRadius() ;
+
+    // Set relative position
+    nodeS->setPosition(Vector3(0, length/2+getArticulationRadius(),0));
+
+
     Vector3 ogreSize(radius*2,length,radius*2);
-    Vector3 scale = ogreSize  / originalCylinderBB.getSize();
-    nodeC->setScale(scale);	// the cube is too big for us
+    Vector3 scale = ogreSize / originalCylinderBB.getSize();
+    nodeC->setScale(scale);
+    nodeC->setPosition(Vector3(0,0,0));
 }
 
 
 void btoBone::setSelected(bool selected)
 {
     if(selected) {
+
         entityC->setMaterialName("BaseWhite");
         entityS->setMaterialName("BaseWhite");
+
+        /*
+        materialName - material i am wanting to fade
+        fade - float holding the fade value, 0 being completey transparent 1 being solid
+        */
+
+//        MaterialPtr tempMat = MaterialManager::getSingleton().getByName("Sinbad/Teeth");
+//        TextureUnitState *tempTex = tempMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState();
+//        float fade = 0.0;
+//        tempTex->setAlphaOperation(LBX_MODULATE, LBS_TEXTURE, LBS_MANUAL, 1.0f, fade);
+
+//        entityC->setMaterial(tempMat);
+//        entityS->setMaterial(tempMat);
+
     }
     else {
         entityC->setMaterialName("Sinbad/Teeth");

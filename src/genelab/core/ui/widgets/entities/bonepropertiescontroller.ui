@@ -28,10 +28,10 @@
   <widget class="FixationProperties" name="fixationProperties" native="true">
    <property name="geometry">
     <rect>
-     <x>12</x>
-     <y>12</y>
-     <width>350</width>
-     <height>171</height>
+     <x>0</x>
+     <y>0</y>
+     <width>371</width>
+     <height>181</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -46,7 +46,7 @@
     <rect>
      <x>10</x>
      <y>190</y>
-     <width>121</width>
+     <width>351</width>
      <height>17</height>
     </rect>
    </property>
@@ -89,7 +89,7 @@
    <property name="currentIndex">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="Angular">
+   <widget class="QWidget" name="tabAngularParams">
     <attribute name="icon">
      <iconset resource="../../../ressources/ressources.qrc">
       <normaloff>:/img/icons/anchor</normaloff>:/img/icons/anchor</iconset>
@@ -547,7 +547,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="tab_2">
+   <widget class="QWidget" name="tabMotorsEffector">
     <attribute name="icon">
      <iconset resource="../../../ressources/ressources.qrc">
       <normaloff>:/img/icons/motor_test</normaloff>:/img/icons/motor_test</iconset>
@@ -1180,13 +1180,46 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="tab">
+   <widget class="QWidget" name="tabTools">
+    <attribute name="icon">
+     <iconset resource="../../../ressources/ressources.qrc">
+      <normaloff>:/img/icons/wrench</normaloff>:/img/icons/wrench</iconset>
+    </attribute>
     <attribute name="title">
-     <string>Size</string>
+     <string>Tools</string>
     </attribute>
     <layout class="QFormLayout" name="formLayout">
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Length</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="leLength"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSlider" name="sLength">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>20000</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>1000</number>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
@@ -1199,6 +1232,25 @@
       <widget class="QLineEdit" name="leRadius"/>
      </item>
      <item row="3" column="1">
+      <widget class="QSlider" name="sRadius">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>5000</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>1000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_14">
        <item>
         <spacer name="horizontalSpacer_2">
@@ -1221,13 +1273,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Length</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>

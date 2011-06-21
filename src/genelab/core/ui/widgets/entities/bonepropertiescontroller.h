@@ -42,6 +42,8 @@ private slots:
     void resetMotors();
     void setOutFrom();
     void changeSize();
+    void changeLengthFromSlider(int value);
+    void changeRadiusFromSlider(int value);
     void rigidBodySelectedFromFix(btRigidBody*);
 };
 

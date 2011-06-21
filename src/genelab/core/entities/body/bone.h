@@ -58,15 +58,18 @@ protected:
    btBone *body;
    btScalar radius;
    btScalar length;
-   // Modifier
-   RotationalMotorsModifier *motorsModifier;
-
    btRigidBody *rigidBody;
    RigidBodyOrigin *origin;
    Fixation *endFix;
+
+   // Modifier
+   RotationalMotorsModifier *motorsModifier;
+
+
+
+   // Contraints
    btGeneric6DofConstraint *parentCt;
    btGeneric6DofConstraint *endFixConstraint;
-
 
    // MotorModifier data
    QVariant motorModifierData;

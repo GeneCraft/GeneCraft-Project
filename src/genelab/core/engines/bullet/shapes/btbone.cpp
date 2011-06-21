@@ -5,10 +5,13 @@
 #include <QDebug>
 
 namespace GeneLabCore {
+
+const btScalar btBone::DENSITY = 5.0;
+
 btBone::btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
     btShape(world)
 {
-    this->init(length, radius, radiusArticulation, 5.0, transform);
+    this->init(length, radius, radiusArticulation, btBone::DENSITY, transform);
 }
 
 void btBone::init(btScalar length,
@@ -16,10 +19,11 @@ void btBone::init(btScalar length,
                   btScalar radiusArticulation,
                   btScalar density,
                   const btTransform &transform) {
-    btScalar friction = 1;
+
+    btScalar friction = 0.8; // TODO
 
     // shape
-    this->shape = new btCompoundShape(true);
+    this->shape = new btCompoundShape(true); 
 
     // Adding the sphere to the shape !
     sphereShape = new btSphereShape(radiusArticulation);
@@ -46,7 +50,6 @@ void btBone::init(btScalar length,
     this->rigidBody->setFriction(friction);
 }
 
-
 void btBone::setup()
 {
     if(world != NULL && rigidBody != NULL)
@@ -55,22 +58,31 @@ void btBone::setup()
 
 void btBone::setSize(btScalar radius, btScalar length)
 {
-    if(cylinderShape != NULL) {
+    if(cylinderShape != NULL && sphereShape != NULL) {
 
-
-        //shape->recalculateLocalAabb();
+        // remove shapes from compound
+        shape->removeChildShape(sphereShape);
         shape->removeChildShape(cylinderShape);
 
-        cylinderShape->setLocalScaling(btVector3(radius*4,length,radius*4));
-        btTransform cylinderTransform; cylinderTransform.setIdentity();
-        shape->addChildShape(cylinderTransform,cylinderShape);
+        // fix
+        btTransform localFix; localFix.setIdentity();
+        localFix.setOrigin(btVector3(0, length*0.5 + sphereShape->getRadius(), 0));
+        shape->addChildShape(localFix,sphereShape);
 
-        // body
-        //btVector3 localInertia(0,0,0);
-        //shape->calculateLocalInertia(1.0,localInertia); // TODO mass
+        // bone
+        cylinderShape->setImplicitShapeDimensions(btVector3(radius, length/2, radius));
+        btTransform localBone; localBone.setIdentity();
+        shape->addChildShape(localBone,cylinderShape);
+
+        // set body mass
+        btScalar volBone    = M_PI*radius*radius*length;
+        btScalar volFix     = 4/3. * M_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
+        btScalar mass = volBone*DENSITY + volFix*DENSITY; // TODO different density between fix and bone
+        btVector3 localInertia(0,0,0);
+        rigidBody->setMassProps(mass,localInertia);
     }
     else
-        qDebug() << Q_FUNC_INFO << ", shape == NULL";
+        qDebug() << Q_FUNC_INFO << ", cylinderShape == NULL or sphereShape == NULL";
 }
 
 }
