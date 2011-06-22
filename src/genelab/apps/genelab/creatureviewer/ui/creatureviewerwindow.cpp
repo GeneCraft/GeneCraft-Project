@@ -171,7 +171,7 @@ void CreatureViewerWindow::init() {
     biomeData.insert("aB", (float)0.8);
 
     biomeData.insert("lR", (float)0.6);
-    biomeData.insert("lG", (float)0.4);
+    biomeData.insert("lG", (float)0.6);
     biomeData.insert("lB", (float)0.6);
 
     QVariantMap camData;
@@ -226,7 +226,7 @@ void CreatureViewerWindow::init() {
     }
     qDebug() << b;
     Entity* e;
-    for(int i = 0; i < 1; i++) {
+    for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 1; j++) {
             Spider *spider = new Spider();
             e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
