@@ -77,7 +77,7 @@ void Bone::setup()
     if(parentCt)
     {
         // state
-        //rigidBody->setActivationState(DISABLE_DEACTIVATION);
+        rigidBody->setActivationState(DISABLE_DEACTIVATION);
         for(int i=0;i<3;i++)
         {
             btRotationalLimitMotor * motor = parentCt->getRotationalLimitMotor(i);

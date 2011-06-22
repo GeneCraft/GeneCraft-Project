@@ -82,7 +82,7 @@ namespace GeneLabCore {
 
             // state
             //rigidBody->setDeactivationTime(100.0);
-            //rigidBody->setActivationState(DISABLE_DEACTIVATION);
+            rigidBody->setActivationState(DISABLE_DEACTIVATION);
         }
 
         for(int i=0;i<bones.size();++i)
