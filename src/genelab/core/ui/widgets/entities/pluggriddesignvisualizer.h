@@ -13,9 +13,7 @@ namespace GeneLabCore {
         Q_OBJECT
     public:
         explicit PlugGridDesignVisualizer(QWidget *parent = 0);
-        void setBrain(Brain* b) {
-            this->brain = b;
-        }
+        void setBrain(Brain* b);
 
         void setSelectedSensors(QList<Sensor*> s) {
             selectedSensors = s;
@@ -34,6 +32,8 @@ namespace GeneLabCore {
         QGraphicsView* view;
         float* neurons;
         bool init;
+        QList<QGraphicsRectItem*> neurones;
+        QMap<int, QMap<int, QGraphicsEllipseItem* > > ellipses;
 
     };
 }

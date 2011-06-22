@@ -21,10 +21,10 @@ Spider::Spider() :
 {
     nbLegs      = qrand()%8 + 3;
     nbBoneInLeg = qrand()%3 + 2;
-    legRadius   = ((float)qrand())/RAND_MAX * 1 + 0.1;
-    legLenght   = ((float)qrand())/RAND_MAX * 6 + 0.1;
-    kneeRadius  = ((float)qrand())/RAND_MAX * 2 + 0.1;
-    headRadius  = ((float)qrand())/RAND_MAX * 3 + legRadius*nbLegs/6;
+    legRadius   = ((float)qrand())/RAND_MAX * 0.3 + 0.1;
+    legLenght   = ((float)qrand())/RAND_MAX * 2 + 0.1;
+    kneeRadius  = ((float)qrand())/RAND_MAX * 0.3 + 0.1;
+    headRadius  = ((float)qrand())/RAND_MAX * 1 + legRadius*nbLegs/6;
 }
 
 Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {

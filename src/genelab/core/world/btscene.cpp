@@ -27,7 +27,7 @@ namespace GeneLabCore {
             btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,collisionShape,btVector3(0,0,0));
 
             btRigidBody *rigidBody = new btRigidBody(groundRigidBodyCI);
-            rigidBody->setActivationState(DISABLE_DEACTIVATION);
+            //rigidBody->setActivationState(DISABLE_DEACTIVATION);
             world->addRigidBody(rigidBody);
         }
     }

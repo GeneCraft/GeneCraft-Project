@@ -9,6 +9,8 @@
 #include <QVariantMap>
 #include <QVariantList>
 
+#include <QDebug>
+
 namespace GeneLabCore {
 
     btoBiome::btoBiome(MainFactory* factory, QVariant biomeData, QObject *parent) :
@@ -63,12 +65,12 @@ namespace GeneLabCore {
         // -------------------------
         // -- List of Material :) --
         // -------------------------
-        //Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
-        /*while (materialIterator.hasMoreElements())
+        /*Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
+        while (materialIterator.hasMoreElements())
         {
             QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
 
-            if(matName.contains("Grass"))
+            if(matName.contains("Axis") ||matName.contains("Debug"))
                 qDebug() << "****************************************************" ;
 
             qDebug() << matName;

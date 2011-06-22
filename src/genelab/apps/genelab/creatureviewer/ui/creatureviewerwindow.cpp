@@ -200,8 +200,19 @@ void CreatureViewerWindow::init() {
 
     world->setup();
     cvim->setWorld(world);
+/*
+    btoWorld* world2 = new btoWorld(factory, worldData);
+    btShapesFactory* shapesFactory2 = new btoShapesFactory(world2, btoEngine);
 
+    btBiome* biome2 = new btoBiome(factory, biomeData);
+    world2->setBiome(biome2);
 
+    btScene* scene2 = new btoScene(factory, sceneData);
+    world2->setScene(scene2);
+
+    world2->setup();
+
+*/
 
     // Spider
     qDebug() << "Spider creation !";
@@ -216,7 +227,7 @@ void CreatureViewerWindow::init() {
     qDebug() << b;
     Entity* e;
     for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 1; j++) {
+        for(int j = 0; j < 5; j++) {
             Spider *spider = new Spider();
             e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
             qDebug() << "spider setup !";

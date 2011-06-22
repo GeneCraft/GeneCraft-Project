@@ -8,6 +8,9 @@
 #include "modifiers/modifier.h"
 #include <QLayout>
 #include <QBoxLayout>
+#include <QGraphicsItem>
+#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
 
 namespace GeneLabCore {
 PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
@@ -25,7 +28,7 @@ PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
 int cptD = 0;
 void PlugGridDesignVisualizer::step() {
     cptD++;
-    if(cptD%15 == 0)
+    if(cptD%10 == 0)
     this->update();
 }
 
@@ -34,9 +37,9 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
     if(this->brain == 0)
         return;
 
-    this->view->scene()->clear();
+    //this->view->scene()->clear();
     this->view->scene()->setSceneRect(0, 0,brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
-    this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
+    this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10, Qt::KeepAspectRatio);
 
 
     // On récupère le bon réseau de neurone
@@ -48,19 +51,33 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
     //p.setStyle(Qt::NoPen);
     b.setStyle(Qt::SolidPattern);
     float width = 10;
+
     // On dessine les neurones
-    for(int i = 0; i < size; i++) {
-        for(int j = 0; j < size; j++) {
-            int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
-            int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
-            int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
-            b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
-            this->view->scene()->addRect(width * i,
-                                         width * j /*+ 70*/, width, width, p, b);
+    if(neurones.size() == 0)
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
+                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
+                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
+                neurones.append(this->view->scene()->addRect(width * i,
+                                             width * j /*+ 70*/, width, width, p, b));
+
+            }
         }
-    }
+    else
+    // On réutilise les vieux neurones
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
+                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
+                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
+                neurones.at(i* size + j)->setBrush(b);
+            }
+        }
 
-
+/*
     for(int i = 0; i < n->getInputs().size(); i++) {
 
         // On dessine les entrées
@@ -88,10 +105,6 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
 
             this->view->scene()->addEllipse(10*c.x, 10*c.y, 10, 10, p, b);
 
-            /*this->view->scene()->addLine(startingPoint.x() + 10, startingPoint.y() + 10,
-                                         brain->getPlugGrid()->getSize()*10/size*c.x + brain->getPlugGrid()->getSize()*10/size * 0.5,
-                                         brain->getPlugGrid()->getSize()*10/size*c.y + brain->getPlugGrid()->getSize()*10/size * 0.5 + 70, p);
-            */
             }
     }
 
@@ -117,12 +130,22 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
 
                 this->view->scene()->addEllipse(10*c.x, 10*c.y, 10, 10, p, b);
 
-                /*this->view->scene()->addLine(startingPoint.x() + 10, startingPoint.y() + 10,
-                                             brain->getPlugGrid()->getSize()*10/size*c.x + brain->getPlugGrid()->getSize()*10/size * 0.5,
-                                             brain->getPlugGrid()->getSize()*10/size*c.y + brain->getPlugGrid()->getSize()*10/size * 0.5 + 70, p);
-                */
                 }
+        }*/
+    }
+
+    void PlugGridDesignVisualizer::setBrain(Brain* b) {
+        // Old brain exist and new != old
+        if(brain != 0 && brain != b) {
+            foreach(QGraphicsRectItem* neurone, neurones) {
+                this->view->scene()->removeItem(neurone);
+                delete neurone;
+            }
+
+            neurones.clear();
         }
+
+        this->brain = b;
     }
 }
-}
+

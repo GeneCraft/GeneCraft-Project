@@ -26,11 +26,14 @@ public:
         Ogre::SceneNode *nodeC;
         Ogre::Entity *entityS;
         Ogre::SceneNode *nodeS;
+        Ogre::SceneNode *debugNode;
 
     private:
 
         static int mNumEntitiesInstanced;
         Ogre::AxisAlignedBox originalCylinderBB;
+
+        Ogre::SceneNode *getDebugAxes();
 };
 }
 

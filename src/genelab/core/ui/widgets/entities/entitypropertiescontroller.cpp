@@ -15,6 +15,7 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EntityPropertiesController)
 {
+
     ui->setupUi(this);
     QLayout* layoutBrain = new QBoxLayout(QBoxLayout::TopToBottom);
     this->ui->tabBrain->setLayout(layoutBrain);

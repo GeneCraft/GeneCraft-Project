@@ -31,19 +31,19 @@ namespace GeneLabCore {
     int cptP;
     void PlugGridVisualizer::step() {
         cptP++;
-        if(cptP%4 == 0)
+        if(cptP%10 == 0)
         this->update();
     }
 
     void PlugGridVisualizer::paintEvent(QPaintEvent * e) {
-        this->view->fitInView(this->view->scene()->sceneRect());
+        this->view->fitInView(this->view->scene()->sceneRect(), Qt::KeepAspectRatio);
 
         if(this->brain == 0)
             return;
 
         this->view->scene()->clear();
         this->view->scene()->setSceneRect(0, 0,brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
-        this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
+        this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10, Qt::KeepAspectRatio);
 
 
         // On récupère le bon réseau de neurone
