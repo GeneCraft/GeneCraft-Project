@@ -10,10 +10,14 @@ namespace GeneLabCore {
     SimulationManager::SimulationManager(QMap<QString, Engine*> engines, QObject *parent)
     {
         this->engines = engines;
-        this->renderEngine = engines.find("Ogre").value();
+        this->renderEngine      = engines.find("Ogre").value();
         this->translationEngine = engines.find("BulletOgre").value();
+        this->eventsManager     = engines.find("Events").value();
+
         this->engines.remove("Ogre");
         this->engines.remove("OgreBullet");
+        this->engines.remove("EventsManager");
+
         this->stepBySec = 60;
         this->nbStep = 0;
     }
@@ -47,38 +51,52 @@ namespace GeneLabCore {
         stepTimer->stop();
     }
 
-    void SimulationManager::toggle() {
+    bool SimulationManager::toggle() {
         if(stepTimer->isActive()) {
             stepTimer->stop();
         } else {
             stepTimer->start();
         }
+
+        return stepTimer->isActive();
     }
 
     void SimulationManager::update()
     {
         nbStep++;
 
+        // beforeStep
         foreach(Engine* e, engines)
             e->beforeStep();
 
+        // step
         foreach(Engine* e, engines)
             e->step();
 
+        // after step
         foreach(Engine* e, engines)
             e->afterStep();
     }
 
     void SimulationManager::renderUpdate() {
+
+        // beforeStep
+        this->eventsManager->beforeStep();
         this->translationEngine->beforeStep();
-        this->translationEngine->step();
-        this->translationEngine->afterStep();
         this->renderEngine->beforeStep();
+
+        // step
+        this->eventsManager->step();
+        this->translationEngine->step();
         this->renderEngine->step();
+
+        // after step
+        this->eventsManager->afterStep();
+        this->translationEngine->afterStep();
         this->renderEngine->afterStep();
     }
 
-    void SimulationManager::setFreq(int stepBySec) {
+    void SimulationManager::setPhysicsFreq(int stepBySec) {
         this->stepBySec = stepBySec;
         if(stepBySec < 0 )
             stepBySec = 0;

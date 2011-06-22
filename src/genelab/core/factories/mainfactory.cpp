@@ -9,7 +9,7 @@
 #include "ogre/ogrewidget.h"
 #include "bullet/bulletengine.h"
 #include "bulletogre/bulletogreengine.h"
-#include "events/eventmanager.h"
+#include "events/eventsmanager.h"
 #include "creatureviewerinputmanager.h"
 #include "ressources/ressource.h"
 
@@ -104,7 +104,7 @@ namespace GeneLabCore {
         // -- Events --
         // ------------
         qDebug() << "Init Events Manager";
-        EventManager *em = new EventManager();
+        EventsManager *em = new EventsManager();
         connect(oW1,SIGNAL(mousePressed(QMouseEvent*)),em,SLOT(mousePressEvent(QMouseEvent*)));
         connect(oW1,SIGNAL(mouseReleased(QMouseEvent*)),em,SLOT(mouseReleaseEvent(QMouseEvent*)));
         connect(oW1,SIGNAL(mouseMoved(QMouseEvent*)),em,SLOT(mouseMoveEvent(QMouseEvent*)));
@@ -112,7 +112,7 @@ namespace GeneLabCore {
         connect(oW1,SIGNAL(keyReleased(QKeyEvent*)),em,SLOT(keyReleaseEvent(QKeyEvent*)));
         connect(oW1,SIGNAL(entered(QEvent*)),em,SLOT(enterViewPortEvent(QEvent*)));
         connect(oW1,SIGNAL(leaved(QEvent*)),em,SLOT(leaveViewPortEvent(QEvent*)));
-        this->engines.insert("Event", em);
+        this->engines.insert("Events", em);
         qDebug() << "[OK]\n";
     }
 

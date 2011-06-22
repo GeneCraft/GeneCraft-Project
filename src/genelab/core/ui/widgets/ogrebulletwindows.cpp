@@ -20,7 +20,7 @@
 #include "ogre/ogrewidget.h"
 #include "bullet/bulletengine.h"
 #include "simulationmanager.h"
-#include "events/eventmanager.h"
+#include "events/eventsmanager.h"
 #include "families/snakefamily.h"
 #include "body/treeshape.h"
 #include "body/fixation.h"

@@ -7,7 +7,7 @@ namespace GeneLabCore {
     BulletEngine::BulletEngine(QObject *parent) :
         Engine(parent)
     {
-        physicsEnable = false;
+        physicsEnable = true;
     }
 
     void BulletEngine::step() {

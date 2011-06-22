@@ -21,6 +21,11 @@ namespace GeneLabCore {
         void addEngine(QString name, Engine *engine);
         void removeEngine(QString name);
 
+        inline int getPhysicsFreq()
+        {
+            return stepBySec;
+        }
+
     signals:
 
     public slots:
@@ -31,8 +36,8 @@ namespace GeneLabCore {
         // the world manager the time
         void start();
         void stop();
-        void toggle();
-        void setFreq(int stepBySec);
+        bool toggle();
+        void setPhysicsFreq(int stepBySec);
         void update();
         void renderUpdate();
 
@@ -40,6 +45,7 @@ namespace GeneLabCore {
         QMap<QString, Engine*> engines;
         Engine* renderEngine;
         Engine* translationEngine;
+        Engine* eventsManager;
 
         // Execution timer
         int nbStep;

@@ -34,7 +34,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(0, 85, 255);</string>
+    <string notr="true">color: rgb(81, 119, 145);</string>
    </property>
    <property name="text">
     <string>Creature Viewer</string>
@@ -92,7 +92,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>0.1 | heig-vd 2011</string>
+    <string>0.1, June 2011</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -122,6 +122,9 @@
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(81, 119, 145);</string>
    </property>
    <property name="text">
     <string>GeneLab</string>

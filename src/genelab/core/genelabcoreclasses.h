@@ -24,7 +24,7 @@ namespace GeneLabCore {
     class btoCylinder;
 
     // Event management
-    class EventManager;
+    class EventsManager;
     class InputListener;
 
     // OpenGL

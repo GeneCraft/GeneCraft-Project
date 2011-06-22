@@ -1,60 +1,60 @@
-#include "eventmanager.h"
+#include "eventsmanager.h"
 
 using namespace Ogre;
 
 namespace GeneLabCore {
 
-    EventManager::EventManager(QObject *parent) : GeneLabCore::Engine(parent)
+    EventsManager::EventsManager(QObject *parent) : GeneLabCore::Engine(parent)
     {
     }
 
-    void EventManager::addListener(InputListener * il)
+    void EventsManager::addListener(InputListener * il)
     {
         inputListeners.push_back(il);
     }
 
-    void EventManager::removeListener(InputListener *il)
+    void EventsManager::removeListener(InputListener *il)
     {
         inputListeners.removeOne(il);
     }
 
-    void EventManager::mousePressEvent(QMouseEvent * e)
+    void EventsManager::mousePressEvent(QMouseEvent * e)
     {
         eventsQueue.enqueue(e);
     }
 
-    void EventManager::mouseReleaseEvent(QMouseEvent * e)
+    void EventsManager::mouseReleaseEvent(QMouseEvent * e)
     {
         eventsQueue.enqueue(e);
     }
 
-    void EventManager::mouseMoveEvent(QMouseEvent * e)
+    void EventsManager::mouseMoveEvent(QMouseEvent * e)
     {
         eventsQueue.enqueue(e);
     }
 
-    void EventManager::keyPressEvent(QKeyEvent *e)
+    void EventsManager::keyPressEvent(QKeyEvent *e)
     {
         eventsQueue.enqueue(e);
     }
 
-    void EventManager::keyReleaseEvent(QKeyEvent *e)
+    void EventsManager::keyReleaseEvent(QKeyEvent *e)
     {
         eventsQueue.enqueue(e);
     }
 
-    void EventManager::enterViewPortEvent (QEvent *e)
+    void EventsManager::enterViewPortEvent (QEvent *e)
     {
         eventsQueue.enqueue(e);
     }
 
-    void EventManager::leaveViewPortEvent (QEvent *e)
+    void EventsManager::leaveViewPortEvent (QEvent *e)
     {
         eventsQueue.enqueue(e);
     }
 
     // Engine
-    void EventManager::beforeStep(){
+    void EventsManager::beforeStep(){
 
         while(!eventsQueue.empty())
         {
@@ -113,9 +113,9 @@ namespace GeneLabCore {
     }
 
 
-    void EventManager::step()
+    void EventsManager::step()
     {}
 
-    void EventManager::afterStep()
+    void EventsManager::afterStep()
     {}
 }

@@ -118,8 +118,9 @@ void OgreFreeCamera::step()
     if(t.elapsed() == 0.0)
        t.start();
 
-    qDebug() << t.elapsed()/1000.0;
+    //qDebug() << t.elapsed()/1000.0;
     Ogre::Real elapsedTime = t.elapsed()/1000.0;
+    t.restart();
 
     // any movement key are pressed
     if(forwardKeyPressed || backwardKeyPressed
@@ -169,8 +170,6 @@ void OgreFreeCamera::step()
             // continue to move in the last direction
             ogreCamera->move(lastMovementDirection * movementSpeed * elapsedTime);
     }
-
-    t.restart();
 }
 
 void OgreFreeCamera::enterViewPortEvent (QEvent *e)

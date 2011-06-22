@@ -10,17 +10,11 @@
     <height>765</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>400</width>
-    <height>16777215</height>
-   </size>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -46,18 +40,6 @@
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget_3">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>400</height>
-      </size>
-     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -189,6 +171,18 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QTreeWidget" name="twBodyTree">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>200</height>
+          </size>
+         </property>
          <property name="autoExpandDelay">
           <number>0</number>
          </property>
@@ -201,7 +195,125 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/entity_stats</normaloff>:/img/icons/entity_stats</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Stats</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="1">
+        <widget class="QLabel" name="lName_2">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <italic>true</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>velocity_value</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(81, 119, 145);</string>
+         </property>
+         <property name="text">
+          <string>Height :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="lFamily_2">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <italic>true</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>height_value</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(81, 119, 145);</string>
+         </property>
+         <property name="text">
+          <string>Weight :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lGeneration_2">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <italic>true</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>weight_value</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>249</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(81, 119, 145);</string>
+         </property>
+         <property name="text">
+          <string>Velocity :</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab_2">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/motor_test</normaloff>:/img/icons/motor_test</iconset>
+      </attribute>
       <attribute name="title">
        <string>All motors</string>
       </attribute>
@@ -289,16 +401,10 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>400</height>
-      </size>
      </property>
      <property name="currentIndex">
       <number>0</number>
@@ -357,7 +463,14 @@
         </widget>
        </item>
        <item row="1" column="0" rowspan="2" colspan="5">
-        <widget class="QListWidget" name="lwSensors"/>
+        <widget class="QListWidget" name="lwSensors">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="1" column="5">
         <widget class="QPushButton" name="pushButton">
@@ -386,18 +499,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="lNbrEffectors">
-         <property name="font">
-          <font>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>#effectors</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="3">
         <widget class="QLabel" name="label_7">
          <property name="styleSheet">
@@ -420,8 +521,33 @@
          </property>
         </widget>
        </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="lNbrEffectors">
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>#effectors</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="0" colspan="5">
-        <widget class="QListWidget" name="lwEffectors"/>
+        <widget class="QListWidget" name="lwEffectors">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="4" column="5">
         <widget class="QPushButton" name="pushButton_2">
@@ -432,6 +558,19 @@
           <string>Clear all</string>
          </property>
         </widget>
+       </item>
+       <item row="5" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

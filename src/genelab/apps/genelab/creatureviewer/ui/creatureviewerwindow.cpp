@@ -28,7 +28,7 @@
 #include "ogre/ogreengine.h"
 #include "mainfactory.h"
 #include "simulationmanager.h"
-#include "events/eventmanager.h"
+#include "events/eventsmanager.h"
 #include "bulletogre/bulletogreengine.h"
 #include "entities/entitiesengine.h"
 
@@ -83,20 +83,30 @@ void CreatureViewerWindow::init() {
     // --------------
 
     // create actions & add to bar
-    QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString("New creature"));
-    QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString("Add creature"));
-    QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString("Save creature"));
-    QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString("Remove creature"));
+    QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString(tr("New creature")));
+    QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString(tr("Add creature")));
+    QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString(tr("Save creature")));
+    QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString(tr("Remove creature")));
     ui->toolBar->addSeparator();
-    aTogglePhysics = ui->toolBar->addAction(QIcon(":img/icons/bullet_physics_library_play"),QString("Toggle physics"));
+
+    // step manager
+    //ui->toolBar->addWidget(new QLabel(tr("Step manager :"));
+    aTogglePhysics = ui->toolBar->addAction(QIcon(":img/icons/bullet_physics_library_stop"),QString(tr("Toggle physics")));
+    QSlider *sPhysicStep = new QSlider();
+    sPhysicStep->setToolTip(tr("Physical steps by sec. [1..1000]"));
+    sPhysicStep->setOrientation(Qt::Horizontal);
+    sPhysicStep->setMinimum(1);
+    sPhysicStep->setMaximum(1000);
+    sPhysicStep->setMaximumWidth(200);
+    sPhysicStep->setTickInterval(100);
+    sPhysicStep->setTickPosition(QSlider::TicksBelow);
+    ui->toolBar->addWidget(sPhysicStep);
 
     // connections
     connect(aNewCreature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(aAddCreature,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
     connect(aSaveCreature,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
     connect(aRemoveCreature,SIGNAL(triggered()),this,SLOT(removeEntity()));
-    connect(aTogglePhysics,SIGNAL(triggered()),this,SLOT(togglePhysics()));
-
 
     // ----------------------
     // -- Events Listeners --
@@ -107,7 +117,7 @@ void CreatureViewerWindow::init() {
     CreatureViewerInputManager *cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
     EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     // add listener in events manager
-    EventManager *eventsManager =  static_cast<EventManager*>(factory->getEngines().find("Event").value());
+    EventsManager *eventsManager =  static_cast<EventsManager*>(factory->getEngines().find("Events").value());
     eventsManager->addListener(cvim);
 
 
@@ -117,8 +127,8 @@ void CreatureViewerWindow::init() {
     // ------------------------
     qDebug() << "Init Simulation Manager";
     simulationManager = new SimulationManager(factory->getEngines());
-
     simulationManager->setup();
+    sPhysicStep->setValue(simulationManager->getPhysicsFreq());
     qDebug() << "[OK]\n";
 
 
@@ -138,12 +148,14 @@ void CreatureViewerWindow::init() {
 
     qDebug() << "Start simulation";
     simulationManager->start();
-    connect(this->ui->sliderStep, SIGNAL(valueChanged(int)), this->simulationManager, SLOT(setFreq(int)));
-    connect(this->ui->toggleSimulation, SIGNAL(clicked()), this->simulationManager, SLOT(toggle()));
+
+    connect(sPhysicStep,SIGNAL(valueChanged(int)),this->simulationManager,SLOT(setPhysicsFreq(int)));
+    connect(aTogglePhysics,SIGNAL(triggered()),this,SLOT(togglePhysics()));
+
     qDebug() << "[OK]\n";
 
 
-    // Création du monde
+    // World creation
     btoWorld* world = new btoWorld(factory);
     world->setup();
     cvim->setWorld(world);
@@ -353,10 +365,7 @@ void CreatureViewerWindow::saveEntityToFile()
 
 void CreatureViewerWindow::togglePhysics()
 {
-    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
-    btoEngine->getBulletEngine()->setPhysicsEnable(!btoEngine->getBulletEngine()->getPhysicsEnable());
-
-    if(btoEngine->getBulletEngine()->getPhysicsEnable())
+    if(this->simulationManager->toggle())
         aTogglePhysics->setIcon(QIcon(":img/icons/bullet_physics_library_stop"));
     else
         aTogglePhysics->setIcon(QIcon(":img/icons/bullet_physics_library_play"));

@@ -99,7 +99,6 @@ SOURCES += \
     ../genelab/core/engines/ogre/ogreengine.cpp \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.cpp \
     ../genelab/core/engines/events/inputlistener.cpp \
-    ../genelab/core/engines/events/eventmanager.cpp \
     ../genelab/core/engines/engine.cpp \
     ../genelab/core/engines/bullet/bulletengine.cpp \
     ../genelab/core/engines/ogre/ogrewidget.cpp \
@@ -165,13 +164,13 @@ SOURCES += \
     ../genelab/core/world/btbiome.cpp \
     ../genelab/core/world/btoworld.cpp \
     ../genelab/core/world/btoscene.cpp \
-    ../genelab/core/world/btobiome.cpp
+    ../genelab/core/world/btobiome.cpp \
+    ../genelab/core/engines/events/eventsmanager.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
     ../genelab/core/engines/ogre/ogreengine.h \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.h \
-    ../genelab/core/engines/events/eventmanager.h \
     ../genelab/core/engines/engine.h \
     ../genelab/core/engines/bullet/bulletengine.h \
     ../genelab/core/engines/ogre/ogrewidget.h \
@@ -239,7 +238,8 @@ HEADERS += \
     ../genelab/core/world/btbiome.h \
     ../genelab/core/world/btoworld.h \
     ../genelab/core/world/btoscene.h \
-    ../genelab/core/world/btobiome.h
+    ../genelab/core/world/btobiome.h \
+    ../genelab/core/engines/events/eventsmanager.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
