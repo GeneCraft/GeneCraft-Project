@@ -6,6 +6,7 @@
 #include <QMap>
 
 #include <QTimer>
+#include <QTime>
 
 namespace GeneLabCore {
 

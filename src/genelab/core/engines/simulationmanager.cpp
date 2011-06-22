@@ -5,6 +5,9 @@
 #include <QTimer>
 #include <ctime>
 
+#include "Ogre.h"
+#include "OgreTextAreaOverlayElement.h"
+
 namespace GeneLabCore {
 
     SimulationManager::SimulationManager(QMap<QString, Engine*> engines, QObject *parent)
@@ -64,6 +67,15 @@ namespace GeneLabCore {
     void SimulationManager::update()
     {
         nbStep++;
+        int sec = (nbStep/60)%60;
+        int min = (nbStep/3600)%60;
+        int hour = (nbStep/(3600*60));
+        QString time = (hour?QString::number(hour) + "h ":"")
+                      +(min?QString::number(min) + "m ":"")
+                      +(sec?QString::number(sec) + "s ":"");
+        Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
+
+        overlayManager.getOverlayElement("timeArea")->setCaption(time.toStdString());
 
         // beforeStep
         foreach(Engine* e, engines)

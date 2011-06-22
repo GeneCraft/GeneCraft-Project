@@ -159,7 +159,7 @@ void CreatureViewerWindow::init() {
 
     // Création du monde ---> WorldFactory
     QVariantMap worldData;
-    worldData.insert("Name", "Earth");
+    worldData.insert("name", "Earth");
 
     QVariantMap biomeData;
     biomeData.insert("gravity", (float)9.81);
@@ -226,8 +226,8 @@ void CreatureViewerWindow::init() {
     }
     qDebug() << b;
     Entity* e;
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
+    for(int i = 0; i < 1; i++) {
+        for(int j = 0; j < 1; j++) {
             Spider *spider = new Spider();
             e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
             qDebug() << "spider setup !";

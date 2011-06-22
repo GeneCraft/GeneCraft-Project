@@ -1,5 +1,6 @@
 #include "ogrewidget.h"
 #include "Ogre.h"
+#include "OgreViewport.h"
 #include <QDebug>
 #include "bullet/bulletengine.h"
 #include "ogre/ogreengine.h"
@@ -83,7 +84,7 @@ namespace GeneLabCore {
 
         mViewport = mOgreWindow->addViewport( mCamera );
         mViewport->setBackgroundColour( Ogre::ColourValue( 0.8,0.8,1 ) );
-
+        mViewport->setOverlaysEnabled(true);
         mIsInit = true;
         resized = true;
 
