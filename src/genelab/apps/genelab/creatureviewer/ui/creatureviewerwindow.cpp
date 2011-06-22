@@ -166,9 +166,9 @@ void CreatureViewerWindow::init() {
 
     biomeData.insert("sky", "Examples/CloudySky");
 
-    biomeData.insert("aR", (float)0.6);
-    biomeData.insert("aG", (float)0.4);
-    biomeData.insert("aB", (float)0.6);
+    biomeData.insert("aR", (float)0.8);
+    biomeData.insert("aG", (float)0.8);
+    biomeData.insert("aB", (float)0.8);
 
     biomeData.insert("lR", (float)0.6);
     biomeData.insert("lG", (float)0.4);

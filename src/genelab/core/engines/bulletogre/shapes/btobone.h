@@ -34,6 +34,13 @@ public:
         Ogre::AxisAlignedBox originalCylinderBB;
 
         Ogre::SceneNode *getDebugAxes();
+
+        QString boneMaterial;
+        QString fixationMaterial;
+
+        QString boneSelectedMaterial;
+        QString fixationSelectedMaterial;
+
 };
 }
 

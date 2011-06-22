@@ -20,6 +20,9 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();
 
+    fixationMaterial = "GeneLab/Fixation";
+    fixationSelectedMaterial = "GeneLab/Fixation_Selected";
+
     // -------------------
     // -- create sphere --
     // -------------------
@@ -34,7 +37,7 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
             "sphere.mesh");
 
     // Material
-    entity->setMaterialName("Sinbad/Eyes");
+    entity->setMaterialName(fixationMaterial.toStdString());
     entity->setCastShadows(true);
 
     node = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
@@ -60,9 +63,9 @@ void btoSphere::setup()
 void btoSphere::setSelected(bool selected)
 {
     if(selected)
-        entity->setMaterialName("BaseWhite");
+        entity->setMaterialName(fixationSelectedMaterial.toStdString());
     else
-        entity->setMaterialName("Sinbad/Eyes");
+        entity->setMaterialName(fixationMaterial.toStdString());
 }
 
 }

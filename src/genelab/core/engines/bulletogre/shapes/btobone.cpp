@@ -18,6 +18,12 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();
 
+    boneMaterial = "GeneLab/Bone";
+    fixationMaterial = "GeneLab/Fixation";
+
+    boneSelectedMaterial = "GeneLab/Bone_Selected";
+    fixationSelectedMaterial = "GeneLab/Fixation_Selected";
+
     // New entity
     btoBone::mNumEntitiesInstanced++;
 
@@ -27,7 +33,7 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
             "Barrel.mesh");
 
     // Material
-    entityC->setMaterialName("Sinbad/Teeth");
+    entityC->setMaterialName(boneMaterial.toStdString());
     entityC->setCastShadows(true);
 
     // Attach
@@ -47,7 +53,7 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
             "sphere.mesh");
 
     // Material
-    entityS->setMaterialName("Sinbad/Eyes");
+    entityS->setMaterialName(fixationMaterial.toStdString());
     entityS->setCastShadows(true);
 
     nodeS = parentNode->createChildSceneNode(Vector3(0, length/2+radiusArticulation, 0));
@@ -97,8 +103,8 @@ void btoBone::setSelected(bool selected)
 {
     if(selected) {
 
-        entityC->setMaterialName("BaseWhite");
-        entityS->setMaterialName("BaseWhite");
+        entityC->setMaterialName(boneSelectedMaterial.toStdString());
+        entityS->setMaterialName(fixationSelectedMaterial.toStdString());
         debugNode->setVisible(true, true);
 
         /*
@@ -116,8 +122,8 @@ void btoBone::setSelected(bool selected)
 
     }
     else {
-        entityC->setMaterialName("Sinbad/Teeth");
-        entityS->setMaterialName("Sinbad/Teeth");
+        entityC->setMaterialName(boneMaterial.toStdString());
+        entityS->setMaterialName(fixationMaterial.toStdString());
         debugNode->setVisible(false);
 
     }

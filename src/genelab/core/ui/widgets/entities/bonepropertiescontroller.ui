@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
+    <width>380</width>
     <height>558</height>
    </rect>
   </property>
@@ -481,7 +481,7 @@
             <item>
              <widget class="QLabel" name="label_6">
               <property name="styleSheet">
-               <string notr="true">color: rgb(107, 128, 166);</string>
+               <string notr="true">color: rgb(0, 0, 238);</string>
               </property>
               <property name="text">
                <string>X</string>
@@ -494,7 +494,7 @@
             <item>
              <widget class="QLabel" name="label_5">
               <property name="styleSheet">
-               <string notr="true">color: rgb(107, 128, 166);</string>
+               <string notr="true">color: rgb(0, 238, 0);</string>
               </property>
               <property name="text">
                <string>Y</string>
@@ -507,7 +507,7 @@
             <item>
              <widget class="QLabel" name="label_4">
               <property name="styleSheet">
-               <string notr="true">color: rgb(107, 128, 166);</string>
+               <string notr="true">color: rgb(238, 0, 0);</string>
               </property>
               <property name="text">
                <string>Z</string>

@@ -20,6 +20,9 @@ protected:
     Ogre::Entity *entity;
     Ogre::SceneNode *node;
 
+    QString fixationMaterial;
+    QString fixationSelectedMaterial;
+
 private:
     static int mNumSpheresInstanced;
 };
