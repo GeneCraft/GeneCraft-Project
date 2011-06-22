@@ -1,0 +1,62 @@
+material GeneLab/Bone
+{
+    technique
+    {
+        pass
+        {
+            ambient 0.6 0.6 0.6
+            diffuse 0.6 0.6 0.6
+			specular 1.0 1.0 1.0
+            
+            texture_unit
+            {
+                texture military.jpg
+				scroll_anim 0.5 0.0
+            }
+        }
+    }
+}
+
+material GeneLab/Bone_Selected : GeneLab/Bone    
+{
+    technique
+    {
+		pass
+        {
+			ambient 1.0 1.0 1.0
+			diffuse 1.0 1.0 1.0
+        }
+    }
+}
+
+material GeneLab/Fixation   
+{
+    technique
+    {
+        pass
+        {
+			ambient 0.6 0.6 0.6
+            diffuse 0.6 0.6 0.6
+			specular 1.0 1.0 1.0
+		
+            texture_unit
+            {
+				texture military.jpg
+				env_map spherical
+				scroll_anim 0.5 0.0
+            }
+        }
+    }
+}
+
+material GeneLab/Fixation_Selected : GeneLab/Fixation    
+{
+    technique
+    {
+		pass
+        {
+			ambient 1.0 1.0 1.0
+			diffuse 1.0 1.0 1.0
+        }
+    }
+}
