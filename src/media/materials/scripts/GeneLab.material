@@ -10,7 +10,7 @@ material GeneLab/Bone
             
             texture_unit
             {
-				texture military_fun.png
+				texture bone.jpg
             }
         }
     }
@@ -40,7 +40,7 @@ material GeneLab/Fixation
 		
             texture_unit
             {
-				texture military.jpg
+				texture fixation.jpg
 				env_map spherical
             }
         }
