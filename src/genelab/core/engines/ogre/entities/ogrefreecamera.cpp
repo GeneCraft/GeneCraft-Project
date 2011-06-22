@@ -13,7 +13,7 @@ OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
     initialMovementSpeed    = 1.4;
     movementSpeed           = initialMovementSpeed;
     maxMovementSpeed        = 60.0; // meter / s
-    movementAcceleration    = 1.06;
+    movementAcceleration    = 1.2;
     movementDeceleration    = 1.1;
 
     // Look parameters

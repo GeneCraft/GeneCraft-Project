@@ -10,8 +10,9 @@ class btoWorld : public btWorld
 {
     Q_OBJECT
 public:
-    explicit btoWorld(MainFactory* factory, QObject *parent = 0);
+    explicit btoWorld(MainFactory* factory, QVariant data, QObject *parent = 0);
 
+    virtual void setup();
 signals:
 
 public slots:

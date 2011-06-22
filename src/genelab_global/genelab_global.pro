@@ -27,7 +27,6 @@ INCLUDEPATH += \
 
 #library related
 INCLUDEPATH  += \
-    ../lib/ogre/boost_1_44 \
     ../lib/bullet/src \
     ../lib/bullet/Extra/ConvexDecomposition \
     ../lib/qxt/src/core \
@@ -36,24 +35,22 @@ INCLUDEPATH  += \
  win32 {
     INCLUDEPATH += ../lib/ogre/include/OGRE \
                    ../lib/ogre/include/OIS \
-                   ../lib/ogre/include
+                   ../lib/ogre/include \
+                   ../lib/ogre/boost_1_44
 
-
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OGRE
     QMAKE_CXXFLAGS  += -isystem../lib/ogre/include/OIS
  }
  unix {
     INCLUDEPATH += ../lib/ogre/Dependencies/include \
-    /Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/OgreMain/include \
-    /Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo/Ogre.framework/Headers
+    INCLUDEPATH += /Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo/Ogre.framework/Headers
 
-    QMAKE_CXXFLAGS  += -isystem../lib/ogre/Dependencies/include
+    #QMAKE_CXXFLAGS  += -isystem../lib/ogre/Dependencies/include
     QMAKE_CXXFLAGS  += -isystem/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo/Ogre.framework/Headers
-    QMAKE_CXXFLAGS  += -isystem/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/OgreMain/include
  }
 
-QMAKE_CXXFLAGS  += -isystem../lib/ogre/include
-QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_44
 QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
 QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
 QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
@@ -99,6 +96,7 @@ SOURCES += \
     ../genelab/core/engines/ogre/ogreengine.cpp \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.cpp \
     ../genelab/core/engines/events/inputlistener.cpp \
+    ../genelab/core/engines/events/eventsmanager.cpp \
     ../genelab/core/engines/engine.cpp \
     ../genelab/core/engines/bullet/bulletengine.cpp \
     ../genelab/core/engines/ogre/ogrewidget.cpp \
@@ -164,13 +162,13 @@ SOURCES += \
     ../genelab/core/world/btbiome.cpp \
     ../genelab/core/world/btoworld.cpp \
     ../genelab/core/world/btoscene.cpp \
-    ../genelab/core/world/btobiome.cpp \
-    ../genelab/core/engines/events/eventsmanager.cpp
+    ../genelab/core/world/btobiome.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
     ../genelab/core/engines/ogre/ogreengine.h \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.h \
+    ../genelab/core/engines/events/eventsmanager.h \
     ../genelab/core/engines/engine.h \
     ../genelab/core/engines/bullet/bulletengine.h \
     ../genelab/core/engines/ogre/ogrewidget.h \
@@ -238,8 +236,7 @@ HEADERS += \
     ../genelab/core/world/btbiome.h \
     ../genelab/core/world/btoworld.h \
     ../genelab/core/world/btoscene.h \
-    ../genelab/core/world/btobiome.h \
-    ../genelab/core/engines/events/eventsmanager.h
+    ../genelab/core/world/btobiome.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

@@ -14,25 +14,15 @@
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 #include "BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
 
-
-
-// Shapes
-#include "BulletCollision/CollisionShapes/btStaticPlaneShape.h"
-#include "bulletogre/shapes/btosphere.h"
-#include "bulletogre/shapes/btobox.h"
-#include "bulletogre/shapes/btocylinder.h"
-#include "btoshapesfactory.h"
-
-
 namespace GeneLabCore {
 
-    btWorld::btWorld(MainFactory* factory, QObject *parent) :
+    btWorld::btWorld(MainFactory* factory, QVariant worldData, QObject *parent) :
         QObject(parent)
     {
+        this->data = worldData.toMap();
         this->factory = factory;
         this->btEngine = static_cast<BulletEngine*>(factory->getEngines().find("Bullet").value());
         entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-
 
     }
 
@@ -58,27 +48,29 @@ namespace GeneLabCore {
         btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
         world = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
 
+        // Set the world to the subworld classes
+        this->biome->setBulletWorld(world);
+        this->scene->setBulletWorld(world);
+
         // Setup the biome+scene
-        //this->biome->setup(world);
-        //this->scene->setup(world);
-
-        // TO BIOME
-        world->setGravity(btVector3(0,-9.81,0));
-
-        btStaticPlaneShape *collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
-        btTransform worldTransform;
-        worldTransform.setIdentity();
-        btDefaultMotionState* groundMotionState = new btDefaultMotionState(worldTransform);
-        btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,collisionShape,btVector3(0,0,0));
-
-        btRigidBody *rigidBody = new btRigidBody(groundRigidBodyCI);
-        rigidBody->setActivationState(DISABLE_DEACTIVATION);
-        world->addRigidBody(rigidBody);
+        this->biome->setup();
+        this->scene->setup();
 
         // Add the world to the bullet engine
         btEngine->addWorld(world);
     }
 
+    // To set the scene
+    void btWorld::setScene(btScene* scene) {
+        this->scene = scene;
+        this->scene->setBulletWorld(world);
+    }
+
+    // To set the biome
+    void btWorld::setBiome(btBiome* biome) {
+        this->biome = biome;
+        this->biome->setBulletWorld(world);
+    }
 
 
 }

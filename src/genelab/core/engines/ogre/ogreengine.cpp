@@ -1,5 +1,5 @@
 #include "ogreengine.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 #include <QDebug>
 #include <QApplication>
 #include "ogrewidget.h"

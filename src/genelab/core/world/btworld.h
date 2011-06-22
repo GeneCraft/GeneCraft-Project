@@ -9,6 +9,11 @@
 #include "LinearMath/btTransform.h"
 
 #include <deque>
+#include <QVariant>
+
+#include "world/btscene.h"
+#include "world/btbiome.h"
+
 
 namespace GeneLabCore {
 
@@ -16,7 +21,7 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit btWorld(MainFactory* factory, QObject *parent = 0);
+        explicit btWorld(MainFactory* factory, QVariant worldData, QObject *parent = 0);
 
         // To create a new creature
         virtual btTransform getSpawnPosition();
@@ -24,16 +29,8 @@ namespace GeneLabCore {
         // To add a created creature to the world
         virtual void addCreature(Entity* ent);
 
-        // To set the scene
-        virtual void setScene(btScene* scene) {
-            this->scene = scene;
-        }
-
-        // To set the biome
-        virtual void setBiome(btBiome* biome) {
-            this->biome = biome;
-        }
-
+        void setScene(btScene* scene);
+        void setBiome(btBiome* biome);
 
         btScene* getScene() { return scene; }
         btBiome* getBiome() { return biome; }
@@ -65,6 +62,9 @@ namespace GeneLabCore {
 
         // Bullet world
         btDynamicsWorld* world;
+
+        // Data
+        QVariantMap data;
     };
 
 }

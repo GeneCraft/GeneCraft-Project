@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 #include "ogre/ogreengine.h"
 #include "ogre/ogrewidget.h"
 #include "bullet/bulletengine.h"
@@ -121,7 +121,7 @@ namespace GeneLabCore {
     }
 
     QMap<QString, Engine*> MainFactory::getEngines() {
-        return engines;
+        return QMap<QString, Engine*>(engines);
 
     }
 

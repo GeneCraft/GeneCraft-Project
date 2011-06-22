@@ -3,7 +3,7 @@
 
 #include "genelabcoreclasses.h"
 #include "bullet/shapes/btbox.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 
 namespace GeneLabCore {
 

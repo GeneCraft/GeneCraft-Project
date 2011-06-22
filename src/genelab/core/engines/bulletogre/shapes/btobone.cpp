@@ -74,7 +74,7 @@ void btoBone::setSize(btScalar radius, btScalar length)
 {
     btBone::setSize(radius,length);
 
-    qDebug()<< getArticulationRadius() ;
+    //qDebug()<< getArticulationRadius() ;
 
     // Set relative position
     nodeS->setPosition(Vector3(0, length/2+getArticulationRadius(),0));

@@ -4,7 +4,7 @@
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "bullet/bulletengine.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 
 
 namespace GeneLabCore {
@@ -28,9 +28,13 @@ void BulletOgreEngine::step()
     {
         body = it.next();
         btTransform transform = body->rigidBody->getWorldTransform();
+        if(transform.getOrigin().x() != transform.getOrigin().x())
+            continue;
+
         body->node->setPosition(transform.getOrigin().x(),
                                 transform.getOrigin().y(),
                                 transform.getOrigin().z());
+
         body->node->setOrientation(transform.getRotation().w(),
                                    transform.getRotation().x(),
                                    transform.getRotation().y(),

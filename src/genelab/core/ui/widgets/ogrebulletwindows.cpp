@@ -7,7 +7,7 @@
 #include <QPushButton>
 
 // Ogre
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 
 // Factory
 #include "mainfactory.h"

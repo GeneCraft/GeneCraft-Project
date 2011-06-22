@@ -1,8 +1,7 @@
 #include "ogrewidget.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 #include <QDebug>
 #include "bullet/bulletengine.h"
-#include "OGRE/Ogre.h"
 #include "ogre/ogreengine.h"
 
 using namespace Ogre;
@@ -102,10 +101,6 @@ namespace GeneLabCore {
 
     }
 
-    /**
-     * @brief resize the GL window
-     * @author Kito Berg-Taylor
-     */
     void OgreWidget::resizeEvent(QResizeEvent * e)
     {
         this->resized = true;

@@ -24,7 +24,7 @@
 
 // Engine
 #include "bullet/bulletengine.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 #include "ogre/ogreengine.h"
 #include "mainfactory.h"
 #include "simulationmanager.h"
@@ -50,6 +50,9 @@
 
 
 #include "world/btoworld.h"
+#include "world/btobiome.h"
+#include "world/btoscene.h"
+
 #include "btoshapesfactory.h"
 
 #include <QThread>
@@ -154,12 +157,50 @@ void CreatureViewerWindow::init() {
 
     qDebug() << "[OK]\n";
 
+    // Création du monde ---> WorldFactory
+    QVariantMap worldData;
+    worldData.insert("Name", "Earth");
 
-    // World creation
-    btoWorld* world = new btoWorld(factory);
+    QVariantMap biomeData;
+    biomeData.insert("gravity", (float)9.81);
+
+    biomeData.insert("sky", "Examples/CloudySky");
+
+    biomeData.insert("aR", (float)0.6);
+    biomeData.insert("aG", (float)0.4);
+    biomeData.insert("aB", (float)0.6);
+
+    biomeData.insert("lR", (float)0.6);
+    biomeData.insert("lG", (float)0.4);
+    biomeData.insert("lB", (float)0.6);
+
+    QVariantMap camData;
+    camData.insert("cX", -20);
+    camData.insert("cY",  10);
+    camData.insert("cZ",   0);
+
+    camData.insert("lX", -20);
+    camData.insert("lY",  -5);
+    camData.insert("lZ",   0);
+
+    QVariantMap sceneData;
+    sceneData.insert("type", "flatland");
+    sceneData.insert("cam", camData);
+    sceneData.insert("floor", "Examples/GrassFloor");
+
+
+    btoWorld* world = new btoWorld(factory, worldData);
+    shapesFactory = new btoShapesFactory(world, btoEngine);
+
+    btBiome* biome = new btoBiome(factory, biomeData);
+    world->setBiome(biome);
+
+    btScene* scene = new btoScene(factory, sceneData);
+    world->setScene(scene);
+
     world->setup();
     cvim->setWorld(world);
-    shapesFactory = new btoShapesFactory(world, btoEngine);
+
 
 
     // Spider
@@ -183,8 +224,6 @@ void CreatureViewerWindow::init() {
             ee->addEntity(e);
         }
     }
-
-
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()

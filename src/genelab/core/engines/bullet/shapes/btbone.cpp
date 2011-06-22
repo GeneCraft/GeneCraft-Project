@@ -70,7 +70,9 @@ void btBone::setSize(btScalar radius, btScalar length)
         shape->addChildShape(localFix,sphereShape);
 
         // bone
-        cylinderShape->setImplicitShapeDimensions(btVector3(radius, length/2, radius));
+        delete cylinderShape;
+        cylinderShape = new btCylinderShape(btVector3(radius,length/2.0,radius));
+        //cylinderShape->setImplicitShapeDimensions(btVector3(radius, length/2, radius));
         btTransform localBone; localBone.setIdentity();
         shape->addChildShape(localBone,cylinderShape);
 

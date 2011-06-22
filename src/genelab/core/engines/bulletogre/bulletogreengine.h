@@ -4,7 +4,7 @@
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "engine.h"
-#include "OGRE/Ogre.h"
+#include "Ogre.h"
 
 
 namespace GeneLabCore {
