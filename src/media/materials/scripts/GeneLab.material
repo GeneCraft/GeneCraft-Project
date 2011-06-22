@@ -10,8 +10,7 @@ material GeneLab/Bone
             
             texture_unit
             {
-                texture military.jpg
-				scroll_anim 0.5 0.0
+				texture military_fun.png
             }
         }
     }
@@ -43,7 +42,6 @@ material GeneLab/Fixation
             {
 				texture military.jpg
 				env_map spherical
-				scroll_anim 0.5 0.0
             }
         }
     }
