@@ -18,12 +18,10 @@ namespace GeneLabCore {
     void BulletOgreEngine::addBody(btRigidBody * rigidBody,Ogre::Entity *entity, Ogre::SceneNode *node)
     {
         bodies.append(OgreBody(rigidBody,entity,node));
-        qDebug() << "nb body : " << bodies.size();
     }
 
     void BulletOgreEngine::removeBody(btRigidBody *rigidBody, Ogre::Entity *entity, Ogre::SceneNode *node) {
         bodies.removeAll(OgreBody(rigidBody, entity, node));
-        qDebug() << "nb body : " << bodies.size();
     }
 
 void BulletOgreEngine::step()

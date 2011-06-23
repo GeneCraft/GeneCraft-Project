@@ -54,6 +54,14 @@ RotationalMotorsModifier::RotationalMotorsModifier(QVariant data, btGeneric6DofC
     }
 }
 
+RotationalMotorsModifier::~RotationalMotorsModifier() {
+    delete this->brainOutputs[0];
+    delete this->brainOutputs[1];
+    delete this->brainOutputs[2];
+    delete this->sinusIn[0];
+    delete this->sinusIn[1];
+}
+
 QVariant RotationalMotorsModifier::serialize() {
     QVariantMap data = Modifier::serialize().toMap();
     QVariantList bOuts;

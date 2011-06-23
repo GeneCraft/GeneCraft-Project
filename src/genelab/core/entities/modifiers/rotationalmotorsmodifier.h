@@ -23,6 +23,10 @@ public:
         boMaxMotorForce = new BrainOut(min_MaxMotorForce,max_MaxMotorForce);
         boTargetVelocity = new BrainOut(min_TargetVelocity,max_TargetVelocity);
     }
+    ~BrainOutMotor() {
+        delete this->boMaxMotorForce;
+        delete this->boTargetVelocity;
+    }
 
     BrainOutMotor(QVariant data, btRotationalLimitMotor* motor) : motor(motor){
         QVariantMap outMap = data.toMap();
@@ -59,6 +63,7 @@ public:
 
     RotationalMotorsModifier(btGeneric6DofConstraint * constraint);
     RotationalMotorsModifier(QVariant data, btGeneric6DofConstraint* ct);
+    ~RotationalMotorsModifier();
 
     // used to know if the motor is disabled
     bool isDisable()        { return m_isDisable; }

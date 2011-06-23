@@ -38,6 +38,16 @@ float sigmoid(float x)
 
     }
 
+    BrainFunctional::~BrainFunctional() {
+        foreach(QList<BrainNode*> tree, trees) {
+            foreach(BrainNode* n, tree) {
+                delete n;
+            }
+        }
+
+        delete plugGrid;
+    }
+
     void BrainFunctional::addOut(BrainOut *out) {
         QString treeData = out->getConnexionInfo().toString();
         QList<BrainNode*> tree = QList<BrainNode*>();

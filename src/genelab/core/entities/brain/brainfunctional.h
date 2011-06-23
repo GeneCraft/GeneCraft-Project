@@ -15,6 +15,7 @@ class BrainFunctional : public Brain
 public:
     explicit BrainFunctional(int plugGridSize, QObject *parent = 0);
     BrainFunctional(QVariant data);
+    ~BrainFunctional();
 
     void addOut(BrainOut* out);
     QString createRandomFunc(int depth);

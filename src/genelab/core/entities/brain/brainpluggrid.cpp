@@ -52,6 +52,10 @@ namespace GeneLabCore {
         this->propagation = size/10;
     }
 
+    BrainPlugGrid::~BrainPlugGrid() {
+        delete this->neurons;
+    }
+
     float BrainPlugGrid::getValue(int x, int y) {
         float v = this->neurons[x + y * size];
         return v;

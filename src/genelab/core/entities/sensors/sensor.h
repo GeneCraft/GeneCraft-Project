@@ -5,6 +5,7 @@
 #include <QList>
 
 #include "genelabcoreclasses.h"
+#include "brain/brainin.h"
 
 namespace GeneLabCore {
 
@@ -25,6 +26,12 @@ class Sensor : public QObject
 
 public:
     explicit Sensor(Fixation * fixation, QObject *parent = 0);
+    ~Sensor() {
+        foreach(BrainIn* i, this->brainInputs) {
+            delete i;
+        }
+    }
+
     Sensor(QVariant data, Fixation* fixation);
     virtual QVariant serialize();
 

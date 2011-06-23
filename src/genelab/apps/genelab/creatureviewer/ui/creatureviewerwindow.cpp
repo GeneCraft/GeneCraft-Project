@@ -260,12 +260,13 @@ void CreatureViewerWindow::init() {
     }
 
     entitySpawner = new QTimer();
-    entitySpawner->setInterval(1000);
+    entitySpawner->setInterval(10000);
     entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 }
 
 void CreatureViewerWindow::spawnNew() {
+    for(int i = 0; i < 10; i++) {
     Spider *spider = new Spider();
     btVector3 pos = world->getSpawnPosition();
     Entity* e = spider->createEntity(shapesFactory, pos);
@@ -281,6 +282,7 @@ void CreatureViewerWindow::spawnNew() {
     entitiesEngine->removeEntity(old);
 
     delete old;
+    }
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()

@@ -74,6 +74,8 @@ btoBone::~btoBone() {
 
     parentNode->removeAndDestroyAllChildren();
 
+    scnMan->destroySceneNode(parentNode);
+
     scnMan->destroyEntity(entityC);
     scnMan->destroyEntity(entityS);
     scnMan->destroyEntity(debugEntity);

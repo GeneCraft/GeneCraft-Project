@@ -12,6 +12,7 @@ namespace GeneLabCore {
         Q_OBJECT
     public:
         explicit BrainPlugGrid(int size, QObject *parent = 0);
+        ~BrainPlugGrid();
 
         // Size of the edge of the grid
         int getSize() {
