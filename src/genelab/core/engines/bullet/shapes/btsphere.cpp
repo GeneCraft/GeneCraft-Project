@@ -17,6 +17,12 @@ btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform
     init(radius, 5, transform);
 }
 
+btSphere::~btSphere() {
+    world->getBulletWorld()->removeRigidBody(rigidBody);
+    delete shape;
+    delete motionState;
+}
+
 void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
 {
 //    this->size = size;

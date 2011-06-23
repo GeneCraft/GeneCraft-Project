@@ -203,7 +203,7 @@ void CreatureViewerWindow::init() {
     positionSpawn.insert("y", 15);
     positionSpawn.insert("z", -10);
 
-    spawns.append(positionSpawn);
+  //  spawns.append(positionSpawn);
 
     QVariantMap sceneData;
     sceneData.insert("type", "flatland");
@@ -212,7 +212,7 @@ void CreatureViewerWindow::init() {
     sceneData.insert("floor", "Examples/GrassFloor");
 
 
-    btoWorld* world = new btoWorld(factory, worldData);
+    world = new btoWorld(factory, worldData);
     shapesFactory = new btoShapesFactory(world, btoEngine);
 
     btBiome* biome = new btoBiome(factory, biomeData);
@@ -249,16 +249,38 @@ void CreatureViewerWindow::init() {
     }
     qDebug() << b;
     Entity* e;
-    for(int i = 0; i < 2; i++) {
-        for(int j = 0; j < 2; j++) {
+    for(int i = 0; i < 10; i++) {
             Spider *spider = new Spider();
             btVector3 pos = world->getSpawnPosition();
             e = spider->createEntity(shapesFactory, pos);
             qDebug() << "spider setup !";
             e->setup();
             ee->addEntity(e);
-        }
+            ents.append(e);
     }
+
+    entitySpawner = new QTimer();
+    entitySpawner->setInterval(1000);
+    entitySpawner->start();
+    connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
+}
+
+void CreatureViewerWindow::spawnNew() {
+    Spider *spider = new Spider();
+    btVector3 pos = world->getSpawnPosition();
+    Entity* e = spider->createEntity(shapesFactory, pos);
+    qDebug() << "spider setup !";
+    e->setup();
+
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+    entitiesEngine->addEntity(e);
+
+    ents.append(e);
+    Entity * old = ents.takeFirst();
+
+    entitiesEngine->removeEntity(old);
+
+    delete old;
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()
@@ -288,18 +310,20 @@ void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
 {
-    // unselection
-    selectedEntity = NULL;
 
-    if(boneSelected != NULL){
+    if(selectedEntity && boneSelected != NULL){
         boneSelected->setSelected(false);
         boneSelected = NULL;
     }
 
-    if(fixSelected != NULL) {
+    if(selectedEntity && fixSelected != NULL) {
         fixSelected->setSelected(false);
         fixSelected = NULL;
     }
+
+
+    // unselection
+    selectedEntity = NULL;
 
     //other exclusions ?
     if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
@@ -449,11 +473,13 @@ void CreatureViewerWindow::removeEntity()
 {
     if(selectedEntity != NULL)
     {
-        //EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-        //entitiesEngine->removeEntity(e);
+        EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+        entitiesEngine->removeEntity(selectedEntity);
 
         delete selectedEntity;
         selectedEntity = NULL;
+        boneSelected = NULL;
+        fixSelected = NULL;
     }
     else
         QMessageBox::warning(this, "No entity selected.", "No entity selected.");

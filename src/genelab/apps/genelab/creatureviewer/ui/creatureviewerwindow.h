@@ -58,6 +58,14 @@ private:
 
     // components
     QAction *aTogglePhysics;
+
+    // Spawned entity
+    QList<Entity*> ents;
+    QTimer* entitySpawner;
+
+    btoWorld* world;
+private slots:
+    void spawnNew();
 };
 
 #endif // CREATUREVIEWER_H

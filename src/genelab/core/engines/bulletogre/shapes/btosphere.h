@@ -11,6 +11,7 @@ class btoSphere : public btSphere
 {
 public:
     btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
+    ~btoSphere();
     void setup();
     void setSelected(bool selected);
     void setRadius(btScalar radius);

@@ -14,6 +14,7 @@ class btoBone : public btBone
 public:
     explicit btoBone(btoWorld *world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
                      btScalar radiusArticulation, const btTransform &transform);
+    ~btoBone();
     void setup();
     void setSize(btScalar radius, btScalar height);
     void setSelected(bool selected);
@@ -26,15 +27,16 @@ public:
         Ogre::Entity *entityC;
         Ogre::SceneNode *nodeC;
         Ogre::Entity *entityS;
+        Ogre::Entity *debugEntity;
         Ogre::SceneNode *nodeS;
         Ogre::SceneNode *debugNode;
+        Ogre::SceneNode *getDebugAxes();
 
     private:
 
         static int mNumEntitiesInstanced;
         Ogre::AxisAlignedBox originalCylinderBB;
 
-        Ogre::SceneNode *getDebugAxes();
 
         QString boneMaterial;
         QString fixationMaterial;

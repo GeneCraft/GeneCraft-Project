@@ -14,6 +14,14 @@ btBone::btBone(btWorld *world, btScalar length, btScalar radius, btScalar radius
     this->init(length, radius, radiusArticulation, btBone::DENSITY, transform);
 }
 
+btBone::~btBone() {
+    this->world->getBulletWorld()->removeRigidBody(rigidBody);
+    delete shape;
+    delete motionState;
+    delete cylinderShape;
+    delete sphereShape;
+}
+
 void btBone::init(btScalar length,
                   btScalar radius,
                   btScalar radiusArticulation,

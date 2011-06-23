@@ -58,17 +58,16 @@ protected:
 
    // Shape
    btScalar yAxis, zAxis;
-   btBone *body;
+   btBone *body;             // Owner
    btRigidBody *rigidBody;
-   RigidBodyOrigin *origin;
-   Fixation *endFix;
+   RigidBodyOrigin *origin;  // Owner
+   Fixation *endFix;         // Owner
 
    // Modifier
-   RotationalMotorsModifier *motorsModifier;
+   RotationalMotorsModifier *motorsModifier; // Owner
 
    // Contraints
-   btGeneric6DofConstraint *parentCt;
-   btGeneric6DofConstraint *endFixConstraint;
+   btGeneric6DofConstraint *parentCt;          // Owner
 
    // MotorModifier data
    QVariant motorModifierData;

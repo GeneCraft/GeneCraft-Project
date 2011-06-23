@@ -14,6 +14,7 @@ class btBone : public btShape
     Q_OBJECT
 public:
     explicit btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
+    ~btBone();
     virtual void setup();
 
     btScalar getLength() { return cylinderShape->getHalfExtentsWithMargin().y()*btScalar(2.0); }

@@ -12,8 +12,8 @@ class btShape : public QObject
     Q_OBJECT
 
 public:
-    explicit btShape(btWorld* world, QObject *parent = 0);
-
+    explicit btShape(btWorld* world);
+    ~btShape();
     btRigidBody * getRigidBody() { return rigidBody; }
     //btCollisionShape *getCollisionShape(){ return collisionShape; }
     virtual void setSelected(bool selected){};

@@ -27,6 +27,8 @@ namespace GeneLabCore {
     }
 
     Entity::~Entity() {
+        delete this->treeShape;
+        delete this->brain;
     }
 
     EntityPropertiesController *Entity::getInspectorWidget(Entity * selectedCreature, btRigidBody *selectedBody)

@@ -75,21 +75,21 @@ namespace GeneLabCore {
         btShapesFactory *shapesFactory;
         btTransform localFixation;
         btRigidBody *rigidBody;
-        RigidBodyOrigin *origin;
+        RigidBodyOrigin *origin; // Owner
         btScalar radius;
-        btSphere *sphere;
+        btSphere *sphere; // Owner
         bool delegatedSetup;
 
         // Related entity
         Entity *entity;
 
         // Children
-        QList<Bone *> bones;
-        QList<Sensor *> sensors;
+        QList<Bone *> bones; // Owner
+        QList<Sensor *> sensors; // Owner
         //QList<Modifier *> modifiers;
 
         // Tools
-        btTypedConstraint *airFixation;
+        btTypedConstraint *airFixation; // Owner
 
         // Qt Render
         static FixationProperties *inspectorWidget;

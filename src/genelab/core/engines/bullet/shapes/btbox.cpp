@@ -11,6 +11,12 @@ btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform) : btS
     init(size, 5.0, transform);
 }
 
+btBox::~btBox() {
+    this->world->getBulletWorld()->removeRigidBody(rigidBody);
+    delete shape;
+    delete motionState;
+}
+
 void btBox::init(btVector3 size, btScalar density, const btTransform &transform)
 {
 //    this->size = size;

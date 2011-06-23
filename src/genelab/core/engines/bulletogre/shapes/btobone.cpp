@@ -67,6 +67,19 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     debugNode->setVisible(false);
 }
 
+btoBone::~btoBone() {
+    btoEngine->removeBody(rigidBody, entityC, parentNode);
+
+    Ogre::SceneManager* scnMan = btoEngine->getOgreEngine()->getOgreSceneManager();
+
+    parentNode->removeAndDestroyAllChildren();
+
+    scnMan->destroyEntity(entityC);
+    scnMan->destroyEntity(entityS);
+    scnMan->destroyEntity(debugEntity);
+
+}
+
 void btoBone::setup()
 {
     btBone::setup();
@@ -210,14 +223,14 @@ Ogre::SceneNode* btoBone::getDebugAxes() {
 
     }
     // Create Ogre Entity
-    Ogre::Entity* entityDebug = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity(meshName);
+    debugEntity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity(meshName);
 
    // Material
-   entityDebug->setMaterial(mMat);
-   entityDebug->setCastShadows(false);
+   debugEntity->setMaterial(mMat);
+   debugEntity->setCastShadows(false);
 
    Ogre::SceneNode* nodeS = parentNode->createChildSceneNode(Vector3(0, 0, 0));
-   nodeS->attachObject(entityDebug);
+   nodeS->attachObject(debugEntity);
    nodeS->setScale(nodeC->getScale()*8);
 
     return nodeS;

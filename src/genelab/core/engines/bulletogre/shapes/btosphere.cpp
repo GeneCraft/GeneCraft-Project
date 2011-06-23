@@ -52,6 +52,12 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
     sizeBB *= scale;	// don't forget to scale down the Bullet-box too
 }
 
+btoSphere::~btoSphere() {
+    this->btoEngine->removeBody(rigidBody, entity, node);
+    this->node->removeAndDestroyAllChildren();
+    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroyEntity(entity);
+}
+
 void btoSphere::setup()
 {
     btSphere::setup();

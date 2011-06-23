@@ -21,6 +21,11 @@ namespace GeneLabCore {
         this->root = NULL;
     }
 
+
+    TreeShape::~TreeShape() {
+        delete root;
+    }
+
     void TreeShape::createRootFromGenotype(QVariant genotype, btTransform initTransform) {
         QVariantMap treeShapeMap = genotype.toMap();
 
@@ -89,10 +94,6 @@ namespace GeneLabCore {
             // Add bone recurcively
             buildFixFromGenotype(bone->getEndFixation(),boneMap.value("endFix"));
         }
-    }
-
-    TreeShape::~TreeShape() {
-        delete root;
     }
 
     void TreeShape::setRoot(Fixation *root) {

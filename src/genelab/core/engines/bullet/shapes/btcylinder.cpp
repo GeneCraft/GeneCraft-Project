@@ -16,6 +16,12 @@ btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const b
     init(radius,height,5.0,transform);
 }
 
+btCylinder::~btCylinder() {
+    this->world->getBulletWorld()->removeRigidBody(rigidBody);
+    delete shape;
+    delete motionState;
+}
+
 void btCylinder::init(btScalar radius, btScalar height, btScalar density, const btTransform &transform)
 {
     this->radius = radius;

@@ -12,6 +12,7 @@ class btCylinder : public btShape
 {
 public:
     btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform);
+    virtual ~btCylinder();
     virtual void setup();
     virtual void setSize(btScalar radius, btScalar height);
 

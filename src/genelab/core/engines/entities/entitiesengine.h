@@ -28,6 +28,10 @@ public:
         entities.append(entity);
     }
 
+    void removeEntity(Entity* entity) {
+        entities.removeAll(entity);
+    }
+
     void addPlugGridVisualizer(PlugGridVisualizer* viz) {
         this->gridVisualizers.append(viz);
     }

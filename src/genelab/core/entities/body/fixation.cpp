@@ -56,19 +56,32 @@ namespace GeneLabCore {
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         this->rigidBody = sphere->getRigidBody();
-        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
+        this->rigidBody->setFriction(FIXATION_FRICTION);
         delegatedSetup = false;
     }
 
     Fixation::~Fixation()
     {
-        while(bones.size())
-        {
-            delete bones.at(0);
-            bones.removeAt(0);
+        if(this->airFixation) {
+            shapesFactory->getWorld()->getBulletWorld()->removeConstraint(airFixation);
+            delete this->airFixation;
         }
 
-        delete sphere;
+        while(sensors.size()) {
+            delete sensors.at(0);
+            sensors.removeFirst();
+        }
+
+        while(bones.size()) {
+            delete bones.at(0);
+            bones.removeFirst();;
+        }
+
+        if(!delegatedSetup && this->origin != 0)
+            delete this->origin;
+
+        if(!delegatedSetup)
+            delete sphere;
     }
 
     void Fixation::setup()

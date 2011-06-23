@@ -52,14 +52,13 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
 
 Bone::~Bone()
 {
-    //bulletEngine->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody);
+    delete body;
+    delete origin;
+    delete endFix;
+    delete motorsModifier;
 
-    // constraint
-    //bulletEngine->getBulletDynamicsWorld()->removeConstraint(parentCt);
-    //delete parentCt;
-
-    //delete body;
-    //delete endFix;
+    shapesFactory->getWorld()->getBulletWorld()->removeConstraint(parentCt);
+    delete parentCt;
 }
 
 void Bone::setup()

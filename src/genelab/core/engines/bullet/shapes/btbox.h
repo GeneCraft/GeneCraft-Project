@@ -12,6 +12,7 @@ class btBox : public btShape
 {
 public:
     btBox(btWorld *world, btVector3 size, const btTransform &transform);
+    ~btBox();
     virtual void setup();
 
 private:
