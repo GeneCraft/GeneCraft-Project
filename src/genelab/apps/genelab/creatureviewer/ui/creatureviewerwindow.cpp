@@ -183,9 +183,32 @@ void CreatureViewerWindow::init() {
     camData.insert("lY", (float) -5);
     camData.insert("lZ", (float) 15);
 
+    QVariantList spawns;
+    QVariantMap zoneSpawn;
+    QVariantMap positionSpawn;
+
+    zoneSpawn.insert("type", (int)Spawn::Zone);
+    zoneSpawn.insert("minX", (float)0);
+    zoneSpawn.insert("minY", (float)10);
+    zoneSpawn.insert("minZ", (float)0);
+
+    zoneSpawn.insert("maxX", (float)60);
+    zoneSpawn.insert("maxY", (float)10);
+    zoneSpawn.insert("maxZ", (float)60);
+
+    spawns.append(zoneSpawn);
+
+    positionSpawn.insert("type", (int)Spawn::Position);
+    positionSpawn.insert("x", -10);
+    positionSpawn.insert("y", 15);
+    positionSpawn.insert("z", -10);
+
+    //spawns.append(positionSpawn);
+
     QVariantMap sceneData;
     sceneData.insert("type", "flatland");
     sceneData.insert("cam", camData);
+    sceneData.insert("spawns", spawns);
     sceneData.insert("floor", "Examples/GrassFloor");
 
 
@@ -229,7 +252,9 @@ void CreatureViewerWindow::init() {
     for(int i = 0; i < 2; i++) {
         for(int j = 0; j < 2; j++) {
             Spider *spider = new Spider();
-            e = spider->createEntity(shapesFactory, btVector3(j*30,15,i*30));
+            btVector3 pos = world->getSpawnPosition();
+            qDebug() << pos.x() << pos.y() << pos.z();
+            e = spider->createEntity(shapesFactory, pos);
             qDebug() << "spider setup !";
             e->setup();
             ee->addEntity(e);

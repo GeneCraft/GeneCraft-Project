@@ -27,10 +27,8 @@ namespace GeneLabCore {
     }
 
     // To create a new creature
-    btTransform btWorld::getSpawnPosition() {
-        btTransform pos;
-        pos.setIdentity();
-        return pos;
+    btVector3 btWorld::getSpawnPosition() {
+        return scene->getSpawnPosition();
     }
 
     // To add a created creature to the world

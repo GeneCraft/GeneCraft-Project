@@ -125,15 +125,6 @@ namespace GeneLabCore {
 
     }
 
-    QMap<QString, EntityFamily*> MainFactory::getFamilys() {
-        return familys;
-    }
-
-    QMap<QString, World*> MainFactory::getWorlds() {
-        return worlds;
-    }
-
-
     QMap<QString, QWidget*> MainFactory::getWidgets() {
         return widgets;
     }

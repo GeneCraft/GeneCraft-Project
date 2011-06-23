@@ -24,7 +24,7 @@ namespace GeneLabCore {
         explicit btWorld(MainFactory* factory, QVariant worldData, QObject *parent = 0);
 
         // To create a new creature
-        virtual btTransform getSpawnPosition();
+        virtual btVector3 getSpawnPosition();
 
         // To add a created creature to the world
         virtual void addCreature(Entity* ent);

@@ -112,10 +112,6 @@ namespace GeneLabCore {
     // -- World related     --
     // -----------------------
 
-    // World related
-    class World; // TO delete and move into btWorld  btScene  btBiome
-                 //                         btoWorld btoScene btoBiome
-
     class btWorld;
     class btScene;
     class btBiome;
@@ -123,6 +119,8 @@ namespace GeneLabCore {
     class btoWorld;
     class btoScene;
     class btoBiome;
+
+    class Spawn;
 
     // -----------------------
     // -- DELETE OR NOT ??? --

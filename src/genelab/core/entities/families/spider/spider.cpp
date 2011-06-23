@@ -56,7 +56,7 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
 
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(rootFix,i*((M_PI)/(nbLegs+1)), M_PI / 1.5f,lowerLimits,upperLimits);
+        addLeg(rootFix,i*((M_PI)/(nbLegs+1)), M_PI / 2.f,lowerLimits,upperLimits);
     }
 
     return ent;

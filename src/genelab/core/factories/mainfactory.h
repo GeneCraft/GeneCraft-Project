@@ -15,8 +15,6 @@ namespace GeneLabCore {
         bool create(Ressource* r);
 
         QMap<QString, Engine*>        getEngines();
-        QMap<QString, EntityFamily*>  getFamilys();
-        QMap<QString, World*>         getWorlds();
         QMap<QString, QWidget*>       getWidgets();
         btShapesFactory *             getShapesFactory();
 
@@ -32,8 +30,6 @@ namespace GeneLabCore {
 
     private:
         QMap<QString, Engine*>         engines;
-        QMap<QString, EntityFamily*>   familys;
-        QMap<QString, World*>          worlds;
         QMap<QString, QWidget*>        widgets;
         btShapesFactory *              shapesFactory;
 

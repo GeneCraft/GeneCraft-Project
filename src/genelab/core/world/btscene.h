@@ -5,8 +5,11 @@
 #include <QVariant>
 
 #include "mainfactory.h"
+#include "spawn.h"
+#include "genelabcoreclasses.h"
 
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "LinearMath/btVector3.h"
 
 namespace GeneLabCore {
 
@@ -18,6 +21,7 @@ public:
 
     virtual void setup();
 
+    btVector3 getSpawnPosition();
 
     virtual void setBulletWorld(btDynamicsWorld* world) {
         this->world = world;
@@ -31,6 +35,7 @@ protected:
     QVariantMap data;
     btDynamicsWorld* world;
     MainFactory* factory;
+    QList<Spawn*> spawns;
 
 };
 

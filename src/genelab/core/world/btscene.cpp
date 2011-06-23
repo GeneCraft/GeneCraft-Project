@@ -15,6 +15,15 @@ namespace GeneLabCore {
     {
         this->factory = factory;
         this->data = sceneData.toMap();
+        QVariantList spawnData = data["spawns"].toList();
+
+        foreach(QVariant v, spawnData) {
+            this->spawns.append(new Spawn(v));
+        }
+
+        if(this->spawns.size() == 0) { // Prevent no spawn bug !
+            this->spawns.append(new Spawn(Spawn::Position, btVector3(0, 10, 0)));
+        }
     }
 
     void btScene::setup() {
@@ -30,5 +39,10 @@ namespace GeneLabCore {
             //rigidBody->setActivationState(DISABLE_DEACTIVATION);
             world->addRigidBody(rigidBody);
         }
+    }
+
+    btVector3 btScene::getSpawnPosition() {
+        int i = qrand()%spawns.size();
+        return spawns.at(i)->getSpawnPosition();
     }
 }

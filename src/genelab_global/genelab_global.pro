@@ -162,7 +162,8 @@ SOURCES += \
     ../genelab/core/world/btbiome.cpp \
     ../genelab/core/world/btoworld.cpp \
     ../genelab/core/world/btoscene.cpp \
-    ../genelab/core/world/btobiome.cpp
+    ../genelab/core/world/btobiome.cpp \
+    ../genelab/core/world/spawn.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -236,7 +237,8 @@ HEADERS += \
     ../genelab/core/world/btbiome.h \
     ../genelab/core/world/btoworld.h \
     ../genelab/core/world/btoscene.h \
-    ../genelab/core/world/btobiome.h
+    ../genelab/core/world/btobiome.h \
+    ../genelab/core/world/spawn.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
