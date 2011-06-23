@@ -17,6 +17,7 @@ public:
     void setup();
     void setSize(btScalar radius, btScalar height);
     void setSelected(bool selected);
+    void setEndFixationRadius(btScalar radius);
 
     protected:
 
@@ -40,6 +41,8 @@ public:
 
         QString boneSelectedMaterial;
         QString fixationSelectedMaterial;
+
+        Ogre::AxisAlignedBox originalSphereBB;
 
 };
 }

@@ -32,7 +32,8 @@ namespace GeneLabCore {
     Fixation::Fixation(btShapesFactory *shapesFactory,
                        btRigidBody* body,
                        btScalar radius,
-                       btTransform localFixation) {
+                       btTransform localFixation,
+                       Bone *parentBone) {
         this->shapesFactory = shapesFactory;
         this->rigidBody = body;
         this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
@@ -40,6 +41,7 @@ namespace GeneLabCore {
         this->localFixation = localFixation;
         this->radius = radius;
         airFixation = NULL;
+        this->parentBone = parentBone;
         entity = NULL;
         delegatedSetup = true; 
     }
@@ -47,7 +49,7 @@ namespace GeneLabCore {
     Fixation::Fixation(btShapesFactory *shapesFactory,
                        btScalar radius,
                        btTransform initTransform) : QObject(),
-        radius(radius), entity(NULL), airFixation(NULL)
+        radius(radius), entity(NULL), airFixation(NULL), parentBone(NULL)
     {
         this->shapesFactory = shapesFactory;
         this->localFixation.setIdentity();
@@ -156,7 +158,7 @@ namespace GeneLabCore {
 
         btTransform localBone;
         localBone.setIdentity();
-        localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 -radius), btScalar(0.)));
+        localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 - radius), btScalar(0.)));
 
         btTransform localFix;
         localFix.setIdentity();
@@ -164,7 +166,7 @@ namespace GeneLabCore {
         localFix.setOrigin(localFixation.getOrigin());
 
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
-                                                                   localFix, localBone, false);
+                                                               localFix, localBone, false);
 
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
@@ -207,6 +209,29 @@ namespace GeneLabCore {
 
         foreach(Bone *bone, bones)
             bone->setEntity(entity);
+    }
+
+    void Fixation::setRadius(btScalar radius)
+    {
+        this->radius = radius;
+
+        // root
+        if(parentBone == NULL) {
+
+            sphere->setRadius(radius);
+
+            // adapt children connections
+            foreach(Bone *b, bones)
+            {
+                b->getParentConstraint()->getFrameOffsetA().setOrigin(btVector3(btScalar(0.), btScalar(0), btScalar(0.)));
+                b->getParentConstraint()->getFrameOffsetB().setOrigin(btVector3(btScalar(0.), btScalar(-b->getLength()*0.5 - radius), btScalar(0.)));
+            }
+        }
+        else {
+
+            // adapt parent
+            parentBone->setEndFixationRadius(radius);
+        }
     }
 
     QVariant Fixation::serialize()

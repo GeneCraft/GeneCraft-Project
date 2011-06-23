@@ -13,10 +13,13 @@ class btSphere : public btShape
 public:
     btSphere(btWorld *btWorld, btScalar radius, const btTransform &transform);
     virtual void setup();
+    virtual void setRadius(btScalar radius);
+    btScalar getMass() const;
 
 private:
 
     void init(btScalar radius, btScalar density, const btTransform &transform);
+    btScalar computeMass() const;
 
 protected:
 

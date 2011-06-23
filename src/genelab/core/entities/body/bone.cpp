@@ -31,9 +31,8 @@ namespace GeneLabCore {
 
 BonePropertiesController* Bone::inspectorWidget = 0;
 
-Bone::Bone(btShapesFactory *shapesFactory,
-           btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform) : QObject(),
-    yAxis(yAxis), zAxis(zAxis), radius(radius), length(length), motorsModifier(NULL)
+Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform)
+    : QObject(), yAxis(yAxis), zAxis(zAxis), motorsModifier(NULL)
 {
 
     motorModifierData = QVariant(0);
@@ -41,13 +40,12 @@ Bone::Bone(btShapesFactory *shapesFactory,
     body         = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
     rigidBody    = body->getRigidBody();
 
-
-    btVector3 position(btScalar(0), length/2 + endFixRadius, btScalar(0));
+    btVector3 position(btScalar(0), length*0.5 + endFixRadius, btScalar(0));
     btTransform endTransform;
     endTransform.setIdentity();
     endTransform.setOrigin(position);
 
-    endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform);
+    endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform, this);
 
     this->shapesFactory = shapesFactory;
 }
@@ -187,8 +185,8 @@ QVariant Bone::serialize()
     QVariantMap bone;
 
     // Length & radius
-    bone.insert("length",QVariant((double)length));
-    bone.insert("radius",QVariant((double)radius));
+    bone.insert("length",QVariant((double)getLength()));
+    bone.insert("radius",QVariant((double)getRadius()));
 
     // Yaw & Roll
     QVariantMap localRotation;
@@ -239,20 +237,29 @@ void Bone::setSelected(bool selected)
 
 void Bone::setSize(btScalar radius, btScalar length)
 {
-    btScalar oldLength  = this->length;
-
-    this->radius        = radius;
-    this->length        = length;
+    btScalar oldLength  = this->getLength();
     body->setSize(radius,length);
 
     // adapt parent connection
     btVector3 origin = parentCt->getFrameOffsetB().getOrigin();
-    btVector3 newor = origin - btVector3(0, btScalar(-oldLength*0.5),0) + btVector3(0,btScalar(-length*0.5),0);
+    btVector3 newor = origin + btVector3(0, btScalar(oldLength*0.5),0) - btVector3(0,btScalar(getLength()*0.5),0);
     parentCt->getFrameOffsetB().setOrigin(newor);
 
     // adapt children connections
     foreach(Bone *b, endFix->getBones())
-        b->getParentConstraint()->getFrameOffsetA().setOrigin(btVector3(btScalar(0.), btScalar(length*0.5 +endFix->getRadius()), btScalar(0.)));
+        b->getParentConstraint()->getFrameOffsetA().setOrigin(btVector3(btScalar(0.), btScalar(getLength()*0.5 + endFix->getRadius()), btScalar(0.)));
+}
+
+void Bone::setEndFixationRadius(btScalar radius)
+{
+    body->setEndFixationRadius(radius);
+
+    // adapt children connections
+    foreach(Bone *b, endFix->getBones())
+    {
+        b->getParentConstraint()->getFrameOffsetA().setOrigin(btVector3(btScalar(0.), btScalar(getLength()*0.5 + radius), btScalar(0.)));
+        b->getParentConstraint()->getFrameOffsetB().setOrigin(btVector3(btScalar(0.), btScalar(-b->getLength()*0.5 - radius), btScalar(0.)));
+    }
 }
 
 }

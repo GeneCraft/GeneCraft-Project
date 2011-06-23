@@ -6,6 +6,7 @@
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 #include <QVariant>
+#include "bullet/shapes/btbone.h"
 
 namespace GeneLabCore {
 
@@ -23,14 +24,15 @@ public:
    btRigidBody* getRigidBody()                             { return rigidBody;             }
    void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
    btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
-   btScalar getLength()                                    { return length;                }
-   btScalar getRadius()                                    { return radius;                }
+   btScalar getLength()                                    { return body->getLength();     }
+   btScalar getRadius()                                    { return body->getRadius();     }
+
    Fixation *getEndFixation()                              { return endFix;                }
    Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
 
-   RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier;        }
-   void setMotorModifierData(QVariant data) { this->motorModifierData = data; }
+   inline RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier; }
+   inline void setMotorModifierData(QVariant data) { this->motorModifierData = data; }
    BonePropertiesController *getInspectorWidget();
    static BonePropertiesController *getEmptyInspectorWidget();
 
@@ -41,8 +43,8 @@ public:
    void resetMotors();
 
    QVariant serialize();
-   btScalar getYAxis() { return yAxis; }
-   btScalar getZAxis() { return zAxis; }
+   inline btScalar getYAxis() { return yAxis; }
+   inline btScalar getZAxis() { return zAxis; }
 
    void setyAxis(btScalar yAxis);
    void setZAxis(btScalar zAxis);
@@ -50,22 +52,19 @@ public:
    void setSelected(bool selected);
 
    void setSize(btScalar radius, btScalar length);
+   void setEndFixationRadius(btScalar radius);
 
 protected:
 
    // Shape
    btScalar yAxis, zAxis;
    btBone *body;
-   btScalar radius;
-   btScalar length;
    btRigidBody *rigidBody;
    RigidBodyOrigin *origin;
    Fixation *endFix;
 
    // Modifier
    RotationalMotorsModifier *motorsModifier;
-
-
 
    // Contraints
    btGeneric6DofConstraint *parentCt;

@@ -42,10 +42,9 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
 
     // Scale
     originalCylinderBB = entityC->getBoundingBox();
-    AxisAlignedBox boundingB = entityC->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
     Vector3 ogreSize(radius*2,length,radius*2);
-    Vector3 scale = ogreSize  / boundingB.getSize();
-    nodeC->scale(scale);	// the cube is too big for us
+    Vector3 scale = ogreSize  / originalCylinderBB.getSize();
+    nodeC->scale(scale);
 
      // Create Ogre Entity
     entityS = ogreEngine->getOgreSceneManager()->createEntity(
@@ -56,17 +55,16 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     entityS->setMaterialName(fixationMaterial.toStdString());
     entityS->setCastShadows(true);
 
-    nodeS = parentNode->createChildSceneNode(Vector3(0, length/2+radiusArticulation, 0));
-
-    Ogre::Vector3 size(radiusArticulation*2,radiusArticulation*2,radiusArticulation*2);
+    nodeS = parentNode->createChildSceneNode(Vector3(0, length*0.5 + radiusArticulation, 0));
 
     // Scale
-    boundingB = entityS->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
-    scale = size / boundingB.getSize();
-    nodeS->scale(scale);	// the cube is too big for us
+    Vector3 size(radiusArticulation*2,radiusArticulation*2,radiusArticulation*2);
+    originalSphereBB = entityS->getBoundingBox();
+    scale = size / originalSphereBB.getSize();
+    nodeS->scale(scale);
+
     debugNode = getDebugAxes();
     debugNode->setVisible(false);
-
 }
 
 void btoBone::setup()
@@ -80,20 +78,29 @@ void btoBone::setup()
 
 void btoBone::setSize(btScalar radius, btScalar length)
 {
+    // set Bullet properties
     btBone::setSize(radius,length);
 
-    //qDebug()<< getArticulationRadius() ;
-
-    // Set relative position
-    nodeS->setPosition(Vector3(0, length/2+getArticulationRadius(),0));
-
-
+    nodeS->setPosition(Vector3(0, length*0.5 + getArticulationRadius(),0));
     Vector3 ogreSize(radius*2,length,radius*2);
     Vector3 scale = ogreSize / originalCylinderBB.getSize();
     nodeC->setScale(scale);
     nodeC->setPosition(Vector3(0,0,0));
 
+    // Size of debug node (to show axis)
     debugNode->setScale(nodeC->getScale()*8);
+}
+
+
+void btoBone::setEndFixationRadius(btScalar radius)
+{
+    btBone::setEndFixationRadius(radius);
+
+    qDebug() << Q_FUNC_INFO << radius << originalSphereBB.getSize().y;
+
+    Ogre::Vector3 size(radius*2,radius*2,radius*2);
+    nodeS->setScale(size / originalSphereBB.getSize());
+    nodeS->setPosition(Vector3(0, getLength()*0.5 + radius,0));
 }
 
 #include "OgreNode.h"
@@ -106,26 +113,11 @@ void btoBone::setSelected(bool selected)
         entityC->setMaterialName(boneSelectedMaterial.toStdString());
         entityS->setMaterialName(fixationSelectedMaterial.toStdString());
         debugNode->setVisible(true, true);
-
-        /*
-        materialName - material i am wanting to fade
-        fade - float holding the fade value, 0 being completey transparent 1 being solid
-        */
-
-//        MaterialPtr tempMat = MaterialManager::getSingleton().getByName("Sinbad/Teeth");
-//        TextureUnitState *tempTex = tempMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState();
-//        float fade = 0.0;
-//        tempTex->setAlphaOperation(LBX_MODULATE, LBS_TEXTURE, LBS_MANUAL, 1.0f, fade);
-
-//        entityC->setMaterial(tempMat);
-//        entityS->setMaterial(tempMat);
-
     }
     else {
         entityC->setMaterialName(boneMaterial.toStdString());
         entityS->setMaterialName(fixationMaterial.toStdString());
         debugNode->setVisible(false);
-
     }
 }
 
@@ -230,5 +222,6 @@ Ogre::SceneNode* btoBone::getDebugAxes() {
 
     return nodeS;
 }
+
 }
 

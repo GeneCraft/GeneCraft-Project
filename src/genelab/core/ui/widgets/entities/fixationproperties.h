@@ -37,6 +37,9 @@ public slots:
     void setPosition();
     void selectBone();
 
+    void changeRadiusFromSlider(int value);
+    void changeRadiusFromButton();
+
 private:
     Ui::FixationProperties *ui;
 

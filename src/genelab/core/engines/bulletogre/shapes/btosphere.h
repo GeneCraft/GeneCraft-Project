@@ -13,6 +13,7 @@ public:
     btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
     void setup();
     void setSelected(bool selected);
+    void setRadius(btScalar radius);
 
 protected:
 
@@ -22,6 +23,7 @@ protected:
 
     QString fixationMaterial;
     QString fixationSelectedMaterial;
+    Ogre::AxisAlignedBox originalSphereBB;
 
 private:
     static int mNumSpheresInstanced;

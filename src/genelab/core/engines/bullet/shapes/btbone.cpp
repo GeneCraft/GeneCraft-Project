@@ -29,11 +29,11 @@ void btBone::init(btScalar length,
     sphereShape = new btSphereShape(radiusArticulation);
     btTransform articulationTransform;
     articulationTransform.setIdentity();
-    articulationTransform.setOrigin(btVector3(0,length/2.+ radiusArticulation, 0));
+    articulationTransform.setOrigin(btVector3(0,length*0.5 + radiusArticulation, 0));
     shape->addChildShape(articulationTransform, sphereShape);
 
     // adding the cylinder to the shape
-    cylinderShape = new btCylinderShape(btVector3(radius,length/2.0,radius));
+    cylinderShape = new btCylinderShape(btVector3(radius,length*0.5,radius));
     btTransform cylinderTransform; cylinderTransform.setIdentity();
     shape->addChildShape(cylinderTransform, cylinderShape);
 
@@ -64,23 +64,57 @@ void btBone::setSize(btScalar radius, btScalar length)
         shape->removeChildShape(sphereShape);
         shape->removeChildShape(cylinderShape);
 
-        // fix
+        // re-add fixation
         btTransform localFix; localFix.setIdentity();
         localFix.setOrigin(btVector3(0, length*0.5 + sphereShape->getRadius(), 0));
         shape->addChildShape(localFix,sphereShape);
 
-        // bone
+        // adapt bone size + re-add
         delete cylinderShape;
-        cylinderShape = new btCylinderShape(btVector3(radius,length/2.0,radius));
+        cylinderShape = new btCylinderShape(btVector3(radius,length*0.5,radius));
         //cylinderShape->setImplicitShapeDimensions(btVector3(radius, length/2, radius));
         btTransform localBone; localBone.setIdentity();
         shape->addChildShape(localBone,cylinderShape);
 
         // set body mass
-        btScalar volBone    = M_PI*radius*radius*length;
+        btScalar volBone    = M_PI*getRadius()*getRadius()*getLength();
         btScalar volFix     = 4/3. * M_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
         btScalar mass = volBone*DENSITY + volFix*DENSITY; // TODO different density between fix and bone
-        btVector3 localInertia(0,0,0);
+        btVector3 localInertia;
+        shape->calculateLocalInertia(mass,localInertia);
+        rigidBody->setMassProps(mass,localInertia);
+    }
+    else
+        qDebug() << Q_FUNC_INFO << ", cylinderShape == NULL or sphereShape == NULL";
+}
+
+void btBone::setEndFixationRadius(btScalar fixationRadius)
+{
+    qDebug() << "resize" << fixationRadius;
+
+    if(cylinderShape != NULL && sphereShape != NULL) {
+
+        // remove shapes from compound
+        shape->removeChildShape(sphereShape);
+        shape->removeChildShape(cylinderShape);
+
+        // adapt fixation + re-add
+        delete sphereShape;
+        sphereShape = new btSphereShape(fixationRadius);
+        btTransform localFix; localFix.setIdentity();
+        localFix.setOrigin(btVector3(0, getLength()*0.5 + fixationRadius, 0));
+        shape->addChildShape(localFix,sphereShape);
+
+        // bone
+        btTransform localBone; localBone.setIdentity();
+        shape->addChildShape(localBone,cylinderShape);
+
+        // set body mass
+        btScalar volBone    = M_PI*getRadius()*getRadius()*getLength();
+        btScalar volFix     = 4/3. * M_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
+        btScalar mass = volBone*DENSITY + volFix*DENSITY; // TODO different density between fix and bone
+        btVector3 localInertia;
+        shape->calculateLocalInertia(mass,localInertia);
         rigidBody->setMassProps(mass,localInertia);
     }
     else

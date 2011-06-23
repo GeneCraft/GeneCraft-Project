@@ -15,17 +15,19 @@ class btBone : public btShape
 public:
     explicit btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
     virtual void setup();
-    virtual void setSize(btScalar radius, btScalar length);
 
+    btScalar getLength() { return cylinderShape->getHalfExtentsWithMargin().y()*btScalar(2.0); }
+    btScalar getRadius() { return cylinderShape->getRadius(); }
     btScalar getArticulationRadius() { return sphereShape->getRadius(); }
+
+    virtual void setSize(btScalar radius, btScalar length);
+    virtual void setEndFixationRadius(btScalar radius);
 
     static const btScalar DENSITY;
 
 private:
 
     void init(btScalar length, btScalar radius, btScalar radiusArticulation, btScalar density, const btTransform &transform);
-
-
 
 protected:
 
@@ -34,7 +36,6 @@ protected:
     btDefaultMotionState* motionState;
     btCylinderShape* cylinderShape;
     btSphereShape* sphereShape;
-
 };
 }
 

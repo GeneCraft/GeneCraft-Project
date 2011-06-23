@@ -24,7 +24,7 @@ namespace GeneLabCore {
         /**
           * Surcharged constructor, called to create a fixation from a existant rigidbody
           */
-        Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btScalar radius, btTransform localFixation);
+        Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btScalar radius, btTransform localFixation, Bone *parentBone);
         ~Fixation();
 
         /**
@@ -54,6 +54,7 @@ namespace GeneLabCore {
         FixationProperties *getInspectorWidget();
         static FixationProperties *getEmptyInspectorWidget();
         void setSelected(bool isSelected);
+        void setRadius(btScalar radius);
 
         // TOOLS
         void fixeInTheAir();
@@ -92,6 +93,9 @@ namespace GeneLabCore {
 
         // Qt Render
         static FixationProperties *inspectorWidget;
+
+        // parent bone
+        Bone *parentBone;
 
     };
 }

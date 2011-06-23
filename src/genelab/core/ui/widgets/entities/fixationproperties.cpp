@@ -28,6 +28,8 @@ FixationProperties::FixationProperties(QWidget *parent) :
     connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
     connect(this->ui->pbSelectBone,SIGNAL(pressed()),this,SLOT(selectBone()));
 
+    connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+    connect(this->ui->pbResizeRadius,SIGNAL(pressed()),this,SLOT(changeRadiusFromButton()));
 }
 
 FixationProperties::~FixationProperties()
@@ -43,6 +45,12 @@ void FixationProperties::setFormTitle(QString title)
 void FixationProperties::setFixation(Fixation *fixation)
 {
     this->fixation = fixation;
+
+    // Radius
+    disconnect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+    this->ui->sRadius->setValue(fixation->getRadius()*1000);
+    connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+    this->ui->leRadius->setText(QString::number(fixation->getRadius()));
 
     // Bones
     this->ui->lwBones->clear();
@@ -144,4 +152,16 @@ void FixationProperties::addSensor()
         fixation->addSensor(sensor);
         setFixation(fixation); // refresh widget
     }
+}
+
+void FixationProperties::changeRadiusFromSlider(int value)
+{
+    fixation->setRadius(value/1000.0);
+    this->ui->leRadius->setText(QString::number(value / 1000.0));
+}
+
+void FixationProperties::changeRadiusFromButton()
+{
+    fixation->setRadius(ui->leRadius->text().toDouble());
+    setFixation(fixation); // update
 }
