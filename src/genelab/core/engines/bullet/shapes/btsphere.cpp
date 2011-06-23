@@ -15,7 +15,7 @@ namespace GeneLabCore {
     btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform) : btShape(world)
 {
 
-    init(radius, 2, transform);
+    init(radius, 5, transform);
 }
 
 void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
@@ -24,7 +24,7 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
 //    this->initialPosition = position;
 //    this->initiaEulerlRotation = EulerRotation;
 
-    btScalar friction = 1;
+    btScalar friction = 0.3;
 
     // shape
     this->shape = new btSphereShape(radius);

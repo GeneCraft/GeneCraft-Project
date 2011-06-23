@@ -13,7 +13,7 @@ namespace GeneLabCore {
     void BulletEngine::step() {
         if(physicsEnable) {
             foreach(btDynamicsWorld* world, worldList)
-                world->stepSimulation(1/60.0, 10);
+                world->stepSimulation(1.0/60., 10, 1/240.);
         }
     }
 }

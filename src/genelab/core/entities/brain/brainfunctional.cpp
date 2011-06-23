@@ -307,7 +307,7 @@ float sigmoid(float x)
         QString func;
 
         int rand = qrand()%100;
-        if(rand < 50 && depth > 1) {
+        if(rand < 40 && depth > 1) {
             int subChoix = qrand()%4;
             if(subChoix == 3) {
                 func += "+ ,";
@@ -329,7 +329,7 @@ float sigmoid(float x)
                 func += this->createRandomFunc(depth -1);
             }
         }
-        else if(rand > 50 &&rand < 70 && depth > 1) {
+        else if(rand > 40 &&rand < 70 && depth > 1) {
             func += "SINUS ,";
             func += this->createRandomFunc(depth -1);
             func += this->createRandomFunc(depth -1);

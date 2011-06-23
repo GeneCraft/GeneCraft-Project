@@ -21,10 +21,10 @@ Spider::Spider() :
 {
     nbLegs      = 4;
     nbBoneInLeg = 3;
-    legRadius   = ((float)qrand())/RAND_MAX * 0.3 + 0.1;
+    legRadius   = ((float)qrand())/RAND_MAX * 0.4 + 0.1;
     legLenght   = ((float)qrand())/RAND_MAX * 2 + 0.5;
-    kneeRadius  = ((float)qrand())/RAND_MAX * 0.3 + 0.1;
-    headRadius  = ((float)qrand())/RAND_MAX * 1 + legRadius*nbLegs/3;
+    kneeRadius  = ((float)qrand())/RAND_MAX * 0.4 + 0.1;
+    headRadius  = ((float)qrand())/RAND_MAX * 1 + legRadius*nbLegs/1.5;
 }
 
 Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
@@ -32,7 +32,7 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     this->initialPosition = position;
     // root fixation
     Entity* ent = new Entity("Spider !", "SpiderFamily", 1);
-    ent->setBrain(new BrainFunctional(qrand()%25 + 1));
+    ent->setBrain(new BrainFunctional(qrand()%20 + 5));
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(initialPosition);
@@ -45,18 +45,18 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     // legs
     btQuaternion legLocal;
     btQuaternion legLocal2;
-    btVector3 lowerLimits(0,0,0);
-    btVector3 upperLimits(0,0,0);
+    btVector3 lowerLimits(-0.1,0,0);
+    btVector3 upperLimits(0.1,0,0.7);
 
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(rootFix,-i*((M_PI)/(nbLegs+1)), M_PI / 3.0f,lowerLimits,upperLimits);
+        addLeg(rootFix,-i*((M_PI)/(nbLegs+1)), M_PI / 2.f,lowerLimits,upperLimits);
     }
 
 
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(rootFix,i*((M_PI)/(nbLegs+1)), M_PI / 3.0f,lowerLimits,upperLimits);
+        addLeg(rootFix,i*((M_PI)/(nbLegs+1)), M_PI / 1.5f,lowerLimits,upperLimits);
     }
 
     return ent;
@@ -76,9 +76,9 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
-        btVector3 lowerLimits(0,0,-M_PI/10);
-        btVector3 upperLimits(0,0,M_PI/6);
-        float ang =  M_PI / 3.5f;
+        btVector3 lowerLimits(0,0,-M_PI/10.);
+        btVector3 upperLimits(0,0,-M_PI/10.);
+        float ang =  M_PI / 12.f;
         rootBone = rootBone->getEndFixation()->addBone(0, ang,
                                                        btScalar(legRadius - legRadius*(i/nbBoneInLeg)),
                                                        btScalar(legLenght - legLenght*(i/nbBoneInLeg)),
@@ -94,10 +94,10 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));
     }
     {
-        btVector3 lowerLimits(0,0,-M_PI/4);
+        btVector3 lowerLimits(0,0,-M_PI/4.);
         btVector3 upperLimits(0,0,0);
         rootBone->getEndFixation()->addBone(0,
-                                            - M_PI / 3,
+                                            - M_PI / 4.,
                                             btScalar(legRadius),
                                             btScalar(legLenght/2.),
                                             btScalar(kneeRadius/3.),

@@ -175,13 +175,13 @@ void CreatureViewerWindow::init() {
     biomeData.insert("lB", (float)0.6);
 
     QVariantMap camData;
-    camData.insert("cX", -20);
-    camData.insert("cY",  10);
-    camData.insert("cZ",   0);
+    camData.insert("cX", (float) -20);
+    camData.insert("cY", (float) 10);
+    camData.insert("cZ", (float) -20);
 
-    camData.insert("lX", -20);
-    camData.insert("lY",  -5);
-    camData.insert("lZ",   0);
+    camData.insert("lX", (float) 15);
+    camData.insert("lY", (float) -5);
+    camData.insert("lZ", (float) 15);
 
     QVariantMap sceneData;
     sceneData.insert("type", "flatland");
@@ -226,10 +226,10 @@ void CreatureViewerWindow::init() {
     }
     qDebug() << b;
     Entity* e;
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 1; j++) {
+    for(int i = 0; i < 2; i++) {
+        for(int j = 0; j < 2; j++) {
             Spider *spider = new Spider();
-            e = spider->createEntity(shapesFactory, btVector3(j*30,7,i*30));
+            e = spider->createEntity(shapesFactory, btVector3(j*30,15,i*30));
             qDebug() << "spider setup !";
             e->setup();
             ee->addEntity(e);
