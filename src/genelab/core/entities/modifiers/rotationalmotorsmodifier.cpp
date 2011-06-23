@@ -17,7 +17,7 @@ RotationalMotorsModifier::RotationalMotorsModifier(btGeneric6DofConstraint *cons
 
     // Stabilisation properties
     normalPositionMaxError = 0.001;
-    normalPositionFactor   = 10.0;
+    normalPositionFactor   = 1.0;
 
     for(int i=0;i<3;i++)
     {
@@ -75,16 +75,30 @@ void RotationalMotorsModifier::setOutputsFrom(int outputsFrom)
     case 1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/:  // brain
 
         // enable motors
-        for(int i=0;i<3;i++)
-            brainOutputs[i]->motor->m_enableMotor = true;
+        // enable motors
+        for(int i=0;i<3;i++) {
+
+            btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+            motor->m_enableMotor = true;
+            motor->m_maxMotorForce = 10.0;
+            motor->m_targetVelocity = 0;
+            motor->m_currentPosition = 0;
+        }
+
 
         break;
 
     case 2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/: // random
 
         // enable motors
-        for(int i=0;i<3;i++)
-            brainOutputs[i]->motor->m_enableMotor = true;
+        for(int i=0;i<3;i++) {
+
+            btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+            motor->m_enableMotor = true;
+            motor->m_maxMotorForce = 10.0;
+            motor->m_targetVelocity = 0;
+            motor->m_currentPosition = 0;
+        }
 
         break;
 
@@ -94,7 +108,7 @@ void RotationalMotorsModifier::setOutputsFrom(int outputsFrom)
         {
             btRotationalLimitMotor * motor = brainOutputs[i]->motor;
             motor->m_enableMotor = true;
-            motor->m_maxMotorForce = 1000.0;
+            motor->m_maxMotorForce = 10.0;
             motor->m_targetVelocity = 0;
             motor->m_currentPosition = 0;
         }
@@ -120,8 +134,8 @@ void RotationalMotorsModifier::step()
             for(int i=0;i<3;i++)
             {
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
-                motor->m_maxMotorForce = ( sinusIn[1]->getValue())*0.0001 + 0.0001;
-                motor->m_targetVelocity = (sinusIn[0]->getValue())*0.001;
+                motor->m_maxMotorForce = ( sinusIn[1]->getValue())*5 + 5;
+                motor->m_targetVelocity = (sinusIn[0]->getValue())*5;
             }
             break;
 
@@ -132,7 +146,8 @@ void RotationalMotorsModifier::step()
                 // Stabilisation
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
 
-                if(motor->m_currentPosition < normalPositionMaxError || motor->m_currentPosition > normalPositionMaxError)
+                if(motor->m_currentPosition < normalPositionMaxError
+                   || motor->m_currentPosition > normalPositionMaxError)
                     motor->m_targetVelocity = -normalPositionFactor * motor->m_currentPosition;
             }
 
