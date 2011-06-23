@@ -203,7 +203,7 @@ void CreatureViewerWindow::init() {
     positionSpawn.insert("y", 15);
     positionSpawn.insert("z", -10);
 
-    //spawns.append(positionSpawn);
+    spawns.append(positionSpawn);
 
     QVariantMap sceneData;
     sceneData.insert("type", "flatland");
@@ -253,7 +253,6 @@ void CreatureViewerWindow::init() {
         for(int j = 0; j < 2; j++) {
             Spider *spider = new Spider();
             btVector3 pos = world->getSpawnPosition();
-            qDebug() << pos.x() << pos.y() << pos.z();
             e = spider->createEntity(shapesFactory, pos);
             qDebug() << "spider setup !";
             e->setup();

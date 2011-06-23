@@ -57,6 +57,67 @@ namespace GeneLabCore {
            sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
         }
 
+
+        // Spawns zones and point
+        foreach(Spawn* sp, this->spawns) {
+            switch(sp->getType()) {
+            case Spawn::Position:
+
+                {
+                // Create Ogre Entity
+                Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
+
+                // Material
+                entity->setMaterialName("Examples/BumpMapping/MultiLight");
+
+                // Attach
+                Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
+
+                // Scale
+                Ogre::AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
+                Ogre::Vector3 ogreSize(1, 1, 1);
+                Ogre::Vector3 scale = ogreSize  / boundingB.getSize();
+                node->scale(scale);	// the cube is too big for us
+
+                node->attachObject(entity);
+                node->setPosition(sp->getSpawnPosition().x(),
+                                  sp->getSpawnPosition().y(),
+                                  sp->getSpawnPosition().z());
+            }
+
+                break;
+            case Spawn::Zone:
+                {
+                // Create Ogre Entity
+                Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
+
+                // Material
+                entity->setMaterialName("Examples/BumpMapping/MultiLight");
+
+                // Attach
+                Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
+
+
+
+                node->attachObject(entity);
+                btVector3 minPos = sp->getMinPos();
+                btVector3 maxPos = sp->getMaxPos();
+                btVector3 center = ( minPos + maxPos ) / 2.0f;
+
+                node->setPosition(center.x(), center.y(), center.z());
+
+                // Scale
+                Ogre::AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
+                Ogre::Vector3 ogreSize(maxPos.x() - minPos.x(),
+                                       maxPos.y() - minPos.y(),
+                                       maxPos.z() - minPos.z());
+                Ogre::Vector3 scale = ogreSize  / boundingB.getSize();
+                node->scale(scale);	// the cube is too big for us
+            }
+                break;
+            }
+        }
+
     }
 
 }
