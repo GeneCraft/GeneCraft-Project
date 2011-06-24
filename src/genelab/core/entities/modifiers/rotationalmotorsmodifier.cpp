@@ -17,7 +17,7 @@ RotationalMotorsModifier::RotationalMotorsModifier(btGeneric6DofConstraint *cons
 
     // Stabilisation properties
     normalPositionMaxError = 0.001;
-    normalPositionFactor   = 1.0;
+    normalPositionFactor   = 10.0;
 
     for(int i=0;i<3;i++)
     {

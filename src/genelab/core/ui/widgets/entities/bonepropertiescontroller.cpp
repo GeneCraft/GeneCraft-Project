@@ -1,6 +1,8 @@
 #include "bonepropertiescontroller.h"
 #include "ui_bonepropertiescontroller.h"
 
+#include <cmath>
+
 // Entity
 #include "entity.h"
 
@@ -18,6 +20,16 @@
 // Effector
 #include "modifiers/rotationalmotorsmodifier.h"
 
+
+float roundPrecision(float n, int precision = 2)
+{
+      int precision_pow10 = pow(10,precision);
+      n*=precision_pow10;
+      n = ceil(n);
+      n/=precision_pow10;
+      return n;
+}
+
 BonePropertiesController::BonePropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::BonePropertiesController), bone(0)
 {
@@ -33,8 +45,8 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     connect(this->ui->rbOutFrom_Disable,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
 
-    connect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
     connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
@@ -43,6 +55,8 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
     connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+    connect(this->ui->pbValidateAngularInputs,SIGNAL(pressed()),this,SLOT(validateAngularInputs()));
 
 
     connect(this->ui->sLength,SIGNAL(valueChanged(int)),this,SLOT(changeLengthFromSlider(int)));
@@ -132,10 +146,10 @@ void BonePropertiesController::saveChanges()
         // ANGULAR PARAMETERS
 
         // Local transform (Yaw / Roll)
-        bone->setyAxis(this->ui->dEulerRotY->value() / 100.0);
-        bone->setZAxis(this->ui->dEulerRotZ->value() / 100.0);
-        this->ui->lInitRot_Yaw->setText(QString::number(this->ui->dEulerRotY->value() / 100.0));
-        this->ui->lInitRot_Roll->setText(QString::number(this->ui->dEulerRotZ->value() / 100.0));
+        bone->setyAxis(this->ui->dInitRot_Yaw->value() / 100.0);
+        bone->setZAxis(this->ui->dInitRot_Roll->value() / 100.0);
+        this->ui->lInitRot_Yaw->setText(QString::number(this->ui->dInitRot_Yaw->value() / 100.0));
+        this->ui->lInitRot_Roll->setText(QString::number(this->ui->dInitRot_Roll->value() / 100.0));
 
         // Limits & motor effector
         btRotationalLimitMotor *motor;
@@ -191,18 +205,18 @@ void BonePropertiesController::setBone(Bone * bone)
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
         // Local transform (Yaw / Roll)
-        disconnect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-        disconnect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        disconnect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        disconnect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
         btScalar eulerYaw,eulerRoll,eulerPitch;
         constraint->getFrameOffsetA().getBasis().getEulerZYX(eulerYaw,eulerRoll,eulerPitch);
-        this->ui->dEulerRotY->setValue(bone->getYAxis() * 100);
-        this->ui->dEulerRotZ->setValue(bone->getZAxis() * 100);
-        this->ui->lInitRot_Yaw->setText(QString::number(bone->getYAxis()));
-        this->ui->lInitRot_Roll->setText(QString::number(bone->getZAxis()));
+        this->ui->dInitRot_Yaw->setValue(bone->getYAxis() * 100);
+        this->ui->dInitRot_Roll->setValue(bone->getZAxis() * 100);
+        this->ui->lInitRot_Yaw->setText(QString::number(roundPrecision(bone->getYAxis())));
+        this->ui->lInitRot_Roll->setText(QString::number(roundPrecision(bone->getZAxis())));
 
-        connect(this->ui->dEulerRotY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-        connect(this->ui->dEulerRotZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        connect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        connect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
         // MOTOR EFFECTOR
         if(!bone->getRotationalMotorsModifier()->isDisable())
@@ -231,16 +245,16 @@ void BonePropertiesController::setBone(Bone * bone)
             case 0 :
 
                 this->ui->cbEnable_m1->setChecked(motor->m_enableMotor);
-                this->ui->leTargetVelocity_m1->setText(QString().setNum(motor->m_targetVelocity));
-                this->ui->leMaxMotorForce_m1->setText(QString().setNum(motor->m_maxMotorForce));
+                this->ui->leTargetVelocity_m1->setText(QString().number(roundPrecision(motor->m_targetVelocity)));
+                this->ui->leMaxMotorForce_m1->setText(QString().number(roundPrecision(motor->m_maxMotorForce)));
 
                 // Init motor X
                 disconnect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 disconnect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 this->ui->dAngularLowerLimitX->setValue(btNormalizeAngle(motor->m_loLimit) * 100);
                 this->ui->dAngularUpperLimitX->setValue(btNormalizeAngle(motor->m_hiLimit) * 100);
-                this->ui->lAngularLowerLimitX->setText(QString::number(motor->m_loLimit));
-                this->ui->lAngularUpperLimitX->setText(QString::number(motor->m_hiLimit));
+                this->ui->lAngularLowerLimitX->setText(QString::number(roundPrecision(motor->m_loLimit)));
+                this->ui->lAngularUpperLimitX->setText(QString::number(roundPrecision(motor->m_hiLimit)));
                 connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
@@ -255,8 +269,8 @@ void BonePropertiesController::setBone(Bone * bone)
                 disconnect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 this->ui->dAngularLowerLimitY->setValue(btNormalizeAngle(motor->m_loLimit) * 100);
                 this->ui->dAngularUpperLimitY->setValue(btNormalizeAngle(motor->m_hiLimit) * 100);
-                this->ui->lAngularLowerLimitY->setText(QString::number(motor->m_loLimit));
-                this->ui->lAngularUpperLimitY->setText(QString::number(motor->m_hiLimit));
+                this->ui->lAngularLowerLimitY->setText(QString::number(roundPrecision(motor->m_loLimit)));
+                this->ui->lAngularUpperLimitY->setText(QString::number(roundPrecision(motor->m_hiLimit)));
                 connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
@@ -271,8 +285,8 @@ void BonePropertiesController::setBone(Bone * bone)
                 disconnect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 this->ui->dAngularLowerLimitZ->setValue(btNormalizeAngle(motor->m_loLimit) * 100);
                 this->ui->dAngularUpperLimitZ->setValue(btNormalizeAngle(motor->m_hiLimit) * 100);
-                this->ui->lAngularLowerLimitZ->setText(QString::number(motor->m_loLimit));
-                this->ui->lAngularUpperLimitZ->setText(QString::number(motor->m_hiLimit));
+                this->ui->lAngularLowerLimitZ->setText(QString::number(roundPrecision(motor->m_loLimit)));
+                this->ui->lAngularUpperLimitZ->setText(QString::number(roundPrecision(motor->m_hiLimit)));
                 connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                 break;
@@ -303,3 +317,126 @@ void BonePropertiesController::setBone(Bone * bone)
     }
 }
 
+
+void BonePropertiesController::validateAngularInputs()
+{
+    if(bone != 0)
+    {
+
+        btGeneric6DofConstraint *constraint = bone->getParentConstraint();
+
+        // ANGULAR PARAMETERS
+
+        // Local transform (Yaw / Roll)
+        bone->setyAxis(this->ui->lInitRot_Yaw->text().toDouble());
+        bone->setZAxis(this->ui->lInitRot_Roll->text().toDouble());
+
+        // update dials
+        disconnect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        disconnect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        this->ui->dInitRot_Yaw->setValue(bone->getYAxis() * 100);
+        this->ui->dInitRot_Roll->setValue(bone->getZAxis() * 100);
+        connect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+        connect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+        // Limits & motor effector
+        btRotationalLimitMotor *motor;
+        for(int i=0;i<3;i++)
+        {
+            motor = constraint->getRotationalLimitMotor(i);
+
+            switch(i)
+            {
+                case 0 :
+
+                    // update motor
+                    motor->m_loLimit = this->ui->lAngularLowerLimitX->text().toDouble();
+                    motor->m_hiLimit = this->ui->lAngularUpperLimitX->text().toDouble();
+
+                    // update dials
+                    disconnect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    disconnect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    this->ui->dAngularLowerLimitX->setValue(motor->m_loLimit * 100);
+                    this->ui->dAngularUpperLimitX->setValue(motor->m_hiLimit * 100);
+                    connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+                    if(motor->m_loLimit == motor->m_hiLimit)
+                    {
+                        ui->cbEffectorX->setChecked(false);
+                        // delete rotational motor if exists
+
+                    }
+                    else
+                    {
+                        ui->cbEffectorX->setChecked(true);
+                        // create rotational motor if not exists
+                    }
+
+
+                    break;
+
+                case 1 :
+
+                    // update motor
+                    motor->m_loLimit = this->ui->lAngularLowerLimitY->text().toDouble();
+                    motor->m_hiLimit = this->ui->lAngularUpperLimitY->text().toDouble();
+
+                    // update dials
+                    disconnect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    disconnect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    this->ui->dAngularLowerLimitY->setValue(motor->m_loLimit * 100);
+                    this->ui->dAngularUpperLimitY->setValue(motor->m_hiLimit * 100);
+                    connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+
+                    if(motor->m_loLimit == motor->m_hiLimit)
+                    {
+                        ui->cbEffectorY->setChecked(false);
+                        // delete rotational motor if exists
+
+                    }
+                    else
+                    {
+                        ui->cbEffectorY->setChecked(true);
+                        // create rotational motor if not exists
+                    }
+
+                    break;
+
+                case 2 :
+
+                    // update motor
+                    motor->m_loLimit = this->ui->lAngularLowerLimitZ->text().toDouble();
+                    motor->m_hiLimit = this->ui->lAngularUpperLimitZ->text().toDouble();
+
+                    // update dials
+                    disconnect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    disconnect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    this->ui->dAngularLowerLimitZ->setValue(motor->m_loLimit * 100);
+                    this->ui->dAngularUpperLimitZ->setValue(motor->m_hiLimit * 100);
+                    connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+                    connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+
+                    qDebug() << motor->m_loLimit << motor->m_hiLimit ;
+
+                    if(motor->m_loLimit == motor->m_hiLimit)
+                    {
+                        ui->cbEffectorZ->setChecked(false);
+                        // delete rotational motor if exists
+
+                    }
+                    else
+                    {
+                        ui->cbEffectorZ->setChecked(true);
+                        // create rotational motor if not exists
+                    }
+
+
+                    break;
+            }
+        }
+    }
+}

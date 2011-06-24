@@ -45,6 +45,7 @@ private slots:
     void changeLengthFromSlider(int value);
     void changeRadiusFromSlider(int value);
     void rigidBodySelectedFromFix(btRigidBody*);
+    void validateAngularInputs();
 };
 
 #endif // BONEPROPERTIESCONTROLLER_H

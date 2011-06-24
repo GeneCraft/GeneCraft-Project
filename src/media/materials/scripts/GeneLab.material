@@ -58,3 +58,35 @@ material GeneLab/Fixation_Selected : GeneLab/Fixation
         }
     }
 }
+
+material GeneLab/Spawn
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			depth_write off
+		   
+			texture_unit
+			{
+				// spawn texture
+				texture spawn.png
+				tex_coord_set 0
+				alpha_op_ex source1 src_manual src_current 0.5
+			}
+		 }
+		 pass
+		 {
+			scene_blend alpha_blend
+			depth_write off
+		   
+			texture_unit
+			{
+				// green alpha color
+				colour_op_ex source1 src_manual src_current 0 1 0
+				alpha_op_ex source1 src_manual src_current 0.1
+			}
+		}
+    }
+}

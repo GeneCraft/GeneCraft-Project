@@ -51,7 +51,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget_2">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabBones">
       <attribute name="icon">
@@ -172,7 +172,7 @@
        <item row="3" column="5" colspan="2">
         <widget class="QPushButton" name="pbRemoveBone">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimumSize">
           <size>

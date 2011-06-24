@@ -74,7 +74,7 @@ namespace GeneLabCore {
 
         while(bones.size()) {
             delete bones.at(0);
-            bones.removeFirst();;
+            bones.removeFirst();
         }
 
         if(!delegatedSetup && this->origin != 0)

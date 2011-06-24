@@ -74,7 +74,7 @@ namespace GeneLabCore {
         //sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
 
 
-        /*
+        D/*
         Ogre::Light* pointLight = sceneManager->createLight("pointLight");
         pointLight->setType(Ogre::Light::LT_POINT);
         pointLight->setPosition(Ogre::Vector3(0, 150, 250));

@@ -30,6 +30,7 @@ FixationProperties::FixationProperties(QWidget *parent) :
 
     connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
     connect(this->ui->pbResizeRadius,SIGNAL(pressed()),this,SLOT(changeRadiusFromButton()));
+    connect(this->ui->pbRemoveBone,SIGNAL(pressed()),this,SLOT(removeSelectedBone()));
 }
 
 FixationProperties::~FixationProperties()
@@ -106,10 +107,13 @@ void FixationProperties::setPosition()
 
 void FixationProperties::selectBone()
 {
-    BoneListWidgetItem * boneItem = dynamic_cast<BoneListWidgetItem*>(this->ui->lwBones->selectedItems().at(0));
+    if(this->ui->lwBones->selectedItems().size() > 0)
+    {
+        BoneListWidgetItem * boneItem = dynamic_cast<BoneListWidgetItem*>(this->ui->lwBones->selectedItems().at(0));
 
-    if (boneItem)
-        emit rigidBodySelected(boneItem->bone->getRigidBody());
+        if (boneItem)
+            emit rigidBodySelected(boneItem->bone->getRigidBody());
+    }
 }
 
 void FixationProperties::addSensor()
@@ -164,4 +168,19 @@ void FixationProperties::changeRadiusFromButton()
 {
     fixation->setRadius(ui->leRadius->text().toDouble());
     setFixation(fixation); // update
+}
+
+void FixationProperties::removeSelectedBone()
+{
+    if(this->ui->lwBones->selectedItems().size() > 0)
+    {
+        BoneListWidgetItem * boneItem = dynamic_cast<BoneListWidgetItem*>(this->ui->lwBones->selectedItems().at(0));
+
+        if (boneItem)
+        {
+            emit rigidBodySelected(NULL);
+
+            delete boneItem->bone;
+        }
+    }
 }

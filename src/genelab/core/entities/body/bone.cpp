@@ -53,12 +53,16 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
 Bone::~Bone()
 {
     delete body;
+    qDebug() << Q_FUNC_INFO << "bone deleted";
     delete origin;
+    qDebug() << Q_FUNC_INFO << "origin deleted";
     delete endFix;
+    qDebug() << Q_FUNC_INFO << "endFix deleted";
     delete motorsModifier;
-
+    qDebug() << Q_FUNC_INFO << "motorsModifier deleted";
     shapesFactory->getWorld()->getBulletWorld()->removeConstraint(parentCt);
     delete parentCt;
+    qDebug() << Q_FUNC_INFO << "parentCt deleted";
 }
 
 void Bone::setup()

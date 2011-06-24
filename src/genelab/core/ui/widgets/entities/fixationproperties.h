@@ -36,6 +36,7 @@ public slots:
     void fixInTheAir();
     void setPosition();
     void selectBone();
+    void removeSelectedBone();
 
     void changeRadiusFromSlider(int value);
     void changeRadiusFromButton();

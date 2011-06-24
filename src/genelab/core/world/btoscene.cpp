@@ -68,7 +68,7 @@ namespace GeneLabCore {
                 Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
 
                 // Material
-                entity->setMaterialName("Examples/BumpMapping/MultiLight");
+                entity->setMaterialName("GeneLab/Spawn");
 
                 // Attach
                 Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
@@ -92,7 +92,7 @@ namespace GeneLabCore {
                 Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
 
                 // Material
-                entity->setMaterialName("Examples/BumpMapping/MultiLight");
+                entity->setMaterialName("GeneLab/Spawn");
 
                 // Attach
                 Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
@@ -107,12 +107,12 @@ namespace GeneLabCore {
                 node->setPosition(center.x(), center.y(), center.z());
 
                 // Scale
-                Ogre::AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
+                Ogre::AxisAlignedBox boundingB = entity->getBoundingBox();
                 Ogre::Vector3 ogreSize(maxPos.x() - minPos.x(),
                                        maxPos.y() - minPos.y(),
                                        maxPos.z() - minPos.z());
                 Ogre::Vector3 scale = ogreSize  / boundingB.getSize();
-                node->scale(scale);	// the cube is too big for us
+                node->scale(scale);
             }
                 break;
             }

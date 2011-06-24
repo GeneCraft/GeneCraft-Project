@@ -188,12 +188,12 @@ void CreatureViewerWindow::init() {
     QVariantMap positionSpawn;
 
     zoneSpawn.insert("type", (int)Spawn::Zone);
-    zoneSpawn.insert("minX", (float)0);
+    zoneSpawn.insert("minX", (float)-60);
     zoneSpawn.insert("minY", (float)10);
-    zoneSpawn.insert("minZ", (float)0);
+    zoneSpawn.insert("minZ", (float)-60);
 
     zoneSpawn.insert("maxX", (float)60);
-    zoneSpawn.insert("maxY", (float)10);
+    zoneSpawn.insert("maxY", (float)30);
     zoneSpawn.insert("maxZ", (float)60);
 
     spawns.append(zoneSpawn);
@@ -203,7 +203,7 @@ void CreatureViewerWindow::init() {
     positionSpawn.insert("y", 15);
     positionSpawn.insert("z", -10);
 
-  //  spawns.append(positionSpawn);
+    //spawns.append(positionSpawn);
 
     QVariantMap sceneData;
     sceneData.insert("type", "flatland");
@@ -261,7 +261,7 @@ void CreatureViewerWindow::init() {
 
     entitySpawner = new QTimer();
     entitySpawner->setInterval(10000);
-    entitySpawner->start();
+    //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 }
 
@@ -327,59 +327,63 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
     // unselection
     selectedEntity = NULL;
 
-    //other exclusions ?
-    if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
+    // you can also unselect by calling rigidBodySelected(NULL)
+    if(rigidBody != NULL)
     {
-        if(rigidBody->getUserPointer() != NULL)
+        //other exclusions ?
+        if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
         {
-            RigidBodyOrigin* origin = static_cast<RigidBodyOrigin*>(rigidBody->getUserPointer());
-            if(origin != 0)
+            if(rigidBody->getUserPointer() != NULL)
             {
-                if(origin->getObject() != NULL)
+                RigidBodyOrigin* origin = static_cast<RigidBodyOrigin*>(rigidBody->getUserPointer());
+                if(origin != 0)
                 {
-                    switch(origin->getType())
+                    if(origin->getObject() != NULL)
                     {
-                        case RigidBodyOrigin::BONE:{
+                        switch(origin->getType())
+                        {
+                            case RigidBodyOrigin::BONE:{
 
-                            Bone *bone = dynamic_cast<Bone*>(origin->getObject());
-                            bone->setSelected(true); // TODO stock selection into rigidbody origin
-                            boneSelected = bone;
-                            setInspector(bone->getInspectorWidget());
-                            selectedEntity = bone->getEntity();
-                            setEntity(bone->getEntity(),bone->getRigidBody());
-                            }
-                            break;
+                                Bone *bone = dynamic_cast<Bone*>(origin->getObject());
+                                bone->setSelected(true); // TODO stock selection into rigidbody origin
+                                boneSelected = bone;
+                                setInspector(bone->getInspectorWidget());
+                                selectedEntity = bone->getEntity();
+                                setEntity(bone->getEntity(),bone->getRigidBody());
+                                }
+                                break;
 
-                        case RigidBodyOrigin::FIXATION:{
+                            case RigidBodyOrigin::FIXATION:{
 
-                            Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
-                            fix->setSelected(true); // TODO stock selection into rigidbody origin
-                            fixSelected = fix;
-                            setInspector(fix->getInspectorWidget());
-                            selectedEntity = fix->getEntity();
-                            setEntity(fix->getEntity(),fix->getRigidBody());
-                            }
-                            break;
+                                Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
+                                fix->setSelected(true); // TODO stock selection into rigidbody origin
+                                fixSelected = fix;
+                                setInspector(fix->getInspectorWidget());
+                                selectedEntity = fix->getEntity();
+                                setEntity(fix->getEntity(),fix->getRigidBody());
+                                }
+                                break;
 
-                        case RigidBodyOrigin::BASIC_SHAPE:{
+                            case RigidBodyOrigin::BASIC_SHAPE:{
 
-                            //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
-                            //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
-                            //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
-                            setInspector(new QLabel("BASIC_SHAPE"));
+                                //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
+                                //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
+                                //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
+                                setInspector(new QLabel("BASIC_SHAPE"));
 
-                            }
-                            break;
+                                }
+                                break;
 
-                        default:
-                            setInspector(0);
+                            default:
+                                setInspector(0);
+                        }
                     }
+                    else
+                        qDebug() << "CreatureViewer::rigidBodySelected : object NULL";
                 }
                 else
-                    qDebug() << "CreatureViewer::rigidBodySelected : object NULL";
+                    qDebug() << "CreatureViewer::rigidBodySelected : RigidBodyOrigin NULL";
             }
-            else
-                qDebug() << "CreatureViewer::rigidBodySelected : RigidBodyOrigin NULL";
         }
     }
 }
