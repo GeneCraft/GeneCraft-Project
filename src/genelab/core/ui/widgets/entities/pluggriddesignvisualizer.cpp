@@ -27,8 +27,8 @@ PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
 
 int cptD = 0;
 void PlugGridDesignVisualizer::step() {
-    cptD++;
-    if(cptD%10 == 0)
+    //cptD++;
+    //if(cptD%10 == 0)
     this->update();
 }
 

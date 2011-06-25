@@ -346,7 +346,7 @@ float sigmoid(float x)
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
         else if(rand > 70  && rand < 80  && depth > 1) {
-            int maxMem = 100;
+            int maxMem = 20;
             int subchoix = qrand()%5;
             if(subchoix == 3) {
                 func += "MEM ";

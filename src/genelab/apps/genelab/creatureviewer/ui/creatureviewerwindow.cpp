@@ -249,7 +249,7 @@ void CreatureViewerWindow::init() {
     }
     qDebug() << b;
     Entity* e;
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 5; i++) {
             Spider *spider = new Spider();
             btVector3 pos = world->getSpawnPosition();
             e = spider->createEntity(shapesFactory, pos);

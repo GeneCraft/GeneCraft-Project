@@ -30,8 +30,8 @@ namespace GeneLabCore {
 
     int cptP;
     void PlugGridVisualizer::step() {
-        cptP++;
-        if(cptP%10 == 0)
+        //cptP++;
+        //if(cptP%10 == 0)
         this->update();
     }
 
