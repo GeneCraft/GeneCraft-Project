@@ -3,13 +3,13 @@
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
 
-#include "mainfactory.h"
+#include "btofactory.h"
 
 #include "Ogre.h"
 
 namespace GeneLabCore {
 
-    btoScene::btoScene(MainFactory* factory, QVariant sceneData, QObject *parent) :
+    btoScene::btoScene(btoFactory* factory, QVariant sceneData, QObject *parent) :
         btScene(factory, sceneData, parent)
     {
     }

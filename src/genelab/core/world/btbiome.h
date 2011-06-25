@@ -4,9 +4,8 @@
 #include <QObject>
 #include <QVariant>
 
-#include "mainfactory.h"
-
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "btfactory.h"
 
 namespace GeneLabCore {
 
@@ -14,7 +13,7 @@ class btBiome : public QObject
 {
     Q_OBJECT
 public:
-    explicit btBiome(MainFactory* factory, QVariant biomeData, QObject *parent = 0);
+    explicit btBiome(btFactory* factory, QVariant biomeData, QObject *parent = 0);
 
     virtual void setup();
 
@@ -29,7 +28,7 @@ public slots:
 protected:
     QVariantMap data;
     btDynamicsWorld* world;
-    MainFactory* factory;
+    btFactory* factory;
 
 };
 

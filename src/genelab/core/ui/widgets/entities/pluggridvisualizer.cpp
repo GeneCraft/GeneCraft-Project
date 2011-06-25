@@ -9,9 +9,6 @@
 #include <QLayout>
 #include <QBoxLayout>
 #include <QDebug>
-#include <QGLWidget>
-#include <QGLContext>
-
 
 namespace GeneLabCore {
     PlugGridVisualizer::PlugGridVisualizer(QWidget *parent) :

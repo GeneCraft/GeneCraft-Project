@@ -4,6 +4,10 @@
 #include <QApplication>
 #include "ogrewidget.h"
 
+
+#include "Ogre.h"
+#include "OgreTextAreaOverlayElement.h"
+
 namespace GeneLabCore {
 
     // We use genelab core for code productivity
@@ -153,7 +157,6 @@ namespace GeneLabCore {
     }
 
     void OgreEngine::step() {
-
         ogreRoot->renderOneFrame();
 
         foreach(OgreWidget *ow, ogreWidgets)

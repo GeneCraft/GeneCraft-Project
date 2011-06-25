@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QVariant>
 
-#include "mainfactory.h"
 #include "spawn.h"
 #include "genelabcoreclasses.h"
 
@@ -17,7 +16,7 @@ class btScene : public QObject
 {
     Q_OBJECT
 public:
-    explicit btScene(MainFactory* factory, QVariant sceneData, QObject *parent = 0);
+    explicit btScene(btFactory* factory, QVariant sceneData, QObject *parent = 0);
 
     virtual void setup();
 
@@ -34,7 +33,7 @@ public slots:
 protected:
     QVariantMap data;
     btDynamicsWorld* world;
-    MainFactory* factory;
+    btFactory* factory;
     QList<Spawn*> spawns;
 
 };

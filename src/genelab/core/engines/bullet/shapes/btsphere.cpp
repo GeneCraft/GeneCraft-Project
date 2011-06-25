@@ -56,6 +56,7 @@ btScalar btSphere::getMass() const
 btScalar btSphere::computeMass() const
 {
     // volume * density
+    // TODO MOVE 5 into density !!
     return 4/3.*M_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * 5 ;
 }
 

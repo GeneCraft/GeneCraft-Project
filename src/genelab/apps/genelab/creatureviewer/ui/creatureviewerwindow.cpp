@@ -26,7 +26,7 @@
 #include "bullet/bulletengine.h"
 #include "Ogre.h"
 #include "ogre/ogreengine.h"
-#include "mainfactory.h"
+#include "btofactory.h"
 #include "simulationmanager.h"
 #include "events/eventsmanager.h"
 #include "bulletogre/bulletogreengine.h"
@@ -45,6 +45,7 @@
 // Ressources
 #include "ressources/ressource.h"
 #include "ressources/jsonfile.h"
+#include "ressources/dbrecord.h"
 
 #include "families/spider/spider.h"
 
@@ -71,7 +72,7 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
 void CreatureViewerWindow::init() {
 
-    factory = new MainFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+    factory = new btoFactory(this->ui->centralwidget, (unsigned long) this->winId() );
 
     // ----------
     // -- Menu --
@@ -276,8 +277,8 @@ void CreatureViewerWindow::init() {
 
 void CreatureViewerWindow::loadEntityFromDb() {
     QString id = QInputDialog::getText(this, "Loading from database genecraft-project", "Please, enter the creature id");
-    DbRecord r(this->base, id);
-    QVariant genotype = r.load();
+    Ressource* r = new DbRecord(this->base, id);
+    QVariant genotype = r->load();
 
     QVariantMap data = genotype.toMap();
     if(data.contains("error")) {
@@ -299,6 +300,7 @@ void CreatureViewerWindow::loadEntityFromDb() {
 
     Entity *e = GenericFamily::createEntity(genotype, shapesFactory, initPosition);
     e->setup();
+    e->setRessource(r);
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     entitiesEngine->addEntity(e);
 }
@@ -306,22 +308,28 @@ void CreatureViewerWindow::loadEntityFromDb() {
 void CreatureViewerWindow::saveEntityToDb() {
     if(selectedEntity != NULL)
     {
-        QString id = QInputDialog::getText(this, "Saving to genecraft-project", "Please, enter the creature id");
-        if (id != "") {
+        if(!selectedEntity->getRessource()) {
+            QString id = QInputDialog::getText(this, "Saving to genecraft-project", "Please, enter the creature id");
+            if (id != "") {
 
-            // Load Generic Entity
-            DbRecord to(base, id);
-            to.save(selectedEntity->serialize());
+                // Load Generic Entity
+                DbRecord* to = new DbRecord(base, id);
+                to->save(selectedEntity->serialize());
 
-            if(to.error) {
-                QMessageBox msg;
-                msg.setDetailedText(to.errorString);
-                msg.setText("An error did occur during save");
-                msg.setIcon(QMessageBox::Critical);
-                msg.setWindowTitle("Saving to genecraft-project");
-                msg.exec();
-                return;
+                if(to->error) {
+                    QMessageBox msg;
+                    msg.setDetailedText(to->errorString);
+                    msg.setText("An error did occur during save");
+                    msg.setIcon(QMessageBox::Critical);
+                    msg.setWindowTitle("Saving to genecraft-project");
+                    msg.exec();
+                    return;
+                } else {
+                    selectedEntity->setRessource(to);
+                }
             }
+        } else {
+            selectedEntity->getRessource()->save(selectedEntity->serialize());
         }
     }
     else
@@ -499,6 +507,7 @@ void CreatureViewerWindow::loadEntityFromFile()
 
         Entity *e = GenericFamily::createEntity(genotype, shapesFactory, initPosition);
         e->setup();
+        e->setRessource(from);
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
         entitiesEngine->addEntity(e);
 
@@ -512,6 +521,12 @@ void CreatureViewerWindow::saveEntityToFile()
     simulationManager->stop();
     if(selectedEntity != NULL)
     {
+        // Short circuit if already save / load from something
+        if(selectedEntity->getRessource()) {
+            selectedEntity->getRessource()->save(selectedEntity->serialize());
+            simulationManager->start();
+            return;
+        }
         const QString DEFAULT_DIR_KEY("default_dir");
         QSettings mySettings;
         QString selectedFile = QFileDialog::getSaveFileName(this, "Save your genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
@@ -523,6 +538,7 @@ void CreatureViewerWindow::saveEntityToFile()
             // Load Generic Entity
             Ressource* to = new JsonFile(selectedFile);
             to->save(selectedEntity->serialize());
+            selectedEntity->setRessource(to);
         }
     }
     else

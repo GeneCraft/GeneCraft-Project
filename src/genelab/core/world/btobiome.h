@@ -10,7 +10,7 @@ class btoBiome : public btBiome
 {
     Q_OBJECT
 public:
-    explicit btoBiome(MainFactory* factory, QVariant biomeData, QObject *parent = 0);
+    explicit btoBiome(btoFactory* factory, QVariant biomeData, QObject *parent = 0);
 
     virtual void setup();
 signals:

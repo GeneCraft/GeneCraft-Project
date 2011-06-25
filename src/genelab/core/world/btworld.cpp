@@ -6,7 +6,7 @@
 #include "bullet/bulletengine.h"
 #include "entities/entitiesengine.h"
 
-#include "mainfactory.h"
+#include "btfactory.h"
 
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
@@ -16,7 +16,7 @@
 
 namespace GeneLabCore {
 
-    btWorld::btWorld(MainFactory* factory, QVariant worldData, QObject *parent) :
+    btWorld::btWorld(btFactory* factory, QVariant worldData, QObject *parent) :
         QObject(parent)
     {
         this->data = worldData.toMap();

@@ -28,6 +28,7 @@ private:
     OgreWidget* oW2;
     OgreEngine* ogreEngine;
     BulletEngine*  bulletEngine;
+    btoFactory* factory;
 
 private slots:
 

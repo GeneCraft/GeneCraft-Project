@@ -1,3 +1,6 @@
+#ifndef GENLAB_CLASSES_H
+#define GENLAB_CLASSES_H
+
 // Our namespace
 namespace GeneLabCore {
 
@@ -81,8 +84,8 @@ namespace GeneLabCore {
     // ---------------
     // -- Factories --
     // ---------------
-    class MainFactory;
-    class WorldFactory;
+    class btFactory;
+    class btoFactory;
 
     // Shapes
     class btShapesFactory;
@@ -155,3 +158,5 @@ namespace OgreBulletCollisions {
     class DebugDrawer;
     class CollisionShape;
 }
+
+#endif

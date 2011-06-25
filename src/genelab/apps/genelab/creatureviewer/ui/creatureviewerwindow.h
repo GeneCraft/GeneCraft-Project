@@ -55,7 +55,7 @@ private:
 
     Entity *selectedEntity;
     QWidget *inspector;
-    MainFactory* factory;
+    btoFactory* factory;
     SimulationManager* simulationManager;
     btShapesFactory* shapesFactory;
 

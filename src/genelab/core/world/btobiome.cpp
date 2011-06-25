@@ -8,12 +8,13 @@
 #include <QVariant>
 #include <QVariantMap>
 #include <QVariantList>
+#include "btofactory.h"
 
 #include <QDebug>
 
 namespace GeneLabCore {
 
-    btoBiome::btoBiome(MainFactory* factory, QVariant biomeData, QObject *parent) :
+    btoBiome::btoBiome(btoFactory* factory, QVariant biomeData, QObject *parent) :
     btBiome(factory, biomeData, parent)
     {
     }

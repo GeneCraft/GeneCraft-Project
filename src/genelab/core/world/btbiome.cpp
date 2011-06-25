@@ -1,7 +1,7 @@
 #include "btbiome.h"
 
 namespace GeneLabCore {
-    btBiome::btBiome(MainFactory* factory, QVariant biomeData, QObject *parent) :
+    btBiome::btBiome(btFactory* factory, QVariant biomeData, QObject *parent) :
         QObject(parent)
     {
         this->factory = factory;

@@ -10,12 +10,14 @@
 #include "sensors/sensor.h"
 #include "modifiers/modifier.h"
 
+#include "ressources/ressource.h"
+
 namespace GeneLabCore {
 
     EntityPropertiesController* Entity::inspectorWidget = NULL;
 
     Entity::Entity(QString name, QString family, int generation, QObject *parent) :
-        QObject(parent)
+        QObject(parent), r(NULL)
     {
         this->name          = name;
         this->family        = family;
@@ -29,6 +31,7 @@ namespace GeneLabCore {
     Entity::~Entity() {
         delete this->treeShape;
         delete this->brain;
+        delete this->r;
     }
 
     EntityPropertiesController *Entity::getInspectorWidget(Entity * selectedCreature, btRigidBody *selectedBody)
@@ -100,5 +103,9 @@ namespace GeneLabCore {
 
             brain->addOut(modifier->getOutputs()[i]);
         }
+    }
+
+    void Entity::setRessource(Ressource* r) {
+        this->r = r;
     }
 }

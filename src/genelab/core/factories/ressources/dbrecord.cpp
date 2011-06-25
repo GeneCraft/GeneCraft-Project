@@ -31,6 +31,8 @@ namespace GeneLabCore {
             v.insert("error", r->errorString());
             return v;
         }
+
+        r->deleteLater();
     }
 
     void DbRecord::save(QVariant data) {
@@ -55,6 +57,8 @@ namespace GeneLabCore {
             this->errorString = r->errorString();
             qDebug() << r->readAll();
         }
+
+        r->deleteLater();
     }
 
     void DbRecord::request(QString url, RequestType verb, QString data) {
@@ -86,6 +90,8 @@ namespace GeneLabCore {
         // also dispose the event loop after the reply has arrived
         connect(pnam, SIGNAL(finished(QNetworkReply *)), &eventLoop, SLOT(quit()));
         eventLoop.exec();
+
+        pnam->deleteLater();
     }
 
     void DbRecord::networkReply(QNetworkReply* r) {

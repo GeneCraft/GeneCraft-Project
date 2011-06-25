@@ -45,6 +45,10 @@ namespace GeneLabCore {
         QVariant serialize();
         QVariant serializeOrigins();
 
+        // Set ressource
+        void setRessource(Ressource* r);
+        Ressource* getRessource() { return r; }
+
     signals:
 
     public slots:
@@ -64,6 +68,7 @@ namespace GeneLabCore {
         QList<Sensor *> sensors;
         QList<Modifier *> modifiers;
         BrainFunctional *brain;
+        Ressource* r;
 
         // Qt Render
         static EntityPropertiesController *inspectorWidget;

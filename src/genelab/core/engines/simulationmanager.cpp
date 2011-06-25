@@ -5,8 +5,6 @@
 #include <QTimer>
 #include <ctime>
 
-#include "Ogre.h"
-#include "OgreTextAreaOverlayElement.h"
 
 namespace GeneLabCore {
 
@@ -14,11 +12,11 @@ namespace GeneLabCore {
     {
         this->engines = engines;
         this->renderEngine      = engines.find("Ogre").value();
-        this->translationEngine = engines.find("BulletOgre").value();
+        //this->translationEngine = engines.find("BulletOgre").value();
         this->eventsManager     = engines.find("Events").value();
 
         this->engines.remove("Ogre");
-        this->engines.remove("OgreBullet");
+        //this->engines.remove("OgreBullet");
         this->engines.remove("EventsManager");
 
         this->stepBySec = 60;
@@ -83,32 +81,19 @@ namespace GeneLabCore {
 
     void SimulationManager::renderUpdate() {
 
-
-        int sec = (nbStep/60)%60;
-        int min = (nbStep/3600)%60;
-        int hour = (nbStep/(3600*60));
-        QString time = (hour?QString::number(hour) + "h ":"")
-                      +(min?QString::number(min) + "m ":"")
-                      +(sec?QString::number(sec) + "s -- ":" -- ")
-                      +(QString::number(nbStep) + " steps");
-
-        Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
-
-        overlayManager.getOverlayElement("timeArea")->setCaption(time.toStdString());
-
         // beforeStep
         this->eventsManager->beforeStep();
-        this->translationEngine->beforeStep();
+        //this->translationEngine->beforeStep();
         this->renderEngine->beforeStep();
 
         // step
         this->eventsManager->step();
-        this->translationEngine->step();
+        //this->translationEngine->step();
         this->renderEngine->step();
 
         // after step
         this->eventsManager->afterStep();
-        this->translationEngine->afterStep();
+        //this->translationEngine->afterStep();
         this->renderEngine->afterStep();
     }
 

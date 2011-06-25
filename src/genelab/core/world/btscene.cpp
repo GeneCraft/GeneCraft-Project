@@ -3,14 +3,14 @@
 
 // Shapes
 #include "BulletCollision/CollisionShapes/btStaticPlaneShape.h"
-#include "bulletogre/shapes/btosphere.h"
-#include "bulletogre/shapes/btobox.h"
-#include "bulletogre/shapes/btocylinder.h"
-#include "btoshapesfactory.h"
+#include "bullet/shapes/btsphere.h"
+#include "bullet/shapes/btbox.h"
+#include "bullet/shapes/btcylinder.h"
+#include "btfactory.h"
 
 namespace GeneLabCore {
 
-    btScene::btScene(MainFactory* factory, QVariant sceneData, QObject *parent) :
+    btScene::btScene(btFactory* factory, QVariant sceneData, QObject *parent) :
         QObject(parent)
     {
         this->factory = factory;
