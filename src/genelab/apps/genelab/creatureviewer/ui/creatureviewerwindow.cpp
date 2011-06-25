@@ -56,6 +56,8 @@
 #include "btoshapesfactory.h"
 
 #include <QThread>
+#include <QInputDialog>
+#include <QMessageBox>
 
 using namespace GeneLabCore;
 
@@ -76,6 +78,8 @@ void CreatureViewerWindow::init() {
     // ----------
     connect(this->ui->actionFrom_file,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
     connect(this->ui->actionTo_file,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
+    connect(this->ui->actionFrom_database, SIGNAL(triggered()), this, SLOT(loadEntityFromDb()));
+    connect(this->ui->actionDatabase, SIGNAL(triggered()), this, SLOT(saveEntityToDb()));
     connect(this->ui->actionNew_creature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(this->ui->actionRemove_creature,SIGNAL(triggered()),this,SLOT(removeEntity()));
     connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
@@ -263,6 +267,65 @@ void CreatureViewerWindow::init() {
     entitySpawner->setInterval(10000);
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
+
+    base.url = "http://www.genecraft-project.com";
+    base.dbName = "db/genecraft";
+    base.port = 80;
+
+}
+
+void CreatureViewerWindow::loadEntityFromDb() {
+    QString id = QInputDialog::getText(this, "Loading from database genecraft-project", "Please, enter the creature id");
+    DbRecord r(this->base, id);
+    QVariant genotype = r.load();
+
+    QVariantMap data = genotype.toMap();
+    if(data.contains("error")) {
+
+        QMessageBox msg;
+        msg.setDetailedText(data["error"].toString());
+        msg.setText("this creature didn't exist in the database, please check your internet connexion and the creature id.");
+        msg.setIcon(QMessageBox::Critical);
+        msg.setWindowTitle("Loading from database genecraft-project");
+        msg.exec();
+        return;
+    }
+
+    // get initial position
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
+    Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
+    btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
+
+    Entity *e = GenericFamily::createEntity(genotype, shapesFactory, initPosition);
+    e->setup();
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+    entitiesEngine->addEntity(e);
+}
+
+void CreatureViewerWindow::saveEntityToDb() {
+    if(selectedEntity != NULL)
+    {
+        QString id = QInputDialog::getText(this, "Saving to genecraft-project", "Please, enter the creature id");
+        if (id != "") {
+
+            // Load Generic Entity
+            DbRecord to(base, id);
+            to.save(selectedEntity->serialize());
+
+            if(to.error) {
+                QMessageBox msg;
+                msg.setDetailedText(to.errorString);
+                msg.setText("An error did occur during save");
+                msg.setIcon(QMessageBox::Critical);
+                msg.setWindowTitle("Saving to genecraft-project");
+                msg.exec();
+                return;
+            }
+        }
+    }
+    else
+        QMessageBox::warning(this, "No entity selected.", "No entity selected.");
 }
 
 void CreatureViewerWindow::spawnNew() {

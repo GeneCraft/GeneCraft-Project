@@ -23,6 +23,8 @@ namespace GeneLabCore {
         virtual QVariant load();
         virtual void save(QVariant data);
 
+        bool error;
+        QString errorString;
     signals:
 
     public slots:

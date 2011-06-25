@@ -27,7 +27,9 @@ namespace GeneLabCore {
             return v;
         } else {
             qDebug() << r->readAll();
-            return QVariant();
+            QVariantMap v;
+            v.insert("error", r->errorString());
+            return v;
         }
     }
 
@@ -38,13 +40,19 @@ namespace GeneLabCore {
         if(this->rev != "")
             mData.insert("_rev", this->rev);
 
+
+        qDebug() << url;
         this->request(url, RPUT, QxtJSON::stringify(mData));
         qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
             this->id = v.find("id").value().toString();
             this->rev = v.find("rev").value().toString();
+            this->error = false;
+
         } else {
+            this->error = true;
+            this->errorString = r->errorString();
             qDebug() << r->readAll();
         }
     }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "genelabcoreclasses.h"
 #include "btBulletDynamicsCommon.h"
+#include "ressources/dbrecord.h"
 
 namespace Ui {
     class CreatureViewer;
@@ -38,7 +39,9 @@ public slots:
     // new / load / save entity
     void createNewEntity();
     void loadEntityFromFile();
+    void loadEntityFromDb();
     void saveEntityToFile();
+    void saveEntityToDb();
     void removeEntity();
 
     // physics
@@ -64,6 +67,9 @@ private:
     QTimer* entitySpawner;
 
     btoWorld* world;
+
+    DataBase base;
+
 private slots:
     void spawnNew();
 };
