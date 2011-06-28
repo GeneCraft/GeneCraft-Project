@@ -78,7 +78,7 @@ namespace GeneLabCore {
     class ContactSensor;
 
     // Modifier
-    class Modifier;
+    class Effector;
     class RotationalMotorsModifier;
 
     // ---------------

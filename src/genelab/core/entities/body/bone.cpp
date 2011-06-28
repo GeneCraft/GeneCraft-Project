@@ -32,7 +32,7 @@ namespace GeneLabCore {
 BonePropertiesController* Bone::inspectorWidget = 0;
 
 Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform)
-    : QObject(), yAxis(yAxis), zAxis(zAxis), motorsModifier(NULL)
+    : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL)
 {
 
     motorModifierData = QVariant(0);
@@ -58,7 +58,7 @@ Bone::~Bone()
     qDebug() << Q_FUNC_INFO << "origin deleted";
     delete endFix;
     qDebug() << Q_FUNC_INFO << "endFix deleted";
-    delete motorsModifier;
+    delete motorsEffector;
     qDebug() << Q_FUNC_INFO << "motorsModifier deleted";
     shapesFactory->getWorld()->getBulletWorld()->removeConstraint(parentCt);
     delete parentCt;
@@ -94,12 +94,12 @@ void Bone::setup()
 
         // add motor modifier
         if(motorModifierData != QVariant(0))
-            motorsModifier = new RotationalMotorsModifier(motorModifierData, parentCt);
+            motorsEffector = new RotationalMotorsModifier(motorModifierData, this, parentCt);
         else
-            motorsModifier = new RotationalMotorsModifier(parentCt);
+            motorsEffector = new RotationalMotorsModifier(this, parentCt);
 
         if(entity)
-           entity->addLinkToModifier(motorsModifier);
+           entity->addLinkToEffector(motorsEffector);
 
         // attach to its parent
         shapesFactory->getWorld()->getBulletWorld()->addConstraint(parentCt, true);
@@ -135,24 +135,28 @@ void Bone::setEntity(Entity *entity)
     endFix->setEntity(entity);
 }
 
+// ------------
+// -- MOTORS --
+// ------------
+
 void Bone::disableMotors()
 {
-    motorsModifier->disable();
+    motorsEffector->disable();
 }
 
 void Bone::setBrainMotors()
 {
-    motorsModifier->setOutputsFrom(1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/);
+    motorsEffector->setOutputsFrom(1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/);
 }
 
 void Bone::setNormalPositionMotors()
 {
-    motorsModifier->setOutputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/);
+    motorsEffector->setOutputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/);
 }
 
 void Bone::setRandomMotors()
 {
-    motorsModifier->setOutputsFrom(2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/);
+    motorsEffector->setOutputsFrom(2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/);
 }
 
 void Bone::resetMotors()
@@ -172,6 +176,38 @@ void Bone::resetMotors()
     }
 }
 
+void Bone::disconnectMotor(int i)
+{
+    if(entity && motorsEffector->getBrainOutputs(i))
+    {
+        qDebug() << Q_FUNC_INFO << i;
+
+        entity->removeBrainOut(motorsEffector->getBrainOutputs(i)->boMaxMotorForce);
+        entity->removeBrainOut(motorsEffector->getBrainOutputs(i)->boTargetVelocity);
+
+        motorsEffector->disconnectMotor(i);
+    }
+    //else
+        //qDebug() << Q_FUNC_INFO << " ERROR : entity == " << entity << ", motorsEffector->getBrainOutputs(" << i << ") == " << motorsEffector->getBrainOutputs(i);
+}
+
+void Bone::connectMotor(int i)
+{
+    if(entity && motorsEffector)
+    {
+        motorsEffector->connectMotor(i);
+
+        if(motorsEffector->getBrainOutputs(i)) {
+            entity->addBrainOut(motorsEffector->getBrainOutputs(i)->boMaxMotorForce);
+            entity->addBrainOut(motorsEffector->getBrainOutputs(i)->boTargetVelocity);
+        }
+    }
+}
+
+// ----------------------
+// -- INITIAL POSITION --
+// ----------------------
+
 void Bone::setyAxis(btScalar yAxis) {
     this->yAxis = yAxis;
     btQuaternion local1;
@@ -182,6 +218,21 @@ void Bone::setyAxis(btScalar yAxis) {
 
     parentCt->getFrameOffsetA().setRotation(local1);
 }
+
+void Bone::setZAxis(btScalar zAxis) {
+    this->zAxis = zAxis;
+    btQuaternion local1;
+    local1.setRotation(btVector3(0, 1, 0), yAxis);
+    btQuaternion local2;
+    local2.setRotation(btVector3(0, 0, 1), zAxis);
+    local1 *= local2;
+
+    parentCt->getFrameOffsetA().setRotation(local1);
+}
+
+// -------------------
+// -- SERIALIZATION --
+// -------------------
 
 QVariant Bone::serialize()
 {
@@ -217,21 +268,15 @@ QVariant Bone::serialize()
     // End fixation
     bone.insert("endFix",endFix->serialize());
 
-    bone.insert("muscle", this->motorsModifier->serialize());
+    bone.insert("muscle", this->motorsEffector->serialize());
 
     return bone;
 }
 
-void Bone::setZAxis(btScalar zAxis) {
-    this->zAxis = zAxis;
-    btQuaternion local1;
-    local1.setRotation(btVector3(0, 1, 0), yAxis);
-    btQuaternion local2;
-    local2.setRotation(btVector3(0, 0, 1), zAxis);
-    local1 *= local2;
 
-    parentCt->getFrameOffsetA().setRotation(local1);
-}
+// -----------
+// -- TOOLS --
+// -----------
 
 void Bone::setSelected(bool selected)
 {

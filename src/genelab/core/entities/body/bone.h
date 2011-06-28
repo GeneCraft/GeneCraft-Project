@@ -31,7 +31,7 @@ public:
    Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
 
-   inline RotationalMotorsModifier *getRotationalMotorsModifier() { return motorsModifier; }
+   inline RotationalMotorsModifier *getRotationalMotorsEffector() { return motorsEffector; }
    inline void setMotorModifierData(QVariant data) { this->motorModifierData = data; }
    BonePropertiesController *getInspectorWidget();
    static BonePropertiesController *getEmptyInspectorWidget();
@@ -54,6 +54,9 @@ public:
    void setSize(btScalar radius, btScalar length);
    void setEndFixationRadius(btScalar radius);
 
+   void connectMotor(int i);
+   void disconnectMotor(int i);
+
 protected:
 
    // Shape
@@ -64,7 +67,7 @@ protected:
    Fixation *endFix;         // Owner
 
    // Modifier
-   RotationalMotorsModifier *motorsModifier; // Owner
+   RotationalMotorsModifier *motorsEffector; // Owner
 
    // Contraints
    btGeneric6DofConstraint *parentCt;          // Owner

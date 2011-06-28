@@ -418,7 +418,7 @@
        <string>In / Out</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
+       <item row="0" column="1">
         <widget class="QLabel" name="label_4">
          <property name="styleSheet">
           <string notr="true">color: rgb(81, 119, 145);</string>
@@ -428,7 +428,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1" colspan="2">
+       <item row="0" column="2">
         <widget class="QLabel" name="lNbrSensors">
          <property name="font">
           <font>
@@ -440,29 +440,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label_5">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(81, 119, 145);</string>
-         </property>
-         <property name="text">
-          <string>Brain Inputs : </string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4" colspan="2">
-        <widget class="QLabel" name="lNbrBrainInputs">
-         <property name="font">
-          <font>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>#inputs</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" rowspan="2" colspan="5">
+       <item row="1" column="1" rowspan="2" colspan="5">
         <widget class="QListWidget" name="lwSensors">
          <property name="minimumSize">
           <size>
@@ -472,24 +450,24 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="5">
-        <widget class="QPushButton" name="pushButton">
+       <item row="1" column="6">
+        <widget class="QPushButton" name="pbClearSensors">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Clear all</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="5">
+       <item row="2" column="6">
         <widget class="QPushButton" name="pbSelectFixation">
          <property name="text">
           <string>Select Fix</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
+       <item row="3" column="1">
         <widget class="QLabel" name="label_6">
          <property name="styleSheet">
           <string notr="true">color: rgb(81, 119, 145);</string>
@@ -499,41 +477,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
-        <widget class="QLabel" name="label_7">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(81, 119, 145);</string>
-         </property>
-         <property name="text">
-          <string>Brain Outputs :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4" colspan="2">
-        <widget class="QLabel" name="lNbrBrainOutputs">
-         <property name="font">
-          <font>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>#outputs</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="lNbrEffectors">
-         <property name="font">
-          <font>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>#effectors</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="5">
+       <item row="4" column="1" colspan="5">
         <widget class="QListWidget" name="lwEffectors">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -549,17 +493,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="5">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Clear all</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
+       <item row="11" column="1">
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -571,6 +505,130 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Brain size : </string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QComboBox" name="cbBrainSize">
+         <item>
+          <property name="text">
+           <string>2x2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4x4</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>8x8</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>16x16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>32x32</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>64x64</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="lNbrEffectors">
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>#effectors</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(81, 119, 145);</string>
+         </property>
+         <property name="text">
+          <string>Brain Inputs : </string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(81, 119, 145);</string>
+         </property>
+         <property name="text">
+          <string>Brain Outputs :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="lNbrBrainInputs">
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>#inputs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QLabel" name="lNbrBrainOutputs">
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>#outputs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pbClearEffectors">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Disconnect all</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbMinimalOuts">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Min. outs</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

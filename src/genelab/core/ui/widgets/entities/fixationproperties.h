@@ -37,6 +37,7 @@ public slots:
     void setPosition();
     void selectBone();
     void removeSelectedBone();
+    void removeSelectedSensor();
 
     void changeRadiusFromSlider(int value);
     void changeRadiusFromButton();

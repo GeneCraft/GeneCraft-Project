@@ -28,11 +28,16 @@ namespace GeneLabCore {
 
         // Sensors links
         void addLinkToSensor(Sensor *sensor);
+        void removeLinksToSensor(Sensor *sensor);
         QList<Sensor *> &getSensors() { return sensors;  }
 
-        // Modifiers links
-        void addLinkToModifier(Modifier *modifier);
-        QList<Modifier *> &getModifiers() { return modifiers;  }
+        // Effectors links
+        void addLinkToEffector(Effector *effector);
+        //void removeLinksToEffector(Effector *effector);
+        void addBrainOut(BrainOut *brainOut);
+        void removeBrainOut(BrainOut *brainOut);
+        QList<Effector *> &getEffectors() { return effectors;  }
+
 
         // Brain
         void setBrain(BrainFunctional* brain) { this->brain = brain; }
@@ -66,7 +71,7 @@ namespace GeneLabCore {
 
         // Brain
         QList<Sensor *> sensors;
-        QList<Modifier *> modifiers;
+        QList<Effector *> effectors;
         BrainFunctional *brain;
         Ressource* r;
 

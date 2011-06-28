@@ -31,6 +31,8 @@ FixationProperties::FixationProperties(QWidget *parent) :
     connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
     connect(this->ui->pbResizeRadius,SIGNAL(pressed()),this,SLOT(changeRadiusFromButton()));
     connect(this->ui->pbRemoveBone,SIGNAL(pressed()),this,SLOT(removeSelectedBone()));
+
+    connect(this->ui->pbDeleteSensor,SIGNAL(pressed()),this,SLOT(removeSelectedSensor()));
 }
 
 FixationProperties::~FixationProperties()
@@ -59,9 +61,9 @@ void FixationProperties::setFixation(Fixation *fixation)
         this->ui->lwBones->addItem(new BoneListWidgetItem(b));
 
     // Sensors
-    this->ui->listSensors->clear();
+    this->ui->lwSensors->clear();
     foreach(Sensor *s, fixation->getSensors())
-        this->ui->listSensors->addItem(new SensorListWidgetItem(s));
+        this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
 }
 
 void FixationProperties::addBone()
@@ -178,9 +180,37 @@ void FixationProperties::removeSelectedBone()
 
         if (boneItem)
         {
+            // update ui
             emit rigidBodySelected(NULL);
 
+            // delete the bone
             delete boneItem->bone;
+        }
+    }
+}
+
+void FixationProperties::removeSelectedSensor()
+{
+    if(fixation)
+    {
+        if(this->ui->lwSensors->selectedItems().size() > 0)
+        {
+            SensorListWidgetItem * sensorItem = dynamic_cast<SensorListWidgetItem*>(this->ui->lwSensors->selectedItems().at(0));
+
+            if (sensorItem)
+            {
+                // remove the sensor in the fixation
+                fixation->removeSensor(sensorItem->sensor);
+
+                // delete sensor
+                delete sensorItem->sensor;
+
+                // update ui TODO emit
+                setFixation(fixation);
+
+                // FIXME update entityPropertiesController !!!!!!!!!!!!!!!!!!!!!!!!!
+                // because user could edit a deleted sensor !
+            }
         }
     }
 }

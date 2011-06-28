@@ -24,6 +24,8 @@ public:
 
     virtual QVariant serialize();
 
+    static int randomPlugGridSize();
+
 signals:
 
 public slots:

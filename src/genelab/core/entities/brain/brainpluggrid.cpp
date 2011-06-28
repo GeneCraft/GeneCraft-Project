@@ -43,26 +43,37 @@ namespace GeneLabCore {
             this->inputs.append(in);
         }*/
 
-
         // On crée quelques outputs
 
-
-        // Pour les tests :P
-
-        this->propagation = size/10;
+        // FIXME Pour les tests :P
+        this->propagation = qRound(size/10.0);
     }
 
     BrainPlugGrid::~BrainPlugGrid() {
         delete this->neurons;
     }
 
+    float BrainPlugGrid::getValue(float x, float y) {
+        return this->neurons[qRound(x * size) + qRound(y * size) * size];
+    }
+
     float BrainPlugGrid::getValue(int x, int y) {
-        float v = this->neurons[x + y * size];
-        return v;
+        return this->neurons[x + y * size];
+    }
+
+    void BrainPlugGrid::setSize(int size)
+    {
+        this->size = size;
+        delete[] neurons;
+        this->neurons = new float[size*size];
+        for(int i = 0; i < size*size; i++)
+            neurons[i] = 0.0f;
+
+        // FIXME Pour les tests :P
+        this->propagation = qRound(size/10.0);
     }
 
     void BrainPlugGrid::beforeStep() {
-
 
         // Clean the neurons
         for(int i = 0; i < size*size; i++) {
@@ -76,19 +87,25 @@ namespace GeneLabCore {
             float value = in->getValue();
 
             foreach(NeuralConnexion connexion, in->getConnexions()) {
-                if(connexion.x >= 0 && connexion.x < size &&
-                   connexion.y >= 0 && connexion.y < size) {
+
+                int posX = qRound(connexion.x * size);
+                int posY = qRound(connexion.y * size);
+
+                //if(connexion.x >= 0 && connexion.x < size &&
+                //   connexion.y >= 0 && connexion.y < size) {
                     // Adding this value to the cell
-                    for(int i = qMax(0, connexion.x-propagation); i <= qMin( size-1, connexion.x + propagation); i++) {
-                        for(int j = qMax(0, connexion.y -propagation); j <= qMin(size-1, propagation + connexion.y); j++) {
+
+                    // FIXEM (int) n'attendra presque jamais la dernier case, utiliser round ou (int) (x + 0.5)
+                    for(int i = qMax(0, posX-propagation); i <= qMin( size-1, posX+propagation); i++) {
+                        for(int j = qMax(0, posY-propagation); j <= qMin(size-1, posY+propagation); j++) {
                                 this->neurons[i + j*size]
                                     += connexion.weight * value
-                                    * (1 - 1 * ((float)qAbs(i - connexion.x) / (propagation+1)))
-                                    * (1 - 1 * ((float)qAbs(j - connexion.y) / (propagation+1))) ;
+                                    * (1 - 1 * ((float)qAbs(i - posX) / (propagation+1)))
+                                    * (1 - 1 * ((float)qAbs(j - posY) / (propagation+1)));
 
                         }
                     }
-                }
+                //}
             }
         }
     }

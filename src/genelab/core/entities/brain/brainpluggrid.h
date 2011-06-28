@@ -19,10 +19,16 @@ namespace GeneLabCore {
             return this->size;
         }
 
+        // Set the of the plug grid
+        void setSize(int size);
+
         // Input connected to the grid
         QList<BrainIn*> getInputs() {
             return this->inputs;
         }
+
+        // Return the value from pourcentage x/y [0.0 - 1.0]
+        float getValue(float x, float y);
 
         // Return the value from the grid in x/y
         float getValue(int x, int y);
@@ -35,9 +41,15 @@ namespace GeneLabCore {
     signals:
 
     public slots:
+
         // Adding an input
         void connectInput(BrainIn* in) {
             this->inputs.append(in);
+        }
+
+        // Remove an input
+        void disconnectInput(BrainIn* in) {
+            this->inputs.removeAll(in);
         }
 
         // Get value must be called in between those two call

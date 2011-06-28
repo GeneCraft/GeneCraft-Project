@@ -33,5 +33,6 @@
         <file alias="brain_activity">img/icons/brain_activity.png</file>
         <file alias="thumbtack">img/icons/thumbtack.png</file>
         <file alias="entity_stats">img/icons/chart_curve.png</file>
+        <file alias="bone_delete">img/icons/bone_delete.png</file>
     </qresource>
 </RCC>

@@ -82,14 +82,14 @@ class EffectorListWidgetItem : public QListWidgetItem
 {
 public:
 
-    EffectorListWidgetItem(Modifier * effector)
+    EffectorListWidgetItem(Effector * effector)
     {
         this->effector = effector;
         this->setIcon(QIcon(":/img/icons/motor_test"));
         this->setText(effector->getTypeName());
     }
 
-    Modifier *effector;
+    Effector *effector;
 };
 
 

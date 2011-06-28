@@ -7,14 +7,14 @@
 
 namespace GeneLabCore {
 
-enum ModifierType { rotationalMotor };
+enum EffectorType { rotationalMotor };
 
-class Modifier : public QObject
+class Effector : public QObject
 {
     Q_OBJECT
 public:
-    explicit Modifier(QObject *parent = 0);
-    Modifier(QVariant data);
+    explicit Effector(QObject *parent = 0);
+    Effector(QVariant data);
     virtual QVariant serialize();
 
     const QString &getTypeName() { return typeName; }

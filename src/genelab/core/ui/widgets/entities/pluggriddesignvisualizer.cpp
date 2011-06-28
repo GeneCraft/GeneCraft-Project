@@ -56,12 +56,12 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
     if(neurones.size() == 0)
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
-                int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
-                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
-                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
-                neurones.append(this->view->scene()->addRect(width * i,
-                                             width * j /*+ 70*/, width, width, p, b));
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i,j))) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i,j))) * 255.));
+                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
+                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+                neurones.append(this->view->scene()->addRect(width * j,
+                                             width * i /*+ 70*/, width, width, p, b));
 
             }
         }
@@ -69,11 +69,11 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
     // On réutilise les vieux neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
-                int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
-                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
-                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
-                neurones.at(i* size + j)->setBrush(b);
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i,j))) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i,j))) * 255.));
+                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
+                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+                neurones.at(i + j * size)->setBrush(b);
             }
         }
 
@@ -135,8 +135,8 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent * e) {
     }
 
     void PlugGridDesignVisualizer::setBrain(Brain* b) {
-        // Old brain exist and new != old
-        if(brain != 0 && brain != b) {
+
+        if(brain) {
             foreach(QGraphicsRectItem* neurone, neurones) {
                 this->view->scene()->removeItem(neurone);
                 delete neurone;

@@ -43,6 +43,11 @@ namespace GeneLabCore {
          */
         void addSensor(Sensor * sensor);
 
+        /**
+         * Used to remove a sensor
+         */
+        void removeSensor(Sensor * sensor);
+
         // GETTERS AND SETTERS
         QList<Bone *> &getBones()               { return bones; }
         QList<Sensor *> &getSensors()           { return sensors; }
@@ -50,7 +55,7 @@ namespace GeneLabCore {
         btScalar getRadius()                    { return radius; }
         void setEntity(Entity *entity);
         Entity *getEntity()                     { return entity; }
-        btRigidBody *getRigidBody();
+        btRigidBody *getRigidBody()             { return this->rigidBody; }
         FixationProperties *getInspectorWidget();
         static FixationProperties *getEmptyInspectorWidget();
         void setSelected(bool isSelected);

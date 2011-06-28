@@ -5,6 +5,7 @@
 #include "body/fixation.h"
 #include "brain/brainfunctional.h"
 #include <QDebug>
+#include "tools.h"
 
 namespace GeneLabCore {
 GenericFamily::GenericFamily()
@@ -50,7 +51,7 @@ Entity *GenericFamily::createViginEntity(btShapesFactory *shapesFactory,
                                                 const btVector3 &initialPosition)
 {
     Entity * entity = new Entity("no name", "no family", 0);
-    entity->setBrain(new BrainFunctional(10));
+    entity->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
 
     TreeShape *shape = new TreeShape(shapesFactory);
 

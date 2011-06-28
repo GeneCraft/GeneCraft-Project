@@ -28,7 +28,6 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <zorder>label</zorder>
     </widget>
    </item>
    <item>
@@ -942,7 +941,7 @@
                </size>
               </property>
               <property name="text">
-               <string>m_targetVelocity</string>
+               <string>Target velocity</string>
               </property>
              </widget>
             </item>
@@ -961,7 +960,7 @@
                </size>
               </property>
               <property name="text">
-               <string>m_maxMotorForce</string>
+               <string>Max motor force</string>
               </property>
              </widget>
             </item>
@@ -992,7 +991,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>m_enable</string>
+                 <string>Enable</string>
                 </property>
                </widget>
               </item>
@@ -1437,7 +1436,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pbSaveChanges">
+             <widget class="QPushButton" name="pbValidateMotorsValues">
               <property name="text">
                <string>Apply</string>
               </property>
@@ -1475,26 +1474,20 @@
        <property name="fieldGrowthPolicy">
         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
        </property>
-       <item row="4" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_14"/>
-       </item>
-       <item row="14" column="0">
-        <layout class="QGridLayout" name="gridLayout_3"/>
-       </item>
-       <item row="0" column="0" colspan="2">
+       <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Size</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Length</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
+          <item row="1" column="2">
            <widget class="QLineEdit" name="leLength">
             <property name="maximumSize">
              <size>
@@ -1504,7 +1497,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="3" column="2">
            <widget class="QLineEdit" name="leRadius">
             <property name="maximumSize">
              <size>
@@ -1514,14 +1507,14 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Radius</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="1" column="1">
            <widget class="QSlider" name="sLength">
             <property name="minimum">
              <number>1</number>
@@ -1540,7 +1533,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QSlider" name="sRadius">
             <property name="minimum">
              <number>1</number>
@@ -1559,7 +1552,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="4" column="2">
            <widget class="QPushButton" name="pbApplySize">
             <property name="minimumSize">
              <size>
@@ -1578,7 +1571,7 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="4" column="0">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -1595,6 +1588,38 @@
            </spacer>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+       </item>
+       <item row="14" column="0">
+        <layout class="QGridLayout" name="gridLayout_3"/>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Actions</string>
+         </property>
+         <widget class="QPushButton" name="pbDeleteBone">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>81</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Delete</string>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>

@@ -78,23 +78,38 @@ namespace GeneLabCore {
     }
 
 
+    // Sensors links
     void Entity::addLinkToSensor(Sensor *sensor) {
         sensors.append(sensor);
-        // Connexion de l'input au plug grid !
+
+        // Inputs connections to grid
         for(int i = 0; i < sensor->getInputs().size(); i++) {
-            // little cheat
+            // little cheat TODO ???
             for(int j = sensor->getInputs()[i]->getConnexions().size(); j < 2; j++) {
-                sensor->getInputs()[i]->connectTo(qrand()%brain->getPlugGrid()->getSize(),
-                                                  qrand()%brain->getPlugGrid()->getSize(), ((float)qrand())/RAND_MAX*2 -1);
+                sensor->getInputs()[i]->connectTo(((float)qrand())/RAND_MAX,        //  0.0 to 1.0
+                                                  ((float)qrand())/RAND_MAX,        //  0.0 to 1.0
+                                                  ((float)qrand())/RAND_MAX*2 -1);  // -1.0 to 1.0
             }
             brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
         }
     }
 
+    void Entity::removeLinksToSensor(Sensor *sensor) {
+
+        sensors.removeAll(sensor);
+
+        // Inputs connections to grid
+        for(int i = 0; i < sensor->getInputs().size(); i++) {
+            sensor->getInputs()[i]->disconnectTotally();
+            brain->getPlugGrid()->disconnectInput(sensor->getInputs()[i]);
+        }
+    }
+
     // Modifiers links
-    void Entity::addLinkToModifier(Modifier *modifier) {
-        modifiers.append(modifier);
-        // Connexion de l'output au cerveau
+    void Entity::addLinkToEffector(Effector *modifier) {
+        effectors.append(modifier);
+
+        // Outputs connections to grid
         for(int i = 0; i < modifier->getOutputs().size(); i++) {
             if(modifier->getOutputs()[i]->getConnexionInfo() == "") {
                 QString randomFunc = brain->createRandomFunc(5);
@@ -103,6 +118,15 @@ namespace GeneLabCore {
 
             brain->addOut(modifier->getOutputs()[i]);
         }
+    }
+
+    void Entity::addBrainOut(BrainOut *brainOut)
+    {
+        brain->addOut(brainOut);
+    }
+
+    void Entity::removeBrainOut(BrainOut *brainOut) {
+        brain->removeOut(brainOut);
     }
 
     void Entity::setRessource(Ressource* r) {

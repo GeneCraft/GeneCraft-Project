@@ -62,38 +62,6 @@
        <string>Bones</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Length</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="leAddBoneLenght">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>2.0</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="2">
         <widget class="QLabel" name="label_2">
          <property name="text">
@@ -149,10 +117,50 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" rowspan="3" colspan="5">
+       <item row="2" column="0" rowspan="4" colspan="6">
         <widget class="QListWidget" name="lwBones"/>
        </item>
-       <item row="1" column="5" colspan="2">
+       <item row="3" column="6">
+        <widget class="QPushButton" name="pbSelectBone">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Select</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../ressources/ressources.qrc">
+           <normaloff>:/img/icons/bone</normaloff>:/img/icons/bone</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <widget class="QPushButton" name="pbRemoveBone">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Delete</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../ressources/ressources.qrc">
+           <normaloff>:/img/icons/bone_delete</normaloff>:/img/icons/bone_delete</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
         <widget class="QPushButton" name="pbAddBone">
          <property name="minimumSize">
           <size>
@@ -169,35 +177,35 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="5" colspan="2">
-        <widget class="QPushButton" name="pbRemoveBone">
-         <property name="enabled">
-          <bool>true</bool>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="leAddBoneLenght">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>40</height>
+           <width>50</width>
+           <height>0</height>
           </size>
          </property>
          <property name="text">
-          <string>Delete</string>
+          <string>2.0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
-       <item row="2" column="5" colspan="2">
-        <widget class="QPushButton" name="pbSelectBone">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>40</height>
-          </size>
-         </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Select</string>
+          <string>Length</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
@@ -217,7 +225,7 @@
          <property name="minimumSize">
           <size>
            <width>240</width>
-           <height>40</height>
+           <height>32</height>
           </size>
          </property>
          <item>
@@ -237,8 +245,8 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="0" rowspan="2">
-        <widget class="QListWidget" name="listSensors">
+       <item row="1" column="0" rowspan="3">
+        <widget class="QListWidget" name="lwSensors">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
            <horstretch>0</horstretch>
@@ -247,7 +255,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item row="1" column="2" colspan="2">
         <widget class="QPushButton" name="pbAddSensor">
          <property name="minimumSize">
           <size>
@@ -264,10 +272,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2" rowspan="3">
-        <widget class="QPushButton" name="pushButton">
+       <item row="2" column="2" colspan="2">
+        <widget class="QPushButton" name="pbDeleteSensor">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimumSize">
           <size>
@@ -277,6 +285,10 @@
          </property>
          <property name="text">
           <string>Delete</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../ressources/ressources.qrc">
+           <normaloff>:/img/icons/sensor_delete</normaloff>:/img/icons/sensor_delete</iconset>
          </property>
         </widget>
        </item>

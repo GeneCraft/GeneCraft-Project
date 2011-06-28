@@ -67,8 +67,8 @@ void EntitiesEngine::afterStep()
 {
     foreach(Entity* e, entities) {
         // step modifiers
-        QList<Modifier *> modifiers = e->getModifiers();
-        foreach(Modifier* m, modifiers)
+        QList<Effector *> modifiers = e->getEffectors();
+        foreach(Effector* m, modifiers)
             m->step();
     }
 }

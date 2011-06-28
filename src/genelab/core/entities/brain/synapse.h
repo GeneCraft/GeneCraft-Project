@@ -8,7 +8,7 @@
 namespace GeneLabCore {
 
     typedef struct NeuralConnexion {
-        NeuralConnexion(int x, int y, float weight) {
+        NeuralConnexion(float x, float y, float weight) {
             this->x = x;
             this->y = y;
             this->weight = weight;
@@ -21,7 +21,7 @@ namespace GeneLabCore {
             return this->x == b.x && this->y == b.y;
         }
 
-        int   x, y;   // Connexion point
+        float x, y;   // Connexion point. grid's pourcent position [0.0-1.0]
         float weight; // Weight of the connexion
 
     } NeuralConnexion;
@@ -41,17 +41,17 @@ namespace GeneLabCore {
     signals:
 
     public slots:
-        void connectTo(int x, int y, float weight = 1.0f) {
+
+        void connectTo(float x, float y, float weight = 1.0f) {
             this->connexions.append(NeuralConnexion(x, y, weight));
         }
 
-        void disconnect(int x, int y) {
-            this->connexions.removeOne(NeuralConnexion(x, y, 1));
+        void disconnectTotally() {
+            this->connexions.clear();
         }
 
     private:
         QList<NeuralConnexion> connexions;
-
 
     };
 }

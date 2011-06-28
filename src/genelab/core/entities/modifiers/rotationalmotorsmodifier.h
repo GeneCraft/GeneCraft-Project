@@ -57,19 +57,30 @@ public:
     BrainOut * boTargetVelocity;
 };
 
-class RotationalMotorsModifier : public Modifier
+class RotationalMotorsModifier : public Effector
 {
 public:
 
-    RotationalMotorsModifier(btGeneric6DofConstraint * constraint);
-    RotationalMotorsModifier(QVariant data, btGeneric6DofConstraint* ct);
+    RotationalMotorsModifier(Bone * bone, btGeneric6DofConstraint * constraint);
+    RotationalMotorsModifier(QVariant data, Bone * bone, btGeneric6DofConstraint* ct);
     ~RotationalMotorsModifier();
+
+     // used to connect to brain
+    void connectMotor(int i);
+
+    // used to disconnect from brain
+    void disconnectMotor(int i);
 
     // used to know if the motor is disabled
     bool isDisable()        { return m_isDisable; }
 
     // used to know the origins of motors actions
     int getOutPutsFrom()    { return outputsFrom; }
+
+    // used to get bone
+    Bone *getBone() { return bone; }
+
+    BrainOutMotor *getBrainOutputs(int i) { return brainOutputs[i]; }
 
     /**
      * used to get a seralised representation of effector
@@ -95,6 +106,9 @@ public slots:
     void step();
 
 private:
+
+    // bone
+    Bone *bone;
 
     // origin of motor
     btGeneric6DofConstraint * constraint;

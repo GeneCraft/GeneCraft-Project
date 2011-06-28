@@ -55,10 +55,10 @@ namespace GeneLabCore {
         // On dessine les neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                int bleu  = qMin(255., qMax(0., (-n->activation(n->getNeurons()[i + j * size])) * 255.));
-                int rouge = qMin(255., qMax(0., (n->activation(n->getNeurons()[i + j * size])) * 255.));
-                int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getNeurons()[i + j * size])) * 255.)));
-                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getNeurons()[i + j * size]) + 1) * 255/2.0f));
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i,j))) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i,j))) * 255.));
+                int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
+                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
                 this->view->scene()->addRect(width * i,
                                              width * j /*+ 70*/, width, width, p, b);
             }

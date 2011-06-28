@@ -35,33 +35,44 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(this->ui->pbSaveChanges,SIGNAL(pressed()),this,SLOT(saveChanges()));
+    // -----------------
+    // -- Connections --
+    // -----------------
+
+    // Delete
     //connect(this->ui->pbDelete,SIGNAL(pressed()),this,SLOT(deleteBone()));
-    connect(this->ui->pbApplySize,SIGNAL(pressed()),this,SLOT(changeSize()));
-    //connect(this->ui->pbRandomValues,SIGNAL(pressed()),this,SLOT(randomValues()));
-    //connect(this->ui->pbResetMotors,SIGNAL(pressed()),this,SLOT(resetMotors()));
+
+    // Rotation
+    connect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+
+    // Angular limits
+    connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
+    connect(this->ui->pbValidateAngularInputs,SIGNAL(pressed()),this,SLOT(validateAngularInputs()));
+
+    // Outputs from & Motors
     connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_Brain,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_Disable,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
+    connect(this->ui->pbValidateMotorsValues,SIGNAL(pressed()),this,SLOT(saveChanges()));
 
-    connect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-
-    connect(this->ui->dAngularLowerLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->dAngularLowerLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-
-    connect(this->ui->dAngularUpperLimitX,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->dAngularUpperLimitY,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-    connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
-
-    connect(this->ui->pbValidateAngularInputs,SIGNAL(pressed()),this,SLOT(validateAngularInputs()));
-
-
+    // Size
     connect(this->ui->sLength,SIGNAL(valueChanged(int)),this,SLOT(changeLengthFromSlider(int)));
     connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+    connect(this->ui->pbApplySize,SIGNAL(pressed()),this,SLOT(changeSize()));
 
+    // Effectors
+    connect(this->ui->cbEffectorX,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorX_stateChanged(int)));
+    connect(this->ui->cbEffectorY,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorY_stateChanged(int)));
+    connect(this->ui->cbEffectorZ,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorZ_stateChanged(int)));
+
+    // Update
     connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
 }
 
@@ -91,21 +102,19 @@ BonePropertiesController::~BonePropertiesController()
 void BonePropertiesController::changeLengthFromSlider(int value)
 {
     bone->setSize(this->ui->sRadius->value()/1000.0, value/1000.0);
-
     this->ui->leLength->setText(QString::number(value / 1000.0));
 }
 
 void BonePropertiesController::changeRadiusFromSlider(int value)
 {
     bone->setSize(value/1000.0, this->ui->sLength->value()/1000.0);
-
     this->ui->leRadius->setText(QString::number(value / 1000.0));
 }
 
 void BonePropertiesController::deleteBone()
 {
     //delete bone;
-    //bone = 0;
+    //bone = NULL;
 }
 
 void BonePropertiesController::changeSize()
@@ -115,7 +124,7 @@ void BonePropertiesController::changeSize()
 
 void BonePropertiesController::randomValues()
 {
-    if(bone != 0)
+    if(bone)
     {
         bone->setRandomMotors();
         setBone(bone);
@@ -124,7 +133,7 @@ void BonePropertiesController::randomValues()
 
 void BonePropertiesController::resetMotors()
 {
-    if(bone != 0)
+    if(bone)
     {
         bone->resetMotors();
         setBone(bone);
@@ -138,7 +147,7 @@ void BonePropertiesController::rigidBodySelectedFromFix(btRigidBody *rigidBody)
 
 void BonePropertiesController::saveChanges()
 {
-    if(bone != 0)
+    if(bone)
     {
 
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
@@ -199,7 +208,7 @@ void BonePropertiesController::setBone(Bone * bone)
 {
     this->bone = bone;
 
-    if(bone != 0)
+    if(bone)
     {
         // ANGULAR PARAMETERS
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
@@ -219,10 +228,37 @@ void BonePropertiesController::setBone(Bone * bone)
         connect(this->ui->dInitRot_Roll,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
         // MOTOR EFFECTOR
-        if(!bone->getRotationalMotorsModifier()->isDisable())
+        if(!bone->getRotationalMotorsEffector()->isDisable())
         {
-            switch(bone->getRotationalMotorsModifier()->getOutPutsFrom())
-            {
+            for(int i=0;i<3;++i) {
+
+                bool checked = bone->getRotationalMotorsEffector()->getBrainOutputs(i) != NULL;
+
+                switch(i) {
+                case 0 :
+
+                    disconnect(this->ui->cbEffectorX,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorX_stateChanged(int)));
+                    this->ui->cbEffectorX->setChecked(checked);
+                    connect(this->ui->cbEffectorX,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorX_stateChanged(int)));
+                    break;
+
+                case 1 :
+
+                    disconnect(this->ui->cbEffectorY,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorY_stateChanged(int)));
+                    this->ui->cbEffectorY->setChecked(checked);
+                    connect(this->ui->cbEffectorY,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorY_stateChanged(int)));
+                    break;
+
+                case 2 :
+
+                    disconnect(this->ui->cbEffectorZ,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorZ_stateChanged(int)));
+                    this->ui->cbEffectorZ->setChecked(checked);
+                    connect(this->ui->cbEffectorZ,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorZ_stateChanged(int)));
+                    break;
+                }
+            }
+
+            switch(bone->getRotationalMotorsEffector()->getOutPutsFrom()) {
             case 1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/ : this->ui->rbOutFrom_Brain->setChecked(true);  break;
             case 2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/: this->ui->rbOutFrom_Random->setChecked(true); break;
             case 0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/ : this->ui->rbOutFrom_NormalPosition->setChecked(true); break;
@@ -232,7 +268,7 @@ void BonePropertiesController::setBone(Bone * bone)
             this->ui->rbOutFrom_Disable->setChecked(true);
 
         // enable only for disabled outputs
-        this->ui->gbMotorsTest->setEnabled(bone->getRotationalMotorsModifier()->isDisable());
+        this->ui->gbMotorsTest->setEnabled(bone->getRotationalMotorsEffector()->isDisable());
 
         // Angular Limit Motors
         btRotationalLimitMotor *motor;
@@ -317,10 +353,9 @@ void BonePropertiesController::setBone(Bone * bone)
     }
 }
 
-
 void BonePropertiesController::validateAngularInputs()
 {
-    if(bone != 0)
+    if(bone)
     {
 
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
@@ -434,9 +469,32 @@ void BonePropertiesController::validateAngularInputs()
                         // create rotational motor if not exists
                     }
 
-
                     break;
             }
         }
     }
+}
+
+void BonePropertiesController::cbEffectorX_stateChanged(int value)
+{
+    if(value == Qt::Checked)
+        bone->connectMotor(0);
+    else
+        bone->disconnectMotor(0);
+}
+
+void BonePropertiesController::cbEffectorY_stateChanged(int value)
+{
+    if(value == Qt::Checked)
+        bone->connectMotor(1);
+    else
+        bone->disconnectMotor(1);
+}
+
+void BonePropertiesController::cbEffectorZ_stateChanged(int value)
+{
+    if(value == Qt::Checked)
+        bone->connectMotor(2);
+    else
+        bone->disconnectMotor(2);
 }

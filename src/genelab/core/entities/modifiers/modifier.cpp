@@ -2,18 +2,18 @@
 #include <QVariant>
 namespace GeneLabCore {
 
-Modifier::Modifier(QObject *parent) :
+Effector::Effector(QObject *parent) :
     QObject(parent)
 {
 
 }
 
 
-Modifier::Modifier(QVariant data) {
+Effector::Effector(QVariant data) {
     this->typeName = data.toMap()["type"].toString();
 }
 
-QVariant Modifier::serialize() {
+QVariant Effector::serialize() {
     QVariantMap data;
     data.insert("type", this->typeName);
     return data;

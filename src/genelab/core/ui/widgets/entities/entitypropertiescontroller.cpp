@@ -1,15 +1,19 @@
 #include "entitypropertiescontroller.h"
 #include "ui_entitypropertiescontroller.h"
+
+#include <QVariant>
+#include <QMetaType>
+#include <QLayout>
+
 #include "entity.h"
 #include "body/fixation.h"
 #include "body/treeshape.h"
 #include "body/bone.h"
 #include "pluggridvisualizer.h"
 #include "pluggriddesignvisualizer.h"
-#include <QVariant>
-#include <QMetaType>
-#include <QLayout>
 #include "modifiers/modifier.h"
+#include "brain/brainpluggrid.h"
+#include "modifiers/rotationalmotorsmodifier.h"
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent),
@@ -31,6 +35,12 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
 
     connect(this->ui->pbSelectFixation,SIGNAL(clicked()),this,SLOT(selectSensorFixation()));
+
+
+    connect(this->ui->cbBrainSize,SIGNAL(currentIndexChanged(QString)),this,SLOT(setBrainSize()));
+    connect(this->ui->pbClearSensors,SIGNAL(clicked()),this,SLOT(clearSensors()));
+    connect(this->ui->pbClearEffectors,SIGNAL(clicked()),this,SLOT(clearEffectors()));
+
 
 }
 
@@ -99,11 +109,36 @@ void EntityPropertiesController::resetBonesProperties()
        recurciveResetBonesProperties(entity->getShape()->getRoot());
 }
 
+// Used to clear a recurcively QTreeWidgetItem
+void clearTreeWidgetItem(QTreeWidgetItem * item)
+{
+    QTreeWidgetItem * child;
+    while(item->childCount()) {
+        child = item->child(0);
+        clearTreeWidgetItem(child);
+        item->removeChild(child);
+        delete child;
+    }
+}
+
+// Used to clear a QTreeWidget
+void clearTreeWidget(QTreeWidget * tree)
+{
+    QTreeWidgetItem * topItem;
+    while(tree->topLevelItemCount()) {
+
+        topItem = tree->topLevelItem(0);
+
+        clearTreeWidgetItem(topItem);
+        tree->removeItemWidget(topItem,0);
+
+        delete topItem;
+    }
+}
 
 void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selectedBody)
 {
     this->entity = entity;
-    ui->twBodyTree->clear();
 
     if(entity != 0)
     {
@@ -112,12 +147,22 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         ui->lFamily->setText(entity->getFamily());
         ui->lGeneration->setText(QString::number(entity->getGeneration()));
 
-        // Bones
+        // -- Bones --
+
+        // clear recucively
+        clearTreeWidget(this->ui->twBodyTree);
+
+        //  fill list
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
             setupBodyTree(entity->getShape()->getRoot(),selectedBody);
 
-        // Sensors
-        this->ui->lwSensors->clear();
+        // -- Sensors --
+
+        // clear list
+        while(this->ui->lwSensors->count())
+            delete this->ui->lwSensors->itemAt(0,0);
+
+        // fill list
         int nbrBrainIn = 0;
         foreach(Sensor *s, entity->getSensors()) {
             this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
@@ -126,16 +171,20 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         this->ui->lNbrBrainInputs->setText(QString::number(nbrBrainIn));
         this->ui->lNbrSensors->setText(QString::number(entity->getSensors().size()));
 
-        // Effectors
-        this->ui->lwEffectors->clear();
+        // -- Effectors --
+
+        // clear list
+        while(this->ui->lwEffectors->count())
+            delete this->ui->lwEffectors->itemAt(0,0);
+
+        // fill list
         int nbrBrainOut = 0;
-        foreach(Modifier *e, entity->getModifiers()) {
+        foreach(Effector *e, entity->getEffectors()) {
             this->ui->lwEffectors->addItem(new EffectorListWidgetItem(e));
             nbrBrainOut += e->getOutputs().size();
         }
         this->ui->lNbrBrainOutputs->setText(QString::number(nbrBrainOut));
-        this->ui->lNbrEffectors->setText(QString::number(entity->getModifiers().size()));
-
+        this->ui->lNbrEffectors->setText(QString::number(entity->getEffectors().size()));
 
         // Brain
         this->brainViz->setBrain(entity->getBrain());
@@ -221,4 +270,71 @@ void EntityPropertiesController::selectSensorFixation()
             emit rigidBodySelected(sensorItem->sensor->getFixation()->getRigidBody());
         }
     }
+}
+
+void EntityPropertiesController::setBrainSize()
+{
+    int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
+    entity->getBrain()->getPlugGrid()->setSize(size);
+
+    // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
+    this->brainViz->setBrain(entity->getBrain());
+    this->brainDezViz->setBrain(entity->getBrain());
+}
+
+void EntityPropertiesController::clearSensors()
+{
+    while(ui->lwSensors->count() != 0)
+    {
+        SensorListWidgetItem * sensorItem = dynamic_cast<SensorListWidgetItem*>(ui->lwSensors->itemAt(0,0));
+
+        if (sensorItem)
+        {
+            // remove the sensor in the fixation
+            sensorItem->sensor->getFixation()->removeSensor(sensorItem->sensor);
+
+            // delete sensor
+            delete sensorItem->sensor;
+
+            // delete list item
+            ui->lwSensors->removeItemWidget(sensorItem);
+            delete sensorItem;
+        }
+        else
+            break;
+
+    }
+
+    // update ui TODO emit
+    setEntity(entity);
+}
+
+
+void EntityPropertiesController::clearEffectors()
+{
+
+    EffectorListWidgetItem * effectorItem;
+    RotationalMotorsModifier * motorEffector;
+    for(int iEffectors=0; iEffectors < ui->lwEffectors->count(); ++iEffectors)
+    {
+        effectorItem = dynamic_cast<EffectorListWidgetItem*>(ui->lwEffectors->item(iEffectors));
+
+        if(effectorItem)
+        {
+            // TODO if type == RotationalMotorsEffector
+            motorEffector = dynamic_cast<RotationalMotorsModifier*>(effectorItem->effector);
+
+            if(motorEffector){
+                for(int i=0;i<3;++i)
+                    motorEffector->getBone()->disconnectMotor(i);
+            }
+            else
+                break;
+        }
+        else
+            break;
+    }
+
+    // update ui TODO emit
+    setEntity(entity);
 }

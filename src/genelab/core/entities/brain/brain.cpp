@@ -1,6 +1,7 @@
 #include "brain.h"
 #include "brainpluggrid.h"
-
+#include "tools.h"
+#include "qmath.h"
 
 namespace GeneLabCore {
     Brain::Brain(int plugGridSize, QObject *parent) :
@@ -18,5 +19,10 @@ namespace GeneLabCore {
         QVariantMap data;
         data.insert("plugGridSize", this->plugGrid->getSize());
         return data;
+    }
+
+    int Brain::randomPlugGridSize()
+    {
+        return pow(2,Tools::random(1,6));
     }
 }

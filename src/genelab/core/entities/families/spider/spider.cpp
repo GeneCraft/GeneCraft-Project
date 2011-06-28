@@ -32,7 +32,7 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     this->initialPosition = position;
     // root fixation
     Entity* ent = new Entity("Spider !", "SpiderFamily", 1);
-    ent->setBrain(new BrainFunctional(qrand()%20 + 5));
+    ent->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(initialPosition);

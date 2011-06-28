@@ -106,8 +106,20 @@ float sigmoid(float x)
             }
         }
 
-        this->trees.append(tree);
+
         this->outputs.append(out);
+    }
+
+    void BrainFunctional::removeOut(BrainOut* out)
+    {
+        int iOut = outputs.indexOf(out);
+        if(iOut != -1)
+        {
+            outputs.removeAt(iOut);
+            trees.removeAt(iOut);
+
+            // TODO delete Brain node !!!!!!!!!!!!!!!
+        }
     }
 
     void BrainFunctional::step() {
@@ -378,8 +390,8 @@ float sigmoid(float x)
         }
         else {
             func += "IN ";
-            int x = qrand()%plugGrid->getSize();
-            int y = qrand()%plugGrid->getSize();
+            float x = ((float)qrand())/RAND_MAX; //  0.0 to 1.0
+            float y = ((float)qrand())/RAND_MAX; //  0.0 to 1.0
             func += QString::number(x) + " " + QString::number(y) + ",";
         }
 
@@ -390,5 +402,4 @@ float sigmoid(float x)
         QVariantMap data = Brain::serialize().toMap();
         return data;
     }
-
 }

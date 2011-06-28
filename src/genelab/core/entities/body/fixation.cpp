@@ -29,22 +29,32 @@ namespace GeneLabCore {
     #define FIXATION_DENSITY 1.0f
     #define FIXATION_FRICTION 0.6f
 
+    // --------------------------
+    // -- DELEGATE CONSTRUCTOR --
+    // --------------------------
+
     Fixation::Fixation(btShapesFactory *shapesFactory,
                        btRigidBody* body,
                        btScalar radius,
                        btTransform localFixation,
                        Bone *parentBone) {
-        this->shapesFactory = shapesFactory;
-        this->rigidBody = body;
-        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
+        this->shapesFactory     = shapesFactory;
+        this->rigidBody         = body;
         this->localFixation.setIdentity();
-        this->localFixation = localFixation;
-        this->radius = radius;
-        airFixation = NULL;
-        this->parentBone = parentBone;
-        entity = NULL;
-        delegatedSetup = true; 
+        this->localFixation     = localFixation;
+        this->radius            = radius;
+        this->airFixation       = NULL;
+        this->parentBone        = parentBone;
+        this->entity            = NULL;
+        this->delegatedSetup    = true;
+
+        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
     }
+
+
+    // -------------------------------
+    // -- ROOT FIXATION CONSTRUCTOR --
+    // -------------------------------
 
     Fixation::Fixation(btShapesFactory *shapesFactory,
                        btScalar radius,
@@ -55,34 +65,14 @@ namespace GeneLabCore {
         this->localFixation.setIdentity();
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
-        this->rigidBody = sphere->getRigidBody();
-        this->rigidBody->setFriction(FIXATION_FRICTION);
-        delegatedSetup = false;
+        this->rigidBody     = sphere->getRigidBody();
+        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
+        delegatedSetup      = false;
     }
 
-    Fixation::~Fixation()
-    {
-        if(this->airFixation) {
-            shapesFactory->getWorld()->getBulletWorld()->removeConstraint(airFixation);
-            delete this->airFixation;
-        }
-
-        while(sensors.size()) {
-            delete sensors.at(0);
-            sensors.removeFirst();
-        }
-
-        while(bones.size()) {
-            delete bones.at(0);
-            bones.removeFirst();
-        }
-
-        if(!delegatedSetup && this->origin != 0)
-            delete this->origin;
-
-        if(!delegatedSetup)
-            delete sphere;
-    }
+    // -----------
+    // -- SETUP --
+    // -----------
 
     void Fixation::setup()
     {
@@ -104,38 +94,38 @@ namespace GeneLabCore {
             bones.at(i)->setup();
     }
 
-    btRigidBody* Fixation::getRigidBody()
-    {
-        return this->rigidBody;
-        //return this->rigidBody;
-    }
+    // ----------------
+    // -- DESTRUCTOR --
+    // ----------------
 
-    void Fixation::setSelected(bool isSelected)
+    Fixation::~Fixation()
     {
-        sphere->setSelected(isSelected);
-    }
-
-    void Fixation::fixeInTheAir()
-    {
-        // fixe root in the air
-        btTransform local; local.setIdentity();
-        btGeneric6DofConstraint *ct = new btGeneric6DofConstraint(*this->rigidBody,local,true);
-        ct->setAngularLowerLimit(btVector3(0,0,0));
-        ct->setAngularUpperLimit(btVector3(0,0,0));
-        airFixation = ct;
-
-        shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct);
-    }
-
-    void Fixation::unfixInTheAir()
-    {
-        if(airFixation != NULL)
-        {
+        if(this->airFixation) {
             shapesFactory->getWorld()->getBulletWorld()->removeConstraint(airFixation);
-            delete airFixation;
-            airFixation = NULL;
+            delete this->airFixation;
         }
+
+        while(sensors.size()) {
+            entity->removeLinksToSensor(sensors.at(0));
+            delete sensors.at(0);
+            sensors.removeFirst();
+        }
+
+        while(bones.size()) {
+            delete bones.at(0);
+            bones.removeFirst();
+        }
+
+        if(!delegatedSetup && this->origin != 0)
+            delete this->origin;
+
+        if(!delegatedSetup)
+            delete sphere;
     }
+
+    // ----------
+    // -- BONE --
+    // ----------
 
     Bone *Fixation::addBone(btScalar yAxis, btScalar zAxis,
                             btScalar boneRadius,
@@ -190,6 +180,11 @@ namespace GeneLabCore {
         return bone;
     }
 
+
+    // -------------
+    // -- SENSORS --
+    // -------------
+
     void Fixation::addSensor(Sensor * sensor)
     {
         sensors.append(sensor);
@@ -197,6 +192,18 @@ namespace GeneLabCore {
         if(entity)
             entity->addLinkToSensor(sensor);
     }
+
+    void Fixation::removeSensor(Sensor *sensor){
+
+        sensors.removeOne(sensor);
+
+        if(entity)
+            entity->removeLinksToSensor(sensor);
+    }
+
+    // ---------------
+    // -- INSPECTOR --
+    // ---------------
 
     FixationProperties *Fixation::getInspectorWidget()
     {
@@ -216,6 +223,10 @@ namespace GeneLabCore {
         return inspectorWidget;
     }
 
+    // ------------
+    // -- ENTITY --
+    // ------------
+
     void Fixation::setEntity(Entity * entity)
     {
         this->entity = entity;
@@ -223,6 +234,10 @@ namespace GeneLabCore {
         foreach(Bone *bone, bones)
             bone->setEntity(entity);
     }
+
+    // -----------
+    // -- TOOLS --
+    // -----------
 
     void Fixation::setRadius(btScalar radius)
     {
@@ -246,6 +261,37 @@ namespace GeneLabCore {
             parentBone->setEndFixationRadius(radius);
         }
     }
+
+    void Fixation::setSelected(bool isSelected)
+    {
+        sphere->setSelected(isSelected);
+    }
+
+    void Fixation::fixeInTheAir()
+    {
+        // fixe root in the air
+        btTransform local; local.setIdentity();
+        btGeneric6DofConstraint *ct = new btGeneric6DofConstraint(*this->rigidBody,local,true);
+        ct->setAngularLowerLimit(btVector3(0,0,0));
+        ct->setAngularUpperLimit(btVector3(0,0,0));
+        airFixation = ct;
+
+        shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct);
+    }
+
+    void Fixation::unfixInTheAir()
+    {
+        if(airFixation != NULL)
+        {
+            shapesFactory->getWorld()->getBulletWorld()->removeConstraint(airFixation);
+            delete airFixation;
+            airFixation = NULL;
+        }
+    }
+
+    // -------------------
+    // -- SERIALIZATION --
+    // -------------------
 
     QVariant Fixation::serialize()
     {

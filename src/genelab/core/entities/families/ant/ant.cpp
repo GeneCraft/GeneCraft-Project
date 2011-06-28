@@ -10,6 +10,7 @@
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/accelerometersensor.h"
 #include "sensors/positionsensor.h"
+#include "tools.h"
 
 namespace GeneLabCore {
 
@@ -27,7 +28,7 @@ Entity* Ant::createEntity(btShapesFactory *shapesFactory, const btVector3 &posit
     this->initialPosition = position;
 
     Entity* ent = new Entity("Ant", "AntFamily", 1);
-    ent->setBrain(new BrainFunctional(30));
+    ent->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
 
     // root fixation
     btTransform initTransform;
