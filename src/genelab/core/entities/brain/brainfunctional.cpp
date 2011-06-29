@@ -106,12 +106,14 @@ float sigmoid(float x)
             }
         }
 
-
+        this->trees.append(tree);
         this->outputs.append(out);
     }
 
     void BrainFunctional::removeOut(BrainOut* out)
     {
+        qDebug() << Q_FUNC_INFO;
+
         int iOut = outputs.indexOf(out);
         if(iOut != -1)
         {
@@ -126,7 +128,6 @@ float sigmoid(float x)
         for(int i = 0; i < trees.size(); i++) {
             this->doNode(trees[i], outputs[i]);
         }
-
     }
 
     void BrainFunctional::doNode(QList<BrainNode*> tree, BrainOut* out) {
