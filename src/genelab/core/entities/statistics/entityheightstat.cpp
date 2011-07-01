@@ -14,7 +14,15 @@ EntityHeightStat::EntityHeightStat(Entity *entity) : entity(entity)
 
 void EntityHeightStat::recurciveUpdate(Bone *b)
 {
-    btScalar y = b->getEndFixation()->getRigidBody()->getWorldTransform().getOrigin().y();
+    // Bone.rigidBody == Bone.endFixation.rigidBody (CompoundShape)
+
+    // compute local origin of the end fixation
+    btVector3 fixLocalOrigin(0,b->getLength()*0.5 + b->getEndFixation()->getRadius(),0);
+    btQuaternion boneRot = b->getRigidBody()->getWorldTransform().getRotation();
+    fixLocalOrigin.rotate(boneRot.getAxis(),boneRot.getAngle());
+
+    // Compute global origin (just Y) of the end fixation
+    btScalar y = b->getEndFixation()->getRigidBody()->getWorldTransform().getOrigin().y() + fixLocalOrigin.y();
 
     if(y < minY)
        minY = y;
