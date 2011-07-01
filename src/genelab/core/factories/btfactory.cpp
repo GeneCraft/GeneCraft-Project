@@ -40,5 +40,9 @@ QMap<QString, QWidget*> btFactory::getWidgets() {
     return widgets;
 }
 
+Engine *btFactory::getEngineByName(QString name)
+{
+    return engines.find(name).value();
+}
 
 }

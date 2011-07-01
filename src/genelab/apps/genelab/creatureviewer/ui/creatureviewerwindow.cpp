@@ -12,6 +12,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QMap>
+#include <QWhatsThis>
 #include "creatureviewerabout.h"
 
 // Entity
@@ -50,6 +51,7 @@
 #include "families/spider/spider.h"
 
 
+#include "tools.h"
 #include "world/btoworld.h"
 #include "world/btobiome.h"
 #include "world/btoscene.h"
@@ -84,7 +86,7 @@ void CreatureViewerWindow::init() {
     connect(this->ui->actionNew_creature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(this->ui->actionRemove_creature,SIGNAL(triggered()),this,SLOT(removeEntity()));
     connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
-
+    connect(this->ui->aEnterInWhatsThisMode,SIGNAL(triggered()),this,SLOT(enterInWhatsThisMode()));
 
     // --------------
     // -- Tool bar --
@@ -162,32 +164,36 @@ void CreatureViewerWindow::init() {
 
     qDebug() << "[OK]\n";
 
-    // Création du monde ---> WorldFactory
+
+    // -----------
+    // -- World --
+    // -----------
+
+    // World from program (soon from file)
     QVariantMap worldData;
     worldData.insert("name", "Earth");
 
+    // Biome
     QVariantMap biomeData;
     biomeData.insert("gravity", (float)9.81);
-
     biomeData.insert("sky", "Examples/CloudySky");
-
     biomeData.insert("aR", (float)0.8);
     biomeData.insert("aG", (float)0.8);
     biomeData.insert("aB", (float)0.8);
-
     biomeData.insert("lR", (float)0.6);
     biomeData.insert("lG", (float)0.6);
     biomeData.insert("lB", (float)0.6);
 
+    // Camera
     QVariantMap camData;
     camData.insert("cX", (float) -20);
     camData.insert("cY", (float) 10);
     camData.insert("cZ", (float) -20);
-
     camData.insert("lX", (float) 15);
     camData.insert("lY", (float) -5);
     camData.insert("lZ", (float) 15);
 
+    // Spawn areas
     QVariantList spawns;
     QVariantMap zoneSpawn;
     QVariantMap positionSpawn;
@@ -196,34 +202,58 @@ void CreatureViewerWindow::init() {
     zoneSpawn.insert("minX", (float)-60);
     zoneSpawn.insert("minY", (float)10);
     zoneSpawn.insert("minZ", (float)-60);
-
     zoneSpawn.insert("maxX", (float)60);
     zoneSpawn.insert("maxY", (float)30);
     zoneSpawn.insert("maxZ", (float)60);
-
     spawns.append(zoneSpawn);
 
     positionSpawn.insert("type", (int)Spawn::Position);
     positionSpawn.insert("x", -10);
     positionSpawn.insert("y", 15);
     positionSpawn.insert("z", -10);
-
     //spawns.append(positionSpawn);
 
+    // Static boxes
+    QVariantList staticBoxes;
+
+    for(int i=0;i<100;++i){
+
+        double sizeX = Tools::random(1.0, 10.0);
+        double sizeY = Tools::random(1.0, 10.0);
+        double sizeZ = Tools::random(1.0, 10.0);
+
+        double posX = Tools::random(-100, 100);
+        double posZ = Tools::random(-100, 100);
+
+        QVariantMap staticBox;
+        staticBox.insert("posX",posX);
+        staticBox.insert("posY",sizeY/2.0);
+        staticBox.insert("posZ",posZ);
+        staticBox.insert("eulerX",0);
+        staticBox.insert("eulerY",0);
+        staticBox.insert("eulerZ",0);
+        staticBox.insert("sizeX",sizeX);
+        staticBox.insert("sizeY",sizeY);
+        staticBox.insert("sizeZ",sizeZ);
+        staticBoxes.append(staticBox);
+    }
+
+    // Scene
     QVariantMap sceneData;
     sceneData.insert("type", "flatland");
     sceneData.insert("cam", camData);
     sceneData.insert("spawns", spawns);
+    sceneData.insert("staticBoxes", staticBoxes);
     sceneData.insert("floor", "Examples/GrassFloor");
 
-
+    // Create the world
     world = new btoWorld(factory, worldData);
     shapesFactory = new btoShapesFactory(world, btoEngine);
 
     btBiome* biome = new btoBiome(factory, biomeData);
     world->setBiome(biome);
 
-    btScene* scene = new btoScene(factory, sceneData);
+    btScene* scene = new btoScene(world, sceneData);
     world->setScene(scene);
 
     world->setup();
@@ -568,4 +598,8 @@ void CreatureViewerWindow::removeEntity()
     }
     else
         QMessageBox::warning(this, "No entity selected.", "No entity selected.");
+}
+
+void CreatureViewerWindow::enterInWhatsThisMode(){
+    QWhatsThis::enterWhatsThisMode();
 }

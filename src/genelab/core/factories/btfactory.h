@@ -13,9 +13,16 @@ class btFactory : public QObject
 public:
     explicit btFactory(QObject *parent = 0);
 
+    // To get an engine by its name
+    Engine *getEngineByName(QString name);
 
+    // To get all engines
     QMap<QString, Engine*>        getEngines();
+
+    // To get all widgets
     QMap<QString, QWidget*>       getWidgets();
+
+    // to get the shapes factory
     btShapesFactory *             getShapesFactory();
 
 signals:

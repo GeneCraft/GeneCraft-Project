@@ -11,7 +11,7 @@ class btoShapesFactory : public btShapesFactory
 public:
     btoShapesFactory(btoWorld* world, BulletOgreEngine *btoEngine);
 
-    virtual btBox *createBox(btVector3 size, const btTransform &transform);
+    virtual btBox *createBox(btVector3 size, const btTransform &transform, const btScalar density);
     virtual btSphere *createSphere(btScalar radius, const btTransform &transform);
     virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform);
     virtual btBone *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);

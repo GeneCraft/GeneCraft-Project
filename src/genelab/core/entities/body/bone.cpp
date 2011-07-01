@@ -310,4 +310,20 @@ void Bone::setEndFixationRadius(btScalar radius)
     }
 }
 
+void Bone::setToMinimalOuts(){
+
+    // Angular Limit Motors
+    btRotationalLimitMotor *motor;
+    for(int i=0;i<3;i++)
+    {
+        motor = parentCt->getRotationalLimitMotor(i);
+
+        // rigid constraint (no free degrees)
+        if(motor->m_loLimit == motor->m_hiLimit)
+        {
+            disconnectMotor(i);
+        }
+    }
+}
+
 }

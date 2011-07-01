@@ -37,6 +37,8 @@ namespace GeneLabCore {
 
         btDynamicsWorld* getBulletWorld() { return world; }
 
+        btFactory *getFactory() {return factory; }
+
         // To setup the world
         virtual void setup();
 

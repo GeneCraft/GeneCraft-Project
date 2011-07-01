@@ -43,6 +43,7 @@ public slots:
     void saveEntityToFile();
     void saveEntityToDb();
     void removeEntity();
+    void enterInWhatsThisMode();
 
     // physics
     void togglePhysics();

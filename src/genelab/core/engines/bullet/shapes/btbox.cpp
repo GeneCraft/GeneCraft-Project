@@ -6,9 +6,9 @@
 
 namespace GeneLabCore {
 
-btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform) : btShape(world)
+btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform, const btScalar density) : btShape(world)
 {
-    init(size, 5.0, transform);
+    init(size, transform, density);
 }
 
 btBox::~btBox() {
@@ -17,7 +17,7 @@ btBox::~btBox() {
     delete motionState;
 }
 
-void btBox::init(btVector3 size, btScalar density, const btTransform &transform)
+void btBox::init(btVector3 size, const btTransform &transform, const btScalar density)
 {
 //    this->size = size;
 //    this->initialPosition = position;

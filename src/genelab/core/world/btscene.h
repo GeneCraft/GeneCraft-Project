@@ -16,14 +16,14 @@ class btScene : public QObject
 {
     Q_OBJECT
 public:
-    explicit btScene(btFactory* factory, QVariant sceneData, QObject *parent = 0);
+    explicit btScene(btWorld* world, QVariant sceneData, QObject *parent = 0);
 
     virtual void setup();
 
     btVector3 getSpawnPosition();
 
-    virtual void setBulletWorld(btDynamicsWorld* world) {
-        this->world = world;
+    virtual void setBulletWorld(btDynamicsWorld* bulletWorld) {
+        this->bulletWorld = bulletWorld;
     }
 
 signals:
@@ -32,8 +32,8 @@ public slots:
 
 protected:
     QVariantMap data;
-    btDynamicsWorld* world;
-    btFactory* factory;
+    btDynamicsWorld* bulletWorld;
+    btWorld* world;
     QList<Spawn*> spawns;
 
 };

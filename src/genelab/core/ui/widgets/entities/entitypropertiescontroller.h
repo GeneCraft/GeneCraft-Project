@@ -39,6 +39,7 @@ public slots:
     void setBrainSize();
     void clearSensors();
     void clearEffectors();
+    void computeMinimalOuts();
 
 private:
 

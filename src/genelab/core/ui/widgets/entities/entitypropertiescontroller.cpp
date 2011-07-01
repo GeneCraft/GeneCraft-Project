@@ -41,6 +41,8 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     connect(this->ui->pbClearSensors,SIGNAL(clicked()),this,SLOT(clearSensors()));
     connect(this->ui->pbClearEffectors,SIGNAL(clicked()),this,SLOT(clearEffectors()));
 
+    connect(this->ui->pbMinimalOuts,SIGNAL(clicked()),this,SLOT(computeMinimalOuts()));
+
 
 }
 
@@ -146,6 +148,12 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         ui->lName->setText(entity->getName());
         ui->lFamily->setText(entity->getFamily());
         ui->lGeneration->setText(QString::number(entity->getGeneration()));
+
+        // Statistics
+        ui->lWeight->setText(QString::number(entity->getStatisitcByName("bodyWeight")));
+        ui->lRootDistance->setText(QString::number(entity->getStatisitcByName("rootDistance")));
+        ui->lHeight->setText(QString::number(entity->getStatisitcByName("bodyHeight")));
+        ui->lVelocity->setText(QString::number(entity->getStatisitcByName("rootAverageVelocity")));
 
         // -- Bones --
 
@@ -337,4 +345,13 @@ void EntityPropertiesController::clearEffectors()
 
     // update ui TODO emit
     setEntity(entity);
+}
+
+void EntityPropertiesController::computeMinimalOuts() {
+
+    if(entity){
+
+        entity->setToMinimalOuts();
+    }
+
 }

@@ -10,10 +10,10 @@
 
 namespace GeneLabCore {
 
-    btScene::btScene(btFactory* factory, QVariant sceneData, QObject *parent) :
+    btScene::btScene(btWorld* world, QVariant sceneData, QObject *parent) :
         QObject(parent)
     {
-        this->factory = factory;
+        this->world = world;
         this->data = sceneData.toMap();
         QVariantList spawnData = data["spawns"].toList();
 
@@ -37,7 +37,7 @@ namespace GeneLabCore {
 
             btRigidBody *rigidBody = new btRigidBody(groundRigidBodyCI);
             //rigidBody->setActivationState(DISABLE_DEACTIVATION);
-            world->addRigidBody(rigidBody);
+            bulletWorld->addRigidBody(rigidBody);
         }
     }
 

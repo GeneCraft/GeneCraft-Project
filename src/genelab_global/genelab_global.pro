@@ -162,7 +162,12 @@ SOURCES += \
     ../genelab/core/world/btobiome.cpp \
     ../genelab/core/world/spawn.cpp \
     ../genelab/core/factories/btofactory.cpp \
-    ../genelab/core/factories/btfactory.cpp
+    ../genelab/core/factories/btfactory.cpp \
+    ../genelab/core/entities/statistics/statistic.cpp \
+    ../genelab/core/entities/statistics/fixdistancestat.cpp \
+    ../genelab/core/entities/statistics/entityweightstat.cpp \
+    ../genelab/core/entities/statistics/entityheightstat.cpp \
+    ../genelab/core/entities/statistics/fixaveragevelocitystat.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -236,7 +241,12 @@ HEADERS += \
     ../genelab/core/world/spawn.h \
     ../genelab/core/factories/btofactory.h \
     ../genelab/core/factories/btfactory.h \
-    ../genelab/core/engines/ogre/entities/ogrefreecamera.h
+    ../genelab/core/engines/ogre/entities/ogrefreecamera.h \
+    ../genelab/core/entities/statistics/statistic.h \
+    ../genelab/core/entities/statistics/fixdistancestat.h \
+    ../genelab/core/entities/statistics/entityweightstat.h \
+    ../genelab/core/entities/statistics/entityheightstat.h \
+    ../genelab/core/entities/statistics/fixaveragevelocitystat.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

@@ -19,10 +19,13 @@ EntitiesEngine::EntitiesEngine()
 void EntitiesEngine::beforeStep()
 {
     foreach(Entity* e, entities) {
+
         // step sensors
-        QList<Sensor *> sensors = e->getSensors();
-        foreach(Sensor *s, sensors)
+        foreach(Sensor *s, e->getSensors())
             s->step();
+
+        // step statistics
+        e->updadeStatistics();
     }
 }
 

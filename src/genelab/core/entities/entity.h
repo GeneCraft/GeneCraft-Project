@@ -38,10 +38,16 @@ namespace GeneLabCore {
         void removeBrainOut(BrainOut *brainOut);
         QList<Effector *> &getEffectors() { return effectors;  }
 
-
         // Brain
         void setBrain(BrainFunctional* brain) { this->brain = brain; }
         Brain *getBrain() { return brain; }
+
+        /**
+         * compute de minimal outs
+         *
+         * if a constraint is rigid (no free degrees), we can unplug outputs...
+         */
+        void setToMinimalOuts();
 
         // Qt Render
         static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
@@ -53,6 +59,11 @@ namespace GeneLabCore {
         // Set ressource
         void setRessource(Ressource* r);
         Ressource* getRessource() { return r; }
+
+        // Statistics
+        void updadeStatistics();
+        float getStatisitcByName(QString statisticName);
+        void updateStatisticByName(QString statisticName);
 
     signals:
 
@@ -75,8 +86,15 @@ namespace GeneLabCore {
         BrainFunctional *brain;
         Ressource* r;
 
+        // Statistics
+        QMap<QString, Statistic *> stats;
+
         // Qt Render
         static EntityPropertiesController *inspectorWidget;
+
+    private:
+
+        void setToMinimalOuts(Bone *bone);
 
     };
 }

@@ -12,7 +12,7 @@ class btoScene : public btScene
 {
     Q_OBJECT
 public:
-    explicit btoScene(btoFactory* factory, QVariant sceneData, QObject *parent = 0);
+    explicit btoScene(btoWorld* world, QVariant sceneData, QObject *parent = 0);
 
     virtual void setup();
 signals:

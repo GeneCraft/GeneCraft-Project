@@ -100,7 +100,7 @@ void CreatureViewerInputManager::throwCube()
     e->setup();
 */
     if(this->world) {
-        btoBox *box = new btoBox(world, btoEngine,btVector3(1,1,1),transform);
+        btoBox *box = new btoBox(world, btoEngine,btVector3(1,1,1),transform, 800.0);
         box->setup();
 
         // apply impulse from the center of the box in direction of the camera

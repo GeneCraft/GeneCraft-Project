@@ -67,6 +67,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout_CreatureViewer"/>
+    <addaction name="aEnterInWhatsThisMode"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -124,7 +125,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
   </widget>
   <action name="actionSave_selected_creature">
@@ -243,6 +244,15 @@
    </property>
    <property name="text">
     <string>Remove creature</string>
+   </property>
+  </action>
+  <action name="aEnterInWhatsThisMode">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/help</normaloff>:/img/icons/help</iconset>
+   </property>
+   <property name="text">
+    <string>Enter in What's this mode</string>
    </property>
   </action>
  </widget>

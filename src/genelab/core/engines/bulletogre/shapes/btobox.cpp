@@ -11,8 +11,8 @@ using namespace Ogre;
 
 int btoBox::mNumEntitiesInstanced = 0;
 
-btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, const btTransform &transform)
-    : btBox(world, size, transform)
+btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, const btTransform &transform, const btScalar density)
+    : btBox(world, size, transform, density)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();
