@@ -167,7 +167,8 @@ SOURCES += \
     ../genelab/core/entities/statistics/fixdistancestat.cpp \
     ../genelab/core/entities/statistics/entityweightstat.cpp \
     ../genelab/core/entities/statistics/entityheightstat.cpp \
-    ../genelab/core/entities/statistics/fixaveragevelocitystat.cpp
+    ../genelab/core/entities/statistics/fixaveragevelocitystat.cpp \
+    ../genelab/core/entities/statistics/entitytotalbonesstat.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -246,7 +247,8 @@ HEADERS += \
     ../genelab/core/entities/statistics/fixdistancestat.h \
     ../genelab/core/entities/statistics/entityweightstat.h \
     ../genelab/core/entities/statistics/entityheightstat.h \
-    ../genelab/core/entities/statistics/fixaveragevelocitystat.h
+    ../genelab/core/entities/statistics/fixaveragevelocitystat.h \
+    ../genelab/core/entities/statistics/entitytotalbonesstat.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

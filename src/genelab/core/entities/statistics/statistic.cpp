@@ -2,7 +2,7 @@
 
 namespace GeneLabCore{
 
-Statistic::Statistic() : value(0.0)
+Statistic::Statistic() : value(0.0), updateEachStep(false)
 {
 }
 

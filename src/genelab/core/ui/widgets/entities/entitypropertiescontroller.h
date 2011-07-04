@@ -5,6 +5,7 @@
 #include "bodyitems.h"
 #include "genelabcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
+#include <QTimer>
 
 namespace Ui {
     class EntityPropertiesController;
@@ -40,6 +41,7 @@ public slots:
     void clearSensors();
     void clearEffectors();
     void computeMinimalOuts();
+    void updateStats();
 
 private:
 
@@ -51,6 +53,8 @@ private:
     void setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem = 0);
 
     Entity *entity;
+
+    QTimer *statsTimer;
 
 };
 

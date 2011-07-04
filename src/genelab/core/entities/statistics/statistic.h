@@ -10,10 +10,12 @@ public:
 
     virtual void update() = 0;
     float getValue() { return value; }
+    bool wantToBeUpdatedEachStep() { return updateEachStep; }
 
 protected:
 
     float value;
+    bool updateEachStep;
 };
 
 }

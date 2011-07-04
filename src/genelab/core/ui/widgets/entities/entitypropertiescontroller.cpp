@@ -16,8 +16,7 @@
 #include "modifiers/rotationalmotorsmodifier.h"
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::EntityPropertiesController)
+    QWidget(parent), ui(new Ui::EntityPropertiesController), entity(NULL)
 {
 
     ui->setupUi(this);
@@ -37,13 +36,18 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     connect(this->ui->pbSelectFixation,SIGNAL(clicked()),this,SLOT(selectSensorFixation()));
 
 
-    connect(this->ui->cbBrainSize,SIGNAL(currentIndexChanged(QString)),this,SLOT(setBrainSize()));
+    //connect(this->ui->cbBrainSize,SIGNAL(currentIndexChanged(QString)),this,SLOT(setBrainSize()));
+    connect(this->ui->sBrainPluggridSize,SIGNAL(valueChanged(int)),this,SLOT(setBrainSize()));
+
     connect(this->ui->pbClearSensors,SIGNAL(clicked()),this,SLOT(clearSensors()));
     connect(this->ui->pbClearEffectors,SIGNAL(clicked()),this,SLOT(clearEffectors()));
 
     connect(this->ui->pbMinimalOuts,SIGNAL(clicked()),this,SLOT(computeMinimalOuts()));
 
-
+    statsTimer = new QTimer();
+    statsTimer->setInterval(1000/5); // by ms
+    connect(statsTimer, SIGNAL(timeout()), this, SLOT(updateStats()));
+    statsTimer->start();
 }
 
 EntityPropertiesController::~EntityPropertiesController()
@@ -80,7 +84,7 @@ void setupBonesProperties(Fixation *fixation, int action)
 
 void EntityPropertiesController::setOutFrom()
 {
-    if(entity != 0 && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
+    if(entity && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
     {
         if(ui->rbOutFrom_Random->isChecked())
             setupBonesProperties(entity->getShape()->getRoot(),2);
@@ -107,7 +111,7 @@ void recurciveResetBonesProperties(Fixation *fixation)
 
 void EntityPropertiesController::resetBonesProperties()
 {
-    if(entity != 0 && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
+    if(entity && entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
        recurciveResetBonesProperties(entity->getShape()->getRoot());
 }
 
@@ -142,7 +146,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
 {
     this->entity = entity;
 
-    if(entity != 0)
+    if(entity)
     {
         // Origins
         ui->lName->setText(entity->getName());
@@ -154,6 +158,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         ui->lRootDistance->setText(QString::number(entity->getStatisitcByName("rootDistance")));
         ui->lHeight->setText(QString::number(entity->getStatisitcByName("bodyHeight")));
         ui->lVelocity->setText(QString::number(entity->getStatisitcByName("rootAverageVelocity")));
+        ui->lBodyBones->setText(QString::number(entity->getStatisitcByName("bodyTotalBones")));
 
         // -- Bones --
 
@@ -195,6 +200,8 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         this->ui->lNbrEffectors->setText(QString::number(entity->getEffectors().size()));
 
         // Brain
+        ui->sBrainPluggridSize->setValue(entity->getBrain()->getPlugGrid()->getSize());
+        ui->lBrainPluggridSize->setText(QString::number(entity->getBrain()->getPlugGrid()->getSize()));
         this->brainViz->setBrain(entity->getBrain());
         this->brainDezViz->setBrain(entity->getBrain());
     }
@@ -282,7 +289,9 @@ void EntityPropertiesController::selectSensorFixation()
 
 void EntityPropertiesController::setBrainSize()
 {
-    int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
+    //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
+    int size = ui->sBrainPluggridSize->value();
+    ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));
     entity->getBrain()->getPlugGrid()->setSize(size);
 
     // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
@@ -354,4 +363,15 @@ void EntityPropertiesController::computeMinimalOuts() {
         entity->setToMinimalOuts();
     }
 
+}
+
+void EntityPropertiesController::updateStats(){
+
+    if(entity){
+        ui->lWeight->setText(QString::number(entity->getStatisitcByName("bodyWeight")));
+        ui->lRootDistance->setText(QString::number(entity->getStatisitcByName("rootDistance")));
+        ui->lHeight->setText(QString::number(entity->getStatisitcByName("bodyHeight")));
+        ui->lVelocity->setText(QString::number(entity->getStatisitcByName("rootAverageVelocity")));
+        ui->lBodyBones->setText(QString::number(entity->getStatisitcByName("bodyTotalBones")));
+    }
 }

@@ -10,6 +10,8 @@ namespace GeneLabCore{
 EntityWeightStat::EntityWeightStat(Entity *entity) : entity(entity)
 {
     update();
+
+    updateEachStep = true;
 }
 
 void EntityWeightStat::recurciveUpdate(Bone *b)

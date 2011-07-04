@@ -7,6 +7,7 @@ namespace GeneLabCore{
 FixDistanceStat::FixDistanceStat(Fixation *fix) : fix(fix)
 {
     previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
+    updateEachStep = true;
 }
 
 void FixDistanceStat::update()

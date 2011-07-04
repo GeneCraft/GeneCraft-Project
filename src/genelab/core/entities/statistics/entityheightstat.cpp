@@ -10,6 +10,8 @@ namespace GeneLabCore{
 EntityHeightStat::EntityHeightStat(Entity *entity) : entity(entity)
 {
     update();
+
+    updateEachStep = true;
 }
 
 void EntityHeightStat::recurciveUpdate(Bone *b)

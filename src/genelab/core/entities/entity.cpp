@@ -17,6 +17,7 @@
 #include "statistics/entityweightstat.h"
 #include "statistics/entityheightstat.h"
 #include "statistics/fixaveragevelocitystat.h"
+#include "statistics/entitytotalbonesstat.h"
 
 namespace GeneLabCore {
 
@@ -38,6 +39,7 @@ void Entity::setup() {
         this->stats.insert("bodyWeight", new EntityWeightStat(this));
         this->stats.insert("bodyHeight", new EntityHeightStat(this));
         this->stats.insert("rootAverageVelocity", new FixAverageVelocityStat(treeShape->getRoot()));
+        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
     }
 }
 
@@ -162,7 +164,8 @@ void Entity::setToMinimalOuts()
 void Entity::updadeStatistics(){
 
     foreach(Statistic * s, stats)
-        s->update();
+        if(s->wantToBeUpdatedEachStep())
+            s->update();
 }
 
 float Entity::getStatisitcByName(QString statisticName)
