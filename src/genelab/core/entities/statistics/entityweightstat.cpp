@@ -11,7 +11,9 @@ EntityWeightStat::EntityWeightStat(Entity *entity) : entity(entity)
 {
     update();
 
-    updateEachStep = true;
+    // Optimization : Only update when the value is needed
+    updateWhenValueIsRequested = true;
+    updateEachStep = false;
 }
 
 void EntityWeightStat::recurciveUpdate(Bone *b)

@@ -17,8 +17,8 @@
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/accelerometersensor.h"
 
-// Effector
-#include "modifiers/rotationalmotorsmodifier.h"
+// Effectors
+#include "effectors/rotationalmotorseffector.h"
 
 
 float roundPrecision(float n, int precision = 2)

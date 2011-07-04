@@ -38,7 +38,7 @@ public:
    void setEntity(Entity *entity);
 
    // motors
-   inline RotationalMotorsModifier *getRotationalMotorsEffector() { return motorsEffector; }
+   inline RotationalMotorsEffector *getRotationalMotorsEffector() { return motorsEffector; }
    inline void setMotorModifierData(QVariant data)         { this->motorModifierData = data; }
 
    // inspector
@@ -88,7 +88,7 @@ protected:
    Fixation *endFix;         // Owner
 
    // Modifier
-   RotationalMotorsModifier *motorsEffector; // Owner
+   RotationalMotorsEffector *motorsEffector; // Owner
 
    // Contraints
    btGeneric6DofConstraint *parentCt; // Owner

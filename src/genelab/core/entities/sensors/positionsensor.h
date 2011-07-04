@@ -7,7 +7,7 @@
 namespace GeneLabCore {
 
 /**
- * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
  *
  * This sensor allows entities to know a distance between two fixations. Normally the
  * first fixation is the root fixation of the entity.
@@ -17,18 +17,25 @@ namespace GeneLabCore {
  * a different position in the world.
  *
  * @version 1.0 | May 2011
- * @author Aurelien Da Campo & Cyprien Huissoud
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
  */
 class PositionSensor : public Sensor
 {
 public:
 
+    // To create
     PositionSensor(Fixation * rootFix, Fixation * fixation);
+
+    // To create from serialization data
     PositionSensor(QVariant data, Fixation* rootFix, Fixation* fixation);
+
+    // To serialize
     virtual QVariant serialize();
 
 public slots:
 
+    // To update brain inputs values
     void step();
 
 private:

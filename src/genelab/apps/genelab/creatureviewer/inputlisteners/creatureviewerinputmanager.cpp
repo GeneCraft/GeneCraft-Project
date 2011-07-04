@@ -1,6 +1,6 @@
 #include "creatureviewerinputmanager.h"
 
-#include "families/spider/spider.h"
+#include "families/spiderfamily.h"
 #include "btoshapesfactory.h"
 #include "entity.h"
 #include "body/treeshape.h"

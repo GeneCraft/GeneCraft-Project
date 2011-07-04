@@ -11,9 +11,9 @@
 #include "body/bone.h"
 #include "pluggridvisualizer.h"
 #include "pluggriddesignvisualizer.h"
-#include "modifiers/modifier.h"
+#include "effectors/effector.h"
 #include "brain/brainpluggrid.h"
-#include "modifiers/rotationalmotorsmodifier.h"
+#include "effectors/rotationalmotorseffector.h"
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::EntityPropertiesController), entity(NULL)
@@ -331,7 +331,7 @@ void EntityPropertiesController::clearEffectors()
 {
 
     EffectorListWidgetItem * effectorItem;
-    RotationalMotorsModifier * motorEffector;
+    RotationalMotorsEffector * motorEffector;
     for(int iEffectors=0; iEffectors < ui->lwEffectors->count(); ++iEffectors)
     {
         effectorItem = dynamic_cast<EffectorListWidgetItem*>(ui->lwEffectors->item(iEffectors));
@@ -339,7 +339,7 @@ void EntityPropertiesController::clearEffectors()
         if(effectorItem)
         {
             // TODO if type == RotationalMotorsEffector
-            motorEffector = dynamic_cast<RotationalMotorsModifier*>(effectorItem->effector);
+            motorEffector = dynamic_cast<RotationalMotorsEffector*>(effectorItem->effector);
 
             if(motorEffector){
                 for(int i=0;i<3;++i)

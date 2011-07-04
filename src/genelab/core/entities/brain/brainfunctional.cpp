@@ -52,6 +52,7 @@ float sigmoid(float x)
         QString treeData = out->getConnexionInfo().toString();
         QList<BrainNode*> tree = QList<BrainNode*>();
         QStringList nodes = treeData.split(",", QString::SkipEmptyParts);
+
         for(int i = 0; i < nodes.length(); i++) {
             QString node = nodes[i];
             QStringList nodePart = node.split(" ", QString::SkipEmptyParts);
@@ -63,7 +64,7 @@ float sigmoid(float x)
             case DIVIDE:
             case ATAN:
             // 2 operands + decisions
-            case THRESOLD:
+            case THRESOLD: // --------> THRESHOLD ;)
             case GT:
             // 3 operands
             case IFELSE:

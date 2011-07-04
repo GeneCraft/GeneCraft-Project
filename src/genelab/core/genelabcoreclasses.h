@@ -79,7 +79,7 @@ namespace GeneLabCore {
 
     // Modifier
     class Effector;
-    class RotationalMotorsModifier;
+    class RotationalMotorsEffector;
 
     // Statistics
     class Statistic;

@@ -8,7 +8,7 @@
 // Entity
 #include "entity.h"
 #include "body/fixation.h"
-#include "modifiers/rotationalmotorsmodifier.h"
+#include "effectors/rotationalmotorseffector.h"
 
 // Engine
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
@@ -94,9 +94,9 @@ void Bone::setup()
 
         // add motor modifier
         if(motorModifierData != QVariant(0))
-            motorsEffector = new RotationalMotorsModifier(motorModifierData, this, parentCt);
+            motorsEffector = new RotationalMotorsEffector(motorModifierData, this, parentCt);
         else
-            motorsEffector = new RotationalMotorsModifier(this, parentCt);
+            motorsEffector = new RotationalMotorsEffector(this, parentCt);
 
         if(entity)
            entity->addLinkToEffector(motorsEffector);

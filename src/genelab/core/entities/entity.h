@@ -7,96 +7,108 @@
 #include "brain/brainfunctional.h"
 
 namespace GeneLabCore {
-    class Entity : public QObject
-    {
-        Q_OBJECT
 
-    public:
+/**
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+ *
+ * Entities represent the "living" organisms simulate in GeneCraft.
+ *
+ * Entities are manage by the entitiesEngine.
+ *
+ * @version 1.0 | May 2011
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
+ */
+class Entity : public QObject
+{
+    Q_OBJECT
 
-        Entity(QString name, QString family, int generation, QObject *parent = 0);
+public:
 
-        ~Entity();
+    Entity(QString name, QString family, int generation, QObject *parent = 0);
 
-        // Origins
-        const QString &getName() { return name; }
-        const QString &getFamily() { return family; }
-        int getGeneration() { return generation; }
+    ~Entity();
 
-        // Shape
-        TreeShape* getShape();
-        void setShape(TreeShape* shape);
+    // Origins
+    const QString &getName() { return name; }
+    const QString &getFamily() { return family; }
+    int getGeneration() { return generation; }
 
-        // Sensors links
-        void addLinkToSensor(Sensor *sensor);
-        void removeLinksToSensor(Sensor *sensor);
-        QList<Sensor *> &getSensors() { return sensors;  }
+    // Shape
+    TreeShape* getShape();
+    void setShape(TreeShape* shape);
 
-        // Effectors links
-        void addLinkToEffector(Effector *effector);
-        //void removeLinksToEffector(Effector *effector);
-        void addBrainOut(BrainOut *brainOut);
-        void removeBrainOut(BrainOut *brainOut);
-        QList<Effector *> &getEffectors() { return effectors;  }
+    // Sensors links
+    void addLinkToSensor(Sensor *sensor);
+    void removeLinksToSensor(Sensor *sensor);
+    QList<Sensor *> &getSensors() { return sensors;  }
 
-        // Brain
-        void setBrain(BrainFunctional* brain) { this->brain = brain; }
-        Brain *getBrain() { return brain; }
+    // Effectors links
+    void addLinkToEffector(Effector *effector);
+    //void removeLinksToEffector(Effector *effector);
+    void addBrainOut(BrainOut *brainOut);
+    void removeBrainOut(BrainOut *brainOut);
+    QList<Effector *> &getEffectors() { return effectors;  }
 
-        /**
-         * compute de minimal outs
-         *
-         * if a constraint is rigid (no free degrees), we can unplug outputs...
-         */
-        void setToMinimalOuts();
+    // Brain
+    void setBrain(BrainFunctional* brain) { this->brain = brain; }
+    Brain *getBrain() { return brain; }
 
-        // Qt Render
-        static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
+    /**
+     * compute de minimal outs
+     *
+     * if a constraint is rigid (no free degrees), we can unplug outputs...
+     */
+    void setToMinimalOuts();
 
-        // serialisation
-        QVariant serialize();
-        QVariant serializeOrigins();
+    // Qt Render
+    static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
-        // Set ressource
-        void setRessource(Ressource* r);
-        Ressource* getRessource() { return r; }
+    // serialisation
+    QVariant serialize();
+    QVariant serializeOrigins();
 
-        // Statistics
-        void updadeStatistics();
-        float getStatisitcByName(QString statisticName);
-        void updateStatisticByName(QString statisticName);
+    // Set ressource
+    void setRessource(Ressource* r);
+    Ressource* getRessource() { return r; }
 
-    signals:
+    // Statistics
+    void updadeStatistics();
+    float getStatisitcByName(QString statisticName);
+    void updateStatisticByName(QString statisticName);
 
-    public slots:
-        virtual void setup();
+signals:
 
-    protected:
+public slots:
+    virtual void setup();
 
-        // Origins
-        QString name;
-        QString family;
-        int generation;
+protected:
 
-        // Shape
-        TreeShape* treeShape;
+    // Origins
+    QString name;
+    QString family;
+    int generation;
 
-        // Brain
-        QList<Sensor *> sensors;
-        QList<Effector *> effectors;
-        BrainFunctional *brain;
-        Ressource* r;
+    // Shape
+    TreeShape* treeShape;
 
-        // Statistics
-        QMap<QString, Statistic *> stats;
+    // Brain
+    QList<Sensor *> sensors;
+    QList<Effector *> effectors;
+    BrainFunctional *brain;
+    Ressource* r;
 
-        // Qt Render
-        static EntityPropertiesController *inspectorWidget;
+    // Statistics
+    QMap<QString, Statistic *> stats;
 
-    private:
+    // Qt Render
+    static EntityPropertiesController *inspectorWidget;
 
-        void setToMinimalOuts(Bone *bone);
+private:
 
-    };
+    void setToMinimalOuts(Bone *bone);
+
+};
 }
 
 #endif // ENTITY_H

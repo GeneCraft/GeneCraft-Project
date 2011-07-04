@@ -9,7 +9,8 @@ namespace GeneLabCore {
     }
 
     int Tools::random(int min, int max) {
-        return (int)((max - min) * rand()/(float) RAND_MAX + min);
+        //return (int)((max - min) * rand()/(float) RAND_MAX + min);
+        return min+int((max-min+1)*rand()/(RAND_MAX+1.0));
     }
 
     float Tools::random(float min, float max) {

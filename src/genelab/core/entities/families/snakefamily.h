@@ -6,26 +6,40 @@
 #include "entity.h"
 
 namespace GeneLabCore {
-    class SnakeFamily : EntityFamily
-    {
-        Q_OBJECT
-    public:
-        explicit SnakeFamily(QVariant data, QObject *parent = 0);
 
-        Entity* createEntity(btShapesFactory*);
+/**
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+ *
+ * Snake Family
+ *
+ * @version 1.0 | May 2011
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
+ */
+class SnakeFamily : EntityFamily
+{
+    Q_OBJECT
 
+public:
 
-        QVariant serialize();
-        void load(QVariant data);
+    // To create a random snake family
+    explicit SnakeFamily(QObject *parent = 0);
 
-    signals:
+    // To create the family from serialization data
+    SnakeFamily(QVariant data, QObject *parent = 0);
 
-    public slots:
+    // To create an entity of this family
+    Entity* createEntity(btShapesFactory* factory, const btVector3 &position);
 
-    private:
-        int length;
-        float pieceLength;
+    // To serialize family
+    QVariant serialize();
+    void load(QVariant data);
 
-    };
+private:
+    int length;
+    btScalar pieceLength;
+    btScalar pieceRadius;
+
+};
 }
 #endif // SNAKEBUILDER_H

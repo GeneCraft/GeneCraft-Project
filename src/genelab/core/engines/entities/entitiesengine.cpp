@@ -6,7 +6,7 @@
 #include "brain/brain.h"
 #include "brain/brainpluggrid.h"
 #include "sensors/sensor.h"
-#include "modifiers/modifier.h"
+#include "effectors/effector.h"
 
 #include "widgets/entities/pluggriddesignvisualizer.h"
 #include "widgets/entities/pluggridvisualizer.h"

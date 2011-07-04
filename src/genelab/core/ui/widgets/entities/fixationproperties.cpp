@@ -127,29 +127,20 @@ void FixationProperties::addSensor()
     case 0 : // Egocentric position sensor
 
         if(fixation->getEntity())
-        {
-            qDebug() << "BonePropertiesController::addSensor : Egocentric position sensor";
             sensor = new PositionSensor(fixation->getEntity()->getShape()->getRoot(),fixation);
-        }
         break;
 
     case 1 : // Gyroscopic sensor
 
         if(fixation->getEntity())
-        {
-            qDebug() << "BonePropertiesController::addSensor : Gyroscopic sensor";
             sensor = new GyroscopicSensor(fixation);
-        }
         break;
 
     case 2 : // Accelerometer sensor
 
         if(fixation->getEntity())
-        {
-            qDebug() << "BonePropertiesController::addSensor : Accelerometer sensor";
             // TODO get step time from sulation manager !!!
-            sensor = new AccelerometerSensor(1000/60.0,fixation);
-        }
+            sensor = new AccelerometerSensor(fixation);
         break;
     }
 

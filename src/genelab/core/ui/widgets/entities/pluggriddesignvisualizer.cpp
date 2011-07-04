@@ -5,7 +5,7 @@
 #include "brain/brainin.h"
 #include "brain/synapse.h"
 #include "sensors/sensor.h"
-#include "modifiers/modifier.h"
+#include "effectors/effector.h"
 #include <QLayout>
 #include <QBoxLayout>
 #include <QGraphicsItem>

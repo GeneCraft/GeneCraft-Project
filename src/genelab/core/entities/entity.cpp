@@ -8,7 +8,7 @@
 #include "brain/brainpluggrid.h"
 #include "brain/brainout.h"
 #include "sensors/sensor.h"
-#include "modifiers/modifier.h"
+#include "effectors/effector.h"
 
 #include "ressources/ressource.h"
 #include "body/bone.h"

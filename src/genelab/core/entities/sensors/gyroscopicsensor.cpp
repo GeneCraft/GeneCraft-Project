@@ -7,11 +7,11 @@
 
 namespace GeneLabCore {
 
-GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation)
-{
+GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
     typeName = "Gyroscopic sensor";
     type = gyroscopic;
 
+    // value beetween -PI..PI
     inputYaw = new BrainIn(-M_PI, M_PI);
     inputPitch = new BrainIn(-M_PI,M_PI);
     inputRoll = new BrainIn(-M_PI,M_PI);
@@ -35,17 +35,14 @@ GyroscopicSensor::GyroscopicSensor(QVariant data, Fixation* fixation) : Sensor(d
 
 QVariant GyroscopicSensor::serialize() {
     QVariantMap data = Sensor::serialize().toMap();
-
     data.insert("inputYaw", inputYaw->serialize());
     data.insert("inputPitch", inputPitch->serialize());
     data.insert("inputRoll", inputRoll->serialize());
 
     return data;
-
 }
 
-void GyroscopicSensor::step()
-{
+void GyroscopicSensor::step(){
     btScalar yaw, pitch, roll;
     fixation->getRigidBody()->getWorldTransform().getBasis().getEulerZYX(yaw, pitch, roll);
 

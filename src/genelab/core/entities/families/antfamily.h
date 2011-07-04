@@ -1,5 +1,5 @@
-#ifndef ANT_H
-#define ANT_H
+#ifndef ANTFAMILY_H
+#define ANTFAMILY_H
 
 #include "genelabcoreclasses.h"
 #include "LinearMath/btTransform.h"
@@ -7,28 +7,43 @@
 
 namespace GeneLabCore {
 
-class Ant : public EntityFamily
+/**
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+ *
+ * Ant Family
+ *
+ * @version 1.0 | May 2011
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
+ */
+class AntFamily : public EntityFamily
 {
     Q_OBJECT
 
 public:
-    Ant();
 
+    // To create a random ant family
+    AntFamily();
+
+    // To create an entity of this family
     virtual Entity* createEntity(btShapesFactory *shapesFactory,
                                  const btVector3 &position);
 
+    // To serialize the family
     virtual QVariant serialize();
 
 protected:
 
-    btVector3 initialPosition;
     btShapesFactory *shapesFactory;
 
-    int nbLegs;
-    int nbBoneInLeg;
+    // characteristics of the family
+    int nbBonesInLeg;
     btScalar legRadius;
     btScalar legLenght;
     btScalar kneeRadius;
+    btScalar headRadius;
+    btScalar trunkRadius;
+    btScalar metasomaRadius;
 
 private:
 
@@ -37,4 +52,4 @@ private:
 };
 }
 
-#endif // ANT_H
+#endif // ANTFAMILY_H

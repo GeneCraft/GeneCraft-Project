@@ -129,7 +129,6 @@ SOURCES += \
     ../genelab/core/engines/bulletogre/shapes/btocylinder.cpp \
     ../genelab/core/factories/btshapesfactory.cpp \
     ../genelab/core/factories/btoshapesfactory.cpp \
-    ../genelab/core/entities/families/spider/spider.cpp \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.cpp \
     ../genelab/core/engines/bullet/shapes/btbone.cpp \
@@ -147,11 +146,8 @@ SOURCES += \
     ../genelab/core/engines/entities/entitiesengine.cpp \
     ../genelab/core/entities/sensors/gyroscopicsensor.cpp \
     ../genelab/core/entities/sensors/accelerometersensor.cpp \
-    ../genelab/core/entities/modifiers/modifier.cpp \
-    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.cpp \
     ../genelab/core/factories/ressources/jsonfile.cpp \
     ../genelab/core/factories/ressources/dbrecord.cpp \
-    ../genelab/core/entities/families/ant/ant.cpp \
     ../genelab/core/entities/families/genericfamily.cpp \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp \
     ../genelab/core/world/btworld.cpp \
@@ -168,7 +164,11 @@ SOURCES += \
     ../genelab/core/entities/statistics/entityweightstat.cpp \
     ../genelab/core/entities/statistics/entityheightstat.cpp \
     ../genelab/core/entities/statistics/fixaveragevelocitystat.cpp \
-    ../genelab/core/entities/statistics/entitytotalbonesstat.cpp
+    ../genelab/core/entities/statistics/entitytotalbonesstat.cpp \
+    ../genelab/core/entities/effectors/effector.cpp \
+    ../genelab/core/entities/effectors/rotationalmotorseffector.cpp \
+    ../genelab/core/entities/families/spiderfamily.cpp \
+    ../genelab/core/entities/families/antfamily.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -207,7 +207,6 @@ HEADERS += \
     ../genelab/core/engines/bulletogre/shapes/btocylinder.h \
     ../genelab/core/factories/btshapesfactory.h \
     ../genelab/core/factories/btoshapesfactory.h \
-    ../genelab/core/entities/families/spider/spider.h \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h \
     ../genelab/core/engines/bullet/shapes/btbone.h \
@@ -225,11 +224,8 @@ HEADERS += \
     ../genelab/core/engines/entities/entitiesengine.h \
     ../genelab/core/entities/sensors/gyroscopicsensor.h \
     ../genelab/core/entities/sensors/accelerometersensor.h \
-    ../genelab/core/entities/modifiers/modifier.h \
-    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.h \
     ../genelab/core/factories/ressources/jsonfile.h \
     ../genelab/core/factories/ressources/dbrecord.h \
-    ../genelab/core/entities/families/ant/ant.h \
     ../genelab/core/entities/families/genericfamily.h \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h \
     ../genelab/core/ui/widgets/entities/bodyitems.h \
@@ -248,7 +244,11 @@ HEADERS += \
     ../genelab/core/entities/statistics/entityweightstat.h \
     ../genelab/core/entities/statistics/entityheightstat.h \
     ../genelab/core/entities/statistics/fixaveragevelocitystat.h \
-    ../genelab/core/entities/statistics/entitytotalbonesstat.h
+    ../genelab/core/entities/statistics/entitytotalbonesstat.h \
+    ../genelab/core/entities/effectors/effector.h \
+    ../genelab/core/entities/effectors/rotationalmotorseffector.h \
+    ../genelab/core/entities/families/spiderfamily.h \
+    ../genelab/core/entities/families/antfamily.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

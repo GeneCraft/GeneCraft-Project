@@ -6,6 +6,17 @@
 
 namespace GeneLabCore{
 
+/**
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+ *
+ * Statistics used to know the number of bones of an entity.
+ *
+ * Unit : bones
+ *
+ * @version 1.0 | July 2011
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
+ */
 class EntityTotalBonesStat : public Statistic
 {
 public:

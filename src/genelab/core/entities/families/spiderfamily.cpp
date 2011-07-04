@@ -1,5 +1,5 @@
 #include <QDebug>
-#include "spider.h"
+#include "spiderfamily.h"
 #include "btshapesfactory.h"
 #include "body/fixation.h"
 #include "body/bone.h"
@@ -16,7 +16,7 @@
 
 namespace GeneLabCore {
 
-Spider::Spider() :
+SpiderFamily::SpiderFamily() :
     EntityFamily()
 {
     nbLegs      = 4;
@@ -27,21 +27,20 @@ Spider::Spider() :
     headRadius  = ((float)qrand())/RAND_MAX * 1 + legRadius*nbLegs/1.5;
 }
 
-Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
+Entity* SpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
     this->shapesFactory = shapesFactory;
-    this->initialPosition = position;
     // root fixation
     Entity* ent = new Entity("Spider !", "SpiderFamily", 1);
     ent->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
     btTransform initTransform;
     initTransform.setIdentity();
-    initTransform.setOrigin(initialPosition);
+    initTransform.setOrigin(position);
     TreeShape* shape = new TreeShape(shapesFactory);
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(headRadius),initTransform);
     shape->setRoot(rootFix);
     ent->setShape(shape);
     rootFix->addSensor(new GyroscopicSensor(rootFix));
-    rootFix->addSensor(new AccelerometerSensor(1000/60., rootFix));
+    rootFix->addSensor(new AccelerometerSensor(rootFix));
     // legs
     btQuaternion legLocal;
     btQuaternion legLocal2;
@@ -62,7 +61,7 @@ Entity* Spider::createEntity(btShapesFactory *shapesFactory, const btVector3 &po
     return ent;
 }
 
-void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVector3 &lowerLimits, const btVector3 &upperLimits)
+void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btVector3 &lowerLimits, const btVector3 &upperLimits)
 {
     Bone *rootBone = fixBody->addBone(yAxis, zAxis,
                                       btScalar(legRadius),
@@ -86,7 +85,7 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
                                                        lowerLimits,
                                                        upperLimits);
 
-        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(1000/60., rootBone->getEndFixation()));
+        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
 
         //rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
 
@@ -106,7 +105,7 @@ void Spider::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const btV
     }
 }
 
-QVariant Spider::serialize() {
+QVariant SpiderFamily::serialize() {
     return QVariant();
 }
 

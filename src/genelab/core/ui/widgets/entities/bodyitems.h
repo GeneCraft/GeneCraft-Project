@@ -6,7 +6,7 @@
 
 #include "genelabcoreclasses.h"
 #include "sensors/sensor.h"
-#include "modifiers/modifier.h"
+#include "effectors/effector.h"
 
 namespace GeneLabCore{
 

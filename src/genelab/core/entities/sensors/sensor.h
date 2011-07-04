@@ -12,40 +12,52 @@ namespace GeneLabCore {
 enum SensorType { gyroscopic, accelerometer, position };
 
 /**
- * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
  *
  * A sensor is attached to a fixation and contrains a collection of brain inputs.
- * Its step method is used to update the value of their brain inputs.
+ * Its step method is used to update the value of their brain inputs. *
  *
  * @version 1.0 | May 2011
- * @author Aurelien Da Campo & Cyprien Huissoud
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
  */
 class Sensor : public QObject
 {
     Q_OBJECT
 
 public:
+
+    // To create a sensor
     explicit Sensor(Fixation * fixation, QObject *parent = 0);
+
+    // To create a sensor from serialization data
+    Sensor(QVariant data, Fixation* fixation);
+
+    // To delete the sensor
     ~Sensor() {
-        foreach(BrainIn* i, this->brainInputs) {
+
+        // delete all brain inputs
+        foreach(BrainIn* i, this->brainInputs)
             delete i;
-        }
     }
 
-    Sensor(QVariant data, Fixation* fixation);
+    // To serialize
     virtual QVariant serialize();
 
+    // To get the type name
     const QString &getTypeName() { return typeName; }
+
+    // To get brain inputs
     const QList<BrainIn *> getInputs() { return brainInputs; }
+
+    // To get the fixation where the sensor is attached
     inline Fixation *getFixation() { return fixation; }
 
 signals:
 
 public slots:
 
-    /**
-     * Used to update brain inputs values.
-     */
+    // To update brain inputs values
     virtual void step() = 0;
 
 protected:

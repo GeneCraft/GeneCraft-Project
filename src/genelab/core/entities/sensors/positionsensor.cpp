@@ -6,19 +6,20 @@
 #include <QVariant>
 
 namespace GeneLabCore {
-PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(fixation)
-{
+PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(fixation) {
     this->rootFix = rootFix;
 
     typeName = "Egocentric position sensor";
     type = position;
 
-    // WARNING : max size of an entity is 200 in this case ! FIXME
-    // 200 c'est grand de toute façon :D
-    // Je dirais plutot 20 !
-    inputX = new BrainIn(-5.0, 5.0);
-    inputY = new BrainIn(-5.0, 5.0);
-    inputZ = new BrainIn(-5.0, 5.0);
+    // FIXME : max size of an entity is 10 in this case !
+    // The best would be to pass the entity for computing its biggest member (root to end fix)
+    float minDistanceBetweenRootFixAndThisFix = -5.0;
+    float maxDistanceBetweenRootFixAndThisFix = 5.0;
+
+    inputX = new BrainIn(minDistanceBetweenRootFixAndThisFix, maxDistanceBetweenRootFixAndThisFix);
+    inputY = new BrainIn(minDistanceBetweenRootFixAndThisFix, maxDistanceBetweenRootFixAndThisFix);
+    inputZ = new BrainIn(minDistanceBetweenRootFixAndThisFix, maxDistanceBetweenRootFixAndThisFix);
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
@@ -44,11 +45,9 @@ QVariant PositionSensor::serialize() {
     data.insert("inputZ", inputZ->serialize());
 
     return data;
-
 }
 
-void PositionSensor::step()
-{
+void PositionSensor::step() {
     btTransform inverseRootTransform = rootFix->getRigidBody()->getWorldTransform().inverse();
     btVector3 distance = inverseRootTransform(fixation->getRigidBody()->getWorldTransform().getOrigin());
 

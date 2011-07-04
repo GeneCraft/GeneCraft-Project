@@ -10,6 +10,7 @@ FixAverageVelocityStat::FixAverageVelocityStat(Fixation *fix) : fix(fix)
     totalDistance = .0f;
     previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
     updateEachStep = true;
+    updateWhenValueIsRequested = false;
 }
 
 void FixAverageVelocityStat::update()

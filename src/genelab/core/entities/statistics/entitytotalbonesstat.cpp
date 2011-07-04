@@ -11,6 +11,7 @@ EntityTotalBonesStat::EntityTotalBonesStat(Entity *entity) : entity(entity)
 {
     update();
     updateEachStep = false;
+    updateWhenValueIsRequested = true;
 }
 
 void EntityTotalBonesStat::recurciveUpdate(Bone *b)

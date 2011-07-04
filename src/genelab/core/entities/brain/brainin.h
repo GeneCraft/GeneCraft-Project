@@ -17,6 +17,10 @@ namespace GeneLabCore {
         BrainIn(QVariant data);
         QVariant serialize();
 
+        void setMin(float min) { this->min = min; }
+        void setMax(float max) { this->max = max; }
+        void setMinMax(float min, float max) { this->min = min; this->max = max; }
+
     signals:
 
     public slots:
@@ -24,7 +28,7 @@ namespace GeneLabCore {
           * Set the normalized value, will be normalized between min and max.
           */
         virtual void setValue(float value) {
-            // Normalisation
+            // Normalization (projection in range -1..1)
             this->value = (value - min) / (max - min) * 2.0f - 1.0f;
         }
 

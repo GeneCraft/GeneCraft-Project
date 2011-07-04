@@ -6,14 +6,17 @@
 #include <QVariant>
 
 namespace GeneLabCore {
-AccelerometerSensor::AccelerometerSensor(long stepTime, Fixation *fixation) : Sensor(fixation), stepTime(stepTime)
+AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
 {
     typeName = "Accelerometer sensor";
     type = accelerometer;
 
-    inputX = new BrainIn(-10.0,10.0);
-    inputY = new BrainIn(-10.0,10.0);
-    inputZ = new BrainIn(-10.0,10.0);
+    const float minAcceleration = -1.0;
+    const float maxAcceleration = 1.0;
+
+    inputX = new BrainIn(minAcceleration,maxAcceleration);
+    inputY = new BrainIn(minAcceleration,maxAcceleration);
+    inputZ = new BrainIn(minAcceleration,maxAcceleration);
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
@@ -22,11 +25,13 @@ AccelerometerSensor::AccelerometerSensor(long stepTime, Fixation *fixation) : Se
     // initial position and speed
     oldPosition = fixation->getRigidBody()->getWorldTransform().getOrigin();
     oldSpeed    = btVector3(0,0,0);
+
+    tmpMinAcc = tmpMaxAcc = 0;
 }
 
 AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation) {
 
-    this->stepTime = data.toMap()["step"].toInt();
+    //this->stepTime = data.toMap()["step"].toInt();
 
     inputX = new BrainIn(data.toMap()["inputX"]);
     inputY = new BrainIn(data.toMap()["inputY"]);
@@ -39,6 +44,8 @@ AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : S
     // initial position and speed
     oldPosition = fixation->getRigidBody()->getWorldTransform().getOrigin();
     oldSpeed    = btVector3(0,0,0);
+
+    tmpMinAcc = tmpMaxAcc = 0;
 }
 
 QVariant AccelerometerSensor::serialize() {
@@ -48,18 +55,18 @@ QVariant AccelerometerSensor::serialize() {
     data.insert("inputY", inputY->serialize());
     data.insert("inputZ", inputZ->serialize());
 
-    data.insert("step", (int)stepTime);
-
     return data;
 }
 
 void AccelerometerSensor::step()
 {
     btVector3 position = fixation->getRigidBody()->getWorldTransform().getOrigin();
-    btVector3 speed = (position - oldPosition) * stepTime;
+    btVector3 speed = (position - oldPosition);// * stepTime;
     btVector3 acceleration = speed - oldSpeed;
 
-    float factor  = 0.05;
+    // float factor  = 0.05;
+    float factor  = 1.;
+
     /*)
     factor = 0.1
     value = new_value*factor + old_value*(1 - factor)
@@ -69,10 +76,26 @@ void AccelerometerSensor::step()
     oldPosition.setY( oldPosition.getY()*(1-factor) + position.getY()*factor);
     oldPosition.setZ( oldPosition.getZ()*(1-factor) + position.getZ()*factor);
 
-
     oldSpeed.setX( oldSpeed.getX()*(1-factor) + speed.getX()*factor);
     oldSpeed.setY( oldSpeed.getY()*(1-factor) + speed.getY()*factor);
     oldSpeed.setZ( oldSpeed.getZ()*(1-factor) + speed.getZ()*factor);
+
+
+    if(acceleration.x() < tmpMinAcc)
+        tmpMinAcc = acceleration.x();
+//    if(acceleration.y() < tmpMinAcc)
+//        tmpMinAcc = acceleration.y();
+    if(acceleration.z() < tmpMinAcc)
+        tmpMinAcc = acceleration.z();
+
+    if(acceleration.x() > tmpMaxAcc)
+        tmpMaxAcc = acceleration.x();
+//    if(acceleration.y() > tmpMaxAcc)
+//        tmpMaxAcc = acceleration.y();
+    if(acceleration.z() > tmpMaxAcc)
+        tmpMaxAcc = acceleration.z();
+
+    //qDebug() << tmpMinAcc << tmpMaxAcc;
 
     inputX->setValue(acceleration.x());
     inputY->setValue(acceleration.y());

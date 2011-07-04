@@ -1,5 +1,5 @@
-#ifndef SPIDER_H
-#define SPIDER_H
+#ifndef SPIDERFAMILY_H
+#define SPIDERFAMILY_H
 
 #include "genelabcoreclasses.h"
 #include "LinearMath/btTransform.h"
@@ -7,22 +7,35 @@
 
 namespace GeneLabCore {
 
-class Spider : public EntityFamily
+/**
+ * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+ *
+ * Spider Family
+ *
+ * @version 1.0 | May 2011
+ * @author Aurelien Da Campo
+ * @author Cyprien Huissoud
+ */
+class SpiderFamily : public EntityFamily
 {
     Q_OBJECT
 
 public:
 
-    Spider();
+    // To create a random spider family
+    SpiderFamily();
+
+    // To create an entity of this family
     virtual Entity* createEntity(btShapesFactory *shapesFactory,
                                  const btVector3 &position);
-
+    // To serialize the family
     virtual QVariant serialize();
+
 protected:
 
-    btVector3 initialPosition;
     btShapesFactory *shapesFactory;
 
+    // characteristics of the family
     int nbLegs;
     int nbBoneInLeg;
     btScalar legRadius;
@@ -38,4 +51,4 @@ private:
 
 }
 
-#endif // SPIDER_H
+#endif // SPIDERFAMILY_H

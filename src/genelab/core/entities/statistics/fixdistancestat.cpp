@@ -8,6 +8,7 @@ FixDistanceStat::FixDistanceStat(Fixation *fix) : fix(fix)
 {
     previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
     updateEachStep = true;
+    updateWhenValueIsRequested = false;
 }
 
 void FixDistanceStat::update()

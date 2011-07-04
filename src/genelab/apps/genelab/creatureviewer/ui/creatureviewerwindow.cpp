@@ -48,7 +48,9 @@
 #include "ressources/jsonfile.h"
 #include "ressources/dbrecord.h"
 
-#include "families/spider/spider.h"
+#include "families/spiderfamily.h"
+#include "families/snakefamily.h"
+#include "families/antfamily.h"
 
 
 #include "tools.h"
@@ -274,6 +276,7 @@ void CreatureViewerWindow::init() {
 
     // Spider
     qDebug() << "Spider creation !";
+
     qDebug() << time(NULL);
     srand(time(NULL));
     qsrand(time(NULL));
@@ -283,19 +286,11 @@ void CreatureViewerWindow::init() {
         b += a;
     }
     qDebug() << b;
-    Entity* e;
-    for(int i = 0; i < 5; i++) {
-            Spider *spider = new Spider();
-            btVector3 pos = world->getSpawnPosition();
-            e = spider->createEntity(shapesFactory, pos);
-            qDebug() << "spider setup !";
-            e->setup();
-            ee->addEntity(e);
-            ents.append(e);
-    }
+
+    spawnNew();
 
     entitySpawner = new QTimer();
-    entitySpawner->setInterval(10000);
+    entitySpawner->setInterval(60000);
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
@@ -367,22 +362,49 @@ void CreatureViewerWindow::saveEntityToDb() {
 }
 
 void CreatureViewerWindow::spawnNew() {
+
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
+
+    // Clear entities
+    while(ents.size() != 0){
+        Entity * old = ents.takeFirst();
+        entitiesEngine->removeEntity(old);
+        delete old;
+    }
+
+    Entity *e;
     for(int i = 0; i < 10; i++) {
-    Spider *spider = new Spider();
-    btVector3 pos = world->getSpawnPosition();
-    Entity* e = spider->createEntity(shapesFactory, pos);
-    qDebug() << "spider setup !";
-    e->setup();
 
-    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-    entitiesEngine->addEntity(e);
+        e = NULL;
+        int enttype = Tools::random(0,2);
 
-    ents.append(e);
-    Entity * old = ents.takeFirst();
+        btVector3 pos = world->getSpawnPosition();
 
-    entitiesEngine->removeEntity(old);
+        switch(enttype)
+        {
 
-    delete old;
+        case 0 :{
+            SpiderFamily *spider = new SpiderFamily();
+            e = spider->createEntity(shapesFactory, pos);
+            break;
+        }
+        case 1 : {
+            SnakeFamily *snakeFamily = new SnakeFamily();
+            e = snakeFamily->createEntity(shapesFactory, pos);
+            break;
+        }
+        case 2 : {
+            AntFamily *antFamily = new AntFamily();
+            e = antFamily->createEntity(shapesFactory, pos);
+            break;
+        }
+        }
+
+        if(e){
+            e->setup();
+            entitiesEngine->addEntity(e);
+            ents.append(e);
+        }
     }
 }
 
