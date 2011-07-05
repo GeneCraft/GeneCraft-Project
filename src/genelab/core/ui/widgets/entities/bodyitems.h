@@ -3,10 +3,12 @@
 
 #include <QTreeWidgetItem>
 #include <QListWidgetItem>
+#include <QTableWidgetItem>
 
 #include "genelabcoreclasses.h"
 #include "sensors/sensor.h"
 #include "effectors/effector.h"
+#include "statistics/statistic.h"
 
 namespace GeneLabCore{
 
@@ -45,6 +47,24 @@ public:
     }
 
     Bone *bone;
+};
+
+class StatisticTreeWidgetItem : public QTreeWidgetItem
+{
+public:
+    StatisticTreeWidgetItem(Statistic * stat) {
+        this->stat = stat;
+        setText(0,stat->getName());
+        setText(2,stat->getUnit());
+        update();
+        //this->setIcon(0,QIcon(":/img/icons/bone_and_fixation"));
+    }
+
+    void update() {
+        setText(1,QString::number(stat->getValue()));
+    }
+
+    Statistic *stat;
 };
 
 

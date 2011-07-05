@@ -1,4 +1,4 @@
-#include "entitytotalbonesstat.h"
+#include "entitytotalboneslengthstat.h"
 
 #include "entity.h"
 #include "body/treeshape.h"
@@ -7,27 +7,27 @@
 
 namespace GeneLabCore{
 
-EntityTotalBonesStat::EntityTotalBonesStat(Entity *entity) : entity(entity)
+EntityTotalBonesLengthStat::EntityTotalBonesLengthStat(Entity *entity) : entity(entity)
 {
     // Info
-    name = "Body total bones";
-    unit = "bone(s)";
+    name = "Body total bones length";
+    unit = "m";
 
     updateEachStep = false;
     updateWhenValueIsRequested = true;
 }
 
-void EntityTotalBonesStat::recurciveUpdate(Bone *b)
+void EntityTotalBonesLengthStat::recurciveUpdate(Bone *b)
 {
-    value += b->getEndFixation()->getBones().size();
+    value += b->getLength();
 
     foreach (Bone *b, b->getEndFixation()->getBones())
         recurciveUpdate(b);
 }
 
-void EntityTotalBonesStat::update()
+void EntityTotalBonesLengthStat::update()
 {
-    value = entity->getShape()->getRoot()->getBones().size();
+    value = 0;
 
     foreach (Bone *b, entity->getShape()->getRoot()->getBones())
         recurciveUpdate(b);

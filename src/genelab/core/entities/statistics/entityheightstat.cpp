@@ -9,9 +9,15 @@ namespace GeneLabCore{
 
 EntityHeightStat::EntityHeightStat(Entity *entity) : entity(entity)
 {
-    update();
+    // Info
+    name = "Body height";
+    unit = "m";
 
     updateEachStep = true;
+    updateWhenValueIsRequested = false;
+
+    // First update
+    update();
 }
 
 void EntityHeightStat::recurciveUpdate(Bone *b)

@@ -92,7 +92,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>0.1, June 2011</string>
+    <string>0.2, July 2011</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -127,7 +127,7 @@
     <string notr="true">color: rgb(81, 119, 145);</string>
    </property>
    <property name="text">
-    <string>GeneLab</string>
+    <string>GeneCraft</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">

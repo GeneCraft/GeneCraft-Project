@@ -25,6 +25,9 @@ public:
     FixAverageVelocityStat(Fixation * fix);
     void update();
 
+    // To reset average
+    void reset() { totalDistance = 0.0; nbSteps = 0;}
+
 protected:
 
     float totalDistance;

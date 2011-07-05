@@ -74,8 +74,9 @@ public:
 
     // Statistics
     void updadeStatistics();
-    float getStatisitcByName(QString statisticName);
+    float getStatisticByName(QString statisticName);
     void updateStatisticByName(QString statisticName);
+    QMap<QString, Statistic *> getStatistics() { return stats; }
 
 signals:
 

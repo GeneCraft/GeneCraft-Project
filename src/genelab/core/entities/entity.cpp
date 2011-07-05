@@ -12,12 +12,16 @@
 
 #include "ressources/ressource.h"
 #include "body/bone.h"
+
+// Statistics
 #include "statistics/statistic.h"
 #include "statistics/fixdistancestat.h"
 #include "statistics/entityweightstat.h"
 #include "statistics/entityheightstat.h"
 #include "statistics/fixaveragevelocitystat.h"
 #include "statistics/entitytotalbonesstat.h"
+#include "statistics/fixdistancefromoriginstat.h"
+#include "statistics/entitytotalboneslengthstat.h"
 
 namespace GeneLabCore {
 
@@ -35,11 +39,26 @@ void Entity::setup() {
 
     if(treeShape) {
         this->treeShape->setup();
-        this->stats.insert("rootDistance", new FixDistanceStat(treeShape->getRoot()));
+        Statistic *s;
+
+        // Body
+        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
+        this->stats.insert("bodyTotalBonesLength", new EntityTotalBonesLengthStat(this));
         this->stats.insert("bodyWeight", new EntityWeightStat(this));
         this->stats.insert("bodyHeight", new EntityHeightStat(this));
-        this->stats.insert("rootAverageVelocity", new FixAverageVelocityStat(treeShape->getRoot()));
-        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
+
+        // Root
+        s = new FixDistanceStat(treeShape->getRoot());
+        s->setName("Root distance traveled");
+        this->stats.insert("rootDistance", s);
+
+        s = new FixAverageVelocityStat(treeShape->getRoot());
+        s->setName("Root average velocity");
+        this->stats.insert("rootAverageVelocity", s);
+
+        s = new FixDistanceFromOriginStat(treeShape->getRoot());
+        s->setName("Root distance from origin");
+        this->stats.insert("rootDistanceFromOrigin", s);
     }
 }
 
@@ -168,7 +187,7 @@ void Entity::updadeStatistics(){
             s->update();
 }
 
-float Entity::getStatisitcByName(QString statisticName)
+float Entity::getStatisticByName(QString statisticName)
 {
     if(stats.contains(statisticName))
         return stats.value(statisticName)->getValue();

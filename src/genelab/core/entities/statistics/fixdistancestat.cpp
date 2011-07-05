@@ -6,6 +6,10 @@ namespace GeneLabCore{
 
 FixDistanceStat::FixDistanceStat(Fixation *fix) : fix(fix)
 {
+    // Info
+    name = "Fixation distance traveled";
+    unit = "m";
+
     previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
     updateEachStep = true;
     updateWhenValueIsRequested = false;

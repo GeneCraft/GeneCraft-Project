@@ -168,7 +168,9 @@ SOURCES += \
     ../genelab/core/entities/effectors/effector.cpp \
     ../genelab/core/entities/effectors/rotationalmotorseffector.cpp \
     ../genelab/core/entities/families/spiderfamily.cpp \
-    ../genelab/core/entities/families/antfamily.cpp
+    ../genelab/core/entities/families/antfamily.cpp \
+    ../genelab/core/entities/statistics/fixdistancefromoriginstat.cpp \
+    ../genelab/core/entities/statistics/entitytotalboneslengthstat.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -248,7 +250,9 @@ HEADERS += \
     ../genelab/core/entities/effectors/effector.h \
     ../genelab/core/entities/effectors/rotationalmotorseffector.h \
     ../genelab/core/entities/families/spiderfamily.h \
-    ../genelab/core/entities/families/antfamily.h
+    ../genelab/core/entities/families/antfamily.h \
+    ../genelab/core/entities/statistics/fixdistancefromoriginstat.h \
+    ../genelab/core/entities/statistics/entitytotalboneslengthstat.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

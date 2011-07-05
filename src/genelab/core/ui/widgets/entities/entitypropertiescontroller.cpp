@@ -18,32 +18,41 @@
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::EntityPropertiesController), entity(NULL)
 {
-
     ui->setupUi(this);
-    QLayout* layoutBrain = new QBoxLayout(QBoxLayout::TopToBottom);
-    this->ui->tabBrain->setLayout(layoutBrain);
 
-    QLayout* layoutBrainD = new QBoxLayout(QBoxLayout::TopToBottom);
-    this->ui->tabBrainStruct->setLayout(layoutBrainD);
-
+    // Bones
     connect(ui->twBodyTree,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(itemClicked(QTreeWidgetItem *,int)));
 
+    // Motors outputs
     connect(this->ui->rbOutFrom_Random,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_Brain,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_Disable,SIGNAL(clicked()),this,SLOT(setOutFrom()));
     connect(this->ui->rbOutFrom_NormalPosition,SIGNAL(clicked()),this,SLOT(setOutFrom()));
 
-    connect(this->ui->pbSelectFixation,SIGNAL(clicked()),this,SLOT(selectSensorFixation()));
-
-
-    //connect(this->ui->cbBrainSize,SIGNAL(currentIndexChanged(QString)),this,SLOT(setBrainSize()));
+    // Brain
     connect(this->ui->sBrainPluggridSize,SIGNAL(valueChanged(int)),this,SLOT(setBrainSize()));
+    QLayout* layoutBrain = new QBoxLayout(QBoxLayout::TopToBottom);
+    this->ui->tabBrain->setLayout(layoutBrain);
+    QLayout* layoutBrainD = new QBoxLayout(QBoxLayout::TopToBottom);
+    this->ui->tabBrainStruct->setLayout(layoutBrainD);
 
+    // Sensors
+    connect(this->ui->pbSelectFixation,SIGNAL(clicked()),this,SLOT(selectSensorFixation()));
     connect(this->ui->pbClearSensors,SIGNAL(clicked()),this,SLOT(clearSensors()));
-    connect(this->ui->pbClearEffectors,SIGNAL(clicked()),this,SLOT(clearEffectors()));
 
+    // Effectors
+    connect(this->ui->pbClearEffectors,SIGNAL(clicked()),this,SLOT(clearEffectors()));
     connect(this->ui->pbMinimalOuts,SIGNAL(clicked()),this,SLOT(computeMinimalOuts()));
 
+    // Statistics headers
+    connect(this->ui->pbResetAllStats,SIGNAL(clicked()),this,SLOT(resetAllStats()));
+    connect(this->ui->pbResetSelectedStat,SIGNAL(clicked()),this,SLOT(resetSelectedStat()));
+
+    ui->twStats->setColumnWidth(0,200);
+    ui->twStats->setColumnWidth(1,70);
+    ui->twStats->setColumnWidth(2,60);
+
+    // Statistics refresh timer
     statsTimer = new QTimer();
     statsTimer->setInterval(1000/5); // by ms
     connect(statsTimer, SIGNAL(timeout()), this, SLOT(updateStats()));
@@ -154,11 +163,14 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         ui->lGeneration->setText(QString::number(entity->getGeneration()));
 
         // Statistics
-        ui->lWeight->setText(QString::number(entity->getStatisitcByName("bodyWeight")));
-        ui->lRootDistance->setText(QString::number(entity->getStatisitcByName("rootDistance")));
-        ui->lHeight->setText(QString::number(entity->getStatisitcByName("bodyHeight")));
-        ui->lVelocity->setText(QString::number(entity->getStatisitcByName("rootAverageVelocity")));
-        ui->lBodyBones->setText(QString::number(entity->getStatisitcByName("bodyTotalBones")));
+        clearTreeWidget(ui->twStats);
+        QMapIterator<QString, Statistic *> iStats(entity->getStatistics());
+        iStats.toBack();
+        while (iStats.hasPrevious()) {
+            Statistic * stat = iStats.previous().value();
+            ui->twStats->insertTopLevelItem(0,new StatisticTreeWidgetItem(stat));
+        }
+        updateStats();
 
         // -- Bones --
 
@@ -368,10 +380,23 @@ void EntityPropertiesController::computeMinimalOuts() {
 void EntityPropertiesController::updateStats(){
 
     if(entity){
-        ui->lWeight->setText(QString::number(entity->getStatisitcByName("bodyWeight")));
-        ui->lRootDistance->setText(QString::number(entity->getStatisitcByName("rootDistance")));
-        ui->lHeight->setText(QString::number(entity->getStatisitcByName("bodyHeight")));
-        ui->lVelocity->setText(QString::number(entity->getStatisitcByName("rootAverageVelocity")));
-        ui->lBodyBones->setText(QString::number(entity->getStatisitcByName("bodyTotalBones")));
+        for(int i=0; i<ui->twStats->topLevelItemCount(); ++i) {
+            ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->update();
+        }
+    }
+}
+
+void EntityPropertiesController::resetAllStats(){
+    if(entity){
+        for(int i=0; i<ui->twStats->topLevelItemCount(); ++i) {
+            ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->stat->reset();
+        }
+    }
+}
+
+void EntityPropertiesController::resetSelectedStat(){
+    if(entity){
+        if(ui->twStats->currentItem())
+            ((StatisticTreeWidgetItem *) ui->twStats->currentItem())->stat->reset();
     }
 }

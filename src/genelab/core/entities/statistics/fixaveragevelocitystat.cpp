@@ -6,6 +6,10 @@ namespace GeneLabCore{
 
 FixAverageVelocityStat::FixAverageVelocityStat(Fixation *fix) : fix(fix)
 {
+    // Info
+    name = "Fixation average velocity";
+    unit = "m / step";
+
     nbSteps = 0;
     totalDistance = .0f;
     previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();

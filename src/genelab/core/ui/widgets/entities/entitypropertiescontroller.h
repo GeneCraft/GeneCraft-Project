@@ -41,7 +41,11 @@ public slots:
     void clearSensors();
     void clearEffectors();
     void computeMinimalOuts();
+
+    // Statistics
     void updateStats();
+    void resetAllStats();
+    void resetSelectedStat();
 
 private:
 

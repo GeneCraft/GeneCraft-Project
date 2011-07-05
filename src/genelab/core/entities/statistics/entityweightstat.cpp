@@ -9,7 +9,9 @@ namespace GeneLabCore{
 
 EntityWeightStat::EntityWeightStat(Entity *entity) : entity(entity)
 {
-    update();
+    // Info
+    name = "Body weight";
+    unit = "kg";
 
     // Optimization : Only update when the value is needed
     updateWhenValueIsRequested = true;

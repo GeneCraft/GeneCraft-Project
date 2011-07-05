@@ -1,6 +1,8 @@
 #ifndef STATISTIC_H
 #define STATISTIC_H
 
+#include <QString>
+
 namespace GeneLabCore{
 
 /**
@@ -21,6 +23,16 @@ public:
     // To define how to update statistic value
     virtual void update() = 0;
 
+    // To get the name
+    const QString &getName() { return name; }
+
+    // To rename to a more precise name
+    // (for ex.: root position rather than fixation position)
+    void setName(const QString &name) { this->name = name; }
+
+    // To get the unit
+    const QString &getUnit() { return unit; }
+
     // To get the statistic value
     float getValue()
     {
@@ -30,6 +42,9 @@ public:
         return value;
     }
 
+    // To reset
+    virtual void reset() {}
+
     // To know if statistic need to be updated at each step
     bool wantToBeUpdatedEachStep() { return updateEachStep; }
 
@@ -37,6 +52,12 @@ protected:
 
     // The statistic value
     float value;
+
+    // Name
+    QString name;
+
+    // Unit
+    QString unit;
 
     // need to be updated at each step
     bool updateEachStep;
