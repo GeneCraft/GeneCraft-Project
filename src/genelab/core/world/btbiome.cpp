@@ -1,13 +1,13 @@
 #include "btbiome.h"
+#include "btworld.h"
 
 namespace GeneLabCore {
-    btBiome::btBiome(btFactory* factory, QVariant biomeData, QObject *parent) :
+    btBiome::btBiome(btWorld* world, QVariant biomeData, QObject *parent) :
         QObject(parent)
     {
-        this->factory = factory;
+        world->setBiome(this);
         this->data = biomeData.toMap();
     }
-
 
     void btBiome::setup() {
         float gravity = data["gravity"].toFloat();

@@ -10,16 +10,20 @@ class btShapesFactory
 {
 public:
 
-    btShapesFactory(btWorld *world);
+    btShapesFactory();
 
     virtual btWorld* getWorld() {
         return world;
     }
 
+
+    virtual void setWorld(btWorld* world) { this->world = world; }
+
     virtual btBox *createBox(btVector3 size, const btTransform &transform, const btScalar density);
     virtual btSphere *createSphere(btScalar radius, const btTransform &transform);
     virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform);
     virtual btBone  *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
+
 protected:
     btWorld* world;
 };

@@ -7,9 +7,8 @@
 
 namespace GeneLabCore {
 
-btShapesFactory::btShapesFactory(btWorld *world)
+btShapesFactory::btShapesFactory()
 {
-    this->world = world;
 }
 
 btBox *btShapesFactory::createBox(btVector3 size, const btTransform &transform, const btScalar density)

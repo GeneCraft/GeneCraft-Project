@@ -58,7 +58,7 @@ private:
     QWidget *inspector;
     btoFactory* factory;
     SimulationManager* simulationManager;
-    btShapesFactory* shapesFactory;
+    btoShapesFactory* shapesFactory;
 
     // components
     QAction *aTogglePhysics;

@@ -1,6 +1,7 @@
 #include "btoworld.h"
 
 #include "btofactory.h"
+#include "btoshapesfactory.h"
 #include "bulletogre/bulletogreengine.h"
 #include "Ogre.h"
 #include "OgreMeshManager.h"
@@ -15,8 +16,8 @@
 
 namespace GeneLabCore {
 
-    btoWorld::btoWorld(btoFactory* factory, QVariant data, QObject *parent) :
-        btWorld(factory, data, parent)
+    btoWorld::btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent) :
+        btWorld(factory, shapesFactory, data, parent)
     {
         btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
     }

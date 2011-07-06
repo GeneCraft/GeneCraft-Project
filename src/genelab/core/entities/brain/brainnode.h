@@ -76,12 +76,12 @@ protected:
 class BrainNodeIn : public BrainNode {
     Q_OBJECT
 public:
-    explicit BrainNodeIn(int x, int y) : BrainNode(IN) {
+    explicit BrainNodeIn(float x, float y) : BrainNode(IN) {
         this->x = x;
         this->y = y;
     }
 
-    int x, y;
+    float x, y;
 
 signals:
 

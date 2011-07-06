@@ -16,11 +16,12 @@
 
 namespace GeneLabCore {
 
-    btWorld::btWorld(btFactory* factory, QVariant worldData, QObject *parent) :
+    btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent) :
         QObject(parent)
     {
         this->data = worldData.toMap();
         this->factory = factory;
+        this->shapesFactory = shapesFactory;
         this->btEngine = static_cast<BulletEngine*>(factory->getEngines().find("Bullet").value());
         entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
 

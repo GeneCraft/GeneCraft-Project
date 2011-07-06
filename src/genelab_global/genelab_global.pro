@@ -170,7 +170,8 @@ SOURCES += \
     ../genelab/core/entities/families/spiderfamily.cpp \
     ../genelab/core/entities/families/antfamily.cpp \
     ../genelab/core/entities/statistics/fixdistancefromoriginstat.cpp \
-    ../genelab/core/entities/statistics/entitytotalboneslengthstat.cpp
+    ../genelab/core/entities/statistics/entitytotalboneslengthstat.cpp \
+    ../genelab/core/entities/sensors/contactsensor.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -252,7 +253,8 @@ HEADERS += \
     ../genelab/core/entities/families/spiderfamily.h \
     ../genelab/core/entities/families/antfamily.h \
     ../genelab/core/entities/statistics/fixdistancefromoriginstat.h \
-    ../genelab/core/entities/statistics/entitytotalboneslengthstat.h
+    ../genelab/core/entities/statistics/entitytotalboneslengthstat.h \
+    ../genelab/core/entities/sensors/contactsensor.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

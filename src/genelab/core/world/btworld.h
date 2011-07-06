@@ -21,7 +21,7 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit btWorld(btFactory* factory, QVariant worldData, QObject *parent = 0);
+        explicit btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
 
         // To create a new creature
         virtual btVector3 getSpawnPosition();
@@ -38,6 +38,7 @@ namespace GeneLabCore {
         btDynamicsWorld* getBulletWorld() { return world; }
 
         btFactory *getFactory() {return factory; }
+        btShapesFactory *getShapesFactory() {return shapesFactory; }
 
         // To setup the world
         virtual void setup();
@@ -61,6 +62,7 @@ namespace GeneLabCore {
 
         // Factory in case of
         btFactory* factory;
+        btShapesFactory* shapesFactory;
 
         // Bullet world
         btDynamicsWorld* world;

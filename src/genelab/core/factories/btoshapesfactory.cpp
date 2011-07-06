@@ -10,7 +10,7 @@
 
 namespace GeneLabCore {
 
-btoShapesFactory::btoShapesFactory(btoWorld *world, BulletOgreEngine *btoEngine) : btShapesFactory(world)
+btoShapesFactory::btoShapesFactory(BulletOgreEngine *btoEngine) : btShapesFactory()
 {
     this->btoEngine = btoEngine;
 }

@@ -13,7 +13,7 @@ class btBiome : public QObject
 {
     Q_OBJECT
 public:
-    explicit btBiome(btFactory* factory, QVariant biomeData, QObject *parent = 0);
+    explicit btBiome(btWorld* world, QVariant biomeData, QObject *parent = 0);
 
     virtual void setup();
 
@@ -28,8 +28,6 @@ public slots:
 protected:
     QVariantMap data;
     btDynamicsWorld* world;
-    btFactory* factory;
-
 };
 
 }

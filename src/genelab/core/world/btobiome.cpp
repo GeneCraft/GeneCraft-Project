@@ -1,6 +1,8 @@
 #include "btobiome.h"
 #include "Ogre.h"
 
+#include "btoworld.h"
+
 
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
@@ -14,9 +16,10 @@
 
 namespace GeneLabCore {
 
-    btoBiome::btoBiome(btoFactory* factory, QVariant biomeData, QObject *parent) :
-    btBiome(factory, biomeData, parent)
+    btoBiome::btoBiome(btoWorld* world, QVariant biomeData, QObject *parent) :
+        btBiome(world, biomeData, parent), world(world)
     {
+        this->world = world;
     }
 
     void btoBiome::setup() {
@@ -32,7 +35,7 @@ namespace GeneLabCore {
         float lightG   = data["lG"].toFloat();
         float lightB   = data["lB"].toFloat();
 
-        BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
+        BulletOgreEngine* btoEngine = world->getBulletOgreEngine();
 
         Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
 

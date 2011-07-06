@@ -28,7 +28,7 @@ void BulletOgreEngine::step()
 {
     nbStep++;
     int sec = (nbStep/60)%60;
-    int min = (nbStep/3600)%60;
+    int min = (nbStep/(60 * 60))%60;
     int hour = (nbStep/(3600*60));
     QString time = (hour?QString::number(hour) + "h ":"")
                   +(min?QString::number(min) + "m ":"")

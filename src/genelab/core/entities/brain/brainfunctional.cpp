@@ -80,7 +80,7 @@ float sigmoid(float x)
                 tree.append(new BrainNode(t));
                 break;
             case IN:
-                tree.append(new BrainNodeIn(nodePart[1].toInt(), nodePart[2].toInt()));
+                tree.append(new BrainNodeIn(nodePart[1].toFloat(), nodePart[2].toFloat()));
                 break;
             case CONST:
                 tree.append(new BrainNodeConst(nodePart[1].toFloat()));

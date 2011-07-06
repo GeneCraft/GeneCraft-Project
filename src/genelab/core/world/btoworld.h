@@ -10,9 +10,14 @@ class btoWorld : public btWorld
 {
     Q_OBJECT
 public:
-    explicit btoWorld(btoFactory* factory, QVariant data, QObject *parent = 0);
+    explicit btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent = 0);
 
     virtual void setup();
+
+    BulletOgreEngine* getBulletOgreEngine() {
+        return btoEngine;
+    }
+
 signals:
 
 public slots:

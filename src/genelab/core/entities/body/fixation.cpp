@@ -171,6 +171,7 @@ namespace GeneLabCore {
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                localFix, localBone, false);
 
+        ct->setBreakingImpulseThreshold(this->radius * 400.);
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);

@@ -249,10 +249,11 @@ void CreatureViewerWindow::init() {
     sceneData.insert("floor", "Examples/GrassFloor");
 
     // Create the world
-    world = new btoWorld(factory, worldData);
-    shapesFactory = new btoShapesFactory(world, btoEngine);
+    shapesFactory = new btoShapesFactory(btoEngine);
+    world = new btoWorld(factory, shapesFactory, worldData);
+    shapesFactory->setWorld(world);
 
-    btBiome* biome = new btoBiome(factory, biomeData);
+    btBiome* biome = new btoBiome(world, biomeData);
     world->setBiome(biome);
 
     btScene* scene = new btoScene(world, sceneData);
@@ -290,7 +291,7 @@ void CreatureViewerWindow::init() {
     spawnNew();
 
     entitySpawner = new QTimer();
-    entitySpawner->setInterval(60000);
+    entitySpawner->setInterval(5000);
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
@@ -377,6 +378,7 @@ void CreatureViewerWindow::spawnNew() {
 
         e = NULL;
         int enttype = Tools::random(0,2);
+
 
         btVector3 pos = world->getSpawnPosition();
 

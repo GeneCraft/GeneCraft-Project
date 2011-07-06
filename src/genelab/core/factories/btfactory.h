@@ -17,13 +17,10 @@ public:
     Engine *getEngineByName(QString name);
 
     // To get all engines
-    QMap<QString, Engine*>        getEngines();
+    QMap<QString, Engine*> getEngines();
 
     // To get all widgets
-    QMap<QString, QWidget*>       getWidgets();
-
-    // to get the shapes factory
-    btShapesFactory *             getShapesFactory();
+    QMap<QString, QWidget*> getWidgets();
 
 signals:
 
@@ -32,8 +29,6 @@ public slots:
 protected:
     QMap<QString, Engine*>         engines;
     QMap<QString, QWidget*>        widgets;
-    btShapesFactory *              shapesFactory;
-
 };
 
 }

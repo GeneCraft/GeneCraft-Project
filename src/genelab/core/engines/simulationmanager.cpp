@@ -26,7 +26,7 @@ namespace GeneLabCore {
     void SimulationManager::setup() {
         stepTimer = new QTimer();
         renderTimer = new QTimer();
-        renderTimer->setInterval(1000/40); // 30fps
+        renderTimer->setInterval(1000/40); // 40fps
         stepTimer->setInterval(1000/stepBySec); // 60 frames by sec
         connect(stepTimer, SIGNAL(timeout()), this, SLOT(update()));
         connect(renderTimer, SIGNAL(timeout()), this, SLOT(renderUpdate()));
@@ -99,9 +99,9 @@ namespace GeneLabCore {
 
     void SimulationManager::setPhysicsFreq(int stepBySec) {
         this->stepBySec = stepBySec;
-        if(stepBySec < 0 )
-            stepBySec = 0;
-        this->stepTimer->setInterval(1000/(stepBySec+1));
+        if(stepBySec < 1)
+            stepBySec = 1;
+        this->stepTimer->setInterval(1000/stepBySec);
     }
 }
 
