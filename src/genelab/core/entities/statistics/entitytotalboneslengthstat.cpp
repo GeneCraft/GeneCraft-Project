@@ -27,7 +27,7 @@ void EntityTotalBonesLengthStat::recurciveUpdate(Bone *b)
 
 void EntityTotalBonesLengthStat::update()
 {
-    value = 0;
+    value = 0.0;
 
     foreach (Bone *b, entity->getShape()->getRoot()->getBones())
         recurciveUpdate(b);

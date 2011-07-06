@@ -26,12 +26,11 @@ public:
     void update();
 
     // To reset average
-    void reset() { totalDistance = 0.0; nbSteps = 0;}
+    void reset() { Statistic::reset(); totalDistance = 0.0;}
 
 protected:
 
     float totalDistance;
-    int nbSteps;
     Fixation *fix;
     btVector3 previousOrigin;
 };

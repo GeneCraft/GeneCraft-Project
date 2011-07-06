@@ -183,8 +183,7 @@ void Entity::setToMinimalOuts()
 void Entity::updadeStatistics(){
 
     foreach(Statistic * s, stats)
-        if(s->wantToBeUpdatedEachStep())
-            s->update();
+        s->step();
 }
 
 float Entity::getStatisticByName(QString statisticName)

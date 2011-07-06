@@ -44,7 +44,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_5">
       <attribute name="icon">
@@ -223,6 +223,26 @@ p, li { white-space: pre-wrap; }
          <column>
           <property name="text">
            <string>Value</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Min</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Max</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Average</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Sum</string>
           </property>
          </column>
          <column>

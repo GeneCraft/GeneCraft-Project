@@ -24,7 +24,6 @@ public:
 
     FixDistanceStat(Fixation * fix);
     void update();
-    void reset() { value = 0.; }
 
 protected:
 

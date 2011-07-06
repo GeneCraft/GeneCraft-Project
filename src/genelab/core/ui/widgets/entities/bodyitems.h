@@ -55,13 +55,17 @@ public:
     StatisticTreeWidgetItem(Statistic * stat) {
         this->stat = stat;
         setText(0,stat->getName());
-        setText(2,stat->getUnit());
+        setText(6,stat->getUnit());
         update();
         //this->setIcon(0,QIcon(":/img/icons/bone_and_fixation"));
     }
 
     void update() {
         setText(1,QString::number(stat->getValue()));
+        setText(2,QString::number(stat->getMinValue()));
+        setText(3,QString::number(stat->getMaxValue()));
+        setText(4,QString::number(stat->getAverage()));
+        setText(5,QString::number(stat->getSum()));
     }
 
     Statistic *stat;

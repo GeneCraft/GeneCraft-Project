@@ -218,27 +218,51 @@ void CreatureViewerWindow::init() {
     // Static boxes
     QVariantList staticBoxes;
 
-    for(int i=0;i<100;++i){
+    // MineCraft Floor
+    int sizeX = 10;
+    int sizeZ = 10;
+    for(int i=-10;i<10;++i){
+        for(int j=-10;j<10;++j){
 
-        double sizeX = Tools::random(1.0, 10.0);
-        double sizeY = Tools::random(1.0, 10.0);
-        double sizeZ = Tools::random(1.0, 10.0);
+            double sizeY = Tools::random(0.1, 3.0);
 
-        double posX = Tools::random(-100, 100);
-        double posZ = Tools::random(-100, 100);
-
-        QVariantMap staticBox;
-        staticBox.insert("posX",posX);
-        staticBox.insert("posY",sizeY/2.0);
-        staticBox.insert("posZ",posZ);
-        staticBox.insert("eulerX",0);
-        staticBox.insert("eulerY",0);
-        staticBox.insert("eulerZ",0);
-        staticBox.insert("sizeX",sizeX);
-        staticBox.insert("sizeY",sizeY);
-        staticBox.insert("sizeZ",sizeZ);
-        staticBoxes.append(staticBox);
+            QVariantMap staticBox;
+            staticBox.insert("posX",i*10);
+            staticBox.insert("posY",sizeY/2.0);
+            staticBox.insert("posZ",j*10);
+            staticBox.insert("eulerX",0);
+            staticBox.insert("eulerY",0);
+            staticBox.insert("eulerZ",0);
+            staticBox.insert("sizeX",sizeX);
+            staticBox.insert("sizeY",sizeY);
+            staticBox.insert("sizeZ",sizeZ);
+            staticBoxes.append(staticBox);
+        }
     }
+
+//    // Ruin Floor
+//    for(int i=0;i<100;++i){
+
+//        double sizeX = Tools::random(1.0, 10.0);
+//        double sizeY = Tools::random(1.0, 10.0);
+//        double sizeZ = Tools::random(1.0, 10.0);
+
+//        double posX = Tools::random(-100, 100);
+//        double posZ = Tools::random(-100, 100);
+
+//        QVariantMap staticBox;
+//        staticBox.insert("posX",posX);
+//        staticBox.insert("posY",sizeY/2.0);
+//        staticBox.insert("posZ",posZ);
+//        staticBox.insert("eulerX",0);
+//        staticBox.insert("eulerY",0);
+//        staticBox.insert("eulerZ",0);
+//        staticBox.insert("sizeX",sizeX);
+//        staticBox.insert("sizeY",sizeY);
+//        staticBox.insert("sizeZ",sizeZ);
+//        staticBoxes.append(staticBox);
+//    }
+
 
     // Scene
     QVariantMap sceneData;

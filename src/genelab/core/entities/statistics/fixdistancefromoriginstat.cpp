@@ -22,6 +22,7 @@ void FixDistanceFromOriginStat::update()
 }
 
 void FixDistanceFromOriginStat::reset() {
+    Statistic::reset();
     this->origin = fix->getRigidBody()->getWorldTransform().getOrigin();
 }
 
