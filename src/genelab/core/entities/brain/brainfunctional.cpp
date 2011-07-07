@@ -138,6 +138,7 @@ float sigmoid(float x)
         float value = apply(it, tree.end());
         if(value != value) {
             qDebug() << "NAN ! " << value << out->getConnexionInfo().toString();
+            qDebug() << this->plugGrid->getSize();
         } else {
             out->setValue(value);
         }
@@ -333,7 +334,7 @@ float sigmoid(float x)
         QString func;
 
         int rand = qrand()%100;
-        if(rand < 40 && depth > 1) {
+        if(rand < 40 && depth > 1 && false) {
             int subChoix = qrand()%4;
             if(subChoix == 3) {
                 func += "+ ,";
@@ -355,13 +356,13 @@ float sigmoid(float x)
                 func += this->createRandomFunc(depth -1);
             }
         }
-        else if(rand > 40 &&rand < 70 && depth > 1) {
+        else if(rand > 40 &&rand < 70 && depth > 1 && false) {
             func += "SINUS ,";
             func += this->createRandomFunc(depth -1);
             func += this->createRandomFunc(depth -1);
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
-        else if(rand > 70  && rand < 80  && depth > 1) {
+        else if(rand > 70  && rand < 80  && depth > 1 && false) {
             int maxMem = 20;
             int subchoix = qrand()%5;
             if(subchoix == 3) {

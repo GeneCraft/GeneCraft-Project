@@ -66,115 +66,137 @@ LIBS += -lBulletSoftBody
 #LIBS += -lOpenGLSupport
 
 SOURCES += \
+    ../genelab/core/engines/engine.cpp \
     ../genelab/core/engines/simulationmanager.cpp \
     ../genelab/core/engines/events/inputlistener.cpp \
     ../genelab/core/engines/events/eventsmanager.cpp \
-    ../genelab/core/engines/engine.cpp \
     ../genelab/core/engines/bullet/bulletengine.cpp \
-    ../genelab/core/entities/body/treeshape.cpp \
-    ../genelab/core/entities/brain/synapse.cpp \
-    ../genelab/core/entities/families/snakefamily.cpp \
-    ../genelab/core/entities/brain/sinusin.cpp \
-    ../genelab/core/entities/body/fixation.cpp \
-    ../genelab/core/entities/entityfamily.cpp \
-    ../genelab/core/entities/entity.cpp \
-    ../genelab/core/entities/body/bone.cpp \
-    ../genelab/core/factories/worldfactory.cpp \
-    ../genelab/core/factories/ressources/ressource.cpp \
-    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
-    main.cpp \
     ../genelab/core/engines/bullet/rigidbodyorigin.cpp \
-    ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
-    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
-    ../genelab/core/utils/tools.cpp \
     ../genelab/core/engines/bullet/shapes/btshape.cpp \
     ../genelab/core/engines/bullet/shapes/btbox.cpp \
     ../genelab/core/engines/bullet/shapes/btsphere.cpp \
     ../genelab/core/engines/bullet/shapes/btcylinder.cpp \
-    ../genelab/core/factories/btshapesfactory.cpp \
-    ../genelab/core/entities/families/spider/spider.cpp \
-    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
     ../genelab/core/engines/bullet/shapes/btbone.cpp \
+    ../genelab/core/engines/entities/entitiesengine.cpp \
+    ../genelab/core/entities/entity.cpp \
+    ../genelab/core/entities/entityfamily.cpp \
+    ../genelab/core/entities/body/treeshape.cpp \
+    ../genelab/core/entities/body/bone.cpp \
+    ../genelab/core/entities/body/fixation.cpp \
+    ../genelab/core/entities/families/snakefamily.cpp \
+    ../genelab/core/entities/families/spiderfamily.cpp \
+    ../genelab/core/entities/families/antfamily.cpp \
+    ../genelab/core/entities/families/genericfamily.cpp \
+    ../genelab/core/entities/brain/sinusin.cpp \
     ../genelab/core/entities/brain/brainpluggrid.cpp \
     ../genelab/core/entities/brain/brainnode.cpp \
     ../genelab/core/entities/brain/brain.cpp \
     ../genelab/core/entities/brain/brainfunctional.cpp \
     ../genelab/core/entities/brain/brainin.cpp \
     ../genelab/core/entities/brain/brainout.cpp \
-    ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp \
+    ../genelab/core/entities/brain/synapse.cpp \
     ../genelab/core/entities/sensors/sensor.cpp \
     ../genelab/core/entities/sensors/positionsensor.cpp \
-    ../genelab/core/engines/entities/entitiesengine.cpp \
     ../genelab/core/entities/sensors/gyroscopicsensor.cpp \
     ../genelab/core/entities/sensors/accelerometersensor.cpp \
-    ../genelab/core/entities/modifiers/modifier.cpp \
-    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.cpp \
+    ../genelab/core/entities/sensors/contactsensor.cpp \
+    ../genelab/core/entities/effectors/effector.cpp \
+    ../genelab/core/entities/effectors/rotationalmotorseffector.cpp \
+    ../genelab/core/entities/statistics/statistic.cpp \
+    ../genelab/core/entities/statistics/fixdistancestat.cpp \
+    ../genelab/core/entities/statistics/entityweightstat.cpp \
+    ../genelab/core/entities/statistics/entityheightstat.cpp \
+    ../genelab/core/entities/statistics/fixaveragevelocitystat.cpp \
+    ../genelab/core/entities/statistics/entitytotalbonesstat.cpp \
+    ../genelab/core/entities/statistics/fixdistancefromoriginstat.cpp \
+    ../genelab/core/entities/statistics/entitytotalboneslengthstat.cpp \
+    ../genelab/core/factories/btshapesfactory.cpp \
+    ../genelab/core/factories/worldfactory.cpp \
+    ../genelab/core/factories/btfactory.cpp \
+    ../genelab/core/factories/ressources/ressource.cpp \
     ../genelab/core/factories/ressources/jsonfile.cpp \
     ../genelab/core/factories/ressources/dbrecord.cpp \
-    ../genelab/core/entities/families/ant/ant.cpp \
-    ../genelab/core/entities/families/genericfamily.cpp \
+    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
+    ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
+    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
+    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
+    ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp \
     ../genelab/core/world/btworld.cpp \
     ../genelab/core/world/btscene.cpp \
     ../genelab/core/world/btbiome.cpp \
     ../genelab/core/world/spawn.cpp \
-    ../genelab/core/factories/btfactory.cpp
+    ../genelab/core/experiment/experiment.cpp \
+    ../genelab/core/experiment/experimentmanager.cpp \
+    ../genelab/core/utils/tools.cpp \
+    main.cpp
 
 HEADERS += \
+    ../genelab/core/engines/engine.h \
     ../genelab/core/engines/simulationmanager.h \
     ../genelab/core/engines/events/eventsmanager.h \
-    ../genelab/core/engines/engine.h \
-    ../genelab/core/engines/bullet/bulletengine.h \
     ../genelab/core/engines/events/inputlistener.h \
-    ../genelab/core/entities/body/treeshape.h \
-    ../genelab/core/entities/brain/synapse.h \
-    ../genelab/core/entities/families/snakefamily.h \
-    ../genelab/core/entities/brain/sinusin.h \
-    ../genelab/core/entities/body/fixation.h \
-    ../genelab/core/entities/entityfamily.h \
-    ../genelab/core/entities/entity.h \
-    ../genelab/core/entities/body/bone.h \
-    ../genelab/core/factories/worldfactory.h \
-    ../genelab/core/factories/ressources/ressource.h \
-    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
-    ../genelab/core/genelabcoreclasses.h \
+    ../genelab/core/engines/bullet/bulletengine.h \
     ../genelab/core/engines/bullet/rigidbodyorigin.h \
-    ../genelab/core/ui/widgets/entities/fixationproperties.h \
-    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
-    ../genelab/core/utils/tools.h \
     ../genelab/core/engines/bullet/shapes/btshape.h \
     ../genelab/core/engines/bullet/shapes/btbox.h \
     ../genelab/core/engines/bullet/shapes/btsphere.h \
     ../genelab/core/engines/bullet/shapes/btcylinder.h \
-    ../genelab/core/factories/btshapesfactory.h \
-    ../genelab/core/entities/families/spider/spider.h \
-    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
     ../genelab/core/engines/bullet/shapes/btbone.h \
+    ../genelab/core/engines/entities/entitiesengine.h \
+    ../genelab/core/entities/entityfamily.h \
+    ../genelab/core/entities/entity.h \
+    ../genelab/core/entities/body/treeshape.h \
+    ../genelab/core/entities/body/fixation.h \
+    ../genelab/core/entities/body/bone.h \
+    ../genelab/core/entities/brain/synapse.h \
+    ../genelab/core/entities/brain/sinusin.h \
     ../genelab/core/entities/brain/brainpluggrid.h \
     ../genelab/core/entities/brain/brainnode.h \
     ../genelab/core/entities/brain/brain.h \
     ../genelab/core/entities/brain/brainfunctional.h \
     ../genelab/core/entities/brain/brainin.h \
     ../genelab/core/entities/brain/brainout.h \
-    ../genelab/core/ui/widgets/entities/pluggridvisualizer.h \
     ../genelab/core/entities/sensors/sensor.h \
     ../genelab/core/entities/sensors/positionsensor.h \
-    ../genelab/core/engines/entities/entitiesengine.h \
     ../genelab/core/entities/sensors/gyroscopicsensor.h \
     ../genelab/core/entities/sensors/accelerometersensor.h \
-    ../genelab/core/entities/modifiers/modifier.h \
-    ../genelab/core/entities/modifiers/rotationalmotorsmodifier.h \
+    ../genelab/core/entities/sensors/contactsensor.h \
+    ../genelab/core/entities/effectors/effector.h \
+    ../genelab/core/entities/effectors/rotationalmotorseffector.h \
+    ../genelab/core/entities/families/antfamily.h \
+    ../genelab/core/entities/families/genericfamily.h \
+    ../genelab/core/entities/families/spiderfamily.h \
+    ../genelab/core/entities/families/snakefamily.h \
+    ../genelab/core/entities/statistics/statistic.h \
+    ../genelab/core/entities/statistics/fixdistancestat.h \
+    ../genelab/core/entities/statistics/entityweightstat.h \
+    ../genelab/core/entities/statistics/entityheightstat.h \
+    ../genelab/core/entities/statistics/fixaveragevelocitystat.h \
+    ../genelab/core/entities/statistics/entitytotalbonesstat.h \
+    ../genelab/core/entities/statistics/fixdistancefromoriginstat.h \
+    ../genelab/core/entities/statistics/entitytotalboneslengthstat.h \
+    ../genelab/core/factories/worldfactory.h \
+    ../genelab/core/factories/ressources/ressource.h \
+    ../genelab/core/factories/btfactory.h \
     ../genelab/core/factories/ressources/jsonfile.h \
     ../genelab/core/factories/ressources/dbrecord.h \
-    ../genelab/core/entities/families/ant/ant.h \
-    ../genelab/core/entities/families/genericfamily.h \
+    ../genelab/core/factories/btshapesfactory.h \
+    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
+    ../genelab/core/ui/widgets/entities/fixationproperties.h \
+    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
+    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
+    ../genelab/core/ui/widgets/entities/pluggridvisualizer.h \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h \
     ../genelab/core/ui/widgets/entities/bodyitems.h \
     ../genelab/core/world/btworld.h \
     ../genelab/core/world/btscene.h \
     ../genelab/core/world/btbiome.h \
     ../genelab/core/world/spawn.h \
-    ../genelab/core/factories/btfactory.h
+    ../genelab/core/experiment/experiment.h \
+    ../genelab/core/experiment/experimentmanager.h \
+    ../genelab/core/utils/tools.h \
+    ../genelab/core/genelabcoreclasses.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

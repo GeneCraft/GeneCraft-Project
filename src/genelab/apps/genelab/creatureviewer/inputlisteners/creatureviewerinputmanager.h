@@ -39,6 +39,32 @@ public:
 signals:
 
     void rigidBodySelected(btRigidBody *rigidBody);
+    /*
+    void entitySelected();
+    void boneSelected();
+    void fixationSelected();
+
+    void entityDeleted();
+    void boneDeleted();
+
+    void boneAdded();
+    void boneUpdated();
+    void fixationUpdated();
+    void entityUpdated();
+
+public slots:
+    void entitySelected();
+    void boneSelected();
+    void fixationSelected();
+
+    void entityDeleted();
+    void boneDeleted();
+
+    void boneAdded();
+    void boneUpdated();
+    void fixationUpdated();
+    void entityUpdated();
+    */
 
 private:
 

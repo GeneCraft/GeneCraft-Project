@@ -16,7 +16,7 @@ namespace GeneLabCore {
  * @author Aurelien Da Campo
  * @author Cyprien Huissoud
  */
-class SnakeFamily : EntityFamily
+class SnakeFamily : public EntityFamily
 {
     Q_OBJECT
 

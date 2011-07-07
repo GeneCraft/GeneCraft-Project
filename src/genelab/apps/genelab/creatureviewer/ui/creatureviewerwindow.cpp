@@ -158,6 +158,9 @@ void CreatureViewerWindow::init() {
     connect(Bone::getEmptyInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
     connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
 
+    connect(Fixation::getEmptyInspectorWidget(), SIGNAL(boneDeleted(Bone*)), this, SLOT(boneDeleted(Bone*)));
+    connect(Bone::getEmptyInspectorWidget(), SIGNAL(boneDeleted(Bone*)), this, SLOT(boneDeleted(Bone*)));
+
     qDebug() << "Start simulation";
     simulationManager->start();
 
