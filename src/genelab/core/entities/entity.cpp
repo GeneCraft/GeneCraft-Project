@@ -197,12 +197,12 @@ void Entity::updadeStatistics(){
         s->step();
 }
 
-float Entity::getStatisticByName(QString statisticName)
+Statistic* Entity::getStatisticByName(QString statisticName)
 {
-//    if(stats.contains(statisticName))
-//        return stats.value(statisticName)->getValue();
-//    else
-        return 0.0;
+    if(!this->statisticsStorage->exists(statisticName))
+        return NULL;
+
+    return this->statisticsStorage->getStatistics().find(statisticName).value();
 }
 
 void Entity::updateStatisticByName(QString statisticName)

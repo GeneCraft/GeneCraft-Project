@@ -23,6 +23,11 @@
 
 #include "tools.h"
 
+#include "ressources/dbrecord.h"
+
+#define MAX_ENTITY 1
+#define MAX_TIME 6000
+
 using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
@@ -82,7 +87,7 @@ int main(int argc, char *argv[])
     QVariantList staticBoxes;
 
     // MineCraft Floor
-    int sizeX = 10;
+    /*int sizeX = 10;
     int sizeZ = 10;
     for(int i=-10;i<10;++i){
         for(int j=-10;j<10;++j){
@@ -101,7 +106,7 @@ int main(int argc, char *argv[])
             staticBox.insert("sizeZ",sizeZ);
             staticBoxes.append(staticBox);
         }
-    }
+    }*/
 
 //    // Ruin Floor
 //    for(int i=0;i<100;++i){
@@ -132,10 +137,18 @@ int main(int argc, char *argv[])
     sceneData.insert("type", "flatland");
     sceneData.insert("cam", camData);
     sceneData.insert("spawns", spawns);
-    sceneData.insert("staticBoxes", staticBoxes);
+    //sceneData.insert("staticBoxes", staticBoxes);
     sceneData.insert("floor", "Examples/GrassFloor");
 
-
+    float max = 0;
+    QString bestGen = "";
+    Ressource* r;
+    DataBase database;
+    database.dbName = "/db/genecraft/";
+    database.url = "http://www.genecraft-project.org";
+    database.port = 80;
+    r = new DbRecord(database, "BestSnake");
+    r->load();
 
     // Spider
     qDebug() << "Spider creation !";
@@ -153,9 +166,9 @@ int main(int argc, char *argv[])
     world->setScene(scene);
 
     world->setup();
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < MAX_ENTITY; i++) {
 
-        EntityFamily *spider = new AntFamily();
+        EntityFamily *spider = new SnakeFamily();
         btVector3 pos = world->getSpawnPosition();
         e = spider->createEntity(shapesFactory, pos);
         e->setup();
@@ -183,7 +196,38 @@ int main(int argc, char *argv[])
             e->afterStep();
         }
         if(cpt%60 == 0) {
-            qDebug() << "\r" << cpt/60 << "secondes";
+            //qDebug() << "\r" << cpt/60 << "secondes";
+        }
+
+        if(cpt >= MAX_TIME) {
+            qDebug() << "new entity !";
+            cpt = 0;
+            // Evaluation
+            QList<Entity*> entities = ee->getAllEntities();
+            foreach(Entity* e, entities) {
+                Statistic* s = e->getStatisticByName("Treeshape Vertical Height");
+                qDebug() << s->getMean();
+                if(s->getMean() > max) {
+                    max = s->getMean();
+                    qDebug() << "! new max " << s->getMean();
+                    r->save(e->serialize());
+                }
+            }
+
+            foreach(Entity* e, entities) {
+                ee->removeEntity(e);
+                delete e;
+            }
+
+
+            for(int i = 0; i < MAX_ENTITY; i++) {
+
+                EntityFamily *spider = new SnakeFamily();
+                btVector3 pos = world->getSpawnPosition();
+                e = spider->createEntity(shapesFactory, pos);
+                e->setup();
+                ee->addEntity(e);
+            }
         }
     }
 

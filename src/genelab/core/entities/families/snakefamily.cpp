@@ -39,7 +39,7 @@ namespace GeneLabCore {
         btTransform initTransform;
         initTransform.setIdentity();
         initTransform.setOrigin(position);
-        initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), M_PI/2.));
+        //initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), M_PI/2.));
 
         Fixation* root = new Fixation(factory,fixRadius,initTransform);
         snakeShape->setRoot(root);
@@ -48,6 +48,16 @@ namespace GeneLabCore {
         float angle = M_PI - M_PI / 3;
 
         // Build body
+        Bone* b = root->addBone(0, M_PI/2., pieceRadius,
+                                pieceLength,
+                                fixRadius,
+                                btVector3(-angle,-M_PI/4,-angle),
+                                btVector3(angle,M_PI/4,angle));
+
+        root = b->getEndFixation();
+
+        b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+
         for(int i = 0; i < length; i++) {
             Bone* b = root->addBone(0., 0.,
                                     pieceRadius/(1+1.6180339887 * (i) / 10),

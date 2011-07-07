@@ -334,7 +334,7 @@ float sigmoid(float x)
         QString func;
 
         int rand = qrand()%100;
-        if(rand < 40 && depth > 1 && false) {
+        if(rand < 40 && depth > 1) {
             int subChoix = qrand()%4;
             if(subChoix == 3) {
                 func += "+ ,";
@@ -356,13 +356,13 @@ float sigmoid(float x)
                 func += this->createRandomFunc(depth -1);
             }
         }
-        else if(rand > 40 &&rand < 70 && depth > 1 && false) {
+        else if(rand > 40 &&rand < 70 && depth > 1) {
             func += "SINUS ,";
             func += this->createRandomFunc(depth -1);
             func += this->createRandomFunc(depth -1);
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
-        else if(rand > 70  && rand < 80  && depth > 1 && false) {
+        else if(rand > 70  && rand < 80  && depth > 1) {
             int maxMem = 20;
             int subchoix = qrand()%5;
             if(subchoix == 3) {

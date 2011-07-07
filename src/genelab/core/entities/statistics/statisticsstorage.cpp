@@ -30,6 +30,9 @@ QMap<QString, Statistic *> StatisticsStorage::getStatistics() {
 
 // To get a statistics
 float StatisticsStorage::getValue(QString name){
+    if(!stats.contains(name))
+        return 0.0;
+
     return stats.value(name)->getValue();
 }
 

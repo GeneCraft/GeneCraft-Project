@@ -32,6 +32,10 @@ public:
         entities.removeAll(entity);
     }
 
+    QList<Entity*> getAllEntities() {
+        return QList<Entity*>(entities);
+    }
+
     void addPlugGridVisualizer(PlugGridVisualizer* viz) {
         this->gridVisualizers.append(viz);
     }

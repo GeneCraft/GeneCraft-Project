@@ -322,7 +322,7 @@ void CreatureViewerWindow::init() {
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
-    base.url = "http://www.genecraft-project.com";
+    base.url = "http://www.genecraft-project.org";
     base.dbName = "db/genecraft";
     base.port = 80;
 
@@ -401,7 +401,7 @@ void CreatureViewerWindow::spawnNew() {
     }
 
     Entity *e;
-    for(int i = 0; i < 20; i++) {
+    for(int i = 0; i < 5; i++) {
 
         e = NULL;
         int enttype = Tools::random(0,2);

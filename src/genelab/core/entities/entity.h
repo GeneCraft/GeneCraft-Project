@@ -75,7 +75,7 @@ public:
     // Statistics
     StatisticsStorage * getStatisticsStorage() { return statisticsStorage; }
     void updadeStatistics();
-    float getStatisticByName(QString statisticName);
+    Statistic* getStatisticByName(QString statisticName);
     void updateStatisticByName(QString statisticName);
     QMap<QString, StatisticsProvider *> getStatistics() { return stats; }
 
