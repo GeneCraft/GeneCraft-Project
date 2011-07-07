@@ -11,8 +11,8 @@ FixDistanceFromOriginStat::FixDistanceFromOriginStat(Fixation *fix) : fix(fix)
     unit = "m";
 
     origin = fix->getRigidBody()->getWorldTransform().getOrigin();
-    updateEachStep = false;
-    updateWhenValueIsRequested = true;
+    updateEachStep = true;
+    updateWhenValueIsRequested = false;
 }
 
 void FixDistanceFromOriginStat::update()

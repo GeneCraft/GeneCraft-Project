@@ -172,9 +172,12 @@ void FixationProperties::removeSelectedBone()
         if (boneItem)
         {
             // update ui
+            emit boneDeleted(boneItem->bone);
             emit rigidBodySelected(NULL);
 
             // delete the bone
+            this->fixation->removeBone(boneItem->bone);
+            boneItem->bone->remove();
             delete boneItem->bone;
         }
     }

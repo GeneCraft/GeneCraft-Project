@@ -45,7 +45,7 @@ public:
 
     // Effectors links
     void addLinkToEffector(Effector *effector);
-    //void removeLinksToEffector(Effector *effector);
+    void removeLinksToEffector(Effector *effector);
     void addBrainOut(BrainOut *brainOut);
     void removeBrainOut(BrainOut *brainOut);
     QList<Effector *> &getEffectors() { return effectors;  }

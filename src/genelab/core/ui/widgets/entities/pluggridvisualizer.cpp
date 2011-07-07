@@ -32,7 +32,7 @@ namespace GeneLabCore {
         this->update();
     }
 
-    void PlugGridVisualizer::paintEvent(QPaintEvent * e) {
+    void PlugGridVisualizer::paintEvent(QPaintEvent *) {
         this->view->fitInView(this->view->scene()->sceneRect(), Qt::KeepAspectRatio);
 
         if(this->brain == 0)
@@ -55,8 +55,8 @@ namespace GeneLabCore {
         // On dessine les neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i,j))) * 255.));
-                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i,j))) * 255.));
+                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
+                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
                 int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
                 b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
                 this->view->scene()->addRect(width * i,

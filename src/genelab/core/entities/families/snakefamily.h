@@ -39,6 +39,7 @@ private:
     int length;
     btScalar pieceLength;
     btScalar pieceRadius;
+    btScalar fixRadius;
 
 };
 }

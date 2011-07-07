@@ -153,6 +153,10 @@ void Entity::addLinkToEffector(Effector *modifier) {
     }
 }
 
+void Entity::removeLinksToEffector(Effector *effector) {
+    effectors.removeAll(effector);
+}
+
 void Entity::addBrainOut(BrainOut *brainOut)
 {
     brain->addOut(brainOut);

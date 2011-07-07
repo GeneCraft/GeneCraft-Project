@@ -398,10 +398,11 @@ void CreatureViewerWindow::spawnNew() {
     }
 
     Entity *e;
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 20; i++) {
 
         e = NULL;
         int enttype = Tools::random(0,2);
+        enttype = 1;
 
 
         btVector3 pos = world->getSpawnPosition();
@@ -638,7 +639,7 @@ void CreatureViewerWindow::removeEntity()
     {
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
         entitiesEngine->removeEntity(selectedEntity);
-
+        this->setEntity(NULL, NULL);
         delete selectedEntity;
         selectedEntity = NULL;
         boneSelected = NULL;
@@ -650,4 +651,17 @@ void CreatureViewerWindow::removeEntity()
 
 void CreatureViewerWindow::enterInWhatsThisMode(){
     QWhatsThis::enterWhatsThisMode();
+}
+
+
+void CreatureViewerWindow::entityDeleted(Entity*) {
+    this->setEntity(NULL, NULL);
+}
+
+void CreatureViewerWindow::boneDeleted(Bone* bone) {
+    this->setEntity(bone->getEntity(), NULL);
+}
+
+void CreatureViewerWindow::fixationDeleted(Fixation* fix) {
+    this->setEntity(fix->getEntity(), NULL);
 }

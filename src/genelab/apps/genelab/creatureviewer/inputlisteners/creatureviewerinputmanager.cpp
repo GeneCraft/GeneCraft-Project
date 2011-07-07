@@ -52,8 +52,8 @@ void CreatureViewerInputManager::mousePressEvent(QMouseEvent * e)
     }
 }
 
-void CreatureViewerInputManager::mouseReleaseEvent(QMouseEvent * e){}
-void CreatureViewerInputManager::mouseMoveEvent(QMouseEvent * e){}
+void CreatureViewerInputManager::mouseReleaseEvent(QMouseEvent *){}
+void CreatureViewerInputManager::mouseMoveEvent(QMouseEvent *){}
 
 void CreatureViewerInputManager::keyPressEvent(QKeyEvent *e)
 {
@@ -80,9 +80,9 @@ void CreatureViewerInputManager::keyPressEvent(QKeyEvent *e)
     }
 }
 
-void CreatureViewerInputManager::keyReleaseEvent(QKeyEvent *e){}
-void CreatureViewerInputManager::enterViewPortEvent(QEvent *e){}
-void CreatureViewerInputManager::leaveViewPortEvent(QEvent *e){}
+void CreatureViewerInputManager::keyReleaseEvent(QKeyEvent *){}
+void CreatureViewerInputManager::enterViewPortEvent(QEvent *){}
+void CreatureViewerInputManager::leaveViewPortEvent(QEvent *){}
 
 void CreatureViewerInputManager::throwCube()
 {

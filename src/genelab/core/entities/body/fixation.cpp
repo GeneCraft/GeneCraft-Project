@@ -70,6 +70,16 @@ namespace GeneLabCore {
         delegatedSetup      = false;
     }
 
+    void Fixation::remove() {
+        foreach(Bone* b, bones) {
+            b->remove();
+        }
+
+        while(sensors.size() > 0) {
+            this->removeSensor(sensors.first());
+        }
+    }
+
     // -----------
     // -- SETUP --
     // -----------
@@ -171,7 +181,7 @@ namespace GeneLabCore {
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                localFix, localBone, false);
 
-        ct->setBreakingImpulseThreshold(this->radius * 400.);
+        ct->setBreakingImpulseThreshold(1./this->rigidBody->getInvMass() * 100);
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);
@@ -179,6 +189,10 @@ namespace GeneLabCore {
         bones.append(bone);
 
         return bone;
+    }
+
+    void Fixation::removeBone(Bone *bone) {
+        this->bones.removeAll(bone);
     }
 
 

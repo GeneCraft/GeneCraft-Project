@@ -14,9 +14,10 @@ namespace GeneLabCore {
     SnakeFamily::SnakeFamily(QObject *parent) :
         EntityFamily(parent)
     {
-        this->length = Tools::random(5,15);
-        this->pieceLength = Tools::random(1,10);
-        this->pieceRadius = Tools::random(0.2,2.0);
+        this->length = Tools::random(5,20);
+        this->pieceLength = Tools::random(.1,2.);
+        this->pieceRadius = Tools::random(0.1,1.0);
+        this->fixRadius = Tools::random(0.1,1.0);
     }
 
     SnakeFamily::SnakeFamily(QVariant data, QObject *parent) :
@@ -38,8 +39,9 @@ namespace GeneLabCore {
         btTransform initTransform;
         initTransform.setIdentity();
         initTransform.setOrigin(position);
+        initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), M_PI/2.));
 
-        Fixation* root = new Fixation(factory,pieceRadius,initTransform);
+        Fixation* root = new Fixation(factory,fixRadius,initTransform);
         snakeShape->setRoot(root);
         snake->setShape(snakeShape);
 
@@ -50,7 +52,7 @@ namespace GeneLabCore {
             Bone* b = root->addBone(0., 0.,
                                     pieceRadius/(1+1.6180339887 * (i) / 10),
                                     pieceLength/(1+1.6180339887 * (i) / 10),
-                                    pieceRadius/(1+1.6180339887 * (i) / 10),
+                                    fixRadius/(1+1.6180339887 * (i) / 10),
                                     btVector3(-angle,-M_PI/4,-angle),
                                     btVector3(angle,M_PI/4,angle));
 

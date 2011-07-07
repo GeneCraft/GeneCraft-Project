@@ -20,6 +20,7 @@ namespace GeneLabCore {
         QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
         this->request(url, RGET);
         qDebug() << r->error();
+        r->deleteLater();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
             this->id = v.find("_id").value().toString();
@@ -31,8 +32,7 @@ namespace GeneLabCore {
             v.insert("error", r->errorString());
             return v;
         }
-
-        r->deleteLater();
+        return QVariant();
     }
 
     void DbRecord::save(QVariant data) {

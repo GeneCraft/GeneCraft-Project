@@ -30,9 +30,6 @@ namespace GeneLabCore {
         // Return the value from pourcentage x/y [0.0 - 1.0]
         float getValue(float x, float y);
 
-        // Return the value from the grid in x/y
-        float getValue(int x, int y);
-
         // Return the entire grid
         float* getNeurons() {
             return this->neurons;

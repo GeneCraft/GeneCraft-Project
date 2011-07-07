@@ -26,6 +26,7 @@ protected:
 
     btSphereShape* shape;
     btDefaultMotionState* motionState;
+    float density;
 };
 
 }

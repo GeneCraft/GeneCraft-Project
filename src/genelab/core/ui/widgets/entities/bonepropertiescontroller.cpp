@@ -113,8 +113,10 @@ void BonePropertiesController::changeRadiusFromSlider(int value)
 
 void BonePropertiesController::deleteBone()
 {
-    //delete bone;
-    //bone = NULL;
+    bone->remove();
+    emit boneDeleted(bone);
+    delete bone;
+    bone = NULL;
 }
 
 void BonePropertiesController::changeSize()

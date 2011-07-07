@@ -25,6 +25,7 @@ btSphere::~btSphere() {
 
 void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
 {
+    this->density = density;
 //    this->size = size;
 //    this->initialPosition = position;
 //    this->initiaEulerlRotation = EulerRotation;
@@ -57,7 +58,7 @@ btScalar btSphere::computeMass() const
 {
     // volume * density
     // TODO MOVE 5 into density !!
-    return 4/3.*M_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * 5 ;
+    return 4/3.*M_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * density ;
 }
 
 void btSphere::setup()

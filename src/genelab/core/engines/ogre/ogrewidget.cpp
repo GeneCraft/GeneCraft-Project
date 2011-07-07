@@ -102,7 +102,7 @@ namespace GeneLabCore {
 
     }
 
-    void OgreWidget::resizeEvent(QResizeEvent * e)
+    void OgreWidget::resizeEvent(QResizeEvent *)
     {
         this->resized = true;
 

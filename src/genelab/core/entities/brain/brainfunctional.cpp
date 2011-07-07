@@ -118,10 +118,12 @@ float sigmoid(float x)
         int iOut = outputs.indexOf(out);
         if(iOut != -1)
         {
+            foreach(BrainNode* node, trees.at(iOut)) {
+                delete node;
+            }
+
             outputs.removeAt(iOut);
             trees.removeAt(iOut);
-
-            // TODO delete Brain node !!!!!!!!!!!!!!!
         }
     }
 

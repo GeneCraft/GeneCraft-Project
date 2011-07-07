@@ -24,6 +24,7 @@ public:
 signals:
 
     void rigidBodySelected(btRigidBody *);
+    void boneDeleted(Bone *);
 
 public slots:
 

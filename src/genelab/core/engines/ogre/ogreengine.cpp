@@ -41,57 +41,7 @@ namespace GeneLabCore {
         ogreRoot->initialise(false); // don't create a window
     }
 
-    void OgreEngine::initRenderingSystem(unsigned long winId) {
-        // Get the parameters of the window QT created
-        /*
-        //Parameters to pass to Ogre::Root::createRenderWindow()
-        Ogre::NameValuePairList params;
-        //params["useNVPerfHUD"] = "true";
-
-        //The external windows handle parameters are platform-specific
-        Ogre::String externalWindowHandleParams;
-
-        //Accept input focus
-        //setFocusPolicy(Qt::StrongFocus);
-
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-        //positive integer for W32 (HWND handle) - According to Ogre Docs
-        externalWindowHandleParams = Ogre::StringConverter::toString((unsigned int)(winId));
-#endif
-
-#if defined(Q_WS_X11)
-        //poslong:posint:poslong:poslong (display*:screen:windowHandle:XVisualInfo*) for GLX - According to Ogre Docs
-        QX11Info info = x11Info();
-        externalWindowHandleParams  = Ogre::StringConverter::toString((unsigned long)(info.display()));
-        externalWindowHandleParams += ":";
-        externalWindowHandleParams += Ogre::StringConverter::toString((unsigned int)(info.screen()));
-        externalWindowHandleParams += ":";
-        externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(winId()));
-        //externalWindowHandleParams += ":";
-        //externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(info.visual()));
-#endif
-
-        //Add the external window handle parameters to the existing params set.
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-        params["parentWindowHandle"] = externalWindowHandleParams;
-#endif
-
-#if defined(Q_WS_X11)
-        params["parentWindowHandle"] = externalWindowHandleParams;
-#endif
-
-#if defined(Q_WS_MAC)
-        params["macAPI"] = "cocoa";
-        //params["macAPICocoaUseNSView"] = "true";
-#endif
-         //Finally create our window.
-        Ogre::RenderWindow* mOgreWindow = this->ogreRoot->createRenderWindow(
-                "FakeOne",
-                640, 480, false, &params);
-
-        mOgreWindow->setActive(false);
-        mOgreWindow->setVisible(false);
-        //mOgreWindow->destroy();*/
+    void OgreEngine::initRenderingSystem(unsigned long) {
 
     }
 

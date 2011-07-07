@@ -257,7 +257,7 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
     }
 }
 
-void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int column)
+void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int)
 {
     FixationTreeWidgetItem * fixItem = dynamic_cast<FixationTreeWidgetItem*>(item);
     if (fixItem)

@@ -24,7 +24,7 @@ SpiderFamily::SpiderFamily() :
     legRadius   = ((float)qrand())/RAND_MAX * 0.4 + 0.1;
     legLenght   = ((float)qrand())/RAND_MAX * 2 + 0.5;
     kneeRadius  = ((float)qrand())/RAND_MAX * 0.4 + 0.1;
-    headRadius  = ((float)qrand())/RAND_MAX * 1 ; // + legRadius*nbLegs/1.5;
+    headRadius  = ((float)qrand())/RAND_MAX * 1 +0.2; // + legRadius*nbLegs/1.5;
 }
 
 Entity* SpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {

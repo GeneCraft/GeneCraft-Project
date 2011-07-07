@@ -25,7 +25,8 @@ public:
 
    /** add bone and its end fixation in the world */
    void setup();
-
+   /** To remove it without destructing entity */
+   void remove();
    // -------------------------
    // -- getters and setters --
    // -------------------------

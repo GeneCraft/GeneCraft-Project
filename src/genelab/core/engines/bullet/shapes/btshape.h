@@ -16,7 +16,7 @@ public:
     ~btShape();
     btRigidBody * getRigidBody() { return rigidBody; }
     //btCollisionShape *getCollisionShape(){ return collisionShape; }
-    virtual void setSelected(bool selected){};
+    virtual void setSelected(bool){};
 
     virtual void setup(){};
 

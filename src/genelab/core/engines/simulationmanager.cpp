@@ -8,7 +8,7 @@
 
 namespace GeneLabCore {
 
-    SimulationManager::SimulationManager(QMap<QString, Engine*> engines, QObject *parent)
+    SimulationManager::SimulationManager(QMap<QString, Engine*> engines, QObject *)
     {
         this->engines = engines;
         this->renderEngine      = engines.find("Ogre").value();

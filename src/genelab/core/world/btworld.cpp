@@ -33,7 +33,7 @@ namespace GeneLabCore {
     }
 
     // To add a created creature to the world
-    void btWorld::addCreature(Entity* ent) {
+    void btWorld::addCreature(Entity*) {
 
     }
 

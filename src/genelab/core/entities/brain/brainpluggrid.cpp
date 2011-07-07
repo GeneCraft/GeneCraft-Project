@@ -57,11 +57,6 @@ namespace GeneLabCore {
         return this->neurons[qRound(x * size) + qRound(y * size) * size];
     }
 
-    float BrainPlugGrid::getValue(int x, int y) {
-        qDebug() << "SHOULD NOT BE !";
-        return this->neurons[x + y * size];
-    }
-
     void BrainPlugGrid::setSize(int size)
     {
         this->size = size;

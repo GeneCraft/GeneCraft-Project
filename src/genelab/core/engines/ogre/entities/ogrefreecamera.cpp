@@ -172,12 +172,12 @@ void OgreFreeCamera::step()
     }
 }
 
-void OgreFreeCamera::enterViewPortEvent (QEvent *e)
+void OgreFreeCamera::enterViewPortEvent (QEvent *)
 {
 
 }
 
-void OgreFreeCamera::leaveViewPortEvent (QEvent *e)
+void OgreFreeCamera::leaveViewPortEvent (QEvent *)
 {
 
 }

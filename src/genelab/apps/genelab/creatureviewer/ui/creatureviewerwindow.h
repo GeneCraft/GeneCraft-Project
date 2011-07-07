@@ -44,6 +44,9 @@ public slots:
     void saveEntityToDb();
     void removeEntity();
     void enterInWhatsThisMode();
+    void entityDeleted(Entity* ent);
+    void boneDeleted(Bone* bone);
+    void fixationDeleted(Fixation* fix);
 
     // physics
     void togglePhysics();

@@ -28,6 +28,8 @@ public:
 signals:
 
     void rigidBodySelected(btRigidBody *);
+    void boneDeleted(Bone* bone);
+    void fixationDeleted(Fixation* fixation);
 
 public slots:
 

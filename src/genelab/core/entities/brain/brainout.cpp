@@ -2,7 +2,7 @@
 
 namespace GeneLabCore {
 
-    BrainOut::BrainOut(float min, float max, QObject *parent) :
+    BrainOut::BrainOut(float min, float max, QObject *) :
         min(min), max(max), value((min + max) / 2.0)
     {
         connexionInfo = "";

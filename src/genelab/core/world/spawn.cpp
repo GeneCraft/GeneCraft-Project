@@ -56,6 +56,8 @@ namespace GeneLabCore {
             spawn.setZ(Tools::random(minPosition.z(), maxPosition.z()));
             return spawn;
         }
+
+        return btVector3(0, 0, 0);
     }
 
 }

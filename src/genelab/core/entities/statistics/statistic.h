@@ -44,7 +44,6 @@ public:
         }
     }
 
-    // To define how to update statistic value
     virtual void update() = 0;
 
     // To get name

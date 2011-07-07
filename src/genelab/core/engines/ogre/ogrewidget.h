@@ -50,7 +50,7 @@ namespace GeneLabCore {
             return 0;
         }
 
-        void paintEvent(QPaintEvent* evt)
+        void paintEvent(QPaintEvent*)
         {
         }
 

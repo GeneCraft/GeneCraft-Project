@@ -19,7 +19,7 @@ AntFamily::AntFamily() : EntityFamily()
     // head / trunk / metasoma
     headRadius      = Tools::random(0.5,1.2);
     trunkRadius     = Tools::random(0.8,1.2);
-    metasomaRadius  = Tools::random(headRadius,headRadius+1.0);
+    metasomaRadius  = Tools::random((double)headRadius, (double)headRadius+1.0);
 
     // legs
     nbBonesInLeg    = Tools::random(2,3);
