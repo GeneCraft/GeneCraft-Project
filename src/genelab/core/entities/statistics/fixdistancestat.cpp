@@ -2,29 +2,29 @@
 
 #include "body/fixation.h"
 
-namespace GeneLabCore{
+//namespace GeneLabCore{
 
-FixDistanceStat::FixDistanceStat(Fixation *fix) : fix(fix)
-{
-    // Info
-    name = "Fixation distance traveled";
-    unit = "m";
+//FixDistanceStat::FixDistanceStat(Fixation *fix) : fix(fix)
+//{
+//    // Info
+//    name = "Fixation distance traveled";
+//    unit = "m";
 
-    previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
-    updateEachStep = true;
-    updateWhenValueIsRequested = false;
-}
+//    previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
+//    updateEachStep = true;
+//    updateWhenValueIsRequested = false;
+//}
 
-void FixDistanceStat::update()
-{
-    // get new origin
-    btVector3 origin = fix->getRigidBody()->getWorldTransform().getOrigin();
+//void FixDistanceStat::update()
+//{
+//    // get new origin
+//    btVector3 origin = fix->getRigidBody()->getWorldTransform().getOrigin();
 
-    // update value by computing distance between previous origin and new origin
-    value += previousOrigin.distance(origin);
+//    // update value by computing distance between previous origin and new origin
+//    value += previousOrigin.distance(origin);
 
-    // update previous origin
-    previousOrigin = origin;
-}
+//    // update previous origin
+//    previousOrigin = origin;
+//}
 
-}
+//}

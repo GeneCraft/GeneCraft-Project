@@ -8,7 +8,8 @@
 #include "genelabcoreclasses.h"
 #include "sensors/sensor.h"
 #include "effectors/effector.h"
-#include "statistics/statistic.h"
+#include "statistics/statisticsprovider.h"
+#include "statistics/statisticsstorage.h"
 
 namespace GeneLabCore{
 
@@ -64,7 +65,7 @@ public:
         setText(1,QString::number(stat->getValue()));
         setText(2,QString::number(stat->getMinValue()));
         setText(3,QString::number(stat->getMaxValue()));
-        setText(4,QString::number(stat->getAverage()));
+        setText(4,QString::number(stat->getMean()));
         setText(5,QString::number(stat->getSum()));
     }
 

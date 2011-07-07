@@ -1,34 +1,34 @@
-#include "fixaveragevelocitystat.h"
+//#include "fixaveragevelocitystat.h"
 
-#include "body/fixation.h"
+//#include "body/fixation.h"
 
-namespace GeneLabCore{
+//namespace GeneLabCore{
 
-FixAverageVelocityStat::FixAverageVelocityStat(Fixation *fix) : fix(fix)
-{
-    // Info
-    name = "Fixation average velocity";
-    unit = "m / step";
+//FixAverageVelocityStat::FixAverageVelocityStat(Fixation *fix) : fix(fix)
+//{
+//    // Info
+//    name = "Fixation average velocity";
+//    unit = "m / step";
 
-//    totalDistance = .0f;
-//    previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
-//    updateEachStep = true;
-//    updateWhenValueIsRequested = false;
-}
+////    totalDistance = .0f;
+////    previousOrigin = fix->getRigidBody()->getWorldTransform().getOrigin();
+////    updateEachStep = true;
+////    updateWhenValueIsRequested = false;
+//}
 
-void FixAverageVelocityStat::update()
-{
-//    // get new origin
-//    btVector3 origin = fix->getRigidBody()->getWorldTransform().getOrigin();
+//void FixAverageVelocityStat::update()
+//{
+////    // get new origin
+////    btVector3 origin = fix->getRigidBody()->getWorldTransform().getOrigin();
 
-//    // update value by computing distance between previous origin and new origin
-//    totalDistance += previousOrigin.distance(origin);
+////    // update value by computing distance between previous origin and new origin
+////    totalDistance += previousOrigin.distance(origin);
 
-//    // update previous origin
-//    previousOrigin = origin;
+////    // update previous origin
+////    previousOrigin = origin;
 
-//    // compute average velocity
-//    value = totalDistance / nbSteps;
-}
+////    // compute average velocity
+////    value = totalDistance / nbSteps;
+//}
 
-}
+//}

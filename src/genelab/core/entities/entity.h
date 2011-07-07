@@ -73,10 +73,11 @@ public:
     Ressource* getRessource() { return r; }
 
     // Statistics
+    StatisticsStorage * getStatisticsStorage() { return statisticsStorage; }
     void updadeStatistics();
     float getStatisticByName(QString statisticName);
     void updateStatisticByName(QString statisticName);
-    QMap<QString, Statistic *> getStatistics() { return stats; }
+    QMap<QString, StatisticsProvider *> getStatistics() { return stats; }
 
 signals:
 
@@ -100,7 +101,9 @@ protected:
     Ressource* r;
 
     // Statistics
-    QMap<QString, Statistic *> stats;
+    // TODO QList
+    QMap<QString, StatisticsProvider *> stats;
+    StatisticsStorage *statisticsStorage;
 
     // Qt Render
     static EntityPropertiesController *inspectorWidget;

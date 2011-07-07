@@ -1,40 +1,40 @@
-#ifndef FIXAVERAGEVELOCITYSTAT_H
-#define FIXAVERAGEVELOCITYSTAT_H
+//#ifndef FIXAVERAGEVELOCITYSTAT_H
+//#define FIXAVERAGEVELOCITYSTAT_H
 
-#include "genelabcoreclasses.h"
-#include "statistic.h"
-#include "LinearMath/btVector3.h"
+//#include "genelabcoreclasses.h"
+//#include "statistic.h"
+//#include "LinearMath/btVector3.h"
 
-namespace GeneLabCore{
+//namespace GeneLabCore{
 
-/**
- * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
- *
- * Statistics used to know the average velocity of a fixation (all axes combined).
- *
- * Unit : meters / step
- *
- * @version 1.0 | July 2011
- * @author Aurelien Da Campo
- * @author Cyprien Huissoud
- */
-class FixAverageVelocityStat : public Statistic
-{
-public:
+///**
+// * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+// *
+// * Statistics used to know the average velocity of a fixation (all axes combined).
+// *
+// * Unit : meters / step
+// *
+// * @version 1.0 | July 2011
+// * @author Aurelien Da Campo
+// * @author Cyprien Huissoud
+// */
+//class FixAverageVelocityStat : public StatisticsProvider
+//{
+//public:
 
-    FixAverageVelocityStat(Fixation * fix);
-    void update();
+//    FixAverageVelocityStat(Fixation * fix);
+//    void update();
 
-    // To reset average
-    void reset() { Statistic::reset(); totalDistance = 0.0;}
+//    // To reset average
+//    void reset() { StatisticsProvider::reset(); totalDistance = 0.0;}
 
-protected:
+//protected:
 
-    float totalDistance;
-    Fixation *fix;
-    btVector3 previousOrigin;
-};
+//    float totalDistance;
+//    Fixation *fix;
+//    btVector3 previousOrigin;
+//};
 
-}
+//}
 
-#endif // FIXAVERAGEVELOCITYSTAT_H
+//#endif // FIXAVERAGEVELOCITYSTAT_H

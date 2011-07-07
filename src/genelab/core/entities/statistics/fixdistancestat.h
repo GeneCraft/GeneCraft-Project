@@ -2,35 +2,35 @@
 #define FIXDISTANCESTAT_H
 
 #include "genelabcoreclasses.h"
-#include "statistic.h"
+#include "statisticsprovider.h"
 #include "LinearMath/btVector3.h"
 
-namespace GeneLabCore{
+//namespace GeneLabCore{
 
-/**
- * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
- *
- * Statistics used to know the distance traveled by a fixation (all axes combined).
- *
- * Unit : meters
- *
- * @version 1.0 | July 2011
- * @author Aurelien Da Campo
- * @author Cyprien Huissoud
- */
-class FixDistanceStat : public Statistic
-{
-public:
+///**
+// * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
+// *
+// * Statistics used to know the distance traveled by a fixation (all axes combined).
+// *
+// * Unit : meters
+// *
+// * @version 1.0 | July 2011
+// * @author Aurelien Da Campo
+// * @author Cyprien Huissoud
+// */
+//class FixDistanceStat : public StatisticsProvider
+//{
+//public:
 
-    FixDistanceStat(Fixation * fix);
-    void update();
+//    FixDistanceStat(Fixation * fix);
+//    void update();
 
-protected:
+//protected:
 
-    Fixation *fix;
-    btVector3 previousOrigin;
-};
+//    Fixation *fix;
+//    btVector3 previousOrigin;
+//};
 
-}
+//}
 
 #endif // FIXDISTANCESTAT_H

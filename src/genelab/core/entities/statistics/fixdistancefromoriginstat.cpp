@@ -1,29 +1,29 @@
-#include "fixdistancefromoriginstat.h"
+//#include "fixdistancefromoriginstat.h"
 
-#include "body/fixation.h"
+//#include "body/fixation.h"
 
-namespace GeneLabCore{
+//namespace GeneLabCore{
 
-FixDistanceFromOriginStat::FixDistanceFromOriginStat(Fixation *fix) : fix(fix)
-{
-    // Info
-    name = "Fixation distance from origin";
-    unit = "m";
+//FixDistanceFromOriginStat::FixDistanceFromOriginStat(Fixation *fix) : fix(fix)
+//{
+//    // Info
+//    name = "Fixation distance from origin";
+//    unit = "m";
 
-    origin = fix->getRigidBody()->getWorldTransform().getOrigin();
-    updateEachStep = true;
-    updateWhenValueIsRequested = false;
-}
+//    origin = fix->getRigidBody()->getWorldTransform().getOrigin();
+//    updateEachStep = true;
+//    updateWhenValueIsRequested = false;
+//}
 
-void FixDistanceFromOriginStat::update()
-{
-    // update value by computing distance between previous origin and current origin
-    value = origin.distance(fix->getRigidBody()->getWorldTransform().getOrigin());
-}
+//void FixDistanceFromOriginStat::update()
+//{
+//    // update value by computing distance between previous origin and current origin
+//    value = origin.distance(fix->getRigidBody()->getWorldTransform().getOrigin());
+//}
 
-void FixDistanceFromOriginStat::reset() {
-    Statistic::reset();
-    this->origin = fix->getRigidBody()->getWorldTransform().getOrigin();
-}
+//void FixDistanceFromOriginStat::reset() {
+//    StatisticsProvider::reset();
+//    this->origin = fix->getRigidBody()->getWorldTransform().getOrigin();
+//}
 
-}
+//}

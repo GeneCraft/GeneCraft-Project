@@ -82,8 +82,8 @@ namespace GeneLabCore {
     class RotationalMotorsEffector;
 
     // Statistics
-    class Statistic;
-    class FixDistanceStat;
+    class StatisticsProvider;
+    class StatisticsStorage;
 
     // ---------------
     // -- Factories --

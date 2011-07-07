@@ -14,14 +14,17 @@
 #include "body/bone.h"
 
 // Statistics
-#include "statistics/statistic.h"
-#include "statistics/fixdistancestat.h"
-#include "statistics/entityweightstat.h"
-#include "statistics/entityheightstat.h"
-#include "statistics/fixaveragevelocitystat.h"
-#include "statistics/entitytotalbonesstat.h"
-#include "statistics/fixdistancefromoriginstat.h"
-#include "statistics/entitytotalboneslengthstat.h"
+#include "statistics/statisticsprovider.h"
+#include "statistics/statisticsstorage.h"
+#include "statistics/treeshapestats.h"
+
+//#include "statistics/fixdistancestat.h"
+//#include "statistics/entityweightstat.h"
+//#include "statistics/entityheightstat.h"
+//#include "statistics/fixaveragevelocitystat.h"
+//#include "statistics/entitytotalbonesstat.h"
+//#include "statistics/fixdistancefromoriginstat.h"
+//#include "statistics/entitytotalboneslengthstat.h"
 
 namespace GeneLabCore {
 
@@ -33,32 +36,36 @@ Entity::Entity(QString name, QString family, int generation, QObject *parent) :
     this->name          = name;
     this->family        = family;
     this->generation    = generation;
+    this->statisticsStorage = new StatisticsStorage();
 }
 
 void Entity::setup() {
 
     if(treeShape) {
         this->treeShape->setup();
-        Statistic *s;
+        StatisticsProvider *s;
 
-        // Body
-        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
-        this->stats.insert("bodyTotalBonesLength", new EntityTotalBonesLengthStat(this));
-        this->stats.insert("bodyWeight", new EntityWeightStat(this));
-        this->stats.insert("bodyHeight", new EntityHeightStat(this));
+        this->stats.insert("bodyTotalBones", new TreeShapeStats(statisticsStorage,treeShape));
 
-        // Root
-        s = new FixDistanceStat(treeShape->getRoot());
-        s->setName("Root distance traveled");
-        this->stats.insert("rootDistance", s);
 
-        s = new FixAverageVelocityStat(treeShape->getRoot());
-        s->setName("Root average velocity");
-        this->stats.insert("rootAverageVelocity", s);
+//        // Body
+//        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
+//        this->stats.insert("bodyTotalBonesLength", new EntityTotalBonesLengthStat(this));
+//        this->stats.insert("bodyWeight", new EntityWeightStat(this));
+//        this->stats.insert("bodyHeight", new EntityHeightStat(this));
 
-        s = new FixDistanceFromOriginStat(treeShape->getRoot());
-        s->setName("Root distance from origin");
-        this->stats.insert("rootDistanceFromOrigin", s);
+//        // Root
+//        s = new FixDistanceStat(treeShape->getRoot());
+//        s->setName("Root distance traveled");
+//        this->stats.insert("rootDistance", s);
+
+//        s = new FixAverageVelocityStat(treeShape->getRoot());
+//        s->setName("Root average velocity");
+//        this->stats.insert("rootAverageVelocity", s);
+
+//        s = new FixDistanceFromOriginStat(treeShape->getRoot());
+//        s->setName("Root distance from origin");
+//        this->stats.insert("rootDistanceFromOrigin", s);
     }
 }
 
@@ -186,15 +193,15 @@ void Entity::setToMinimalOuts()
 
 void Entity::updadeStatistics(){
 
-    foreach(Statistic * s, stats)
+    foreach(StatisticsProvider * s, stats)
         s->step();
 }
 
 float Entity::getStatisticByName(QString statisticName)
 {
-    if(stats.contains(statisticName))
-        return stats.value(statisticName)->getValue();
-    else
+//    if(stats.contains(statisticName))
+//        return stats.value(statisticName)->getValue();
+//    else
         return 0.0;
 }
 

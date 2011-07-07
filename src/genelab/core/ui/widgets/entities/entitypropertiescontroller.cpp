@@ -14,6 +14,7 @@
 #include "effectors/effector.h"
 #include "brain/brainpluggrid.h"
 #include "effectors/rotationalmotorseffector.h"
+#include "statistics/statisticsstorage.h"
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::EntityPropertiesController), entity(NULL)
@@ -164,7 +165,8 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
 
         // Statistics
         clearTreeWidget(ui->twStats);
-        QMapIterator<QString, Statistic *> iStats(entity->getStatistics());
+
+        QMapIterator<QString, Statistic *> iStats(entity->getStatisticsStorage()->getStatistics());
         iStats.toBack();
         while (iStats.hasPrevious()) {
             Statistic * stat = iStats.previous().value();
@@ -398,7 +400,8 @@ void EntityPropertiesController::resetAllStats(){
 
 void EntityPropertiesController::resetSelectedStat(){
     if(entity){
-        if(ui->twStats->currentItem())
+        if(ui->twStats->currentItem()){
             ((StatisticTreeWidgetItem *) ui->twStats->currentItem())->stat->reset();
+        }
     }
 }

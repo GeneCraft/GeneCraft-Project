@@ -159,7 +159,6 @@ SOURCES += \
     ../genelab/core/world/spawn.cpp \
     ../genelab/core/factories/btofactory.cpp \
     ../genelab/core/factories/btfactory.cpp \
-    ../genelab/core/entities/statistics/statistic.cpp \
     ../genelab/core/entities/statistics/fixdistancestat.cpp \
     ../genelab/core/entities/statistics/entityweightstat.cpp \
     ../genelab/core/entities/statistics/entityheightstat.cpp \
@@ -171,7 +170,10 @@ SOURCES += \
     ../genelab/core/entities/families/antfamily.cpp \
     ../genelab/core/entities/statistics/fixdistancefromoriginstat.cpp \
     ../genelab/core/entities/statistics/entitytotalboneslengthstat.cpp \
-    ../genelab/core/entities/sensors/contactsensor.cpp
+    ../genelab/core/entities/sensors/contactsensor.cpp \
+    ../genelab/core/entities/statistics/statisticsstorage.cpp \
+    ../genelab/core/entities/statistics/treeshapestats.cpp \
+    ../genelab/core/entities/statistics/statisticsprovider.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -242,7 +244,6 @@ HEADERS += \
     ../genelab/core/factories/btofactory.h \
     ../genelab/core/factories/btfactory.h \
     ../genelab/core/engines/ogre/entities/ogrefreecamera.h \
-    ../genelab/core/entities/statistics/statistic.h \
     ../genelab/core/entities/statistics/fixdistancestat.h \
     ../genelab/core/entities/statistics/entityweightstat.h \
     ../genelab/core/entities/statistics/entityheightstat.h \
@@ -254,7 +255,10 @@ HEADERS += \
     ../genelab/core/entities/families/antfamily.h \
     ../genelab/core/entities/statistics/fixdistancefromoriginstat.h \
     ../genelab/core/entities/statistics/entitytotalboneslengthstat.h \
-    ../genelab/core/entities/sensors/contactsensor.h
+    ../genelab/core/entities/sensors/contactsensor.h \
+    ../genelab/core/entities/statistics/statisticsstorage.h \
+    ../genelab/core/entities/statistics/treeshapestats.h \
+    ../genelab/core/entities/statistics/statisticsprovider.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
