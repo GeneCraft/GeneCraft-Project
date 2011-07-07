@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
     world->setScene(scene);
 
     world->setup();
-    for(int i = 0; i < 100; i++) {
+    for(int i = 0; i < 10; i++) {
 
         EntityFamily *spider = new AntFamily();
         btVector3 pos = world->getSpawnPosition();

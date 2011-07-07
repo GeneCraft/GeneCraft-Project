@@ -8,6 +8,8 @@ QT       += core testlib network gui
 
 TARGET = genelab_worker
 CONFIG   += console
+CONFIG   += qxt
+QXT	 += core
 CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -47,7 +49,8 @@ win32 {
 }
 
 unix {
-    LIBS += -framework QxtCore
+#    LIBS += -L/usr/local/Qxt/lib
+#    LIBS += -lQxtCore
 }
 
 LIBS += -lBulletDynamics
