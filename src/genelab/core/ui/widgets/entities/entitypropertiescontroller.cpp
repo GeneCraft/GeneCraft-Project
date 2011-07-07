@@ -301,14 +301,16 @@ void EntityPropertiesController::selectSensorFixation()
 
 void EntityPropertiesController::setBrainSize()
 {
-    //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
-    int size = ui->sBrainPluggridSize->value();
-    ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));
-    entity->getBrain()->getPlugGrid()->setSize(size);
+    if(entity){
+        //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
+        int size = ui->sBrainPluggridSize->value();
+        ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));
+        entity->getBrain()->getPlugGrid()->setSize(size);
 
-    // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
-    this->brainViz->setBrain(entity->getBrain());
-    this->brainDezViz->setBrain(entity->getBrain());
+        // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
+        this->brainViz->setBrain(entity->getBrain());
+        this->brainDezViz->setBrain(entity->getBrain());
+    }
 }
 
 void EntityPropertiesController::clearSensors()

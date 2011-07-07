@@ -73,8 +73,8 @@ EntityPropertiesController *Entity::getInspectorWidget(Entity * selectedCreature
     if(inspectorWidget == NULL)
         inspectorWidget = new EntityPropertiesController();
 
-    if(selectedCreature != NULL)
-        inspectorWidget->setEntity(selectedCreature,selectedBody);
+
+    inspectorWidget->setEntity(selectedCreature,selectedBody);
 
     return inspectorWidget;
 }
