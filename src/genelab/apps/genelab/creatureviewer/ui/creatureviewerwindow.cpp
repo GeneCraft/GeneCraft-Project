@@ -64,6 +64,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include "mutation/mutationsmanager.h"
+
 using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
@@ -222,26 +224,26 @@ void CreatureViewerWindow::init() {
     QVariantList staticBoxes;
 
     // MineCraft Floor
-    int sizeX = 10;
-    int sizeZ = 10;
-    for(int i=-10;i<10;++i){
-        for(int j=-10;j<10;++j){
+//    int sizeX = 10;
+//    int sizeZ = 10;
+//    for(int i=-10;i<10;++i){
+//        for(int j=-10;j<10;++j){
 
-            double sizeY = Tools::random(0.1, 3.0);
+//            double sizeY = Tools::random(0.1, 3.0);
 
-            QVariantMap staticBox;
-            staticBox.insert("posX",i*10);
-            staticBox.insert("posY",sizeY/2.0);
-            staticBox.insert("posZ",j*10);
-            staticBox.insert("eulerX",0);
-            staticBox.insert("eulerY",0);
-            staticBox.insert("eulerZ",0);
-            staticBox.insert("sizeX",sizeX);
-            staticBox.insert("sizeY",sizeY);
-            staticBox.insert("sizeZ",sizeZ);
-            staticBoxes.append(staticBox);
-        }
-    }
+//            QVariantMap staticBox;
+//            staticBox.insert("posX",i*10);
+//            staticBox.insert("posY",sizeY/2.0);
+//            staticBox.insert("posZ",j*10);
+//            staticBox.insert("eulerX",0);
+//            staticBox.insert("eulerY",0);
+//            staticBox.insert("eulerZ",0);
+//            staticBox.insert("sizeX",sizeX);
+//            staticBox.insert("sizeY",sizeY);
+//            staticBox.insert("sizeZ",sizeZ);
+//            staticBoxes.append(staticBox);
+//        }
+//    }
 
 //    // Ruin Floor
 //    for(int i=0;i<100;++i){
@@ -400,35 +402,34 @@ void CreatureViewerWindow::spawnNew() {
         delete old;
     }
 
-    Entity *e;
-    for(int i = 0; i < 5; i++) {
+    Entity *e = NULL;
 
-        e = NULL;
-        int enttype = Tools::random(0,2);
-        //enttype = 1;
 
+    // Mutations tests
+    MutationsManager *mm = new MutationsManager(QVariant());
+
+
+    SnakeFamily *family = new SnakeFamily();
+    //SpiderFamily *family = new SpiderFamily();
+    //AntFamily *family = new AntFamily();
+    btVector3 pos = world->getSpawnPosition();
+    Entity *originEntity = family->createEntity(shapesFactory, pos);
+    QVariant originGenome = originEntity->serialize();
+
+    const QVariant treeShapeVariant = originGenome.toMap().value("body").toMap().value("shape");
+
+    for(int i = 0; i < 10; i++) {
+
+        // toMap return A COPY !!!
+        QVariantMap newGenome = originGenome.toMap();
+        QVariant newTreeShapeVariant = mm->mutateTreeShape(treeShapeVariant);
+
+        QVariantMap newBodyMap = originGenome.toMap().value("body").toMap();
+        newBodyMap.insert("shape", newTreeShapeVariant);
+        newGenome.insert("body",newBodyMap);
 
         btVector3 pos = world->getSpawnPosition();
-
-        switch(enttype)
-        {
-
-        case 0 :{
-            SpiderFamily *spider = new SpiderFamily();
-            e = spider->createEntity(shapesFactory, pos);
-            break;
-        }
-        case 1 : {
-            SnakeFamily *snakeFamily = new SnakeFamily();
-            e = snakeFamily->createEntity(shapesFactory, pos);
-            break;
-        }
-        case 2 : {
-            AntFamily *antFamily = new AntFamily();
-            e = antFamily->createEntity(shapesFactory, pos);
-            break;
-        }
-        }
+        e = GenericFamily::createEntity(newGenome,shapesFactory,pos);
 
         if(e){
             e->setup();
@@ -436,6 +437,45 @@ void CreatureViewerWindow::spawnNew() {
             ents.append(e);
         }
     }
+
+
+
+
+//    for(int i = 0; i < 5; i++) {
+
+//        e = NULL;
+//        int enttype = Tools::random(0,2);
+//        //enttype = 1;
+
+
+//        btVector3 pos = world->getSpawnPosition();
+
+//        switch(enttype)
+//        {
+
+//        case 0 :{
+//            SpiderFamily *spider = new SpiderFamily();
+//            e = spider->createEntity(shapesFactory, pos);
+//            break;
+//        }
+//        case 1 : {
+//            SnakeFamily *snakeFamily = new SnakeFamily();
+//            e = snakeFamily->createEntity(shapesFactory, pos);
+//            break;
+//        }
+//        case 2 : {
+//            AntFamily *antFamily = new AntFamily();
+//            e = antFamily->createEntity(shapesFactory, pos);
+//            break;
+//        }
+//        }
+
+//        if(e){
+//            e->setup();
+//            entitiesEngine->addEntity(e);
+//            ents.append(e);
+//        }
+//    }
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()

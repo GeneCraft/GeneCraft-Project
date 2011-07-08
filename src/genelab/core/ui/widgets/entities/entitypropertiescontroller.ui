@@ -237,7 +237,7 @@ p, li { white-space: pre-wrap; }
          </column>
          <column>
           <property name="text">
-           <string>Average</string>
+           <string>Mean</string>
           </property>
          </column>
          <column>

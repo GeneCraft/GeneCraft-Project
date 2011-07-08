@@ -272,7 +272,8 @@ QVariant Bone::serialize()
     // End fixation
     bone.insert("endFix",endFix->serialize());
 
-    bone.insert("muscle", this->motorsEffector->serialize());
+    if(motorsEffector) // FIXME you can't serialize motorsEffector if entity isn't still setup !
+        bone.insert("muscle", this->motorsEffector->serialize());
 
     return bone;
 }
