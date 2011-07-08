@@ -12,16 +12,16 @@ namespace GeneLabCore{
 TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * treeshape) :
     StatisticsProvider(statsStorage), treeshape(treeshape)
 {
-    treeshapeVerticalHeight = new Statistic("Treeshape Vertical Height",0,"m");
+    treeshapeVerticalHeight = new Statistic("Treeshape Vertical Height","m");
     statsStorage->registerStat("Treeshape Vertical Height",treeshapeVerticalHeight);
 
-    treeshapeBones = new Statistic("Treeshape Bones",0,"bones");
+    treeshapeBones = new Statistic("Treeshape Bones","bones");
     statsStorage->registerStat("Treeshape Bones",treeshapeBones);
 
-    treeshapeBonesLength = new Statistic("Treeshape Bones Length",0,"m");
+    treeshapeBonesLength = new Statistic("Treeshape Bones Length","m");
     statsStorage->registerStat("Treeshape Bones Length",treeshapeBonesLength);
 
-    treeshapeWeight = new Statistic("Treeshape Weight",0,"kg");
+    treeshapeWeight = new Statistic("Treeshape Weight","kg");
     statsStorage->registerStat("Treeshape Weight",treeshapeWeight);
 }
 
@@ -57,7 +57,7 @@ void TreeShapeStats::recurciveUpdate(Bone *b)
         recurciveUpdate(b);
 }
 
-void TreeShapeStats::update()
+void TreeShapeStats::step()
 {
     // TREESHAPE BONES LENGTH
     length = 0.0;

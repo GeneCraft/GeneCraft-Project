@@ -17,6 +17,7 @@
 #include "statistics/statisticsprovider.h"
 #include "statistics/statisticsstorage.h"
 #include "statistics/treeshapestats.h"
+#include "statistics/fixationstats.h"
 
 //#include "statistics/fixdistancestat.h"
 //#include "statistics/entityweightstat.h"
@@ -43,11 +44,11 @@ void Entity::setup() {
 
     if(treeShape) {
         this->treeShape->setup();
-        StatisticsProvider *s;
 
-        this->stats.insert("bodyTotalBones", new TreeShapeStats(statisticsStorage,treeShape));
+        this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
+        this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"Root"));
 
-
+//        StatisticsProvider *s;
 //        // Body
 //        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
 //        this->stats.insert("bodyTotalBonesLength", new EntityTotalBonesLengthStat(this));
@@ -208,7 +209,7 @@ Statistic* Entity::getStatisticByName(QString statisticName)
 void Entity::updateStatisticByName(QString statisticName)
 {
     if(stats.contains(statisticName))
-        stats.value(statisticName)->update();
+        stats.value(statisticName)->step();
 }
 
 }

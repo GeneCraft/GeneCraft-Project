@@ -405,7 +405,7 @@ void CreatureViewerWindow::spawnNew() {
 
         e = NULL;
         int enttype = Tools::random(0,2);
-        enttype = 1;
+        //enttype = 1;
 
 
         btVector3 pos = world->getSpawnPosition();

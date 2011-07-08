@@ -173,7 +173,8 @@ SOURCES += \
     ../genelab/core/entities/sensors/contactsensor.cpp \
     ../genelab/core/entities/statistics/statisticsstorage.cpp \
     ../genelab/core/entities/statistics/treeshapestats.cpp \
-    ../genelab/core/entities/statistics/statisticsprovider.cpp
+    ../genelab/core/entities/statistics/statisticsprovider.cpp \
+    ../genelab/core/entities/statistics/fixationstats.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -258,7 +259,8 @@ HEADERS += \
     ../genelab/core/entities/sensors/contactsensor.h \
     ../genelab/core/entities/statistics/statisticsstorage.h \
     ../genelab/core/entities/statistics/treeshapestats.h \
-    ../genelab/core/entities/statistics/statisticsprovider.h
+    ../genelab/core/entities/statistics/statisticsprovider.h \
+    ../genelab/core/entities/statistics/fixationstats.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

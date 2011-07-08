@@ -393,7 +393,7 @@ void EntityPropertiesController::updateStats(){
 void EntityPropertiesController::resetAllStats(){
     if(entity){
         for(int i=0; i<ui->twStats->topLevelItemCount(); ++i) {
-            ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->stat->reset();
+            ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->stat->resetAll();
         }
     }
 }
@@ -401,7 +401,7 @@ void EntityPropertiesController::resetAllStats(){
 void EntityPropertiesController::resetSelectedStat(){
     if(entity){
         if(ui->twStats->currentItem()){
-            ((StatisticTreeWidgetItem *) ui->twStats->currentItem())->stat->reset();
+            ((StatisticTreeWidgetItem *) ui->twStats->currentItem())->stat->resetAll();
         }
     }
 }

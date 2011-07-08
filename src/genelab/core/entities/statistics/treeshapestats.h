@@ -12,7 +12,7 @@ class TreeShapeStats : public StatisticsProvider
 public:
 
     TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * treeshape);
-    void update();
+    void step();
 
 protected:
 

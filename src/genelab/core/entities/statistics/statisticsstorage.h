@@ -1,18 +1,21 @@
 #ifndef STATISTICSSTORAGE_H
 #define STATISTICSSTORAGE_H
 
+#include <QObject>
 #include <QMap>
 #include <QString>
 #include <float.h>
 
 namespace GeneLabCore{
 
-class Statistic
+class Statistic : public QObject
 {
+    Q_OBJECT
+
     public :
 
-    Statistic(QString name, float initialValue, QString unit) :
-        name(name), value(initialValue), min(FLT_MAX), max(FLT_MIN), unit(unit), nbValues(0), sum(0), resetable(true) {
+    Statistic(QString name, QString unit) :
+        name(name), unit(unit), value(0), min(FLT_MAX), max(FLT_MIN), sum(0), nbValues(0), resetable(true) {
     }
 
     // To get unit
@@ -72,19 +75,15 @@ class Statistic
     }
 
     // To reset
-    void reset(){
+    void resetAll();
 
-        if(resetable)
-        {
-            min = FLT_MAX;
-            max = FLT_MIN;
+signals:
 
-            value = sum = 0.0;
-            nbValues = 0;
-        }
-    }
+    void reseted();
 
 private:
+
+    QString name, unit;
 
     // The statistic values
     float value, min, max, sum;
@@ -94,7 +93,6 @@ private:
 
     bool resetable;
 
-    QString name, unit;
 };
 
 /**
@@ -114,7 +112,7 @@ public:
     StatisticsStorage();
 
     // To register a statistics
-    Statistic * registerStat(QString name, float initialValue, QString unit);
+    Statistic * registerStat(QString name, QString unit);
     void registerStat(QString name, Statistic *stat);
 
     // To create or set a statistics value

@@ -8,8 +8,4 @@ StatisticsProvider::StatisticsProvider(StatisticsStorage *statsStorage) : statsS
 {
 }
 
-void StatisticsProvider::step(){
-    update();
-}
-
 }

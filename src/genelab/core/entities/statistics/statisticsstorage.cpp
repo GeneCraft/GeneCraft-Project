@@ -6,9 +6,9 @@ namespace GeneLabCore{
 StatisticsStorage::StatisticsStorage() {}
 
 // To register a statistics
-Statistic * StatisticsStorage::registerStat(QString name, float initialValue, QString unit) {
+Statistic * StatisticsStorage::registerStat(QString name, QString unit) {
 
-    Statistic * s = new Statistic(name, initialValue,unit);
+    Statistic * s = new Statistic(name,unit);
     stats.insert(name, s);
     return s;
 }
@@ -39,6 +39,20 @@ float StatisticsStorage::getValue(QString name){
 // To know if a stats exist
 bool StatisticsStorage::exists(QString name){
     return stats.contains(name);
+}
+
+void Statistic::resetAll(){
+
+    if(resetable)
+    {
+        min = FLT_MAX;
+        max = FLT_MIN;
+
+        value = sum = 0.0;
+        nbValues = 0;
+
+        emit reseted();
+    }
 }
 
 }

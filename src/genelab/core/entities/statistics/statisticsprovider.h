@@ -19,14 +19,14 @@ namespace GeneLabCore{
  * @author Aurelien Da Campo
  * @author Cyprien Huissoud
  */
-class StatisticsProvider
+class StatisticsProvider : public QObject
 {
+    Q_OBJECT
 public:
     StatisticsProvider(StatisticsStorage * statsStorage);
 
     // To step the statistic
-    virtual void step();
-    virtual void update() = 0;
+    virtual void step() = 0;
 
 protected:
 
