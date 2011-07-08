@@ -75,13 +75,13 @@ int main(int argc, char *argv[])
     zoneSpawn.insert("maxX", (float)60);
     zoneSpawn.insert("maxY", (float)30);
     zoneSpawn.insert("maxZ", (float)60);
-    spawns.append(zoneSpawn);
+    //spawns.append(zoneSpawn);
 
     positionSpawn.insert("type", (int)Spawn::Position);
     positionSpawn.insert("x", -10);
     positionSpawn.insert("y", 15);
     positionSpawn.insert("z", -10);
-    //spawns.append(positionSpawn);
+    spawns.append(positionSpawn);
 
     // Static boxes
     QVariantList staticBoxes;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
-    r = new DbRecord(database, "BestSnake");
+    r = new DbRecord(database, "HighestSpider" + QString::number(time(NULL)));
     r->load();
 
     // Spider
@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
     world->setup();
     for(int i = 0; i < MAX_ENTITY; i++) {
 
-        EntityFamily *spider = new SnakeFamily();
+        EntityFamily *spider = new SpiderFamily();
         btVector3 pos = world->getSpawnPosition();
         e = spider->createEntity(shapesFactory, pos);
         e->setup();
@@ -222,7 +222,7 @@ int main(int argc, char *argv[])
 
             for(int i = 0; i < MAX_ENTITY; i++) {
 
-                EntityFamily *spider = new SnakeFamily();
+                EntityFamily *spider = new SpiderFamily();
                 btVector3 pos = world->getSpawnPosition();
                 e = spider->createEntity(shapesFactory, pos);
                 e->setup();
