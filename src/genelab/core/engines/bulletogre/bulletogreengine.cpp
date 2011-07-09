@@ -45,8 +45,10 @@ void BulletOgreEngine::step()
     {
         body = it.next();
         btTransform transform = body.rigidBody->getWorldTransform();
-        if(transform.getOrigin().x() != transform.getOrigin().x())
+        if(transform.getOrigin().x() != transform.getOrigin().x()) {
+            qDebug() << body.entity << body.node << body.rigidBody;
             continue;
+        }
 
         body.node->setPosition(transform.getOrigin().x(),
                                 transform.getOrigin().y(),

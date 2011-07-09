@@ -34,6 +34,7 @@ namespace GeneLabCore {
         QVariantMap rootFixMap = treeShapeMap.value("rootFix").toMap();
 
         root = new Fixation(shapesFactory, rootFixMap.value("radius").toDouble(), initTransform);
+
     }
 
     void TreeShape::buildFixFromGenotype(Fixation *fix, QVariant fixGenotype)

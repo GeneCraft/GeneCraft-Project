@@ -11,25 +11,25 @@ namespace GeneLabCore {
 MutationsManager::MutationsManager(QVariant mutationsParams)
 {
     // Bone Length mutation
-    probOfBoneLengthMutation    = 0.6;
+    probOfBoneLengthMutation    = 0.1;
     minFactOfBoneLengthMutation = 0.5;
     maxFactOfBoneLengthMutation = 1.5;
-    minBoneLength               = 0.01;
+    minBoneLength               = 0.1;
     maxBoneLength               = 5.0;
 
     // Bone radius mutation
-    probOfBoneRadiusMutation    = 0.6;
+    probOfBoneRadiusMutation    = 0.1;
     minFactOfBoneRadiusMutation = 0.5;
     maxFactOfBoneRadiusMutation = 1.5;
-    minBoneRadius               = 0.01;
+    minBoneRadius               = 0.1;
     maxBoneRadius               = 2.0;
 
     // Fixation radius mutation
-    probOfFixRadiusMutation    = 0.6;
+    probOfFixRadiusMutation    = 0.1;
     minFactOfFixRadiusMutation = 0.5;
     maxFactOfFixRadiusMutation = 1.5;
-    minFixRadius               = 0.01;
-    maxFixRadius               = 5.0;
+    minFixRadius               = 0.1;
+    maxFixRadius               = 2.0;
 }
 
 
@@ -46,14 +46,14 @@ QVariant MutationsManager::mutateTreeShape(const QVariant &treeShapeVariant)
     QVariantMap rootFixMap = rootFixVariant.toMap(); // COPY !
     QVariantList newBonesList;
     foreach(QVariant boneVariant, rootFixMap.value("bones").toList())
-        newBonesList.append(recurciveMutateTreeShape(boneVariant));
+        newBonesList.append(recursiveMutateTreeShape(boneVariant));
 
     rootFixMap.insert("bones",newBonesList);
     treeShapeMap.insert("rootFix",rootFixMap);
     return treeShapeMap;
 }
 
-QVariant MutationsManager::recurciveMutateTreeShape(QVariant &boneVariant) {
+QVariant MutationsManager::recursiveMutateTreeShape(QVariant &boneVariant) {
 
     // mutate bone
     boneVariant = mutateBone(boneVariant);
@@ -67,7 +67,7 @@ QVariant MutationsManager::recurciveMutateTreeShape(QVariant &boneVariant) {
     QVariantMap endFixMap = endFixVariant.toMap(); // COPY !
     QVariantList newBonesList;
     foreach(QVariant boneVariant, endFixMap.value("bones").toList())
-        newBonesList.append(recurciveMutateTreeShape(boneVariant));
+        newBonesList.append(recursiveMutateTreeShape(boneVariant));
 
     endFixMap.insert("bones",newBonesList);
     boneVariantMap.insert("endFix",endFixMap);
@@ -106,19 +106,27 @@ void MutationsManager::mutate(QVariantMap &map, QString key, float probOfMutatio
     // mutation ?
     if(Tools::random(0.f,1.f) <= probOfMutation) {
 
-        for(int i=0; i < MAX_MUTATION_TRIES; ++i){
+        //for(int i=0; i < MAX_MUTATION_TRIES; ++i){
 
             float factor = Tools::random(minFactor,maxFactor);
             float newValue = factor * map.value(key).toDouble();
 
             // correct value
-            if(newValue >= minValue && newValue <= maxValue){
-                map.insert(key,QVariant((double)newValue));
-                break;
-            }
+            //if(newValue >= minValue && newValue <= maxValue){
+            //} // La capé serait mieux
 
-            qDebug() << Q_FUNC_INFO << "Incorrect mutation !" << factor << key << " : " << newValue;
-        }
+            if(newValue < minValue)
+                newValue = minValue;
+
+            if(newValue > maxValue)
+                newValue = maxValue;
+
+
+            map.insert(key,QVariant((double)newValue));
+            //break;
+
+            //qDebug() << Q_FUNC_INFO << "Incorrect mutation !" << factor << key << " : " << newValue;
+        //}
     }
 }
 

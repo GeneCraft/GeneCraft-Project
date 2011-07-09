@@ -33,6 +33,7 @@ protected:
 
     // specific data
     int nbSteps;
+    float sum;
     float distance;
     btVector3 previousOrigin, refOrigin;
 };

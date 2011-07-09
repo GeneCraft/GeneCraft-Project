@@ -16,10 +16,10 @@ public:
     // To mutate a treeshape
     QVariant mutateTreeShape(const QVariant &treeShapeVariant);
 
-    // To mutate a fixation (Not recurcively)
+    // To mutate a fixation (Not recursively)
     QVariant mutateBone(const QVariant &boneVariant);
 
-    // To mutate a fixation (Not recurcively)
+    // To mutate a fixation (Not recursively)
     QVariant mutateFixation(const QVariant &fixVariant);
 
 private:
@@ -27,7 +27,7 @@ private:
     // To mutate a value in a map
     void mutate(QVariantMap &map, QString key, float probOfMutation, float minFactor, float maxFactor, float minValue, float maxValue);
 
-    QVariant recurciveMutateTreeShape(QVariant &boneVariant);
+    QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
     // BONE
 

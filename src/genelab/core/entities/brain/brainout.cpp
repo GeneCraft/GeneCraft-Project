@@ -12,6 +12,7 @@ namespace GeneLabCore {
         min = data.toMap()["min"].toFloat();
         max = data.toMap()["max"].toFloat();
         connexionInfo = data.toMap()["connexionInfo"].toString();
+        value = (min + max) / 2.0;
     }
 
     QVariant BrainOut::serialize() {

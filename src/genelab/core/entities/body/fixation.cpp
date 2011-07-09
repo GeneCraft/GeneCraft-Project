@@ -48,7 +48,9 @@ namespace GeneLabCore {
         this->entity            = NULL;
         this->delegatedSetup    = true;
 
-        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
+        this->rigidBody->setFriction(FIXATION_FRICTION);
+
+
     }
 
 
@@ -66,8 +68,11 @@ namespace GeneLabCore {
 
         sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
         this->rigidBody     = sphere->getRigidBody();
-        this->rigidBody->setFriction(FIXATION_FRICTION); ////////////////////////////////////////// TEST
+        this->rigidBody->setFriction(FIXATION_FRICTION);
         delegatedSetup      = false;
+
+
+
     }
 
     void Fixation::remove() {

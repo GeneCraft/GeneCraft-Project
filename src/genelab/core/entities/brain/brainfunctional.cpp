@@ -356,13 +356,13 @@ float sigmoid(float x)
                 func += this->createRandomFunc(depth -1);
             }
         }
-        else if(rand > 40 &&rand < 70 && depth > 1) {
+        else if(rand < 60 && depth > 1) {
             func += "SINUS ,";
             func += this->createRandomFunc(depth -1);
             func += this->createRandomFunc(depth -1);
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
-        else if(rand > 70  && rand < 80  && depth > 1) {
+        else if(rand < 70  && depth > 1) {
             int maxMem = 20;
             int subchoix = qrand()%5;
             if(subchoix == 3) {
@@ -392,6 +392,10 @@ float sigmoid(float x)
                 func += this->createRandomFunc(depth -1);
             }
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
+        } else if(rand < 80) {
+            func += "CONST ";
+            float x = ((float)qrand())/RAND_MAX*10 - 10; //  0.0 to 1.0
+            func += QString::number(x) + ",";
         }
         else {
             func += "IN ";

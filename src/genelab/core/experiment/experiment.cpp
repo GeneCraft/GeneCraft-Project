@@ -1,5 +1,4 @@
 #include "experiment.h"
 
-Experiment::Experiment()
-{
+namespace GeneLabCore {
 }

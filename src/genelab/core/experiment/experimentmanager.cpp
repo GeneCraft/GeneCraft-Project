@@ -1,5 +1,4 @@
 #include "experimentmanager.h"
 
-ExperimentManager::ExperimentManager()
-{
+namespace GeneLabCore {
 }

@@ -48,6 +48,7 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform, this);
 
     this->shapesFactory = shapesFactory;
+
 }
 
 

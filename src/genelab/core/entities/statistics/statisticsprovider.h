@@ -6,7 +6,7 @@
 #include <QDebug>
 #include "genelabcoreclasses.h"
 
-namespace GeneLabCore{
+namespace GeneLabCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

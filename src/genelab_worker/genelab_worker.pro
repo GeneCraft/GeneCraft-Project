@@ -9,7 +9,7 @@ QT       += core testlib network gui
 TARGET = genelab_worker
 CONFIG   += console
 CONFIG   += qxt
-#QXT	 += core
+QXT	 += core
 #CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -115,6 +115,7 @@ SOURCES += \
     ../genelab/core/entities/statistics/statisticsstorage.cpp \
     ../genelab/core/entities/statistics/treeshapestats.cpp \
     ../genelab/core/entities/statistics/statisticsprovider.cpp \
+    ../genelab/core/entities/statistics/fixationstats.cpp \
     ../genelab/core/factories/btshapesfactory.cpp \
     ../genelab/core/factories/worldfactory.cpp \
     ../genelab/core/factories/btfactory.cpp \
@@ -134,7 +135,8 @@ SOURCES += \
     ../genelab/core/experiment/experiment.cpp \
     ../genelab/core/experiment/experimentmanager.cpp \
     ../genelab/core/utils/tools.cpp \
-    main.cpp
+    main.cpp \
+    ../genelab/core/experiment/result.cpp
 
 HEADERS += \
     ../genelab/core/engines/engine.h \
@@ -183,6 +185,7 @@ HEADERS += \
     ../genelab/core/entities/statistics/statisticsstorage.h \
     ../genelab/core/entities/statistics/treeshapestats.h \
     ../genelab/core/entities/statistics/statisticsprovider.h \
+    ../genelab/core/entities/statistics/fixationstats.h \
     ../genelab/core/factories/worldfactory.h \
     ../genelab/core/factories/ressources/ressource.h \
     ../genelab/core/factories/btfactory.h \
@@ -203,7 +206,8 @@ HEADERS += \
     ../genelab/core/experiment/experiment.h \
     ../genelab/core/experiment/experimentmanager.h \
     ../genelab/core/utils/tools.h \
-    ../genelab/core/genelabcoreclasses.h
+    ../genelab/core/genelabcoreclasses.h \
+    ../genelab/core/experiment/result.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

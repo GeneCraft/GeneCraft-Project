@@ -403,7 +403,10 @@ void CreatureViewerWindow::spawnNew() {
     }
 
     // RANDOM ENTITIES
-    spawnRandomEntities(10);
+    spawnRandomEntities(1);
+    Entity* e = ents.first();
+
+    spawnMutationSample(e, 30);
 
     // MUTATION
 //    //CaterpillarFamily *family = new CaterpillarFamily();
@@ -423,10 +426,10 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // Mutations tests
     MutationsManager *mm = new MutationsManager(QVariant());
 
-    originEntity->setup();
+    //originEntity->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-    entitiesEngine->addEntity(originEntity);
-    ents.append(originEntity);
+    //entitiesEngine->addEntity(originEntity);
+    //ents.append(originEntity);
     QVariant originGenome = originEntity->serialize();
 
     // circle
@@ -436,7 +439,6 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // mutations
     for(int i = 0; i < nbCreatures; i++) {
 
-        // toMap return A COPY !!!
         QVariantMap newGenome = originGenome.toMap();
         const QVariant treeShapeVariant = originGenome.toMap().value("body").toMap().value("shape");
         QVariant newTreeShapeVariant = mm->mutateTreeShape(treeShapeVariant);
@@ -445,7 +447,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
         newBodyMap.insert("shape", newTreeShapeVariant);
         newGenome.insert("body",newBodyMap);
 
-        btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r);
+        btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 
         e = GenericFamily::createEntity(newGenome,shapesFactory,pos + originPos);
 
@@ -454,6 +456,8 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
             entitiesEngine->addEntity(e);
             ents.append(e);
             originGenome = e->serialize();
+        } else {
+            qDebug() << "NOT CREATED ANY ENTITY ... STRANGE !";
         }
     }
 }
@@ -466,7 +470,7 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
     for(int i = 0; i < nbEntities; i++) {
 
         int enttype = Tools::random(0,3);
-        enttype = 3;
+        enttype = 2;
 
         btVector3 pos = world->getSpawnPosition();
 
