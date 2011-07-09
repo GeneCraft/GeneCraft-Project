@@ -16,9 +16,15 @@ public:
     ~btShape();
     btRigidBody * getRigidBody() { return rigidBody; }
     //btCollisionShape *getCollisionShape(){ return collisionShape; }
-    virtual void setSelected(bool){};
 
-    virtual void setup(){};
+    // To get the world
+    //btWorld *getWorld() { return world; }
+
+    // What to do when shape is selected ?
+    virtual void setSelected(bool){}
+
+    // How to setup the shape in the world ?
+    virtual void setup(){}
 
 signals:
 

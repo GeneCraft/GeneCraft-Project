@@ -175,7 +175,8 @@ SOURCES += \
     ../genelab/core/entities/statistics/treeshapestats.cpp \
     ../genelab/core/entities/statistics/statisticsprovider.cpp \
     ../genelab/core/entities/statistics/fixationstats.cpp \
-    ../genelab/core/entities/mutation/mutationsmanager.cpp
+    ../genelab/core/entities/mutation/mutationsmanager.cpp \
+    ../genelab/core/entities/families/caterpillarfamily.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -262,7 +263,8 @@ HEADERS += \
     ../genelab/core/entities/statistics/treeshapestats.h \
     ../genelab/core/entities/statistics/statisticsprovider.h \
     ../genelab/core/entities/statistics/fixationstats.h \
-    ../genelab/core/entities/mutation/mutationsmanager.h
+    ../genelab/core/entities/mutation/mutationsmanager.h \
+    ../genelab/core/entities/families/caterpillarfamily.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

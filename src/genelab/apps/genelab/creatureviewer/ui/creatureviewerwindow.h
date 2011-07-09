@@ -76,6 +76,8 @@ private:
 
 private slots:
     void spawnNew();
+    void spawnRandomEntities(int nbEntities);
+    void spawnMutationSample(Entity *originEntity, int nbCreatures);
 };
 
 #endif // CREATUREVIEWER_H

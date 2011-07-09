@@ -77,6 +77,9 @@ namespace GeneLabCore {
 
         QVariant serialize();
 
+        // To get the sphere world
+        btShapesFactory *getShapesFactory() { return shapesFactory; }
+
         /**
          * The percent of penetration of bone into fixation (percent of fixation radius)
          */
@@ -100,7 +103,7 @@ namespace GeneLabCore {
         // Children
         QList<Bone *> bones; // Owner
         QList<Sensor *> sensors; // Owner
-        //QList<Modifier *> modifiers;
+        //QList<Effector *> effector;
 
         // Tools
         btTypedConstraint *airFixation; // Owner

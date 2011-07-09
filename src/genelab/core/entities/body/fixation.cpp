@@ -329,4 +329,11 @@ namespace GeneLabCore {
 
         return fixation;
     }
+
+    // -----------
+    // -- UTILS --
+    // -----------
+//    btWorld *Fixation::getWorld() {
+//         return sphere->getWorld();
+//    }
 }

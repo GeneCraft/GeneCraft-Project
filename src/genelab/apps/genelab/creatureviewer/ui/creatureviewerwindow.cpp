@@ -51,7 +51,7 @@
 #include "families/spiderfamily.h"
 #include "families/snakefamily.h"
 #include "families/antfamily.h"
-
+#include "families/caterpillarfamily.h"
 
 #include "tools.h"
 #include "world/btoworld.h"
@@ -402,34 +402,98 @@ void CreatureViewerWindow::spawnNew() {
         delete old;
     }
 
-    Entity *e = NULL;
+    // RANDOM ENTITIES
+    //spawnRandomEntities(10);
 
+    // MUTATION
+    CaterpillarFamily *family = new CaterpillarFamily();
+    //SnakeFamily *family = new SnakeFamily();
+    //SpiderFamily *family = new SpiderFamily();
+    //AntFamily *family = new AntFamily();
+    btVector3 pos(0,5,0);
+    Entity *originEntity = family->createEntity(shapesFactory, pos);
+    spawnMutationSample(originEntity, 8);
+}
+
+void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreatures){
+
+    Entity *e = NULL;
+    btVector3 originPos = originEntity->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin();
 
     // Mutations tests
     MutationsManager *mm = new MutationsManager(QVariant());
 
-
-    SnakeFamily *family = new SnakeFamily();
-    //SpiderFamily *family = new SpiderFamily();
-    //AntFamily *family = new AntFamily();
-    btVector3 pos = world->getSpawnPosition();
-    Entity *originEntity = family->createEntity(shapesFactory, pos);
+    originEntity->setup();
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+    entitiesEngine->addEntity(originEntity);
+    ents.append(originEntity);
     QVariant originGenome = originEntity->serialize();
 
-    const QVariant treeShapeVariant = originGenome.toMap().value("body").toMap().value("shape");
+    // circle
+    float r = 3 * nbCreatures;
+    float angle = 2 * M_PI / nbCreatures;
 
-    for(int i = 0; i < 10; i++) {
+    // mutations
+    for(int i = 0; i < nbCreatures; i++) {
 
         // toMap return A COPY !!!
         QVariantMap newGenome = originGenome.toMap();
+        const QVariant treeShapeVariant = originGenome.toMap().value("body").toMap().value("shape");
         QVariant newTreeShapeVariant = mm->mutateTreeShape(treeShapeVariant);
 
         QVariantMap newBodyMap = originGenome.toMap().value("body").toMap();
         newBodyMap.insert("shape", newTreeShapeVariant);
         newGenome.insert("body",newBodyMap);
 
+        btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r);
+
+        e = GenericFamily::createEntity(newGenome,shapesFactory,pos + originPos);
+
+        if(e){
+            e->setup();
+            entitiesEngine->addEntity(e);
+            ents.append(e);
+            originGenome = e->serialize();
+        }
+    }
+}
+
+void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
+
+    Entity *e = NULL;
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+
+    for(int i = 0; i < nbEntities; i++) {
+
+        int enttype = Tools::random(0,3);
+        enttype = 3;
+
         btVector3 pos = world->getSpawnPosition();
-        e = GenericFamily::createEntity(newGenome,shapesFactory,pos);
+
+        switch(enttype)
+        {
+
+        case 0 :{
+            SpiderFamily *family = new SpiderFamily();
+            e = family->createEntity(shapesFactory, pos);
+            break;
+        }
+        case 1 : {
+            SnakeFamily *family = new SnakeFamily();
+            e = family->createEntity(shapesFactory, pos);
+            break;
+        }
+        case 2 : {
+            AntFamily *family = new AntFamily();
+            e = family->createEntity(shapesFactory, pos);
+            break;
+        }
+        case 3 : {
+            CaterpillarFamily *family = new CaterpillarFamily();
+            e = family->createEntity(shapesFactory, pos);
+            break;
+        }
+        }
 
         if(e){
             e->setup();
@@ -437,45 +501,6 @@ void CreatureViewerWindow::spawnNew() {
             ents.append(e);
         }
     }
-
-
-
-
-//    for(int i = 0; i < 5; i++) {
-
-//        e = NULL;
-//        int enttype = Tools::random(0,2);
-//        //enttype = 1;
-
-
-//        btVector3 pos = world->getSpawnPosition();
-
-//        switch(enttype)
-//        {
-
-//        case 0 :{
-//            SpiderFamily *spider = new SpiderFamily();
-//            e = spider->createEntity(shapesFactory, pos);
-//            break;
-//        }
-//        case 1 : {
-//            SnakeFamily *snakeFamily = new SnakeFamily();
-//            e = snakeFamily->createEntity(shapesFactory, pos);
-//            break;
-//        }
-//        case 2 : {
-//            AntFamily *antFamily = new AntFamily();
-//            e = antFamily->createEntity(shapesFactory, pos);
-//            break;
-//        }
-//        }
-
-//        if(e){
-//            e->setup();
-//            entitiesEngine->addEntity(e);
-//            ents.append(e);
-//        }
-//    }
 }
 
 CreatureViewerWindow::~CreatureViewerWindow()

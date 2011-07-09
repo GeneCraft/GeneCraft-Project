@@ -14,6 +14,7 @@
 #include "sensors/positionsensor.h"
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/accelerometersensor.h"
+#include "sensors/contactsensor.h"
 
 FixationProperties::FixationProperties(QWidget *parent) :
     QWidget(parent),
@@ -139,8 +140,13 @@ void FixationProperties::addSensor()
     case 2 : // Accelerometer sensor
 
         if(fixation->getEntity())
-            // TODO get step time from sulation manager !!!
             sensor = new AccelerometerSensor(fixation);
+        break;
+
+    case 3 : // Accelerometer sensor
+
+        if(fixation->getEntity())
+            sensor = new ContactSensor(fixation);
         break;
     }
 

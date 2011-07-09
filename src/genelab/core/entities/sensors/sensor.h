@@ -9,7 +9,7 @@
 
 namespace GeneLabCore {
 
-enum SensorType { gyroscopic, accelerometer, position };
+enum SensorType { gyroscopic, accelerometer, position, contact };
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

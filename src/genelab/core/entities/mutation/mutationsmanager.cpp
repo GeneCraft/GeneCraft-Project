@@ -11,24 +11,24 @@ namespace GeneLabCore {
 MutationsManager::MutationsManager(QVariant mutationsParams)
 {
     // Bone Length mutation
-    probOfBoneLengthMutation    = 1.0; // 100%
-    minFactOfBoneLengthMutation = 0.2; // - 80%
-    maxFactOfBoneLengthMutation = 1.8; // + 80%
-    minBoneLength               = 0.1;
+    probOfBoneLengthMutation    = 0.6;
+    minFactOfBoneLengthMutation = 0.5;
+    maxFactOfBoneLengthMutation = 1.5;
+    minBoneLength               = 0.01;
     maxBoneLength               = 5.0;
 
     // Bone radius mutation
-    probOfBoneRadiusMutation    = 1.0; // 100%
-    minFactOfBoneRadiusMutation = 0.2; // - 80%
-    maxFactOfBoneRadiusMutation = 1.8; // + 80%
-    minBoneRadius               = 0.1;
+    probOfBoneRadiusMutation    = 0.6;
+    minFactOfBoneRadiusMutation = 0.5;
+    maxFactOfBoneRadiusMutation = 1.5;
+    minBoneRadius               = 0.01;
     maxBoneRadius               = 2.0;
 
     // Fixation radius mutation
-    probOfFixRadiusMutation    = 1.0; // 100%
-    minFactOfFixRadiusMutation = 0.5; // - 80%
-    maxFactOfFixRadiusMutation = 1.5; // + 80%
-    minFixRadius               = 0.1;
+    probOfFixRadiusMutation    = 0.6;
+    minFactOfFixRadiusMutation = 0.5;
+    maxFactOfFixRadiusMutation = 1.5;
+    minFixRadius               = 0.01;
     maxFixRadius               = 5.0;
 }
 
@@ -106,22 +106,18 @@ void MutationsManager::mutate(QVariantMap &map, QString key, float probOfMutatio
     // mutation ?
     if(Tools::random(0.f,1.f) <= probOfMutation) {
 
-        float newValue;
-
         for(int i=0; i < MAX_MUTATION_TRIES; ++i){
 
             float factor = Tools::random(minFactor,maxFactor);
-            newValue = factor * map.value(key).toDouble();
-
-            qDebug() << Q_FUNC_INFO << factor << key << " : " << newValue;
+            float newValue = factor * map.value(key).toDouble();
 
             // correct value
             if(newValue >= minValue && newValue <= maxValue){
-                map.insert(key,newValue);
+                map.insert(key,QVariant((double)newValue));
                 break;
             }
 
-            //qDebug() << Q_FUNC_INFO << "Incorrect mutation !";
+            qDebug() << Q_FUNC_INFO << "Incorrect mutation !" << factor << key << " : " << newValue;
         }
     }
 }

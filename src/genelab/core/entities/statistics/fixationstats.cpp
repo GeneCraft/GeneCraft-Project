@@ -17,6 +17,9 @@ FixationStats::FixationStats(StatisticsStorage * statsStorage, Fixation * fixati
     resetOrigin();
 
     fixationRelativeDistance = statsStorage->registerStat(fixName + QString(" relative velocity"),"m / step");
+
+    // first initialization of the previous origin
+    previousOrigin = fixation->getRigidBody()->getWorldTransform().getOrigin();
 }
 
 void FixationStats::step()
