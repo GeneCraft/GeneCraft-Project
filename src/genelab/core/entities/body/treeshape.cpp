@@ -12,6 +12,7 @@
 #include "sensors/accelerometersensor.h"
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/positionsensor.h"
+#include "sensors/contactsensor.h"
 
 namespace GeneLabCore {
     TreeShape::TreeShape(btShapesFactory* shapesFactory, QObject *parent) :
@@ -54,6 +55,12 @@ namespace GeneLabCore {
            case position:{
 
                PositionSensor* s = new PositionSensor(sensor, this->root, fix);
+               fix->addSensor(s);
+           }
+               break;
+           case contact:{
+
+               ContactSensor* s = new ContactSensor(sensor, fix);
                fix->addSensor(s);
            }
                break;

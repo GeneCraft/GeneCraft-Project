@@ -13,19 +13,25 @@ ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
     type = contact;
 
     collided = new BrainIn(0,1);
-    world = fixation->getShapesFactory()->getWorld();
+    //world = fixation->getShapesFactory()->getWorld();
 
     brainInputs.append(collided);
 }
 
 // To create from serialization data
 ContactSensor::ContactSensor(QVariant data, Fixation * fixation) : Sensor(fixation) {
+
+    collided = new BrainIn(data.toMap()["collisionInput"]);
+
+    brainInputs.append(collided);
 }
 
 // To serialize
 QVariant ContactSensor::serialize()
 {
-    return collided->serialize();
+    QVariantMap data = Sensor::serialize().toMap();
+    data.insert("collisionInput", collided->serialize());
+    return data;
 }
 
 //
@@ -36,35 +42,41 @@ QVariant ContactSensor::serialize()
 // To update brain inputs values
 void ContactSensor::step() {
 
-//    // Method : contactTest
+    // Method : contactTest
 //    btRigidBody* tgtBody = fixation->getRigidBody();
 //    ContactSensorCallback callback(tgtBody, this);
 //    world->getBulletWorld()->contactTest(tgtBody,callback);
 
-    bool collide = false;
 
     // Method : Contact Information
+    bool collide = false;
+
     //Assume world->stepSimulation or world->performDiscreteCollisionDetection has been called
-    int numManifolds = world->getBulletWorld()->getDispatcher()->getNumManifolds();
+    int numManifolds = fixation->getShapesFactory()->getWorld()->getBulletWorld()->getDispatcher()->getNumManifolds();
 
     for (int i=0;i<numManifolds;i++)
     {
-            btPersistentManifold* contactManifold =  world->getBulletWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+            btPersistentManifold* contactManifold =  fixation->getShapesFactory()->getWorld()->getBulletWorld()->getDispatcher()->getManifoldByIndexInternal(i);
             btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
             btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
 
-            btCollisionObject* object;
+            // contact ?
+            if(contactManifold->getNumContacts() > 0)
+            {
+                btCollisionObject* object;
 
-            if(obA == (btCollisionObject *) fixation->getRigidBody())
-                object = obB;
-            else if(obB == (btCollisionObject *) fixation->getRigidBody())
-                object = obA;
-            else
-                continue;
+                // get object in contact
+                if(obA == (btCollisionObject *) fixation->getRigidBody())
+                    object = obB;
+                else if(obB == (btCollisionObject *) fixation->getRigidBody())
+                    object = obA;
+                else
+                    continue;
 
-            if(object->isStaticObject()){
-                collide = true;
-                break;
+                if(object->isStaticObject()){
+                    collide = true;
+                    break;
+                }
             }
 
 //            // more info
@@ -81,9 +93,7 @@ void ContactSensor::step() {
 //            }
     }
 
-    qDebug() << Q_FUNC_INFO << (int) collide;
-
-    //collided->setValue((int)collide);
+    collided->setValue((int)collide);
 }
 
 }

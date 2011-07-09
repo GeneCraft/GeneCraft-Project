@@ -43,7 +43,7 @@ public slots:
 
 private:
 
-    btWorld *world;
+    //btWorld *world;
     BrainIn * collided, * inputY, * inputZ;
     btVector3 oldPosition, oldSpeed;
 

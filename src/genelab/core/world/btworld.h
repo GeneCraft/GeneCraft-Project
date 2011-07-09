@@ -35,7 +35,7 @@ namespace GeneLabCore {
         btScene* getScene() { return scene; }
         btBiome* getBiome() { return biome; }
 
-        btDynamicsWorld* getBulletWorld() { return world; }
+        btDynamicsWorld* getBulletWorld() { return this->world; }
 
         btFactory *getFactory() {return factory; }
         btShapesFactory *getShapesFactory() {return shapesFactory; }

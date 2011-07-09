@@ -106,7 +106,8 @@ namespace GeneLabCore {
                               btVector3(M_PI / 10,0,M_PI / 10));
 
                 b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
-                b->getEndFixation()->addSensor(new PositionSensor(shape->getRoot(),b->getEndFixation()));
+                //b->getEndFixation()->addSensor(new PositionSensor(shape->getRoot(),b->getEndFixation()));
+                b->getEndFixation()->addSensor(new ContactSensor(b->getEndFixation()));
             }
         }
 
@@ -117,15 +118,18 @@ namespace GeneLabCore {
 
                 float yAxis, zAxis;
 
+                // first piece of antenna
                 if(j == 0){
                     yAxis = M_PI * 0.5 + M_PI / 8 * i;
                     zAxis = -M_PI * 0.7;
                 }
+                // others
                 else{
                     yAxis = M_PI / 8 * i;
                     zAxis = -M_PI * Tools::random(0.1f,0.4f);
                 }
 
+                // add new piece
                 b = root->addBone(yAxis, zAxis,
                               antennaRadius,
                               antennaLength,
@@ -133,7 +137,9 @@ namespace GeneLabCore {
                               btVector3(0,0,0),
                               btVector3(0,0,0));
 
-                //b->getEndFixation()->addSensor(new ContactSensor(b->getEndFixation()));
+                // last piece of antenna
+                if(j == antennaPieces-1)
+                    b->getEndFixation()->addSensor(new ContactSensor(b->getEndFixation()));
 
                 root = b->getEndFixation();
             }

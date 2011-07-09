@@ -403,16 +403,16 @@ void CreatureViewerWindow::spawnNew() {
     }
 
     // RANDOM ENTITIES
-    //spawnRandomEntities(10);
+    spawnRandomEntities(10);
 
     // MUTATION
-    CaterpillarFamily *family = new CaterpillarFamily();
-    //SnakeFamily *family = new SnakeFamily();
-    //SpiderFamily *family = new SpiderFamily();
-    //AntFamily *family = new AntFamily();
-    btVector3 pos(0,5,0);
-    Entity *originEntity = family->createEntity(shapesFactory, pos);
-    spawnMutationSample(originEntity, 8);
+//    //CaterpillarFamily *family = new CaterpillarFamily();
+//    //SnakeFamily *family = new SnakeFamily();
+//    SpiderFamily *family = new SpiderFamily();
+//    //AntFamily *family = new AntFamily();
+//    btVector3 pos(0,5,0);
+//    Entity *originEntity = family->createEntity(shapesFactory, pos);
+//    spawnMutationSample(originEntity, 8);
 }
 
 void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreatures){

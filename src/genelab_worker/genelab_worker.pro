@@ -9,8 +9,8 @@ QT       += core testlib network gui
 TARGET = genelab_worker
 CONFIG   += console
 CONFIG   += qxt
-QXT	 += core
-CONFIG   -= app_bundle
+#QXT	 += core
+#CONFIG   -= app_bundle
 
 TEMPLATE = app
 
