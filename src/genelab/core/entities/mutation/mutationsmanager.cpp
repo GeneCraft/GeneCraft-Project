@@ -141,15 +141,53 @@ namespace GeneLabCore {
 
         QVariantMap boneMap = boneVariant.toMap();
 
-        // length mutation ?
+        // length mutation
         boneLength->mutate(boneMap, "length");
 
-        // radius mutation ?
+        // radius mutation
         boneRadius->mutate(boneMap, "radius");
+
+        // ----------------------
+        // -- motors mutations --
+        // ----------------------
+        QVariantMap newMuscle;
+        QVariantMap newOuts;
+
+        // foreach motor axis...
+        for(int i=0; i<3; ++i){
+
+            QVariantMap outs = boneMap["muscle"].toMap()["outs"].toMap();
+
+            // get motor name
+            QString motor;
+            if(i == 0) motor = "x";
+            else if(i == 1) motor = "y";
+            else motor = "z";
+
+            // if motor exists
+            if(outs.contains(motor))
+            {
+                QVariantMap newOut;
+                QVariant out = outs[motor];
+                QVariantList newBrainOuts;
+                QVariantList brainOuts = out.toMap()["brainOuts"].toList();
+
+                foreach(QVariant brainOut, brainOuts){
+                    // add new brainOut
+                    newBrainOuts.append(mutateBrainOut(brainOut));
+                }
+
+                newOut.insert("brainOuts",newBrainOuts);
+                newOuts.insert(motor,newOut);
+            }
+        }
+
+        newMuscle.insert("type",QVariant("RotationalMotor"));
+        newMuscle.insert("outs",newOuts);
+        boneMap.insert("muscle",newMuscle);
 
         return boneMap;
     }
-
 
     QVariant MutationsManager::mutateFixation(const QVariant &fixVariant){
 

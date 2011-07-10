@@ -405,7 +405,6 @@ void CreatureViewerWindow::spawnNew() {
     // RANDOM ENTITIES
     spawnRandomEntities(1);
     Entity* e = ents.first();
-
     spawnMutationSample(e, 30);
 
     // MUTATION
@@ -464,7 +463,7 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
     for(int i = 0; i < nbEntities; i++) {
 
         int enttype = Tools::random(0,3);
-        enttype = 2;
+        //enttype = 2;
 
         btVector3 pos = world->getSpawnPosition();
 
