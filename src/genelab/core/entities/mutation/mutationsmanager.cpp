@@ -44,7 +44,7 @@ namespace GeneLabCore {
 
         // Plug grid size
         brainSize = new IntegerMutation();
-        brainSize->probability   = 0.;
+        brainSize->probability   = 1.;
         brainSize->minIncr       = -3;
         brainSize->maxIncr       =  3;
         brainSize->minValue      = 1;
@@ -52,7 +52,7 @@ namespace GeneLabCore {
 
         // Position X of Input
         brainInPos = new FloatMutation();
-        brainInPos->probability = 0.1;
+        brainInPos->probability = 1;
         brainInPos->minFact     = -0.1;
         brainInPos->maxFact     =  0.1;
         brainInPos->minValue    = 0;
@@ -60,7 +60,7 @@ namespace GeneLabCore {
 
         // BrainWeight
         brainWeight = new FloatMutation();
-        brainWeight->probability = 0.1;
+        brainWeight->probability = 1;
         brainWeight->minFact    = -0.1;
         brainWeight->maxFact    = -0.1;
         brainWeight->minValue   = -1.0;
@@ -68,7 +68,7 @@ namespace GeneLabCore {
 
         // Brain memory size
         brainMemorySize = new IntegerMutation();
-        brainMemorySize->probability    = 0.1;
+        brainMemorySize->probability    = 1;
         brainMemorySize->minIncr        = -3;
         brainMemorySize->maxIncr        =  3;
         brainMemorySize->minValue       = 1;

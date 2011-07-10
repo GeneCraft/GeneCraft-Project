@@ -37,7 +37,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
     if(this->brain == 0)
         return;
 
-    //this->view->scene()->clear();
+    this->view->scene()->clear();
     this->view->scene()->setSceneRect(0, 0,brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
     this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10, Qt::KeepAspectRatio);
 
@@ -53,19 +53,19 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
     float width = 10;
 
     // On dessine les neurones
-    if(neurones.size() == 0)
+    //if(neurones.size() == 0)
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
                 int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
                 int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
                 int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
                 b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
-                neurones.append(this->view->scene()->addRect(width * j,
-                                             width * i /*+ 70*/, width, width, p, b));
+                /*neurones.append(*/this->view->scene()->addRect(width * j,
+                                             width * i /*+ 70*/, width, width, p, b)/*)*/;
 
             }
         }
-    else
+    /*else
     // On réutilise les vieux neurones
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
@@ -76,8 +76,8 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
                 neurones.at(i + j * size)->setBrush(b);
             }
         }
+*/
 
-/*
     for(int i = 0; i < n->getInputs().size(); i++) {
 
         // On dessine les entrées
@@ -103,7 +103,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
                 p.setStyle(Qt::SolidLine);
 
 
-            this->view->scene()->addEllipse(10*c.x, 10*c.y, 10, 10, p, b);
+            this->view->scene()->addEllipse(10*qRound(c.x*(size-1)), 10*qRound(c.y*(size-1)), 10, 10, p, b);
 
             }
     }
@@ -128,10 +128,11 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
                 p.setWidthF(2);
 
 
-                this->view->scene()->addEllipse(10*c.x, 10*c.y, 10, 10, p, b);
+                this->view->scene()->addEllipse(10*qRound(c.x*(size-1)), 10*qRound(c.y*(size-1)), 10, 10, p, b);
 
                 }
-        }*/
+            }
+        }
     }
 
     void PlugGridDesignVisualizer::setBrain(Brain* b) {

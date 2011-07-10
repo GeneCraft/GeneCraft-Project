@@ -405,7 +405,7 @@ void CreatureViewerWindow::spawnNew() {
     // RANDOM ENTITIES
     spawnRandomEntities(1);
     Entity* e = ents.first();
-    spawnMutationSample(e, 30);
+    spawnMutationSample(e, 10);
 
     // MUTATION
 //    //CaterpillarFamily *family = new CaterpillarFamily();
@@ -440,7 +440,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
 
         QVariant newGenome = mm->mutateEntity(originGenome);
 
-        btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
+        btVector3 pos(sin(i*angle)*r,0,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 
         e = GenericFamily::createEntity(newGenome,shapesFactory,pos + originPos);
 
