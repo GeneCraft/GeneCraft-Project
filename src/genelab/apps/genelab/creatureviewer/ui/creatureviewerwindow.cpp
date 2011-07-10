@@ -79,6 +79,8 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 void CreatureViewerWindow::init() {
 
     factory = new btoFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+    creatureFactory = new CreatureFactory();
+    worldFactory    = new WorldFactory();
 
     // ----------
     // -- Menu --
@@ -224,26 +226,26 @@ void CreatureViewerWindow::init() {
     QVariantList staticBoxes;
 
     // MineCraft Floor
-//    int sizeX = 10;
-//    int sizeZ = 10;
-//    for(int i=-10;i<10;++i){
-//        for(int j=-10;j<10;++j){
+    int sizeX = 10;
+    int sizeZ = 10;
+    for(int i=-10;i<10;++i){
+        for(int j=-10;j<10;++j){
 
-//            double sizeY = Tools::random(0.1, 3.0);
+            double sizeY = Tools::random(0.1, 3.0);
 
-//            QVariantMap staticBox;
-//            staticBox.insert("posX",i*10);
-//            staticBox.insert("posY",sizeY/2.0);
-//            staticBox.insert("posZ",j*10);
-//            staticBox.insert("eulerX",0);
-//            staticBox.insert("eulerY",0);
-//            staticBox.insert("eulerZ",0);
-//            staticBox.insert("sizeX",sizeX);
-//            staticBox.insert("sizeY",sizeY);
-//            staticBox.insert("sizeZ",sizeZ);
-//            staticBoxes.append(staticBox);
-//        }
-//    }
+            QVariantMap staticBox;
+            staticBox.insert("posX",i*10);
+            staticBox.insert("posY",sizeY/2.0);
+            staticBox.insert("posZ",j*10);
+            staticBox.insert("eulerX",0);
+            staticBox.insert("eulerY",0);
+            staticBox.insert("eulerZ",0);
+            staticBox.insert("sizeX",sizeX);
+            staticBox.insert("sizeY",sizeY);
+            staticBox.insert("sizeZ",sizeZ);
+            staticBoxes.append(staticBox);
+        }
+    }
 
 //    // Ruin Floor
 //    for(int i=0;i<100;++i){
@@ -274,7 +276,7 @@ void CreatureViewerWindow::init() {
     sceneData.insert("type", "flatland");
     sceneData.insert("cam", camData);
     sceneData.insert("spawns", spawns);
-    sceneData.insert("staticBoxes", staticBoxes);
+    //sceneData.insert("staticBoxes", staticBoxes);
     sceneData.insert("floor", "Examples/GrassFloor");
 
     // Create the world
@@ -290,32 +292,10 @@ void CreatureViewerWindow::init() {
 
     world->setup();
     cvim->setWorld(world);
-/*
-    btoWorld* world2 = new btoWorld(factory, worldData);
-    btShapesFactory* shapesFactory2 = new btoShapesFactory(world2, btoEngine);
 
-    btBiome* biome2 = new btoBiome(factory, biomeData);
-    world2->setBiome(biome2);
-
-    btScene* scene2 = new btoScene(factory, sceneData);
-    world2->setScene(scene2);
-
-    world2->setup();
-
-*/
-
-    // Spider
-    qDebug() << "Spider creation !";
-
-    qDebug() << time(NULL);
+    // Init Random
     srand(time(NULL));
     qsrand(time(NULL));
-    int b = 0;
-    for(int i = 0; i < 1000; i++) {
-        int a = rand();
-        b += a;
-    }
-    qDebug() << b;
 
     spawnNew();
 
@@ -353,7 +333,14 @@ void CreatureViewerWindow::loadEntityFromDb() {
     Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
     btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
 
-    Entity *e = GenericFamily::createEntity(genotype, shapesFactory, initPosition);
+    Entity *e = creatureFactory->createEntity(genotype, shapesFactory, initPosition);
+
+    if(e == NULL) {
+        QMessageBox::warning(this, "Impossible to load entity",
+"Entity could not be created, maybe version of genotype don't match. Please update your client.");
+        return;
+    }
+
     e->setup();
     e->setRessource(r);
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
@@ -442,15 +429,17 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
 
         btVector3 pos(sin(i*angle)*r,0,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 
-        e = GenericFamily::createEntity(newGenome,shapesFactory,pos + originPos);
+        e = creatureFactory->createEntity(newGenome, shapesFactory, pos + originPos);
+        if(e == NULL) {
+            QMessageBox::warning(this, "Impossible to load entity",
+    "Entity could not be created, maybe version of genotype don't match. Please update your client.");
+        }
 
         if(e){
             e->setup();
             entitiesEngine->addEntity(e);
             ents.append(e);
             originGenome = e->serialize();
-        } else {
-            qDebug() << "NOT CREATED ANY ENTITY ... STRANGE !";
         }
     }
 }
@@ -618,7 +607,7 @@ void CreatureViewerWindow::createNewEntity()
     btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
 
     // TODO choice of radius root
-    Entity * e = GenericFamily::createViginEntity(shapesFactory, btScalar(1.0), initPosition);
+    Entity * e = GenericFamily::createVirginEntity(shapesFactory, btScalar(1.0), initPosition);
     e->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     entitiesEngine->addEntity(e);
@@ -649,7 +638,14 @@ void CreatureViewerWindow::loadEntityFromFile()
         Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
         btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
 
-        Entity *e = GenericFamily::createEntity(genotype, shapesFactory, initPosition);
+        Entity *e = creatureFactory->createEntity(genotype, shapesFactory, initPosition);
+
+        if(e == NULL) {
+            QMessageBox::warning(this, "Impossible to load entity",
+"Entity could not be created, maybe version of genotype don't match. Please update your client.");
+            return;
+        }
+
         e->setup();
         e->setRessource(from);
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());

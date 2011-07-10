@@ -20,7 +20,7 @@ namespace GeneLabCore {
     {
         // Bone Length
         boneLength = new FloatMutation();
-        boneLength->probability  = 0.;
+        boneLength->probability  = 0.1;
         boneLength->minFact      = -0.5;
         boneLength->maxFact      =  0.5;
         boneLength->minValue     = 0.1;
@@ -28,7 +28,7 @@ namespace GeneLabCore {
 
         // Bone radius mutation
         boneRadius = new FloatMutation();
-        boneRadius->probability  = 0.;
+        boneRadius->probability  = 0.1;
         boneRadius->minFact      = -0.5;
         boneRadius->maxFact      =  0.5;
         boneRadius->minValue     = 0.1;
@@ -36,7 +36,7 @@ namespace GeneLabCore {
 
         // Fixation radius mutation
         fixRadius = new FloatMutation();
-        fixRadius->probability   = 0.;
+        fixRadius->probability   = 0.1;
         fixRadius->minFact       = -0.5;
         fixRadius->maxFact       =  0.5;
         fixRadius->minValue      = 0.1;
@@ -44,15 +44,15 @@ namespace GeneLabCore {
 
         // Plug grid size
         brainSize = new IntegerMutation();
-        brainSize->probability   = 1.;
-        brainSize->minIncr       = -3;
-        brainSize->maxIncr       =  3;
+        brainSize->probability   = 0.1;
+        brainSize->minIncr       = -5;
+        brainSize->maxIncr       =  5;
         brainSize->minValue      = 1;
         brainSize->maxValue      = 100;
 
         // Position X of Input
         brainInPos = new FloatMutation();
-        brainInPos->probability = 1;
+        brainInPos->probability = 0.1;
         brainInPos->minFact     = -0.1;
         brainInPos->maxFact     =  0.1;
         brainInPos->minValue    = 0;
@@ -60,7 +60,7 @@ namespace GeneLabCore {
 
         // BrainWeight
         brainWeight = new FloatMutation();
-        brainWeight->probability = 1;
+        brainWeight->probability = 0.1;
         brainWeight->minFact    = -0.1;
         brainWeight->maxFact    =  0.1;
         brainWeight->minValue   = -1.0;
@@ -68,9 +68,9 @@ namespace GeneLabCore {
 
         // Brain memory size
         brainMemorySize = new IntegerMutation();
-        brainMemorySize->probability    = 1;
-        brainMemorySize->minIncr        = -3;
-        brainMemorySize->maxIncr        =  3;
+        brainMemorySize->probability    = 0.1;
+        brainMemorySize->minIncr        = -5;
+        brainMemorySize->maxIncr        =  5;
         brainMemorySize->minValue       = 1;
         brainMemorySize->maxValue       = 100;
 

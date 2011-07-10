@@ -35,6 +35,8 @@ namespace GeneLabCore {
             DbRecord* r = new DbRecord(db, map["id"].toString());
             return r;
         }
+
+        return NULL;
     }
 
 
@@ -50,7 +52,36 @@ namespace GeneLabCore {
     }
 
 
-    QVariant Ressource::serialize(Ressource *r) {
+    QVariant Ressource::serialize(JsonFile *r) {
+        QVariantMap ressourceMap;
+        QVariantMap data;
 
+        data.insert("type", "file");
+
+        data.insert("filename", r->filename);
+
+        ressourceMap.insert("type", "include");
+        ressourceMap.insert("data", data);
+
+        return ressourceMap;
+    }
+
+
+    QVariant Ressource::serialize(DbRecord *r) {
+        QVariantMap ressourceMap;
+        QVariantMap data;
+
+        data.insert("type", "db");
+
+        data.insert("url", r->db.url);
+        data.insert("dbName", r->db.dbName);
+        data.insert("port", r->db.port);
+
+        data.insert("id", r->id);
+
+        ressourceMap.insert("type", "include");
+        ressourceMap.insert("data", data);
+
+        return ressourceMap;
     }
 }

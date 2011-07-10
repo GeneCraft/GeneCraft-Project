@@ -10,7 +10,7 @@ TARGET = genelab_worker
 CONFIG   += console
 CONFIG   += qxt
 QXT	 += core
-#CONFIG   -= app_bundle
+CONFIG   -= app_bundle
 
 TEMPLATE = app
 
@@ -90,6 +90,7 @@ SOURCES += \
     ../genelab/core/entities/families/spiderfamily.cpp \
     ../genelab/core/entities/families/antfamily.cpp \
     ../genelab/core/entities/families/genericfamily.cpp \
+    ../genelab/core/entities/families/caterpillarfamily.cpp \
     ../genelab/core/entities/brain/sinusin.cpp \
     ../genelab/core/entities/brain/brainpluggrid.cpp \
     ../genelab/core/entities/brain/brainnode.cpp \
@@ -116,6 +117,11 @@ SOURCES += \
     ../genelab/core/entities/statistics/treeshapestats.cpp \
     ../genelab/core/entities/statistics/statisticsprovider.cpp \
     ../genelab/core/entities/statistics/fixationstats.cpp \
+    ../genelab/core/entities/mutation/mutationsmanager.cpp \
+    ../genelab/core/entities/mutation/mutation.cpp \
+    ../genelab/core/entities/mutation/floatmutation.cpp \
+    ../genelab/core/entities/mutation/brainnodemutation.cpp \
+    ../genelab/core/entities/mutation/integermutation.cpp \
     ../genelab/core/factories/btshapesfactory.cpp \
     ../genelab/core/factories/worldfactory.cpp \
     ../genelab/core/factories/btfactory.cpp \
@@ -175,6 +181,7 @@ HEADERS += \
     ../genelab/core/entities/families/genericfamily.h \
     ../genelab/core/entities/families/spiderfamily.h \
     ../genelab/core/entities/families/snakefamily.h \
+    ../genelab/core/entities/families/caterpillarfamily.h \
     ../genelab/core/entities/statistics/fixdistancestat.h \
     ../genelab/core/entities/statistics/entityweightstat.h \
     ../genelab/core/entities/statistics/entityheightstat.h \
@@ -186,6 +193,11 @@ HEADERS += \
     ../genelab/core/entities/statistics/treeshapestats.h \
     ../genelab/core/entities/statistics/statisticsprovider.h \
     ../genelab/core/entities/statistics/fixationstats.h \
+    ../genelab/core/entities/mutation/mutationsmanager.h \
+    ../genelab/core/entities/mutation/mutation.h \
+    ../genelab/core/entities/mutation/floatmutation.h \
+    ../genelab/core/entities/mutation/brainnodemutation.h \
+    ../genelab/core/entities/mutation/integermutation.h \
     ../genelab/core/factories/worldfactory.h \
     ../genelab/core/factories/ressources/ressource.h \
     ../genelab/core/factories/btfactory.h \

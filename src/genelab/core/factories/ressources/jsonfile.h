@@ -18,8 +18,9 @@ signals:
 
 public slots:
 
-protected:
+public:
     QFile f;
+    QString filename;
 
 };
 

@@ -10,6 +10,8 @@ namespace GeneLabCore {
       * Broadcast a result -> save it to the ressource
       */
     void Result::save(Ressource * r) {
+        ressource = r;
+
         QVariantMap resultData;
         resultData.insert("experiment", exp->getId());
         resultData.insert("fitness", (float)this->fitness);
@@ -23,6 +25,8 @@ namespace GeneLabCore {
       * Load a result -> take it from the ressource
       */
     void Result::load(Ressource * r) {
+        ressource = r;
+
         QVariantMap map = ressource->load().toMap();
         this->fitness = map["fitness"].toFloat();
     }

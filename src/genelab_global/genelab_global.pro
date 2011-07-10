@@ -180,7 +180,8 @@ SOURCES += \
     ../genelab/core/entities/mutation/mutation.cpp \
     ../genelab/core/entities/mutation/floatmutation.cpp \
     ../genelab/core/entities/mutation/brainnodemutation.cpp \
-    ../genelab/core/entities/mutation/integermutation.cpp
+    ../genelab/core/entities/mutation/integermutation.cpp \
+    ../genelab/core/factories/creaturefactory.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -272,7 +273,8 @@ HEADERS += \
     ../genelab/core/entities/mutation/mutation.h \
     ../genelab/core/entities/mutation/floatmutation.h \
     ../genelab/core/entities/mutation/brainnodemutation.h \
-    ../genelab/core/entities/mutation/integermutation.h
+    ../genelab/core/entities/mutation/integermutation.h \
+    ../genelab/core/factories/creaturefactory.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

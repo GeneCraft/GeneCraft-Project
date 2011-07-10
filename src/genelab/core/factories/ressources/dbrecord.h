@@ -33,10 +33,11 @@ namespace GeneLabCore {
         void networkReply(QNetworkReply*);
         void request(QString url, RequestType verb, QString data = "");
 
-    protected:
+    public:
         DataBase db;
         QString id;
         QString rev;
+    protected:
         QNetworkReply* r;
 
     };

@@ -21,8 +21,9 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     // Entity & origins
     QVariantMap origins = entityMap.value("origins").toMap();
     Entity * entity = new Entity(origins.value("name").toString(),
-                                  origins.value("family").toString()
-                                  ,0);
+                                  origins.value("family").toString(),
+                                  "generic",
+                                  0);
     // Brain
     entity->setBrain(new BrainFunctional(entityMap.value("brain")));
 
@@ -46,11 +47,11 @@ Entity *GenericFamily::createEntity(QVariant genotype,
 }
 
 
-Entity *GenericFamily::createViginEntity(btShapesFactory *shapesFactory,
+Entity *GenericFamily::createVirginEntity(btShapesFactory *shapesFactory,
                                                 btScalar rootFixRadius,
                                                 const btVector3 &initialPosition)
 {
-    Entity * entity = new Entity("no name", "no family", 0);
+    Entity * entity = new Entity("no name", "no family","generic", 0);
     entity->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
 
     TreeShape *shape = new TreeShape(shapesFactory);

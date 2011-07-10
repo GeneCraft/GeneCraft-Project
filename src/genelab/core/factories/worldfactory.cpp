@@ -1,6 +1,10 @@
 #include "worldfactory.h"
 
-WorldFactory::WorldFactory(QObject *parent) :
-    QObject(parent)
-{
+namespace GeneLabCore {
+
+    WorldFactory::WorldFactory(QObject *parent) :
+        QObject(parent)
+    {
+    }
+
 }

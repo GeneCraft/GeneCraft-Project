@@ -42,7 +42,7 @@ namespace GeneLabCore {
     Entity* CaterpillarFamily::createEntity(btShapesFactory* factory, const btVector3 &position) {
 
         // create entity
-        Entity* entity = new Entity("Yet Another Caterpillar", "Caterpillar", 1);
+        Entity* entity = new Entity("Yet Another Caterpillar", "Caterpillar","generic", 1);
 
         // create brain
         entity->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));

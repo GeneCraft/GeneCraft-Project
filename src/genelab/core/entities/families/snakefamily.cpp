@@ -31,7 +31,7 @@ namespace GeneLabCore {
 
     Entity* SnakeFamily::createEntity(btShapesFactory* factory, const btVector3 &position) {
 
-        Entity* snake = new Entity("Snaky"+QString::number(length), "Snake", 1);
+        Entity* snake = new Entity("Snaky"+QString::number(length), "Snake","generic", 1);
         snake->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
 
         TreeShape* snakeShape = new TreeShape(factory);

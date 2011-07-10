@@ -8,6 +8,7 @@
 
 namespace GeneLabCore {
 
+
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
  *
@@ -25,13 +26,15 @@ class Entity : public QObject
 
 public:
 
-    Entity(QString name, QString family, int generation, QObject *parent = 0);
+    Entity(QString name, QString family, QString type, int generation, QObject *parent = 0);
 
     ~Entity();
 
     // Origins
     const QString &getName() { return name; }
     const QString &getFamily() { return family; }
+    const QString &getType() { return type; }
+    void setType(QString type) { this->type = type; }
     int getGeneration() { return generation; }
 
     // Shape
@@ -79,6 +82,9 @@ public:
     void updateStatisticByName(QString statisticName);
     QMap<QString, StatisticsProvider *> getStatistics() { return stats; }
 
+
+    static const QString genomeVersion;
+
 signals:
 
 public slots:
@@ -89,6 +95,7 @@ protected:
     // Origins
     QString name;
     QString family;
+    QString type;
     int generation;
 
     // Shape

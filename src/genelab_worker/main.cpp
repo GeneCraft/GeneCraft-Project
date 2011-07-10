@@ -24,6 +24,7 @@
 #include "tools.h"
 
 #include "ressources/dbrecord.h"
+#include "ressources/jsonfile.h"
 #include "bullet/bulletengine.h"
 #include "statistics/statisticsstorage.h"
 #include "statistics/statisticsprovider.h"
@@ -51,21 +52,21 @@ int main(int argc, char *argv[])
     QVariantMap biomeData;
     biomeData.insert("gravity", (float)9.81);
     biomeData.insert("sky", "Examples/CloudySky");
-    biomeData.insert("aR", (float)0.8);
-    biomeData.insert("aG", (float)0.8);
-    biomeData.insert("aB", (float)0.8);
-    biomeData.insert("lR", (float)0.6);
-    biomeData.insert("lG", (float)0.6);
-    biomeData.insert("lB", (float)0.6);
+    biomeData.insert("aR", 0.8);
+    biomeData.insert("aG", 0.8);
+    biomeData.insert("aB", 0.8);
+    biomeData.insert("lR", 0.6);
+    biomeData.insert("lG", 0.6);
+    biomeData.insert("lB", 0.6);
 
     // Camera
     QVariantMap camData;
-    camData.insert("cX", (float) -20);
-    camData.insert("cY", (float) 10);
-    camData.insert("cZ", (float) -20);
-    camData.insert("lX", (float) 15);
-    camData.insert("lY", (float) -5);
-    camData.insert("lZ", (float) 15);
+    camData.insert("cX",  -20);
+    camData.insert("cY",   10);
+    camData.insert("cZ",  -20);
+    camData.insert("lX",   15);
+    camData.insert("lY",   -5);
+    camData.insert("lZ",   15);
 
     // Spawn areas
     QVariantList spawns;
@@ -73,12 +74,12 @@ int main(int argc, char *argv[])
     QVariantMap positionSpawn;
 
     zoneSpawn.insert("type", (int)Spawn::Zone);
-    zoneSpawn.insert("minX", (float)-60);
-    zoneSpawn.insert("minY", (float)10);
-    zoneSpawn.insert("minZ", (float)-60);
-    zoneSpawn.insert("maxX", (float)60);
-    zoneSpawn.insert("maxY", (float)30);
-    zoneSpawn.insert("maxZ", (float)60);
+    zoneSpawn.insert("minX", -60);
+    zoneSpawn.insert("minY",  10);
+    zoneSpawn.insert("minZ", -60);
+    zoneSpawn.insert("maxX",  60);
+    zoneSpawn.insert("maxY",  30);
+    zoneSpawn.insert("maxZ",  60);
     //spawns.append(zoneSpawn);
 
     positionSpawn.insert("type", (int)Spawn::Position);
@@ -91,7 +92,7 @@ int main(int argc, char *argv[])
     QVariantList staticBoxes;
 
     // MineCraft Floor
-    /*int sizeX = 10;
+    int sizeX = 10;
     int sizeZ = 10;
     for(int i=-10;i<10;++i){
         for(int j=-10;j<10;++j){
@@ -110,7 +111,7 @@ int main(int argc, char *argv[])
             staticBox.insert("sizeZ",sizeZ);
             staticBoxes.append(staticBox);
         }
-    }*/
+    }
 
 //    // Ruin Floor
 //    for(int i=0;i<100;++i){
@@ -144,7 +145,16 @@ int main(int argc, char *argv[])
     //sceneData.insert("staticBoxes", staticBoxes);
     sceneData.insert("floor", "Examples/GrassFloor");
 
-    float max = 0;
+    QVariantMap map;
+    map.insert("world", worldData);
+    map.insert("scene", sceneData);
+    map.insert("biome", biomeData);
+    JsonFile* f = new JsonFile("./earth.world");
+    f->save(map);
+    qDebug() << f->f.error();
+    qDebug() << "WORLD SAUVE !";
+
+
     QString bestGen = "";
     Ressource* r;
     DataBase database;
@@ -180,92 +190,6 @@ int main(int argc, char *argv[])
     }
 
     qDebug() << "lancement des engines !";
-
-    int cpt = 0;
-    bool stable = false;
-    int needStableCpt = 0;
-    float lastHeight = 0;
-    while(1) {
-        cpt++;
-        if(!stable && cpt < 600) {
-            QList<Entity*> entities = ee->getAllEntities();
-            foreach(Entity* e, entities) {
-                StatisticsProvider* stat = e->getStatistics().find("FixationStats").value();
-                stat->step();
-                Statistic* s = e->getStatisticByName("Root relative velocity");
-                if(lastHeight + EPSILON > s->getValue() &&
-                   lastHeight - EPSILON < s->getValue()) {
-                    needStableCpt++;
-                } else {
-                    needStableCpt = 0;
-                }
-                lastHeight = s->getValue();
-
-                if(needStableCpt > 60) {
-                    stable = true;
-                    s->resetAll();
-                    needStableCpt = 0;
-                }
-            }
-            ((BulletEngine*)engines.find("Bullet").value())->beforeStep();
-            ((BulletEngine*)engines.find("Bullet").value())->step();
-            ((BulletEngine*)engines.find("Bullet").value())->afterStep();
-            continue;
-        }
-
-        //qDebug() << cpt;
-        foreach(Engine* e, engines) {
-
-            e->beforeStep();
-        }
-
-        foreach(Engine* e, engines) {
-
-            e->step();
-        }
-
-        foreach(Engine* e, engines) {
-
-            e->afterStep();
-        }
-        if(cpt%60 == 0) {
-            //qDebug() << "\r" << cpt/60 << "secondes";
-        }
-
-        if(cpt >= MAX_TIME) {
-            qDebug() << "new entity !";
-            cpt = 0;
-            // Evaluation
-            QList<Entity*> entities = ee->getAllEntities();
-            if(stable)
-            foreach(Entity* e, entities) {
-                Statistic* s = e->getStatisticByName("Root relative velocity");
-                qDebug() << s->getSum();
-                if(s->getSum() > max) {
-                    max = s->getSum();
-                    qDebug() << "! new max " << s->getSum();
-                    r->save(e->serialize());
-                }
-            }
-
-            foreach(Entity* e, entities) {
-                ee->removeEntity(e);
-                delete e;
-            }
-
-
-            for(int i = 0; i < MAX_ENTITY; i++) {
-
-                EntityFamily *spider = new SpiderFamily();
-                btVector3 pos = world->getSpawnPosition();
-                e = spider->createEntity(shapesFactory, pos);
-                e->setup();
-                ee->addEntity(e);
-            }
-
-            stable = false;
-        }
-    }
 
     return a.exec();
 }

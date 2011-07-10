@@ -7,7 +7,7 @@
 
 namespace GeneLabCore {
     JsonFile::JsonFile(QString filename, QObject *parent) :
-        Ressource(parent), f(filename)
+        Ressource(parent), f(filename), filename(filename)
     {
 
     }

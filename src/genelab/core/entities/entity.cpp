@@ -29,14 +29,16 @@
 
 namespace GeneLabCore {
 
+    const QString Entity::genomeVersion = "0.1";
 EntityPropertiesController* Entity::inspectorWidget = NULL;
 
-Entity::Entity(QString name, QString family, int generation, QObject *parent) :
+Entity::Entity(QString name, QString family, QString type, int generation, QObject *parent) :
     QObject(parent), r(NULL)
 {
     this->name          = name;
     this->family        = family;
     this->generation    = generation;
+    this->type          = type;
     this->statisticsStorage = new StatisticsStorage();
 }
 
@@ -111,6 +113,9 @@ QVariant Entity::serializeOrigins()
 QVariant Entity::serialize()
 {
     QVariantMap entityVariant;
+
+    entityVariant.insert("version", genomeVersion);
+    entityVariant.insert("type", type);
 
     entityVariant.insert("origins",serializeOrigins());
     entityVariant.insert("brain",brain->serialize());

@@ -5,6 +5,8 @@
 #include "genelabcoreclasses.h"
 #include "btBulletDynamicsCommon.h"
 #include "ressources/dbrecord.h"
+#include "creaturefactory.h"
+#include "worldfactory.h"
 
 namespace Ui {
     class CreatureViewer;
@@ -62,6 +64,8 @@ private:
     btoFactory* factory;
     SimulationManager* simulationManager;
     btoShapesFactory* shapesFactory;
+    CreatureFactory*  creatureFactory;
+    WorldFactory*     worldFactory;
 
     // components
     QAction *aTogglePhysics;

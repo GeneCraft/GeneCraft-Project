@@ -3,16 +3,21 @@
 
 #include <QObject>
 
-class WorldFactory : public QObject
-{
-    Q_OBJECT
-public:
-    explicit WorldFactory(QObject *parent = 0);
 
-signals:
+namespace GeneLabCore {
 
-public slots:
+    class WorldFactory : public QObject
+    {
+        Q_OBJECT
+    public:
+        explicit WorldFactory(QObject *parent = 0);
 
-};
+    signals:
+
+    public slots:
+
+    };
+
+}
 
 #endif // WORLDFACTORY_H

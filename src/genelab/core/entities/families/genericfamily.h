@@ -28,7 +28,7 @@ public:
                                 const btVector3 &initialPosition);
 
     // To create a virgin entity
-    static Entity *createViginEntity(btShapesFactory *shapesFactory,
+    static Entity *createVirginEntity(btShapesFactory *shapesFactory,
                                      btScalar rootFixRadius,
                                      const btVector3 &initialPosition);
 };

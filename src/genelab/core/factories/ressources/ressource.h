@@ -4,7 +4,12 @@
 #include <QObject>
 #include <QVariant>
 
+
 namespace GeneLabCore {
+
+    class JsonFile;
+    class DbRecord;
+
     class Ressource : public QObject
     {
         Q_OBJECT
@@ -30,7 +35,8 @@ namespace GeneLabCore {
           * Create an include QVariant bloc,
           * which can be loaded by the static Ressource::load function
           */
-        static QVariant serialize(Ressource *r);
+        static QVariant serialize(JsonFile *r);
+        static QVariant serialize(DbRecord *r);
 
         /**
           * Load data from either a ressource data, or the real data
