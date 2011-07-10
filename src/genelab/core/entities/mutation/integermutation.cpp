@@ -9,7 +9,7 @@ namespace GeneLabCore {
         if(Tools::random(0.f,1.f) <= probability) {
 
             int factor = Tools::random(minIncr, maxIncr);
-            qDebug() << factor;
+
             int newValue = map.value(key).toInt() + factor;
 
             if(newValue < minValue)

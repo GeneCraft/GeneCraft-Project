@@ -64,8 +64,10 @@ private:
     IntegerMutation* brainSize;
 
     // Input positions
-    FloatMutation* brainInPosX;
-    FloatMutation* brainInPosY;
+    FloatMutation* brainInPos;
+
+    // Input weight
+    FloatMutation* brainWeight;
 
 };
 
