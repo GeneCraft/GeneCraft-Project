@@ -6,6 +6,14 @@
 
 namespace GeneLabCore {
 
+    struct Mutation {
+        float probability;
+        float minFact;
+        float maxFact;
+        float minValue;
+        float maxValue;
+    };
+
 class MutationsManager
 {
 public:
@@ -22,38 +30,39 @@ public:
     // To mutate a fixation (Not recursively)
     QVariant mutateFixation(const QVariant &fixVariant);
 
+    // Mutate the brain
+    QVariant mutateBrain(QVariant brain);
+
+    // Mutate a brainInput
+    QVariant mutateBrainIn(QVariant brainIn);
+
+    // Mutate a brainOutput
+    QVariant mutateBrainOut(QVariant brainOut);
+
 private:
 
     // To mutate a value in a map
-    void mutate(QVariantMap &map, QString key, float probOfMutation, float minFactor, float maxFactor, float minValue, float maxValue);
+    void mutate(QVariantMap &map, QString key, Mutation mutation);
 
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
     // BONE
 
     // Bone Length mutation
-    float probOfBoneLengthMutation;     // probability of length mutation
-    float minFactOfBoneLengthMutation;  // factor of min length mutation
-    float maxFactOfBoneLengthMutation;  // factor of max length mutation
-    float minBoneLength;                // min bone length in meter
-    float maxBoneLength;                // max bone length in meter
+    Mutation boneLength;                // max bone length in meter
 
     // Bone radius mutation
-    float probOfBoneRadiusMutation;     // probability of radius mutation
-    float minFactOfBoneRadiusMutation;  // factor of min radius mutation
-    float maxFactOfBoneRadiusMutation;  // factor of max radius mutation
-    float minBoneRadius;                // min bone radius in meter
-    float maxBoneRadius;                // max bone radius in meter
+    Mutation boneRadius;                // max bone radius in meter
 
 
     // FIXATION
 
     // Fixation radius mutation
-    float probOfFixRadiusMutation;      // probability of radius mutation
-    float minFactOfFixRadiusMutation;   // factor of min radius mutation
-    float maxFactOfFixRadiusMutation;   // factor of max radius mutation
-    float minFixRadius;                 // min fix radius in meter
-    float maxFixRadius;                 // max fix radius in meter
+    Mutation fixRadius;                 // max fix radius in meter
+
+    Mutation brainSize;
+    Mutation brainInPosX;
+    Mutation brainInPosY;
 
 };
 
