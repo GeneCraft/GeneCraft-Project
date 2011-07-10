@@ -108,7 +108,6 @@ SOURCES += \
     ../genelab/core/entities/entityfamily.cpp \
     ../genelab/core/entities/entity.cpp \
     ../genelab/core/entities/body/bone.cpp \
-    ../genelab/core/factories/worldfactory.cpp \
     ../genelab/core/factories/ressources/ressource.cpp \
     ../genelab/core/ui/widgets/ogrebulletwindows.cpp \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
@@ -181,7 +180,9 @@ SOURCES += \
     ../genelab/core/entities/mutation/floatmutation.cpp \
     ../genelab/core/entities/mutation/brainnodemutation.cpp \
     ../genelab/core/entities/mutation/integermutation.cpp \
-    ../genelab/core/factories/creaturefactory.cpp
+    ../genelab/core/factories/creaturefactory.cpp \
+    ../genelab/core/factories/btworldfactory.cpp \
+    ../genelab/core/factories/btoworldfactory.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -199,7 +200,6 @@ HEADERS += \
     ../genelab/core/entities/entityfamily.h \
     ../genelab/core/entities/entity.h \
     ../genelab/core/entities/body/bone.h \
-    ../genelab/core/factories/worldfactory.h \
     ../genelab/core/factories/ressources/ressource.h \
     ../genelab/core/ui/widgets/ogrebulletwindows.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
@@ -274,7 +274,9 @@ HEADERS += \
     ../genelab/core/entities/mutation/floatmutation.h \
     ../genelab/core/entities/mutation/brainnodemutation.h \
     ../genelab/core/entities/mutation/integermutation.h \
-    ../genelab/core/factories/creaturefactory.h
+    ../genelab/core/factories/creaturefactory.h \
+    ../genelab/core/factories/btworldfactory.h \
+    ../genelab/core/factories/btoworldfactory.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

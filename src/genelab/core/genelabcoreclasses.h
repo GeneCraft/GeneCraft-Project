@@ -96,6 +96,10 @@ namespace GeneLabCore {
     class btglShapesFactory;
     class btoShapesFactory;
 
+    class CreatureFactory;
+    class btoWorldFactory;
+    class btWorldFactory;
+
     // ----------------
     // -- Ressources --
     // ----------------
