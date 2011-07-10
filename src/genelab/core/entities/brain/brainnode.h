@@ -107,6 +107,10 @@ class BrainMemory : public BrainNode {
     Q_OBJECT
 public:
     explicit BrainMemory(int size) : BrainNode(MEMORY_SPACE){
+        if(size <= 0) {
+            qDebug() << "size of 0 or less ! bad" << size;
+            size = 1;
+        }
         this->size = size;
         for(int i = 0; i < size; i++) {
             this->insert(0);

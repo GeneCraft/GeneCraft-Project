@@ -311,6 +311,7 @@ namespace GeneLabCore {
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
                             QString::number(brainWeight->mutate(nodePart[1].toFloat())));
+                newConnexionInfo.append(",");
                 break;
             case INTEGRATE:
             case INTERPOLATE:
@@ -322,6 +323,7 @@ namespace GeneLabCore {
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
                             QString::number(brainMemorySize->mutate(nodePart[1].toInt())));
+                newConnexionInfo.append(",");
                 break;
             case SINUS:
                 newConnexionInfo.append(node);
