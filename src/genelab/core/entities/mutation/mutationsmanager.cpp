@@ -62,7 +62,7 @@ namespace GeneLabCore {
         brainWeight = new FloatMutation();
         brainWeight->probability = 1;
         brainWeight->minFact    = -0.1;
-        brainWeight->maxFact    = -0.1;
+        brainWeight->maxFact    =  0.1;
         brainWeight->minValue   = -1.0;
         brainWeight->maxValue   =  1.0;
 
