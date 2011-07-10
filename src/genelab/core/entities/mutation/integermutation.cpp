@@ -1,5 +1,6 @@
 #include "integermutation.h"
 #include "tools.h"
+#include <QDebug>
 
 namespace GeneLabCore {
     void IntegerMutation::mutate(QVariantMap &map, QString key){
@@ -7,8 +8,9 @@ namespace GeneLabCore {
         // mutation ?
         if(Tools::random(0.f,1.f) <= probability) {
 
-            float factor = Tools::random(minFact, maxFact);
-            int newValue = factor * map.value(key).toInt();
+            int factor = Tools::random(minIncr, maxIncr);
+            qDebug() << factor;
+            int newValue = map.value(key).toInt() + factor;
 
             if(newValue < minValue)
                 newValue = minValue;

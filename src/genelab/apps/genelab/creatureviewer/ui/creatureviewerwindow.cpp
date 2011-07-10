@@ -439,13 +439,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // mutations
     for(int i = 0; i < nbCreatures; i++) {
 
-        QVariantMap newGenome = originGenome.toMap();
-        const QVariant treeShapeVariant = originGenome.toMap().value("body").toMap().value("shape");
-        QVariant newTreeShapeVariant = mm->mutateTreeShape(treeShapeVariant);
-
-        QVariantMap newBodyMap = originGenome.toMap().value("body").toMap();
-        newBodyMap.insert("shape", newTreeShapeVariant);
-        newGenome.insert("body",newBodyMap);
+        QVariant newGenome = mm->mutateEntity(originGenome);
 
         btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 

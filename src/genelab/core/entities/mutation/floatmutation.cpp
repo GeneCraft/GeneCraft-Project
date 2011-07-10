@@ -8,7 +8,7 @@ namespace GeneLabCore {
         if(Tools::random(0.f,1.f) <= probability) {
 
             float factor = Tools::random(minFact, maxFact);
-            float newValue = factor * map.value(key).toDouble();
+            float newValue = map.value(key).toDouble() + factor * map.value(key).toDouble();
 
             if(newValue < minValue)
                 newValue = minValue;

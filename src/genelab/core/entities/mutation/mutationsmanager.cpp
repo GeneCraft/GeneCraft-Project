@@ -16,34 +16,52 @@ namespace GeneLabCore {
         // Bone Length
         boneLength = new FloatMutation();
         boneLength->probability  = 0.1;
-        boneLength->minFact      = 0.5;
-        boneLength->maxFact      = 1.5;
+        boneLength->minFact      = -0.5;
+        boneLength->maxFact      =  0.5;
         boneLength->minValue     = 0.1;
         boneLength->maxValue     = 5.0;
 
         // Bone radius mutation
         boneRadius = new FloatMutation();
         boneRadius->probability  = 0.1;
-        boneRadius->minFact      = 0.5;
-        boneRadius->maxFact      = 1.5;
+        boneRadius->minFact      = -0.5;
+        boneRadius->maxFact      =  0.5;
         boneRadius->minValue     = 0.1;
         boneRadius->maxValue     = 2.0;
 
         // Fixation radius mutation
         fixRadius = new FloatMutation();
         fixRadius->probability   = 0.1;
-        fixRadius->minFact       = 0.5;
-        fixRadius->maxFact       = 1.5;
+        fixRadius->minFact       = -0.5;
+        fixRadius->maxFact       =  0.5;
         fixRadius->minValue      = 0.1;
         fixRadius->maxValue      = 2.0;
 
         // Plug grid size
         brainSize = new IntegerMutation();
-        brainSize->probability   = 0.1;
-        brainSize->minFact       = 0.5;
-        brainSize->maxFact       = 1.5;
+        brainSize->probability   = 0.3;
+        brainSize->minIncr       = -3;
+        brainSize->maxIncr       =  3;
         brainSize->minValue      = 1;
         brainSize->maxValue      = 100;
+    }
+
+
+    QVariant MutationsManager::mutateEntity(const QVariant &entityVariant) {
+        QVariantMap entityMap = entityVariant.toMap();
+        QVariantMap bodyMap = entityMap["body"].toMap();
+        QVariantMap treeShapeMap = bodyMap["shape"].toMap();
+        QVariantMap brainMap = entityMap["brain"].toMap();
+
+        QVariant newTreeShapeMap = this->mutateTreeShape(treeShapeMap);
+        QVariant newBrainMap     = this->mutateBrain(brainMap);
+
+        bodyMap.insert("shape",   newTreeShapeMap);
+        entityMap.insert("body",  bodyMap);
+        entityMap.insert("brain", newBrainMap);
+
+        return entityMap;
+
     }
 
 

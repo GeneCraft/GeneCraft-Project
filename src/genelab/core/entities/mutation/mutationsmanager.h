@@ -16,6 +16,9 @@ public:
     // To create the mutation manager
     MutationsManager(QVariant mutationsParams);
 
+    // To mutate an entire entity
+    QVariant mutateEntity(const QVariant &entityVariant);
+
     // To mutate a treeshape
     QVariant mutateTreeShape(const QVariant &treeShapeVariant);
 
@@ -55,7 +58,12 @@ private:
     // Fixation radius mutation
     FloatMutation* fixRadius;                 // max fix radius in meter
 
+    // BRAIN
+
+    // Brain size
     IntegerMutation* brainSize;
+
+    // Input positions
     FloatMutation* brainInPosX;
     FloatMutation* brainInPosY;
 
