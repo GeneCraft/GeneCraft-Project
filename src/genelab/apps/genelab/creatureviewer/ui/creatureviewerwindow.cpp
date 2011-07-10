@@ -405,7 +405,7 @@ void CreatureViewerWindow::spawnNew() {
     // RANDOM ENTITIES
     spawnRandomEntities(1);
     Entity* e = ents.first();
-    spawnMutationSample(e, 10);
+    spawnMutationSample(e, 8);
 
     // MUTATION
 //    //CaterpillarFamily *family = new CaterpillarFamily();
@@ -463,7 +463,7 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
     for(int i = 0; i < nbEntities; i++) {
 
         int enttype = Tools::random(0,3);
-        //enttype = 2;
+        enttype = 3;
 
         btVector3 pos = world->getSpawnPosition();
 

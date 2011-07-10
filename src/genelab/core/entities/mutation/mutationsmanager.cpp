@@ -152,11 +152,10 @@ namespace GeneLabCore {
         // ----------------------
         QVariantMap newMuscle;
         QVariantMap newOuts;
+        QVariantMap outs = boneMap["muscle"].toMap()["outs"].toMap();
 
         // foreach motor axis...
         for(int i=0; i<3; ++i){
-
-            QVariantMap outs = boneMap["muscle"].toMap()["outs"].toMap();
 
             // get motor name
             QString motor;
@@ -168,9 +167,9 @@ namespace GeneLabCore {
             if(outs.contains(motor))
             {
                 QVariantMap newOut;
-                QVariant out = outs[motor];
+                QVariantMap out = outs[motor].toMap();
                 QVariantList newBrainOuts;
-                QVariantList brainOuts = out.toMap()["brainOuts"].toList();
+                QVariantList brainOuts = out["brainOuts"].toList();
 
                 foreach(QVariant brainOut, brainOuts){
                     // add new brainOut

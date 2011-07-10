@@ -19,7 +19,7 @@ ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
 }
 
 // To create from serialization data
-ContactSensor::ContactSensor(QVariant data, Fixation * fixation) : Sensor(fixation) {
+ContactSensor::ContactSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation) {
 
     collided = new BrainIn(data.toMap()["collisionInput"]);
 
