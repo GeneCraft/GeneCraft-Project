@@ -6,7 +6,7 @@
 
 namespace GeneLabCore {
 
-    class btoWorldFactory : protected btWorldFactory
+    class btoWorldFactory : public btWorldFactory
     {
     public:
         btoWorldFactory();
