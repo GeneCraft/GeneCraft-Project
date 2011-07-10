@@ -176,7 +176,11 @@ SOURCES += \
     ../genelab/core/entities/statistics/statisticsprovider.cpp \
     ../genelab/core/entities/statistics/fixationstats.cpp \
     ../genelab/core/entities/mutation/mutationsmanager.cpp \
-    ../genelab/core/entities/families/caterpillarfamily.cpp
+    ../genelab/core/entities/families/caterpillarfamily.cpp \
+    ../genelab/core/entities/mutation/mutation.cpp \
+    ../genelab/core/entities/mutation/floatmutation.cpp \
+    ../genelab/core/entities/mutation/brainnodemutation.cpp \
+    ../genelab/core/entities/mutation/integermutation.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -264,7 +268,11 @@ HEADERS += \
     ../genelab/core/entities/statistics/statisticsprovider.h \
     ../genelab/core/entities/statistics/fixationstats.h \
     ../genelab/core/entities/mutation/mutationsmanager.h \
-    ../genelab/core/entities/families/caterpillarfamily.h
+    ../genelab/core/entities/families/caterpillarfamily.h \
+    ../genelab/core/entities/mutation/mutation.h \
+    ../genelab/core/entities/mutation/floatmutation.h \
+    ../genelab/core/entities/mutation/brainnodemutation.h \
+    ../genelab/core/entities/mutation/integermutation.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

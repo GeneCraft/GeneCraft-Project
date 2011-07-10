@@ -3,6 +3,9 @@
 #include <QVariantMap>
 #include "tools.h"
 #include <QDebug>
+#include "floatmutation.h"
+#include "integermutation.h"
+#include "brainnodemutation.h"
 
 #define MAX_MUTATION_TRIES 100
 
@@ -10,33 +13,37 @@ namespace GeneLabCore {
 
     MutationsManager::MutationsManager(QVariant mutationsParams)
     {
-        // Bone Length mutation
-        boneLength.probability  = 0.1;
-        boneLength.minFact      = 0.5;
-        boneLength.maxFact      = 1.5;
-        boneLength.minValue     = 0.1;
-        boneLength.maxValue     = 5.0;
+        // Bone Length
+        boneLength = new FloatMutation();
+        boneLength->probability  = 0.1;
+        boneLength->minFact      = 0.5;
+        boneLength->maxFact      = 1.5;
+        boneLength->minValue     = 0.1;
+        boneLength->maxValue     = 5.0;
 
         // Bone radius mutation
-        boneRadius.probability  = 0.1;
-        boneRadius.minFact      = 0.5;
-        boneRadius.maxFact      = 1.5;
-        boneRadius.minValue     = 0.1;
-        boneRadius.maxValue     = 2.0;
+        boneRadius = new FloatMutation();
+        boneRadius->probability  = 0.1;
+        boneRadius->minFact      = 0.5;
+        boneRadius->maxFact      = 1.5;
+        boneRadius->minValue     = 0.1;
+        boneRadius->maxValue     = 2.0;
 
         // Fixation radius mutation
-        fixRadius.probability   = 0.1;
-        fixRadius.minFact       = 0.5;
-        fixRadius.maxFact       = 1.5;
-        fixRadius.minValue      = 0.1;
-        fixRadius.maxValue      = 2.0;
+        fixRadius = new FloatMutation();
+        fixRadius->probability   = 0.1;
+        fixRadius->minFact       = 0.5;
+        fixRadius->maxFact       = 1.5;
+        fixRadius->minValue      = 0.1;
+        fixRadius->maxValue      = 2.0;
 
         // Plug grid size
-        brainSize.probability   = 0.1;
-        brainSize.minFact       = 0.5;
-        brainSize.maxFact       = 1.5;
-        brainSize.minValue      = 1;
-        brainSize.maxValue      = 100;
+        brainSize = new IntegerMutation();
+        brainSize->probability   = 0.1;
+        brainSize->minFact       = 0.5;
+        brainSize->maxFact       = 1.5;
+        brainSize->minValue      = 1;
+        brainSize->maxValue      = 100;
     }
 
 
@@ -87,10 +94,10 @@ namespace GeneLabCore {
         QVariantMap boneMap = boneVariant.toMap();
 
         // length mutation ?
-        mutate(boneMap, "length", boneLength);
+        boneLength->mutate(boneMap, "length");
 
         // radius mutation ?
-        mutate(boneMap, "radius", boneRadius);
+        boneRadius->mutate(boneMap, "radius");
 
         return boneMap;
     }
@@ -101,57 +108,25 @@ namespace GeneLabCore {
         QVariantMap fixMap = fixVariant.toMap();
 
         // radius mutation ?
-        mutate(fixMap, "radius", fixRadius);
+        fixRadius->mutate(fixMap, "radius");
 
         return fixMap;
     }
 
-
-
-    void MutationsManager::mutate(QVariantMap &map, QString key, Mutation mutation){
-
-        // mutation ?
-        if(Tools::random(0.f,1.f) <= mutation.probability) {
-
-            //for(int i=0; i < MAX_MUTATION_TRIES; ++i){
-
-                float factor = Tools::random(mutation.minFact, mutation.maxFact);
-                float newValue = factor * map.value(key).toDouble();
-
-                // correct value
-                //if(newValue >= minValue && newValue <= maxValue){
-                //} // La capé serait mieux
-
-                if(newValue < mutation.minValue)
-                    newValue = mutation.minValue;
-
-                if(newValue > mutation.maxValue)
-                    newValue = mutation.maxValue;
-
-
-                map.insert(key,QVariant((double)newValue));
-                //break;
-
-                //qDebug() << Q_FUNC_INFO << "Incorrect mutation !" << factor << key << " : " << newValue;
-            //}
-        }
-
-
-
-    }
-
     // Mutate the brain
     QVariant MutationsManager::mutateBrain(QVariant brain) {
-        QVariantMap brainRetour = brain.toMap();
-        this->mutate(brainRetour, "plugGridSize", brainSize);
+        QVariantMap brainMap = brain.toMap();
+        brainSize->mutate(brainMap, "plugGridSize");
+        return brainMap;
     }
 
     // Mutate a brainInput
     QVariant MutationsManager::mutateBrainIn(QVariant brainIn) {
-
+        return brainIn;
     }
 
     // Mutate a brainOutput
     QVariant MutationsManager::mutateBrainOut(QVariant brainOut) {
+        return brainOut;
     }
 }

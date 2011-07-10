@@ -3,16 +3,11 @@
 
 #include <QVariant>
 #include <body/bone.h>
+#include "mutation.h"
+#include "floatmutation.h"
+#include "integermutation.h"
 
 namespace GeneLabCore {
-
-    struct Mutation {
-        float probability;
-        float minFact;
-        float maxFact;
-        float minValue;
-        float maxValue;
-    };
 
 class MutationsManager
 {
@@ -42,27 +37,27 @@ public:
 private:
 
     // To mutate a value in a map
-    void mutate(QVariantMap &map, QString key, Mutation mutation);
+    void mutate(QVariantMap &map, QString key, Mutation* mutation);
 
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
     // BONE
 
     // Bone Length mutation
-    Mutation boneLength;                // max bone length in meter
+    FloatMutation* boneLength;                // max bone length in meter
 
     // Bone radius mutation
-    Mutation boneRadius;                // max bone radius in meter
+    FloatMutation* boneRadius;                // max bone radius in meter
 
 
     // FIXATION
 
     // Fixation radius mutation
-    Mutation fixRadius;                 // max fix radius in meter
+    FloatMutation* fixRadius;                 // max fix radius in meter
 
-    Mutation brainSize;
-    Mutation brainInPosX;
-    Mutation brainInPosY;
+    IntegerMutation* brainSize;
+    FloatMutation* brainInPosX;
+    FloatMutation* brainInPosY;
 
 };
 
