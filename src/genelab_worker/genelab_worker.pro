@@ -123,11 +123,12 @@ SOURCES += \
     ../genelab/core/entities/mutation/brainnodemutation.cpp \
     ../genelab/core/entities/mutation/integermutation.cpp \
     ../genelab/core/factories/btshapesfactory.cpp \
-    ../genelab/core/factories/worldfactory.cpp \
+    ../genelab/core/factories/btworldfactory.cpp \
     ../genelab/core/factories/btfactory.cpp \
     ../genelab/core/factories/ressources/ressource.cpp \
     ../genelab/core/factories/ressources/jsonfile.cpp \
     ../genelab/core/factories/ressources/dbrecord.cpp \
+    ../genelab/core/factories/creaturefactory.cpp \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
     ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
@@ -198,12 +199,13 @@ HEADERS += \
     ../genelab/core/entities/mutation/floatmutation.h \
     ../genelab/core/entities/mutation/brainnodemutation.h \
     ../genelab/core/entities/mutation/integermutation.h \
-    ../genelab/core/factories/worldfactory.h \
+    ../genelab/core/factories/btworldfactory.h \
     ../genelab/core/factories/ressources/ressource.h \
     ../genelab/core/factories/btfactory.h \
     ../genelab/core/factories/ressources/jsonfile.h \
     ../genelab/core/factories/ressources/dbrecord.h \
     ../genelab/core/factories/btshapesfactory.h \
+    ../genelab/core/factories/creaturefactory.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
     ../genelab/core/ui/widgets/entities/fixationproperties.h \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
