@@ -69,6 +69,9 @@ private:
     // Input weight
     FloatMutation* brainWeight;
 
+    // Brain memory size
+    IntegerMutation* brainMemorySize;
+
 };
 
 }

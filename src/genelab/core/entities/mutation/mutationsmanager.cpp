@@ -4,10 +4,13 @@
 #include <QVariantList>
 #include "tools.h"
 #include <QDebug>
+#include <QString>
+#include <QStringList>
 #include "floatmutation.h"
 #include "integermutation.h"
 #include "brainnodemutation.h"
 #include "sensors/sensor.h"
+#include "brain/brainnode.h"
 
 #define MAX_MUTATION_TRIES 100
 
@@ -62,6 +65,14 @@ namespace GeneLabCore {
         brainWeight->maxFact    = -0.1;
         brainWeight->minValue   = -1.0;
         brainWeight->maxValue   =  1.0;
+
+        // Brain memory size
+        brainMemorySize = new IntegerMutation();
+        brainMemorySize->probability    = 0.1;
+        brainMemorySize->minIncr        = -3;
+        brainMemorySize->maxIncr        =  3;
+        brainMemorySize->minValue       = 1;
+        brainMemorySize->maxValue       = 100;
 
     }
 
@@ -216,6 +227,78 @@ namespace GeneLabCore {
 
     // Mutate a brainOutput
     QVariant MutationsManager::mutateBrainOut(QVariant brainOut) {
-        return brainOut;
+        QVariantMap outMap = brainOut.toMap();
+
+        QString treeData = outMap["connexionInfo"].toString();
+        QStringList nodes = treeData.split(",", QString::SkipEmptyParts);
+
+        QString newConnexionInfo;
+        foreach(QString node, nodes) {
+            QStringList nodePart = node.split(" ", QString::SkipEmptyParts);
+            NodeType t = fromString(nodePart[0]);
+            switch(t) {
+            // 2 operands
+            case SUM:
+            case PRODUCT:
+            case DIVIDE:
+            case ATAN:
+            // 2 operands + decisions
+            case THRESOLD: // --------> THRESHOLD ;)
+            case GT:
+            // 3 operands
+            case IFELSE:
+
+            // 1 operand
+            case COS:
+            case SIN:
+            case ABS:
+            case SIGN_OF:
+            case LOG:
+            case EXP:
+            case SIGM:
+                // No mutation for thoses !
+                newConnexionInfo.append(node);
+                newConnexionInfo.append(",");
+                break;
+            case IN:
+                // x et y
+                newConnexionInfo.append(nodePart[0]);
+                newConnexionInfo.append(" " +
+                            QString::number(brainInPos->mutate(nodePart[1].toFloat())));
+                newConnexionInfo.append(" " +
+                            QString::number(brainInPos->mutate(nodePart[2].toFloat())));
+                newConnexionInfo.append(",");
+                break;
+            case CONST:
+                newConnexionInfo.append(nodePart[0]);
+                newConnexionInfo.append(" " +
+                            QString::number(brainWeight->mutate(nodePart[1].toFloat())));
+                break;
+            case INTEGRATE:
+            case INTERPOLATE:
+            case DIFFERENTIATE:
+            case MEMORY:
+            case SMOOTH:
+            case MIN:
+            case MAX:
+                newConnexionInfo.append(nodePart[0]);
+                newConnexionInfo.append(" " +
+                            QString::number(brainMemorySize->mutate(nodePart[1].toInt())));
+                break;
+            case SINUS:
+                newConnexionInfo.append(node);
+                newConnexionInfo.append(",");
+                break;
+            case MEMORY_SPACE:
+            case BAD_TYPE:
+                qDebug() << "SHOULD NOT BE IN STRING memoryspace or badtype !!";
+                break;
+
+            }
+        }
+
+        outMap.insert("connexionInfo", newConnexionInfo);
+
+        return outMap;
     }
 }

@@ -7,16 +7,23 @@ namespace GeneLabCore {
         // mutation ?
         if(Tools::random(0.f,1.f) <= probability) {
 
-            float factor = Tools::random(minFact, maxFact);
-            float newValue = map.value(key).toDouble() + factor * map.value(key).toDouble();
+            float newValue = this->mutate(map.value(key).toDouble());
 
-            if(newValue < minValue)
-                newValue = minValue;
-
-            if(newValue > maxValue)
-                newValue = maxValue;
 
             map.insert(key,QVariant((double)newValue));
         }
+    }
+
+    float FloatMutation::mutate(float value) {
+        float factor = Tools::random(minFact, maxFact);
+        float newValue = value + factor * value;
+
+        if(newValue < minValue)
+            newValue = minValue;
+
+        if(newValue > maxValue)
+            newValue = maxValue;
+
+        return newValue;
     }
 }

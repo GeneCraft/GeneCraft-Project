@@ -8,6 +8,7 @@ namespace GeneLabCore {
     class FloatMutation : public Mutation {
     public:
         void mutate(QVariantMap &map, QString key);
+        float mutate(float value);
         float minFact;
         float maxFact;
         float minValue;
