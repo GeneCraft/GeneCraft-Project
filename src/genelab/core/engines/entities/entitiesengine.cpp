@@ -33,12 +33,15 @@ int cptBrain;
 void EntitiesEngine::step()
 {
     cptBrain++;
-    if(cptBrain%6) // 60/6 brain step per sec so 0.1
-        return;
 
     foreach(Entity* e, entities) {
         // step brains
         if(e->getBrain() != NULL) {
+            e->getBrainActivityStat()->setValue(e->getBrain()->getFrequency()/60.);
+
+            if(cptBrain % e->getBrain()->getFrequency())
+                continue;
+
             e->getBrain()->getPlugGrid()->beforeStep();
         }
     }

@@ -93,8 +93,8 @@ void Bone::setup()
             motor->m_maxMotorForce = 0.001f;
             motor->m_maxLimitForce = 0.001f;
             motor->m_targetVelocity = 0;
-            motor->m_bounce = 0.9;
-            motor->m_damping = 0.9;
+            motor->m_bounce = 0.1;
+            motor->m_damping = 1.0;
         }
 
         // add motor modifier

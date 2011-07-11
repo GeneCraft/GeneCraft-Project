@@ -47,7 +47,7 @@ public:
     void update()
     {
         motor->m_maxMotorForce
-                = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*10;
+                = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*25;
         motor->m_targetVelocity
                 = (boTargetVelocity->getValue() - boMaxMotorForce->getValue())*5;
     }

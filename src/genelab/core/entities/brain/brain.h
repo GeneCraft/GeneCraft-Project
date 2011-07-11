@@ -27,9 +27,13 @@ public:
     static int randomPlugGridSize();
 
     virtual void step() = 0;
+    int getFrequency() {
+        return frequency;
+    }
 
 protected:
     BrainPlugGrid* plugGrid;
+    int frequency;
 };
 }
 

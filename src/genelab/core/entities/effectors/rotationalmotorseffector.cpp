@@ -163,7 +163,7 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
             if(brainOutputs[i]){
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
                 motor->m_enableMotor = true;
-                motor->m_maxMotorForce = 10.0;
+                motor->m_maxMotorForce = 20.0;
                 motor->m_targetVelocity = 0;
                 motor->m_currentPosition = 0;
             }
@@ -178,7 +178,7 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
             if(brainOutputs[i]){
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
                 motor->m_enableMotor = true;
-                motor->m_maxMotorForce = 10.0;
+                motor->m_maxMotorForce = 20.0;
                 motor->m_targetVelocity = 0;
                 motor->m_currentPosition = 0;
             }
@@ -191,7 +191,7 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
             if(brainOutputs[i]){
                 btRotationalLimitMotor * motor = brainOutputs[i]->motor;
                 motor->m_enableMotor = true;
-                motor->m_maxMotorForce = 10.0;
+                motor->m_maxMotorForce = 20.0;
                 motor->m_targetVelocity = 0;
                 motor->m_currentPosition = 0;
             }
@@ -218,7 +218,7 @@ void RotationalMotorsEffector::step()
             for(int i=0;i<3;i++)
                 if(brainOutputs[i]){
                     btRotationalLimitMotor * motor = brainOutputs[i]->motor;
-                    motor->m_maxMotorForce = ( sinusIn[1]->getValue())*5 + 5;
+                    motor->m_maxMotorForce = ( sinusIn[1]->getValue())*10 + 10;
                     motor->m_targetVelocity = (sinusIn[0]->getValue())*5;
                 }
 

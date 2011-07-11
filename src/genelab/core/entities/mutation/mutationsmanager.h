@@ -72,6 +72,9 @@ private:
     // Brain memory size
     IntegerMutation* brainMemorySize;
 
+    // Brain frequency
+    IntegerMutation* brainFrequency;
+
 };
 
 }

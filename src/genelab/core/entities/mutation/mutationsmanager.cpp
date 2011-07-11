@@ -12,8 +12,6 @@
 #include "sensors/sensor.h"
 #include "brain/brainnode.h"
 
-#define MAX_MUTATION_TRIES 100
-
 namespace GeneLabCore {
 
     MutationsManager::MutationsManager(QVariant mutationsParams)
@@ -73,6 +71,13 @@ namespace GeneLabCore {
         brainMemorySize->maxIncr        =  5;
         brainMemorySize->minValue       = 1;
         brainMemorySize->maxValue       = 100;
+
+        brainFrequency = new IntegerMutation();
+        brainFrequency->probability     = 0.1;
+        brainFrequency->minIncr      = -2;
+        brainFrequency->maxIncr      =  2;
+        brainFrequency->minValue     =  1;
+        brainFrequency->maxValue     = 60;
 
     }
 
@@ -234,6 +239,7 @@ namespace GeneLabCore {
     QVariant MutationsManager::mutateBrain(QVariant brain) {
         QVariantMap brainMap = brain.toMap();
         brainSize->mutate(brainMap, "plugGridSize");
+        brainFrequency->mutate(brainMap, "frequency");
         return brainMap;
     }
 

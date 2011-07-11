@@ -49,6 +49,7 @@ void Entity::setup() {
 
         this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
         this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"Root"));
+        this->brainActivityStat = statisticsStorage->registerStat("Brain Activity", "a / step");
 
 //        StatisticsProvider *s;
 //        // Body
@@ -158,7 +159,7 @@ void Entity::addLinkToEffector(Effector *modifier) {
     // Outputs connections to grid
     for(int i = 0; i < modifier->getOutputs().size(); i++) {
         if(modifier->getOutputs()[i]->getConnexionInfo() == "") {
-            QString randomFunc = brain->createRandomFunc(2);
+            QString randomFunc = brain->createRandomFunc(5);
             modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
         }
 

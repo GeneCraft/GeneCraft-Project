@@ -86,6 +86,10 @@ public:
 
     virtual void setup();
 
+    Statistic* getBrainActivityStat() {
+        return this->brainActivityStat;
+    }
+
 protected:
 
     // Origins
@@ -106,6 +110,7 @@ protected:
     // Statistics
     // TODO QList
     QMap<QString, StatisticsProvider *> stats;
+    Statistic*         brainActivityStat;
     StatisticsStorage *statisticsStorage;
 
     // Qt Render
