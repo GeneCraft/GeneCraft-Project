@@ -280,7 +280,7 @@ void CreatureViewerWindow::spawnNew() {
     // RANDOM ENTITIES
     spawnRandomEntities(1);
     Entity* e = entitiesEngine->getAllEntities().first();
-    spawnMutationSample(e, 8);
+    //spawnMutationSample(e, 8);
 
     // MUTATION
 //    //CaterpillarFamily *family = new CaterpillarFamily();

@@ -16,6 +16,7 @@
 
 #include "btshapesfactory.h"
 #include "btworldfactory.h"
+#include "creaturefactory.h"
 
 #include <QMap>
 #include <QVariant>
@@ -30,9 +31,10 @@
 #include "statistics/statisticsstorage.h"
 #include "statistics/statisticsprovider.h"
 #include "statistics/fixationstats.h"
+#include "mutation/mutationsmanager.h"
 
 #define MAX_ENTITY 1
-#define MAX_TIME 6000
+#define MAX_TIME 600
 #define EPSILON 0.00001
 
 using namespace GeneLabCore;
@@ -62,9 +64,11 @@ int main(int argc, char *argv[])
     Entity* e;
     btWorldFactory* worldFactory = new btWorldFactory();
     btShapesFactory* shapesFactory = new btShapesFactory();
+    CreatureFactory* creatureFactory = new CreatureFactory();
+    QVariant bestGenome;
     float max = 0;
     btWorld* world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
-
+    int cptMutation = 0;
     for(int i = 0; i < MAX_ENTITY; i++) {
 
         EntityFamily *spider = new SpiderFamily();
@@ -139,7 +143,9 @@ int main(int argc, char *argv[])
                 if(s->getSum() > max) {
                     max = s->getSum();
                     qDebug() << "! new max " << s->getSum();
-                    r->save(e->serialize());
+                    bestGenome = e->serialize();
+                    r->save(bestGenome);
+                    cptMutation = 0;
                 }
             }
 
@@ -150,10 +156,18 @@ int main(int argc, char *argv[])
 
 
             for(int i = 0; i < MAX_ENTITY; i++) {
-
-                EntityFamily *spider = new SpiderFamily();
+                cptMutation++;
                 btVector3 pos = world->getSpawnPosition();
-                e = spider->createEntity(shapesFactory, pos);
+
+                if(cptMutation == 20) {
+                    SpiderFamily* family = new SpiderFamily();
+                    e = family->createEntity(shapesFactory, pos);
+                } else {
+                    MutationsManager* mutation = new MutationsManager(QVariant());
+                    QVariant newGenome = mutation->mutateEntity(bestGenome);
+
+                    e = creatureFactory->createEntity(newGenome, shapesFactory, pos);
+                }
                 e->setup();
                 ee->addEntity(e);
             }
