@@ -14,11 +14,16 @@
 #include "BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 #include "BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+
+#include <QDebug>
+
+/*
 #include "BulletMultiThreaded/btParallelConstraintSolver.h"
 #include "BulletMultiThreaded/btThreadSupportInterface.h"
 #include "BulletMultiThreaded/SequentialThreadSupport.h"
 #include "BulletMultiThreaded/PosixThreadSupport.h"
 #include "BulletCollision/CollisionDispatch/btSimulationIslandManager.h"
+ */
 
 namespace GeneLabCore {
 
@@ -56,24 +61,23 @@ namespace GeneLabCore {
 //        threadSupport->startSPU();
 
 
-	PosixThreadSupport::ThreadConstructionInfo solverConstructionInfo("solver", SolverThreadFunc,
-																	  
-SolverlsMemoryFunc, 6);
+//	PosixThreadSupport::ThreadConstructionInfo solverConstructionInfo("solver", SolverThreadFunc, SolverlsMemoryFunc, 6);
 	
-	PosixThreadSupport* threadSupport = new PosixThreadSupport(solverConstructionInfo);
+//	PosixThreadSupport* threadSupport = new PosixThreadSupport(solverConstructionInfo);
 
-        btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
+//        btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
         //this solver requires the contacts to be in a contiguous pool, so avoid dynamic allocation
-        dispatcher->setDispatcherFlags(btCollisionDispatcher::CD_DISABLE_CONTACTPOOL_DYNAMIC_ALLOCATION);
+//        dispatcher->setDispatcherFlags(btCollisionDispatcher::CD_DISABLE_CONTACTPOOL_DYNAMIC_ALLOCATION);
 
 
+        btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
         world = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
 
-        world->getSimulationIslandManager()->setSplitIslands(false);
-        world->getSolverInfo().m_numIterations = 4;
-        world->getSolverInfo().m_solverMode = SOLVER_SIMD+SOLVER_USE_WARMSTARTING;//+SOLVER_RANDMIZE_ORDER;
+//        world->getSimulationIslandManager()->setSplitIslands(false);
+//        world->getSolverInfo().m_numIterations = 10; // A varier pour des contraintes plus fermes
+//        world->getSolverInfo().m_solverMode = SOLVER_SIMD+SOLVER_USE_WARMSTARTING;//+SOLVER_RANDMIZE_ORDER;
 
-        world->getDispatchInfo().m_enableSPU = true;
+//        world->getDispatchInfo().m_enableSPU = true;
 
         // Set the world to the subworld classes
         this->biome->setBulletWorld(world);
