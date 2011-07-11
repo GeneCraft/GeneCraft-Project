@@ -184,6 +184,10 @@ void CreatureViewerWindow::init() {
     srand(time(NULL));
     qsrand(time(NULL));
 
+    base.url = "http://www.genecraft-project.org";
+    base.dbName = "db/genecraft";
+    base.port = 80;
+
     spawnNew();
 
     entitySpawner = new QTimer();
@@ -191,9 +195,6 @@ void CreatureViewerWindow::init() {
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
-    base.url = "http://www.genecraft-project.org";
-    base.dbName = "db/genecraft";
-    base.port = 80;
 
 }
 
@@ -278,7 +279,7 @@ void CreatureViewerWindow::spawnNew() {
 
     // RANDOM ENTITIES
     spawnRandomEntities(1);
-    Entity* e = ents.first();
+    Entity* e = entitiesEngine->getAllEntities().first();
     spawnMutationSample(e, 8);
 
     // MUTATION

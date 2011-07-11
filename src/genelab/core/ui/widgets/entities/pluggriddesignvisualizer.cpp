@@ -60,8 +60,8 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
                 int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
                 int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
                 b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
-                /*neurones.append(*/this->view->scene()->addRect(width * j,
-                                             width * i /*+ 70*/, width, width, p, b)/*)*/;
+                /*neurones.append(*/this->view->scene()->addRect(width * i,
+                                             width * j /*+ 70*/, width, width, p, b)/*)*/;
 
             }
         }
