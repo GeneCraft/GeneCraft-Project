@@ -34,7 +34,7 @@
 #include "mutation/mutationsmanager.h"
 
 #define MAX_ENTITY 1
-#define MAX_TIME 600
+#define MAX_TIME 6000
 #define EPSILON 0.00001
 
 using namespace GeneLabCore;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
-    r = new DbRecord(database, "HighestSpider" + QString::number(time(NULL)));
+    r = new DbRecord(database, "SpiderMutated");
     r->load();
 
     // Spider
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     float lastHeight = 0;
     while(1) {
         cpt++;
-        if(!stable && cpt < 600) {
+/*        if(!stable && cpt < 600) {
             QList<Entity*> entities = ee->getAllEntities();
             foreach(Entity* e, entities) {
                 StatisticsProvider* stat = e->getStatistics().find("FixationStats").value();
@@ -104,13 +104,15 @@ int main(int argc, char *argv[])
                     s->resetAll();
                     ((FixationStats*)stat)->resetOrigin();
                     needStableCpt = 0;
+		    cpt = 0;
                 }
             }
             ((BulletEngine*)engines.find("Bullet").value())->beforeStep();
             ((BulletEngine*)engines.find("Bullet").value())->step();
             ((BulletEngine*)engines.find("Bullet").value())->afterStep();
             continue;
-        }
+        }*/
+stable = true;
 
         //qDebug() << cpt;
         foreach(Engine* e, engines) {
@@ -131,7 +133,7 @@ int main(int argc, char *argv[])
             //qDebug() << "\r" << cpt/60 << "secondes";
         }
 
-        if(cpt >= MAX_TIME) {
+        if(cpt >= MAX_TIME || !stable) {
             qDebug() << "new entity !";
             cpt = 0;
             // Evaluation
@@ -159,15 +161,23 @@ int main(int argc, char *argv[])
                 cptMutation++;
                 btVector3 pos = world->getSpawnPosition();
 
-                if(cptMutation == 20) {
-                    SpiderFamily* family = new SpiderFamily();
-                    e = family->createEntity(shapesFactory, pos);
-                } else {
+//                if(cptMutation >= 50) {
+//                    SpiderFamily* family = new SpiderFamily();
+//                    e = family->createEntity(shapesFactory, pos);
+//                } else {
                     MutationsManager* mutation = new MutationsManager(QVariant());
-                    QVariant newGenome = mutation->mutateEntity(bestGenome);
-
+		    QVariant newGenome = bestGenome;
+		for(int i = 0; i < 1 + cptMutation/100; i++) {
+//                    newGenome = mutation->mutateEntity(newGenome);
+	            qDebug() << (newGenome == bestGenome);
+	            qDebug() << "mutating from best once";
+		}
                     e = creatureFactory->createEntity(newGenome, shapesFactory, pos);
-                }
+ //               }
+//		if(cptMutation > 50) {
+//			qDebug() << "adding mutation to best genome !";
+//			bestGenome = newGenome;// boosting mutation
+//		}
                 e->setup();
                 ee->addEntity(e);
             }

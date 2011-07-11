@@ -43,8 +43,8 @@ void EntitiesEngine::step()
         if(e->getBrain() != NULL) {
             e->getBrainActivityStat()->setValue(e->getBrain()->getFrequency()/60.);
 
-            if(cptBrain % e->getBrain()->getFrequency())
-                continue;
+//            if(cptBrain % e->getBrain()->getFrequency())
+//                continue;
 
             e->getBrain()->getPlugGrid()->beforeStep();
         }
