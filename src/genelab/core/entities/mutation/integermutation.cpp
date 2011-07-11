@@ -4,15 +4,16 @@
 
 namespace GeneLabCore {
     void IntegerMutation::mutate(QVariantMap &map, QString key){
-
-        // mutation ?
-        if(Tools::random(0.f,1.f) < probability) {
-            int newValue = this->mutate(map.value(key).toInt());
-            map.insert(key,QVariant((int)newValue));
-        }
+        int newValue = this->mutate(map.value(key).toInt());
+        map.insert(key,QVariant((int)newValue));
     }
 
     int IntegerMutation::mutate(int value) {
+
+        if(Tools::random(0.f,1.f) > probability) {
+            return value;
+        }
+
         int factor = Tools::random(minIncr, maxIncr);
         int newValue = value + factor;
 
