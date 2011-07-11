@@ -103,6 +103,7 @@ void CreatureViewerWindow::init() {
     // create actions & add to bar
     QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString(tr("New creature")));
     QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString(tr("Add creature")));
+    QAction *aAddCreatureFromBdd = ui->toolBar->addAction(QIcon(":img/icons/entity_add_from_bdd"),QString(tr("Add creature from database")));
     QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString(tr("Save creature")));
     QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString(tr("Remove creature")));
     ui->toolBar->addSeparator();
@@ -123,6 +124,7 @@ void CreatureViewerWindow::init() {
     // connections
     connect(aNewCreature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(aAddCreature,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
+    connect(aAddCreatureFromBdd,SIGNAL(triggered()),this,SLOT(loadEntityFromDb()));
     connect(aSaveCreature,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
     connect(aRemoveCreature,SIGNAL(triggered()),this,SLOT(removeEntity()));
 

@@ -16,8 +16,9 @@ namespace GeneLabCore {
             return value;
         }
 
-        float factor = Tools::random(minFact, maxFact);
-        float newValue = value + factor * value;
+
+        //float newValue = value + Tools::random(minFact, maxFact) * value;
+        float newValue = value + (maxValue - minValue) * Tools::random(minFact, maxFact);
 
         if(newValue < minValue)
             newValue = minValue;

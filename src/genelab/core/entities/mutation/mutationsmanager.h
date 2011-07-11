@@ -6,6 +6,7 @@
 #include "mutation.h"
 #include "floatmutation.h"
 #include "integermutation.h"
+#include "bonelimitsmutation.h"
 
 namespace GeneLabCore {
 
@@ -44,19 +45,23 @@ private:
 
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
-    // BONE
+    // BODY
 
     // Bone Length mutation
-    FloatMutation* boneLength;                // max bone length in meter
+    FloatMutation* boneLength;
 
     // Bone radius mutation
-    FloatMutation* boneRadius;                // max bone radius in meter
+    FloatMutation* boneRadius;
 
+    // Bone angular origin (Yaw and Roll)
+    FloatMutation* boneAngularOrigin;
 
-    // FIXATION
+    // Bone angular limits (x,y,z for lower and upper)
+    BoneLimitsMutation* boneAngularLimits;
 
     // Fixation radius mutation
-    FloatMutation* fixRadius;                 // max fix radius in meter
+    FloatMutation* fixRadius;
+
 
     // BRAIN
 

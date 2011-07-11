@@ -175,7 +175,8 @@ SOURCES += \
     ../genelab/core/entities/mutation/integermutation.cpp \
     ../genelab/core/factories/creaturefactory.cpp \
     ../genelab/core/factories/btworldfactory.cpp \
-    ../genelab/core/factories/btoworldfactory.cpp
+    ../genelab/core/factories/btoworldfactory.cpp \
+    ../genelab/core/entities/mutation/bonelimitsmutation.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -262,7 +263,8 @@ HEADERS += \
     ../genelab/core/entities/mutation/integermutation.h \
     ../genelab/core/factories/creaturefactory.h \
     ../genelab/core/factories/btworldfactory.h \
-    ../genelab/core/factories/btoworldfactory.h
+    ../genelab/core/factories/btoworldfactory.h \
+    ../genelab/core/entities/mutation/bonelimitsmutation.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

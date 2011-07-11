@@ -47,13 +47,11 @@ RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, bt
     this->bone = bone;
     QVariantMap outsMap = data.toMap()["outs"].toMap();
 
+    QString motors[] = {"x","y","z"};
+
     for(int i = 0; i < 3; i++) {
 
-        QString key;
-        if(i == 0)      key = "x";
-        else if(i == 1) key = "y";
-        else            key = "z";
-
+        QString key = motors[i];
         if(outsMap.contains(key)) {
             brainOutputs[i] = new BrainOutMotor(outsMap.value(key), constraint->getRotationalLimitMotor(i));
             brainOutputs[i]->motor->m_enableMotor = true;
@@ -133,15 +131,10 @@ void RotationalMotorsEffector::disconnectMotor(int i)
 QVariant RotationalMotorsEffector::serialize() {
     QVariantMap data = Effector::serialize().toMap();
     QVariantMap bOuts;
+    QString motors[] = {"x","y","z"};
     for(int i = 0; i < 3; i++)
         if(brainOutputs[i]) {
-
-            QString key;
-            if(i == 0)      key = "x";
-            else if(i == 1) key = "y";
-            else            key = "z";
-
-            bOuts.insert(key,brainOutputs[i]->serialize());
+            bOuts.insert(motors[i],brainOutputs[i]->serialize());
         }
     data.insert("outs", bOuts);
 

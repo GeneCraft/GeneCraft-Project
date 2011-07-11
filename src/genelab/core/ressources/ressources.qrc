@@ -35,5 +35,6 @@
         <file alias="entity_stats">img/icons/chart_curve.png</file>
         <file alias="bone_delete">img/icons/bone_delete.png</file>
         <file alias="brain_connections">img/icons/brain_connections.png</file>
+        <file alias="entity_add_from_bdd">img/icons/bug_add_from_bdd.png</file>
     </qresource>
 </RCC>

@@ -17,9 +17,13 @@ namespace GeneLabCore {
 
     MutationsManager::MutationsManager(QVariant mutationsParams)
     {
+        // --------------------
+        // -- BODY MUTATIONS --
+        // --------------------
+
         // Bone Length
         boneLength = new FloatMutation();
-        boneLength->probability  = 0.1;
+        boneLength->probability  = 0.0;
         boneLength->minFact      = -0.5;
         boneLength->maxFact      =  0.5;
         boneLength->minValue     = 0.1;
@@ -27,7 +31,7 @@ namespace GeneLabCore {
 
         // Bone radius mutation
         boneRadius = new FloatMutation();
-        boneRadius->probability  = 0.1;
+        boneRadius->probability  = 0.0;
         boneRadius->minFact      = -0.5;
         boneRadius->maxFact      =  0.5;
         boneRadius->minValue     = 0.1;
@@ -35,11 +39,32 @@ namespace GeneLabCore {
 
         // Fixation radius mutation
         fixRadius = new FloatMutation();
-        fixRadius->probability   = 0.1;
+        fixRadius->probability   = 0.0;
         fixRadius->minFact       = -0.5;
         fixRadius->maxFact       =  0.5;
         fixRadius->minValue      = 0.1;
         fixRadius->maxValue      = 2.0;
+
+        // Bone angular origin (Yaw and Roll)
+        boneAngularOrigin = new FloatMutation();
+        boneAngularOrigin->probability   = 0.0;
+        boneAngularOrigin->minFact       = -0.5;
+        boneAngularOrigin->maxFact       =  0.5;
+        boneAngularOrigin->minValue      = -M_PI+0.01; // -INF (cyclic) ?
+        boneAngularOrigin->maxValue      =  M_PI-0.01; // +INF (cyclic) ?
+
+        // Bone angular limits (x,y,z for lower and upper)
+        boneAngularLimits = new BoneLimitsMutation();
+        boneAngularLimits->probability                  = 0.0;
+        boneAngularLimits->axisMutation->probability    = 0.1;
+        boneAngularLimits->axisMutation->minFact        = -0.5;
+        boneAngularLimits->axisMutation->maxFact        =  0.5;
+        boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
+        boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
+
+        // ---------------------
+        // -- BRAIN MUTATIONS --
+        // ---------------------
 
         // Plug grid size
         brainSize = new IntegerMutation();
@@ -149,11 +174,36 @@ namespace GeneLabCore {
 
         QVariantMap boneMap = boneVariant.toMap();
 
+        // ----------
+        // -- size --
+        // ----------
+
         // length mutation
         boneLength->mutate(boneMap, "length");
 
         // radius mutation
         boneRadius->mutate(boneMap, "radius");
+
+        // --------------------
+        // -- angular origin --
+        // --------------------
+        QVariantMap localRotation = boneMap["localRotation"].toMap();
+        boneAngularOrigin->mutate(localRotation,"y");
+        boneAngularOrigin->mutate(localRotation,"z");
+        boneMap.insert("localRotation",localRotation);
+
+        // --------------------
+        // -- angular limits --
+        // --------------------
+
+        QVariantMap lowerLimits = boneMap["lowerLimits"].toMap();
+        QVariantMap upperLimits = boneMap["upperLimits"].toMap();
+
+        boneAngularLimits->mutate(lowerLimits,upperLimits);
+
+        boneMap.insert("lowerLimits",lowerLimits);
+        boneMap.insert("upperLimits",upperLimits);
+
 
         // ----------------------
         // -- motors mutations --
@@ -350,7 +400,6 @@ namespace GeneLabCore {
             case BAD_TYPE:
                 qDebug() << "SHOULD NOT BE IN STRING memoryspace or badtype !!";
                 break;
-
             }
         }
 
