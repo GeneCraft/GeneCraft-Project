@@ -12,6 +12,8 @@
 #include "families/antfamily.h"
 #include "families/snakefamily.h"
 #include "entity.h"
+#include "brain/brain.h"
+#include "brain/brainpluggrid.h"
 #include "entities/entitiesengine.h"
 
 #include "btshapesfactory.h"
@@ -34,7 +36,7 @@
 #include "mutation/mutationsmanager.h"
 
 #define MAX_ENTITY 1
-#define MAX_TIME 6000
+#define MAX_TIME 1800
 #define EPSILON 0.00001
 
 using namespace GeneLabCore;
@@ -54,7 +56,7 @@ int main(int argc, char *argv[])
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
-    r = new DbRecord(database, "SpiderMutated");
+    r = new DbRecord(database, "SpiderMutated2");
     r->load();
 
     // Spider
@@ -69,6 +71,7 @@ int main(int argc, char *argv[])
     float max = 0;
     btWorld* world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
     int cptMutation = 0;
+    int cptBoostrap = 10;
     for(int i = 0; i < MAX_ENTITY; i++) {
 
         EntityFamily *spider = new SpiderFamily();
@@ -85,6 +88,8 @@ int main(int argc, char *argv[])
     float lastHeight = 0;
     while(1) {
         cpt++;
+	if(cpt == 1)
+	qDebug() << e->getBrain()->getPlugGrid()->getSize();
         if(!stable && cpt < 600) {
             QList<Entity*> entities = ee->getAllEntities();
             foreach(Entity* e, entities) {
@@ -160,21 +165,22 @@ int main(int argc, char *argv[])
                 cptMutation++;
                 btVector3 pos = world->getSpawnPosition();
 
-//                if(cptMutation >= 50) {
-//                    SpiderFamily* family = new SpiderFamily();
-//                    e = family->createEntity(shapesFactory, pos);
-//                } else {
+                if(cptBoostrap > 0) {
+		    cptBoostrap--;
+                    SpiderFamily* family = new SpiderFamily();
+                    e = family->createEntity(shapesFactory, pos);
+                } else {
                     MutationsManager* mutation = new MutationsManager(QVariant());
 		    QVariant newGenome = bestGenome;
 		for(int i = 0; i < 1 + cptMutation/100 || (newGenome == bestGenome); i++) {
                     newGenome = mutation->mutateEntity(newGenome);
 	            qDebug() << (newGenome == bestGenome);
-		    if(!(newGenome == bestGenome))
-			qDebug() << newGenome << "\n" << bestGenome;
+//		    if(!(newGenome == bestGenome))
+//			qDebug() << newGenome << "\n" << bestGenome;
 	            qDebug() << "mutating from best once";
 		}
                     e = creatureFactory->createEntity(newGenome, shapesFactory, pos);
- //               }
+                }
 //		if(cptMutation > 50) {
 //			qDebug() << "adding mutation to best genome !";
 //			bestGenome = newGenome;// boosting mutation
