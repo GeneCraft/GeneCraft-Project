@@ -18,6 +18,7 @@
 #include "BulletMultiThreaded/btThreadSupportInterface.h"
 #include "BulletMultiThreaded/SequentialThreadSupport.h"
 #include "BulletMultiThreaded/PosixThreadSupport.h"
+#include "BulletCollision/CollisionDispatch/btSimulationIslandManager.h"
 
 namespace GeneLabCore {
 
@@ -61,6 +62,11 @@ namespace GeneLabCore {
 
         world = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
 
+        world->getSimulationIslandManager()->setSplitIslands(false);
+        world->getSolverInfo().m_numIterations = 4;
+        world->getSolverInfo().m_solverMode = SOLVER_SIMD+SOLVER_USE_WARMSTARTING;//+SOLVER_RANDMIZE_ORDER;
+
+        world->getDispatchInfo().m_enableSPU = true;
 
         // Set the world to the subworld classes
         this->biome->setBulletWorld(world);

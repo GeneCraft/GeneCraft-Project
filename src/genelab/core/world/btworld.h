@@ -5,7 +5,7 @@
 
 #include "genelabcoreclasses.h"
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
-#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "LinearMath/btTransform.h"
 
 #include <deque>
@@ -61,7 +61,7 @@ namespace GeneLabCore {
         btShapesFactory* shapesFactory;
 
         // Bullet world
-        btDynamicsWorld* world;
+        btDiscreteDynamicsWorld* world;
 
         // Data
         QVariantMap data;
