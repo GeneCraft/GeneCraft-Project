@@ -192,7 +192,7 @@ void CreatureViewerWindow::init() {
 
     entitySpawner = new QTimer();
     entitySpawner->setInterval(5000);
-    entitySpawner->start();
+    //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
 

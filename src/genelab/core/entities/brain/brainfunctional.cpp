@@ -348,34 +348,34 @@ float sigmoid(float x)
             int subChoix = qrand()%7;
             if(subChoix == 6) {
                 func += "+ ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subChoix == 5) {
                 func += "* ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subChoix == 4) {
                 func += "/ ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subChoix == 3) {
                 func += "ATAN ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subChoix == 2) {
                 func += "T ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subChoix == 1) {
                 func += "IF ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else {
                 func += "> ,";
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             }
         }
         else if(rand < 60 && depth > 1) {
@@ -383,39 +383,39 @@ float sigmoid(float x)
             switch(subchoice) {
             case 0:
                 func += "COS ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             case 1:
                 func += "SIN ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             case 2:
                 func += "ABS ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             case 3:
                 func += "SIGN ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             case 4:
                 func += "LOG ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             case 5:
                 func += "EXP ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             case 6:
                 func += "SIGM ,";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 break;
             }
 
         }
         else if(rand < 80 && depth > 1) {
             func += "SINUS ,";
-            func += this->createRandomFunc(depth -1);
-            func += this->createRandomFunc(depth -1);
+            func += createRandomFunc(depth -1);
+            func += createRandomFunc(depth -1);
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         }
         else if(rand <= 100  && depth > 1) {
@@ -425,27 +425,27 @@ float sigmoid(float x)
                 func += "MEM ";
                 func += QString::number(qrand()%maxMem+1);
                 func += ",";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subchoix == 2) {
                 func += "SMOOTH ";
                 func += QString::number(qrand()%maxMem+1);
                 func += ",";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subchoix == 1) {
                 func += "INT ";
                 func += QString::number(qrand()%maxMem+1);
                 func += ",";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             } else if(subchoix == 0) {
                func += "INTERPOLATE ";
                func += QString::number(qrand()%maxMem+1);
                func += ",";
-               func += this->createRandomFunc(depth -1);
+               func += createRandomFunc(depth -1);
            } else {
                 func += "MAX ";
                 func += QString::number(qrand()%maxMem+1);
                 func += ",";
-                func += this->createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
             }
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         } else if(rand < 50) {

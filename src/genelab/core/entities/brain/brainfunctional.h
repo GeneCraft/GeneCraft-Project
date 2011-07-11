@@ -20,7 +20,7 @@ public:
     void addOut(BrainOut* out);
     void removeOut(BrainOut* out);
 
-    QString createRandomFunc(int depth);
+    static QString createRandomFunc(int depth);
 
     virtual QVariant serialize();
 

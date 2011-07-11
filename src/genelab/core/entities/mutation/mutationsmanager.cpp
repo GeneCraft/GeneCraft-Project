@@ -11,6 +11,7 @@
 #include "brainnodemutation.h"
 #include "sensors/sensor.h"
 #include "brain/brainnode.h"
+#include "brain/brainfunctional.h"
 
 namespace GeneLabCore {
 
@@ -275,7 +276,16 @@ namespace GeneLabCore {
         QString treeData = outMap["connexionInfo"].toString();
         QStringList nodes = treeData.split(",", QString::SkipEmptyParts);
 
+        // Small change of replacing to entire brain tree
+
         QString newConnexionInfo;
+
+        if(Tools::random(0., 1.) <= 0.1) {
+            newConnexionInfo = BrainFunctional::createRandomFunc(Tools::random(1, 5));
+            outMap.insert("connexionInfo", newConnexionInfo);
+            return outMap;
+        }
+
         foreach(QString node, nodes) {
             QStringList nodePart = node.split(" ", QString::SkipEmptyParts);
             NodeType t = fromString(nodePart[0]);
