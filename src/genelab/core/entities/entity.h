@@ -90,6 +90,18 @@ public:
         return this->brainActivityStat;
     }
 
+    int getAge() {
+        return age;
+    }
+
+    void setAge(int age) {
+        this->age = age;
+    }
+
+    void incrAge() {
+        this->age++;
+    }
+
 protected:
 
     // Origins
@@ -97,6 +109,9 @@ protected:
     QString family;
     QString type;
     int generation;
+
+    // Age
+    int age;
 
     // Shape
     TreeShape* treeShape;

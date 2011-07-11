@@ -32,19 +32,14 @@ void EntitiesEngine::beforeStep()
 
 void EntitiesEngine::step()
 {
-    cptBrain++;
-
-    if(cptBrain > 60) {
-        cptBrain = 0;
-    }
-
     foreach(Entity* e, entities) {
         // step brains
         if(e->getBrain() != NULL) {
             e->getBrainActivityStat()->setValue(e->getBrain()->getFrequency()/60.);
+            e->incrAge();
 
-//            if(cptBrain % e->getBrain()->getFrequency())
-//                continue;
+            if(e->getAge() % e->getBrain()->getFrequency())
+                continue;
 
             e->getBrain()->getPlugGrid()->beforeStep();
         }

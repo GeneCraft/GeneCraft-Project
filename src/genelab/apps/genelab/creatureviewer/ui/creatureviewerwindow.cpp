@@ -192,7 +192,7 @@ void CreatureViewerWindow::init() {
 
     entitySpawner = new QTimer();
     entitySpawner->setInterval(5000);
-    //entitySpawner->start();
+    entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
 
@@ -271,11 +271,11 @@ void CreatureViewerWindow::spawnNew() {
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
 
     // Clear entities
-    while(ents.size() != 0){
+    /*while(ents.size() != 0){
         Entity * old = ents.takeFirst();
         entitiesEngine->removeEntity(old);
         delete old;
-    }
+    }*/
 
     // RANDOM ENTITIES
     spawnRandomEntities(1);
@@ -332,6 +332,8 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     }
 }
 
+int cptNew = 0;
+QVariant genomeTester;
 void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
 
     Entity *e = NULL;
@@ -343,6 +345,12 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
         enttype = 0;
 
         btVector3 pos = world->getSpawnPosition();
+        pos += btVector3(0, 0, 30*cptNew);
+
+        cptNew++;
+        if(cptNew > 1) {
+            e = GenericFamily::createEntity(genomeTester, shapesFactory, pos);
+        } else
 
         switch(enttype)
         {
@@ -373,6 +381,8 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
             e->setup();
             entitiesEngine->addEntity(e);
             ents.append(e);
+            if(cptNew == 1)
+                genomeTester = e->serialize();
         }
     }
 }

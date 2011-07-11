@@ -4,6 +4,7 @@
 #include <QList>
 #include "genelabcoreclasses.h"
 #include "engine.h"
+#include "entities/entity.h"
 
 namespace GeneLabCore {
 
@@ -24,6 +25,7 @@ class EntitiesEngine : public Engine
 public:
     EntitiesEngine();
     void addEntity(Entity * entity) {
+        entity->setAge(0);
         entities.append(entity);
     }
 

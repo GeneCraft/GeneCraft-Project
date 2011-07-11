@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     float lastHeight = 0;
     while(1) {
         cpt++;
-/*        if(!stable && cpt < 600) {
+        if(!stable && cpt < 600) {
             QList<Entity*> entities = ee->getAllEntities();
             foreach(Entity* e, entities) {
                 StatisticsProvider* stat = e->getStatistics().find("FixationStats").value();
@@ -105,15 +105,14 @@ int main(int argc, char *argv[])
                     ((FixationStats*)stat)->resetOrigin();
                     needStableCpt = 0;
 		    cpt = 0;
+                    e->setAge(0);
                 }
             }
             ((BulletEngine*)engines.find("Bullet").value())->beforeStep();
             ((BulletEngine*)engines.find("Bullet").value())->step();
             ((BulletEngine*)engines.find("Bullet").value())->afterStep();
             continue;
-        }*/
-stable = true;
-
+        }
         //qDebug() << cpt;
         foreach(Engine* e, engines) {
 
