@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                 if(s->getSum() > max) {
                     max = s->getSum();
                     qDebug() << "! new max " << s->getSum();
-                    //r->save(e->serialize());
+                    r->save(e->serialize());
                 }
             }
 
