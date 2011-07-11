@@ -51,9 +51,16 @@ namespace GeneLabCore {
         btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
         btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
 
-        SequentialThreadSupport::SequentialThreadConstructionInfo tci("solverThreads",SolverThreadFunc,SolverlsMemoryFunc);
-        SequentialThreadSupport* threadSupport = new SequentialThreadSupport(tci);
-        threadSupport->startSPU();
+//        SequentialThreadSupport::SequentialThreadConstructionInfo tci("solverThreads",SolverThreadFunc,SolverlsMemoryFunc);
+//        SequentialThreadSupport* threadSupport = new SequentialThreadSupport(tci);
+//        threadSupport->startSPU();
+
+
+	PosixThreadSupport::ThreadConstructionInfo solverConstructionInfo("solver", SolverThreadFunc,
+																	  
+SolverlsMemoryFunc, 6);
+	
+	PosixThreadSupport* threadSupport = new PosixThreadSupport(solverConstructionInfo);
 
         btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
         //this solver requires the contacts to be in a contiguous pool, so avoid dynamic allocation

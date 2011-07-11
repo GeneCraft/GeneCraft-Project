@@ -42,11 +42,11 @@ QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
 QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
 QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
 
-win32 {
+#win32 {
     LIBS += -L../lib/bullet/lib
     LIBS += -L../lib/qxt/lib
     LIBS += -lQxtCore
-}
+#}
 
 unix {
 #    LIBS += -L/usr/local/Qxt/lib
