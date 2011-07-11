@@ -49,14 +49,11 @@ namespace GeneLabCore {
         btBroadphaseInterface* broadphase = new btDbvtBroadphase();
         btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
         btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-        PosixThreadSupport::ThreadConstructionInfo solverConstructionInfo("solver",
-                                                                          SolverThreadFunc,
-                                                                          SolverlsMemoryFunc,
-                                                                          2);
 
 
-        PosixThreadSupport* threadSupport = new PosixThreadSupport(solverConstructionInfo);
 
+        SequentialThreadSupport::SequentialThreadConstructionInfo tci("solverThreads",SolverThreadFunc,SolverlsMemoryFunc);
+        SequentialThreadSupport* threadSupport = new SequentialThreadSupport(tci);
         threadSupport->startSPU();
 
         btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
