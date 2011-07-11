@@ -50,14 +50,17 @@ namespace GeneLabCore {
         btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
         btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
 
-
-
         SequentialThreadSupport::SequentialThreadConstructionInfo tci("solverThreads",SolverThreadFunc,SolverlsMemoryFunc);
         SequentialThreadSupport* threadSupport = new SequentialThreadSupport(tci);
         threadSupport->startSPU();
 
         btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
+        //this solver requires the contacts to be in a contiguous pool, so avoid dynamic allocation
+        dispatcher->setDispatcherFlags(btCollisionDispatcher::CD_DISABLE_CONTACTPOOL_DYNAMIC_ALLOCATION);
+
+
         world = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
+
 
         // Set the world to the subworld classes
         this->biome->setBulletWorld(world);
