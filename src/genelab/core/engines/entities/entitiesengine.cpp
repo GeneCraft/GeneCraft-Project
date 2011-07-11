@@ -14,6 +14,7 @@
 namespace GeneLabCore {
 EntitiesEngine::EntitiesEngine()
 {
+    cptBrain = 0;
 }
 
 void EntitiesEngine::beforeStep()
@@ -29,10 +30,13 @@ void EntitiesEngine::beforeStep()
     }
 }
 
-int cptBrain;
 void EntitiesEngine::step()
 {
     cptBrain++;
+
+    if(cptBrain > 60) {
+        cptBrain = 0;
+    }
 
     foreach(Entity* e, entities) {
         // step brains

@@ -8,7 +8,7 @@ namespace GeneLabCore {
         QObject(parent)
     {
         this->plugGrid = new BrainPlugGrid(plugGridSize);
-        this->frequency = qrand()%10;
+        this->frequency = qrand()%10 + 1;
     }
 
     Brain::Brain(QVariant data) {

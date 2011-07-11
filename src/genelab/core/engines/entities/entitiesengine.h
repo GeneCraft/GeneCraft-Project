@@ -51,6 +51,7 @@ private:
     QList<Entity *> entities;
     QList<PlugGridVisualizer*> gridVisualizers;
     QList<PlugGridDesignVisualizer*> gridDezVisualizers;
+    int cptBrain;
 };
 }
 
