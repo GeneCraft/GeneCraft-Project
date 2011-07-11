@@ -29,6 +29,7 @@
 #include "bullet/bulletengine.h"
 #include "statistics/statisticsstorage.h"
 #include "statistics/statisticsprovider.h"
+#include "statistics/fixationstats.h"
 
 #define MAX_ENTITY 1
 #define MAX_TIME 6000
@@ -97,6 +98,7 @@ int main(int argc, char *argv[])
                 if(needStableCpt > 60) {
                     stable = true;
                     s->resetAll();
+                    ((FixationStats*)stat)->resetOrigin();
                     needStableCpt = 0;
                 }
             }
