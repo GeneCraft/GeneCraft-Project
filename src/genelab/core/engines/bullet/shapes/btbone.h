@@ -11,7 +11,6 @@
 namespace GeneLabCore {
 class btBone : public btShape
 {
-    Q_OBJECT
 public:
     explicit btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
     ~btBone();

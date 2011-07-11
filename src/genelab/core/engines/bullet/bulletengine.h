@@ -8,9 +8,8 @@
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 namespace GeneLabCore {
-    class BulletEngine : public GeneLabCore::Engine
+    class BulletEngine : public Engine
     {
-        Q_OBJECT
     public:
 
         // To create the engine
@@ -35,10 +34,6 @@ namespace GeneLabCore {
         inline bool getPhysicsEnable(){
             return physicsEnable;
         }
-
-    signals:
-
-    public slots:
 
         void step();
 

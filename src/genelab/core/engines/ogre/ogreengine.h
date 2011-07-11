@@ -10,7 +10,7 @@
 namespace GeneLabCore {
     class OgreEngine : public GeneLabCore::Engine
     {
-        Q_OBJECT
+
     public:
         explicit OgreEngine(unsigned long winId);
 
@@ -33,9 +33,6 @@ namespace GeneLabCore {
 
         OgreWidget*         getOgreWidget(QString widgetName);
 
-    signals:
-
-    public slots:
         void init();
         void beforeStep();
         void step();

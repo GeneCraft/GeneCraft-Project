@@ -9,7 +9,7 @@ namespace GeneLabCore {
 
 class btFactory : public QObject
 {
-    Q_OBJECT
+
 public:
     explicit btFactory(QObject *parent = 0);
 
@@ -21,10 +21,6 @@ public:
 
     // To get all widgets
     QMap<QString, QWidget*> getWidgets();
-
-signals:
-
-public slots:
 
 protected:
     QMap<QString, Engine*>         engines;

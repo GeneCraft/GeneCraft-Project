@@ -7,7 +7,6 @@ namespace GeneLabCore {
 
 class RigidBodyOrigin : public QObject
 {
-    Q_OBJECT
 
 public:
 

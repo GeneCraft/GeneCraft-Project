@@ -8,7 +8,7 @@
 namespace GeneLabCore {
     class TreeShape : QObject
     {
-        Q_OBJECT
+
     public:
         explicit TreeShape(btShapesFactory* shapesFactory, QObject *parent = 0);
         void createRootFromGenotype(QVariant genotype, btTransform initTransform);
@@ -31,10 +31,6 @@ namespace GeneLabCore {
 
         QVariant serialize();
         void buildFixFromGenotype(Fixation *fix, QVariant fixGenotype);
-
-    signals:
-
-    public slots:
 
     private:
 

@@ -13,7 +13,6 @@ namespace GeneLabCore {
 
 class Bone : public QObject
 {
-  Q_OBJECT
 
 public:
 

@@ -18,7 +18,7 @@ namespace GeneLabCore {
  */
 class CaterpillarFamily : public EntityFamily
 {
-    Q_OBJECT
+
 
 public:
 

@@ -21,7 +21,6 @@ namespace GeneLabCore {
  */
 class EntitiesEngine : public Engine
 {
-    Q_OBJECT
 public:
     EntitiesEngine();
     void addEntity(Entity * entity) {
@@ -44,7 +43,6 @@ public:
         this->gridDezVisualizers.append(viz);
     }
 
-public slots:
     void beforeStep();
     void step();
     void afterStep();

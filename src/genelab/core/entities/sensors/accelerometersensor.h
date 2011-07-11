@@ -31,8 +31,6 @@ public:
     // To serialize
     virtual QVariant serialize();
 
-public slots:
-
     // To update brain inputs values
     void step();
 

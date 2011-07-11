@@ -14,7 +14,7 @@ namespace GeneLabCore {
 
 class btScene : public QObject
 {
-    Q_OBJECT
+
 public:
     explicit btScene(btWorld* world, QVariant sceneData, QObject *parent = 0);
 
@@ -25,10 +25,6 @@ public:
     virtual void setBulletWorld(btDynamicsWorld* bulletWorld) {
         this->bulletWorld = bulletWorld;
     }
-
-signals:
-
-public slots:
 
 protected:
     QVariantMap data;

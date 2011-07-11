@@ -21,7 +21,7 @@ namespace GeneLabCore {
  */
 class StatisticsProvider : public QObject
 {
-    Q_OBJECT
+
 public:
     StatisticsProvider(StatisticsStorage * statsStorage);
 

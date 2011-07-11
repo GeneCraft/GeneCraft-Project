@@ -9,7 +9,7 @@ namespace GeneLabCore {
 
     class BrainPlugGrid : public QObject
     {
-        Q_OBJECT
+
     public:
         explicit BrainPlugGrid(int size, QObject *parent = 0);
         ~BrainPlugGrid();
@@ -35,9 +35,6 @@ namespace GeneLabCore {
             return this->neurons;
         }
 
-    signals:
-
-    public slots:
 
         // Adding an input
         void connectInput(BrainIn* in) {

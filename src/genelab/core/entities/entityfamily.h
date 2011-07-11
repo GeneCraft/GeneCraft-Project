@@ -18,7 +18,6 @@ namespace GeneLabCore {
  */
 class EntityFamily : public QObject
 {
-    Q_OBJECT
 
 public:
     explicit EntityFamily(QObject *parent = 0);

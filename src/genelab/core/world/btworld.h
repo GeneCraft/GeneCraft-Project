@@ -19,7 +19,7 @@ namespace GeneLabCore {
 
     class btWorld : public QObject
     {
-        Q_OBJECT
+
     public:
         explicit btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
 
@@ -42,10 +42,6 @@ namespace GeneLabCore {
 
         // To setup the world
         virtual void setup();
-
-    signals:
-
-    public slots:
 
     protected:
         // Static object (ground, etc..)

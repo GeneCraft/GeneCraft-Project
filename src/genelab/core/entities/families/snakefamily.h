@@ -18,7 +18,7 @@ namespace GeneLabCore {
  */
 class SnakeFamily : public EntityFamily
 {
-    Q_OBJECT
+
 
 public:
 

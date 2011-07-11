@@ -104,9 +104,6 @@ public:
 //    static const int OUTPUTS_FROM_BRAIN;
 //    static const int OUTPUTS_FROM_RANDOM;
 
-signals:
-
-public slots:
 
     // used to set the origins of motors actions
     void setOutputsFrom(int outputsFrom);

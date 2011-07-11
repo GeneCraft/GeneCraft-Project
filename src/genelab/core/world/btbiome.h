@@ -11,7 +11,6 @@ namespace GeneLabCore {
 
 class btBiome : public QObject
 {
-    Q_OBJECT
 public:
     explicit btBiome(btWorld* world, QVariant biomeData, QObject *parent = 0);
 
@@ -20,10 +19,6 @@ public:
     virtual void setBulletWorld(btDynamicsWorld* world) {
         this->world = world;
     }
-
-signals:
-
-public slots:
 
 protected:
     QVariantMap data;

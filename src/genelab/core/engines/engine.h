@@ -16,7 +16,7 @@ namespace GeneLabCore {
  */
 class Engine : public QObject
 {
-    Q_OBJECT
+
 public:
     explicit Engine(QObject *parent = 0): QObject(parent) {}
 
@@ -24,9 +24,6 @@ public:
         return false;
     }
 
-signals:
-
-public slots:
     virtual void beforeStep()   {}
     virtual void step()         {}
     virtual void afterStep()    {}

@@ -12,7 +12,7 @@ namespace GeneLabCore {
 
     class Ressource : public QObject
     {
-        Q_OBJECT
+
     public:
         explicit Ressource(QObject *parent = 0);
 
@@ -42,10 +42,6 @@ namespace GeneLabCore {
           * Load data from either a ressource data, or the real data
           */
         static QVariant load(QVariant data);
-
-    signals:
-
-    public slots:
 
     };
 

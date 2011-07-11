@@ -54,7 +54,7 @@ QString fromType(NodeType type);
 NodeType fromString(QString string);
 
 class BrainNode : public QObject {
-    Q_OBJECT
+
 public:
     explicit BrainNode() {}
 
@@ -64,9 +64,6 @@ public:
 
     NodeType type;
 
-signals:
-
-public slots:
 
 protected:
     QList<BrainNode*> childs;
@@ -74,7 +71,7 @@ protected:
 };
 
 class BrainNodeIn : public BrainNode {
-    Q_OBJECT
+
 public:
     explicit BrainNodeIn(float x, float y) : BrainNode(IN) {
         this->x = x;
@@ -83,13 +80,10 @@ public:
 
     float x, y;
 
-signals:
-
-public slots:
 };
 
 class BrainNodeConst : public BrainNode {
-    Q_OBJECT
+
 public:
     explicit BrainNodeConst(float constant) : BrainNode(CONST) {
         this->value = constant;
@@ -97,14 +91,11 @@ public:
 
     float value;
 
-signals:
-
-public slots:
 };
 
 
 class BrainMemory : public BrainNode {
-    Q_OBJECT
+
 public:
     explicit BrainMemory(int size) : BrainNode(MEMORY_SPACE){
         if(size <= 0) {
@@ -130,9 +121,6 @@ public:
     int cpt;
     QList<float> mem;
 
-signals:
-
-public slots:
 };
 
 }

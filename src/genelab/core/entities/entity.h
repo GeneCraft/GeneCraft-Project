@@ -22,7 +22,6 @@ namespace GeneLabCore {
  */
 class Entity : public QObject
 {
-    Q_OBJECT
 
 public:
 
@@ -85,9 +84,6 @@ public:
 
     static const QString genomeVersion;
 
-signals:
-
-public slots:
     virtual void setup();
 
 protected:

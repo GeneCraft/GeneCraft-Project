@@ -18,7 +18,6 @@ namespace GeneLabCore {
  */
 class AntFamily : public EntityFamily
 {
-    Q_OBJECT
 
 public:
 

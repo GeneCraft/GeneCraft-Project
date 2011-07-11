@@ -106,13 +106,6 @@ SOURCES += \
     ../genelab/core/entities/sensors/contactsensor.cpp \
     ../genelab/core/entities/effectors/effector.cpp \
     ../genelab/core/entities/effectors/rotationalmotorseffector.cpp \
-    ../genelab/core/entities/statistics/fixdistancestat.cpp \
-    ../genelab/core/entities/statistics/entityweightstat.cpp \
-    ../genelab/core/entities/statistics/entityheightstat.cpp \
-    ../genelab/core/entities/statistics/fixaveragevelocitystat.cpp \
-    ../genelab/core/entities/statistics/entitytotalbonesstat.cpp \
-    ../genelab/core/entities/statistics/fixdistancefromoriginstat.cpp \
-    ../genelab/core/entities/statistics/entitytotalboneslengthstat.cpp \
     ../genelab/core/entities/statistics/statisticsstorage.cpp \
     ../genelab/core/entities/statistics/treeshapestats.cpp \
     ../genelab/core/entities/statistics/statisticsprovider.cpp \
@@ -183,13 +176,6 @@ HEADERS += \
     ../genelab/core/entities/families/spiderfamily.h \
     ../genelab/core/entities/families/snakefamily.h \
     ../genelab/core/entities/families/caterpillarfamily.h \
-    ../genelab/core/entities/statistics/fixdistancestat.h \
-    ../genelab/core/entities/statistics/entityweightstat.h \
-    ../genelab/core/entities/statistics/entityheightstat.h \
-    ../genelab/core/entities/statistics/fixaveragevelocitystat.h \
-    ../genelab/core/entities/statistics/entitytotalbonesstat.h \
-    ../genelab/core/entities/statistics/fixdistancefromoriginstat.h \
-    ../genelab/core/entities/statistics/entitytotalboneslengthstat.h \
     ../genelab/core/entities/statistics/statisticsstorage.h \
     ../genelab/core/entities/statistics/treeshapestats.h \
     ../genelab/core/entities/statistics/statisticsprovider.h \

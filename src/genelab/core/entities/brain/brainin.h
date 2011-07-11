@@ -11,7 +11,7 @@ namespace GeneLabCore {
 
     class BrainIn : public Synapse
     {
-        Q_OBJECT
+
     public:
         explicit BrainIn(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
         BrainIn(QVariant data);
@@ -21,9 +21,6 @@ namespace GeneLabCore {
         void setMax(float max) { this->max = max; }
         void setMinMax(float min, float max) { this->min = min; this->max = max; }
 
-    signals:
-
-    public slots:
         /**
           * Set the normalized value, will be normalized between min and max.
           */

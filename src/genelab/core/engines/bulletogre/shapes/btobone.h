@@ -10,7 +10,7 @@ namespace GeneLabCore {
 
 class btoBone : public btBone
 {
-    Q_OBJECT
+
 public:
     explicit btoBone(btoWorld *world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
                      btScalar radiusArticulation, const btTransform &transform);

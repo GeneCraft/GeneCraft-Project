@@ -28,7 +28,7 @@ namespace GeneLabCore {
 
     class Synapse : public QObject
     {
-        Q_OBJECT
+
     public:
         explicit Synapse(QObject *parent = 0);
         Synapse(QVariant data);
@@ -37,10 +37,6 @@ namespace GeneLabCore {
         QList<NeuralConnexion> getConnexions() {
             return this->connexions;
         }
-
-    signals:
-
-    public slots:
 
         void connectTo(float x, float y, float weight = 1.0f) {
             this->connexions.append(NeuralConnexion(x, y, weight));

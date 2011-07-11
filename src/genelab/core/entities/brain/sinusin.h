@@ -10,13 +10,9 @@ namespace GeneLabCore {
 
     class SinusIn : public BrainIn
     {
-        Q_OBJECT
+
     public:
         explicit SinusIn(QObject *parent = 0);
-
-    signals:
-
-    public slots:
 
         virtual float getValue() {
             deg+=inc;

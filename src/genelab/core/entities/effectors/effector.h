@@ -22,7 +22,7 @@ enum EffectorType { rotationalMotor };
  */
 class Effector : public QObject
 {
-    Q_OBJECT
+
 public:
 
     // To create
@@ -39,10 +39,6 @@ public:
 
     // To get brain outputs
     const QList<BrainOut*> getOutputs() { return outs; }
-
-signals:
-
-public slots:
 
     // To update world.
     virtual void step() = 0;

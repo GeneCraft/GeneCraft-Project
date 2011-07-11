@@ -27,7 +27,7 @@ namespace GeneLabCore {
       * @see Engine
       * @see InputListener
       */
-    class EventsManager : public GeneLabCore::Engine
+    class EventsManager : public Engine
     {
         Q_OBJECT
 

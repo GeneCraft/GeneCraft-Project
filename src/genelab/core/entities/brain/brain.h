@@ -9,7 +9,7 @@
 namespace GeneLabCore {
 class Brain : public QObject
 {
-    Q_OBJECT
+
 public:
     explicit Brain(int plugGridSize, QObject *parent = 0);
     Brain(QVariant data);
@@ -26,9 +26,6 @@ public:
 
     static int randomPlugGridSize();
 
-signals:
-
-public slots:
     virtual void step() = 0;
 
 protected:

@@ -13,7 +13,7 @@ namespace GeneLabCore {
 
     class Spawn : public QObject
     {
-        Q_OBJECT
+
     public:
         enum SpawnType {
             Zone,
@@ -29,10 +29,6 @@ namespace GeneLabCore {
         SpawnType getType() { return this->type; }
         btVector3 getMinPos() { return this->minPosition; }
         btVector3 getMaxPos() { return this->maxPosition; }
-
-    signals:
-
-    public slots:
 
     protected:
         SpawnType type;

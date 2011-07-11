@@ -10,7 +10,6 @@ namespace GeneLabCore {
 
     class Fixation : public QObject
     {
-        Q_OBJECT
 
     public:
 

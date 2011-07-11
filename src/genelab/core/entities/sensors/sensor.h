@@ -23,7 +23,6 @@ enum SensorType { gyroscopic, accelerometer, position, contact };
  */
 class Sensor : public QObject
 {
-    Q_OBJECT
 
 public:
 
@@ -52,10 +51,6 @@ public:
 
     // To get the fixation where the sensor is attached
     inline Fixation *getFixation() { return fixation; }
-
-signals:
-
-public slots:
 
     // To update brain inputs values
     virtual void step() = 0;
