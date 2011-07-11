@@ -14,6 +14,10 @@
 #include "BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 #include "BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+#include "BulletMultiThreaded/btParallelConstraintSolver.h"
+#include "BulletMultiThreaded/btThreadSupportInterface.h"
+#include "BulletMultiThreaded/SequentialThreadSupport.h"
+#include "BulletMultiThreaded/PosixThreadSupport.h"
 
 namespace GeneLabCore {
 
@@ -45,7 +49,17 @@ namespace GeneLabCore {
         btBroadphaseInterface* broadphase = new btDbvtBroadphase();
         btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
         btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-        btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+        PosixThreadSupport::ThreadConstructionInfo solverConstructionInfo("solver",
+                                                                          SolverThreadFunc,
+                                                                          SolverlsMemoryFunc,
+                                                                          2);
+
+
+        PosixThreadSupport* threadSupport = new PosixThreadSupport(solverConstructionInfo);
+
+        threadSupport->startSPU();
+
+        btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
         world = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
 
         // Set the world to the subworld classes
