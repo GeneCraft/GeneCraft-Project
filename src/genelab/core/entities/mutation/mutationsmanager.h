@@ -75,6 +75,9 @@ private:
     // Brain frequency
     IntegerMutation* brainFrequency;
 
+    // New brain tree luck
+    float newBrainTreeProbability;
+
 };
 
 }

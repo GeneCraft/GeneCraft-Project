@@ -43,7 +43,7 @@ namespace GeneLabCore {
 
         // Plug grid size
         brainSize = new IntegerMutation();
-        brainSize->probability   = 0.1;
+        brainSize->probability   = 0.3;
         brainSize->minIncr       = -5;
         brainSize->maxIncr       =  5;
         brainSize->minValue      = 1;
@@ -51,7 +51,7 @@ namespace GeneLabCore {
 
         // Position X of Input
         brainInPos = new FloatMutation();
-        brainInPos->probability = 0.1;
+        brainInPos->probability = 0.3;
         brainInPos->minFact     = -0.1;
         brainInPos->maxFact     =  0.1;
         brainInPos->minValue    = 0;
@@ -59,7 +59,7 @@ namespace GeneLabCore {
 
         // BrainWeight
         brainWeight = new FloatMutation();
-        brainWeight->probability = 0.1;
+        brainWeight->probability = 0.3;
         brainWeight->minFact    = -0.1;
         brainWeight->maxFact    =  0.1;
         brainWeight->minValue   = -1.0;
@@ -67,18 +67,20 @@ namespace GeneLabCore {
 
         // Brain memory size
         brainMemorySize = new IntegerMutation();
-        brainMemorySize->probability    = 0.1;
+        brainMemorySize->probability    = 0.3;
         brainMemorySize->minIncr        = -5;
         brainMemorySize->maxIncr        =  5;
         brainMemorySize->minValue       = 1;
         brainMemorySize->maxValue       = 100;
 
         brainFrequency = new IntegerMutation();
-        brainFrequency->probability     = 0.1;
+        brainFrequency->probability     = 0.3;
         brainFrequency->minIncr      = -2;
         brainFrequency->maxIncr      =  2;
         brainFrequency->minValue     =  1;
         brainFrequency->maxValue     = 60;
+
+        newBrainTreeProbability = 0.3;
 
     }
 
@@ -280,7 +282,7 @@ namespace GeneLabCore {
 
         QString newConnexionInfo;
 
-        if(Tools::random(0., 1.) <= 0.1) {
+        if(Tools::random(0., 1.) <= newBrainTreeProbability) {
             newConnexionInfo = BrainFunctional::createRandomFunc(Tools::random(1, 5));
             outMap.insert("connexionInfo", newConnexionInfo);
             return outMap;

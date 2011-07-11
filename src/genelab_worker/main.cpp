@@ -88,8 +88,6 @@ int main(int argc, char *argv[])
     float lastHeight = 0;
     while(1) {
         cpt++;
-	if(cpt == 1)
-	qDebug() << e->getBrain()->getPlugGrid()->getSize();
         if(!stable && cpt < 600) {
             QList<Entity*> entities = ee->getAllEntities();
             foreach(Entity* e, entities) {
@@ -149,9 +147,11 @@ int main(int argc, char *argv[])
                 if(s->getSum() > max) {
                     max = s->getSum();
                     qDebug() << "! new max " << s->getSum();
+                    qDebug() << "taille du cerveau " << e->getBrain()->getPlugGrid()->getSize();
                     bestGenome = e->serialize();
                     r->save(bestGenome);
                     cptMutation = 0;
+
                 }
             }
 
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 		    QVariant newGenome = bestGenome;
 		for(int i = 0; i < 1 + cptMutation/100 || (newGenome == bestGenome); i++) {
                     newGenome = mutation->mutateEntity(newGenome);
-	            qDebug() << (newGenome == bestGenome);
+                    qDebug() << (newGenome == bestGenome);
 //		    if(!(newGenome == bestGenome))
 //			qDebug() << newGenome << "\n" << bestGenome;
 	            qDebug() << "mutating from best once";
@@ -187,6 +187,7 @@ int main(int argc, char *argv[])
 //		}
                 e->setup();
                 ee->addEntity(e);
+                qDebug() << "brain size " << e->getBrain()->getPlugGrid()->getSize();
             }
 
             stable = false;
