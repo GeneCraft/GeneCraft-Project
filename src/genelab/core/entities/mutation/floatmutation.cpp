@@ -5,7 +5,7 @@ namespace GeneLabCore {
     void FloatMutation::mutate(QVariantMap &map, QString key){
 
         // mutation ?
-        if(Tools::random(0.f,1.f) <= probability) {
+        if(Tools::random(0.f,1.f) < probability) {
 
             float newValue = this->mutate(map.value(key).toDouble());
 

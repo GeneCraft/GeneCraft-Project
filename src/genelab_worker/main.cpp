@@ -166,9 +166,11 @@ int main(int argc, char *argv[])
 //                } else {
                     MutationsManager* mutation = new MutationsManager(QVariant());
 		    QVariant newGenome = bestGenome;
-		for(int i = 0; i < 1 + cptMutation/100; i++) {
-//                    newGenome = mutation->mutateEntity(newGenome);
+		for(int i = 0; i < 1 + cptMutation/100 || (newGenome == bestGenome); i++) {
+                    newGenome = mutation->mutateEntity(newGenome);
 	            qDebug() << (newGenome == bestGenome);
+		    if(!(newGenome == bestGenome))
+			qDebug() << newGenome << "\n" << bestGenome;
 	            qDebug() << "mutating from best once";
 		}
                     e = creatureFactory->createEntity(newGenome, shapesFactory, pos);
