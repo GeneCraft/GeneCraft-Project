@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
-    r = new DbRecord(database, "SpiderMutated2");
+    r = new DbRecord(database, "SpiderMutatedOnlyBrain");
     r->load();
 
     // Spider
