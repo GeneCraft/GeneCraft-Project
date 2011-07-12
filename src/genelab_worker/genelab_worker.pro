@@ -124,7 +124,7 @@ SOURCES += \
     ../genelab/core/factories/ressources/dbrecord.cpp \
     ../genelab/core/factories/creaturefactory.cpp \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
-    ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp \
@@ -195,7 +195,7 @@ HEADERS += \
     ../genelab/core/factories/btshapesfactory.h \
     ../genelab/core/factories/creaturefactory.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
-    ../genelab/core/ui/widgets/entities/fixationproperties.h \
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/pluggridvisualizer.h \
@@ -214,7 +214,7 @@ HEADERS += \
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.ui \
-    ../genelab/core/ui/widgets/entities/fixationproperties.ui \
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.ui \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.ui \
 
