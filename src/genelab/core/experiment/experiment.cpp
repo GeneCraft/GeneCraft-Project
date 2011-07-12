@@ -3,7 +3,7 @@
 namespace GeneLabCore {
     Experiment::Experiment(QVariant data) {
         QVariantMap map = data.toMap();
-        this->id = "experience1";//map["id"].toString();
+        this->id = "WalkingCaterPillar";//map["id"].toString();
         this->description = map["description"].toString();
         this->expData = map;
         this->resultsDirectory = QDir(id+"/results");

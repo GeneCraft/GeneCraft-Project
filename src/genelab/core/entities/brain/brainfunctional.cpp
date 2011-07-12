@@ -170,12 +170,17 @@ float sigmoid(float x)
             c = 1./b;
 
             if(c != c) // nan or infinity
-                c = 1.0;
+                c = 0.;
 
-            return a;//*c;
+            return a;
 
         case ATAN:
-            return atan2(apply(it, end), apply(it, end));
+            a = atan2(apply(it, end), apply(it, end));
+
+            if(a!=a)
+                return 0;
+
+            return a;
 
         // 2 operands + decisions
         case THRESOLD:
@@ -223,6 +228,11 @@ float sigmoid(float x)
             if(a == 0)
                 return 0;
 
+            a= qAbs(a)/a;
+
+            if(a!=a)
+                return 0;
+
             return qAbs(a)/a    ;
 
         case LOG:
@@ -231,11 +241,21 @@ float sigmoid(float x)
             if(a <= 1) {
                 return 0;
             }
-            return log(a);
+            a = log(a);
+
+            if(a!=a)
+                return 0;
+
+            return a;
 
         case EXP:
             a = apply(it, end);
-            return exp(a);
+            a = a*a;
+
+            if(a!=a)
+                return 0;
+
+            return a;
 
         case SIGM:
             return sigmoid(apply(it, end));

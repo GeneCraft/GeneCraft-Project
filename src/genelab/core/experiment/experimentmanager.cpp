@@ -7,6 +7,7 @@
 
 #include "families/spiderfamily.h"
 #include "families/genericfamily.h"
+#include "families/caterpillarfamily.h"
 #include "entity.h"
 #include "entityfamily.h"
 
@@ -174,7 +175,7 @@ namespace GeneLabCore {
                 // Creating N new spider
                 for(int i = 0; i < exp->getPopSize(); i++) {
                     // New entity
-                    SpiderFamily* family = new SpiderFamily();
+                    CaterpillarFamily* family = new CaterpillarFamily();
                     btVector3 position = world->getSpawnPosition();
                     Entity* e = family->createEntity(shapesFactory, position);
                     // Setup to be able to serialize
