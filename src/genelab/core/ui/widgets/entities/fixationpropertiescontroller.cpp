@@ -1,8 +1,8 @@
-#include "fixationproperties.h"
+#include "fixationpropertiescontroller.h"
 
 // Qt
 #include <QDebug>
-#include "ui_fixationproperties.h"
+#include "ui_fixationpropertiescontroller.h"
 
 // Entity
 #include "body/fixation.h"
@@ -18,7 +18,7 @@
 
 FixationProperties::FixationProperties(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FixationProperties)
+    ui(new Ui::FixationPropertiesController)
 {
     ui->setupUi(this);
     fixation = 0;
@@ -39,11 +39,6 @@ FixationProperties::FixationProperties(QWidget *parent) :
 FixationProperties::~FixationProperties()
 {
     delete ui;
-}
-
-void FixationProperties::setFormTitle(QString title)
-{
-    this->ui->lFormTitle->setText(title);
 }
 
 void FixationProperties::setFixation(Fixation *fixation)

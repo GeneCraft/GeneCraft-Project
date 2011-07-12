@@ -7,48 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>380</width>
-    <height>558</height>
+    <height>426</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_6">
-   <property name="spacing">
-    <number>6</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout_4">
    <property name="margin">
-    <number>2</number>
+    <number>0</number>
    </property>
-   <item>
-    <widget class="FixationProperties" name="fixationProperties" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <family>Verdana</family>
-       <pointsize>14</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(81, 119, 145);</string>
-     </property>
-     <property name="text">
-      <string>Bone controller</string>
-     </property>
-    </widget>
-   </item>
-   <item>
+   <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="maximumSize">
       <size>
@@ -649,19 +618,6 @@ p, li { white-space: pre-wrap; }
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
             </property>
            </widget>
-          </item>
-          <item row="16" column="5">
-           <spacer name="verticalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item row="14" column="3">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -1700,14 +1656,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>FixationProperties</class>
-   <extends>QWidget</extends>
-   <header>widgets/entities/fixationproperties.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../../../ressources/ressources.qrc"/>
  </resources>

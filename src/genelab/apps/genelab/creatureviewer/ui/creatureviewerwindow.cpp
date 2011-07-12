@@ -36,7 +36,7 @@
 // Widget
 #include "widgets/entities/pluggridvisualizer.h"
 #include "widgets/entities/pluggriddesignvisualizer.h"
-#include "widgets/entities/fixationproperties.h"
+#include "widgets/entities/fixationpropertiescontroller.h"
 #include "widgets/entities/bonepropertiescontroller.h"
 #include "widgets/entities/entitypropertiescontroller.h"
 
@@ -157,8 +157,29 @@ void CreatureViewerWindow::init() {
     PlugGridDesignVisualizer* bDezViz = new PlugGridDesignVisualizer();
     ee->addPlugGridDezVisualizer(bDezViz);
     ee->addPlugGridVisualizer(bViz);
-    Entity::getInspectorWidget()->setBrainViz(bViz);
-    Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
+
+    // TEEEEEESST
+    brainPropertiesController = new BrainPropertiesController();
+    brainPropertiesController->setBrainViz(bViz);
+    brainPropertiesController->setBrainDesignViz(bDezViz);
+    ui->dwBrain->setWidget(brainPropertiesController);
+
+//    Entity::getInspectorWidget()->setBrainViz(bViz);
+//    Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
+
+
+
+    // CREATE DOCKS  TEEEEEEEEEEST
+    statsPropertiesController = new StatisticsPropertiesController();
+    ui->dwStats->setWidget(statsPropertiesController);
+
+    fixationPropertiesController = new FixationProperties();
+    ui->dwFixation->setWidget(fixationPropertiesController);
+
+    bonePropertiesController = new BonePropertiesController();
+    ui->dwBone->setWidget(bonePropertiesController);
+
+
 
     // connect emitter of rigidBodySelected
     connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
@@ -196,7 +217,6 @@ void CreatureViewerWindow::init() {
     entitySpawner->setInterval(5000);
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
-
 
 }
 
@@ -399,10 +419,10 @@ CreatureViewerWindow::~CreatureViewerWindow()
 
 void CreatureViewerWindow::setInspector(QWidget * inspector)
 {
-    if(inspector != 0)
-        ui->dwInspector->setWidget(inspector);
-    else
-        ui->dwCreature->setWidget(new QLabel("No element selected."));
+//    if(inspector != 0)
+//        ui->dwInspector->setWidget(inspector);
+//    else
+//        ui->dwCreature->setWidget(new QLabel("No element selected."));
 }
 
 
@@ -412,6 +432,9 @@ void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
         ui->dwCreature->setWidget(Entity::getInspectorWidget(entity,selectedBody));
     else
         ui->dwCreature->setWidget(new QLabel("No creature selected."));
+
+    brainPropertiesController->setEntity(entity);
+    statsPropertiesController->setEntity(entity);
 }
 
 void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
@@ -448,23 +471,39 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                         {
                             case RigidBodyOrigin::BONE:{
 
+                                // select bone
                                 Bone *bone = dynamic_cast<Bone*>(origin->getObject());
-                                bone->setSelected(true); // TODO stock selection into rigidbody origin
+                                bone->setSelected(true);
                                 boneSelected = bone;
-                                setInspector(bone->getInspectorWidget());
-                                selectedEntity = bone->getEntity();
-                                setEntity(bone->getEntity(),bone->getRigidBody());
+                                bonePropertiesController->setBone(bone);
+
+                                // select end fix
+                                Fixation *fix = bone->getEndFixation();
+
+                                if(fix){
+                                    fix->setSelected(true);
+                                    fixSelected = fix;
+                                    fixationPropertiesController->setFixation(fix);
+
+                                    // select entity
+                                    selectedEntity = bone->getEntity();
+                                    setEntity(bone->getEntity(),rigidBody);
+                                }
+
                                 }
                                 break;
 
                             case RigidBodyOrigin::FIXATION:{
 
+                                // select fixation
                                 Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
-                                fix->setSelected(true); // TODO stock selection into rigidbody origin
+                                fix->setSelected(true);
                                 fixSelected = fix;
-                                setInspector(fix->getInspectorWidget());
+                                fixationPropertiesController->setFixation(fix);
+
+                                // select entity
                                 selectedEntity = fix->getEntity();
-                                setEntity(fix->getEntity(),fix->getRigidBody());
+                                setEntity(fix->getEntity(),rigidBody);
                                 }
                                 break;
 
@@ -473,13 +512,13 @@ void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
                                 //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
                                 //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
                                 //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
-                                setInspector(new QLabel("BASIC_SHAPE"));
+                                //setInspector(new QLabel("BASIC_SHAPE"));
 
                                 }
                                 break;
 
-                            default:
-                                setInspector(0);
+                            //default:
+                            //    setInspector(0);
                         }
                     }
                     else

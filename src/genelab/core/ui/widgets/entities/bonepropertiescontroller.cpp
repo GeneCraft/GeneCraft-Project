@@ -73,7 +73,7 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     connect(this->ui->cbEffectorZ,SIGNAL(stateChanged(int)),this,SLOT(cbEffectorZ_stateChanged(int)));
 
     // Update
-    connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
+    //connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
 }
 
 void BonePropertiesController::setOutFrom()
@@ -350,8 +350,8 @@ void BonePropertiesController::setBone(Bone * bone)
         // SUB-WIDGET
 
         // init promoted fixation properties
-        ui->fixationProperties->setFixation(bone->getEndFixation());
-        ui->fixationProperties->setFormTitle("End fixation controller");
+//        ui->fixationProperties->setFixation(bone->getEndFixation());
+//        ui->fixationProperties->setFormTitle("End fixation controller");
     }
 }
 

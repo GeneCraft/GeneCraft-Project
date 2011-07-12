@@ -36,30 +36,14 @@ public slots:
     void setOutFrom();
     void resetBonesProperties();
     void itemClicked(QTreeWidgetItem *,int);
-    void selectSensorFixation();
-    void setBrainSize();
-    void clearSensors();
-    void clearEffectors();
-    void computeMinimalOuts();
-
-    // Statistics
-    void updateStats();
-    void resetAllStats();
-    void resetSelectedStat();
 
 private:
 
     Ui::EntityPropertiesController *ui;
 
-    PlugGridVisualizer* brainViz;
-    PlugGridDesignVisualizer* brainDezViz;
-
     void setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem = 0);
 
     Entity *entity;
-
-    QTimer *statsTimer;
-
 };
 
 #endif // CREATUREPROPERTIESCONTROLLER_H

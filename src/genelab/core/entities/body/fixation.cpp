@@ -18,7 +18,7 @@
 #include "bullet/shapes/btsphere.h"
 
 #include "entity.h"
-#include "widgets/entities/fixationproperties.h"
+#include "widgets/entities/fixationpropertiescontroller.h"
 
 
 namespace GeneLabCore {
@@ -284,7 +284,8 @@ namespace GeneLabCore {
 
     void Fixation::setSelected(bool isSelected)
     {
-        sphere->setSelected(isSelected);
+        if(!delegatedSetup)
+            sphere->setSelected(isSelected);
     }
 
     void Fixation::fixeInTheAir()

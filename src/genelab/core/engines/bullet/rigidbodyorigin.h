@@ -14,8 +14,6 @@ public:
     {
         BONE = 0,
         FIXATION,
-        DESTROYABLE_BLOCK,
-        PLAYER_CHARACTER,
         BASIC_SHAPE
     };
 

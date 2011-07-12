@@ -115,7 +115,6 @@ SOURCES += \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
     main.cpp \
     ../genelab/core/engines/bullet/rigidbodyorigin.cpp \
-    ../genelab/core/ui/widgets/entities/fixationproperties.cpp \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
     ../genelab/core/utils/tools.cpp \
     ../genelab/core/engines/bullet/shapes/btshape.cpp \
@@ -176,7 +175,10 @@ SOURCES += \
     ../genelab/core/factories/creaturefactory.cpp \
     ../genelab/core/factories/btworldfactory.cpp \
     ../genelab/core/factories/btoworldfactory.cpp \
-    ../genelab/core/entities/mutation/bonelimitsmutation.cpp
+    ../genelab/core/entities/mutation/bonelimitsmutation.cpp \
+    ../genelab/core/ui/widgets/entities/brainpropertiescontroller.cpp \
+    ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.cpp \
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -201,7 +203,6 @@ HEADERS += \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
     ../genelab/core/genelabcoreclasses.h \
     ../genelab/core/engines/bullet/rigidbodyorigin.h \
-    ../genelab/core/ui/widgets/entities/fixationproperties.h \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
     ../genelab/core/utils/tools.h \
     ../genelab/core/engines/bullet/shapes/btshape.h \
@@ -264,18 +265,23 @@ HEADERS += \
     ../genelab/core/factories/creaturefactory.h \
     ../genelab/core/factories/btworldfactory.h \
     ../genelab/core/factories/btoworldfactory.h \
-    ../genelab/core/entities/mutation/bonelimitsmutation.h
+    ../genelab/core/entities/mutation/bonelimitsmutation.h \
+    ../genelab/core/ui/widgets/entities/brainpropertiescontroller.h \
+    ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.h \
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.ui \
     ../genelab/apps/sandbox/entitysandbox/entitysandbox.ui \
     ../genelab/apps/sandbox/brainsandbox/brainapp.ui \
-    ../genelab/core/ui/widgets/entities/fixationproperties.ui \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui \
     ../genelab/core/ui/widgets/entities/entitypropertiescontroller.ui \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui \
-    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui \
+    ../genelab/core/ui/widgets/entities/brainpropertiescontroller.ui \
+    ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.ui \
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

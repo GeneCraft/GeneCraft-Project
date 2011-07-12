@@ -117,9 +117,6 @@ public:
     Effector *effector;
 };
 
-
-
-
 }
 
 #endif // BODYITEMS_H

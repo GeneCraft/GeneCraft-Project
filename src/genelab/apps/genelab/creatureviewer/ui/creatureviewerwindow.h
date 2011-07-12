@@ -6,6 +6,9 @@
 #include "btBulletDynamicsCommon.h"
 #include "ressources/dbrecord.h"
 
+#include "ui/widgets/entities/brainpropertiescontroller.h"
+#include "ui/widgets/entities/statisticspropertiescontroller.h"
+
 namespace Ui {
     class CreatureViewer;
 }
@@ -75,6 +78,19 @@ private:
     btoWorld* world;
 
     DataBase base;
+
+
+
+
+    // TEST
+    //Entity
+    FixationProperties *fixationPropertiesController;
+    BonePropertiesController *bonePropertiesController;
+    StatisticsPropertiesController *statsPropertiesController;
+    BrainPropertiesController *brainPropertiesController;
+
+
+
 
 private slots:
     void spawnNew();

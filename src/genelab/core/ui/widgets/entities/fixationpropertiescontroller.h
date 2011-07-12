@@ -1,5 +1,5 @@
-#ifndef FIXATIONPROPERTIES_H
-#define FIXATIONPROPERTIES_H
+#ifndef FIXATIONPROPERTIESCONTROLLER_H
+#define FIXATIONPROPERTIESCONTROLLER_H
 
 #include <QWidget>
 #include <QListWidgetItem>
@@ -11,7 +11,7 @@
 using namespace GeneLabCore;
 
 namespace Ui {
-    class FixationProperties;
+    class FixationPropertiesController;
 }
 
 class FixationProperties : public QWidget
@@ -23,7 +23,6 @@ public:
     ~FixationProperties();
 
     void setFixation(Fixation *fixation);
-    void setFormTitle(QString title);
 
 signals:
 
@@ -45,9 +44,9 @@ public slots:
     void changeRadiusFromButton();
 
 private:
-    Ui::FixationProperties *ui;
+    Ui::FixationPropertiesController *ui;
 
     Fixation *fixation;
 };
 
-#endif // FIXATIONPROPERTIES_H
+#endif // FIXATIONPROPERTIESCONTROLLER_H
