@@ -15,7 +15,7 @@ namespace GeneLabCore {
         QVariantMap entityData = data.toMap();
 
         // inside a result ?
-        if(entityData["type"].toString() == "result") {
+        if(entityData["type"].toString() == "reswult") {
             // Decapsulate
             entityData = entityData["genome"].toMap();
         }

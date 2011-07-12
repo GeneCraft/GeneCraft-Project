@@ -98,6 +98,7 @@ namespace GeneLabCore {
         brainMemorySize->minValue       = 1;
         brainMemorySize->maxValue       = 100;
 
+        // Brain frequency
         brainFrequency = new IntegerMutation();
         brainFrequency->probability     = 0.1;
         brainFrequency->minIncr      = -2;
@@ -105,7 +106,16 @@ namespace GeneLabCore {
         brainFrequency->minValue     =  1;
         brainFrequency->maxValue     = 60;
 
+        // New brain tree probability
         newBrainTreeProbability = 0.1;
+
+        // Brain constant value
+        constValue = new FloatMutation();
+        constValue->probability = 0.1;
+        constValue->minFact = -0.1;
+        constValue->maxFact = 0.1;
+        constValue->minValue = -10;
+        constValue->maxValue = 10;
 
     }
 
@@ -377,7 +387,7 @@ namespace GeneLabCore {
             case CONST:
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
-                            QString::number(brainWeight->mutate(nodePart[1].toFloat())));
+                            QString::number(constValue->mutate(nodePart[1].toFloat())));
                 newConnexionInfo.append(",");
                 break;
             case INTEGRATE:

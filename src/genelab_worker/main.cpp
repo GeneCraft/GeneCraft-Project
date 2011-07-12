@@ -37,40 +37,13 @@
 #include "statistics/fixationstats.h"
 #include "mutation/mutationsmanager.h"
 
+#include "experiment/experimentmanager.h"
+
 #define MAX_ENTITY 1
 #define MAX_TIME 1800
 #define EPSILON 0.00001
 
 using namespace GeneLabCore;
-
-
-
-void setupBonesProperties2(Fixation *fixation, int action)
-{
-    QList<Bone *> bones = fixation->getBones();
-    for(int i=0;i<bones.size();++i)
-    {
-        Bone *bone = bones.at(i);
-
-        switch(action)
-        {
-            case 0:
-                bone->disableMotors();
-            break;
-            case 1:
-                bone->setBrainMotors();
-            break;
-            case 2:
-                bone->setRandomMotors();
-            break;
-            case 3:
-                bone->setNormalPositionMotors();
-            break;
-        }
-
-        setupBonesProperties2(bone->getEndFixation(),action);
-    }
-}
 
 
 
@@ -80,17 +53,21 @@ int main(int argc, char *argv[])
 
     btFactory* factory = new btFactory();
 
-    QMap<QString, Engine*> engines = factory->getEngines();
-    EntitiesEngine* ee = (EntitiesEngine*)engines.find("Entities").value();
-
-    QString bestGen = "";
-    Ressource* r;
     DataBase database;
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
+
+    Experiment* exp = new Experiment(QVariant());
+    ExperimentManager* expMan = new ExperimentManager(factory, exp);
+
+    expMan->experiment();
+
+   /*
+    QString bestGen = "";
+    Ressource* r;
     r = new DbRecord(database, "SpiderMutatedOnlyBrain");
-    r->load();
+    //r->load();
 
     // Spider
     qDebug() << "Spider creation !";
@@ -220,7 +197,7 @@ int main(int argc, char *argv[])
                     qDebug() << "! new max " << s->getSum();
                     qDebug() << "taille du cerveau " << e->getBrain()->getPlugGrid()->getSize();
                     bestGenome = e->serialize();
-                    r->save(bestGenome);
+                    //r->save(bestGenome);
                     cptMutation = 0;
 
                 }
@@ -263,7 +240,7 @@ int main(int argc, char *argv[])
 
             stable = false;
         }
-    }
+    }*/
 
     return a.exec();
 }

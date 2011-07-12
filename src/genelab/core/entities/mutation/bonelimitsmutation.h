@@ -13,7 +13,7 @@ public:
     BoneLimitsMutation();
 
     // Not used !
-    void mutate(QVariantMap &map, QString key){}
+    void mutate(QVariantMap &, QString){}
 
     // To mutate, a lower limit can't be upper than an upper limit !
     void mutate(QVariantMap &lowerLimits, QVariantMap &upperLimits);

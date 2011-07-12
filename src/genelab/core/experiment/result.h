@@ -3,41 +3,24 @@
 
 #include "factories/ressources/ressource.h"
 #include <QVariant>
-
+#include <QDateTime>
 
 namespace GeneLabCore {
-    class Experiment;
-
     class Result
     {
     public:
         // Basic constructor
-        Result() {
-            this->fitness = 0;
-            this->ressource = NULL;
-            this->exp = NULL;
-        }
+        Result();
 
         /**
           * A result is a fitness for a genome, and the ressource where this result is stored
           * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
           */
-        Result(Experiment* exp, float fitness, QVariant genome) {
-            this->exp = exp;
-            this->fitness = fitness;
-            this->genome = genome;
-            this->ressource = NULL;
-        }
+        Result(QString expId, float fitness, QVariant genome,
+               QString date = QDateTime::currentDateTime().toString());
 
-        /**
-          * Copy constructor
-          */
-        Result(const Result& r) {
-            this->exp = r.exp;
-            this->fitness = r.fitness;
-            this->genome = r.genome;
-            this->ressource = r.ressource;
-        }
+        /** Copy constructor */
+        Result(const Result& r);
 
         /**
           * Result with higher fitness are bether !
@@ -49,24 +32,56 @@ namespace GeneLabCore {
         /**
           * Copy affectation
           */
-        void operator=(const Result& r) {
-            this->exp = r.exp;
-            this->fitness = r.fitness;
-            this->genome = r.genome;
-            this->ressource = r.ressource;
-        }
+        void operator=(const Result& r);
 
         /**
           * Broadcast a result -> save it to the ressource
           */
         void save(Ressource * r);
 
-        /**
-          * Load a result -> take it from the ressource
-          */
-        void load(Ressource * r);
+        static Result loadResult(QVariant data, bool& ok);
 
-    private:
+        float getFitness() const {
+            return fitness;
+        }
+
+        QVariant getGenome() const {
+            return genome;
+        }
+
+        Ressource* getRessource() const {
+            return ressource;
+        }
+
+        QString getExperienceId() const {
+            return exp;
+        }
+
+        QString getDate() const {
+            return date;
+        }
+
+        void setFitness(float fitness) {
+            this->fitness = fitness;
+        }
+
+        void setGenome(QVariant genome) {
+            this->genome = genome;
+        }
+
+        void setRessource(Ressource *r) {
+            this->ressource = r;
+        }
+
+        void setExperienceId(QString expId) {
+            this->exp = expId;
+        }
+
+        void setDate(QString date) {
+            this->date = date;
+        }
+
+    protected:
         // Score
         float fitness;
         // Entity
@@ -74,7 +89,9 @@ namespace GeneLabCore {
         // Where to store it
         Ressource* ressource;
         // The attached experimentation
-        Experiment* exp;
+        QString exp;
+        // The date
+        QString date;
     };
 }
 

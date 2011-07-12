@@ -16,7 +16,6 @@ namespace GeneLabCore {
             this->position = btVector3(dMap["x"].toFloat(),
                                        dMap["y"].toFloat(),
                                        dMap["z"].toFloat());
-            qDebug() << "Spawn créé : "<< this->type << this->position.getX() << this->position.getY() << this->position.getZ();
             break;
         case Zone:
             this->minPosition = btVector3(dMap["minX"].toFloat(),

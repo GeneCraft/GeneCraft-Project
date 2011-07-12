@@ -10,26 +10,89 @@ namespace GeneLabCore {
     class ExperimentManager
     {
     public:
-        ExperimentManager(btFactory* factory, Experiment* exp) {
-            this->factory = factory;
-            this->exp = exp;
-        }
+        /**
+          * Creating an experiment manager for a given experiment
+          */
+        ExperimentManager(btFactory* factory, Experiment* exp) ;
 
-        ExperimentManager(QVariant expData) {
-            this->exp = new Experiment(Ressource::load(expData));
-        }
+        /**
+          * Creating an experiment manager for a giver experiment data
+          */
+        ExperimentManager(btFactory* factory, QVariant expData);
 
-        ExperimentManager() {
-            this->exp = new Experiment(QVariant());
-        }
-
+        /**
+          * Experimentation loop
+          */
         void experiment();
+
+        /**
+          * To load results from file system
+          * Return the number of loaded results
+          */
+        int loadResults();
+
+        /**
+          * To load results from online database
+          * Return the number of retrieved results
+          */
+        int retrieveResults();
+
+        /**
+          * To generate a new population from last population
+          */
+        void genNewPop();
+
+        /**
+          * To generate a new population from existing result
+          */
+        void genNewPopFromResults();
+
+        /**
+          * Only for a new experimentation -> random population
+          */
+        void genRandomPop();
+
+        /**
+          * To evaluate the actual population, generating results
+          */
+        void evalPop();
+
+        /**
+          * To save the actual progression of the experiment
+          */
+        void save();
+
+        /**
+          * To broadcast result to online database
+          */
+        void broadcastResults();
+
+    protected:
+        // To simulate a specific entity
+        Entity* spawnEntity(QVariant genome);
+        bool stabilizeEntity(Entity* e);
+        bool simulateEntity(Entity* e);
+        float evaluateEntity(Entity* e);
+        void engineStep();
 
     private:
         Experiment* exp;
         MutationsManager* mutations;
         SelectionManager* selections;
         btFactory* factory;
+        bool broadcast;
+
+        btWorldFactory* worldFactory;
+        btShapesFactory* shapesFactory;
+        CreatureFactory* creatureFactory;
+
+        btWorld* world;
+
+        EntitiesEngine* ee;
+
+        QMap<QString, Engine*> engines;
+
+        int resultNameCpt;
     };
 }
 

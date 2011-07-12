@@ -5,17 +5,13 @@
 #include <QList>
 #include <QDebug>
 #include <QVariantMap>
+#include <QDir>
 
 namespace GeneLabCore {
     class Experiment
     {
     public:
-        Experiment(QVariant data) {
-            QVariantMap map = data.toMap();
-            this->id = map["id"].toString();
-            this->description = map["description"].toString();
-            this->expData = map;
-        }
+        Experiment(QVariant data);
 
         /**
           * The list of all genomes evaluated for this experience
@@ -25,6 +21,7 @@ namespace GeneLabCore {
             if(!sorted) {
                 qSort(this->results.begin(), this->results.end(), qGreater<Result>());
                 sorted = true;
+                qDebug() << "resultats tries";
             }
 
             return QList<Result>(this->results);
@@ -49,7 +46,7 @@ namespace GeneLabCore {
           * To set the new generation of population
           */
         void setActivePopulation(QList<Result> newPop) {
-            if(this->population.size() != newPop.size())
+            if(this->population.size() != newPop.size() && this->population.size() != 0)
                 qDebug() << "Population size changed ! not a good sign";
 
             this->population = newPop;
@@ -77,6 +74,26 @@ namespace GeneLabCore {
             return this->expData;
         }
 
+        int getPopSize() {
+            return popSize;
+        }
+
+        int getMaxGen() {
+            return maxGen;
+        }
+
+        QDir getResultsDir() {
+            return this->resultsDirectory;
+        }
+
+        QVariantMap getSeedInfo() {
+            return this->seedInfo;
+        }
+
+        int getExpTime() {
+            return this->expTime;
+        }
+
     protected:
         QList<Result> results;
         QList<Result> population;
@@ -84,6 +101,14 @@ namespace GeneLabCore {
         QString id;
         QString description;
         QVariantMap expData;
+        QDir resultsDirectory;
+        Ressource* expFile;
+        int maxGen;
+        int popSize;
+        int expTime;
+
+        QVariantMap seedInfo;
+
     };
 }
 
