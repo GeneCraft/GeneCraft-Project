@@ -19,7 +19,9 @@
 #include "btshapesfactory.h"
 #include "btworldfactory.h"
 #include "creaturefactory.h"
-
+#include "body/bone.h"
+#include "body/fixation.h"
+#include "body/treeshape.h"
 #include <QMap>
 #include <QVariant>
 #include <QVariantMap>
@@ -40,6 +42,37 @@
 #define EPSILON 0.00001
 
 using namespace GeneLabCore;
+
+
+
+void setupBonesProperties2(Fixation *fixation, int action)
+{
+    QList<Bone *> bones = fixation->getBones();
+    for(int i=0;i<bones.size();++i)
+    {
+        Bone *bone = bones.at(i);
+
+        switch(action)
+        {
+            case 0:
+                bone->disableMotors();
+            break;
+            case 1:
+                bone->setBrainMotors();
+            break;
+            case 2:
+                bone->setRandomMotors();
+            break;
+            case 3:
+                bone->setNormalPositionMotors();
+            break;
+        }
+
+        setupBonesProperties2(bone->getEndFixation(),action);
+    }
+}
+
+
 
 int main(int argc, char *argv[])
 {
@@ -88,9 +121,27 @@ int main(int argc, char *argv[])
     float lastHeight = 0;
     while(1) {
         cpt++;
+	if(!stable && cpt < 100) {
+        foreach(Engine* e, engines) {
+
+            e->beforeStep();
+        }
+    
+        foreach(Engine* e, engines) {
+    
+            e->step();
+        }
+        
+        foreach(Engine* e, engines) {
+         
+            e->afterStep();
+        }
+	continue;	
+	}
         if(!stable && cpt < 600) {
             QList<Entity*> entities = ee->getAllEntities();
             foreach(Entity* e, entities) {
+		setupBonesProperties2(e->getShape()->getRoot(), 3);
                 StatisticsProvider* stat = e->getStatistics().find("FixationStats").value();
                 stat->step();
                 Statistic* s = e->getStatisticByName("Root relative velocity");
@@ -107,13 +158,33 @@ int main(int argc, char *argv[])
                     s->resetAll();
                     ((FixationStats*)stat)->resetOrigin();
                     needStableCpt = 0;
-		    cpt = 0;
+		    
                     e->setAge(0);
-                }
+		    setupBonesProperties2(e->getShape()->getRoot(), 1);
+		    qDebug() << "stable at " << cpt;
+                    cpt = 0;
+		}
             }
-            ((BulletEngine*)engines.find("Bullet").value())->beforeStep();
-            ((BulletEngine*)engines.find("Bullet").value())->step();
-            ((BulletEngine*)engines.find("Bullet").value())->afterStep();
+//            ((BulletEngine*)engines.find("Bullet").value())->beforeStep();
+//            ((BulletEngine*)engines.find("Bullet").value())->step();
+//            ((BulletEngine*)engines.find("Bullet").value())->afterStep();
+
+        foreach(Engine* e, engines) {
+                   
+            e->beforeStep();
+        }
+                    
+        foreach(Engine* e, engines) {
+                
+            e->step();
+        }
+                    
+        foreach(Engine* e, engines) {
+                    
+            e->afterStep();
+        }
+
+
             continue;
         }
         //qDebug() << cpt;

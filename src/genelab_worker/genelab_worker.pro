@@ -115,6 +115,7 @@ SOURCES += \
     ../genelab/core/entities/mutation/floatmutation.cpp \
     ../genelab/core/entities/mutation/brainnodemutation.cpp \
     ../genelab/core/entities/mutation/integermutation.cpp \
+    ../genelab/core/entities/mutation/bonelimitsmutation.cpp \
     ../genelab/core/factories/btshapesfactory.cpp \
     ../genelab/core/factories/btworldfactory.cpp \
     ../genelab/core/factories/btfactory.cpp \
@@ -185,6 +186,7 @@ HEADERS += \
     ../genelab/core/entities/mutation/floatmutation.h \
     ../genelab/core/entities/mutation/brainnodemutation.h \
     ../genelab/core/entities/mutation/integermutation.h \
+    ../genelab/core/entities/mutation/bonelimitsmutation.h \
     ../genelab/core/factories/btworldfactory.h \
     ../genelab/core/factories/ressources/ressource.h \
     ../genelab/core/factories/btfactory.h \
