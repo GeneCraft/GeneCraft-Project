@@ -195,13 +195,15 @@ namespace GeneLabCore {
       * To generate a new population from last population
       */
     void ExperimentManager::genNewPop() {
-        QList<Result> results = exp->getActivePopulation();
+        QList<Result> results = exp->getResults();
+        QList<Result> activePop = exp->getActivePopulation();
+
         qSort(results.begin(), results.end(), qGreater<Result>());
         QList<Result> newActivePop;
-        int max = results.size();
+        int max = activePop.size();
 
         // For a tenth of the pop size -> the bests one
-        for(int i = 0; i < exp->getPopSize()*0.5 + 1; i++) {
+        for(int i = 0; i < exp->getPopSize()*0.3 + 1; i++) {
             if(i >= max)
                 break;
             // Best 'i one
@@ -219,7 +221,7 @@ namespace GeneLabCore {
         for(int i = 0; i < exp->getPopSize() - already; i++) {
             // random new from results
             int id = qrand()%max;
-            Result r = results.at(id);
+            Result r = activePop.at(id);
             QVariant genome = r.getGenome();
 
             // Mutation
