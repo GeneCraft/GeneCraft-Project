@@ -18,13 +18,8 @@ namespace GeneLabCore {
           * Sorted by fitness
           */
         QList<Result> getResults() {
-            if(!sorted) {
-                qSort(this->results.begin(), this->results.end(), qGreater<Result>());
-                sorted = true;
-                qDebug() << "resultats tries";
-            }
-
-            return QList<Result>(this->results);
+            qSort(this->results.begin(), this->results.end(), qGreater<Result>());
+            return this->results;
         }
 
         /**
