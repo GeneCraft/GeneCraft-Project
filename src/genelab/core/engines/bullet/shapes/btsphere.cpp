@@ -78,7 +78,7 @@ void btSphere::setRadius(btScalar radius)
         rigidBody->setCollisionShape(shape);
 
         btScalar mass = computeMass();
-        btVector3 intertia(0,0,0);
+        btVector3 intertia;
         this->shape->calculateLocalInertia(mass,intertia);
         this->rigidBody->setMassProps(mass,intertia);
     }

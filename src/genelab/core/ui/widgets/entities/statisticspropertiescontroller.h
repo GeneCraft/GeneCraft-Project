@@ -19,12 +19,17 @@ public:
     explicit StatisticsPropertiesController(QWidget *parent = 0);
     ~StatisticsPropertiesController();
 
+    // To connect inspector input manager to be notified if the entity is deleted
+    void connectToInspectorInputManager(InspectorsInputManager *iim);
+
 public slots:
 
     void setEntity(Entity *entity);
     void updateStats();
     void resetAllStats();
     void resetSelectedStat();
+
+    void entityDeleted(Entity *entity);
 
 private:
     Ui::StatisticsPropertiesController *ui;

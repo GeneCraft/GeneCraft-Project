@@ -28,6 +28,7 @@
 #include <QDebug>
 
 #include "tools.h"
+#include <ctime>
 
 #include "ressources/dbrecord.h"
 #include "ressources/jsonfile.h"

@@ -2,7 +2,7 @@
 #define CREATUREVIEWERINPUTMANAGER_H
 
 #include "genelabcoreclasses.h"
-#include "events/inputlistener.h"
+#include "events/inspectorsinputmanager.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
 using namespace GeneLabCore;
@@ -17,7 +17,7 @@ using namespace GeneLabCore;
  * @version 1.0 | May 2011
  * @author Aurelien Da Campo & Cyprien Huissoud
  */
-class CreatureViewerInputManager : public InputListener
+class CreatureViewerInputManager : public InspectorsInputManager
 {
     Q_OBJECT
 
@@ -39,32 +39,8 @@ public:
 signals:
 
     void rigidBodySelected(btRigidBody *rigidBody);
-    /*
-    void entitySelected();
-    void boneSelected();
-    void fixationSelected();
-
-    void entityDeleted();
-    void boneDeleted();
-
-    void boneAdded();
-    void boneUpdated();
-    void fixationUpdated();
-    void entityUpdated();
 
 public slots:
-    void entitySelected();
-    void boneSelected();
-    void fixationSelected();
-
-    void entityDeleted();
-    void boneDeleted();
-
-    void boneAdded();
-    void boneUpdated();
-    void fixationUpdated();
-    void entityUpdated();
-    */
 
 private:
 
@@ -75,6 +51,9 @@ private:
     int mNumEntitiesInstanced;
     QPoint mousePos;
     btoWorld* world;
+
+    Bone *boneSelected;
+    Fixation *fixSelected;
 
 };
 

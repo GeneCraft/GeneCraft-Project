@@ -29,6 +29,7 @@ namespace GeneLabCore {
     // Event management
     class EventsManager;
     class InputListener;
+    class InspectorsInputManager;
 
     // OpenGL
     class OpenGLEngine;
@@ -143,7 +144,7 @@ namespace GeneLabCore {
 
 // Entities
 class BonePropertiesController;
-class FixationProperties;
+class FixationPropertiesController;
 
 // Typical used ogre namespace classes
 namespace Ogre {

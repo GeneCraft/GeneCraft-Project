@@ -14,24 +14,23 @@ namespace Ui {
     class FixationPropertiesController;
 }
 
-class FixationProperties : public QWidget
+class FixationPropertiesController : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit FixationProperties(QWidget *parent = 0);
-    ~FixationProperties();
-
-    void setFixation(Fixation *fixation);
+    explicit FixationPropertiesController(QWidget *parent = 0);
+    ~FixationPropertiesController();
+    void connectToInspectorInputManager(InspectorsInputManager *iim);
 
 signals:
 
     void rigidBodySelected(btRigidBody *);
-    void boneDeleted(Bone* bone);
-    void fixationDeleted(Fixation* fixation);
+    void sBoneDeleted(Bone* bone);
 
 public slots:
 
+    void setFixation(Fixation *fixation);
     void addBone();
     void addSensor();
     void fixInTheAir();
@@ -42,6 +41,9 @@ public slots:
 
     void changeRadiusFromSlider(int value);
     void changeRadiusFromButton();
+
+    void fixationDeleted(Fixation * fixation);
+    void entityDeleted(Entity *entity);
 
 private:
     Ui::FixationPropertiesController *ui;

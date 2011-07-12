@@ -20,6 +20,8 @@
 // Effectors
 #include "effectors/rotationalmotorseffector.h"
 
+#include "events/inspectorsinputmanager.h"
+
 
 float roundPrecision(float n, int precision = 2)
 {
@@ -74,6 +76,30 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
 
     // Update
     //connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
+
+    this->setEnabled(false);
+}
+
+void BonePropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
+{
+    // notifications
+    connect(iim,SIGNAL(sBoneSelected(Bone*)),this,SLOT(setBone(Bone *)));
+    connect(iim,SIGNAL(sBoneDeleted(Bone *)),this,SLOT(boneDeleted(Bone *)),Qt::DirectConnection);
+    connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
+
+    // emission
+    connect(this,SIGNAL(sBoneDeleted(Bone *)),iim,SLOT(boneDeleted(Bone *)),Qt::DirectConnection);
+    //connect(this,SIGNAL(sBoneUpdated(Bone *)),iim,SLOT(boneUpdated(Bone*)));
+}
+
+void BonePropertiesController::boneDeleted(Bone *bone){
+    if(bone == this->bone)
+        setBone(NULL);
+}
+
+void BonePropertiesController::entityDeleted(Entity *) {
+
+    setBone(NULL);
 }
 
 void BonePropertiesController::setOutFrom()
@@ -114,7 +140,7 @@ void BonePropertiesController::changeRadiusFromSlider(int value)
 void BonePropertiesController::deleteBone()
 {
     bone->remove();
-    emit boneDeleted(bone);
+    emit sBoneDeleted(bone);
     delete bone;
     bone = NULL;
 }
@@ -151,7 +177,6 @@ void BonePropertiesController::saveChanges()
 {
     if(bone)
     {
-
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
         // ANGULAR PARAMETERS
@@ -212,6 +237,8 @@ void BonePropertiesController::setBone(Bone * bone)
 
     if(bone)
     {
+        this->setEnabled(true);
+
         // ANGULAR PARAMETERS
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();
 
@@ -352,6 +379,9 @@ void BonePropertiesController::setBone(Bone * bone)
         // init promoted fixation properties
 //        ui->fixationProperties->setFixation(bone->getEndFixation());
 //        ui->fixationProperties->setFormTitle("End fixation controller");
+    }
+    else{
+        this->setEnabled(false);
     }
 }
 

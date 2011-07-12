@@ -84,7 +84,6 @@ void btoSphere::setRadius(btScalar radius)
     Vector3 ogreSize(radius*2,radius*2,radius*2);
     Vector3 scale = ogreSize / originalSphereBB.getSize();
     node->setScale(scale);
-    node->setPosition(Vector3(0,0,0));
 }
 
 }

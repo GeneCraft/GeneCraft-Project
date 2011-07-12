@@ -1,15 +1,18 @@
 #include "creatureviewerinputmanager.h"
 
-#include "families/spiderfamily.h"
+// Qt
+#include <QDebug>
+
 #include "btoshapesfactory.h"
 #include "entity.h"
+#include "body/bone.h"
 #include "body/treeshape.h"
 #include "body/fixation.h"
+#include "bullet/rigidbodyorigin.h"
 
 #include "world/btoworld.h"
 
-// Qt
-#include <QDebug>
+
 
 // Ogre
 #include "ogre/ogreengine.h"
@@ -24,7 +27,7 @@
 #include "bulletogre/bulletogreengine.h"
 
 CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngine,Ogre::Camera *camera) :
-    camera(camera), btoEngine(btoEngine), world(NULL)
+    camera(camera), btoEngine(btoEngine), world(NULL) , boneSelected(NULL), fixSelected(NULL)
 {
 }
 
@@ -140,7 +143,91 @@ void CreatureViewerInputManager::pickBody()
     {
         btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
 
-        if(body)
-            emit rigidBodySelected(body);
+        if(body) {
+
+            //emit rigidBodySelected(body);
+
+            //other exclusions ?
+            if (!(body->isStaticObject() || body->isKinematicObject()))
+            {
+                if(body->getUserPointer() != NULL)
+                {
+                    RigidBodyOrigin* origin = static_cast<RigidBodyOrigin*>(body->getUserPointer());
+                    if(origin != 0)
+                    {
+                        if(origin->getObject() != NULL)
+                        {
+                            switch(origin->getType())
+                            {
+                                case RigidBodyOrigin::BONE:{
+
+                                    // select bone
+                                    Bone *bone = dynamic_cast<Bone*>(origin->getObject());
+                                    bone->setSelected(true);
+                                    boneSelected = bone;
+
+                                    emit sBoneSelected(bone);
+
+
+                                    //bonePropertiesController->setBone(bone);
+
+                                    // select end fix
+                                    Fixation *fix = bone->getEndFixation();
+
+                                    if(fix){
+
+                                        fix->setSelected(true);
+                                        fixSelected = fix;
+                                        //fixationPropertiesController->setFixation(fix);
+                                        emit sFixationSelected(fix);
+
+                                        // select entity
+                                        //selectedEntity = bone->getEntity();
+                                        //setEntity(bone->getEntity(),body);
+
+                                        emit sEntitySelected(bone->getEntity());
+                                    }
+
+                                    }
+                                    break;
+
+                                case RigidBodyOrigin::FIXATION:{
+
+                                    // select fixation
+                                    Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
+                                    fix->setSelected(true);
+                                    fixSelected = fix;
+                                    //fixationPropertiesController->setFixation(fix);
+                                    emit sFixationSelected(fix);
+
+                                    // select entity
+                                    //selectedEntity = fix->getEntity();
+                                    emit sEntitySelected(fix->getEntity());
+                                    //setEntity(fix->getEntity(),body);
+                                    }
+                                    break;
+
+                                case RigidBodyOrigin::BASIC_SHAPE:{
+
+                                    //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
+                                    //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
+                                    //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
+                                    //setInspector(new QLabel("BASIC_SHAPE"));
+
+                                    }
+                                    break;
+
+                                //default:
+                                //    setInspector(0);
+                            }
+                        }
+                        else
+                            qDebug() << Q_FUNC_INFO << "Object NULL";
+                    }
+                    else
+                        qDebug() << Q_FUNC_INFO << "RigidBodyOrigin NULL";
+                }
+            }
+        }
     }
 }

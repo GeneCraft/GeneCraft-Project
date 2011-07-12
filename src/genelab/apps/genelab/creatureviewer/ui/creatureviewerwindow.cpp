@@ -72,7 +72,7 @@ using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CreatureViewer), boneSelected(NULL), fixSelected(NULL), selectedEntity(NULL), inspector(NULL)
+    ui(new Ui::CreatureViewer), selectedEntity(NULL), selectedBone(NULL), selectedFix(NULL)
 {
     ui->setupUi(this);
     this->init();
@@ -104,8 +104,14 @@ void CreatureViewerWindow::init() {
     QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString(tr("New creature")));
     QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString(tr("Add creature")));
     QAction *aAddCreatureFromBdd = ui->toolBar->addAction(QIcon(":img/icons/entity_add_from_bdd"),QString(tr("Add creature from database")));
+    QAction *aAddRandomCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_add_random"),QString(tr("Add random creature")));
+    ui->toolBar->addSeparator();
     QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString(tr("Save creature")));
+    ui->toolBar->addSeparator();
     QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString(tr("Remove creature")));
+    QAction *aRemoveAllCreatures =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all"),QString(tr("Remove all creatures")));
+    ui->toolBar->addSeparator();
+    QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
     ui->toolBar->addSeparator();
 
     // step manager
@@ -125,8 +131,31 @@ void CreatureViewerWindow::init() {
     connect(aNewCreature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(aAddCreature,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
     connect(aAddCreatureFromBdd,SIGNAL(triggered()),this,SLOT(loadEntityFromDb()));
+    connect(aAddRandomCreature,SIGNAL(triggered()),this,SLOT(addRandomEntity()));
     connect(aSaveCreature,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
     connect(aRemoveCreature,SIGNAL(triggered()),this,SLOT(removeEntity()));
+    connect(aRemoveAllCreatures,SIGNAL(triggered()),this,SLOT(removeAllEntities()));
+
+    connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
+
+
+    // -----------
+    // -- Docks --
+    // -----------
+
+    tabifyDockWidget(ui->dwCreature,ui->dwBone);
+    tabifyDockWidget(ui->dwCreature,ui->dwFixation);
+    tabifyDockWidget(ui->dwCreature,ui->dwBrain);
+    setTabPosition(Qt::LeftDockWidgetArea,QTabWidget::North);
+    //setTabShape(QTabWidget::Triangular);
+
+    // get the QTabBar
+    QList<QTabBar *> tabList = findChildren<QTabBar *>();
+    if(!tabList.isEmpty()){
+        QTabBar *tabBar = tabList.at(0);
+        tabBar->setCurrentIndex(0);
+    }
+
 
     // ----------------------
     // -- Events Listeners --
@@ -152,43 +181,54 @@ void CreatureViewerWindow::init() {
     qDebug() << "[OK]\n";
 
 
-    ui->dwCreature->setWidget(Entity::getInspectorWidget());
+    // ------------------
+    // -- Create docks --
+    // ------------------
+
+    // Entity
+    entityPropertiesController = new EntityPropertiesController();
+    ui->dwCreature->setWidget(entityPropertiesController);
+    entityPropertiesController->connectToInspectorInputManager(cvim);
+
+    // Brain
+    brainPropertiesController = new BrainPropertiesController();
     PlugGridVisualizer* bViz = new PlugGridVisualizer();
     PlugGridDesignVisualizer* bDezViz = new PlugGridDesignVisualizer();
     ee->addPlugGridDezVisualizer(bDezViz);
     ee->addPlugGridVisualizer(bViz);
-
-    // TEEEEEESST
-    brainPropertiesController = new BrainPropertiesController();
     brainPropertiesController->setBrainViz(bViz);
     brainPropertiesController->setBrainDesignViz(bDezViz);
     ui->dwBrain->setWidget(brainPropertiesController);
+    brainPropertiesController->connectToInspectorInputManager(cvim);
 
-//    Entity::getInspectorWidget()->setBrainViz(bViz);
-//    Entity::getInspectorWidget()->setBrainDesignViz(bDezViz);
-
-
-
-    // CREATE DOCKS  TEEEEEEEEEEST
-    statsPropertiesController = new StatisticsPropertiesController();
-    ui->dwStats->setWidget(statsPropertiesController);
-
-    fixationPropertiesController = new FixationProperties();
+    // Fixation
+    fixationPropertiesController = new FixationPropertiesController();
+    fixationPropertiesController->connectToInspectorInputManager(cvim);
     ui->dwFixation->setWidget(fixationPropertiesController);
 
+    // Bone
     bonePropertiesController = new BonePropertiesController();
+    bonePropertiesController->connectToInspectorInputManager(cvim);
     ui->dwBone->setWidget(bonePropertiesController);
 
+    // Stats
+    statsPropertiesController = new StatisticsPropertiesController();
+    ui->dwStats->setWidget(statsPropertiesController);
+    statsPropertiesController->connectToInspectorInputManager(cvim);
 
 
-    // connect emitter of rigidBodySelected
-    connect(cvim,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
-    connect(Fixation::getEmptyInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
-    connect(Bone::getEmptyInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
-    connect(Entity::getInspectorWidget(),SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelected(btRigidBody*)));
+    // ----------------------------------
+    // -- Connections to input manager --
+    // ----------------------------------
 
-    connect(Fixation::getEmptyInspectorWidget(), SIGNAL(boneDeleted(Bone*)), this, SLOT(boneDeleted(Bone*)));
-    connect(Bone::getEmptyInspectorWidget(), SIGNAL(boneDeleted(Bone*)), this, SLOT(boneDeleted(Bone*)));
+    // To emit when a entity is deleted from tools bar
+    connect(cvim,SIGNAL(sEntitySelected(Entity*)),this,SLOT(entitySelected(Entity*)));
+    connect(this,SIGNAL(sEntityDeleted(Entity*)),cvim,SLOT(entityDeleted(Entity*)),Qt::DirectConnection);
+    connect(cvim,SIGNAL(sBoneDeleted(Bone*)),this,SLOT(boneDeleted(Bone*)),Qt::DirectConnection);
+    connect(cvim,SIGNAL(sFixationDeleted(Fixation*)),this,SLOT(fixationDeleted(Fixation*)),Qt::DirectConnection);
+    connect(cvim,SIGNAL(sBoneSelected(Bone*)),this,SLOT(boneSelected(Bone*)));
+    connect(cvim,SIGNAL(sFixationSelected(Fixation*)),this,SLOT(fixationSelected(Fixation*)));
+
 
     qDebug() << "Start simulation";
     simulationManager->start();
@@ -288,6 +328,18 @@ void CreatureViewerWindow::saveEntityToDb() {
         QMessageBox::warning(this, "No entity selected.", "No entity selected.");
 }
 
+void CreatureViewerWindow::addRandomEntity(){
+
+    spawnRandomEntities(1);
+}
+
+void CreatureViewerWindow::createMutationSample(){
+
+    if(selectedEntity){
+        spawnMutationSample(selectedEntity,8);
+    }
+}
+
 void CreatureViewerWindow::spawnNew() {
 
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
@@ -354,8 +406,6 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     }
 }
 
-int cptNew = 0;
-QVariant genomeTester;
 void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
 
     Entity *e = NULL;
@@ -364,15 +414,9 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
     for(int i = 0; i < nbEntities; i++) {
 
         int enttype = Tools::random(0,3);
-        enttype = 0;
+        //enttype = 0;
 
         btVector3 pos = world->getSpawnPosition();
-        pos += btVector3(0, 0, 30*cptNew);
-
-        cptNew++;
-        if(cptNew > 1) {
-            e = GenericFamily::createEntity(genomeTester, shapesFactory, pos);
-        } else
 
         switch(enttype)
         {
@@ -403,8 +447,6 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
             e->setup();
             entitiesEngine->addEntity(e);
             ents.append(e);
-            if(cptNew == 1)
-                genomeTester = e->serialize();
         }
     }
 }
@@ -415,120 +457,6 @@ CreatureViewerWindow::~CreatureViewerWindow()
     // Cheat anti double free
     ui->dwCreature->setWidget(new QWidget());
     delete ui;
-}
-
-void CreatureViewerWindow::setInspector(QWidget * inspector)
-{
-//    if(inspector != 0)
-//        ui->dwInspector->setWidget(inspector);
-//    else
-//        ui->dwCreature->setWidget(new QLabel("No element selected."));
-}
-
-
-void CreatureViewerWindow::setEntity(Entity *entity, btRigidBody *selectedBody)
-{
-    if(entity != NULL)
-        ui->dwCreature->setWidget(Entity::getInspectorWidget(entity,selectedBody));
-    else
-        ui->dwCreature->setWidget(new QLabel("No creature selected."));
-
-    brainPropertiesController->setEntity(entity);
-    statsPropertiesController->setEntity(entity);
-}
-
-void CreatureViewerWindow::rigidBodySelected(btRigidBody *rigidBody)
-{
-
-    if(selectedEntity && boneSelected != NULL){
-        boneSelected->setSelected(false);
-        boneSelected = NULL;
-    }
-
-    if(selectedEntity && fixSelected != NULL) {
-        fixSelected->setSelected(false);
-        fixSelected = NULL;
-    }
-
-
-    // unselection
-    selectedEntity = NULL;
-
-    // you can also unselect by calling rigidBodySelected(NULL)
-    if(rigidBody != NULL)
-    {
-        //other exclusions ?
-        if (!(rigidBody->isStaticObject() || rigidBody->isKinematicObject()))
-        {
-            if(rigidBody->getUserPointer() != NULL)
-            {
-                RigidBodyOrigin* origin = static_cast<RigidBodyOrigin*>(rigidBody->getUserPointer());
-                if(origin != 0)
-                {
-                    if(origin->getObject() != NULL)
-                    {
-                        switch(origin->getType())
-                        {
-                            case RigidBodyOrigin::BONE:{
-
-                                // select bone
-                                Bone *bone = dynamic_cast<Bone*>(origin->getObject());
-                                bone->setSelected(true);
-                                boneSelected = bone;
-                                bonePropertiesController->setBone(bone);
-
-                                // select end fix
-                                Fixation *fix = bone->getEndFixation();
-
-                                if(fix){
-                                    fix->setSelected(true);
-                                    fixSelected = fix;
-                                    fixationPropertiesController->setFixation(fix);
-
-                                    // select entity
-                                    selectedEntity = bone->getEntity();
-                                    setEntity(bone->getEntity(),rigidBody);
-                                }
-
-                                }
-                                break;
-
-                            case RigidBodyOrigin::FIXATION:{
-
-                                // select fixation
-                                Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
-                                fix->setSelected(true);
-                                fixSelected = fix;
-                                fixationPropertiesController->setFixation(fix);
-
-                                // select entity
-                                selectedEntity = fix->getEntity();
-                                setEntity(fix->getEntity(),rigidBody);
-                                }
-                                break;
-
-                            case RigidBodyOrigin::BASIC_SHAPE:{
-
-                                //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
-                                //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
-                                //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
-                                //setInspector(new QLabel("BASIC_SHAPE"));
-
-                                }
-                                break;
-
-                            //default:
-                            //    setInspector(0);
-                        }
-                    }
-                    else
-                        qDebug() << "CreatureViewer::rigidBodySelected : object NULL";
-                }
-                else
-                    qDebug() << "CreatureViewer::rigidBodySelected : RigidBodyOrigin NULL";
-            }
-        }
-    }
 }
 
 void CreatureViewerWindow::showAbout()
@@ -550,10 +478,13 @@ void CreatureViewerWindow::createNewEntity()
     e->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     entitiesEngine->addEntity(e);
+    ents.append(e);
     e->getShape()->getRoot()->fixeInTheAir();
-    setEntity(e,e->getShape()->getRoot()->getRigidBody());
 
-    QMessageBox::information(this, "Root fixation fixed in the air", "By default, the root fixation is fixed in the air.\n\nTo unfix it, select it and go to \"Tools\" tab.");
+    //entitySelected(e);
+    //setEntity(e,e->getShape()->getRoot()->getRigidBody());
+
+    QMessageBox::information(this, "Root fixation fixed in the air", "Default, the root fixation is fixed in the air.\n\nTo unfix it, select it and go to \"Tools\" tab of the fixation controller.");
 }
 
 void CreatureViewerWindow::loadEntityFromFile()
@@ -639,29 +570,82 @@ void CreatureViewerWindow::removeEntity()
     {
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
         entitiesEngine->removeEntity(selectedEntity);
-        this->setEntity(NULL, NULL);
+
+        emit sEntityDeleted(selectedEntity);
+
         delete selectedEntity;
+
         selectedEntity = NULL;
-        boneSelected = NULL;
-        fixSelected = NULL;
+        selectedBone = NULL;
+        selectedFix = NULL;
     }
     else
-        QMessageBox::warning(this, "No entity selected.", "No entity selected.");
+        QMessageBox::warning(this, "No entity selected.", "No entity is selected.");
+}
+
+void CreatureViewerWindow::removeAllEntities()
+{
+    selectedEntity = NULL;
+    selectedBone = NULL;
+    selectedFix= NULL;
+
+    // Clear entities
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+    ents = entitiesEngine->getAllEntities();
+    while(ents.size() != 0){
+
+        Entity * old = ents.takeFirst();
+        entitiesEngine->removeEntity(old);
+        emit sEntityDeleted(old);
+
+        delete old;
+    }
 }
 
 void CreatureViewerWindow::enterInWhatsThisMode(){
     QWhatsThis::enterWhatsThisMode();
 }
 
-
-void CreatureViewerWindow::entityDeleted(Entity*) {
-    this->setEntity(NULL, NULL);
+void CreatureViewerWindow::entitySelected(Entity *entity)
+{
+      selectedEntity = entity;
 }
 
-void CreatureViewerWindow::boneDeleted(Bone* bone) {
-    this->setEntity(bone->getEntity(), NULL);
+void CreatureViewerWindow::boneDeleted(Bone* bone){
+    if(selectedBone == bone) {
+        selectedBone = NULL;
+        selectedFix = NULL;
+    }
 }
 
-void CreatureViewerWindow::fixationDeleted(Fixation* fix) {
-    this->setEntity(fix->getEntity(), NULL);
+void CreatureViewerWindow::fixationDeleted(Fixation* fix){
+    if(selectedFix == fix)
+        selectedFix = NULL;
+}
+
+void CreatureViewerWindow::boneSelected(Bone* bone){
+
+    // unselect old
+    if(selectedBone)
+        selectedBone->setSelected(false);
+
+    if(selectedFix)
+       selectedFix->setSelected(false);
+
+    if(bone)
+        bone->setSelected(true);
+
+    selectedBone = bone;
+}
+
+void CreatureViewerWindow::fixationSelected(Fixation* fix){
+
+    // unselect old
+    if(selectedFix)
+        selectedFix->setSelected(false);
+
+    if(fix)
+        fix->setSelected(true);
+
+    selectedFix = fix;
 }

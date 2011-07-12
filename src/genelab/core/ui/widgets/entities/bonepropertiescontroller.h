@@ -20,15 +20,18 @@ class BonePropertiesController : public QWidget
 public:
     explicit BonePropertiesController(QWidget *parent = 0);
     ~BonePropertiesController();
+    void connectToInspectorInputManager(InspectorsInputManager * iim);
 
 signals:
 
     void rigidBodySelected(btRigidBody *);
-    void boneDeleted(Bone *);
+    void sBoneDeleted(Bone *);
 
 public slots:
 
     void setBone(Bone * bone);
+    void boneDeleted(Bone *bone);
+    void entityDeleted(Entity *entity);
 
 private:
     Ui::BonePropertiesController *ui;

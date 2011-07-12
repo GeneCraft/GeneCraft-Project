@@ -51,7 +51,6 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
 
 }
 
-
 Bone::~Bone()
 {
     delete body;

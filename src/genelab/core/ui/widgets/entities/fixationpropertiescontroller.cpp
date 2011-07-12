@@ -16,7 +16,9 @@
 #include "sensors/accelerometersensor.h"
 #include "sensors/contactsensor.h"
 
-FixationProperties::FixationProperties(QWidget *parent) :
+#include "events/inspectorsinputmanager.h"
+
+FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FixationPropertiesController)
 {
@@ -34,35 +36,68 @@ FixationProperties::FixationProperties(QWidget *parent) :
     connect(this->ui->pbRemoveBone,SIGNAL(pressed()),this,SLOT(removeSelectedBone()));
 
     connect(this->ui->pbDeleteSensor,SIGNAL(pressed()),this,SLOT(removeSelectedSensor()));
+
+    this->setEnabled(false);
 }
 
-FixationProperties::~FixationProperties()
+FixationPropertiesController::~FixationPropertiesController()
 {
     delete ui;
 }
 
-void FixationProperties::setFixation(Fixation *fixation)
+void FixationPropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
+{
+    // notifications
+    connect(iim,SIGNAL(sFixationSelected(Fixation *)),this,SLOT(setFixation(Fixation *)));
+    connect(iim,SIGNAL(sFixationDeleted(Fixation *)),this,SLOT(fixationDeleted(Fixation *)),Qt::DirectConnection);
+    connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
+
+    // emission
+    connect(this,SIGNAL(sBoneDeleted(Bone *)),iim,SLOT(boneDeleted(Bone *)),Qt::DirectConnection);
+//    //connect(this,SIGNAL(sBoneUpdated(Bone *)),iim,SLOT(boneUpdated(Bone*)));
+}
+
+void FixationPropertiesController::fixationDeleted(Fixation * fixation){
+    if(fixation == this->fixation)
+        setFixation(NULL);
+}
+
+void FixationPropertiesController::entityDeleted(Entity *) {
+
+    setFixation(NULL);
+}
+
+void FixationPropertiesController::setFixation(Fixation *fixation)
 {
     this->fixation = fixation;
 
-    // Radius
-    disconnect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
-    this->ui->sRadius->setValue(fixation->getRadius()*1000);
-    connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
-    this->ui->leRadius->setText(QString::number(fixation->getRadius()));
+    if(fixation){
 
-    // Bones
-    this->ui->lwBones->clear();
-    foreach(Bone *b, fixation->getBones())
-        this->ui->lwBones->addItem(new BoneListWidgetItem(b));
+        // Radius
+        disconnect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+        this->ui->sRadius->setValue(fixation->getRadius()*1000);
+        connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
+        this->ui->leRadius->setText(QString::number(fixation->getRadius()));
 
-    // Sensors
-    this->ui->lwSensors->clear();
-    foreach(Sensor *s, fixation->getSensors())
-        this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
+        // Bones
+        this->ui->lwBones->clear();
+        foreach(Bone *b, fixation->getBones())
+            this->ui->lwBones->addItem(new BoneListWidgetItem(b));
+
+        // Sensors
+        this->ui->lwSensors->clear();
+        foreach(Sensor *s, fixation->getSensors())
+            this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
+
+        this->setEnabled(true);
+    }
+    else {
+        this->setEnabled(false);
+    }
+
 }
 
-void FixationProperties::addBone()
+void FixationPropertiesController::addBone()
 {
     if(fixation != 0)
     {
@@ -82,7 +117,7 @@ void FixationProperties::addBone()
     setFixation(fixation);
 }
 
-void FixationProperties::fixInTheAir()
+void FixationPropertiesController::fixInTheAir()
 {
     if(fixation != 0)
     {
@@ -95,7 +130,7 @@ void FixationProperties::fixInTheAir()
     }
 }
 
-void FixationProperties::setPosition()
+void FixationPropertiesController::setPosition()
 {
     if(fixation != 0)
         fixation->getRigidBody()->getWorldTransform().setOrigin(btVector3(ui->leX->text().toFloat(),
@@ -103,7 +138,7 @@ void FixationProperties::setPosition()
                                                             ui->leZ->text().toFloat()));
 }
 
-void FixationProperties::selectBone()
+void FixationPropertiesController::selectBone()
 {
     if(this->ui->lwBones->selectedItems().size() > 0)
     {
@@ -114,7 +149,7 @@ void FixationProperties::selectBone()
     }
 }
 
-void FixationProperties::addSensor()
+void FixationPropertiesController::addSensor()
 {
     Sensor *sensor = NULL;
 
@@ -152,19 +187,19 @@ void FixationProperties::addSensor()
     }
 }
 
-void FixationProperties::changeRadiusFromSlider(int value)
+void FixationPropertiesController::changeRadiusFromSlider(int value)
 {
     fixation->setRadius(value/1000.0);
     this->ui->leRadius->setText(QString::number(value / 1000.0));
 }
 
-void FixationProperties::changeRadiusFromButton()
+void FixationPropertiesController::changeRadiusFromButton()
 {
     fixation->setRadius(ui->leRadius->text().toDouble());
     setFixation(fixation); // update
 }
 
-void FixationProperties::removeSelectedBone()
+void FixationPropertiesController::removeSelectedBone()
 {
     if(this->ui->lwBones->selectedItems().size() > 0)
     {
@@ -173,7 +208,7 @@ void FixationProperties::removeSelectedBone()
         if (boneItem)
         {
             // update ui
-            emit boneDeleted(boneItem->bone);
+            emit sBoneDeleted(boneItem->bone);
             emit rigidBodySelected(NULL);
 
             // delete the bone
@@ -184,7 +219,7 @@ void FixationProperties::removeSelectedBone()
     }
 }
 
-void FixationProperties::removeSelectedSensor()
+void FixationPropertiesController::removeSelectedSensor()
 {
     if(fixation)
     {

@@ -64,8 +64,8 @@ namespace GeneLabCore {
         void setEntity(Entity *entity);
         Entity *getEntity()                     { return entity; }
         btRigidBody *getRigidBody()             { return this->rigidBody; }
-        FixationProperties *getInspectorWidget();
-        static FixationProperties *getEmptyInspectorWidget();
+        FixationPropertiesController *getInspectorWidget();
+        static FixationPropertiesController *getEmptyInspectorWidget();
         void setSelected(bool isSelected);
         void setRadius(btScalar radius);
 
@@ -111,7 +111,7 @@ namespace GeneLabCore {
         btTypedConstraint *airFixation; // Owner
 
         // Qt Render
-        static FixationProperties *inspectorWidget;
+        static FixationPropertiesController *inspectorWidget;
 
         // parent bone
         Bone *parentBone;

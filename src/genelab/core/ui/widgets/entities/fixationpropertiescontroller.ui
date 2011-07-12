@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
-    <height>278</height>
+    <width>356</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,10 +24,13 @@
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="margin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -335,6 +338,9 @@ p, li { white-space: pre-wrap; }
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="3" column="0">
         <widget class="QGroupBox" name="gbPosition">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="whatsThis">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;

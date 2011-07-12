@@ -21,19 +21,31 @@ public:
 
     explicit EntityPropertiesController(QWidget *parent = 0);
     ~EntityPropertiesController();
+    void connectToInspectorInputManager(InspectorsInputManager *iim);
 
     // GETTERS / SETTERS
-    void setEntity(Entity *entity, btRigidBody * selectedBody = 0);
     void setBrainViz(PlugGridVisualizer* brainViz);
     void setBrainDesignViz(PlugGridDesignVisualizer* brainViz);
 
 signals:
 
     void rigidBodySelected(btRigidBody *rigidBody);
+    void sSensorsSelected(QList<Sensor*> s);
+    void sFixationSelected(Fixation*);
 
 public slots:
 
-    void setOutFrom();
+    void setEntity(Entity *entity, btRigidBody * selectedBody = 0);
+    void setOutFromNormalPosition();
+    void setOutFromNone();
+    void setOutFromBrain();
+    void setOutFromRandom();
+    void setOutFrom(int outsFrom);
+
+    void shapeUpdated();
+    void entityUpdated(Entity *entity);
+    void entityDeleted(Entity *entity);
+
     void resetBonesProperties();
     void itemClicked(QTreeWidgetItem *,int);
 

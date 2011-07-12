@@ -4,6 +4,7 @@
 #include "bodyitems.h"
 #include "entity.h"
 #include "tools.h"
+#include "events/inspectorsinputmanager.h"
 
 StatisticsPropertiesController::StatisticsPropertiesController(QWidget *parent) :
     QWidget(parent),
@@ -24,11 +25,26 @@ StatisticsPropertiesController::StatisticsPropertiesController(QWidget *parent) 
     statsTimer->setInterval(1000/5); // by ms
     connect(statsTimer, SIGNAL(timeout()), this, SLOT(updateStats()));
     statsTimer->start();
+
+    setEnabled(false);
 }
 
 StatisticsPropertiesController::~StatisticsPropertiesController()
 {
     delete ui;
+}
+
+void StatisticsPropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
+{
+    // notifications
+    connect(iim,SIGNAL(sEntitySelected(Entity *)),this,SLOT(setEntity(Entity*)));
+    connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
+}
+
+void StatisticsPropertiesController::entityDeleted(Entity * entity){
+
+    if(this->entity == entity)
+        setEntity(NULL);
 }
 
 void StatisticsPropertiesController::setEntity(Entity *entity)
@@ -47,12 +63,14 @@ void StatisticsPropertiesController::setEntity(Entity *entity)
             ui->twStats->insertTopLevelItem(0,new StatisticTreeWidgetItem(stat));
         }
         updateStats();
+
+        setEnabled(true);
     }
+    else
+        setEnabled(false);
 }
 
-
 void StatisticsPropertiesController::updateStats(){
-
     if(entity){
         for(int i=0; i<ui->twStats->topLevelItemCount(); ++i) {
             ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->update();

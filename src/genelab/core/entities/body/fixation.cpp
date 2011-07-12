@@ -23,7 +23,7 @@
 
 namespace GeneLabCore {
 
-    FixationProperties* Fixation::inspectorWidget = NULL;
+    FixationPropertiesController* Fixation::inspectorWidget = NULL;
     const btScalar Fixation::PERCENT_BONE_INSIDE_FIX = 0.15f;
 
     #define FIXATION_DENSITY 1.0f
@@ -225,20 +225,20 @@ namespace GeneLabCore {
     // -- INSPECTOR --
     // ---------------
 
-    FixationProperties *Fixation::getInspectorWidget()
+    FixationPropertiesController *Fixation::getInspectorWidget()
     {
         if(inspectorWidget == NULL)
-            inspectorWidget = new FixationProperties();
+            inspectorWidget = new FixationPropertiesController();
 
         inspectorWidget->setFixation(this);
 
         return inspectorWidget;
     }
 
-    FixationProperties *Fixation::getEmptyInspectorWidget()
+    FixationPropertiesController *Fixation::getEmptyInspectorWidget()
     {
         if(inspectorWidget == NULL)
-            inspectorWidget = new FixationProperties();
+            inspectorWidget = new FixationPropertiesController();
 
         return inspectorWidget;
     }

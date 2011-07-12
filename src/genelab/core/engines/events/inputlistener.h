@@ -33,12 +33,12 @@ namespace GeneLabCore {
 
         // Events (call during beforeStep by the EventManager where this is registered)
         virtual void mousePressEvent(QMouseEvent *) {}
-        virtual void mouseReleaseEvent(QMouseEvent *) = 0;
-        virtual void mouseMoveEvent(QMouseEvent *) = 0;
-        virtual void keyPressEvent(QKeyEvent *) = 0;
-        virtual void keyReleaseEvent(QKeyEvent *) = 0;
-        virtual void enterViewPortEvent(QEvent *) = 0;
-        virtual void leaveViewPortEvent(QEvent *) = 0;
+        virtual void mouseReleaseEvent(QMouseEvent *) {}
+        virtual void mouseMoveEvent(QMouseEvent *) {}
+        virtual void keyPressEvent(QKeyEvent *) {}
+        virtual void keyReleaseEvent(QKeyEvent *) {}
+        virtual void enterViewPortEvent(QEvent *) {}
+        virtual void leaveViewPortEvent(QEvent *) {}
 
     };
 }

@@ -10,6 +10,7 @@
 #include "brain/brainpluggrid.h"
 #include "ui/widgets/entities/pluggridvisualizer.h"
 #include "ui/widgets/entities/pluggriddesignvisualizer.h"
+#include "events/inspectorsinputmanager.h"
 
 BrainPropertiesController::BrainPropertiesController(QWidget *parent) :
     QWidget(parent),
@@ -31,11 +32,49 @@ BrainPropertiesController::BrainPropertiesController(QWidget *parent) :
     // Effectors
     connect(this->ui->pbClearEffectors,SIGNAL(clicked()),this,SLOT(clearEffectors()));
     connect(this->ui->pbMinimalOuts,SIGNAL(clicked()),this,SLOT(computeMinimalOuts()));
+
+    this->setEnabled(false);
 }
 
 BrainPropertiesController::~BrainPropertiesController()
 {
     delete ui;
+}
+
+void BrainPropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
+{
+    // notifications
+    connect(iim,SIGNAL(sEntitySelected(Entity*)),this,SLOT(setEntity(Entity *)));
+    connect(iim,SIGNAL(sEntityUpdated(Entity*)),this,SLOT(entityUpdated(Entity *)));
+    connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
+    connect(iim,SIGNAL(sFixationUpdated(Fixation*)),this,SLOT(fixationUpdated(Fixation *)));
+    connect(iim,SIGNAL(sFixationDeleted(Fixation*)),this,SLOT(fixationUpdated(Fixation *)),Qt::DirectConnection);
+    connect(iim,SIGNAL(sSensorsSelected(QList<Sensor*>)),this,SLOT(sensorsSelected(QList<Sensor*>)));
+
+    // emissions
+    connect(this,SIGNAL(sEntityUpdated(Entity *)),iim,SLOT(entityUpdated(Entity *)));
+    connect(this,SIGNAL(sFixationUpdated(Fixation*)),iim,SLOT(fixationUpdated(Fixation*)));
+}
+
+void BrainPropertiesController::entityUpdated(Entity *entity){
+
+    if(this->entity == entity)
+        setEntity(entity);
+}
+
+void BrainPropertiesController::entityDeleted(Entity *entity){
+
+    if(this->entity == entity)
+        setEntity(NULL);
+}
+
+void BrainPropertiesController::fixationUpdated(Fixation *)
+{
+    setEntity(entity);
+}
+
+void BrainPropertiesController::sensorsSelected(QList<Sensor *> sensors){
+    brainDezViz->setSelectedSensors(sensors);
 }
 
 void BrainPropertiesController::setEntity(Entity *entity)
@@ -77,10 +116,18 @@ void BrainPropertiesController::setEntity(Entity *entity)
         // Brain
         ui->sBrainPluggridSize->setValue(entity->getBrain()->getPlugGrid()->getSize());
         ui->lBrainPluggridSize->setText(QString::number(entity->getBrain()->getPlugGrid()->getSize()));
-        //this->brainViz->setBrain(entity->getBrain());
+        this->brainViz->setBrain(entity->getBrain());
         this->brainDezViz->setBrain(entity->getBrain());
-    }
 
+        this->setEnabled(true);
+    }
+    else {
+
+        this->brainViz->setBrain(NULL);
+        this->brainDezViz->setBrain(NULL);
+
+        this->setEnabled(false);
+    }
 }
 
 // TODO MOUAIS... ON PEUT FAIRE MIEUX, NON ?
@@ -111,8 +158,6 @@ void BrainPropertiesController::selectSensorFixation()
 
 void BrainPropertiesController::setBrainSize()
 {
-    qDebug() << entity;
-
     if(entity){
         //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
         int size = ui->sBrainPluggridSize->value();
@@ -122,6 +167,8 @@ void BrainPropertiesController::setBrainSize()
         // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
         this->brainViz->setBrain(entity->getBrain());
         this->brainDezViz->setBrain(entity->getBrain());
+
+        //emit sEntityUpdated(entity);
     }
 }
 
@@ -133,8 +180,10 @@ void BrainPropertiesController::clearSensors()
 
         if (sensorItem)
         {
+            Fixation *fix = sensorItem->sensor->getFixation();
+
             // remove the sensor in the fixation
-            sensorItem->sensor->getFixation()->removeSensor(sensorItem->sensor);
+            fix->removeSensor(sensorItem->sensor);
 
             // delete sensor
             delete sensorItem->sensor;
@@ -142,20 +191,21 @@ void BrainPropertiesController::clearSensors()
             // delete list item
             ui->lwSensors->removeItemWidget(sensorItem);
             delete sensorItem;
+
+            emit sFixationUpdated(fix);
         }
         else
             break;
 
     }
 
-    // update ui TODO emit
+    // update
     setEntity(entity);
 }
 
 
 void BrainPropertiesController::clearEffectors()
 {
-
     EffectorListWidgetItem * effectorItem;
     RotationalMotorsEffector * motorEffector;
     for(int iEffectors=0; iEffectors < ui->lwEffectors->count(); ++iEffectors)
@@ -178,7 +228,7 @@ void BrainPropertiesController::clearEffectors()
             break;
     }
 
-    // update ui TODO emit
+    // update
     setEntity(entity);
 }
 
@@ -186,5 +236,8 @@ void BrainPropertiesController::computeMinimalOuts() {
 
     if(entity){
         entity->setToMinimalOuts();
+
+        // update
+        setEntity(entity);
     }
 }

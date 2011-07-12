@@ -30,7 +30,7 @@
 namespace GeneLabCore {
 
     const QString Entity::genomeVersion = "0.1";
-EntityPropertiesController* Entity::inspectorWidget = NULL;
+//EntityPropertiesController* Entity::inspectorWidget = NULL;
 
 Entity::Entity(QString name, QString family, QString type, int generation, QObject *parent) :
     QObject(parent), r(NULL)
@@ -79,16 +79,16 @@ Entity::~Entity() {
     delete this->r;
 }
 
-EntityPropertiesController *Entity::getInspectorWidget(Entity * selectedCreature, btRigidBody *selectedBody)
-{
-    if(inspectorWidget == NULL)
-        inspectorWidget = new EntityPropertiesController();
+//EntityPropertiesController *Entity::getInspectorWidget(Entity * selectedCreature, btRigidBody *selectedBody)
+//{
+//    if(inspectorWidget == NULL)
+//        inspectorWidget = new EntityPropertiesController();
 
 
-    inspectorWidget->setEntity(selectedCreature,selectedBody);
+//    inspectorWidget->setEntity(selectedCreature,selectedBody);
 
-    return inspectorWidget;
-}
+//    return inspectorWidget;
+//}
 
 
 TreeShape* Entity::getShape() {

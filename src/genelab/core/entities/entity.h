@@ -64,7 +64,7 @@ public:
     void setToMinimalOuts();
 
     // Qt Render
-    static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
+    //static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
     // serialisation
     QVariant serialize();
@@ -131,7 +131,7 @@ protected:
     StatisticsStorage *statisticsStorage;
 
     // Qt Render
-    static EntityPropertiesController *inspectorWidget;
+    //static EntityPropertiesController *inspectorWidget;
 
 private:
 

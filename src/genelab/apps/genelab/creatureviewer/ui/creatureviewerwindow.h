@@ -8,6 +8,7 @@
 
 #include "ui/widgets/entities/brainpropertiescontroller.h"
 #include "ui/widgets/entities/statisticspropertiescontroller.h"
+#include "ui/widgets/entities/entitypropertiescontroller.h"
 
 namespace Ui {
     class CreatureViewer;
@@ -34,9 +35,8 @@ public:
 public slots:
 
     void init();
-    void setInspector(QWidget * inspector);
-    void setEntity(Entity *entity, btRigidBody *selectedBody);
-    void rigidBodySelected(btRigidBody *rigidBody);
+    //void setEntity(Entity *entity, btRigidBody *selectedBody);
+    // void rigidBodySelected(btRigidBody *rigidBody);
     void showAbout();
 
     // new / load / save entity
@@ -46,27 +46,38 @@ public slots:
     void saveEntityToFile();
     void saveEntityToDb();
     void removeEntity();
+    void removeAllEntities();
     void enterInWhatsThisMode();
-    void entityDeleted(Entity* ent);
+
+    // notifications
+    void entitySelected(Entity *entity);
+    //void entityDeleted(Entity*);
     void boneDeleted(Bone* bone);
     void fixationDeleted(Fixation* fix);
+    void boneSelected(Bone* bone);
+    void fixationSelected(Fixation* fix);
+
+
+    void addRandomEntity();
+    void createMutationSample();
 
     // physics
     void togglePhysics();
 
+signals:
+
+    void sEntityDeleted(Entity *);
+
 private:
     Ui::CreatureViewer *ui;
 
-    Bone *boneSelected;
-    Fixation *fixSelected;
-
-    Entity *selectedEntity;
-    QWidget *inspector;
+    // To create
     btoFactory* factory;
     SimulationManager* simulationManager;
     btoShapesFactory* shapesFactory;
-    CreatureFactory*  creatureFactory;
-    btoWorldFactory*     worldFactory;
+    CreatureFactory* creatureFactory;
+    btoWorldFactory* worldFactory;
+    btoWorld* world;
 
     // components
     QAction *aTogglePhysics;
@@ -75,24 +86,21 @@ private:
     QList<Entity*> ents;
     QTimer* entitySpawner;
 
-    btoWorld* world;
-
+    // Operation on entities
+    Entity *selectedEntity;
     DataBase base;
+    Bone *selectedBone;
+    Fixation *selectedFix;
 
-
-
-
-    // TEST
-    //Entity
-    FixationProperties *fixationPropertiesController;
+    // Docks inspectors
+    EntityPropertiesController *entityPropertiesController;
+    FixationPropertiesController *fixationPropertiesController;
     BonePropertiesController *bonePropertiesController;
     StatisticsPropertiesController *statsPropertiesController;
     BrainPropertiesController *brainPropertiesController;
 
-
-
-
 private slots:
+
     void spawnNew();
     void spawnRandomEntities(int nbEntities);
     void spawnMutationSample(Entity *originEntity, int nbCreatures);

@@ -178,7 +178,8 @@ SOURCES += \
     ../genelab/core/entities/mutation/bonelimitsmutation.cpp \
     ../genelab/core/ui/widgets/entities/brainpropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.cpp \
-    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp \
+    ../genelab/core/engines/events/inspectorsinputmanager.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -268,7 +269,8 @@ HEADERS += \
     ../genelab/core/entities/mutation/bonelimitsmutation.h \
     ../genelab/core/ui/widgets/entities/brainpropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.h \
-    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h \
+    ../genelab/core/engines/events/inspectorsinputmanager.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

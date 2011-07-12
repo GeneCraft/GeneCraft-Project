@@ -19,8 +19,10 @@ class BrainPropertiesController : public QWidget
 public:
     explicit BrainPropertiesController(QWidget *parent = 0);
     ~BrainPropertiesController();
+    void connectToInspectorInputManager(InspectorsInputManager *iim);
 
 public slots:
+
     void selectSensorFixation();
     void setBrainSize();
     void clearSensors();
@@ -28,8 +30,19 @@ public slots:
     void computeMinimalOuts();
 
     void setEntity(Entity *entity);
+    void entityUpdated(Entity *entity);
+    void entityDeleted(Entity *entity);
+
+    void fixationUpdated(Fixation *fixation);
+    void sensorsSelected(QList<Sensor*>);
+
     void setBrainViz(PlugGridVisualizer* brainViz);
     void setBrainDesignViz(PlugGridDesignVisualizer* brainViz);
+
+signals:
+
+    void sEntityUpdated(Entity *entity);
+    void sFixationUpdated(Fixation *fixation);
 
 private:
     Ui::BrainPropertiesController *ui;
