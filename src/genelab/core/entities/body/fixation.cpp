@@ -336,6 +336,32 @@ namespace GeneLabCore {
         return fixation;
     }
 
+    void Fixation::setOutputsFrom(int action) {
+        QList<Bone *> bones = this->getBones();
+        for(int i=0;i<bones.size();++i)
+        {
+            Bone *bone = bones.at(i);
+
+            switch(action)
+            {
+                case 0:
+                    bone->disableMotors();
+                break;
+                case 1:
+                    bone->setBrainMotors();
+                break;
+                case 2:
+                    bone->setRandomMotors();
+                break;
+                case 3:
+                    bone->setNormalPositionMotors();
+                break;
+            }
+
+            bone->getEndFixation()->setOutputsFrom(action);
+        }
+    }
+
     // -----------
     // -- UTILS --
     // -----------

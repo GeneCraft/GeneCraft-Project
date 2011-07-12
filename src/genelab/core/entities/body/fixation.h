@@ -84,6 +84,8 @@ namespace GeneLabCore {
          */
         static const btScalar PERCENT_BONE_INSIDE_FIX;
 
+        void setOutputsFrom(int from);
+
     protected:
 
         // Construction
