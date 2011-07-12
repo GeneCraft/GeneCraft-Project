@@ -15,9 +15,11 @@ namespace GeneLabCore {
         QVariantMap entityData = data.toMap();
 
         // inside a result ?
-        if(entityData["type"].toString() == "reswult") {
+        if(entityData["type"].toString() == "result") {
             // Decapsulate
+            qDebug() << "decapsulation from result !";
             entityData = entityData["genome"].toMap();
+            qDebug() << entityData;
         }
 
         // Version check
@@ -33,10 +35,10 @@ namespace GeneLabCore {
 
         // Generic entity
         if(entityData["type"].toString() == "generic")
-            return GenericFamily::createEntity(data, shapesFactory, position);
+            return GenericFamily::createEntity(entityData, shapesFactory, position);
         // Whatever
         else if(entityData["type"].toString() == "symetric")
-            return GenericFamily::createEntity(data, shapesFactory, position);
+            return GenericFamily::createEntity(entityData, shapesFactory, position);
         // Whatever else
         return NULL;
     }

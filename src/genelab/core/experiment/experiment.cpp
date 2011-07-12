@@ -10,7 +10,7 @@ namespace GeneLabCore {
         if(!this->resultsDirectory.exists()) {
             this->resultsDirectory.mkpath(".");
         }
-        this->maxGen = 0;
+        this->maxGen = 100;
         this->popSize = 10;
         this->expTime = 1800;
 
