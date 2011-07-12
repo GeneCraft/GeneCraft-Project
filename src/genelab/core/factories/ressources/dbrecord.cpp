@@ -36,15 +36,26 @@ namespace GeneLabCore {
     }
 
     void DbRecord::save(QVariant data) {
-        QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
+        QString url = QString("%1:%2/%3").arg(db.url, QString::number(db.port), db.dbName);
+
+        if(this->id != "")
+            url += "/" + this->id;
+
         QVariantMap mData = data.toMap();
-        mData.insert("_id", this->id);
+
+        if(this->id != "")
+            mData.insert("_id", this->id);
         if(this->rev != "")
             mData.insert("_rev", this->rev);
 
 
         qDebug() << url;
-        this->request(url, RPUT, QxtJSON::stringify(mData));
+        RequestType type = RPUT;
+
+        if(this->id == "")
+            type = RPOST;
+
+        this->request(url, type, QxtJSON::stringify(mData));
         qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
@@ -69,6 +80,7 @@ namespace GeneLabCore {
               SLOT(networkReply(QNetworkReply*)));
 
         QNetworkRequest req = QNetworkRequest(QUrl(url));
+        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
         switch(verb) {
         case RGET:

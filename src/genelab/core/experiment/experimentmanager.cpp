@@ -341,7 +341,7 @@ namespace GeneLabCore {
             db.port = 80;
             db.url = "http://www.genecraft-project.org";
 
-            Ressource * r = new DbRecord(db, this->exp->getId() + "_result" + this->resultNameCpt++);
+            Ressource * r = new DbRecord(db, "");
             result.save(r);
         }
     }
