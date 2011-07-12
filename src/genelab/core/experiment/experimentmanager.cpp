@@ -25,6 +25,8 @@
 #include "statistics/statisticsprovider.h"
 #include "statistics/fixationstats.h"
 
+#include "ressources/dbrecord.h"
+
 namespace GeneLabCore {
 
     /**
@@ -329,7 +331,19 @@ namespace GeneLabCore {
       * To broadcast result to online database
       */
     void ExperimentManager::broadcastResults() {
+        QList<Result> results = exp->getResults();
+        qSort(results.begin(), results.end(), qGreater<Result>());
 
+        for(int i = 0; i < qMin(10, results.size()); i++) {
+            Result result = results.at(i);
+            DataBase db;
+            db.dbName = "/db/genecraft/";
+            db.port = 80;
+            db.url = "http://www.genecraft-project.org";
+
+            Ressource * r = new DbRecord(db, this->exp->getId() + "_result" + this->resultNameCpt++);
+            result.save(r);
+        }
     }
 
 
