@@ -195,8 +195,8 @@ namespace GeneLabCore {
       * To generate a new population from last population
       */
     void ExperimentManager::genNewPop() {
-
         QList<Result> results = exp->getActivePopulation();
+        qSort(results.begin(), results.end(), qGreater<Result>());
         QList<Result> newActivePop;
         int max = results.size();
 
@@ -204,9 +204,13 @@ namespace GeneLabCore {
         for(int i = 0; i < exp->getPopSize()*0.5 + 1; i++) {
             if(i >= max)
                 break;
-
+            // Best 'i one
             Result r = results.at(i);
-            qDebug() << "loading result with fitness " << r.getFitness();
+
+            // Mutation of best one
+            r.setGenome(mutations->mutateEntity(r.getGenome()));
+
+            qDebug() << "loading mutation of result with fitness " << r.getFitness();
             newActivePop.append(r);
         }
 
@@ -224,7 +228,7 @@ namespace GeneLabCore {
             // Adding to the active population
             newActivePop.append(Result(exp->getId(), -1, newGenome));
 
-            qDebug() << "creating mutation of result with fitness " << r.getFitness();
+            qDebug() << "loading mutation of result with fitness " << r.getFitness();
 
         }
 
@@ -236,6 +240,7 @@ namespace GeneLabCore {
       */
     void ExperimentManager::genNewPopFromResults() {
         QList<Result> results = exp->getResults();
+        qSort(results.begin(), results.end(), qGreater<Result>());
         QList<Result> newActivePop;
         int max = results.size();
 

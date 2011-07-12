@@ -17,35 +17,22 @@ namespace GeneLabCore {
           * The list of all genomes evaluated for this experience
           * Sorted by fitness
           */
-        QList<Result> getResults() {
-            qSort(this->results.begin(), this->results.end(), qGreater<Result>());
-            return this->results;
-        }
+        QList<Result> getResults();
 
         /**
           * To add a new result to this experience
           */
-        void addResult(Result result) {
-            sorted = false;
-            this->results.append(result);
-        }
+        void addResult(Result result);
 
         /**
           * The actual tested population
           */
-        QList<Result> getActivePopulation() {
-            return QList<Result>(population);
-        }
+        QList<Result> getActivePopulation();
 
         /**
           * To set the new generation of population
           */
-        void setActivePopulation(QList<Result> newPop) {
-            if(this->population.size() != newPop.size() && this->population.size() != 0)
-                qDebug() << "Population size changed ! not a good sign";
-
-            this->population = newPop;
-        }
+        void setActivePopulation(QList<Result> newPop);
 
         /**
           * Experiment name, or id
