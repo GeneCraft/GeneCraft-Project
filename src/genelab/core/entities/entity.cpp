@@ -219,4 +219,8 @@ void Entity::updateStatisticByName(QString statisticName)
         stats.value(statisticName)->step();
 }
 
+bool Entity::isAlive() {
+    return this->treeShape->getRoot()->isInOnePiece();
+}
+
 }

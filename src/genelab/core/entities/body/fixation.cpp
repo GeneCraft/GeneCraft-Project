@@ -362,6 +362,23 @@ namespace GeneLabCore {
         }
     }
 
+    bool Fixation::isInOnePiece() {
+        foreach(Bone* b, bones) {
+            if(!(b->getParentConstraint()->isEnabled())) {
+                qDebug() << "constraint not enabled";
+                return false;
+            }
+
+            if(!b->getEndFixation()->isInOnePiece()) {
+                qDebug() << "parent destroyed";
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
     // -----------
     // -- UTILS --
     // -----------

@@ -102,6 +102,8 @@ public:
         this->age++;
     }
 
+    bool isAlive();
+
 protected:
 
     // Origins
