@@ -50,6 +50,8 @@ using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
 {
+    qsrand(time(NULL));
+    srand(time(NULL));
     QCoreApplication a(argc, argv);
     srand(time(NULL));
     qsrand(time(NULL));

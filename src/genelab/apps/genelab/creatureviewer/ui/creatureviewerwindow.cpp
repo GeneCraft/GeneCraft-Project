@@ -414,7 +414,7 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
     for(int i = 0; i < nbEntities; i++) {
 
         int enttype = Tools::random(0,3);
-        //enttype = 0;
+        //enttype = 3;
 
         btVector3 pos = world->getSpawnPosition();
 

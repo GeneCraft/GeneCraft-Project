@@ -26,8 +26,8 @@ namespace GeneLabCore {
         this->legRadius = Tools::random(.1,pieceRadius * 0.5);
 
         this->antennaPieces = Tools::random(2,4);
-        this->antennaLength = Tools::random(.4,0.8);
-        this->antennaRadius = Tools::random(.05,0.08);
+        this->antennaLength = Tools::random(.1,0.2);
+        this->antennaRadius = Tools::random(.1,0.1);
     }
 
     CaterpillarFamily::CaterpillarFamily(QVariant data, QObject *parent) :
@@ -72,14 +72,13 @@ namespace GeneLabCore {
             if(i == 0){
 
                 // neck
-                b = root->addBone(0., 0.,
+                b = root->addBone(0., M_PI/2.,
                                   pieceRadius,
                                   pieceLength / 3.f,
                                   fixRadius,
                                   btVector3(0,0,0),
                                   btVector3(0,0,0));
-            }
-            else {
+            } else {
 
                 // body piece
                 b = root->addBone(0., 0.,
@@ -98,7 +97,7 @@ namespace GeneLabCore {
 
             // add legs
             for(int i=-1;i<2;i+=2) {
-                b = root->addBone(M_PI * 0.5 + M_PI / 6 * i, M_PI / 2,
+                b = root->addBone(M_PI / 6 * i, M_PI / 2,
                               legRadius,
                               legLength,
                               legRadius,
@@ -112,7 +111,7 @@ namespace GeneLabCore {
         }
 
         // antennae
-        for(int i=-1;i<2;i+=2) {
+        /*for(int i=-1;i<2;i+=2) {
             root = reelRoot;
             for(int j=0; j< antennaPieces; j++) {
 
@@ -120,8 +119,8 @@ namespace GeneLabCore {
 
                 // first piece of antenna
                 if(j == 0){
-                    yAxis = M_PI * 0.5 + M_PI / 8 * i;
-                    zAxis = -M_PI * 0.7;
+                    yAxis = M_PI / 2. + M_PI / 8 * i;
+                    zAxis = M_PI * 0.7;
                 }
                 // others
                 else{
@@ -143,7 +142,7 @@ namespace GeneLabCore {
 
                 root = b->getEndFixation();
             }
-        }
+        }*/
         return entity;
     }
 

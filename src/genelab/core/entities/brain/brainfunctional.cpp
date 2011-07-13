@@ -177,9 +177,6 @@ float sigmoid(float x)
         case ATAN:
             a = atan2(apply(it, end), apply(it, end));
 
-            if(a!=a)
-                return 0;
-
             return a;
 
         // 2 operands + decisions
@@ -228,7 +225,7 @@ float sigmoid(float x)
             if(a == 0)
                 return 0;
 
-            a= qAbs(a)/a;
+            a= qAbs(a)/a; // TODO Sign
 
             if(a!=a)
                 return 0;
@@ -242,9 +239,6 @@ float sigmoid(float x)
                 return 0;
             }
             a = log(a);
-
-            if(a!=a)
-                return 0;
 
             return a;
 
