@@ -16,6 +16,7 @@
 #include "sensors/accelerometersensor.h"
 #include "sensors/contactsensor.h"
 
+
 #include "events/inspectorsinputmanager.h"
 
 FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
@@ -50,10 +51,13 @@ void FixationPropertiesController::connectToInspectorInputManager(InspectorsInpu
     // notifications
     connect(iim,SIGNAL(sFixationSelected(Fixation *)),this,SLOT(setFixation(Fixation *)));
     connect(iim,SIGNAL(sFixationDeleted(Fixation *)),this,SLOT(fixationDeleted(Fixation *)),Qt::DirectConnection);
+
+    connect(iim,SIGNAL(sBoneSelected(Bone *)),this,SLOT(boneSelected(Bone *)));
     connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
 
     // emission
     connect(this,SIGNAL(sBoneDeleted(Bone *)),iim,SLOT(boneDeleted(Bone *)),Qt::DirectConnection);
+    connect(this,SIGNAL(sBoneSelected(Bone *)),iim,SLOT(boneSelected(Bone *)));
 //    //connect(this,SIGNAL(sBoneUpdated(Bone *)),iim,SLOT(boneUpdated(Bone*)));
 }
 
@@ -66,6 +70,12 @@ void FixationPropertiesController::entityDeleted(Entity *) {
 
     setFixation(NULL);
 }
+
+void FixationPropertiesController::boneSelected(Bone *bone)
+{
+    setFixation(bone->getEndFixation());
+}
+
 
 void FixationPropertiesController::setFixation(Fixation *fixation)
 {
@@ -145,7 +155,7 @@ void FixationPropertiesController::selectBone()
         BoneListWidgetItem * boneItem = dynamic_cast<BoneListWidgetItem*>(this->ui->lwBones->selectedItems().at(0));
 
         if (boneItem)
-            emit rigidBodySelected(boneItem->bone->getRigidBody());
+            emit sBoneSelected(boneItem->bone);
     }
 }
 
@@ -207,16 +217,19 @@ void FixationPropertiesController::removeSelectedBone()
 
         if (boneItem)
         {
+            // delete the bone
+            this->fixation->removeBone(boneItem->bone);
+            boneItem->bone->remove();
+
             // update ui
             emit sBoneDeleted(boneItem->bone);
             emit rigidBodySelected(NULL);
 
-            // delete the bone
-            this->fixation->removeBone(boneItem->bone);
-            boneItem->bone->remove();
             delete boneItem->bone;
+
+            setFixation(fixation);
         }
-    }
+    }    
 }
 
 void FixationPropertiesController::removeSelectedSensor()

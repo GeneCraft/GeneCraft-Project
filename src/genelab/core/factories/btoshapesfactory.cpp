@@ -15,22 +15,22 @@ btoShapesFactory::btoShapesFactory(BulletOgreEngine *btoEngine) : btShapesFactor
     this->btoEngine = btoEngine;
 }
 
-btBox *btoShapesFactory::createBox(btVector3 size, const btTransform &transform, const btScalar density)
+btBox *btoShapesFactory::createBox(btVector3 size, const btTransform &transform, const btScalar density, QVariant)
 {
     return new btoBox((btoWorld*)world, btoEngine, size, transform, density);
 }
 
-btSphere *btoShapesFactory::createSphere(btScalar radius, const btTransform &transform)
+btSphere *btoShapesFactory::createSphere(btScalar radius, const btTransform &transform, QVariant params)
 {
-    return new btoSphere((btoWorld*)world, btoEngine, radius, transform);
+    return new btoSphere((btoWorld*)world, btoEngine, radius, transform, params);
 }
 
-btCylinder *btoShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform)
+btCylinder *btoShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform, QVariant)
 {
     return new btoCylinder((btoWorld*)world, btoEngine, radius, height, transform);
 }
 
-btBone* btoShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) {
+btBone* btoShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant) {
     return new btoBone((btoWorld*)world, btoEngine, length, radius, radiusArticulation, transform);
 }
 

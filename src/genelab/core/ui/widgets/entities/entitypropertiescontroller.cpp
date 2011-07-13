@@ -43,16 +43,23 @@ EntityPropertiesController::~EntityPropertiesController()
 void EntityPropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
 {
     // notifications
-    connect(iim,SIGNAL(sEntitySelected(Entity*)),this,SLOT(setEntity(Entity *)));
+    //connect(iim,SIGNAL(sEntitySelected(Entity*)),this,SLOT(setEntity(Entity *)));
     connect(iim,SIGNAL(sEntityUpdated(Entity*)),this,SLOT(entityUpdated(Entity *)));
     connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
 
+    // fixation
+    connect(iim,SIGNAL(sFixationSelected(Fixation*)),this,SLOT(fixationSelected(Fixation *)));
+    connect(iim,SIGNAL(sFixationDeleted(Fixation*)),this,SLOT(shapeUpdated()));
+
+    // bone
+    connect(iim,SIGNAL(sBoneSelected(Bone*)),this,SLOT(boneSelected(Bone *)));
     connect(iim,SIGNAL(sBoneAdded(Bone*)),this,SLOT(shapeUpdated()));
     connect(iim,SIGNAL(sBoneDeleted(Bone*)),this,SLOT(shapeUpdated()));
 
     // emissions
     connect(this,SIGNAL(sSensorsSelected(QList<Sensor*>)),iim,SLOT(sensorsSelected(QList<Sensor*>)));
     connect(this,SIGNAL(sFixationSelected(Fixation*)),iim,SLOT(fixationSelected(Fixation*)));
+    connect(this,SIGNAL(sBoneSelected(Bone *)),iim,SLOT(boneSelected(Bone *)));
     //connect(this,SIGNAL(sBoneAdded(Bone *)),iim,SLOT(boneAdded(Bone*)));
     //connect(this,SIGNAL(sBoneDeleted(Bone*)),iim,SLOT(boneDeleted(Bone*)));
 }
@@ -73,6 +80,16 @@ void EntityPropertiesController::shapeUpdated(){
 
     if(entity) // refresh only if necessary...
         setEntity(entity);
+}
+
+void EntityPropertiesController::boneSelected(Bone *bone)
+{
+    setEntity(bone->getEntity(),bone->getRigidBody());
+}
+
+void EntityPropertiesController::fixationSelected(Fixation *fixation)
+{
+    setEntity(fixation->getEntity(),fixation->getRigidBody());
 }
 
 void setupBonesProperties(Fixation *fixation, int action)
@@ -217,6 +234,7 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int)
     {
         emit sSensorsSelected(boneItem->bone->getEndFixation()->getSensors());
         emit sFixationSelected(boneItem->bone->getEndFixation());
+        emit sBoneSelected(boneItem->bone);
         return;
     }
 }

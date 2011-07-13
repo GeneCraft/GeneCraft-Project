@@ -27,7 +27,7 @@
 #include "bulletogre/bulletogreengine.h"
 
 CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngine,Ogre::Camera *camera) :
-    camera(camera), btoEngine(btoEngine), world(NULL) , boneSelected(NULL), fixSelected(NULL)
+    camera(camera), btoEngine(btoEngine), world(NULL)
 {
 }
 
@@ -161,49 +161,19 @@ void CreatureViewerInputManager::pickBody()
                             {
                                 case RigidBodyOrigin::BONE:{
 
-                                    // select bone
                                     Bone *bone = dynamic_cast<Bone*>(origin->getObject());
-                                    bone->setSelected(true);
-                                    boneSelected = bone;
-
                                     emit sBoneSelected(bone);
-
-
-                                    //bonePropertiesController->setBone(bone);
-
-                                    // select end fix
-                                    Fixation *fix = bone->getEndFixation();
-
-                                    if(fix){
-
-                                        fix->setSelected(true);
-                                        fixSelected = fix;
-                                        //fixationPropertiesController->setFixation(fix);
-                                        emit sFixationSelected(fix);
-
-                                        // select entity
-                                        //selectedEntity = bone->getEntity();
-                                        //setEntity(bone->getEntity(),body);
-
-                                        emit sEntitySelected(bone->getEntity());
-                                    }
+                                    emit sEntitySelected(bone->getEntity());
 
                                     }
                                     break;
 
                                 case RigidBodyOrigin::FIXATION:{
 
-                                    // select fixation
                                     Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
-                                    fix->setSelected(true);
-                                    fixSelected = fix;
-                                    //fixationPropertiesController->setFixation(fix);
                                     emit sFixationSelected(fix);
-
-                                    // select entity
-                                    //selectedEntity = fix->getEntity();
                                     emit sEntitySelected(fix->getEntity());
-                                    //setEntity(fix->getEntity(),body);
+
                                     }
                                     break;
 

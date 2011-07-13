@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>298</width>
-    <height>182</height>
+    <width>370</width>
+    <height>216</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>281</width>
+     <width>351</width>
      <height>31</height>
     </rect>
    </property>
@@ -37,7 +37,7 @@
     <string notr="true">color: rgb(81, 119, 145);</string>
    </property>
    <property name="text">
-    <string>Creature Viewer</string>
+    <string>GeneCraft : Creature Viewer</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -85,20 +85,20 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>130</x>
      <y>90</y>
-     <width>201</width>
+     <width>251</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>0.2, July 2011</string>
+    <string>0.1, July 2011, based on GeneCraft Core v0.1</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>130</x>
      <y>110</y>
      <width>201</width>
      <height>16</height>
@@ -111,7 +111,7 @@
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>130</x>
      <y>70</y>
      <width>201</width>
      <height>16</height>
@@ -127,20 +127,46 @@
     <string notr="true">color: rgb(81, 119, 145);</string>
    </property>
    <property name="text">
-    <string>GeneCraft</string>
+    <string>GeneCraft Project</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>140</y>
+     <x>280</x>
+     <y>170</y>
      <width>75</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>130</y>
+     <width>201</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>http://www.genecraft-project.com</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>130</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Official Website :</string>
    </property>
   </widget>
  </widget>

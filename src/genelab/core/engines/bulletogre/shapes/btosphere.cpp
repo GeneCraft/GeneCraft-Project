@@ -14,14 +14,22 @@ using namespace Ogre;
 
 int btoSphere::mNumSpheresInstanced = 0;
 
-btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform)
+btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, QVariant params)
     :btSphere(world, radius, transform)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();
 
-    fixationMaterial = "GeneLab/Fixation";
-    fixationSelectedMaterial = "GeneLab/Fixation_Selected";
+    QVariantMap paramsMap = params.toMap();
+    if(paramsMap.contains("Material"))
+        fixationMaterial = params.toMap()["Material"].toString();
+    else
+        fixationMaterial = "GeneLab/Fixation/Root";
+
+    if(paramsMap.contains("MaterialOnSelection"))
+        fixationSelectedMaterial = params.toMap()["MaterialOnSelection"].toString();
+    else
+        fixationSelectedMaterial = "GeneLab/Fixation_Selected/Root";
 
     // -------------------
     // -- create sphere --

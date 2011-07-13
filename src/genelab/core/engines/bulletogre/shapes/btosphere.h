@@ -4,13 +4,14 @@
 #include "genelabcoreclasses.h"
 #include "bullet/shapes/btsphere.h"
 #include "Ogre.h"
+#include <QVariant>
 
 namespace GeneLabCore {
 
 class btoSphere : public btSphere
 {
 public:
-    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform);
+    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, QVariant params = QVariant());
     ~btoSphere();
     void setup();
     void setSelected(bool selected);

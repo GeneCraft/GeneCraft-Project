@@ -52,9 +52,6 @@ private:
     QPoint mousePos;
     btoWorld* world;
 
-    Bone *boneSelected;
-    Fixation *fixSelected;
-
 };
 
 

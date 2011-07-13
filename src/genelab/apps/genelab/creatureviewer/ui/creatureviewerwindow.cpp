@@ -389,7 +389,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
 
         QVariant newGenome = mm->mutateEntity(originGenome);
 
-        btVector3 pos(sin(i*angle)*r,0,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
+        btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 
         e = creatureFactory->createEntity(newGenome, shapesFactory, pos + originPos);
         if(e == NULL) {
@@ -580,7 +580,7 @@ void CreatureViewerWindow::removeEntity()
         selectedFix = NULL;
     }
     else
-        QMessageBox::warning(this, "No entity selected.", "No entity is selected.");
+        QMessageBox::warning(this, "No entity selected.", "No entity selected.");
 }
 
 void CreatureViewerWindow::removeAllEntities()
@@ -628,7 +628,6 @@ void CreatureViewerWindow::boneSelected(Bone* bone){
     // unselect old
     if(selectedBone)
         selectedBone->setSelected(false);
-
     if(selectedFix)
        selectedFix->setSelected(false);
 
@@ -643,6 +642,8 @@ void CreatureViewerWindow::fixationSelected(Fixation* fix){
     // unselect old
     if(selectedFix)
         selectedFix->setSelected(false);
+    if(selectedBone)
+        selectedBone->setSelected(false);
 
     if(fix)
         fix->setSelected(true);

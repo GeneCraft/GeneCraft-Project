@@ -47,8 +47,9 @@ void BrainPropertiesController::connectToInspectorInputManager(InspectorsInputMa
     connect(iim,SIGNAL(sEntitySelected(Entity*)),this,SLOT(setEntity(Entity *)));
     connect(iim,SIGNAL(sEntityUpdated(Entity*)),this,SLOT(entityUpdated(Entity *)));
     connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
-    connect(iim,SIGNAL(sFixationUpdated(Fixation*)),this,SLOT(fixationUpdated(Fixation *)));
-    connect(iim,SIGNAL(sFixationDeleted(Fixation*)),this,SLOT(fixationUpdated(Fixation *)),Qt::DirectConnection);
+    connect(iim,SIGNAL(sFixationUpdated(Fixation*)),this,SLOT(refresh()));
+    connect(iim,SIGNAL(sFixationDeleted(Fixation*)),this,SLOT(refresh()),Qt::DirectConnection);
+    connect(iim,SIGNAL(sBoneDeleted(Bone*)),this,SLOT(refresh()),Qt::DirectConnection);
     connect(iim,SIGNAL(sSensorsSelected(QList<Sensor*>)),this,SLOT(sensorsSelected(QList<Sensor*>)));
 
     // emissions
@@ -68,8 +69,10 @@ void BrainPropertiesController::entityDeleted(Entity *entity){
         setEntity(NULL);
 }
 
-void BrainPropertiesController::fixationUpdated(Fixation *)
+void BrainPropertiesController::refresh()
 {
+
+    qDebug() << Q_FUNC_INFO;
     setEntity(entity);
 }
 

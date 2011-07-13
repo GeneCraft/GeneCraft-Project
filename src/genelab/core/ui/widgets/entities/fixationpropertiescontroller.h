@@ -27,6 +27,7 @@ signals:
 
     void rigidBodySelected(btRigidBody *);
     void sBoneDeleted(Bone* bone);
+    void sBoneSelected(Bone *);
 
 public slots:
 
@@ -41,6 +42,8 @@ public slots:
 
     void changeRadiusFromSlider(int value);
     void changeRadiusFromButton();
+
+    void boneSelected(Bone *);
 
     void fixationDeleted(Fixation * fixation);
     void entityDeleted(Entity *entity);

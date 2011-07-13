@@ -33,7 +33,7 @@ public slots:
     void entityUpdated(Entity *entity);
     void entityDeleted(Entity *entity);
 
-    void fixationUpdated(Fixation *fixation);
+    void refresh();
     void sensorsSelected(QList<Sensor*>);
 
     void setBrainViz(PlugGridVisualizer* brainViz);

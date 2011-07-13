@@ -29,9 +29,9 @@ public:
 
 signals:
 
-    void rigidBodySelected(btRigidBody *rigidBody);
     void sSensorsSelected(QList<Sensor*> s);
     void sFixationSelected(Fixation*);
+    void sBoneSelected(Bone *);
 
 public slots:
 
@@ -42,6 +42,8 @@ public slots:
     void setOutFromRandom();
     void setOutFrom(int outsFrom);
 
+    void fixationSelected(Fixation *fixation);
+    void boneSelected(Bone *bone);
     void shapeUpdated();
     void entityUpdated(Entity *entity);
     void entityDeleted(Entity *entity);
