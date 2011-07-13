@@ -28,7 +28,7 @@ void btBone::init(btScalar length,
                   btScalar density,
                   const btTransform &transform) {
 
-    btScalar friction = 0.3; // TODO
+    btScalar friction = 0.7; // TODO
 
     // shape
     this->shape = new btCompoundShape(true); 

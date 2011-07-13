@@ -30,7 +30,7 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
 //    this->initialPosition = position;
 //    this->initiaEulerlRotation = EulerRotation;
 
-    btScalar friction = 0.3;
+    btScalar friction = 0.7;
 
     // shape
     this->shape = new btSphereShape(radius);

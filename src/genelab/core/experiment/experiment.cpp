@@ -10,8 +10,8 @@ namespace GeneLabCore {
         if(!this->resultsDirectory.exists()) {
             this->resultsDirectory.mkpath(".");
         }
-        this->maxGen = 200;
-        this->popSize = 100;
+        this->maxGen = 100;
+        this->popSize = 50;
         this->expTime = 1200;
 
         seedInfo.insert("type", "family");
@@ -33,6 +33,10 @@ namespace GeneLabCore {
     void Experiment::addResult(Result result) {
         sorted = false;
         this->results.append(result);
+	if(results.size() >= this->popSize) {
+		qSort(results.begin(), results.end(), qGreater<Result>());
+		this->results.removeLast();
+	}
     }
 
     /**
