@@ -6,8 +6,8 @@
 #include "ressources/jsonfile.h"
 
 #include "families/spiderfamily.h"
+#include "families/snakefamily.h"
 #include "families/genericfamily.h"
-#include "families/caterpillarfamily.h"
 #include "entity.h"
 #include "entityfamily.h"
 
@@ -175,7 +175,7 @@ namespace GeneLabCore {
                 // Creating N new spider
                 for(int i = 0; i < exp->getPopSize(); i++) {
                     // New entity
-                    CaterpillarFamily* family = new CaterpillarFamily();
+                    SpiderFamily* family = new SpiderFamily();
                     btVector3 position = world->getSpawnPosition();
                     Entity* e = family->createEntity(shapesFactory, position);
                     // Setup to be able to serialize
@@ -376,7 +376,7 @@ namespace GeneLabCore {
         float lastVelocity = s->getValue();
         float EPSILON = 0.00001; // Stability needed
         int stableCpt = 0;
-        int maxStableTry = 200;
+        int maxStableTry = 300;
         int neededStableCpt = 60;
 
         // Not stable at the moment

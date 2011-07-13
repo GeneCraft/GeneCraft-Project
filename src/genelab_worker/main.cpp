@@ -51,6 +51,8 @@ using namespace GeneLabCore;
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    srand(time(NULL));
+    qsrand(time(NULL));
 
     btFactory* factory = new btFactory();
 

@@ -23,42 +23,42 @@ namespace GeneLabCore {
 
         // Bone Length
         boneLength = new FloatMutation();
-        boneLength->probability  = -0.1;
-        boneLength->minFact      = -0.1;
-        boneLength->maxFact      =  0.1;
+        boneLength->probability  = 0.1;
+        boneLength->minFact      = -0.05;
+        boneLength->maxFact      =  0.05;
         boneLength->minValue     = 0.1;
         boneLength->maxValue     = 5.0;
 
         // Bone radius mutation
         boneRadius = new FloatMutation();
-        boneRadius->probability  = -0.1;
-        boneRadius->minFact      = -0.1;
-        boneRadius->maxFact      =  0.1;
+        boneRadius->probability  = 0.1;
+        boneRadius->minFact      = -0.05;
+        boneRadius->maxFact      =  0.05;
         boneRadius->minValue     = 0.1;
         boneRadius->maxValue     = 2.0;
 
         // Fixation radius mutation
         fixRadius = new FloatMutation();
-        fixRadius->probability   = -0.1;
-        fixRadius->minFact       = -0.1;
-        fixRadius->maxFact       =  0.1;
+        fixRadius->probability   = 0.1;
+        fixRadius->minFact       = -0.05;
+        fixRadius->maxFact       =  0.05;
         fixRadius->minValue      = 0.1;
         fixRadius->maxValue      = 2.0;
 
         // Bone angular origin (Yaw and Roll)
         boneAngularOrigin = new FloatMutation();
-        boneAngularOrigin->probability   = -0.1;
-        boneAngularOrigin->minFact       = -0.05;
-        boneAngularOrigin->maxFact       =  0.05;
+        boneAngularOrigin->probability   = 0.1;
+        boneAngularOrigin->minFact       = -0.01;
+        boneAngularOrigin->maxFact       =  0.01;
         boneAngularOrigin->minValue      = -M_PI+0.01; // -INF (cyclic) ?
         boneAngularOrigin->maxValue      =  M_PI-0.01; // +INF (cyclic) ?
 
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
-        boneAngularLimits->probability                  = -0.1;
+        boneAngularLimits->probability                  = 0.1;
         boneAngularLimits->axisMutation->probability    = -0.1;
-        boneAngularLimits->axisMutation->minFact        = -0.05;
-        boneAngularLimits->axisMutation->maxFact        =  0.05;
+        boneAngularLimits->axisMutation->minFact        = -0.01;
+        boneAngularLimits->axisMutation->maxFact        =  0.01;
         boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
         boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
 
@@ -111,7 +111,7 @@ namespace GeneLabCore {
 
         // Brain constant value
         constValue = new FloatMutation();
-        constValue->probability = 0.1;
+        constValue->probability = 0.2;
         constValue->minFact = -0.1;
         constValue->maxFact = 0.1;
         constValue->minValue = -10;

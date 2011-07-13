@@ -3,16 +3,16 @@
 namespace GeneLabCore {
     Experiment::Experiment(QVariant data) {
         QVariantMap map = data.toMap();
-        this->id = "WalkingCaterPillar";//map["id"].toString();
+        this->id = "WalkingSpider";//map["id"].toString();
         this->description = map["description"].toString();
         this->expData = map;
         this->resultsDirectory = QDir(id+"/results");
         if(!this->resultsDirectory.exists()) {
             this->resultsDirectory.mkpath(".");
         }
-        this->maxGen = 100;
-        this->popSize = 10;
-        this->expTime = 1800;
+        this->maxGen = 200;
+        this->popSize = 100;
+        this->expTime = 1200;
 
         seedInfo.insert("type", "family");
         seedInfo.insert("familyName", "spider");
