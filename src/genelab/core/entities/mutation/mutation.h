@@ -4,10 +4,15 @@
 #include <QVariant>
 
 namespace GeneLabCore {
+
+    enum MutationType { IntegerMutationType, FloatMutationType, SimpleProbabilityType };
+
     class Mutation {
     public:
         float probability;
-        virtual void mutate(QVariantMap &map, QString key) = 0;
+        virtual void mutate(QVariantMap &map, QString key);
+        bool canMutate();
+        bool enable;
     };
 }
 

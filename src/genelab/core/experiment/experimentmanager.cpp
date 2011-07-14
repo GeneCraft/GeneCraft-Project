@@ -458,7 +458,7 @@ namespace GeneLabCore {
     }
 
     bool ExperimentManager::simulateEntity(Entity* e) {
-        for(int i = 0; i < exp->getExpTime(); i++) {
+        for(int i = 0; i < exp->getDuration(); i++) {
             this->engineStep();
             if(!e->isAlive()) {
                 qDebug() << "entity died at age " << e->getAge();

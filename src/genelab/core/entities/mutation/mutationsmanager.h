@@ -5,9 +5,8 @@
 #include <QStringList>
 #include <body/bone.h>
 #include "mutation.h"
-#include "floatmutation.h"
-#include "integermutation.h"
 #include "bonelimitsmutation.h"
+#include "genelabcoreclasses.h"
 
 namespace GeneLabCore {
 
@@ -16,7 +15,9 @@ class MutationsManager
 public:
 
     // To create the mutation manager
+    MutationsManager();
     MutationsManager(QVariant mutationsParams);
+    QVariant serialize();
 
     // To mutate an entire entity
     QVariant mutateEntity(const QVariant &entityVariant);
@@ -41,15 +42,6 @@ public:
 
     // Mutate the tree of a brainOutput
     QVariant mutateBrainOutTree(QVariant brainOut);
-
-private:
-
-    // To mutate a value in a map
-    void mutate(QVariantMap &map, QString key, Mutation* mutation);
-    int treeDepth(QStringListIterator it);
-    void consumnSubTree(QStringListIterator it);
-
-    QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
     // BODY
 
@@ -90,7 +82,16 @@ private:
     IntegerMutation* brainFrequency;
 
     // New brain tree luck
-    float newBrainTreeProbability;
+    SimpleProbabilityMutation* newBrainTree;
+
+private:
+
+    // To mutate a value in a map
+    void mutate(QVariantMap &map, QString key, Mutation* mutation);
+    int treeDepth(QStringListIterator it);
+    void consumnSubTree(QStringListIterator it);
+
+    QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
 };
 

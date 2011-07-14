@@ -12,10 +12,11 @@
 #include "sensors/sensor.h"
 #include "brain/brainnode.h"
 #include "brain/brainfunctional.h"
+#include "simpleprobabilitymutation.h"
 
 namespace GeneLabCore {
 
-    MutationsManager::MutationsManager(QVariant mutationsParams)
+    MutationsManager::MutationsManager()
     {
         // --------------------
         // -- BODY MUTATIONS --
@@ -107,7 +108,7 @@ namespace GeneLabCore {
         brainFrequency->maxValue     = 60;
 
         // New brain tree probability
-        newBrainTreeProbability = 0.1;
+        newBrainTree = new SimpleProbabilityMutation();
 
         // Brain constant value
         constValue = new FloatMutation();
@@ -116,9 +117,63 @@ namespace GeneLabCore {
         constValue->maxFact = 0.1;
         constValue->minValue = -10;
         constValue->maxValue = 10;
-
     }
 
+    MutationsManager::MutationsManager(QVariant mutationsParams)
+    {
+        QVariantMap map = mutationsParams.toMap();
+
+        // --------------------
+        // -- BODY MUTATIONS --
+        // --------------------
+
+        boneLength = new FloatMutation(map["boneLength"]);
+        boneRadius = new FloatMutation(map["boneRadius"]);
+        fixRadius = new FloatMutation(map["fixRadius"]);
+        boneAngularOrigin = new FloatMutation(map["boneAngularOrigin"]);
+
+        // TODO !!!
+        // Bone angular limits (x,y,z for lower and upper)
+        boneAngularLimits = new BoneLimitsMutation();
+        boneAngularLimits->probability                  = 0.1;
+        boneAngularLimits->axisMutation->probability    = -0.1;
+        boneAngularLimits->axisMutation->minFact        = -0.01;
+        boneAngularLimits->axisMutation->maxFact        =  0.01;
+        boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
+        boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
+
+        // ---------------------
+        // -- BRAIN MUTATIONS --
+        // ---------------------
+
+        // Plug grid size
+        brainSize = new IntegerMutation(map["brainSize"]);
+        brainInPos = new FloatMutation(map["brainInPos"]);
+        brainWeight = new FloatMutation(map["brainWeight"]);
+        brainMemorySize = new IntegerMutation(map["brainMemorySize"]);
+        brainFrequency = new IntegerMutation(map["brainFrequency"]);
+        newBrainTree = new SimpleProbabilityMutation(map["newBrainTree"]);
+        constValue = new FloatMutation(map["constValue"]);
+    }
+
+    QVariant MutationsManager::serialize(){
+
+        QVariantMap map;
+
+        map.insert("boneLength",boneLength->serialize());
+        map.insert("boneRadius",boneRadius->serialize());
+        map.insert("fixRadius",fixRadius->serialize());
+        map.insert("boneAngularOrigin",boneAngularOrigin->serialize());
+        map.insert("brainSize",brainSize->serialize());
+        map.insert("brainInPos",brainInPos->serialize());
+        map.insert("brainWeight",brainWeight->serialize());
+        map.insert("brainMemorySize",brainMemorySize->serialize());
+        map.insert("brainFrequency",brainFrequency->serialize());
+        map.insert("newBrainTree",newBrainTree->serialize());
+        map.insert("constValue",constValue->serialize());
+
+        return map;
+    }
 
     QVariant MutationsManager::mutateEntity(const QVariant &entityVariant) {
         QVariantMap entityMap = entityVariant.toMap();
@@ -136,7 +191,6 @@ namespace GeneLabCore {
         return entityMap;
 
     }
-
 
     QVariant MutationsManager::mutateTreeShape(const QVariant &treeShapeVariant)
     {
@@ -342,7 +396,7 @@ namespace GeneLabCore {
 
         QString newConnexionInfo;
 
-        if(Tools::random(0., 1.) <= newBrainTreeProbability) {
+        if(newBrainTree->canMutate()) {
             newConnexionInfo = BrainFunctional::createRandomFunc(Tools::random(1, 5));
             outMap.insert("connexionInfo", newConnexionInfo);
             return outMap;

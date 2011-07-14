@@ -7,6 +7,11 @@ namespace GeneLabCore {
 
     class IntegerMutation : public Mutation {
     public:
+
+        IntegerMutation(QVariant variant);
+        IntegerMutation();
+        QVariant serialize();
+
         void mutate(QVariantMap &map, QString key);
         int mutate(int value);
         int minIncr;

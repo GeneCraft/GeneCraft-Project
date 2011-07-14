@@ -182,7 +182,13 @@ SOURCES += \
     ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp \
     ../genelab/core/engines/events/inspectorsinputmanager.cpp \
     ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.cpp \
-    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.cpp
+    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.cpp \
+    ../genelab/core/ui/widgets/experiments/integermutationcontroller.cpp \
+    ../genelab/core/ui/widgets/experiments/simpleprobabilitycontroller.cpp \
+    ../genelab/core/experiment/result.cpp \
+    ../genelab/core/experiment/experimentmanager.cpp \
+    ../genelab/core/experiment/experiment.cpp \
+    ../genelab/core/entities/mutation/simpleprobabilitymutation.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -275,7 +281,13 @@ HEADERS += \
     ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h \
     ../genelab/core/engines/events/inspectorsinputmanager.h \
     ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.h \
-    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.h
+    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.h \
+    ../genelab/core/ui/widgets/experiments/integermutationcontroller.h \
+    ../genelab/core/ui/widgets/experiments/simpleprobabilitycontroller.h \
+    ../genelab/core/experiment/result.h \
+    ../genelab/core/experiment/experimentmanager.h \
+    ../genelab/core/experiment/experiment.h \
+    ../genelab/core/entities/mutation/simpleprobabilitymutation.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -290,7 +302,9 @@ FORMS += \
     ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.ui \
     ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.ui \
     ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.ui \
-    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.ui
+    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.ui \
+    ../genelab/core/ui/widgets/experiments/integermutationcontroller.ui \
+    ../genelab/core/ui/widgets/experiments/simpleprobabilitycontroller.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

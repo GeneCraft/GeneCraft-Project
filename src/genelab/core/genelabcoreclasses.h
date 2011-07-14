@@ -102,6 +102,18 @@ namespace GeneLabCore {
     class btWorldFactory;
 
     // ----------------
+    // -- Experiment --
+    // ----------------
+    class Experiment;
+    class ExperimentManager;
+    class Result;
+    class MutationsManager;
+    class Mutation;
+    class FloatMutation;
+    class IntegerMutation;
+    class SimpleProbabilityMutation;
+
+    // ----------------
     // -- Ressources --
     // ----------------
     class Ressource;    // (file, db, etc.)
@@ -118,7 +130,6 @@ namespace GeneLabCore {
     // Neural network
     class PlugGridVisualizer;
     class PlugGridDesignVisualizer;
-
 
     // -----------------------
     // -- World related     --
@@ -145,6 +156,11 @@ namespace GeneLabCore {
 // Entities
 class BonePropertiesController;
 class FixationPropertiesController;
+
+// Experiment
+class FloatMutationController;
+class IntegerMutationController;
+class SimpleProbabilityController;
 
 // Typical used ogre namespace classes
 namespace Ogre {

@@ -14,7 +14,7 @@
    <string>Experiment properties</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1">
+   <item row="2" column="2">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -27,7 +27,7 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="3">
+   <item row="2" column="5">
     <widget class="QPushButton" name="pbClose">
      <property name="minimumSize">
       <size>
@@ -40,23 +40,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="pbSave">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>35</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Save</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="4">
+   <item row="0" column="0" colspan="6">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tab_6">
       <attribute name="icon">
@@ -93,12 +80,12 @@
        <item row="1" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>Name</string>
+          <string>Id</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="leId"/>
        </item>
        <item row="0" column="2">
         <spacer name="horizontalSpacer_2">
@@ -114,9 +101,9 @@
         </spacer>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="lDateOfCreation">
          <property name="text">
-          <string>????-??-??</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -135,7 +122,7 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEdit_4"/>
+        <widget class="QLineEdit" name="leAuthor"/>
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_20">
@@ -148,10 +135,10 @@
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QTextEdit" name="textEdit_2"/>
+        <widget class="QTextEdit" name="leComments"/>
        </item>
        <item row="2" column="1">
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QTextEdit" name="leDescription"/>
        </item>
       </layout>
      </widget>
@@ -171,12 +158,12 @@
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0" colspan="3">
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="cbOnlyIfEntityIsStable">
             <property name="text">
              <string>Only if creature is stable</string>
             </property>
             <property name="checked">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -188,12 +175,15 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="leTimeToWaitForStability">
             <property name="maximumSize">
              <size>
               <width>80</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -234,22 +224,22 @@
            </widget>
           </item>
           <item row="1" column="0" colspan="4">
-           <widget class="QCheckBox" name="checkBox_2">
+           <widget class="QCheckBox" name="cbStopIfEntityIsNotInOnePiece">
             <property name="text">
              <string>Stop if entity is not in one piece (fitness : -1)</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_3">
+           <widget class="QLineEdit" name="leDuration">
             <property name="maximumSize">
              <size>
               <width>80</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -297,9 +287,8 @@
         <normaloff>:/img/icons/chart_line</normaloff>:/img/icons/chart_line</iconset>
       </attribute>
       <attribute name="title">
-       <string>Fitnesses</string>
+       <string>Evaluation</string>
       </attribute>
-      <zorder>pbClose</zorder>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="icon">
@@ -392,7 +381,7 @@
         <normaloff>:/img/icons/entities</normaloff>:/img/icons/entities</iconset>
       </attribute>
       <attribute name="title">
-       <string>Pop. &amp;&amp; Selection</string>
+       <string>Seed(s)</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="tab_5">
@@ -404,6 +393,49 @@
        <string>Results</string>
       </attribute>
      </widget>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QPushButton" name="pbHelp">
+     <property name="minimumSize">
+      <size>
+       <width>35</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../ressources/ressources.qrc">
+       <normaloff>:/img/icons/help</normaloff>:/img/icons/help</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="pbLoadExp">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Load experiment</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPushButton" name="pbSave">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
     </widget>
    </item>
   </layout>
