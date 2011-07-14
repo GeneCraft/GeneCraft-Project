@@ -13,12 +13,12 @@ namespace GeneLabCore {
         /**
           * Creating an experiment manager for a given experiment
           */
-        ExperimentManager(btFactory* factory, Experiment* exp) ;
+        ExperimentManager(btFactory* factory, Experiment* exp, QVariant workerData) ;
 
         /**
           * Creating an experiment manager for a giver experiment data
           */
-        ExperimentManager(btFactory* factory, QVariant expData);
+        ExperimentManager(btFactory* factory, QVariant expData, QVariant workerData);
 
         /**
           * Experimentation loop
@@ -43,11 +43,6 @@ namespace GeneLabCore {
         void genNewPop();
 
         /**
-          * To generate a new population from existing result
-          */
-        void genNewPopFromResults();
-
-        /**
           * Only for a new experimentation -> random population
           */
         void genRandomPop();
@@ -67,6 +62,23 @@ namespace GeneLabCore {
           */
         void broadcastResults();
 
+        /**
+          * To add a new result to this experience
+          */
+        void addResult(Result* result);
+
+        /**
+          * To set the new generation of population
+          */
+        void setActivePopulation(QList<Result*> newPop);
+
+        /**
+          * The directory where the results are stored
+          */
+        QDir getResultsDir() {
+            return this->resultsDirectory;
+        }
+
     protected:
         // To simulate a specific entity
         Entity* spawnEntity(QVariant genome);
@@ -74,13 +86,16 @@ namespace GeneLabCore {
         bool simulateEntity(Entity* e);
         float evaluateEntity(Entity* e);
         void engineStep();
+        QVariant randomNewEntity();
+
+        void load(QVariant data);
 
     private:
         Experiment* exp;
         MutationsManager* mutations;
         SelectionManager* selections;
         btFactory* factory;
-        bool broadcast;
+        bool online;
 
         btWorldFactory* worldFactory;
         btShapesFactory* shapesFactory;
@@ -93,6 +108,24 @@ namespace GeneLabCore {
         QMap<QString, Engine*> engines;
 
         int resultNameCpt;
+        int maxGen;
+        int popSize;
+        int bestResultsStored;
+        int randomResultsStored;
+
+        float probFromBestsResult;
+        float probFromBestsPop;
+        float probFromRandomResult;
+        float probFromRandomPop;
+        float probFromRandomNew;
+
+        QString workerName;
+
+        QList<Result*> bestResults;
+        QList<Result*> randomResults;
+        QList<Result*> activePop;
+
+        QDir resultsDirectory;
     };
 }
 

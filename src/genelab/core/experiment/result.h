@@ -22,6 +22,8 @@ namespace GeneLabCore {
         /** Copy constructor */
         Result(const Result& r);
 
+        ~Result();
+
         /**
           * Result with higher fitness are bether !
           */
@@ -39,7 +41,7 @@ namespace GeneLabCore {
           */
         void save(Ressource * r);
 
-        static Result loadResult(QVariant data, bool& ok);
+        static Result* loadResult(QVariant data, bool& ok);
 
         float getFitness() const {
             return fitness;

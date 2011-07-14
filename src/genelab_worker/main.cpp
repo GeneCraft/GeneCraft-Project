@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     database.port = 80;
 
     Experiment* exp = new Experiment(QVariant());
-    ExperimentManager* expMan = new ExperimentManager(factory, exp);
+    ExperimentManager* expMan = new ExperimentManager(factory, exp, QVariant());
 
     expMan->experiment();
     expMan->broadcastResults();

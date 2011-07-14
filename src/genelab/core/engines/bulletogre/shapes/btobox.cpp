@@ -23,7 +23,7 @@ btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, con
     // Create Ogre Entity
     entity = ogreEngine->getOgreSceneManager()->createEntity(
             "BoxEntity_" + StringConverter::toString(btoBox::mNumEntitiesInstanced),
-            "cube.mesh");
+            SceneManager::PT_CUBE);
 
     // Material
     entity->setMaterialName("Examples/Rockwall");

@@ -33,19 +33,58 @@ namespace GeneLabCore {
     /**
       * Creating an experiment manager for a given experiment
       */
-    ExperimentManager::ExperimentManager(btFactory* factory, Experiment* exp) {
+    ExperimentManager::ExperimentManager(btFactory* factory, Experiment* exp, QVariant workerData) {
         this->factory = factory;
         this->exp = exp;
-        this->broadcast = false;
+
+        this->load(workerData);
     }
 
     /**
       * Creating an experiment manager for a giver experiment data
       */
-    ExperimentManager::ExperimentManager(btFactory* factory, QVariant expData) {
+    ExperimentManager::ExperimentManager(btFactory* factory, QVariant expData, QVariant workerData) {
         this->factory = factory;
         this->exp = new Experiment(Ressource::load(expData));
-        this->broadcast = false;
+
+        this->load(workerData);
+    }
+
+
+    //protected
+    void ExperimentManager::load(QVariant workerData) {
+
+        QVariantMap workerMap = workerData.toMap();
+        this->online          = workerMap["online"].toBool();
+        this->maxGen          = workerMap["maxGen"].toInt();
+        this->popSize         = workerMap["popSize"].toInt();
+        this->workerName      = workerMap["name"].toString();
+
+        this->bestResultsStored   = workerMap["nbBestResults"].toInt();
+        this->randomResultsStored = workerMap["nbRandomResults"].toInt();
+
+        QVariantMap selectionMap   = workerMap["selection"].toMap();
+        this->probFromBestsPop     = selectionMap["bestPop"].toDouble();
+        this->probFromBestsResult  = selectionMap["bestResult"].toDouble();
+        this->probFromRandomPop    = selectionMap["randomPop"].toDouble();
+        this->probFromRandomResult = selectionMap["randomResult"].toDouble();
+        this->probFromRandomNew    = selectionMap["randomNew"].toDouble();
+
+        // Normalisation of probability
+        float sumProb = probFromBestsPop + probFromBestsResult + probFromRandomNew
+                        + probFromRandomPop + probFromRandomResult;
+
+        this->probFromBestsPop     /= sumProb;
+        this->probFromBestsResult  /= sumProb;
+        this->probFromRandomNew    /= sumProb;
+        this->probFromRandomPop    /= sumProb;
+        this->probFromRandomResult /= sumProb;
+
+        // default -> "results"
+        this->resultsDirectory = QDir(exp->getId()+"/"+workerMap["resultsDir"].toString());
+        if(!this->resultsDirectory.exists()) {
+            this->resultsDirectory.mkpath(".");
+        }
     }
 
     /**
@@ -70,7 +109,7 @@ namespace GeneLabCore {
         world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
 
         // Nb gen to compute
-        int nbGen = exp->getMaxGen();
+        int nbGen = this->maxGen;
 
         // Load result from files
         int nb = this->loadResults();
@@ -86,17 +125,17 @@ namespace GeneLabCore {
         if(nb == 0) {
             // New boostrap population
             this->genRandomPop();
-            qDebug() << "generated" << exp->getPopSize() << "random new entities";
+            qDebug() << "generated" << this->popSize << "random new entities";
         } else {
             // New population from results
-            this->genNewPopFromResults();
-            qDebug() << "generated" << exp->getPopSize() << "mutated entities from results";
+            this->genNewPop();
+            qDebug() << "generated" << this->popSize << "mutated entities from results";
         }
 
         // For each generations
         while(nbGen > 0 || nbGen == -1) {
             qDebug() << nbGen;
-            qDebug() << "------ GENERATION" << exp->getMaxGen() - nbGen << "-------";
+            qDebug() << "------ GENERATION" << this->maxGen - nbGen << "-------";
             nbGen--;
 
             // Evaluation of population
@@ -108,7 +147,7 @@ namespace GeneLabCore {
             save();
 
             // Broadcast result to community
-            if(broadcast) {
+            if(online) {
                 qDebug() << "Sending results to community";
                 broadcastResults();
             }
@@ -116,7 +155,7 @@ namespace GeneLabCore {
             // Generate new population
             qDebug() << "Generation of a new population";
             genNewPop();
-            qDebug() << "generated" << this->exp->getPopSize() << "mutated entiteis from active population";
+            qDebug() << "generated" << this->popSize << "mutated entities from active population";
         }
 
     }
@@ -125,7 +164,7 @@ namespace GeneLabCore {
       * To load results from file system
       */
     int ExperimentManager::loadResults() {
-        QDir results = exp->getResultsDir();
+        QDir results = this->resultsDirectory;
         int cptLoaded = 0;
         foreach(QString f, results.entryList(QDir::NoDotAndDotDot
                                              | QDir::Files
@@ -133,14 +172,15 @@ namespace GeneLabCore {
             JsonFile* file = new JsonFile(results.absoluteFilePath(f));
             QVariant result = file->load();
             bool valid = false;
-            Result r = Result::loadResult(result, valid);
+            Result* r = Result::loadResult(result, valid);
             if(valid) {
                 qDebug() << "valid result from " << f;
-                qDebug() << r.getDate();
-                exp->addResult(r);
+                qDebug() << r->getDate();
+                this->addResult(r);
                 cptLoaded++;
             } else {
                 qDebug() << "invalid file format" << f;
+                delete r;
             }
 
         }
@@ -160,135 +200,146 @@ namespace GeneLabCore {
       */
     void ExperimentManager::genRandomPop() {
         // The new random population
-        QList<Result> newPop;
+        QList<Result*> newPop;
 
+
+        // Creating N new spider
+        for(int i = 0; i < this->popSize; i++) {
+            newPop.append(new Result(exp->getId(), -1, this->randomNewEntity()));
+        }
+
+        // Adding the population to the experience
+        this->activePop = newPop;
+    }
+
+    // A new entity
+    QVariant ExperimentManager::randomNewEntity() {
         // How to create the new entities ?
         QVariantMap seedInfo = exp->getSeedInfo();
         QString type = seedInfo["type"].toString();
-
         // From a family
         if(type == "family") {
             // Which one ?
             QString familyName = seedInfo["familyName"].toString();
             // The spider ! Scary !
             if(familyName == "spider") {
-                // Creating N new spider
-                for(int i = 0; i < exp->getPopSize(); i++) {
-                    // New entity
-                    SpiderFamily* family = new SpiderFamily();
-                    btVector3 position = world->getSpawnPosition();
-                    Entity* e = family->createEntity(shapesFactory, position);
-                    // Setup to be able to serialize
-                    e->setup();
-                    // Serialisation
-                    QVariant genome = e->serialize();
-                    Result r(exp->getId(), -1, genome);
-                    newPop.append(r);
-                    delete e;
-                }
+                // New entity
+                SpiderFamily* family = new SpiderFamily();
+                btVector3 position = world->getSpawnPosition();
+                Entity* e = family->createEntity(shapesFactory, position);
+                // Setup to be able to serialize
+                e->setup();
+                // Serialisation
+                QVariant genome = e->serialize();
+                Result r(exp->getId(), -1, genome);
+                delete e;
+                return genome;
             }
         }
+        return QVariant();
+    }
 
-        // Adding the population to the experience
-        exp->setActivePopulation(newPop);
-
+    // To sort result, descending
+    bool myLessThan( const Result *a, const Result *b )
+    {
+       return !((*a) < (*b));
     }
 
     /**
       * To generate a new population from last population
       */
     void ExperimentManager::genNewPop() {
-        QList<Result> results = exp->getResults();
-        QList<Result> activePop = exp->getActivePopulation();
+        // Sorting best results and active pop if needed
+        if(this->probFromBestsResult > 0.0f)
+            qSort(bestResults.begin(), bestResults.end(), myLessThan);
+        if(this->probFromBestsPop > 0.0f)
+            qSort(activePop.begin(), activePop.end(), myLessThan);
 
-        qSort(results.begin(), results.end(), qGreater<Result>());
-        QList<Result> newActivePop;
-        int max = activePop.size();
+        QList<Result*> newActivePop;
 
-        // For a tenth of the pop size -> the bests one
-        for(int i = 0; i < exp->getPopSize()*0.3 + 1; i++) {
+        // For probFromBestsResult part
+        int max = this->bestResults.size();
+        for(int i = 0; i < this->popSize*this->probFromBestsResult; i++) {
+            // No bests results enough?
             if(i >= max)
                 break;
+
             // Best 'i one
-            Result r = results.at(i);
+            Result* r = bestResults.at(i);
 
             // Mutation of best one
-            r.setGenome(mutations->mutateEntity(r.getGenome()));
+            Result* rNew = new Result(this->exp->getId(), -1,
+                                      mutations->mutateEntity(r->getGenome()));
 
-            qDebug() << "loading mutation of result with fitness " << r.getFitness();
-            newActivePop.append(r);
+            newActivePop.append(rNew);
+            qDebug() << "loading mutation of best results with fitness " << r->getFitness();
         }
 
-        // Creating a new population
-        int already = newActivePop.size();
-        for(int i = 0; i < exp->getPopSize() - already; i++) {
+        // For probFromRandomResults part
+        max = randomResults.size();
+        for(int i = 0; i < this->popSize*this->probFromRandomResult; i++) {
             // random new from results
             int id = qrand()%max;
-            Result r = activePop.at(id);
-            QVariant genome = r.getGenome();
+            Result* r = randomResults.at(id);
+            QVariant genome = r->getGenome();
 
             // Mutation
             QVariant newGenome = mutations->mutateEntity(genome);
 
             // Adding to the active population
-            newActivePop.append(Result(exp->getId(), -1, newGenome));
-
-            qDebug() << "loading mutation of result with fitness " << r.getFitness();
-
+            newActivePop.append(new Result(exp->getId(), -1, newGenome));
+            qDebug() << "loading mutation of random results with fitness " << r->getFitness();
         }
 
-        this->exp->setActivePopulation(newActivePop);
-    }
-
-    /**
-      * To generate a new population from existing result
-      */
-    void ExperimentManager::genNewPopFromResults() {
-        QList<Result> results = exp->getResults();
-        qSort(results.begin(), results.end(), qGreater<Result>());
-        QList<Result> newActivePop;
-        int max = results.size();
-
-        // For a tenth of the pop size -> the bests one
-        for(int i = 0; i < exp->getPopSize()*0.5 + 1; i++) {
-            if(i >= max) {
-                qDebug() << "not enough old result to fill the new pop";
+        // For probFromBestsPop part
+        max = activePop.size();
+        for(int i = 0; i < this->popSize*this->probFromBestsPop; i++) {
+            // No bests results enough?
+            if(i >= max)
                 break;
-            }
 
-            Result r = results.at(i);
-            qDebug() << "loading result with fitness " << r.getFitness();
-            newActivePop.append(r);
+            // Best 'i one
+            Result* r = activePop.at(i);
+
+            // Mutation of best one
+            Result* rNew = new Result(this->exp->getId(), -1,
+                                      mutations->mutateEntity(r->getGenome()));
+
+            newActivePop.append(rNew);
+            qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
         }
 
-        // Creating a new population
-        int already = newActivePop.size();
-        for(int i = 0; i < exp->getPopSize() - already; i++) {
+        // For probFromRandomResults part
+        for(int i = 0; i < this->popSize*this->probFromRandomPop; i++) {
             // random new from results
             int id = qrand()%max;
-            Result r = results.at(id);
-            QVariant genome = r.getGenome();
+            Result* r = activePop.at(id);
+            QVariant genome = r->getGenome();
 
             // Mutation
             QVariant newGenome = mutations->mutateEntity(genome);
 
             // Adding to the active population
-            newActivePop.append(Result(exp->getId(), -1, newGenome));
-
-            qDebug() << "creating mutation of result with fitness " << r.getFitness();
-
+            newActivePop.append(new Result(exp->getId(), -1, newGenome));
+            qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
         }
 
-        this->exp->setActivePopulation(newActivePop);
+        //Remaining random new
+        for(int i = 0; i < this->popSize - newActivePop.size(); i++) {
+            QVariant newGenome = this->randomNewEntity();
+            newActivePop.append(new Result(exp->getId(), -1, newGenome));
+            qDebug() << "new random genome !";
+        }
+
+        this->setActivePopulation(newActivePop);
     }
 
     /**
       * To evaluate the actual population, generating results
       */
     void ExperimentManager::evalPop() {
-        QList<Result> evaluatedPop;
-        foreach(Result r, exp->getActivePopulation()) {
-            Entity *e = this->spawnEntity(r.getGenome());
+        foreach(Result* r, this->activePop) {
+            Entity *e = this->spawnEntity(r->getGenome());
             bool stable, simulated;
             float fitness;
             stable = this->stabilizeEntity(e);
@@ -298,32 +349,28 @@ namespace GeneLabCore {
 
             if(stable && simulated) {
                 fitness = this->evaluateEntity(e);
-                r.setFitness(fitness);
+                r->setFitness(fitness);
                 qDebug() << "entity evaluated, fitness =" << fitness;
             } else {
                 qDebug() << "corrupted entity";
-                r.setFitness(-1);
+                r->setFitness(-1);
             }
-            // Evaluated pop
-            evaluatedPop.append(r);
 
             // Delete the entity !! Very important
             ee->removeEntity(e);
             delete e;
         }
-        this->exp->setActivePopulation(evaluatedPop);
     }
 
     /**
       * To save the actual progression of the experiment
       */
     void ExperimentManager::save() {
-        QList<Result> results = exp->getActivePopulation();
-        foreach(Result r, results) {
-            if(r.getFitness() > 0.0) {
-                QString filename = "result" + QString::number(resultNameCpt++);
-                r.save(new JsonFile(this->exp->getResultsDir().absoluteFilePath(filename)));
-                exp->addResult(r);
+        foreach(Result* r, activePop) {
+            if(r->getFitness() > 0.0) {
+                QString filename = this->workerName + QString::number(resultNameCpt++);
+                r->save(new JsonFile(this->getResultsDir().absoluteFilePath(filename)));
+                this->addResult(new Result(*r));
             }
         }
     }
@@ -332,18 +379,18 @@ namespace GeneLabCore {
       * To broadcast result to online database
       */
     void ExperimentManager::broadcastResults() {
-        QList<Result> results = exp->getResults();
-        qSort(results.begin(), results.end(), qGreater<Result>());
+        // Neede to sort
+        qSort(bestResults.begin(), bestResults.end(), myLessThan);
 
-        for(int i = 0; i < qMin(10, results.size()); i++) {
-            Result result = results.at(i);
+        for(int i = 0; i < qMin(10, bestResults.size()); i++) {
+            Result* result = bestResults.at(i);
             DataBase db;
             db.dbName = "/db/genecraft/";
             db.port = 80;
             db.url = "http://www.genecraft-project.org";
 
             Ressource * r = new DbRecord(db, "");
-            result.save(r);
+            result->save(r);
         }
     }
 
@@ -441,5 +488,44 @@ namespace GeneLabCore {
 
             e->afterStep();
         }
+    }
+
+    /**
+      * To add a new result to this experience
+      */
+    void ExperimentManager::addResult(Result* result) {
+        // Best one ?
+        if(result->getFitness() > this->bestResults.last()->getFitness()) {
+            this->bestResults.append(result);
+            while(bestResults.size() > this->bestResultsStored) {
+                    qSort(bestResults.begin(), bestResults.end(), myLessThan);
+                    Result *r = this->bestResults.takeLast();
+                    delete r;
+            }
+        }
+
+        // Random one ?
+        this->randomResults.append(result);
+        while(this->randomResults.size() > this->randomResultsStored) {
+            int at = qrand()%randomResults.size();
+            Result *r = this->randomResults.takeAt(at);
+            delete r;
+        }
+    }
+
+    /**
+      * To set the new generation of population
+      */
+    void ExperimentManager::setActivePopulation(QList<Result*> newPop) {
+        if(this->activePop.size() != newPop.size() && this->activePop.size() != 0)
+            qDebug() << "Population size changed ! not a good sign";
+
+        // Delete the old population
+        while(!activePop.isEmpty()) {
+            Result* r = activePop.takeFirst();
+            delete r;
+        }
+
+        this->activePop = newPop;
     }
 }

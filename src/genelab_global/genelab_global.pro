@@ -66,9 +66,10 @@ win32 {
 
 unix {
     LIBS += -L/Users/cyprienhuissoud/Downloads/Dependencies/bin/Release
+    LIBS += -L../lib/qxt/lib
     LIBS += -F/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo
     LIBS += -framework Ogre
-    LIBS += -framework QxtCore
+    LIBS += -lQxtCore
     LIBS += -lzzip
     LIBS += -lfreetype
     LIBS += -lfreeimage

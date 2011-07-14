@@ -31,6 +31,11 @@ namespace GeneLabCore {
         this->genome = QVariant();
     }
 
+    Result::~Result() {
+        if(ressource)
+            delete ressource;
+    }
+
     /**
       * A result is a fitness for a genome, and the ressource where this result is stored
       * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
@@ -67,27 +72,27 @@ namespace GeneLabCore {
         this->date = r.date;
     }
 
-    Result Result::loadResult(QVariant data, bool& ok) {
+    Result* Result::loadResult(QVariant data, bool& ok) {
         ok = true;
 
         QVariantMap dataMap = data.toMap();
 
         float fitness = dataMap["fitness"].toFloat(&ok);
         if(!ok)
-            return Result();
+            return new Result();
 
         QVariantMap genome = dataMap["genome"].toMap();
         if(genome == QVariant())
-            return Result();
+            return new Result();
 
         QString exp = dataMap["experiment"].toString();
         if(!ok || !dataMap.contains("experiment"))
-            return Result();
+            return new Result();
 
         QString date = dataMap["date"].toString();
         if(!ok ||!dataMap.contains("date"))
-            return Result();
+            return new Result();
 
-        return Result(exp, fitness, genome, date);
+        return new Result(exp, fitness, genome, date);
     }
 }

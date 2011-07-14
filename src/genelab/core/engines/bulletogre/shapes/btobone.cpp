@@ -49,7 +49,7 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
      // Create Ogre Entity
     entityS = ogreEngine->getOgreSceneManager()->createEntity(
             "BoneSphereEntity_" + StringConverter::toString(btoBone::mNumEntitiesInstanced),
-            "sphere.mesh");
+            SceneManager::PT_SPHERE);
 
     // Material
     entityS->setMaterialName(fixationMaterial.toStdString());

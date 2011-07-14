@@ -42,7 +42,7 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
     // Create Ogre Entity
     entity = ogreEngine->getOgreSceneManager()->createEntity(
             "SphereEntity_" + StringConverter::toString(btoSphere::mNumSpheresInstanced),
-            "sphere.mesh");
+            SceneManager::PT_SPHERE);
 
     // Material
     entity->setMaterialName(fixationMaterial.toStdString());
