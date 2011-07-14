@@ -33,12 +33,13 @@
 #include "bulletogre/bulletogreengine.h"
 #include "entities/entitiesengine.h"
 
-// Widget
+// Widgets
 #include "widgets/entities/pluggridvisualizer.h"
 #include "widgets/entities/pluggriddesignvisualizer.h"
 #include "widgets/entities/fixationpropertiescontroller.h"
 #include "widgets/entities/bonepropertiescontroller.h"
 #include "widgets/entities/entitypropertiescontroller.h"
+#include "widgets/experiments/experimentspropertiescontroller.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -67,6 +68,7 @@
 #include <QMessageBox>
 
 #include "mutation/mutationsmanager.h"
+
 
 using namespace GeneLabCore;
 
@@ -112,6 +114,7 @@ void CreatureViewerWindow::init() {
     QAction *aRemoveAllCreatures =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all"),QString(tr("Remove all creatures")));
     ui->toolBar->addSeparator();
     QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
+    QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/experiment"),QString(tr("Edit current mutations params")));
     ui->toolBar->addSeparator();
 
     // step manager
@@ -137,6 +140,7 @@ void CreatureViewerWindow::init() {
     connect(aRemoveAllCreatures,SIGNAL(triggered()),this,SLOT(removeAllEntities()));
 
     connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
+    connect(aEditExperiment,SIGNAL(triggered()),this,SLOT(openExperimentPropertiesController()));
 
 
     // -----------
@@ -257,6 +261,14 @@ void CreatureViewerWindow::init() {
     entitySpawner->setInterval(5000);
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
+
+}
+
+void CreatureViewerWindow::openExperimentPropertiesController(){
+
+    // TODO STATIC
+    ExperimentsPropertiesController * epc = new ExperimentsPropertiesController();
+    epc->show();
 
 }
 

@@ -39,5 +39,10 @@
         <file alias="entity_add_random">img/icons/bug_add_random.png</file>
         <file alias="entity_mutation">img/icons/bug_mutation.png</file>
         <file alias="entity_delete_all">img/icons/bug_delete_all.png</file>
+        <file alias="information">img/icons/information.png</file>
+        <file alias="chart_line">img/icons/chart_line.png</file>
+        <file alias="report">img/icons/report.png</file>
+        <file alias="entities">img/icons/bugs.png</file>
+        <file alias="experiment">img/icons/page_white_magnify.png</file>
     </qresource>
 </RCC>

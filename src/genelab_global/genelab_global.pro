@@ -179,7 +179,9 @@ SOURCES += \
     ../genelab/core/ui/widgets/entities/brainpropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp \
-    ../genelab/core/engines/events/inspectorsinputmanager.cpp
+    ../genelab/core/engines/events/inspectorsinputmanager.cpp \
+    ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.cpp \
+    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -270,7 +272,9 @@ HEADERS += \
     ../genelab/core/ui/widgets/entities/brainpropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h \
-    ../genelab/core/engines/events/inspectorsinputmanager.h
+    ../genelab/core/engines/events/inspectorsinputmanager.h \
+    ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.h \
+    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -283,7 +287,9 @@ FORMS += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui \
     ../genelab/core/ui/widgets/entities/brainpropertiescontroller.ui \
     ../genelab/core/ui/widgets/entities/statisticspropertiescontroller.ui \
-    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.ui
+    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.ui \
+    ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.ui \
+    ../genelab/core/ui/widgets/experiments/floatmutationcontroller.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

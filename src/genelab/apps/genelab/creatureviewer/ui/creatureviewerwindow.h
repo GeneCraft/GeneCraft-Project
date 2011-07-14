@@ -60,6 +60,7 @@ public slots:
 
     void addRandomEntity();
     void createMutationSample();
+    void openExperimentPropertiesController();
 
     // physics
     void togglePhysics();
