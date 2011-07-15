@@ -291,7 +291,6 @@ namespace GeneLabCore {
         QVariantList rows = results["rows"].toList();
         QVariantList ids;
         foreach(QVariant row, rows) {
-            bool valid = false;
             QString id = row.toMap()["value"].toList()[4].toString();
             if(id > lastLoadedId) {
                 lastLoadedId = id;
@@ -343,7 +342,6 @@ namespace GeneLabCore {
         QString newLastLoadedId = lastLoadedId;
         QVariantList ids;
         foreach(QVariant row, rows) {
-            bool valid = false;
             QString id = row.toMap()["value"].toList()[4].toString();
 
             if(id <= lastLoadedId) {
@@ -591,10 +589,12 @@ namespace GeneLabCore {
     void ExperimentManager::broadcastResults() {
         // Neede to sort
         qSort(activePop.begin(), activePop.end(), myLessThan);
+        qSort(bestResults.begin(), bestResults.end(), myLessThan);
 
         QVariantList docsList;
         foreach(Result* result, activePop) {
-            if(result->isBroadcasted() || result->getFitness() < 10.0)
+            // Only broadcast if less than the best of stored results
+            if(result->isBroadcasted() || result->getFitness() < bestResults.last()->fitness)
                 continue;
 
             qDebug() << "broadcast : " << result->getDate() << result->getFitness();
