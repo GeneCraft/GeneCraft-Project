@@ -292,7 +292,7 @@ namespace GeneLabCore {
         QVariantList ids;
         foreach(QVariant row, rows) {
             QString id = row.toMap()["value"].toList()[4].toString();
-            if(id > lastLoadedId) {
+            if(id.left(14) > lastLoadedId.left(14)) {
                 lastLoadedId = id;
             }
             ids.append(id);
@@ -344,11 +344,11 @@ namespace GeneLabCore {
         foreach(QVariant row, rows) {
             QString id = row.toMap()["value"].toList()[4].toString();
 
-            if(id <= lastLoadedId) {
+            if(id.left(14) <= lastLoadedId.left(14)) {
                 continue;
             }
 
-            if(id > newLastLoadedId) {
+            if(id.left(14) > newLastLoadedId.left(14)) {
                 newLastLoadedId = id;
             }
             ids.append(id);
@@ -414,12 +414,16 @@ namespace GeneLabCore {
             if(familyName == "spider") {
                 // New entity
                 family = new SpiderFamily();
+                qDebug() << "new random spider entity";
             } else if(familyName == "ant") {
                 family = new AntFamily();
+                qDebug() << "new random ant entitiy";
             } else if(familyName == "caterpillar") {
                 family = new CaterpillarFamily();
+                qDebug() << "new random caterpillar entity";
             } else if(familyName == "snake") {
                 family = new SnakeFamily();
+                qDebug() << "new random snake entity";
             } else {
                 qDebug() << "ERROR : FAMILY NAME NOT UNDERSTOOD, WILL TAKE CATERPILLAR INSTEAD";
                 family = new CaterpillarFamily();
@@ -594,7 +598,8 @@ namespace GeneLabCore {
         QVariantList docsList;
         foreach(Result* result, activePop) {
             // Only broadcast if less than the best of stored results
-            if(result->isBroadcasted() || result->getFitness() < bestResults.last()->getFitness())
+            if(result->isBroadcasted() || ( bestResults.size() > 0 &&
+                    result->getFitness() < bestResults.last()->getFitness()))
                 continue;
 
             qDebug() << "broadcast : " << result->getDate() << result->getFitness();

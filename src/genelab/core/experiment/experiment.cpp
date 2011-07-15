@@ -4,7 +4,7 @@
 
 namespace GeneLabCore {
 
-Experiment::Experiment() : ressource(NULL){
+    Experiment::Experiment() : ressource(NULL){
 
         // information
         id = "NoId";
@@ -48,8 +48,7 @@ Experiment::Experiment() : ressource(NULL){
         mutationsManager = new MutationsManager(map["mutations"]);
 
         // seed TODO
-        seedInfo.insert("type", "family");
-        seedInfo.insert("familyName", "ant");
+        seedInfo = map["seedInfo"].toMap();
     }
 
     QVariant Experiment::serialize() {
@@ -71,6 +70,7 @@ Experiment::Experiment() : ressource(NULL){
         // mutations
         map.insert("mutations",mutationsManager->serialize());
 
+        map.insert("seedInfo", seedInfo);
         return map;
     }
 }
