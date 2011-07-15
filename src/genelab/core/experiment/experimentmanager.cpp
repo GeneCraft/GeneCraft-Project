@@ -8,6 +8,8 @@
 #include "families/spiderfamily.h"
 #include "families/snakefamily.h"
 #include "families/genericfamily.h"
+#include "families/antfamily.h"
+#include "families/caterpillarfamily.h"
 #include "entity.h"
 #include "entityfamily.h"
 
@@ -408,20 +410,32 @@ namespace GeneLabCore {
         if(type == "family") {
             // Which one ?
             QString familyName = seedInfo["familyName"].toString();
+            EntityFamily* family;
+
             // The spider ! Scary !
             if(familyName == "spider") {
                 // New entity
-                SpiderFamily* family = new SpiderFamily();
-                btVector3 position = world->getSpawnPosition();
-                Entity* e = family->createEntity(shapesFactory, position);
-                // Setup to be able to serialize
-                e->setup();
-                // Serialisation
-                QVariant genome = e->serialize();
-                delete e;
-                delete family;
-                return genome;
+                family = new SpiderFamily();
+            } else if(familyName == "ant") {
+                family = new AntFamily();
+            } else if(familyName == "caterpillar") {
+                family = new CaterpillarFamily();
+            } else if(familyName == "snake") {
+                family = new SnakeFamily();
+            } else {
+                qDebug() << "ERROR : FAMILY NAME NOT UNDERSTOOD, WILL TAKE CATERPILLAR INSTEAD";
+                family = new CaterpillarFamily();
             }
+
+            btVector3 position = world->getSpawnPosition();
+            Entity* e = family->createEntity(shapesFactory, position);
+            // Setup to be able to serialize
+            e->setup();
+            // Serialisation
+            QVariant genome = e->serialize();
+            delete e;
+            delete family;
+            return genome;
         }
         return QVariant();
     }
