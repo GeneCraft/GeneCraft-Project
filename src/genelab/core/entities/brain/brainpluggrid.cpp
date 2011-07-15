@@ -50,7 +50,7 @@ namespace GeneLabCore {
     }
 
     BrainPlugGrid::~BrainPlugGrid() {
-        delete this->neurons;
+        delete[] this->neurons;
     }
 
     float BrainPlugGrid::getValue(float x, float y) {

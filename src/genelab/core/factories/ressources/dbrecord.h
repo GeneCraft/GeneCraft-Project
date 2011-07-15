@@ -18,7 +18,7 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit DbRecord(DataBase db, QString id, QObject *parent = 0);
+        explicit DbRecord(DataBase db, QString id, QVariant postData = QVariant(), QObject *parent = 0);
 
         virtual QVariant load();
         virtual int save(QVariant data);
@@ -37,6 +37,7 @@ namespace GeneLabCore {
         DataBase db;
         QString id;
         QString rev;
+        QVariant postData;
     protected:
         QNetworkReply* r;
 

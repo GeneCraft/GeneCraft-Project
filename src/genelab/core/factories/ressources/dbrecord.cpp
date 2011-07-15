@@ -11,28 +11,48 @@
 #include <QVariantMap>
 
 namespace GeneLabCore {
-    DbRecord::DbRecord(DataBase db, QString id, QObject *parent) :
-        Ressource(parent), db(db), id(id), rev("")
+    DbRecord::DbRecord(DataBase db, QString id, QVariant postData, QObject *parent) :
+        Ressource(parent), db(db), id(id), rev(""), postData(postData)
     {
     }
 
     QVariant DbRecord::load() {
-        QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
-        this->request(url, RGET);
-        qDebug() << r->error();
-        r->deleteLater();
-        if(r->error() == 0) {
-            QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
-            this->id = v.find("_id").value().toString();
-            this->rev = v.find("_rev").value().toString();
-            return v;
+        if(postData == QVariant()) {
+            QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
+            this->request(url, RGET);
+            qDebug() << r->error();
+            r->deleteLater();
+            if(r->error() == 0) {
+                QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+                this->id = v.find("_id").value().toString();
+                this->rev = v.find("_rev").value().toString();
+                return v;
+            } else {
+                qDebug() << r->readAll();
+                QVariantMap v;
+                v.insert("error", r->errorString());
+                return v;
+            }
+            return QVariant();
         } else {
-            qDebug() << r->readAll();
-            QVariantMap v;
-            v.insert("error", r->errorString());
-            return v;
+            QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
+            this->request(url, RPOST, QxtJSON::stringify(postData));
+
+            qDebug() << r->error();
+            r->deleteLater();
+            if(r->error() == 0) {
+                QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+                this->id = v.find("_id").value().toString();
+                this->rev = v.find("_rev").value().toString();
+                return v;
+            } else {
+                qDebug() << r->readAll();
+                QVariantMap v;
+                v.insert("error", r->errorString());
+                return v;
+            }
+            return QVariant();
         }
-        return QVariant();
     }
 
     int DbRecord::save(QVariant data) {
@@ -52,7 +72,7 @@ namespace GeneLabCore {
         qDebug() << url;
         RequestType type = RPUT;
 
-        if(this->id == "")
+        if(this->id == "" || this->id == "_bulk_docs")
             type = RPOST;
 
         this->request(url, type, QxtJSON::stringify(mData));

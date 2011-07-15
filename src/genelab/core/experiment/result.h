@@ -42,6 +42,7 @@ namespace GeneLabCore {
           * Broadcast a result -> save it to the ressource
           */
         void save(Ressource * r);
+        QVariant serialize();
 
         static Result* loadResult(QVariant data, bool& ok);
 
@@ -89,6 +90,14 @@ namespace GeneLabCore {
             return worker;
         }
 
+        void setBroadcasted(bool broadcasted) {
+            this->broadcasted = broadcasted;
+        }
+
+        bool isBroadcasted() {
+            return this->broadcasted;
+        }
+
     protected:
         // Score
         float fitness;
@@ -102,6 +111,8 @@ namespace GeneLabCore {
         QString date;
         // The executant
         QString worker;
+        // Broadcasted online already ?
+        bool broadcasted;
     };
 }
 

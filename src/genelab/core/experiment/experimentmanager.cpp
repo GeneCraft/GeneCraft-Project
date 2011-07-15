@@ -110,16 +110,17 @@ namespace GeneLabCore {
         shapesFactory   = new btShapesFactory();
         creatureFactory = new CreatureFactory();
         mutations       = exp->getMutationsManager();
-        online = false;
-        this->bestResultsStored = 100;
-        this->randomResultsStored = 100;
-        this->popSize = 10;
-        this->maxGen = 10;
+        online = true;
+        this->bestResultsStored = 20;
+        this->randomResultsStored = 20;
+        this->popSize = 3;
+        this->maxGen = 2;
         this->probFromBestsPop     = 0.1;
         this->probFromBestsResult  = 0.1;
         this->probFromRandomNew    = 0.1;
         this->probFromRandomPop    = 0.1;
         this->probFromRandomResult = 0.1;
+        this->workerName = "lol";
 
         // The world to experiment inside
         world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
@@ -243,9 +244,12 @@ namespace GeneLabCore {
 
             if(this->lastModifiedResultLoaded < fileInfo.lastModified()) {
                 qDebug() << "new result : " << f;
-                newLastModified = fileInfo.lastModified();
             } else {
                 break;
+            }
+
+            if(newLastModified < fileInfo.lastModified()){
+                newLastModified = fileInfo.lastModified();
             }
 
             JsonFile* file = new JsonFile(results.absoluteFilePath(f));
@@ -254,7 +258,7 @@ namespace GeneLabCore {
             Result* r = Result::loadResult(result, valid);
             r->setRessource(file);
             if(valid) {
-                qDebug() << "valid result from " << f;
+                qDebug() << "valid result from " << f << fileInfo.lastModified();
                 qDebug() << r->getDate();
                 this->addResult(r);
             } else {
@@ -283,27 +287,42 @@ namespace GeneLabCore {
         delete r;
         QVariantMap results = data.toMap();
         QVariantList rows = results["rows"].toList();
+        QVariantList ids;
         foreach(QVariant row, rows) {
             bool valid = false;
             QString id = row.toMap()["value"].toList()[4].toString();
             if(id > lastLoadedId) {
                 lastLoadedId = id;
             }
-            Ressource* re = new DbRecord(db, id);
-            QVariant genome = re->load();
-            Result* r = Result::loadResult(genome, valid);
-            r->setRessource(re);
+            ids.append(id);
+        }
+        QVariantMap postData;
+        postData.insert("keys", ids);
+        qDebug() << postData;
+        Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
+        QVariant genomes = re->load();
+
+        QVariantMap genomesMap = genomes.toMap();
+        QVariantList genomesList = genomesMap["rows"].toList();
+
+        foreach(QVariant genomeResult, genomesList) {
+            QVariant genome = genomeResult.toMap()["doc"];
+            bool valid;
+            Result* result = Result::loadResult(genome, valid);
             if(valid) {
                 qDebug() << "valid result from " << id;
-                qDebug() << r->getDate() << r->getFitness() << r->getWorker();
-                this->addResult(r);
+                qDebug() << result->getDate() << result->getFitness() << result->getWorker();
+                result->setBroadcasted(true);
+                this->addResult(result);
                 cptLoaded++;
             } else {
                 qDebug() << "invalid file format";
             }
 
-            delete r;
+            delete result;
         }
+        delete re;
+
         return cptLoaded;
     }
 
@@ -320,6 +339,7 @@ namespace GeneLabCore {
         QVariantMap results = data.toMap();
         QVariantList rows = results["rows"].toList();
         QString newLastLoadedId = lastLoadedId;
+        QVariantList ids;
         foreach(QVariant row, rows) {
             bool valid = false;
             QString id = row.toMap()["value"].toList()[4].toString();
@@ -331,22 +351,34 @@ namespace GeneLabCore {
             if(id > newLastLoadedId) {
                 newLastLoadedId = id;
             }
+            ids.append(id);
+        }
 
-            Ressource* re = new DbRecord(db, id);
-            QVariant genome = re->load();
-            Result* r = Result::loadResult(genome, valid);
-            r->setRessource(re);
+        QVariantMap postData;
+        postData.insert("keys", ids);
+        qDebug() << postData;
+        Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
+        QVariant genomes = re->load();
+
+        QVariantMap genomesMap = genomes.toMap();
+        QVariantList genomesList = genomesMap["rows"].toList();
+
+        foreach(QVariant genomeResult, genomesList) {
+            QVariant genome = genomeResult.toMap()["doc"];
+            bool valid;
+            Result* result = Result::loadResult(genome, valid);
             if(valid) {
-                qDebug() << "valid result from ";
-                qDebug() << r->getDate();
-                this->addResult(r);
+                qDebug() << "valid result from " << id;
+                qDebug() << result->getDate() << result->getFitness() << result->getWorker();
+                result->setBroadcasted(true);
+                this->addResult(result);
             } else {
                 qDebug() << "invalid file format";
             }
 
-            delete r;
+            delete result;
         }
-
+        delete re;
         lastLoadedId = newLastLoadedId;
     }
 
@@ -387,6 +419,7 @@ namespace GeneLabCore {
                 // Serialisation
                 QVariant genome = e->serialize();
                 delete e;
+                delete family;
                 return genome;
             }
         }
@@ -497,7 +530,11 @@ namespace GeneLabCore {
             Entity *e = this->spawnEntity(r->getGenome());
             bool stable, simulated;
             float fitness;
-            stable = this->stabilizeEntity(e);
+
+            if(exp->getOnlyIfEntityIsStable())
+                stable = this->stabilizeEntity(e);
+            else
+                stable = true;
 
             if(stable)
                 simulated = this->simulateEntity(e);
@@ -522,7 +559,7 @@ namespace GeneLabCore {
       */
     void ExperimentManager::save() {
         foreach(Result* r, activePop) {
-            if(r->getFitness() > 0.0) {
+            if(r->getFitness() >= 0.0) {
 
                 if(r->getRessource() != NULL)
                     continue;
@@ -539,16 +576,26 @@ namespace GeneLabCore {
       */
     void ExperimentManager::broadcastResults() {
         // Neede to sort
-        qSort(bestResults.begin(), bestResults.end(), myLessThan);
+        qSort(activePop.begin(), activePop.end(), myLessThan);
 
+        QVariantList docsList;
         foreach(Result* result, activePop) {
-            if(result->getRessource() != NULL)
+            if(result->isBroadcasted() || result->getFitness() < 0.0)
                 continue;
 
-            result->save(new DbRecord(db, ""));
-            this->addResult(result);
-            qDebug() << "saved !";
+            qDebug() << "broadcast : " << result->getDate() << result->getFitness();
+
+            docsList.append(result->serialize());
+            result->setBroadcasted(true);
         }
+
+        QVariantMap postData;
+        postData.insert("docs", docsList);
+        DbRecord* r = new DbRecord(db, "_bulk_docs");
+        r->save(postData);
+        delete r;
+
+        qDebug() << "saved !";
     }
 
 

@@ -12,6 +12,11 @@ namespace GeneLabCore {
     void Result::save(Ressource * r) {
         ressource = r;
 
+        ressource->save(this->serialize());
+    }
+
+    QVariant Result::serialize() {
+
         QVariantMap resultData;
         resultData.insert("type", "result");
         resultData.insert("experiment", exp);
@@ -20,7 +25,7 @@ namespace GeneLabCore {
         resultData.insert("date", date);
         resultData.insert("worker", worker);
 
-        ressource->save(resultData);
+        return resultData;
     }
 
     int cptResult = 0;
@@ -32,6 +37,7 @@ namespace GeneLabCore {
         this->date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
         this->genome = QVariant();
         this->worker = "";
+        this->broadcasted = false;
     }
 
     Result::~Result() {
@@ -51,6 +57,7 @@ namespace GeneLabCore {
         this->ressource = NULL;
         this->date = date;
         this->worker = worker;
+        this->broadcasted = false;
     }
 
     /**
@@ -63,6 +70,7 @@ namespace GeneLabCore {
         this->ressource = NULL;
         this->date = r.date;
         this->worker = r.worker;
+        this->broadcasted = r.broadcasted;
     }
 
 
@@ -76,6 +84,7 @@ namespace GeneLabCore {
         this->ressource = NULL;
         this->date = r.date;
         this->worker = r.worker;
+        this->broadcasted = r.broadcasted;
     }
 
     Result* Result::loadResult(QVariant data, bool& ok) {
