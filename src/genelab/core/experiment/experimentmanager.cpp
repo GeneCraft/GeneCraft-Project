@@ -55,7 +55,7 @@ namespace GeneLabCore {
 
     //protected
     void ExperimentManager::load(QVariant workerData) {
-        db.dbName = "/db/genecraft/";
+        db.dbName = "db/genecraft";
         db.port = 80;
         db.url = "http://www.genecraft-project.org";
 
@@ -113,16 +113,16 @@ namespace GeneLabCore {
         creatureFactory = new CreatureFactory();
         mutations       = exp->getMutationsManager();
         online = true;
-        this->bestResultsStored = 20;
-        this->randomResultsStored = 20;
-        this->popSize = 3;
-        this->maxGen = 2;
-        this->probFromBestsPop     = 0.1;
-        this->probFromBestsResult  = 0.1;
+        this->bestResultsStored = 200;
+        this->randomResultsStored = 1;
+        this->popSize = 40;
+        this->maxGen = 200;
+        this->probFromBestsPop     = 0.3;
+        this->probFromBestsResult  = 0.3;
         this->probFromRandomNew    = 0.1;
-        this->probFromRandomPop    = 0.1;
-        this->probFromRandomResult = 0.1;
-        this->workerName = "lol";
+        this->probFromRandomPop    = 0.2;
+        this->probFromRandomResult = 0.0;
+        this->workerName = "redsguest" + QString::number(time(NULL));
 
         // The world to experiment inside
         world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
@@ -594,7 +594,7 @@ namespace GeneLabCore {
 
         QVariantList docsList;
         foreach(Result* result, activePop) {
-            if(result->isBroadcasted() || result->getFitness() < 0.0)
+            if(result->isBroadcasted() || result->getFitness() < 10.0)
                 continue;
 
             qDebug() << "broadcast : " << result->getDate() << result->getFitness();

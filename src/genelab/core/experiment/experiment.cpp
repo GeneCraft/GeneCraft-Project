@@ -49,7 +49,7 @@ Experiment::Experiment() : ressource(NULL){
 
         // seed TODO
         seedInfo.insert("type", "family");
-        seedInfo.insert("familyName", "spider");
+        seedInfo.insert("familyName", "ant");
     }
 
     QVariant Experiment::serialize() {
