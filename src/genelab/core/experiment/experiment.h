@@ -50,11 +50,11 @@ namespace GeneLabCore {
         int getDuration() { return this->duration; }
         void setDuration(int duration) { this->duration = duration; }
 
-        // ...
+        // The time to wait entity's stability (before starting experiment)
         int getTimeToWaitForStability() { return this->timeToWaitForStability; }
         void setTimeToWaitForStability(int timeToWaitForStability) { this->timeToWaitForStability = timeToWaitForStability; }
 
-        // ...
+        // Need stability ?
         bool getOnlyIfEntityIsStable() { return this->onlyIfEntityIsStable; }
         void setOnlyIfEntityIsStable(bool onlyIfEntityIsStable) { this->onlyIfEntityIsStable = onlyIfEntityIsStable; }
 
@@ -76,6 +76,13 @@ namespace GeneLabCore {
 
         QVariantMap getSeedInfo() { return this->seedInfo; }
 
+        // -----------
+        // -- Other --
+        // -----------
+        bool hasRessource() { return ressource != NULL; }
+        Ressource* getRessource() { return ressource; }
+        void setRessource(Ressource* ressource) { this->ressource = ressource; }
+
     protected:
 
         // Information
@@ -86,7 +93,7 @@ namespace GeneLabCore {
         QDateTime dateOfCreation;
 
         // file
-        Ressource* expFile;
+        Ressource* ressource;
 
         // Simulation
         int duration;

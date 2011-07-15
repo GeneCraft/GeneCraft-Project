@@ -24,8 +24,10 @@ namespace GeneLabCore {
 
         /**
           * Save data to ressource
+          *
+          * @return 0 if ok, else error code.
           */
-        virtual void save(QVariant data) = 0;
+        virtual int save(QVariant data) = 0;
 
         /**
           * Create a ressource from a ressource metadata

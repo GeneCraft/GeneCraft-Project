@@ -9,12 +9,11 @@
 #include "ui/widgets/entities/brainpropertiescontroller.h"
 #include "ui/widgets/entities/statisticspropertiescontroller.h"
 #include "ui/widgets/entities/entitypropertiescontroller.h"
+#include "widgets/experiments/experimentspropertiescontroller.h"
 
 namespace Ui {
     class CreatureViewer;
 }
-
-using namespace GeneLabCore;
 
 /**
  * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
@@ -57,13 +56,13 @@ public slots:
     void boneSelected(Bone* bone);
     void fixationSelected(Fixation* fix);
 
-
     void addRandomEntity();
     void createMutationSample();
     void openExperimentPropertiesController();
 
     // physics
     void togglePhysics();
+    void setExperiment(GeneLabCore::Experiment* experiment);
 
 signals:
 
@@ -99,6 +98,9 @@ private:
     BonePropertiesController *bonePropertiesController;
     StatisticsPropertiesController *statsPropertiesController;
     BrainPropertiesController *brainPropertiesController;
+
+    Experiment *experiment;
+    ExperimentsPropertiesController *epc;
 
 private slots:
 

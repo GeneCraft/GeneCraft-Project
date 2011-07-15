@@ -26,6 +26,7 @@ IntegerMutationController::IntegerMutationController(IntegerMutation *mutation, 
     ui->sMinIncr->setValue(mutation->minIncr);
     ui->sMaxIncr->setValue(mutation->maxIncr);
     ui->cbName->setChecked(mutation->enable);
+    nameToggled(mutation->enable);
 }
 
 void IntegerMutationController::createForm(QString name){
@@ -58,9 +59,11 @@ void IntegerMutationController::save() {
 }
 
 void IntegerMutationController::nameToggled(bool checked){
-    ui->sProbability->setEnabled(checked);
-    ui->sMinIncr->setEnabled(checked);
-    ui->sMaxIncr->setEnabled(checked);
+    ui->fForm->setEnabled(checked);
+
+    QFont f(ui->cbName->font());
+    f.setBold(checked);
+    ui->cbName->setFont(f);
 }
 
 void IntegerMutationController::probabilityChanged(int value){

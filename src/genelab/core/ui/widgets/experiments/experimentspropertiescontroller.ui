@@ -87,19 +87,6 @@
        <item row="1" column="1">
         <widget class="QLineEdit" name="leId"/>
        </item>
-       <item row="0" column="2">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="1">
         <widget class="QLabel" name="lDateOfCreation">
          <property name="text">
@@ -151,16 +138,16 @@
        <string>Simulation</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Starting</string>
+          <string>Before starting</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0" colspan="3">
            <widget class="QCheckBox" name="cbOnlyIfEntityIsStable">
             <property name="text">
-             <string>Only if creature is stable</string>
+             <string>Entity need to be stable before starting</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -210,7 +197,7 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Ending</string>
@@ -226,7 +213,7 @@
           <item row="1" column="0" colspan="4">
            <widget class="QCheckBox" name="cbStopIfEntityIsNotInOnePiece">
             <property name="text">
-             <string>Stop if entity is not in one piece (fitness : -1)</string>
+             <string>Stop if entity is not in one piece (bone lost). In this case, fitness = -1</string>
             </property>
            </widget>
           </item>
@@ -266,7 +253,7 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -278,6 +265,27 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>A simulation represents the period in which the entity will be evaluated. The number of simulations in an evolution experience are defined in the parameters of the &quot;GeneCraft Worker&quot; program.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="margin">
+          <number>10</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

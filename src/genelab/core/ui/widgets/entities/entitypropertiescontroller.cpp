@@ -84,12 +84,12 @@ void EntityPropertiesController::shapeUpdated(){
 
 void EntityPropertiesController::boneSelected(Bone *bone)
 {
-    setEntity(bone->getEntity(),bone->getRigidBody());
+    setEntity(bone->getEntity(),bone);
 }
 
 void EntityPropertiesController::fixationSelected(Fixation *fixation)
 {
-    setEntity(fixation->getEntity(),fixation->getRigidBody());
+    setEntity(fixation->getEntity());
 }
 
 void setupBonesProperties(Fixation *fixation, int action)
@@ -158,7 +158,7 @@ void EntityPropertiesController::resetBonesProperties()
        recurciveResetBonesProperties(entity->getShape()->getRoot());
 }
 
-void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selectedBody)
+void EntityPropertiesController::setEntity(Entity *entity, Bone *bone)
 {
     this->entity = entity;
 
@@ -172,7 +172,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         // Bones
         Tools::clearTreeWidget(this->ui->twBodyTree);
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
-            setupBodyTree(entity->getShape()->getRoot(),selectedBody);
+            setupBodyTree(entity->getShape()->getRoot(),bone);
 
         this->setEnabled(true);
     }
@@ -180,7 +180,7 @@ void EntityPropertiesController::setEntity(Entity *entity, btRigidBody * selecte
         this->setEnabled(false);
 }
 
-void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem)
+void EntityPropertiesController::setupBodyTree(Fixation * fixation, Bone *selectedBone, QTreeWidgetItem *rootItem)
 {
     QList<Bone *> bones = fixation->getBones();
 
@@ -197,10 +197,7 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
 //        rootItem->setIcon(0,QIcon(":/img/icons/fixation"));
     }
 
-    Bone *bone;
-    for(int i=0;i<bones.size();++i)
-    {
-        bone = bones.at(i);
+    foreach(Bone *bone, bones) {
 
         QTreeWidgetItem *boneItem = new BoneTreeWidgetItem(rootItem,bone);
         //boneItem->setText(0,QString("Bone + Fix")); //.append(QString().setNum(i)));
@@ -210,12 +207,12 @@ void EntityPropertiesController::setupBodyTree(Fixation * fixation, btRigidBody 
             txt.append(" [").append(QString().setNum(bone->getEndFixation()->getBones().size()).append("]"));
         boneItem->setText(0,txt);
 
-        if(bone->getRigidBody() == selectedBody) {
-             emit sSensorsSelected(bone->getEndFixation()->getSensors());
+        if(bone == selectedBone) {
+             //emit sSensorsSelected(bone->getEndFixation()->getSensors());
              ui->twBodyTree->setCurrentItem(boneItem);
         }
 
-        setupBodyTree(bones.at(i)->getEndFixation(),selectedBody,boneItem);
+        setupBodyTree(bone->getEndFixation(),selectedBone,boneItem);
     }
 }
 
@@ -230,10 +227,9 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int)
     }
 
     BoneTreeWidgetItem * boneItem = dynamic_cast<BoneTreeWidgetItem*>(item);
-    if (boneItem )
+    if (boneItem)
     {
         emit sSensorsSelected(boneItem->bone->getEndFixation()->getSensors());
-        emit sFixationSelected(boneItem->bone->getEndFixation());
         emit sBoneSelected(boneItem->bone);
         return;
     }

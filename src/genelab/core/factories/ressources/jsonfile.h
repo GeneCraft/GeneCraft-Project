@@ -12,7 +12,7 @@ class JsonFile : public Ressource
 public:
     explicit JsonFile(QString filename, QObject *parent = 0);
     virtual QVariant load();
-    virtual void save(QVariant data);
+    virtual int save(QVariant data);
 
 public:
     QFile f;

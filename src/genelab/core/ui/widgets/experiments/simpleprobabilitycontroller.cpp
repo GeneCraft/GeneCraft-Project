@@ -22,6 +22,7 @@ SimpleProbabilityController::SimpleProbabilityController(SimpleProbabilityMutati
 
     ui->sProbability->setValue(mutation->probability * PROBABILITY_PRECISION);
     ui->cbName->setChecked(mutation->enable);
+    nameToggled(mutation->enable);
 }
 
 SimpleProbabilityController::~SimpleProbabilityController()
@@ -38,7 +39,11 @@ void SimpleProbabilityController::save() {
 }
 
 void SimpleProbabilityController::nameToggled(bool checked){
-    ui->sProbability->setEnabled(checked);
+    ui->fForm->setEnabled(checked);
+
+    QFont f(ui->cbName->font());
+    f.setBold(checked);
+    ui->cbName->setFont(f);
 }
 
 void SimpleProbabilityController::probabilityChanged(int value){

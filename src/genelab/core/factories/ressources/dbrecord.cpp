@@ -35,7 +35,7 @@ namespace GeneLabCore {
         return QVariant();
     }
 
-    void DbRecord::save(QVariant data) {
+    int DbRecord::save(QVariant data) {
         QString url = QString("%1:%2/%3").arg(db.url, QString::number(db.port), db.dbName);
 
         if(this->id != "")
@@ -70,6 +70,8 @@ namespace GeneLabCore {
         }
 
         r->deleteLater();
+
+        return this->error;
     }
 
     void DbRecord::request(QString url, RequestType verb, QString data) {

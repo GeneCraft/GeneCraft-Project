@@ -4,7 +4,7 @@
 
 namespace GeneLabCore {
 
-    Experiment::Experiment(){
+Experiment::Experiment() : ressource(NULL){
 
         // information
         id = "NoId";

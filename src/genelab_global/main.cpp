@@ -19,6 +19,19 @@
 #include <iostream>
 using namespace std;
 
+QApplication *a;
+
+void loadStyleSheet(const QString &sheetName)
+{
+    QFile file(/*":/qss/" + */sheetName + ".qss");
+
+    if(file.exists()){
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        a->setStyleSheet(styleSheet);
+    }
+}
+
 int main(int argc, char *argv[])
 {
     // ----------------------------------------------------------------------------
@@ -44,10 +57,14 @@ int main(int argc, char *argv[])
     getcwd(newPath, 500);
     qDebug() << "Current Path: " << directoryPath << newPath;
     #endif
-    QApplication a(argc, argv);
+    a = new QApplication(argc, argv);
 
     CreatureViewerWindow cw;
     cw.showMaximized();
 
-    return a.exec();
+    loadStyleSheet("styleSheet");
+
+    return a->exec();
 }
+
+

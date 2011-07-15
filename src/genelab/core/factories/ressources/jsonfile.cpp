@@ -13,11 +13,13 @@ namespace GeneLabCore {
     }
 
 
-    void JsonFile::save(QVariant data) {
+    int JsonFile::save(QVariant data) {
         f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
         QTextStream out(&f);
         out << QxtJSON::stringify(data);
         f.close();
+
+        return f.error();
     }
 
     QVariant JsonFile::load() {

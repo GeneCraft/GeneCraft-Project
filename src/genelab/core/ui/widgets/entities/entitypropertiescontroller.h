@@ -35,7 +35,7 @@ signals:
 
 public slots:
 
-    void setEntity(Entity *entity, btRigidBody * selectedBody = 0);
+    void setEntity(Entity *entity, Bone *selectedBone = NULL);
     void setOutFromNormalPosition();
     void setOutFromNone();
     void setOutFromBrain();
@@ -55,7 +55,7 @@ private:
 
     Ui::EntityPropertiesController *ui;
 
-    void setupBodyTree(Fixation * fixation, btRigidBody * selectedBody, QTreeWidgetItem *rootItem = 0);
+    void setupBodyTree(Fixation * fixation, Bone *selectedBone, QTreeWidgetItem *rootItem = 0);
 
     Entity *entity;
 };

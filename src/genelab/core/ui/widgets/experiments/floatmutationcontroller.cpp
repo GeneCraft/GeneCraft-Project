@@ -20,6 +20,7 @@ FloatMutationController::FloatMutationController(FloatMutation *mutation, QStrin
     ui->sMinFactor->setValue(mutation->minFact * FACTOR_PRECISION);
     ui->sMaxFactor->setValue(mutation->maxFact * FACTOR_PRECISION);
     ui->cbName->setChecked(mutation->enable);
+    nameToggled(mutation->enable);
 }
 
 void FloatMutationController::createForm(QString name){
@@ -64,9 +65,12 @@ void FloatMutationController::save() {
 //}
 
 void FloatMutationController::nameToggled(bool checked){
-    ui->sProbability->setEnabled(checked);
-    ui->sMinFactor->setEnabled(checked);
-    ui->sMaxFactor->setEnabled(checked);
+
+    ui->fForm->setEnabled(checked);
+
+    QFont f(ui->cbName->font());
+    f.setBold(checked);
+    ui->cbName->setFont(f);
 }
 
 void FloatMutationController::probabilityChanged(int value){

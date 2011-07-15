@@ -60,6 +60,10 @@ public:
     // Fixation radius mutation
     FloatMutation* fixRadius;
 
+    // New sensor
+    SimpleProbabilityMutation* newSensor;
+
+    SimpleProbabilityMutation* removeSensor;
 
     // BRAIN
 

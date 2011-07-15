@@ -17,6 +17,9 @@ public:
     ExperimentsPropertiesController(GeneLabCore::Experiment *experiment, QWidget *parent = 0);
     ~ExperimentsPropertiesController();
 
+signals:
+    void experimentLoaded(GeneLabCore::Experiment *experiment);
+
 public slots:
     void setupForm();
     void save();

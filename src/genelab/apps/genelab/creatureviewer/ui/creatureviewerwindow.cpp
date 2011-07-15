@@ -39,7 +39,6 @@
 #include "widgets/entities/fixationpropertiescontroller.h"
 #include "widgets/entities/bonepropertiescontroller.h"
 #include "widgets/entities/entitypropertiescontroller.h"
-#include "widgets/experiments/experimentspropertiescontroller.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -67,17 +66,17 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include "experiment/experiment.h"
 #include "mutation/mutationsmanager.h"
-
 
 using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CreatureViewer), selectedEntity(NULL), selectedBone(NULL), selectedFix(NULL)
+    ui(new Ui::CreatureViewer), selectedEntity(NULL), selectedBone(NULL), selectedFix(NULL), epc(NULL)
 {
     ui->setupUi(this);
-    this->init();
+    init();
 }
 
 void CreatureViewerWindow::init() {
@@ -85,6 +84,7 @@ void CreatureViewerWindow::init() {
     factory = new btoFactory(this->ui->centralwidget, (unsigned long) this->winId() );
     creatureFactory = new CreatureFactory();
     worldFactory    = new btoWorldFactory();
+    experiment      = new Experiment();
 
     // ----------
     // -- Menu --
@@ -114,7 +114,7 @@ void CreatureViewerWindow::init() {
     QAction *aRemoveAllCreatures =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all"),QString(tr("Remove all creatures")));
     ui->toolBar->addSeparator();
     QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
-    QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/experiment"),QString(tr("Edit current mutations params")));
+    QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/experiment"),QString(tr("Edit current experiment")));
     ui->toolBar->addSeparator();
 
     // step manager
@@ -267,9 +267,19 @@ void CreatureViewerWindow::init() {
 void CreatureViewerWindow::openExperimentPropertiesController(){
 
     // TODO STATIC
-    ExperimentsPropertiesController * epc = new ExperimentsPropertiesController();
-    epc->show();
+    if(epc == NULL) {
+        epc = new ExperimentsPropertiesController(experiment);
+        connect(epc, SIGNAL(experimentLoaded(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
+    }
 
+    epc->show();
+}
+
+void CreatureViewerWindow::setExperiment(Experiment* experiment)
+{
+    this->experiment = experiment;
+
+    // TODO reload world...
 }
 
 void CreatureViewerWindow::loadEntityFromDb() {
@@ -383,9 +393,6 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     Entity *e = NULL;
     btVector3 originPos = originEntity->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin();
 
-    // Mutations tests
-    MutationsManager *mm = new MutationsManager(QVariant());
-
     //originEntity->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     //entitiesEngine->addEntity(originEntity);
@@ -399,7 +406,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // mutations
     for(int i = 0; i < nbCreatures; i++) {
 
-        QVariant newGenome = mm->mutateEntity(originGenome);
+        QVariant newGenome = experiment->getMutationsManager()->mutateEntity(originGenome);
 
         btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 

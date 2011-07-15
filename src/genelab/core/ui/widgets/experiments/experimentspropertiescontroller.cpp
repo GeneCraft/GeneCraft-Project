@@ -4,6 +4,7 @@
 #include <QWhatsThis>
 #include <QSettings>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "floatmutationcontroller.h"
 #include "integermutationcontroller.h"
@@ -11,7 +12,6 @@
 #include "experiment/experiment.h"
 #include "mutation/mutationsmanager.h"
 #include "ressources/jsonfile.h"
-
 
 using namespace GeneLabCore;
 
@@ -24,9 +24,6 @@ ExperimentsPropertiesController::ExperimentsPropertiesController(QWidget *parent
 
     Experiment * exp = new Experiment();
     setExperiment(exp);
-
-    JsonFile *file = new JsonFile("experimentTest.exp");
-    file->save(exp->serialize());
 }
 
 ExperimentsPropertiesController::ExperimentsPropertiesController(Experiment *experiment, QWidget *parent) :
@@ -118,7 +115,9 @@ ExperimentsPropertiesController::~ExperimentsPropertiesController() {
 
 void ExperimentsPropertiesController::save() {
 
-    // Save all data
+    // -----------------------
+    // -- Update structures --
+    // -----------------------
 
     // Information
     experiment->setId(ui->leId->text());
@@ -146,25 +145,43 @@ void ExperimentsPropertiesController::save() {
     constValue->save();
     newBrainTree->save();
 
+    // ------------
+    // -- Saving --
+    // ------------
 
-    // Short circuit if already save / load from something
-//    if(selectedEntity->getRessource()) {
-//        selectedEntity->getRessource()->save(selectedEntity->serialize());
-//        simulationManager->start();
-//        return;
-//    }
+    int code;
+    if(experiment->hasRessource()) {
 
-    const QString DEFAULT_DIR_KEY("default_dir");
-    QSettings mySettings;
-    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Experiment (*.exp)");
+        // To exp ressource
+        Ressource* to = experiment->getRessource();
+        code = to->save(experiment->serialize());
+    }
+    else {
 
-    if (!selectedFile.isEmpty()) {
-        QDir CurrentDir;
-        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+        // To new file
+        const QString DEFAULT_DIR_KEY("default_dir");
+        QSettings mySettings;
+        QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Experiment (*.exp)");
 
-        // Load Generic Entity
-        Ressource* to = new JsonFile(selectedFile);
-        to->save(experiment->serialize());
+        if (!selectedFile.isEmpty()) {
+            QDir CurrentDir;
+            mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+
+            Ressource* to = new JsonFile(selectedFile);
+
+            code = to->save(experiment->serialize());
+
+            if(code == 0)
+                experiment->setRessource(to);
+        }
+    }
+
+    // Error
+    if(code != 0) {
+        QMessageBox::warning(this, "Impossible to save experiment",
+        QString("Impossible to save experiment : error code : ") + QString::number(code));
+
+        experiment->setRessource(NULL);
     }
 }
 
@@ -182,8 +199,16 @@ void ExperimentsPropertiesController::loadExp() {
         Ressource* from = new JsonFile(selectedFile);
         QVariant exp = from->load();
 
+        // TODO Error ???
+//        if(exp.toMap().contains("Error")){
+//        }
+//        else {
+//        }
+
         Experiment *experiment = new Experiment(exp);
+        experiment->setRessource(from);
         setExperiment(experiment);
+        emit experimentLoaded(experiment);
     }
 }
 

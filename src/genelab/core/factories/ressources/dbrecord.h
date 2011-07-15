@@ -21,7 +21,7 @@ namespace GeneLabCore {
         explicit DbRecord(DataBase db, QString id, QObject *parent = 0);
 
         virtual QVariant load();
-        virtual void save(QVariant data);
+        virtual int save(QVariant data);
 
         bool error;
         QString errorString;
