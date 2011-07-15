@@ -594,7 +594,7 @@ namespace GeneLabCore {
         QVariantList docsList;
         foreach(Result* result, activePop) {
             // Only broadcast if less than the best of stored results
-            if(result->isBroadcasted() || result->getFitness() < bestResults.last()->fitness)
+            if(result->isBroadcasted() || result->getFitness() < bestResults.last()->getFitness())
                 continue;
 
             qDebug() << "broadcast : " << result->getDate() << result->getFitness();
