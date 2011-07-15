@@ -113,15 +113,15 @@ namespace GeneLabCore {
         creatureFactory = new CreatureFactory();
         mutations       = exp->getMutationsManager();
         online = true;
-        this->bestResultsStored = 200;
-        this->randomResultsStored = 1;
+        this->bestResultsStored = 150;
+        this->randomResultsStored = 150;
         this->popSize = 40;
-        this->maxGen = 200;
-        this->probFromBestsPop     = 0.3;
+        this->maxGen = 100;
+        this->probFromBestsPop     = 0.2;
         this->probFromBestsResult  = 0.3;
         this->probFromRandomNew    = 0.1;
         this->probFromRandomPop    = 0.2;
-        this->probFromRandomResult = 0.0;
+        this->probFromRandomResult = 0.2;
         this->workerName = "redsguest" + QString::number(time(NULL));
 
         // The world to experiment inside

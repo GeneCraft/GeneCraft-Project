@@ -67,8 +67,8 @@ namespace GeneLabCore {
 
         // sensors
         sensorsMutation = new StructuralMutation();
-        sensorsMutation->addProbability = 0.1f;
-        sensorsMutation->deleteProbability = 0.1f;
+        sensorsMutation->addProbability = 0.f;
+        sensorsMutation->deleteProbability = 0.f;
         sensorsMutation->replaceProbability = 1.f;
         sensorStructuralList = new StructuralList();
         sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
@@ -147,7 +147,7 @@ namespace GeneLabCore {
         // TODO !!!
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
-        boneAngularLimits->probability                  = 0.1;
+        boneAngularLimits->probability                  = -0.1;
         boneAngularLimits->axisMutation->probability    = -0.1;
         boneAngularLimits->axisMutation->minFact        = -0.01;
         boneAngularLimits->axisMutation->maxFact        =  0.01;
@@ -156,8 +156,8 @@ namespace GeneLabCore {
 
         // sensors
         sensorsMutation = new StructuralMutation();
-        sensorsMutation->addProbability = 0.1f;
-        sensorsMutation->deleteProbability = 0.1f;
+        sensorsMutation->addProbability = 0.f;
+        sensorsMutation->deleteProbability = 0.f;
         sensorsMutation->replaceProbability = 1.f;
         sensorStructuralList = new StructuralList();
         sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
