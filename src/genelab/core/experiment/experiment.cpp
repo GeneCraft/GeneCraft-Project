@@ -24,7 +24,7 @@ Experiment::Experiment() : ressource(NULL){
 
         // seed
         seedInfo.insert("type", "family");
-        seedInfo.insert("familyName", "spider");
+        seedInfo.insert("familyName", "ant");
     }
 
     Experiment::Experiment(QVariant data) {
