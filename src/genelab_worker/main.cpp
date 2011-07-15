@@ -46,8 +46,6 @@
 
 using namespace GeneLabCore;
 
-
-
 int main(int argc, char *argv[])
 {
     qsrand(time(NULL));
@@ -63,11 +61,15 @@ int main(int argc, char *argv[])
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
 
-    Experiment* exp = new Experiment(QVariant());
-    ExperimentManager* expMan = new ExperimentManager(factory, exp, QVariant());
+    Ressource* experience_res = new JsonFile("spider.exp");
+    Ressource* worker_res = new JsonFile("myworker.exp");
+    QVariant expdata = experience_res->load();
+    QVariant workerdata = worker_res->load();
+    Experiment* exp = new Experiment(expdata);
+    ExperimentManager* expMan = new ExperimentManager(factory, exp, workerdata);
 
     expMan->experiment();
-    expMan->broadcastResults();
+    //expMan->broadcastResults();
 
     return a.exec();
 }

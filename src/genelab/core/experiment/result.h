@@ -17,7 +17,9 @@ namespace GeneLabCore {
           * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
           */
         Result(QString expId, float fitness, QVariant genome,
-               QString date = QDateTime::currentDateTime().toString());
+               QString workerName = "Anonymous",
+               QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
+               );
 
         /** Copy constructor */
         Result(const Result& r);
@@ -83,6 +85,10 @@ namespace GeneLabCore {
             this->date = date;
         }
 
+        QString getWorker() {
+            return worker;
+        }
+
     protected:
         // Score
         float fitness;
@@ -94,6 +100,8 @@ namespace GeneLabCore {
         QString exp;
         // The date
         QString date;
+        // The executant
+        QString worker;
     };
 }
 

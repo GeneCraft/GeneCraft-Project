@@ -15,7 +15,7 @@ namespace GeneLabCore {
 
         // simulation
         onlyIfEntityIsStable = true;
-        timeToWaitForStability = 1000;
+        timeToWaitForStability = 300;
         duration = 1200;
         stopIfEntityIsNotInOnePiece = true;
 

@@ -126,7 +126,6 @@ namespace GeneLabCore {
         // --------------------
         // -- BODY MUTATIONS --
         // --------------------
-
         boneLength = new FloatMutation(map["boneLength"]);
         boneRadius = new FloatMutation(map["boneRadius"]);
         fixRadius = new FloatMutation(map["fixRadius"]);

@@ -2,11 +2,20 @@
 #include "dbrecord.h"
 #include "jsonfile.h"
 #include <QVariantMap>
+#include <QDebug>
 
 namespace GeneLabCore {
+    int cptRessource = 0;
     Ressource::Ressource(QObject *parent) :
         QObject(parent)
     {
+        cptRessource++;
+        qDebug() << "res" << cptRessource;
+    }
+    Ressource::~Ressource() {
+
+        cptRessource--;
+        qDebug() << "res" <<cptRessource;
     }
 
 

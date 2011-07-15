@@ -17,18 +17,21 @@ namespace GeneLabCore {
         resultData.insert("experiment", exp);
         resultData.insert("fitness", (double)this->fitness);
         resultData.insert("genome", this->genome);
-        resultData.insert("date", QDateTime::currentDateTime().toString());
+        resultData.insert("date", date);
+        resultData.insert("worker", worker);
 
         ressource->save(resultData);
     }
 
+    int cptResult = 0;
     // Basic constructor
     Result::Result() {
         this->fitness = 0;
         this->ressource = NULL;
         this->exp = "";
-        this->date = "";
+        this->date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
         this->genome = QVariant();
+        this->worker = "";
     }
 
     Result::~Result() {
@@ -41,12 +44,13 @@ namespace GeneLabCore {
       * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
       */
     Result::Result(QString expId, float fitness, QVariant genome,
-           QString date) {
+           QString worker, QString date) {
         this->exp = expId;
         this->fitness = fitness;
         this->genome = genome;
         this->ressource = NULL;
         this->date = date;
+        this->worker = worker;
     }
 
     /**
@@ -56,8 +60,9 @@ namespace GeneLabCore {
         this->exp = r.exp;
         this->fitness = r.fitness;
         this->genome = r.genome;
-        this->ressource = r.ressource;
+        this->ressource = NULL;
         this->date = r.date;
+        this->worker = r.worker;
     }
 
 
@@ -68,8 +73,9 @@ namespace GeneLabCore {
         this->exp = r.exp;
         this->fitness = r.fitness;
         this->genome = r.genome;
-        this->ressource = r.ressource;
+        this->ressource = NULL;
         this->date = r.date;
+        this->worker = r.worker;
     }
 
     Result* Result::loadResult(QVariant data, bool& ok) {
@@ -81,18 +87,32 @@ namespace GeneLabCore {
         if(!ok)
             return new Result();
 
+        if(!dataMap.contains("genome")) {
+            ok = false;
+            return new Result();
+        }
+
+        if(!dataMap.contains("experiment")) {
+            ok = false;
+            return new Result();
+        }
+
+        if(!dataMap.contains("date")) {
+            ok = false;
+            return new Result();
+        }
+
+        QString worker;
+        if(!dataMap.contains("worker")) {
+            worker = "OldResult";
+        } else {
+
+            worker = dataMap["worker"].toString();
+        }
+
         QVariantMap genome = dataMap["genome"].toMap();
-        if(genome == QVariant())
-            return new Result();
-
-        QString exp = dataMap["experiment"].toString();
-        if(!ok || !dataMap.contains("experiment"))
-            return new Result();
-
-        QString date = dataMap["date"].toString();
-        if(!ok ||!dataMap.contains("date"))
-            return new Result();
-
-        return new Result(exp, fitness, genome, date);
+        QString exp        = dataMap["experiment"].toString();
+        QString date       = dataMap["date"].toString();
+        return new Result(exp, fitness, genome, worker, date);
     }
 }

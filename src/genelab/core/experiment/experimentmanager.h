@@ -1,6 +1,7 @@
 #ifndef EXPERIMENTMANAGER_H
 #define EXPERIMENTMANAGER_H
 
+#include "ressources/dbrecord.h"
 #include "experiment.h"
 #include "mutation/mutationsmanager.h"
 
@@ -30,12 +31,16 @@ namespace GeneLabCore {
           * Return the number of loaded results
           */
         int loadResults();
+        // During the simulation, synchro with other worker
+        void loadNewResults();
 
         /**
           * To load results from online database
           * Return the number of retrieved results
           */
         int retrieveResults();
+        // During the simulation, synchro with other worker
+        void retrieveNewResults();
 
         /**
           * To generate a new population from last population
@@ -113,6 +118,9 @@ namespace GeneLabCore {
         int bestResultsStored;
         int randomResultsStored;
 
+        QDateTime lastModifiedResultLoaded;
+        QString lastLoadedId;
+
         float probFromBestsResult;
         float probFromBestsPop;
         float probFromRandomResult;
@@ -126,6 +134,7 @@ namespace GeneLabCore {
         QList<Result*> activePop;
 
         QDir resultsDirectory;
+        DataBase db;
     };
 }
 

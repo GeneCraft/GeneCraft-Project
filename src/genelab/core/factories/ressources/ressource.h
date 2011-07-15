@@ -15,6 +15,7 @@ namespace GeneLabCore {
 
     public:
         explicit Ressource(QObject *parent = 0);
+        ~Ressource();
 
         /**
           * Load data from ressource

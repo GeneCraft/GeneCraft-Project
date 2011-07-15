@@ -19,8 +19,10 @@ namespace GeneLabCore {
             maxValue    = map["maxValue"].toDouble();
             enable      = map["enable"].toBool();
         }
-        else
-            qDebug() << Q_FUNC_INFO << "Wrong mutation type" << map["Type"].toInt();
+        else {
+            qDebug() << map;
+            qDebug() << Q_FUNC_INFO << "Wrong mutation type" << map["type"].toInt();
+        }
     }
 
     FloatMutation::FloatMutation()
