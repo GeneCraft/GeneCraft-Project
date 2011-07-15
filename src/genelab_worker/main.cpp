@@ -61,6 +61,25 @@ int main(int argc, char *argv[])
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
 
+    // Delete all fucking doc from database
+    /*DbRecord* r = new DbRecord(database, "_all_docs");
+    QVariant data = r->load();
+    QVariantMap docsMap = data.toMap();
+    QVariantList docsList = docsMap["rows"].toList();
+    foreach(QVariant doc, docsList) {
+        QVariantMap docMap = doc.toMap();
+        QString id = docMap["id"].toString();
+        if(id.size() == 32 && id.left(1) != "_" && id.left(1) != "S") {
+            qDebug() << id << "should be deleted";
+            DbRecord * r = new DbRecord(database, id);
+            r->deleteDoc(docMap["value"].toMap()["rev"].toString());
+            delete r;
+        }
+    }
+
+    return 0;*/
+
+
     Ressource* experience_res = new JsonFile("spider.exp");
     Ressource* worker_res = new JsonFile("myworker.exp");
     QVariant expdata = experience_res->load();
