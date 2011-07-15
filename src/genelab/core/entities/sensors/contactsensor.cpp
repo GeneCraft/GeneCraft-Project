@@ -10,7 +10,7 @@ namespace GeneLabCore {
 ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
 {
     typeName = "Contact sensor";
-    type = contact;
+    type = contactSensor;
 
     collided = new BrainIn(0,1);
     //world = fixation->getShapesFactory()->getWorld();

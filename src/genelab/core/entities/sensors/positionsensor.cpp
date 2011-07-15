@@ -10,7 +10,7 @@ PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(
     this->rootFix = rootFix;
 
     typeName = "Egocentric position sensor";
-    type = position;
+    type = positionSensor;
 
     // FIXME : max size of an entity is 10 in this case !
     // The best would be to pass the entity for computing its biggest member (root to end fix)

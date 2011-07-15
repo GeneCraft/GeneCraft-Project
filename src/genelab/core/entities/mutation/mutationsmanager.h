@@ -3,7 +3,8 @@
 
 #include <QVariant>
 #include <QStringList>
-#include <body/bone.h>
+#include <QMap>
+#include "body/bone.h"
 #include "mutation.h"
 #include "bonelimitsmutation.h"
 #include "genelabcoreclasses.h"
@@ -61,9 +62,8 @@ public:
     FloatMutation* fixRadius;
 
     // New sensor
-    SimpleProbabilityMutation* newSensor;
-
-    SimpleProbabilityMutation* removeSensor;
+    StructuralMutation *sensorsMutation;
+    StructuralList *sensorStructuralList;
 
     // BRAIN
 

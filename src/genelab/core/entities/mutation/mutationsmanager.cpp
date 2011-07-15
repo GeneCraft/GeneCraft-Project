@@ -13,6 +13,14 @@
 #include "brain/brainnode.h"
 #include "brain/brainfunctional.h"
 #include "simpleprobabilitymutation.h"
+#include "structuralmutation.h"
+#include "structurallist.h"
+
+// Sensors
+#include "sensors/accelerometersensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/positionsensor.h"
+#include "sensors/contactsensor.h"
 
 namespace GeneLabCore {
 
@@ -56,12 +64,17 @@ namespace GeneLabCore {
 
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
-        boneAngularLimits->probability                  = 0.1;
-        boneAngularLimits->axisMutation->probability    = -0.1;
-        boneAngularLimits->axisMutation->minFact        = -0.01;
-        boneAngularLimits->axisMutation->maxFact        =  0.01;
-        boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
-        boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
+
+        // sensors
+        sensorsMutation = new StructuralMutation();
+        sensorsMutation->addProbability = 0.1f;
+        sensorsMutation->deleteProbability = 0.1f;
+        sensorsMutation->replaceProbability = 1.f;
+        sensorStructuralList = new StructuralList();
+        sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
+        sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,2.0));
+        sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,3.0));
+        sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
 
         // ---------------------
         // -- BRAIN MUTATIONS --
@@ -140,6 +153,17 @@ namespace GeneLabCore {
         boneAngularLimits->axisMutation->maxFact        =  0.01;
         boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
         boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
+
+        // sensors
+        sensorsMutation = new StructuralMutation();
+        sensorsMutation->addProbability = 0.1f;
+        sensorsMutation->deleteProbability = 0.1f;
+        sensorsMutation->replaceProbability = 1.f;
+        sensorStructuralList = new StructuralList();
+        sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
+        sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,2.0));
+        sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,3.0));
+        sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
 
         // ---------------------
         // -- BRAIN MUTATIONS --
@@ -241,6 +265,8 @@ namespace GeneLabCore {
         // -- size --
         // ----------
 
+        //qDebug() << boneLength->enable << boneLength->probability;
+
         // length mutation
         boneLength->mutate(boneMap, "length");
 
@@ -319,32 +345,70 @@ namespace GeneLabCore {
         // Sensors mutations
         QVariantList sensorList = fixMap["sensors"].toList();
         QVariantList newSensorList;
+
+        // delete sensor
+        int nbSensors = sensorList.count();
+        for(int i=0;i<nbSensors;++i) {
+           if(sensorsMutation->checkDelete()) {
+                sensorList.removeAt(i);
+                i--;
+                nbSensors--;
+           }
+        }
+
+        // mutate sensor
         foreach(QVariant sensor, sensorList) {
             QVariantMap sensorMap = sensor.toMap();
             SensorType type = (SensorType)sensorMap["type"].toInt();
             switch(type) {
-                case accelerometer:
+                case accelerometerSensor:
                     sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"]));
                     sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"]));
                     sensorMap.insert("inputZ", mutateBrainIn(sensorMap["inputZ"]));
                     break;
-                case gyroscopic:
+                case gyroscopicSensor:
                     sensorMap.insert("inputPitch", mutateBrainIn(sensorMap["inputPitch"]));
                     sensorMap.insert("inputYaw",   mutateBrainIn(sensorMap["inputYaw"]));
                     sensorMap.insert("inputRoll",  mutateBrainIn(sensorMap["inputRoll"]));
                     break;
-                case position:
+                case positionSensor:
                     sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"]));
                     sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"]));
                     sensorMap.insert("inputZ", mutateBrainIn(sensorMap["inputZ"]));
                     break;
-                case contact:
+                case contactSensor:
                     sensorMap.insert("collisionInput", mutateBrainIn(sensorMap["collisionInput"]));
                     break;
             }
 
             newSensorList.append(sensorMap);
         }
+
+        // add sensor ?
+        if(sensorsMutation->checkAdd()) {
+
+            MutationElement *me = sensorStructuralList->pickOne();
+            QVariant newSensor;
+
+            switch(me->type) {
+                case accelerometerSensor:
+                    newSensor = AccelerometerSensor::generateEmpty();
+                    qDebug() << newSensor;
+                    break;
+                case gyroscopicSensor:
+
+                    break;
+                case positionSensor:
+
+                    break;
+                case contactSensor:
+
+                    break;
+            }
+
+            newSensorList.append(newSensor);
+        }
+
 
         fixMap.insert("sensors", newSensorList);
 

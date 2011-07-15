@@ -112,6 +112,8 @@ namespace GeneLabCore {
     class FloatMutation;
     class IntegerMutation;
     class SimpleProbabilityMutation;
+    class StructuralMutation;
+    class StructuralList;
 
     // ----------------
     // -- Ressources --

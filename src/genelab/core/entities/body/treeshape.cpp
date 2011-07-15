@@ -42,24 +42,24 @@ namespace GeneLabCore {
         foreach(QVariant sensor, fixGenotype.toMap()["sensors"].toList()) {
            QVariantMap sensorMap = sensor.toMap();
            switch((SensorType)sensorMap["type"].toInt()) {
-           case accelerometer: {
+           case accelerometerSensor: {
                AccelerometerSensor* s = new AccelerometerSensor(sensor, fix);
                fix->addSensor(s);
            }
                break;
-           case gyroscopic: {
+           case gyroscopicSensor: {
 
                GyroscopicSensor* s = new GyroscopicSensor(sensor, fix);
                fix->addSensor(s);
            }
                break;
-           case position:{
+           case positionSensor:{
 
                PositionSensor* s = new PositionSensor(sensor, this->root, fix);
                fix->addSensor(s);
            }
                break;
-           case contact:{
+           case contactSensor:{
 
                ContactSensor* s = new ContactSensor(sensor, fix);
                fix->addSensor(s);

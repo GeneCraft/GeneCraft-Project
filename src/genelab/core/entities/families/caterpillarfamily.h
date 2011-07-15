@@ -29,7 +29,7 @@ public:
     CaterpillarFamily(QVariant data, QObject *parent = 0);
 
     // To create an entity of this family
-    Entity* createEntity(btShapesFactory* factory, const btVector3 &position);
+    Entity* createEntity(btShapesFactory* factory, const btVector3 &positionSensor);
 
     // To serialize family
     QVariant serialize();

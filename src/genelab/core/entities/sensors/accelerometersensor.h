@@ -28,6 +28,9 @@ public:
     // To create from serialization data
     AccelerometerSensor(QVariant data, Fixation * fixation);
 
+    // To create an empty sensor
+    static QVariant generateEmpty();
+
     // To serialize
     virtual QVariant serialize();
 

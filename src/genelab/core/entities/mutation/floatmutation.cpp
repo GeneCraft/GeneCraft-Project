@@ -52,15 +52,15 @@ namespace GeneLabCore {
 
     void FloatMutation::mutate(QVariantMap &map, QString key){
 
-        float newValue = this->mutate(map.value(key).toDouble());
-        map.insert(key,QVariant((double)newValue));
+        float newValue = this->mutate((float)map.value(key).toDouble());
+        map.insert(key,(double)newValue);
 
     }
 
     float FloatMutation::mutate(float value) {
 
         // mutation ?
-        if(canMutate()) {
+        if(!canMutate()) {
             return value;
         }
 

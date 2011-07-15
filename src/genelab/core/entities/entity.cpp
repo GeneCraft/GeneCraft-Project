@@ -12,6 +12,7 @@
 
 #include "ressources/ressource.h"
 #include "body/bone.h"
+#include "tools.h"
 
 // Statistics
 #include "statistics/statisticsprovider.h"
@@ -133,9 +134,9 @@ void Entity::addLinkToSensor(Sensor *sensor) {
     for(int i = 0; i < sensor->getInputs().size(); i++) {
         // little cheat TODO ???
         for(int j = sensor->getInputs()[i]->getConnexions().size(); j < 2; j++) {
-            sensor->getInputs()[i]->connectTo(((float)qrand())/RAND_MAX,        //  0.0 to 1.0
-                                              ((float)qrand())/RAND_MAX,        //  0.0 to 1.0
-                                              ((float)qrand())/RAND_MAX*2 -1);  // -1.0 to 1.0
+            sensor->getInputs()[i]->connectTo(Tools::random(0.0f,1.0f),
+                                              Tools::random(0.0f,1.0f),
+                                              Tools::random(-1.0f,1.0f));
         }
         brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
     }

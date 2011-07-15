@@ -27,6 +27,8 @@ public:
 //    void setMaxFactor(float maxFactor);
 //    float getMaxFactor();
 
+    GeneLabCore::FloatMutation *mutation;
+
 public slots:
 
     void save();
@@ -37,10 +39,11 @@ public slots:
 //    void minValueChanged(int value);
 //    void maxValueChanged(int value);
 
+
+
 private:
     Ui::FloatMutationController *ui;
 
-    GeneLabCore::FloatMutation *mutation;
 };
 
 #endif // FLOATMUTATIONCONTROLLER_H

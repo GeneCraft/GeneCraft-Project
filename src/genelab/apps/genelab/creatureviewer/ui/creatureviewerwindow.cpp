@@ -406,6 +406,9 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // mutations
     for(int i = 0; i < nbCreatures; i++) {
 
+
+        qDebug() << (int) experiment->getMutationsManager();
+
         QVariant newGenome = experiment->getMutationsManager()->mutateEntity(originGenome);
 
         btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//

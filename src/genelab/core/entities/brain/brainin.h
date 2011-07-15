@@ -15,6 +15,8 @@ namespace GeneLabCore {
     public:
         explicit BrainIn(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
         BrainIn(QVariant data);
+
+        static QVariant generateEmpty(float min, float max);
         QVariant serialize();
 
         void setMin(float min) { this->min = min; }

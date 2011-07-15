@@ -145,6 +145,9 @@ void ExperimentsPropertiesController::save() {
     constValue->save();
     newBrainTree->save();
 
+    qDebug()<< (int) experiment->getMutationsManager();
+
+
     // ------------
     // -- Saving --
     // ------------
@@ -168,7 +171,6 @@ void ExperimentsPropertiesController::save() {
             mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
 
             Ressource* to = new JsonFile(selectedFile);
-
             code = to->save(experiment->serialize());
 
             if(code == 0)

@@ -188,7 +188,9 @@ SOURCES += \
     ../genelab/core/experiment/result.cpp \
     ../genelab/core/experiment/experimentmanager.cpp \
     ../genelab/core/experiment/experiment.cpp \
-    ../genelab/core/entities/mutation/simpleprobabilitymutation.cpp
+    ../genelab/core/entities/mutation/simpleprobabilitymutation.cpp \
+    ../genelab/core/entities/mutation/structuralmutation.cpp \
+    ../genelab/core/entities/mutation/structurallist.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -287,7 +289,9 @@ HEADERS += \
     ../genelab/core/experiment/result.h \
     ../genelab/core/experiment/experimentmanager.h \
     ../genelab/core/experiment/experiment.h \
-    ../genelab/core/entities/mutation/simpleprobabilitymutation.h
+    ../genelab/core/entities/mutation/simpleprobabilitymutation.h \
+    ../genelab/core/entities/mutation/structuralmutation.h \
+    ../genelab/core/entities/mutation/structurallist.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

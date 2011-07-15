@@ -9,7 +9,7 @@
 
 namespace GeneLabCore {
 
-enum SensorType { gyroscopic, accelerometer, position, contact };
+enum SensorType { gyroscopicSensor, accelerometerSensor, positionSensor, contactSensor };
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
@@ -31,6 +31,9 @@ public:
 
     // To create a sensor from serialization data
     Sensor(QVariant data, Fixation* fixation);
+
+    // To generate empty sensor
+    static QVariant generateEmpty(QString typeName, int type);
 
     // To delete the sensor
     ~Sensor() {

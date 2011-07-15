@@ -4,19 +4,22 @@
 #include "body/fixation.h"
 #include <QDebug>
 #include <QVariant>
+#include "tools.h"
+
+#define MIN_ACCELERATION -1.0
+#define MAX_ACCELERATION 1.0
+
 
 namespace GeneLabCore {
+
 AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
 {
     typeName = "Accelerometer sensor";
-    type = accelerometer;
+    type = accelerometerSensor;
 
-    const float minAcceleration = -1.0;
-    const float maxAcceleration = 1.0;
-
-    inputX = new BrainIn(minAcceleration,maxAcceleration);
-    inputY = new BrainIn(minAcceleration,maxAcceleration);
-    inputZ = new BrainIn(minAcceleration,maxAcceleration);
+    inputX = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
+    inputY = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
+    inputZ = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
@@ -46,6 +49,29 @@ AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : S
     oldSpeed    = btVector3(0,0,0);
 
     tmpMinAcc = tmpMaxAcc = 0;
+}
+
+QVariant AccelerometerSensor::generateEmpty()
+{
+    QVariantMap data = Sensor::generateEmpty("Accelerometer sensor", accelerometerSensor).toMap();
+
+    BrainIn *inputX = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
+    BrainIn *inputY = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
+    BrainIn *inputZ = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
+
+    inputX->connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputY->connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputZ->connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+
+    data.insert("inputX", inputX->serialize());
+    data.insert("inputY", inputY->serialize());
+    data.insert("inputZ", inputZ->serialize());
+
+    delete inputX;
+    delete inputY;
+    delete inputZ;
+
+    return data;
 }
 
 QVariant AccelerometerSensor::serialize() {

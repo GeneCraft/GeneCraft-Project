@@ -17,9 +17,18 @@ namespace GeneLabCore {
     QVariant BrainIn::serialize() {
         QVariantMap data;
 
-        QVariant l = Synapse::serialize();
+        data.insert("connexions", Synapse::serialize());
+        data.insert("min", (double)min);
+        data.insert("max", (double)max);
 
-        data.insert("connexions", l);
+        return data;
+    }
+
+    QVariant BrainIn::generateEmpty(float min, float max)
+    {
+        QVariantMap data;
+
+        data.insert("connexions", QVariantList());
         data.insert("min", (double)min);
         data.insert("max", (double)max);
 

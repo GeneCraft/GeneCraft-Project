@@ -22,4 +22,11 @@ namespace GeneLabCore {
         return data;
     }
 
+    QVariant Sensor::generateEmpty(QString typeName, int type) {
+        QVariantMap data;
+        data.insert("typeName", typeName);
+        data.insert("type", type);
+        return data;
+    }
+
 }

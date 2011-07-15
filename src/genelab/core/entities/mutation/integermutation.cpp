@@ -53,7 +53,7 @@ namespace GeneLabCore {
 
     int IntegerMutation::mutate(int value) {
 
-        if(canMutate()) {
+        if(!canMutate()) {
             return value;
         }
 

@@ -14,7 +14,7 @@ namespace GeneLabCore {
         explicit CreatureFactory(QObject *parent = 0);
         Entity* createEntity(QVariant data,
                              btShapesFactory* shapesFactory,
-                             btVector3 position);
+                             btVector3 positionSensor);
         QString error;
 
 
