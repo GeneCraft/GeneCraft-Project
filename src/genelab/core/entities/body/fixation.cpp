@@ -2,7 +2,6 @@
 
 // Qt
 #include <QStringBuilder>
-#include <QDebug>
 #include <QVariantList>
 
 // Engine
@@ -19,6 +18,8 @@
 
 #include "entity.h"
 #include "widgets/entities/fixationpropertiescontroller.h"
+
+#include "tools.h"
 
 
 namespace GeneLabCore {
@@ -70,9 +71,6 @@ namespace GeneLabCore {
         this->rigidBody     = sphere->getRigidBody();
         this->rigidBody->setFriction(FIXATION_FRICTION);
         delegatedSetup      = false;
-
-
-
     }
 
     void Fixation::remove() {
@@ -336,6 +334,22 @@ namespace GeneLabCore {
         return fixation;
     }
 
+    QVariant Fixation::generateEmpty()
+    {
+        QVariantMap fixation;
+
+        // TODO right values ???
+        fixation.insert("radius",(double) Tools::random(0.1,0.5));
+        fixation.insert("bones", QVariantList());
+        fixation.insert("sensors", QVariantList());
+
+        return fixation;
+    }
+
+    // -----------
+    // -- TOOLS --
+    // -----------
+
     void Fixation::setOutputsFrom(int action) {
         QList<Bone *> bones = this->getBones();
         for(int i=0;i<bones.size();++i)
@@ -364,16 +378,11 @@ namespace GeneLabCore {
 
     bool Fixation::isInOnePiece() {
         foreach(Bone* b, bones) {
-            if(!(b->getParentConstraint()->isEnabled())) {
-                qDebug() << "constraint not enabled";
+            if(!(b->getParentConstraint()->isEnabled()))
                 return false;
-            }
 
-            if(!b->getEndFixation()->isInOnePiece()) {
-                qDebug() << "parent destroyed";
+            if(!b->getEndFixation()->isInOnePiece())
                 return false;
-            }
-
         }
 
         return true;

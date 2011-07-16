@@ -4,7 +4,6 @@
 #include "body/treeshape.h"
 #include "body/fixation.h"
 #include "brain/brainfunctional.h"
-#include <QDebug>
 #include "tools.h"
 
 namespace GeneLabCore {
@@ -23,7 +22,7 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     Entity * entity = new Entity(origins.value("name").toString(),
                                   origins.value("family").toString(),
                                   "generic",
-                                  0);
+                                  origins.value("generation").toInt());
     // Brain
     entity->setBrain(new BrainFunctional(entityMap.value("brain")));
 
@@ -51,7 +50,7 @@ Entity *GenericFamily::createVirginEntity(btShapesFactory *shapesFactory,
                                                 btScalar rootFixRadius,
                                                 const btVector3 &initialPosition)
 {
-    Entity * entity = new Entity("no name", "no family","generic", 0);
+    Entity * entity = new Entity("no name", "no family","generic", 1);
     entity->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
 
     TreeShape *shape = new TreeShape(shapesFactory);

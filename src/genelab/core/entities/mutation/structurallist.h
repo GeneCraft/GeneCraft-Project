@@ -9,15 +9,9 @@ namespace GeneLabCore {
 class MutationElement {
  public:
 
-    MutationElement(QString name, int type, float weight) {
-        this->name = name;
-        this->type = type;
-
-        if(weight < 0.0)
-            weight = 0.0;
-
-        this->weight = weight;
-    }
+    MutationElement(QString name, int type, float weight);
+    MutationElement(QVariant variant);
+    QVariant serialize();
 
     QString name;
     int type;
@@ -28,9 +22,10 @@ class StructuralList
 {
 public:
     StructuralList();
+    StructuralList(QVariant variant);
+    QVariant serialize();
 
     MutationElement * pickOne();
-
     QList<MutationElement *> elements;
 };
 

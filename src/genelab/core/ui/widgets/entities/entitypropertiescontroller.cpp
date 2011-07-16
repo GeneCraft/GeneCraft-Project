@@ -17,6 +17,15 @@
 #include "statistics/statisticsstorage.h"
 #include "tools.h"
 #include "events/inspectorsinputmanager.h"
+#include "qxtjson.h"
+
+#include "btshapesfactory.h"
+#include "btfactory.h"
+#include "engines/ogre/ogreengine.h"
+#include "engines/ogre/ogrewidget.h"
+#include "engines/ogre/entities/ogrefreecamera.h"
+#include "world/btworld.h"
+
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::EntityPropertiesController), entity(NULL)
@@ -31,6 +40,9 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     connect(this->ui->pbOutsFromNone,SIGNAL(clicked()),this,SLOT(setOutFromNone()));
     connect(this->ui->pbOutsFromBrain,SIGNAL(clicked()),this,SLOT(setOutFromBrain()));
     connect(this->ui->pbOutsFromRandom,SIGNAL(clicked()),this,SLOT(setOutFromRandom()));
+    connect(this->ui->pbViewGenotype,SIGNAL(clicked()),this,SLOT(viewGenotype()));
+
+    connect(ui->pbFollow,SIGNAL(clicked()),this,SLOT(followSelectedEntity()));
 
     this->setEnabled(false);
 }
@@ -71,6 +83,14 @@ void EntityPropertiesController::entityUpdated(Entity *entity){
 }
 
 void EntityPropertiesController::entityDeleted(Entity *entity){
+
+    // TODO save widget !!!
+    // unfollow
+    Fixation * fixation = entity->getShape()->getRoot();
+    OgreEngine * ogre = (OgreEngine *) fixation->getShapesFactory()->getWorld()->getFactory()->getEngineByName("Ogre");
+    OgreWidget *ogreWidget = ogre->getOgreWidget("MainWidget");
+    OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
+    cam->unfollowBody();
 
     if(this->entity == entity)
         setEntity(NULL);
@@ -168,6 +188,7 @@ void EntityPropertiesController::setEntity(Entity *entity, Bone *bone)
         ui->lName->setText(entity->getName());
         ui->lFamily->setText(entity->getFamily());
         ui->lGeneration->setText(QString::number(entity->getGeneration()));
+        ui->pteGenotype->clear();
 
         // Bones
         Tools::clearTreeWidget(this->ui->twBodyTree);
@@ -232,5 +253,25 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int)
         emit sSensorsSelected(boneItem->bone->getEndFixation()->getSensors());
         emit sBoneSelected(boneItem->bone);
         return;
+    }
+}
+
+void EntityPropertiesController::viewGenotype() {
+
+    if(entity != NULL)
+        ui->pteGenotype->setPlainText(QxtJSON::stringify(entity->serialize()));
+}
+
+void EntityPropertiesController::followSelectedEntity() {
+
+    if(entity) {
+
+        Fixation * fixation = entity->getShape()->getRoot();
+        OgreEngine * ogre = (OgreEngine *) fixation->getShapesFactory()->getWorld()->getFactory()->getEngineByName("Ogre");
+        OgreWidget *ogreWidget = ogre->getOgreWidget("MainWidget");
+        OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
+
+        cam->followBody(fixation->getRigidBody());
+        ogreWidget->setFocus(Qt::MouseFocusReason);
     }
 }

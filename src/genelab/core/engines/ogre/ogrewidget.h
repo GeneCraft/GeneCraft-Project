@@ -38,6 +38,8 @@ namespace GeneLabCore {
 
         void step();
 
+        OgreFreeCamera *getOgreFreeCamera() { return ogreFreeCamera; }
+
     public:
         bool resized;
     public slots:

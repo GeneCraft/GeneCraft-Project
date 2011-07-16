@@ -29,6 +29,7 @@ protected:
     // Stats
     Statistic *fixationVelocity;
     Statistic *fixationRelativeDistance;
+    Statistic *fixationAbsoluteYPosition;
     Statistic *fixationAbsoluteDistance;
 
     // specific data

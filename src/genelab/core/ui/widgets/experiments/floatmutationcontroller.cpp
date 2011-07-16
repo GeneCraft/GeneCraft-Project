@@ -4,7 +4,7 @@
 #include "mutation/floatmutation.h"
 
 #define FACTOR_PRECISION 100.0
-#define PROBABILITY_PRECISION 10.0
+#define PROBABILITY_PRECISION 1000.0
 
 using namespace GeneLabCore;
 
@@ -74,7 +74,7 @@ void FloatMutationController::nameToggled(bool checked){
 }
 
 void FloatMutationController::probabilityChanged(int value){
-    ui->lProbabilty->setText(QString::number(value / 10.0).append("%"));
+    ui->lProbabilty->setText(QString::number(value / PROBABILITY_PRECISION * 100.0).append("%"));
 }
 
 void FloatMutationController::minFactorChanged(int value){

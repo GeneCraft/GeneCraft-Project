@@ -1,5 +1,4 @@
 #include "entity.h"
-#include <QDebug>
 #include "body/fixation.h"
 #include "body/treeshape.h"
 #include "brain/brainfunctional.h"
@@ -108,6 +107,7 @@ QVariant Entity::serializeOrigins()
 
     origins.insert("name",name);
     origins.insert("family",family);
+    origins.insert("generation",generation);
 
     return origins;
 }

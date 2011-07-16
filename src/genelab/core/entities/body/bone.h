@@ -26,6 +26,13 @@ public:
    void setup();
    /** To remove it without destructing entity */
    void remove();
+
+   // -------------------
+   // -- serialization --
+   // -------------------
+   QVariant serialize();
+   static QVariant generateEmpty();
+
    // -------------------------
    // -- getters and setters --
    // -------------------------
@@ -72,11 +79,6 @@ public:
    void resetMotors();
    void connectMotor(int i);
    void disconnectMotor(int i);
-
-   // -------------------
-   // -- serialization --
-   // -------------------
-   QVariant serialize();
 
 protected:
 

@@ -10,6 +10,7 @@ class StructuralMutation
 public:
     StructuralMutation();
     StructuralMutation(QVariant variant);
+    QVariant serialize();
 
     bool checkAdd();
     bool checkDelete();
@@ -18,6 +19,8 @@ public:
     float addProbability;
     float deleteProbability;
     float replaceProbability;
+
+    bool enable;
 };
 
 }

@@ -126,51 +126,35 @@ namespace GeneLabCore {
 
     }
 
-    void OgreWidget::mousePressEvent(QMouseEvent *e)
-    {
-        //ogreFreeCamera->mousePressEvent(e);
+    void OgreWidget::mousePressEvent(QMouseEvent *e) {
         emit mousePressed(new QMouseEvent(*e));
     }
 
-    void OgreWidget::mouseReleaseEvent(QMouseEvent *e)
-    {
-        //ogreFreeCamera->mouseReleaseEvent(e);
+    void OgreWidget::mouseReleaseEvent(QMouseEvent *e) {
         emit mouseReleased(new QMouseEvent(*e));
     }
 
-    void OgreWidget::mouseMoveEvent(QMouseEvent *e)
-    {
-        //ogreFreeCamera->mouseMoveEvent(e);
+    void OgreWidget::mouseMoveEvent(QMouseEvent *e) {
         emit mouseMoved(new QMouseEvent(*e));
     }
 
-    void OgreWidget::keyPressEvent(QKeyEvent *e)
-    {
-        //ogreFreeCamera->keyPressEvent(e);
+    void OgreWidget::keyPressEvent(QKeyEvent *e) {
         emit keyPressed(new QKeyEvent(*e));
     }
 
-    void OgreWidget::keyReleaseEvent(QKeyEvent *e)
-    {
-        //ogreFreeCamera->keyReleaseEvent(e);
+    void OgreWidget::keyReleaseEvent(QKeyEvent *e) {
         emit keyReleased(new QKeyEvent(*e));
     }
 
-    void OgreWidget::enterEvent (QEvent *e)
-    {
-        //ogreFreeCamera->enterViewPortEvent(e);
+    void OgreWidget::enterEvent (QEvent *e) {
         emit entered(new QEvent(*e));
     }
 
-    void OgreWidget::leaveEvent (QEvent *e)
-    {
-        //ogreFreeCamera->leaveViewPortEvent(e);
+    void OgreWidget::leaveEvent (QEvent *e) {
         emit leaved(new QEvent(*e));
     }
 
-    void OgreWidget::step()
-    {
-        //ogreFreeCamera->step();
+    void OgreWidget::step() {
         emit stepped();
     }
 }

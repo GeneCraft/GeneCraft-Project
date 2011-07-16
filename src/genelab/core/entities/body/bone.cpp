@@ -184,8 +184,6 @@ void Bone::disconnectMotor(int i)
 {
     if(entity && motorsEffector->getBrainOutputs(i))
     {
-        qDebug() << Q_FUNC_INFO << i;
-
         entity->removeBrainOut(motorsEffector->getBrainOutputs(i)->boMaxMotorForce);
         entity->removeBrainOut(motorsEffector->getBrainOutputs(i)->boTargetVelocity);
 
@@ -274,6 +272,48 @@ QVariant Bone::serialize()
 
     if(motorsEffector) // FIXME you can't serialize motorsEffector if entity isn't still setup !
         bone.insert("muscle", this->motorsEffector->serialize());
+
+    return bone;
+}
+
+QVariant Bone::generateEmpty() {
+
+    QVariantMap bone;
+
+    // TODO right values ???
+    // Length & radius
+    bone.insert("length",QVariant((double)Tools::random(0.1,1.0)));
+    bone.insert("radius",QVariant((double)Tools::random(0.1,0.5)));
+
+    // Yaw & Roll
+    QVariantMap localRotation;
+    localRotation.insert("y",QVariant((double)Tools::random(-M_PI,M_PI)));
+    localRotation.insert("z",QVariant((double)Tools::random(-M_PI,M_PI)));
+    bone.insert("localRotation",localRotation);
+
+    // Limits
+    QVariantMap lowerlimits, upperlimits;
+
+    float lowerLimit_x = Tools::random(-M_PI,M_PI);
+    float lowerLimit_y = Tools::random(-M_PI,M_PI);
+    float lowerLimit_z = Tools::random(-M_PI,M_PI);
+
+    lowerlimits.insert("x",QVariant((double)lowerLimit_x));
+    lowerlimits.insert("y",QVariant((double)lowerLimit_y));
+    lowerlimits.insert("z",QVariant((double)lowerLimit_z));
+
+    upperlimits.insert("x",QVariant((double)Tools::random(lowerLimit_x,(float)M_PI)));
+    upperlimits.insert("y",QVariant((double)Tools::random(lowerLimit_y,(float)M_PI)));
+    upperlimits.insert("z",QVariant((double)Tools::random(lowerLimit_z,(float)M_PI)));
+
+    bone.insert("lowerLimits",lowerlimits);
+    bone.insert("upperLimits",upperlimits);
+
+    // End fixation
+    bone.insert("endFix",Fixation::generateEmpty());
+
+//    if(motorsEffector) // FIXME you can't serialize motorsEffector if entity isn't still setup !
+//        bone.insert("muscle", this->motorsEffector->serialize());
 
     return bone;
 }

@@ -9,9 +9,12 @@
 #include "floatmutationcontroller.h"
 #include "integermutationcontroller.h"
 #include "simpleprobabilitycontroller.h"
+#include "structuralmutationcontroller.h"
+
 #include "experiment/experiment.h"
 #include "mutation/mutationsmanager.h"
 #include "ressources/jsonfile.h"
+
 
 using namespace GeneLabCore;
 
@@ -43,6 +46,8 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbClose,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->pbHelp,SIGNAL(clicked()),this,SLOT(enterInWhatsThisMode()));
     connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExp()));
+    connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveToFile()));
+
 }
 
 void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
@@ -88,18 +93,25 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     boneRadiusMutation = new FloatMutationController(mutationsManager->boneRadius,"Bones Radius");
     fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
     boneAngularOrigin = new FloatMutationController(mutationsManager->boneAngularOrigin,"Bones angular origin");
+    bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
+    sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorStructuralList);
+
     brainSize = new IntegerMutationController(mutationsManager->brainSize,"Brain Size");
     brainInPos = new FloatMutationController(mutationsManager->brainInPos,"BrainIn Position");
     brainInWeight = new FloatMutationController(mutationsManager->brainWeight,"BrainIn Weight");
     brainMemorySize = new IntegerMutationController(mutationsManager->brainMemorySize,"Brain Mermory Size");
     brainFrequency = new IntegerMutationController(mutationsManager->brainFrequency,"Brain Frequency");
     constValue = new FloatMutationController(mutationsManager->constValue,"Constant Value");
-    newBrainTree = new SimpleProbabilityController(mutationsManager->newBrainTree,"New Brain Tree"); // TODO
+    newBrainTree = new SimpleProbabilityController(mutationsManager->newBrainTree,"New Brain Tree");
+
 
     ui->vlBodyMutations->addWidget(boneLengthMutation);
     ui->vlBodyMutations->addWidget(boneRadiusMutation);
     ui->vlBodyMutations->addWidget(fixationRadiusMutation);
     ui->vlBodyMutations->addWidget(boneAngularOrigin);
+    ui->vlBodyMutations->addWidget(bonesStructuralMutation);
+    ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
+
     ui->vlBrainMutations->addWidget(brainSize);
     ui->vlBrainMutations->addWidget(brainInPos);
     ui->vlBrainMutations->addWidget(brainInWeight);
@@ -115,9 +127,52 @@ ExperimentsPropertiesController::~ExperimentsPropertiesController() {
 
 void ExperimentsPropertiesController::save() {
 
-    // -----------------------
-    // -- Update structures --
-    // -----------------------
+    updateStructures();
+
+    if(experiment->hasRessource()) {
+
+        // To exp ressource
+        Ressource* to = experiment->getRessource();
+        int code = to->save(experiment->serialize());
+
+        // Error
+        if(code != 0) {
+            QMessageBox::warning(this, "Impossible to save experiment",
+            QString("Impossible to save experiment : error code : ") + QString::number(code));
+
+            experiment->setRessource(NULL);
+        }
+    }
+}
+
+void ExperimentsPropertiesController::saveToFile() {
+
+    updateStructures();
+
+    // To new file
+    const QString DEFAULT_DIR_KEY("default_dir");
+    QSettings mySettings;
+    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Experiment (*.exp)");
+
+    if (!selectedFile.isEmpty()) {
+        QDir CurrentDir;
+        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+
+        Ressource* to = new JsonFile(selectedFile);
+        int code = to->save(experiment->serialize());
+
+        if(code == 0)
+            experiment->setRessource(to);
+        else {
+            QMessageBox::warning(this, "Impossible to save experiment",
+                                 QString("Impossible to save experiment : error code : ") + QString::number(code));
+
+            experiment->setRessource(NULL);
+        }
+    }
+}
+
+void ExperimentsPropertiesController::updateStructures() {
 
     // Information
     experiment->setId(ui->leId->text());
@@ -137,6 +192,9 @@ void ExperimentsPropertiesController::save() {
     boneRadiusMutation->save();
     fixationRadiusMutation->save();
     boneAngularOrigin->save();
+    bonesStructuralMutation->save();
+    sensorsStructuralMutation->save();
+
     brainSize->save();
     brainInPos->save();
     brainInWeight->save();
@@ -144,47 +202,6 @@ void ExperimentsPropertiesController::save() {
     brainFrequency->save();
     constValue->save();
     newBrainTree->save();
-
-    qDebug()<< (int) experiment->getMutationsManager();
-
-
-    // ------------
-    // -- Saving --
-    // ------------
-
-    int code;
-    if(experiment->hasRessource()) {
-
-        // To exp ressource
-        Ressource* to = experiment->getRessource();
-        code = to->save(experiment->serialize());
-    }
-    else {
-
-        // To new file
-        const QString DEFAULT_DIR_KEY("default_dir");
-        QSettings mySettings;
-        QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Experiment (*.exp)");
-
-        if (!selectedFile.isEmpty()) {
-            QDir CurrentDir;
-            mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
-
-            Ressource* to = new JsonFile(selectedFile);
-            code = to->save(experiment->serialize());
-
-            if(code == 0)
-                experiment->setRessource(to);
-        }
-    }
-
-    // Error
-    if(code != 0) {
-        QMessageBox::warning(this, "Impossible to save experiment",
-        QString("Impossible to save experiment : error code : ") + QString::number(code));
-
-        experiment->setRessource(NULL);
-    }
 }
 
 void ExperimentsPropertiesController::loadExp() {

@@ -23,6 +23,8 @@ signals:
 public slots:
     void setupForm();
     void save();
+    void saveToFile();
+    void updateStructures();
     void enterInWhatsThisMode();
     void loadExp();
     void setExperiment(GeneLabCore::Experiment *exp);
@@ -37,6 +39,8 @@ private:
     FloatMutationController *boneRadiusMutation;
     FloatMutationController *fixationRadiusMutation;
     FloatMutationController *boneAngularOrigin;
+    StructuralMutationController *bonesStructuralMutation;
+    StructuralMutationController *sensorsStructuralMutation;
 
     IntegerMutationController *brainSize;
     FloatMutationController *brainInPos;

@@ -2,10 +2,11 @@
 #include <QDebug>
 
 namespace GeneLabCore {
+
 const QPoint     OgreFreeCamera::invalidMousePoint(-1,-1);
 const Ogre::Real OgreFreeCamera::turboModifier(10);
 
-OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera)
+OgreFreeCamera::OgreFreeCamera (Ogre::Camera *ogreCamera) : followedBody(NULL)
 {
     this->ogreCamera = ogreCamera;
 
@@ -54,6 +55,9 @@ void OgreFreeCamera::mouseMoveEvent(QMouseEvent * e)
 {
     if(e->buttons().testFlag(Qt::LeftButton) && oldPos != invalidMousePoint)
     {
+        if(followedBody)
+            unfollowBody();
+
         const QPoint &pos = e->pos();
         Ogre::Real deltaX = pos.x() - oldPos.x();
         Ogre::Real deltaY = pos.y() - oldPos.y();
@@ -79,13 +83,21 @@ void OgreFreeCamera::keyPressEvent(QKeyEvent *e)
 {
     switch(e->key())
     {
-    case Qt::Key_W : forwardKeyPressed = true;
+    case Qt::Key_W :
+    case Qt::Key_Up :
+        forwardKeyPressed = true;
         break;
-    case Qt::Key_S : backwardKeyPressed = true;
+    case Qt::Key_S :
+    case Qt::Key_Down :
+        backwardKeyPressed = true;
         break;
-    case Qt::Key_D : rightStrafeKeyPressed = true;
+    case Qt::Key_D :
+    case Qt::Key_Right :
+        rightStrafeKeyPressed = true;
         break;
-    case Qt::Key_A : leftStrafeKeyPressed = true;
+    case Qt::Key_A :
+    case Qt::Key_Left :
+        leftStrafeKeyPressed = true;
         break;
     case Qt::Key_Space : upKeyPressed = true;
         break;
@@ -98,13 +110,21 @@ void OgreFreeCamera::keyReleaseEvent(QKeyEvent *e)
 {
     switch(e->key())
     {
-    case Qt::Key_W : forwardKeyPressed = false;
+    case Qt::Key_W :
+    case Qt::Key_Up :
+        forwardKeyPressed = false;
         break;
-    case Qt::Key_S : backwardKeyPressed = false;
+    case Qt::Key_S :
+    case Qt::Key_Down :
+        backwardKeyPressed = false;
         break;
-    case Qt::Key_D : rightStrafeKeyPressed = false;
+    case Qt::Key_D :
+    case Qt::Key_Right :
+        rightStrafeKeyPressed = false;
         break;
-    case Qt::Key_A : leftStrafeKeyPressed = false;
+    case Qt::Key_A :
+    case Qt::Key_Left :
+        leftStrafeKeyPressed = false;
         break;
     case Qt::Key_Space : upKeyPressed = false;
         break;
@@ -112,6 +132,16 @@ void OgreFreeCamera::keyReleaseEvent(QKeyEvent *e)
         break;
     }
 }
+
+Ogre::Vector3 toOgreVector3(btVector3 vector) {
+    Ogre::Vector3 v;
+    v.x = vector.x();
+    v.y = vector.y();
+    v.z = vector.z();
+    return v;
+}
+
+btVector3 toOgreVector3(Ogre::Vector3 vector);
 
 void OgreFreeCamera::step()
 {
@@ -121,6 +151,13 @@ void OgreFreeCamera::step()
     //qDebug() << t.elapsed()/1000.0;
     Ogre::Real elapsedTime = t.elapsed()/1000.0;
     t.restart();
+
+    if(followedBody) {
+
+        Ogre::Vector3 oTarget = toOgreVector3(followedBody->getWorldTransform().getOrigin());
+        ogreCamera->setDirection(oTarget - ogreCamera->getPosition());
+
+    }
 
     // any movement key are pressed
     if(forwardKeyPressed || backwardKeyPressed
@@ -153,7 +190,7 @@ void OgreFreeCamera::step()
         vMovementDirection.normalise();
 
         // apply speed and move the camera
-        ogreCamera->move(vMovementDirection * movementSpeed * elapsedTime);
+        move(vMovementDirection * movementSpeed * elapsedTime);
 
         // save the direction for deceleration
         lastMovementDirection = vMovementDirection;
@@ -168,18 +205,41 @@ void OgreFreeCamera::step()
             movementSpeed = initialMovementSpeed;
         else
             // continue to move in the last direction
-            ogreCamera->move(lastMovementDirection * movementSpeed * elapsedTime);
+            move(lastMovementDirection * movementSpeed * elapsedTime);
     }
 }
 
-void OgreFreeCamera::enterViewPortEvent (QEvent *)
-{
+void OgreFreeCamera::move(const Ogre::Vector3& vec) {
 
+    if(followedBody) {
+
+        int nbSubSteps = vec.length() * 5;
+        for(int i=0; i < nbSubSteps; i++) {
+            ogreCamera->move(vec / nbSubSteps);
+
+            Ogre::Vector3 oTarget = toOgreVector3(followedBody->getWorldTransform().getOrigin());
+            ogreCamera->setDirection(oTarget - ogreCamera->getPosition());
+        }
+    }
+    else
+        ogreCamera->move(vec);
 }
 
-void OgreFreeCamera::leaveViewPortEvent (QEvent *)
-{
+void OgreFreeCamera::enterViewPortEvent (QEvent *){}
+void OgreFreeCamera::leaveViewPortEvent (QEvent *){}
 
+void OgreFreeCamera::followBody(btRigidBody * body){
+
+    distanceToTarget = ogreCamera->getPosition().distance(toOgreVector3(body->getWorldTransform().getOrigin()));
+    followedBody = body;
+
+    //maxMovementSpeed = 30.0;
+}
+
+void OgreFreeCamera::unfollowBody() {
+
+    followedBody = NULL;
+    //maxMovementSpeed = 60.0;
 }
 
 }

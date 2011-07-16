@@ -44,5 +44,8 @@
         <file alias="report">img/icons/report.png</file>
         <file alias="entities">img/icons/bugs.png</file>
         <file alias="experiment">img/icons/page_white_magnify.png</file>
+        <file alias="entity_delete_all_except_one">img/icons/bug_delete_all_except_one.png</file>
+        <file alias="camera">img/icons/camera.png</file>
+        <file alias="world">img/icons/world.png</file>
     </qresource>
 </RCC>

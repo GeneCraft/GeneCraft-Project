@@ -35,7 +35,6 @@ public slots:
     void addBone();
     void addSensor();
     void fixInTheAir();
-    void setPosition();
     void selectBone();
     void removeSelectedBone();
     void removeSelectedSensor();

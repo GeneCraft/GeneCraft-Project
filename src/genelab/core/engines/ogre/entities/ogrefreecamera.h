@@ -11,6 +11,8 @@
 #include "events/inputlistener.h"
 #include <QTime>
 
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 namespace GeneLabCore {
 
 class OgreFreeCamera : public InputListener
@@ -19,17 +21,6 @@ class OgreFreeCamera : public InputListener
 public:
 
     // Constructor
-
-    // FIXED !
-    // Cyp : C'est très bien l'encapsulation ;) !!
-
-    // J'ai d'abord fait un héritage de Ogre::Camera mais je n'arrive pas a créer
-    // ma camera car normalement les caméras sont créées à l'aide du Ogre::SceneManager
-    // de la facon suivante :
-    //
-    // Ogre::Camera *cam = sceneManager->createCamera("camName");
-    //
-    // Donc pour le moment c'est juste une encapsulation... :(
     OgreFreeCamera (Ogre::Camera *ogreCamera);
 
 public slots:
@@ -45,6 +36,10 @@ public slots:
 
     // Compute the new position and angular
     void step();
+    void move(const Ogre::Vector3& vec);
+
+    void followBody(btRigidBody * body);
+    void unfollowBody();
 
 private:
 
@@ -73,6 +68,9 @@ private:
     QPoint oldPos;
     static const Ogre::Real turboModifier;
     static const QPoint invalidMousePoint;
+
+    btRigidBody * followedBody;
+    Ogre::Real distanceToTarget;
 };
 }
 #endif // OGREFREECAMERA_H

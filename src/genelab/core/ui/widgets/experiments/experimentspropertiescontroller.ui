@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
-    <height>458</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Experiment properties</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../ressources/ressources.qrc">
+    <normaloff>:/img/icons/report</normaloff>:/img/icons/report</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="2">
@@ -317,8 +321,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>714</width>
-            <height>350</height>
+            <width>756</width>
+            <height>392</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
@@ -326,6 +330,9 @@
             <widget class="QGroupBox" name="groupBox_4">
              <property name="title">
               <string>Brain</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
               <item row="0" column="0">
@@ -351,6 +358,9 @@
             <widget class="QGroupBox" name="groupBox_3">
              <property name="title">
               <string>Body</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
               <item row="0" column="0">
@@ -381,6 +391,15 @@
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
        <string>Crossovers</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_8">
+      <attribute name="icon">
+       <iconset resource="../../../ressources/ressources.qrc">
+        <normaloff>:/img/icons/world</normaloff>:/img/icons/world</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>World</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="tab_7">
@@ -429,7 +448,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Load experiment</string>
+      <string>Load from file</string>
      </property>
     </widget>
    </item>
@@ -443,6 +462,19 @@
      </property>
      <property name="text">
       <string>Save</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="pbSaveToFile">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Save to file</string>
      </property>
     </widget>
    </item>

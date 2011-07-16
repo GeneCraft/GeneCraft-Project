@@ -190,7 +190,9 @@ SOURCES += \
     ../genelab/core/experiment/experiment.cpp \
     ../genelab/core/entities/mutation/simpleprobabilitymutation.cpp \
     ../genelab/core/entities/mutation/structuralmutation.cpp \
-    ../genelab/core/entities/mutation/structurallist.cpp
+    ../genelab/core/entities/mutation/structurallist.cpp \
+    ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.cpp \
+    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -291,7 +293,9 @@ HEADERS += \
     ../genelab/core/experiment/experiment.h \
     ../genelab/core/entities/mutation/simpleprobabilitymutation.h \
     ../genelab/core/entities/mutation/structuralmutation.h \
-    ../genelab/core/entities/mutation/structurallist.h
+    ../genelab/core/entities/mutation/structurallist.h \
+    ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.h \
+    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -308,7 +312,9 @@ FORMS += \
     ../genelab/core/ui/widgets/experiments/experimentspropertiescontroller.ui \
     ../genelab/core/ui/widgets/experiments/floatmutationcontroller.ui \
     ../genelab/core/ui/widgets/experiments/integermutationcontroller.ui \
-    ../genelab/core/ui/widgets/experiments/simpleprobabilitycontroller.ui
+    ../genelab/core/ui/widgets/experiments/simpleprobabilitycontroller.ui \
+    ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.ui \
+    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

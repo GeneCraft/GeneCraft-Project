@@ -26,6 +26,9 @@ namespace GeneLabCore {
         Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btScalar radius, btTransform localFixation, Bone *parentBone);
         ~Fixation();
 
+        QVariant serialize();
+        static QVariant generateEmpty();
+
         /**
          * Used to set default parameters of fixation and add it into engines
          */
@@ -73,8 +76,6 @@ namespace GeneLabCore {
         void fixeInTheAir();
         void unfixInTheAir();
         bool isFixedInTheAir(){ return airFixation != 0; }
-
-        QVariant serialize();
 
         // To get the sphere world
         btShapesFactory *getShapesFactory() { return shapesFactory; }

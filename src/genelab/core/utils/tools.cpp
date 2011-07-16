@@ -1,7 +1,6 @@
 #include "tools.h"
 #include <ctime>
 #include <cstdlib>
-#include <QDebug>
 
 namespace GeneLabCore {
 

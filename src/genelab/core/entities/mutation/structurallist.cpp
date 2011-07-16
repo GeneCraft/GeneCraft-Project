@@ -5,12 +5,48 @@
 
 namespace GeneLabCore {
 
-StructuralList::StructuralList()
-{
+MutationElement::MutationElement(QString name, int type, float weight) {
+    this->name = name;
+    this->type = type;
+
+    if(weight < 0.0)
+        weight = 0.0;
+
+    this->weight = weight;
 }
 
-MutationElement *StructuralList::pickOne()
-{
+MutationElement::MutationElement(QVariant variant) {
+    QVariantMap map = variant.toMap();
+
+    name = map["name"].toString();
+    type = map["type"].toInt();
+
+    if(map["weight"].toFloat() < 0.0)
+        weight = 0.0;
+    else
+        weight = map["weight"].toFloat();
+}
+
+QVariant MutationElement::serialize() {
+
+    QVariantMap map;
+
+    map.insert("name",name);
+    map.insert("type",type);
+    map.insert("weight",(double)weight);
+
+    return map;
+}
+
+StructuralList::StructuralList(){}
+
+StructuralList::StructuralList(QVariant variant) {
+    QVariantList list = variant.toList();
+    foreach(QVariant variant, list)
+        elements.append(new MutationElement(variant));
+}
+
+MutationElement *StructuralList::pickOne() {
     // Compute the sum of weights
     float totalWeight = 0.f;
     foreach(MutationElement *element, elements)
@@ -32,6 +68,15 @@ MutationElement *StructuralList::pickOne()
 
     // normally, it will not happen...
     return elements.last();
+}
+
+QVariant StructuralList::serialize() {
+    QVariantList list;
+
+    foreach(MutationElement *element, elements)
+        list.append(element->serialize());
+
+    return list;
 }
 
 }

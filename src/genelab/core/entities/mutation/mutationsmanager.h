@@ -61,9 +61,12 @@ public:
     // Fixation radius mutation
     FloatMutation* fixRadius;
 
-    // New sensor
-    StructuralMutation *sensorsMutation;
+    // Add / Remove / Replace sensor
+    StructuralMutation *sensorsStructural;
     StructuralList *sensorStructuralList;
+
+    // Add / Remove / Replace sensor
+    StructuralMutation *bonesStructural;
 
     // BRAIN
 
@@ -95,8 +98,21 @@ private:
     int treeDepth(QStringListIterator it);
     void consumnSubTree(QStringListIterator it);
 
-    // add sensor (-1 = last)
+    /**
+     * To add sensor
+     *
+     * @param the QVariantList where add
+     * @param the position to add (-1 = end of list)
+     */
     void addSensor(QVariantList &sensors, int i=-1);
+
+    /**
+     * To add bone
+     *
+     * @param the QVariantList where add
+     * @param the position to add (-1 = end of list)
+     */
+    void addBone(QVariantList &bones, int i=-1);
 
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 

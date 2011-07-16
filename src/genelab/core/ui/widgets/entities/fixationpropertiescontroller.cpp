@@ -16,19 +16,16 @@
 #include "sensors/accelerometersensor.h"
 #include "sensors/contactsensor.h"
 
-
 #include "events/inspectorsinputmanager.h"
 
 FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FixationPropertiesController)
+    ui(new Ui::FixationPropertiesController), fixation(NULL)
 {
     ui->setupUi(this);
-    fixation = 0;
 
     connect(this->ui->pbAddBone,SIGNAL(pressed()),this,SLOT(addBone()));
     connect(this->ui->pbFixInTheAir,SIGNAL(pressed()),this,SLOT(fixInTheAir()));
-    connect(this->ui->pbSetPosition,SIGNAL(pressed()),this,SLOT(setPosition()));
     connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
     connect(this->ui->pbSelectBone,SIGNAL(pressed()),this,SLOT(selectBone()));
 
@@ -129,7 +126,7 @@ void FixationPropertiesController::addBone()
 
 void FixationPropertiesController::fixInTheAir()
 {
-    if(fixation != 0)
+    if(fixation)
     {
         if(fixation->isFixedInTheAir())
             fixation->unfixInTheAir();
@@ -138,14 +135,6 @@ void FixationPropertiesController::fixInTheAir()
                                              ui->leY->text().toFloat(),
                                              ui->leZ->text().toFloat())*/);
     }
-}
-
-void FixationPropertiesController::setPosition()
-{
-    if(fixation != 0)
-        fixation->getRigidBody()->getWorldTransform().setOrigin(btVector3(ui->leX->text().toFloat(),
-                                                            ui->leY->text().toFloat(),
-                                                            ui->leZ->text().toFloat()));
 }
 
 void FixationPropertiesController::selectBone()

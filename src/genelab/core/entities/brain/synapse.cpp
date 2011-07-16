@@ -23,6 +23,7 @@ namespace GeneLabCore {
     QVariant Synapse::serialize() {
 
         QVariantList l;
+
         for(int i = 0; i < this->connexions.size(); i++) {
             NeuralConnexion c = connexions[i];
             QVariantMap dataC;

@@ -68,15 +68,21 @@ namespace GeneLabCore {
         boneAngularLimits = new BoneLimitsMutation();
 
         // sensors
-        sensorsMutation = new StructuralMutation();
-        sensorsMutation->addProbability = 0.0f;
-        sensorsMutation->deleteProbability = 0.0f;
-        sensorsMutation->replaceProbability = 0.5f;
+        sensorsStructural = new StructuralMutation();
+        sensorsStructural->addProbability = 0.1f;
+        sensorsStructural->deleteProbability = 0.1f;
+        sensorsStructural->replaceProbability = 0.1f;
         sensorStructuralList = new StructuralList();
         sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
+
+        // bones
+        bonesStructural = new StructuralMutation();
+        bonesStructural->addProbability = 0.01f;
+        bonesStructural->deleteProbability = 0.01f;
+        bonesStructural->replaceProbability = 0.01f;
 
         // ---------------------
         // -- BRAIN MUTATIONS --
@@ -157,15 +163,11 @@ namespace GeneLabCore {
         boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
 
         // sensors
-        sensorsMutation = new StructuralMutation();
-        sensorsMutation->addProbability = 0.f;
-        sensorsMutation->deleteProbability = 0.f;
-        sensorsMutation->replaceProbability = 1.f;
-        sensorStructuralList = new StructuralList();
-        sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,2.0));
-        sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,3.0));
-        sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
+        sensorsStructural = new StructuralMutation(map["sensorsStructural"]);
+        sensorStructuralList = new StructuralList(map["sensorStructuralList"]);
+
+        // bones
+        bonesStructural = new StructuralMutation(map["bonesStructural"]);
 
         // ---------------------
         // -- BRAIN MUTATIONS --
@@ -197,24 +199,35 @@ namespace GeneLabCore {
         map.insert("newBrainTree",newBrainTree->serialize());
         map.insert("constValue",constValue->serialize());
 
+        map.insert("sensorsStructural",sensorsStructural->serialize());
+        map.insert("sensorStructuralList",sensorStructuralList->serialize());
+
+        map.insert("bonesStructural",bonesStructural->serialize());
+
         return map;
     }
 
     QVariant MutationsManager::mutateEntity(const QVariant &entityVariant) {
         QVariantMap entityMap = entityVariant.toMap();
+        QVariantMap originsMap =  entityMap["origins"].toMap();
         QVariantMap bodyMap = entityMap["body"].toMap();
         QVariantMap treeShapeMap = bodyMap["shape"].toMap();
         QVariantMap brainMap = entityMap["brain"].toMap();
 
+        // treeshape mutation
         QVariant newTreeShapeMap = this->mutateTreeShape(treeShapeMap);
-        QVariant newBrainMap     = this->mutateBrain(brainMap);
-
         bodyMap.insert("shape",   newTreeShapeMap);
         entityMap.insert("body",  bodyMap);
+
+        // brain mutation
+        QVariant newBrainMap     = this->mutateBrain(brainMap);
         entityMap.insert("brain", newBrainMap);
 
-        return entityMap;
+        // next generation
+        originsMap.insert("generation", originsMap["generation"].toInt()+1);
+        entityMap.insert("origins", originsMap);
 
+        return entityMap;
     }
 
     QVariant MutationsManager::mutateTreeShape(const QVariant &treeShapeVariant)
@@ -231,6 +244,10 @@ namespace GeneLabCore {
         QVariantList newBonesList;
         foreach(QVariant boneVariant, rootFixMap.value("bones").toList())
             newBonesList.append(recursiveMutateTreeShape(boneVariant));
+
+        // add new bone to fix
+        if(bonesStructural->checkAdd())
+            addBone(newBonesList);
 
         rootFixMap.insert("bones",newBonesList);
         treeShapeMap.insert("rootFix",rootFixMap);
@@ -252,6 +269,10 @@ namespace GeneLabCore {
         QVariantList newBonesList;
         foreach(QVariant boneVariant, endFixMap.value("bones").toList())
             newBonesList.append(recursiveMutateTreeShape(boneVariant));
+
+        // add new bone to fix
+        if(bonesStructural->checkAdd())
+             addBone(newBonesList);
 
         endFixMap.insert("bones",newBonesList);
         boneVariantMap.insert("endFix",endFixMap);
@@ -344,22 +365,23 @@ namespace GeneLabCore {
         // radius mutation
         fixRadius->mutate(fixMap, "radius");
 
-        // Sensors mutations
+        // -----------------------
+        // -- Sensors mutations --
+        // -----------------------
         QVariantList sensorList = fixMap["sensors"].toList();
         QVariantList newSensorList;
-
 
         int nbSensors = sensorList.count();
         for(int i=0;i<nbSensors;++i) {
 
            // delete sensor
-           if(sensorsMutation->checkDelete()) {
+           if(sensorsStructural->checkDelete()) {
                 sensorList.removeAt(i);
                 i--;
                 nbSensors--;
            }
            // replace sensor
-           else if(sensorsMutation->checkReplace()) {
+           else if(sensorsStructural->checkReplace()) {
                sensorList.removeAt(i);
                addSensor(sensorList,i);
            }
@@ -394,16 +416,44 @@ namespace GeneLabCore {
         }
 
         // add sensor ?
-        if(sensorsMutation->checkAdd())
+        if(sensorsStructural->checkAdd())
             addSensor(newSensorList);
 
         fixMap.insert("sensors", newSensorList);
+
+        // ---------------------
+        // -- Bones mutations --
+        // ---------------------
+        QVariantList bonesList = fixMap["bones"].toList();
+
+        int nbBones = bonesList.count();
+        for(int i=0;i<nbBones;++i) {
+           // delete
+           if(bonesStructural->checkDelete()) {
+                bonesList.removeAt(i);
+                i--;
+                nbBones--;
+           }
+           // or replace
+           else if(bonesStructural->checkReplace()) {
+               bonesList.removeAt(i);
+               addBone(bonesList,i);
+           }
+        }
+
+        // --
+        // (?) adding of bone : after bone mutation to avoid recurcive calls
+        // (you add a bone then the end fix of this bone will be also mutated...)
+        // see : recursiveMutateTreeShape(...)
+        // --
+
+        fixMap.insert("bones", bonesList);
 
         return fixMap;
     }
 
     // add sensor
-    void MutationsManager::addSensor(QVariantList &sensorsList, int i){
+    void MutationsManager::addSensor(QVariantList &sensorsList, int i) {
 
         MutationElement *me = sensorStructuralList->pickOne();
         QVariant newSensor;
@@ -428,6 +478,16 @@ namespace GeneLabCore {
             sensorsList.insert(i,newSensor);
         else
             sensorsList.append(newSensor);
+    }
+
+    void MutationsManager::addBone(QVariantList &bonesList, int i) {
+        QVariant newBone = Bone::generateEmpty();
+
+        // insert in a specific position
+        if(i > -1 && i < bonesList.count())
+            bonesList.insert(i,newBone);
+        else
+            bonesList.append(newBone);
     }
 
     // Mutate the brain

@@ -114,6 +114,7 @@ namespace GeneLabCore {
     class SimpleProbabilityMutation;
     class StructuralMutation;
     class StructuralList;
+    class MutationElement;
 
     // ----------------
     // -- Ressources --
@@ -163,6 +164,7 @@ class FixationPropertiesController;
 class FloatMutationController;
 class IntegerMutationController;
 class SimpleProbabilityController;
+class StructuralMutationController;
 
 // Typical used ogre namespace classes
 namespace Ogre {

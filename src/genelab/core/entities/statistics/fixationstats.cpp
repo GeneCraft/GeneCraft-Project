@@ -18,6 +18,8 @@ FixationStats::FixationStats(StatisticsStorage * statsStorage, Fixation * fixati
 
     fixationRelativeDistance = statsStorage->registerStat(fixName + QString(" relative velocity"),"m / step");
 
+    fixationAbsoluteYPosition = statsStorage->registerStat(fixName + QString(" absolute Y position"), "m");
+
     // first initialization of the previous origin
     previousOrigin = fixation->getRigidBody()->getWorldTransform().getOrigin();
     sum = 0.;
@@ -28,18 +30,23 @@ void FixationStats::step()
     // get new origin
     btVector3 origin = fixation->getRigidBody()->getWorldTransform().getOrigin();
 
-    // UPDATE VALUES
+    // velocity
     fixationVelocity->setValue(previousOrigin.distance(origin));
-    if(qAbs(origin.distance(refOrigin) - sum) > 0.001)
-    fixationRelativeDistance->setValue(origin.distance(refOrigin) - previousOrigin.distance(refOrigin));
+
+    // relative distance
+    if(qAbs(origin.distance(refOrigin) - sum) > 0.001) // FIXME WTF ? ... need comment
+        fixationRelativeDistance->setValue(origin.distance(refOrigin) - previousOrigin.distance(refOrigin));
     sum = origin.distance(refOrigin);
+
+    // absolute Y position
+    fixationAbsoluteYPosition->setValue(origin.y());
 
     // update previous origin
     previousOrigin = origin;
 }
 
 void FixationStats::resetOrigin(){
-    refOrigin = fixation->getRigidBody()->getWorldTransform().getOrigin();
+    refOrigin = previousOrigin =  fixation->getRigidBody()->getWorldTransform().getOrigin();
     sum = 0.0f;
 }
 

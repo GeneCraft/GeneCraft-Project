@@ -52,7 +52,7 @@ namespace GeneLabCore {
         initTransform.setIdentity();
         initTransform.setOrigin(position);
         Fixation* root = new Fixation(factory,fixRadius,initTransform);
-        Fixation* reelRoot = root;
+        //Fixation* reelRoot = root;
 
         // shape
         TreeShape* shape = new TreeShape(factory);
@@ -60,9 +60,9 @@ namespace GeneLabCore {
         entity->setShape(shape);
 
         // liberty angle
-        float xAngle = M_PI * 0.5;
+        float xAngle = M_PI * 0.06;
         float yAngle = 0;
-        float zAngle = M_PI * 0.06;
+        float zAngle = M_PI * 0.5;
 
         Bone* b;
 

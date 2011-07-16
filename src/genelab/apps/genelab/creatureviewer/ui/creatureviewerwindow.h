@@ -46,6 +46,7 @@ public slots:
     void saveEntityToDb();
     void removeEntity();
     void removeAllEntities();
+    void removeAllEntitiesExceptSelected();
     void enterInWhatsThisMode();
 
     // notifications

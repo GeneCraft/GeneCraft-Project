@@ -3,7 +3,7 @@
 
 #include "mutation/integermutation.h"
 
-#define PROBABILITY_PRECISION 10.0
+#define PROBABILITY_PRECISION 1000.0
 
 using namespace GeneLabCore;
 
@@ -67,7 +67,7 @@ void IntegerMutationController::nameToggled(bool checked){
 }
 
 void IntegerMutationController::probabilityChanged(int value){
-    ui->lProbabilty->setText(QString::number(value / 10.0).append("%"));
+    ui->lProbabilty->setText(QString::number(value / PROBABILITY_PRECISION * 100.0).append("%"));
 }
 
 void IntegerMutationController::minFactorChanged(int value){

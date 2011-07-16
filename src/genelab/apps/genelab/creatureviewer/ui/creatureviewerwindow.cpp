@@ -112,9 +112,12 @@ void CreatureViewerWindow::init() {
     ui->toolBar->addSeparator();
     QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString(tr("Remove creature")));
     QAction *aRemoveAllCreatures =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all"),QString(tr("Remove all creatures")));
+    QAction *aRemoveAllCreaturesExceptSelected = ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all_except_one"),QString(tr("Remove all creatures except that selected")));
+
+
     ui->toolBar->addSeparator();
     QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
-    QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/experiment"),QString(tr("Edit current experiment")));
+    QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/report"),QString(tr("Edit current experiment")));
     ui->toolBar->addSeparator();
 
     // step manager
@@ -138,6 +141,8 @@ void CreatureViewerWindow::init() {
     connect(aSaveCreature,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
     connect(aRemoveCreature,SIGNAL(triggered()),this,SLOT(removeEntity()));
     connect(aRemoveAllCreatures,SIGNAL(triggered()),this,SLOT(removeAllEntities()));
+    connect(aRemoveAllCreaturesExceptSelected,SIGNAL(triggered()),this,SLOT(removeAllEntitiesExceptSelected()));
+
 
     connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
     connect(aEditExperiment,SIGNAL(triggered()),this,SLOT(openExperimentPropertiesController()));
@@ -405,9 +410,6 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // mutations
     for(int i = 0; i < nbCreatures; i++) {
 
-
-        qDebug() << (int) experiment->getMutationsManager();
-
         QVariant newGenome = experiment->getMutationsManager()->mutateEntity(originGenome);
 
         btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
@@ -620,6 +622,26 @@ void CreatureViewerWindow::removeAllEntities()
         emit sEntityDeleted(old);
 
         delete old;
+    }
+}
+
+void CreatureViewerWindow::removeAllEntitiesExceptSelected() {
+
+    if(selectedEntity != NULL) {
+
+        // Clear entities except that selected entity
+        EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+        ents = entitiesEngine->getAllEntities();
+        while(ents.size() != 0){
+
+            Entity * old = ents.takeFirst();
+
+            if(old != selectedEntity) {
+                entitiesEngine->removeEntity(old);
+                emit sEntityDeleted(old);
+                delete old;
+            }
+        }
     }
 }
 
