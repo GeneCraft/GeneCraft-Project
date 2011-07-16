@@ -22,6 +22,8 @@
 #include "sensors/positionsensor.h"
 #include "sensors/contactsensor.h"
 
+#include "qxtjson.h"
+
 namespace GeneLabCore {
 
     MutationsManager::MutationsManager()
@@ -67,13 +69,13 @@ namespace GeneLabCore {
 
         // sensors
         sensorsMutation = new StructuralMutation();
-        sensorsMutation->addProbability = 0.f;
-        sensorsMutation->deleteProbability = 0.f;
-        sensorsMutation->replaceProbability = 1.f;
+        sensorsMutation->addProbability = 0.0f;
+        sensorsMutation->deleteProbability = 0.0f;
+        sensorsMutation->replaceProbability = 0.5f;
         sensorStructuralList = new StructuralList();
         sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,2.0));
-        sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,3.0));
+        sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
+        sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
 
         // ---------------------
@@ -346,17 +348,24 @@ namespace GeneLabCore {
         QVariantList sensorList = fixMap["sensors"].toList();
         QVariantList newSensorList;
 
-        // delete sensor
+
         int nbSensors = sensorList.count();
         for(int i=0;i<nbSensors;++i) {
+
+           // delete sensor
            if(sensorsMutation->checkDelete()) {
                 sensorList.removeAt(i);
                 i--;
                 nbSensors--;
            }
+           // replace sensor
+           else if(sensorsMutation->checkReplace()) {
+               sensorList.removeAt(i);
+               addSensor(sensorList,i);
+           }
         }
 
-        // mutate sensor
+        // mutate sensor brain in
         foreach(QVariant sensor, sensorList) {
             QVariantMap sensorMap = sensor.toMap();
             SensorType type = (SensorType)sensorMap["type"].toInt();
@@ -385,34 +394,40 @@ namespace GeneLabCore {
         }
 
         // add sensor ?
-        if(sensorsMutation->checkAdd()) {
-
-            MutationElement *me = sensorStructuralList->pickOne();
-            QVariant newSensor;
-
-            switch(me->type) {
-                case accelerometerSensor:
-                    newSensor = AccelerometerSensor::generateEmpty();
-                    qDebug() << newSensor;
-                    break;
-                case gyroscopicSensor:
-
-                    break;
-                case positionSensor:
-
-                    break;
-                case contactSensor:
-
-                    break;
-            }
-
-            newSensorList.append(newSensor);
-        }
-
+        if(sensorsMutation->checkAdd())
+            addSensor(newSensorList);
 
         fixMap.insert("sensors", newSensorList);
 
         return fixMap;
+    }
+
+    // add sensor
+    void MutationsManager::addSensor(QVariantList &sensorsList, int i){
+
+        MutationElement *me = sensorStructuralList->pickOne();
+        QVariant newSensor;
+
+        switch(me->type) {
+            case accelerometerSensor:
+                newSensor = AccelerometerSensor::generateEmpty();
+                break;
+            case gyroscopicSensor:
+                newSensor = GyroscopicSensor::generateEmpty();
+                break;
+            case positionSensor:
+                newSensor = PositionSensor::generateEmpty();
+                break;
+            case contactSensor:
+                newSensor = ContactSensor::generateEmpty();
+                break;
+        }
+
+        // insert in a specific position
+        if(i > -1 && i < sensorsList.count())
+            sensorsList.insert(i,newSensor);
+        else
+            sensorsList.append(newSensor);
     }
 
     // Mutate the brain

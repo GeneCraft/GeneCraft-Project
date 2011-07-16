@@ -266,7 +266,6 @@ void CreatureViewerWindow::init() {
 
 void CreatureViewerWindow::openExperimentPropertiesController(){
 
-    // TODO STATIC
     if(epc == NULL) {
         epc = new ExperimentsPropertiesController(experiment);
         connect(epc, SIGNAL(experimentLoaded(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));

@@ -2,6 +2,8 @@
 
 #include "mutation/mutationsmanager.h"
 
+#define EXP_FORMAT_VERSION 0.1
+
 namespace GeneLabCore {
 
     Experiment::Experiment() : ressource(NULL){
@@ -31,6 +33,10 @@ namespace GeneLabCore {
 
         QVariantMap map = data.toMap();
 
+        // TODO
+        //if(map["version"].toString().compare(EXP_FORMAT_VERSION) != 0)
+        //  throw new FormatVersionError("Exp", map["version"]);
+
         // information
         id          = map["id"].toString();
         description = map["description"].toString();
@@ -53,6 +59,9 @@ namespace GeneLabCore {
 
     QVariant Experiment::serialize() {
         QVariantMap map;
+
+        // version
+        map.insert("version",EXP_FORMAT_VERSION);
 
         // information
         map.insert("id",id);

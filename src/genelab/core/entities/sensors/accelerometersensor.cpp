@@ -34,8 +34,6 @@ AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
 
 AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation) {
 
-    //this->stepTime = data.toMap()["step"].toInt();
-
     inputX = new BrainIn(data.toMap()["inputX"]);
     inputY = new BrainIn(data.toMap()["inputY"]);
     inputZ = new BrainIn(data.toMap()["inputZ"]);
@@ -55,21 +53,17 @@ QVariant AccelerometerSensor::generateEmpty()
 {
     QVariantMap data = Sensor::generateEmpty("Accelerometer sensor", accelerometerSensor).toMap();
 
-    BrainIn *inputX = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
-    BrainIn *inputY = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
-    BrainIn *inputZ = new BrainIn(MIN_ACCELERATION,MAX_ACCELERATION);
+    BrainIn inputX(MIN_ACCELERATION,MAX_ACCELERATION);
+    BrainIn inputY(MIN_ACCELERATION,MAX_ACCELERATION);
+    BrainIn inputZ(MIN_ACCELERATION,MAX_ACCELERATION);
 
-    inputX->connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
-    inputY->connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
-    inputZ->connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputX.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputY.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputZ.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
 
-    data.insert("inputX", inputX->serialize());
-    data.insert("inputY", inputY->serialize());
-    data.insert("inputZ", inputZ->serialize());
-
-    delete inputX;
-    delete inputY;
-    delete inputZ;
+    data.insert("inputX", inputX.serialize());
+    data.insert("inputY", inputY.serialize());
+    data.insert("inputZ", inputZ.serialize());
 
     return data;
 }
@@ -91,7 +85,7 @@ void AccelerometerSensor::step()
     btVector3 acceleration = speed - oldSpeed;
 
     // float factor  = 0.05;
-    float factor  = 1.;
+    float factor  = .1;
 
     /*)
     factor = 0.1

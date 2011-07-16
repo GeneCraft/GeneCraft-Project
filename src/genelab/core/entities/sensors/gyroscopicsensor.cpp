@@ -4,6 +4,7 @@
 #include "body/fixation.h"
 #include <QDebug>
 #include <QVariant>
+#include "tools.h"
 
 namespace GeneLabCore {
 
@@ -21,7 +22,6 @@ GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
     brainInputs.append(inputRoll);
 }
 
-
 GyroscopicSensor::GyroscopicSensor(QVariant data, Fixation* fixation) : Sensor(data, fixation) {
 
     inputYaw = new BrainIn(data.toMap()["inputYaw"]);
@@ -38,6 +38,25 @@ QVariant GyroscopicSensor::serialize() {
     data.insert("inputYaw", inputYaw->serialize());
     data.insert("inputPitch", inputPitch->serialize());
     data.insert("inputRoll", inputRoll->serialize());
+
+    return data;
+}
+
+QVariant GyroscopicSensor::generateEmpty()
+{
+    QVariantMap data = Sensor::generateEmpty("Gyroscopic sensor", gyroscopicSensor).toMap();
+
+    BrainIn inputYaw(-M_PI, M_PI);
+    BrainIn inputPitch(-M_PI, M_PI);
+    BrainIn inputRoll(-M_PI, M_PI);
+
+    inputYaw.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputPitch.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputRoll.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+
+    data.insert("inputYaw", inputYaw.serialize());
+    data.insert("inputPitch", inputPitch.serialize());
+    data.insert("inputRoll", inputRoll.serialize());
 
     return data;
 }

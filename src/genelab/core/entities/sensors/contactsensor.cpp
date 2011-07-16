@@ -3,6 +3,7 @@
 #include "body/fixation.h"
 #include "world/btworld.h"
 #include "factories/btshapesfactory.h"
+#include "tools.h"
 
 namespace GeneLabCore {
 
@@ -31,6 +32,19 @@ QVariant ContactSensor::serialize()
 {
     QVariantMap data = Sensor::serialize().toMap();
     data.insert("collisionInput", collided->serialize());
+    return data;
+}
+
+QVariant ContactSensor::generateEmpty()
+{
+    QVariantMap data = Sensor::generateEmpty("Contact sensor", contactSensor).toMap();
+
+    BrainIn collided(0,1);
+
+    collided.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+
+    data.insert("collisionInput", collided.serialize());
+
     return data;
 }
 

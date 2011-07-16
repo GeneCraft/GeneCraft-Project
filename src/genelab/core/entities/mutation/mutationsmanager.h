@@ -95,6 +95,9 @@ private:
     int treeDepth(QStringListIterator it);
     void consumnSubTree(QStringListIterator it);
 
+    // add sensor (-1 = last)
+    void addSensor(QVariantList &sensors, int i=-1);
+
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 
 };
