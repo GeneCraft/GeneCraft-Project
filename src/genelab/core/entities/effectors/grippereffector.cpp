@@ -20,9 +20,30 @@ GripperEffector::GripperEffector(Fixation *fixation) : constraint(NULL) {
     outs.append(gripState);
 }
 
+GripperEffector::~GripperEffector()
+{
+    fixation->getShapesFactory()->getWorld()->getBulletWorld()->removeConstraint(constraint);
+    delete constraint;
+}
+
 void GripperEffector::step() {
-    // activate or disable
-    constraint->setEnabled(gripState->getValue() > 0);
+
+    // disable <= 0 > activate
+    if(gripState->getValue() > 0)
+    {
+        // not already enable
+        if(!constraint->isEnabled()) {
+
+            // set the new grip origin
+            constraint->setPivotA(btVector3(0,0,0));
+
+            // activate the constraint
+            constraint->setEnabled(true);
+        }
+    }
+    else
+        // disable the contraint
+        constraint->setEnabled(false);
 }
 
 }

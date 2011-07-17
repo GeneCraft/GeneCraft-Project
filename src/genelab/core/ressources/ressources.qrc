@@ -48,5 +48,8 @@
         <file alias="camera">img/icons/camera.png</file>
         <file alias="world">img/icons/world.png</file>
         <file alias="entity_follow">img/icons/bug_camera.png</file>
+        <file alias="effector">img/icons/cog.png</file>
+        <file alias="effector_add">img/icons/cog_add.png</file>
+        <file alias="effector_delete">img/icons/cog_delete.png</file>
     </qresource>
 </RCC>

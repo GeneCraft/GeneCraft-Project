@@ -13,6 +13,8 @@ class GripperEffector : public Effector
 public:
     GripperEffector(Fixation *fixation);
 
+    ~GripperEffector();
+
     // To update world.
     void step();
 

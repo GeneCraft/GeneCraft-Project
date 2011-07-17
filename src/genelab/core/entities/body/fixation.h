@@ -13,55 +13,64 @@ namespace GeneLabCore {
 
     public:
 
-        /**
-         * Constructor.
-         *
-         * Think to call setup method to add objects in the world.
-         */
+        // Constructor : Think to call setup method to add objects in the world
         Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform);
 
-        /**
-          * Surcharged constructor, called to create a fixation from a existant rigidbody
-          */
+        // Surcharged constructor, called to create a fixation from a existant rigidbody
         Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btScalar radius, btTransform localFixation, Bone *parentBone);
+
+        // Destuctor
         ~Fixation();
 
+        // To serialize
         QVariant serialize();
+
+        // To generate an empty serialized version
         static QVariant generateEmpty();
 
-        /**
-         * Used to set default parameters of fixation and add it into engines
-         */
+        // To set default parameters of fixation and add it into engines
         void setup();
-        /**
-          * To remove it without destructing entity
-          */
+
+        // To remove it without destructing entity
         void remove();
 
-        /**
-         * Used to create and attach a bone to the fixation
-         */
-        //Bone *addBone(const btQuaternion &localOrientation, btScalar boneRadius, btScalar boneLenght, btScalar endFixRadius, const btVector3 &lowerLimits, const btVector3 &upperLimits);
+        // -----------
+        // -- bones --
+        // -----------
+        QList<Bone *> &getBones()               { return bones; }
+
+        // To create and attach a bone to the fixation
         Bone *addBone(btScalar yAxis, btScalar zAxis, btScalar boneRadius, btScalar boneLength, btScalar endFixRadius, const btVector3& lo, const btVector3 &up);
 
-        /**
-          * To delete manualy a bone
-          */
+        // To delete manualy a bone
         void removeBone(Bone* bone);
 
-        /**
-         * Used to add a sensor
-         */
+        // -------------
+        // -- sensors --
+        // -------------
+        QList<Sensor *> &getSensors()           { return sensors; }
+
+        // To add a sensor
         void addSensor(Sensor * sensor);
 
-        /**
-         * Used to remove a sensor
-         */
+        // To remove a sensor
         void removeSensor(Sensor * sensor);
 
-        // GETTERS AND SETTERS
-        QList<Bone *> &getBones()               { return bones; }
-        QList<Sensor *> &getSensors()           { return sensors; }
+        // ---------------
+        // -- effectors --
+        // ---------------
+        QList<Effector *> &getEffectors()           { return effectors; }
+
+        // To add an effector
+        void addEffector(Effector * effector);
+
+        // To remove an effector
+        void removeEffector(Effector * effector);
+
+
+        // -----------------------
+        // -- getters / setters --
+        // -----------------------
         BulletEngine *getBulletEngine()         { return bulletEngine; }
         btScalar getRadius()                    { return radius; }
         void setEntity(Entity *entity);
@@ -71,22 +80,19 @@ namespace GeneLabCore {
         static FixationPropertiesController *getEmptyInspectorWidget();
         void setSelected(bool isSelected);
         void setRadius(btScalar radius);
+        btShapesFactory *getShapesFactory()     { return shapesFactory; }
 
-        // TOOLS
+        // -----------
+        // -- tools --
+        // -----------
         void fixeInTheAir();
         void unfixInTheAir();
         bool isFixedInTheAir(){ return airFixation != 0; }
-
-        // To get the sphere world
-        btShapesFactory *getShapesFactory() { return shapesFactory; }
-
-        /**
-         * The percent of penetration of bone into fixation (percent of fixation radius)
-         */
-        static const btScalar PERCENT_BONE_INSIDE_FIX;
-
         void setOutputsFrom(int from);
         bool isInOnePiece();
+
+        // The percent of penetration of bone into fixation (percent of fixation radius)
+        static const btScalar PERCENT_BONE_INSIDE_FIX;
 
     protected:
 
@@ -106,7 +112,7 @@ namespace GeneLabCore {
         // Children
         QList<Bone *> bones; // Owner
         QList<Sensor *> sensors; // Owner
-        //QList<Effector *> effector;
+        QList<Effector *> effectors; // Owner
 
         // Tools
         btTypedConstraint *airFixation; // Owner

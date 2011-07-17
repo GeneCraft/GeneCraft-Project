@@ -4,6 +4,9 @@
 #include <QDebug>
 #include "ui_fixationpropertiescontroller.h"
 
+// Events
+#include "events/inspectorsinputmanager.h"
+
 // Entity
 #include "body/fixation.h"
 #include "body/bone.h"
@@ -17,7 +20,8 @@
 #include "sensors/contactsensor.h"
 #include "sensors/boxsmellsensor.h"
 
-#include "events/inspectorsinputmanager.h"
+// Effectors
+#include "effectors/grippereffector.h"
 
 FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
     QWidget(parent),
@@ -28,13 +32,16 @@ FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
     connect(this->ui->pbAddBone,SIGNAL(pressed()),this,SLOT(addBone()));
     connect(this->ui->pbFixInTheAir,SIGNAL(pressed()),this,SLOT(fixInTheAir()));
     connect(this->ui->pbAddSensor,SIGNAL(pressed()),this,SLOT(addSensor()));
+    connect(this->ui->pbAddEffector,SIGNAL(pressed()),this,SLOT(addEffector()));
+
     connect(this->ui->pbSelectBone,SIGNAL(pressed()),this,SLOT(selectBone()));
 
     connect(this->ui->sRadius,SIGNAL(valueChanged(int)),this,SLOT(changeRadiusFromSlider(int)));
     connect(this->ui->pbResizeRadius,SIGNAL(pressed()),this,SLOT(changeRadiusFromButton()));
-    connect(this->ui->pbRemoveBone,SIGNAL(pressed()),this,SLOT(removeSelectedBone()));
 
+    connect(this->ui->pbRemoveBone,SIGNAL(pressed()),this,SLOT(removeSelectedBone()));
     connect(this->ui->pbDeleteSensor,SIGNAL(pressed()),this,SLOT(removeSelectedSensor()));
+    connect(this->ui->pbDeleteEffector,SIGNAL(pressed()),this,SLOT(removeSelectedEffector()));
 
     this->setEnabled(false);
 }
@@ -56,6 +63,7 @@ void FixationPropertiesController::connectToInspectorInputManager(InspectorsInpu
     // emission
     connect(this,SIGNAL(sBoneDeleted(Bone *)),iim,SLOT(boneDeleted(Bone *)),Qt::DirectConnection);
     connect(this,SIGNAL(sBoneSelected(Bone *)),iim,SLOT(boneSelected(Bone *)));
+    connect(this,SIGNAL(sFixationUpdated(Fixation*)),iim,SLOT(fixationUpdated(Fixation*)));
 //    //connect(this,SIGNAL(sBoneUpdated(Bone *)),iim,SLOT(boneUpdated(Bone*)));
 }
 
@@ -88,14 +96,19 @@ void FixationPropertiesController::setFixation(Fixation *fixation)
         this->ui->leRadius->setText(QString::number(fixation->getRadius()));
 
         // Bones
-        this->ui->lwBones->clear();
+        this->ui->lwBones->clear(); // TODO delete because of new !
         foreach(Bone *b, fixation->getBones())
             this->ui->lwBones->addItem(new BoneListWidgetItem(b));
 
         // Sensors
-        this->ui->lwSensors->clear();
+        this->ui->lwSensors->clear(); // TODO delete because of new !
         foreach(Sensor *s, fixation->getSensors())
             this->ui->lwSensors->addItem(new SensorListWidgetItem(s));
+
+        // Sensors
+        this->ui->lwEffectors->clear(); // TODO delete because of new !
+        foreach(Effector *f, fixation->getEffectors())
+            this->ui->lwEffectors->addItem(new EffectorListWidgetItem(f));
 
         this->setEnabled(true);
     }
@@ -194,6 +207,26 @@ void FixationPropertiesController::addSensor()
     }
 }
 
+void FixationPropertiesController::addEffector()
+{
+    Effector *effector = NULL;
+
+    switch(this->ui->cbEffectors->currentIndex())
+    {
+    case 0 : // Gripper
+
+        if(fixation->getEntity())
+            effector = new GripperEffector(fixation);
+        break;
+    }
+
+    if(effector != NULL)
+    {
+        fixation->addEffector(effector);
+        setFixation(fixation); // refresh widget
+    }
+}
+
 void FixationPropertiesController::changeRadiusFromSlider(int value)
 {
     fixation->setRadius(value/1000.0);
@@ -248,9 +281,36 @@ void FixationPropertiesController::removeSelectedSensor()
                 // update ui TODO emit
                 setFixation(fixation);
 
-                // FIXME update entityPropertiesController !!!!!!!!!!!!!!!!!!!!!!!!!
-                // because user could edit a deleted sensor !
+                // FIXME check update entityPropertiesController !!!!!!!!!!!!!!!!!!!!!!!!!
+                emit sFixationUpdated(fixation);
             }
         }
     }
 }
+
+void FixationPropertiesController::removeSelectedEffector()
+{
+    if(fixation)
+    {
+        if(this->ui->lwEffectors->selectedItems().size() > 0)
+        {
+            EffectorListWidgetItem * effectorItem = dynamic_cast<EffectorListWidgetItem*>(this->ui->lwEffectors->selectedItems().at(0));
+
+            if (effectorItem)
+            {
+                // remove the effector in the fixation
+                fixation->removeEffector(effectorItem->effector);
+
+                // delete sensor
+                delete effectorItem->effector;
+
+                // update ui TODO emit
+                setFixation(fixation);
+
+                // FIXME check update entityPropertiesController !!!!!!!!!!!!!!!!!!!!!!!!!
+                emit sFixationUpdated(fixation);
+            }
+        }
+    }
+}
+

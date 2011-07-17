@@ -165,7 +165,6 @@ void Entity::addLinkToEffector(Effector *modifier) {
         }
 
         brain->addOut(modifier->getOutputs()[i]);
-
     }
 }
 

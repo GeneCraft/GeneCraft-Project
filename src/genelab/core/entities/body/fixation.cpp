@@ -81,6 +81,10 @@ namespace GeneLabCore {
         while(sensors.size() > 0) {
             this->removeSensor(sensors.first());
         }
+
+        while(effectors.size() > 0) {
+            this->removeEffector(effectors.first());
+        }
     }
 
     // -----------
@@ -122,6 +126,12 @@ namespace GeneLabCore {
             entity->removeLinksToSensor(sensors.at(0));
             delete sensors.at(0);
             sensors.removeFirst();
+        }
+
+        while(effectors.size()) {
+            entity->removeLinksToEffector(effectors.at(0));
+            delete effectors.at(0);
+            effectors.removeFirst();
         }
 
         while(bones.size()) {
@@ -217,6 +227,26 @@ namespace GeneLabCore {
 
         if(entity)
             entity->removeLinksToSensor(sensor);
+    }
+
+    // ---------------
+    // -- EFFECTORS --
+    // ---------------
+
+    void Fixation::addEffector(Effector * effector)
+    {
+        effectors.append(effector);
+
+        if(entity)
+            entity->addLinkToEffector(effector);
+    }
+
+    void Fixation::removeEffector(Effector *effector){
+
+        effectors.removeOne(effector);
+
+        if(entity)
+            entity->removeLinksToEffector(effector);
     }
 
     // ---------------
@@ -317,6 +347,7 @@ namespace GeneLabCore {
         QVariantMap fixation;
         QVariantList bonesVariantList;
         QVariantList sensorsVariantList;
+        QVariantList effectorsVariantList;
 
         fixation.insert("radius",QVariant((double)radius));
 
@@ -324,12 +355,17 @@ namespace GeneLabCore {
             bonesVariantList.append(bone->serialize());
         }
 
-        foreach(Sensor *sensor, this->sensors) {
+        foreach(Sensor *sensor, sensors) {
             sensorsVariantList.append(sensor->serialize());
+        }
+
+        foreach(Effector *effector, effectors) {
+            effectorsVariantList.append(effector->serialize());
         }
 
         fixation.insert("bones", bonesVariantList);
         fixation.insert("sensors", sensorsVariantList);
+        fixation.insert("effectors", effectorsVariantList);
 
         return fixation;
     }
@@ -342,6 +378,7 @@ namespace GeneLabCore {
         fixation.insert("radius",(double) Tools::random(0.1,0.5));
         fixation.insert("bones", QVariantList());
         fixation.insert("sensors", QVariantList());
+        fixation.insert("effectors", QVariantList());
 
         return fixation;
     }
