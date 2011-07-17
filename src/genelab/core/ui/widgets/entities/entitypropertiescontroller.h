@@ -42,7 +42,6 @@ public slots:
     void setOutFromRandom();
     void setOutFrom(int outsFrom);
     void viewGenotype();
-    void followSelectedEntity();
 
     void fixationSelected(Fixation *fixation);
     void boneSelected(Bone *bone);

@@ -49,6 +49,9 @@ public slots:
     void removeAllEntitiesExceptSelected();
     void enterInWhatsThisMode();
 
+    void followSelectedEntity();
+    void unfollowEntity();
+
     // notifications
     void entitySelected(Entity *entity);
     //void entityDeleted(Entity*);

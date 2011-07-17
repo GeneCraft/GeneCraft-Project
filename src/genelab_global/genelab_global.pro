@@ -192,7 +192,10 @@ SOURCES += \
     ../genelab/core/entities/mutation/structuralmutation.cpp \
     ../genelab/core/entities/mutation/structurallist.cpp \
     ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.cpp \
-    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.cpp
+    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.cpp \
+    ../genelab/core/entities/sensors/smellsensor.cpp \
+    ../genelab/core/entities/sensors/boxsmellsensor.cpp \
+    ../genelab/core/entities/effectors/grippereffector.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -295,7 +298,10 @@ HEADERS += \
     ../genelab/core/entities/mutation/structuralmutation.h \
     ../genelab/core/entities/mutation/structurallist.h \
     ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.h \
-    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.h
+    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.h \
+    ../genelab/core/entities/sensors/smellsensor.h \
+    ../genelab/core/entities/sensors/boxsmellsensor.h \
+    ../genelab/core/entities/effectors/grippereffector.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

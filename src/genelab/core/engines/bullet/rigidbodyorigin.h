@@ -10,17 +10,18 @@ class RigidBodyOrigin : public QObject
 
 public:
 
-    enum type
+    enum RigidBodyType
     {
         BONE = 0,
         FIXATION,
-        BASIC_SHAPE
+        BASIC_SHAPE,
+        FOOD
     };
 
-    RigidBodyOrigin(RigidBodyOrigin::type typeOrigin, QObject * object);
+    RigidBodyOrigin(RigidBodyType typeOrigin, QObject * object);
 
 
-    inline RigidBodyOrigin::type getType()
+    inline RigidBodyType getType()
     {
         return typeOrigin;
     }
@@ -32,7 +33,7 @@ public:
 
 protected:
 
-    RigidBodyOrigin::type typeOrigin;
+    RigidBodyType typeOrigin;
     QObject *object;
 
 };

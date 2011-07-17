@@ -69,6 +69,13 @@
 #include "experiment/experiment.h"
 #include "mutation/mutationsmanager.h"
 
+#include "btshapesfactory.h"
+#include "btfactory.h"
+#include "engines/ogre/ogreengine.h"
+#include "engines/ogre/ogrewidget.h"
+#include "engines/ogre/entities/ogrefreecamera.h"
+#include "world/btworld.h"
+
 using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
@@ -120,6 +127,10 @@ void CreatureViewerWindow::init() {
     QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/report"),QString(tr("Edit current experiment")));
     ui->toolBar->addSeparator();
 
+    QAction *aFollowCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_follow"),QString(tr("Follow selected creature")));
+
+
+
     // step manager
     //ui->toolBar->addWidget(new QLabel(tr("Step manager :"));
     aTogglePhysics = ui->toolBar->addAction(QIcon(":img/icons/bullet_physics_library_stop"),QString(tr("Toggle physics")));
@@ -143,9 +154,11 @@ void CreatureViewerWindow::init() {
     connect(aRemoveAllCreatures,SIGNAL(triggered()),this,SLOT(removeAllEntities()));
     connect(aRemoveAllCreaturesExceptSelected,SIGNAL(triggered()),this,SLOT(removeAllEntitiesExceptSelected()));
 
+    connect(aFollowCreature,SIGNAL(triggered()),this,SLOT(followSelectedEntity()));
 
     connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
     connect(aEditExperiment,SIGNAL(triggered()),this,SLOT(openExperimentPropertiesController()));
+
 
 
     // -----------
@@ -594,6 +607,7 @@ void CreatureViewerWindow::removeEntity()
         EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
         entitiesEngine->removeEntity(selectedEntity);
 
+        unfollowEntity();
         emit sEntityDeleted(selectedEntity);
 
         delete selectedEntity;
@@ -611,6 +625,8 @@ void CreatureViewerWindow::removeAllEntities()
     selectedEntity = NULL;
     selectedBone = NULL;
     selectedFix= NULL;
+
+    unfollowEntity();
 
     // Clear entities
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
@@ -693,3 +709,30 @@ void CreatureViewerWindow::fixationSelected(Fixation* fix){
 
     selectedFix = fix;
 }
+
+void CreatureViewerWindow::followSelectedEntity() {
+
+    qDebug() << Q_FUNC_INFO;
+
+    if(selectedEntity) {
+
+        OgreEngine * ogre = (OgreEngine *) factory->getEngineByName("Ogre");
+        OgreWidget *ogreWidget = ogre->getOgreWidget("MainWidget");
+        OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
+
+        cam->followBody(selectedEntity->getShape()->getRoot()->getRigidBody());
+        ogreWidget->setFocus(Qt::MouseFocusReason);
+    }
+}
+
+void CreatureViewerWindow::unfollowEntity() {
+
+    // TODO save widget !!!
+    OgreEngine * ogre = (OgreEngine *) factory->getEngineByName("Ogre");
+    OgreWidget *ogreWidget = ogre->getOgreWidget("MainWidget");
+    OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
+    cam->unfollowBody();
+
+}
+
+

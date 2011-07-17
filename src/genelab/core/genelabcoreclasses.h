@@ -77,6 +77,7 @@ namespace GeneLabCore {
     class GyroscopicSensor;
     class AccelerometerSensor;
     class ContactSensor;
+    class SmellSensor;
 
     // Modifier
     class Effector;

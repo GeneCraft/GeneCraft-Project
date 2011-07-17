@@ -47,5 +47,6 @@
         <file alias="entity_delete_all_except_one">img/icons/bug_delete_all_except_one.png</file>
         <file alias="camera">img/icons/camera.png</file>
         <file alias="world">img/icons/world.png</file>
+        <file alias="entity_follow">img/icons/bug_camera.png</file>
     </qresource>
 </RCC>

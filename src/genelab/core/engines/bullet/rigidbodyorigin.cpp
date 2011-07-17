@@ -2,7 +2,7 @@
 
 namespace GeneLabCore {
 
-RigidBodyOrigin::RigidBodyOrigin(RigidBodyOrigin::type typeOrigin, QObject * object)
+RigidBodyOrigin::RigidBodyOrigin(RigidBodyType typeOrigin, QObject * object)
 {
     this->typeOrigin = typeOrigin;
     this->object = object;

@@ -15,6 +15,7 @@
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/accelerometersensor.h"
 #include "sensors/contactsensor.h"
+#include "sensors/boxsmellsensor.h"
 
 #include "events/inspectorsinputmanager.h"
 
@@ -177,7 +178,14 @@ void FixationPropertiesController::addSensor()
         if(fixation->getEntity())
             sensor = new ContactSensor(fixation);
         break;
+
+    case 4 : // Box smell sensor
+
+        if(fixation->getEntity())
+            sensor = new BoxSmellSensor(fixation);
+        break;
     }
+
 
     if(sensor != NULL)
     {

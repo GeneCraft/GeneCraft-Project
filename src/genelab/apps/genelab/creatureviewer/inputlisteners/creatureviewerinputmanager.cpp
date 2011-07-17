@@ -157,7 +157,7 @@ void CreatureViewerInputManager::pickBody()
                     {
                         if(origin->getObject() != NULL)
                         {
-                            switch(origin->getType())
+                            switch((RigidBodyOrigin::RigidBodyType)origin->getType())
                             {
                                 case RigidBodyOrigin::BONE:{
 
