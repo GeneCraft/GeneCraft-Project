@@ -6,36 +6,62 @@
 
 namespace GeneLabCore {
 
-GripperEffector::GripperEffector(Fixation *fixation) : constraint(NULL) {
-
-    this->fixation = fixation;
-    this->typeName = "Gripper Effector";
+// To create
+GripperEffector::GripperEffector(Fixation *fixation) :
+    constraint(NULL), fixation(fixation)
+{
+    typeName    = QString("Gripper Effector");
+    type       = gripperEffector;
 
     // create the air contraint
     constraint = new btPoint2PointConstraint(*fixation->getRigidBody(),btVector3(0,0,0));
     constraint->setEnabled(false);
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->addConstraint(constraint);
 
-    gripState = new BrainOut(-1,1);
-    outs.append(gripState);
+    gripperOutput = new BrainOut(-1,1);
+    brainOutputs.append(gripperOutput);
 }
 
+// To create from serialization data
+GripperEffector::GripperEffector(QVariant data, Fixation * fixation) :
+    Effector(data), fixation(fixation) {
+
+    // create the air contraint
+    constraint = new btPoint2PointConstraint(*fixation->getRigidBody(),btVector3(0,0,0));
+    constraint->setEnabled(false);
+    fixation->getShapesFactory()->getWorld()->getBulletWorld()->addConstraint(constraint);
+
+    gripperOutput = new BrainOut(data.toMap()["gripperOutput"]);
+    brainOutputs.append(gripperOutput);
+}
+
+// Destructor
 GripperEffector::~GripperEffector()
 {
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->removeConstraint(constraint);
     delete constraint;
 }
 
+// To serialize
+QVariant GripperEffector::serialize() {
+    QVariantMap data = Effector::serialize().toMap();
+    data.insert("gripperOutput", gripperOutput->serialize());
+    return data;
+}
+
 void GripperEffector::step() {
 
     // disable <= 0 > activate
-    if(gripState->getValue() > 0)
+    if(gripperOutput->getValue() > 0)
     {
         // not already enable
         if(!constraint->isEnabled()) {
 
+            // TODO check if fixation collide with static object...
+
+
             // set the new grip origin
-            constraint->setPivotA(btVector3(0,0,0));
+            constraint->setPivotB(fixation->getRigidBody()->getWorldTransform().getOrigin());
 
             // activate the constraint
             constraint->setEnabled(true);

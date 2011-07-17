@@ -8,11 +8,16 @@
 #include "bone.h"
 #include "bullet/bulletengine.h"
 #include "btshapesfactory.h"
+
 #include "sensors/sensor.h"
 #include "sensors/accelerometersensor.h"
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/positionsensor.h"
 #include "sensors/contactsensor.h"
+#include "sensors/boxsmellsensor.h"
+
+#include "effectors/grippereffector.h"
+#include "effectors/flyingeffector.h"
 
 namespace GeneLabCore {
     TreeShape::TreeShape(btShapesFactory* shapesFactory, QObject *parent) :
@@ -39,35 +44,62 @@ namespace GeneLabCore {
 
     void TreeShape::buildFixFromGenotype(Fixation *fix, QVariant fixGenotype)
     {
+
+        // -------------
+        // -- sensors --
+        // -------------
         foreach(QVariant sensor, fixGenotype.toMap()["sensors"].toList()) {
            QVariantMap sensorMap = sensor.toMap();
            switch((SensorType)sensorMap["type"].toInt()) {
            case accelerometerSensor: {
-               AccelerometerSensor* s = new AccelerometerSensor(sensor, fix);
-               fix->addSensor(s);
+               fix->addSensor(new AccelerometerSensor(sensor, fix));
            }
                break;
            case gyroscopicSensor: {
 
-               GyroscopicSensor* s = new GyroscopicSensor(sensor, fix);
-               fix->addSensor(s);
+               fix->addSensor(new GyroscopicSensor(sensor, fix));
            }
                break;
            case positionSensor:{
 
-               PositionSensor* s = new PositionSensor(sensor, this->root, fix);
-               fix->addSensor(s);
+               fix->addSensor(new PositionSensor(sensor, this->root, fix));
            }
                break;
            case contactSensor:{
 
-               ContactSensor* s = new ContactSensor(sensor, fix);
-               fix->addSensor(s);
+               fix->addSensor(new ContactSensor(sensor, fix));
+           }
+               break;
+           case boxSmellSensor:{
+
+               fix->addSensor(new BoxSmellSensor(sensor, fix));
            }
                break;
            }
         }
 
+        // --------------
+        // -- effector --
+        // --------------
+        foreach(QVariant effector, fixGenotype.toMap()["effectors"].toList()) {
+           QVariantMap effectorMap = effector.toMap();
+           switch((EffectorType)effectorMap["type"].toInt()) {
+
+           case rotationalMotorEffector: break;
+           case gripperEffector: {
+               fix->addEffector(new GripperEffector(fix));
+           }
+               break;
+           case flyingEffector:{
+               fix->addEffector(new FlyingEffector(fix));
+           }
+               break;
+           }
+        }
+
+        // -----------
+        // -- bones --
+        // -----------
         QVariantList bonesVariantList = fixGenotype.toMap().value("bones").toList();
 
         foreach(QVariant bone, bonesVariantList)

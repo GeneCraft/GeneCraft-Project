@@ -79,6 +79,9 @@ namespace GeneLabCore {
     class ContactSensor;
     class SmellSensor;
 
+    // Effector
+    class FlyingEffector;
+
     // Modifier
     class Effector;
     class RotationalMotorsEffector;

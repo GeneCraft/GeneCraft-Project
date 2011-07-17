@@ -34,6 +34,21 @@ SmellSensor::SmellSensor(Fixation *fixation, QString typeName, SensorType type, 
     callback = new ContactSensorCallback(smellSphere, this);
 }
 
+// To create from serialization data
+SmellSensor::SmellSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation)
+{
+    intensityInput = new BrainIn(data.toMap()["intensityInput"]);
+    brainInputs.append(intensityInput);
+}
+
+// To serialize
+QVariant SmellSensor::serialize()
+{
+    QVariantMap data = Sensor::serialize().toMap();
+    data.insert("intensityInput", intensityInput->serialize());
+    return data;
+}
+
 void SmellSensor::step() {
 
     //qDebug() << "STEP START";

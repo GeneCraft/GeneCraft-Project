@@ -18,6 +18,12 @@ class SmellSensor : public Sensor
 public:
     SmellSensor(Fixation *fixation, QString typeName, SensorType type, RigidBodyOrigin::RigidBodyType smellType, btScalar smellRadius);
 
+    // To create from serialization data
+    SmellSensor(QVariant data, Fixation * fixation);
+
+    // To serialize
+    QVariant serialize();
+
     // To update brain inputs values
     void step();
 

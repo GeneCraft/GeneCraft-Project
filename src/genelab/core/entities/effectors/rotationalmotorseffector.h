@@ -92,7 +92,7 @@ public:
     // To get bone
     Bone *getBone() { return bone; }
 
-    BrainOutMotor *getBrainOutputs(int i) { return brainOutputs[i]; }
+    BrainOutMotor *getBrainOutputs(int i) { return brainMotorOutputs[i]; }
 
     /**
      * used to get a seralised representation of effector
@@ -132,7 +132,7 @@ private:
     SinusIn* sinusIn[2];
 
     // Three motors by muscle (X,Y,Z)
-    BrainOutMotor * brainOutputs[3];
+    BrainOutMotor * brainMotorOutputs[3];
 
     // Stabilisation properties
     btScalar normalPositionMaxError;

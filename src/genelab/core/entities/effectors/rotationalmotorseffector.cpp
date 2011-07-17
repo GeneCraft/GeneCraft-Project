@@ -15,6 +15,7 @@ RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofCon
 {
     this->bone = bone;
     this->typeName = "RotationalMotor";
+    this->type = rotationalMotorEffector;
 
     // Stabilisation properties
     normalPositionMaxError = 0.001;
@@ -25,15 +26,15 @@ RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofCon
         // motor effector only if axis motor is not rigid (has liberty degrees)
         if(constraint->getRotationalLimitMotor(i)->m_loLimit != constraint->getRotationalLimitMotor(i)->m_hiLimit) {
 
-            brainOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
-            brainOutputs[i]->motor->m_enableMotor = true;
-            brainOutputs[i]->motor->m_currentPosition = 0;
+            brainMotorOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
+            brainMotorOutputs[i]->motor->m_enableMotor = true;
+            brainMotorOutputs[i]->motor->m_currentPosition = 0;
             this->outputsFrom = 1;
-            this->outs.append(brainOutputs[i]->boMaxMotorForce);
-            this->outs.append(brainOutputs[i]->boTargetVelocity);
+            this->brainOutputs.append(brainMotorOutputs[i]->boMaxMotorForce);
+            this->brainOutputs.append(brainMotorOutputs[i]->boTargetVelocity);
         }
         else
-            brainOutputs[i] = NULL;
+            brainMotorOutputs[i] = NULL;
 
     for(int i = 0; i < 2; i++) {
         this->sinusIn[i] = new SinusIn();
@@ -53,15 +54,15 @@ RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, bt
 
         QString key = motors[i];
         if(outsMap.contains(key)) {
-            brainOutputs[i] = new BrainOutMotor(outsMap.value(key), constraint->getRotationalLimitMotor(i));
-            brainOutputs[i]->motor->m_enableMotor = true;
-            brainOutputs[i]->motor->m_currentPosition = 0;
+            brainMotorOutputs[i] = new BrainOutMotor(outsMap.value(key), constraint->getRotationalLimitMotor(i));
+            brainMotorOutputs[i]->motor->m_enableMotor = true;
+            brainMotorOutputs[i]->motor->m_currentPosition = 0;
             this->outputsFrom = 1;
-            this->outs.append(brainOutputs[i]->boMaxMotorForce);
-            this->outs.append(brainOutputs[i]->boTargetVelocity);
+            this->brainOutputs.append(brainMotorOutputs[i]->boMaxMotorForce);
+            this->brainOutputs.append(brainMotorOutputs[i]->boTargetVelocity);
         }
         else
-            brainOutputs[i] = NULL;
+            brainMotorOutputs[i] = NULL;
 
 //        // OLD VERSION
 
@@ -96,27 +97,27 @@ RotationalMotorsEffector::~RotationalMotorsEffector() {
 
 void RotationalMotorsEffector::connectMotor(int i)
 {
-    if(!brainOutputs[i])
+    if(!brainMotorOutputs[i])
     {
-        brainOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
-        brainOutputs[i]->motor->m_enableMotor = true;
-        brainOutputs[i]->motor->m_currentPosition = 0;
+        brainMotorOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
+        brainMotorOutputs[i]->motor->m_enableMotor = true;
+        brainMotorOutputs[i]->motor->m_currentPosition = 0;
         this->outputsFrom = 1;
-        this->outs.append(brainOutputs[i]->boMaxMotorForce);
-        this->outs.append(brainOutputs[i]->boTargetVelocity);
+        this->brainOutputs.append(brainMotorOutputs[i]->boMaxMotorForce);
+        this->brainOutputs.append(brainMotorOutputs[i]->boTargetVelocity);
     }
 }
 
 // used to disconnect from brain
 void RotationalMotorsEffector::disconnectMotor(int i)
 {
-    BrainOutMotor * boMotor = brainOutputs[i];
+    BrainOutMotor * boMotor = brainMotorOutputs[i];
 
     if(boMotor)
     {
         // delete brain outs
-        this->outs.removeAll(boMotor->boMaxMotorForce);
-        this->outs.removeAll(boMotor->boTargetVelocity);
+        this->brainOutputs.removeAll(boMotor->boMaxMotorForce);
+        this->brainOutputs.removeAll(boMotor->boTargetVelocity);
         delete boMotor->boMaxMotorForce;
         delete boMotor->boTargetVelocity;
         boMotor->boMaxMotorForce = NULL;
@@ -124,7 +125,7 @@ void RotationalMotorsEffector::disconnectMotor(int i)
 
         // delete brain outs motor
         delete boMotor;
-        brainOutputs[i] = NULL;
+        brainMotorOutputs[i] = NULL;
     }
 }
 
@@ -133,8 +134,8 @@ QVariant RotationalMotorsEffector::serialize() {
     QVariantMap bOuts;
     QString motors[] = {"x","y","z"};
     for(int i = 0; i < 3; i++)
-        if(brainOutputs[i]) {
-            bOuts.insert(motors[i],brainOutputs[i]->serialize());
+        if(brainMotorOutputs[i]) {
+            bOuts.insert(motors[i],brainMotorOutputs[i]->serialize());
         }
     data.insert("outs", bOuts);
 
@@ -153,8 +154,8 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
         // enable motors
         // enable motors
         for(int i=0;i<3;i++)
-            if(brainOutputs[i]){
-                btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+            if(brainMotorOutputs[i]){
+                btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                 motor->m_enableMotor = true;
                 motor->m_maxMotorForce = 20.0;
                 motor->m_targetVelocity = 0;
@@ -168,8 +169,8 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
 
         // enable motors
         for(int i=0;i<3;i++)
-            if(brainOutputs[i]){
-                btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+            if(brainMotorOutputs[i]){
+                btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                 motor->m_enableMotor = true;
                 motor->m_maxMotorForce = 20.0;
                 motor->m_targetVelocity = 0;
@@ -181,8 +182,8 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
     case 0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/: // normal position
 
         for(int i=0;i<3;i++)
-            if(brainOutputs[i]){
-                btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+            if(brainMotorOutputs[i]){
+                btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                 motor->m_enableMotor = true;
                 motor->m_maxMotorForce = 20.0;
                 motor->m_targetVelocity = 0;
@@ -201,16 +202,16 @@ void RotationalMotorsEffector::step()
         case 1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/:  // brain
 
             for(int i=0;i<3;i++)
-                if(brainOutputs[i])
-                    brainOutputs[i]->update();
+                if(brainMotorOutputs[i])
+                    brainMotorOutputs[i]->update();
 
             break;
 
         case 2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/: // random
 
             for(int i=0;i<3;i++)
-                if(brainOutputs[i]){
-                    btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+                if(brainMotorOutputs[i]){
+                    btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                     motor->m_maxMotorForce = ( sinusIn[1]->getValue())*10 + 10;
                     motor->m_targetVelocity = (sinusIn[0]->getValue())*5;
                 }
@@ -220,9 +221,9 @@ void RotationalMotorsEffector::step()
         case 0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/: // normal position
 
             for(int i=0;i<3;i++)
-                if(brainOutputs[i]) {
+                if(brainMotorOutputs[i]) {
                     // Stabilisation
-                    btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+                    btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                     if(motor->m_currentPosition < normalPositionMaxError
                        || motor->m_currentPosition > normalPositionMaxError)
                         motor->m_targetVelocity = -normalPositionFactor * motor->m_currentPosition;
@@ -239,8 +240,8 @@ void RotationalMotorsEffector::disable()
     m_isDisable = true;
 
     for(int i=0;i<3;i++)
-        if(brainOutputs[i]) {
-            btRotationalLimitMotor * motor = brainOutputs[i]->motor;
+        if(brainMotorOutputs[i]) {
+            btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
             motor->m_enableMotor = false;
         }
 }

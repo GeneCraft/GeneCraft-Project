@@ -7,7 +7,7 @@
 
 namespace GeneLabCore {
 
-enum EffectorType { rotationalMotor };
+enum EffectorType { rotationalMotorEffector = 0, gripperEffector, flyingEffector };
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
@@ -38,14 +38,15 @@ public:
     const QString &getTypeName() { return typeName; }
 
     // To get brain outputs
-    const QList<BrainOut*> getOutputs() { return outs; }
+    const QList<BrainOut*> getOutputs() { return brainOutputs; }
 
     // To update world.
     virtual void step() = 0;
 
 protected:
     QString typeName;
-    QList<BrainOut*> outs;
+    EffectorType type;
+    QList<BrainOut*> brainOutputs;
 
 };
 }

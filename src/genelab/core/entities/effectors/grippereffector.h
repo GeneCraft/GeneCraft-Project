@@ -13,7 +13,14 @@ class GripperEffector : public Effector
 public:
     GripperEffector(Fixation *fixation);
 
+    // To create from serialization data
+    GripperEffector(QVariant data, Fixation * fixation);
+
+    // Destructor
     ~GripperEffector();
+
+    // To serialize
+    QVariant serialize();
 
     // To update world.
     void step();
@@ -22,7 +29,7 @@ private:
 
     Fixation *fixation;
     btPoint2PointConstraint *constraint;
-    BrainOut *gripState;
+    BrainOut *gripperOutput;
 };
 
 }

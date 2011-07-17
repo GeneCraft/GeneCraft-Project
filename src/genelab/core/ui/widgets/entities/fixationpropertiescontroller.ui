@@ -363,6 +363,11 @@ p, li { white-space: pre-wrap; }
            <string>Gripper effector</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Flying effector</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="1" column="0" rowspan="3">

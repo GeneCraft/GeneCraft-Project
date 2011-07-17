@@ -9,6 +9,9 @@ class BoxSmellSensor : public SmellSensor
 {
 public:
     BoxSmellSensor(Fixation *fixation);
+
+    // To create from serialization data
+    BoxSmellSensor(QVariant data, Fixation * fixation);
 };
 
 }

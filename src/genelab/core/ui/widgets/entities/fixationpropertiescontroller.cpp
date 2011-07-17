@@ -22,6 +22,7 @@
 
 // Effectors
 #include "effectors/grippereffector.h"
+#include "effectors/flyingeffector.h"
 
 FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
     QWidget(parent),
@@ -217,6 +218,11 @@ void FixationPropertiesController::addEffector()
 
         if(fixation->getEntity())
             effector = new GripperEffector(fixation);
+        break;
+    case 1 : // Flying
+
+        if(fixation->getEntity())
+            effector = new FlyingEffector(fixation);
         break;
     }
 
