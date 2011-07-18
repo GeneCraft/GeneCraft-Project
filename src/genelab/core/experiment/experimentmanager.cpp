@@ -407,8 +407,10 @@ namespace GeneLabCore {
     }
 
     float ExperimentManager::evaluateEntity(Entity* e) {
-        Statistic* s = e->getStatisticByName("Root relative velocity");
-        return s->getSum();
+        Statistic* sY = e->getStatisticByName("Root absolute Y position");
+	Statistic* sDist = e->getStatisticByName("Root relative velocity");
+	qDebug() << sY->getMean() << sDist->getSum();
+        return sY->getMean()*sDist->getSum();
     }
 
     void ExperimentManager::engineStep() {

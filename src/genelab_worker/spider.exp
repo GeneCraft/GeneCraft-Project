@@ -4,7 +4,7 @@
    "dateOfCreation":"2011-07-17 22:58:21",
    "description":"",
    "duration":1200,
-   "id":"NoId",
+   "id":"NewOneAgain",
    "mutations":{
       "boneAngularOrigin":{
          "enable":true,
@@ -104,7 +104,7 @@
       },
       "newBrainTree":{
          "enable":true,
-         "probability":1,
+         "probability":0.05,
          "type":2
       },
       "sensorStructuralList":[

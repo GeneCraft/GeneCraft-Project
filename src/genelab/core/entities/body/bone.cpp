@@ -358,7 +358,7 @@ QVariant Bone::generateEmpty() {
     data.insert("outs", bOuts);
     bone.insert("muscle", data);
 
-    qDebug() << bone;
+//    qDebug() << bone;
     return bone;
 }
 

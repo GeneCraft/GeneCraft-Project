@@ -119,16 +119,16 @@ int main(int argc, char *argv[])
 */
     QVariantMap workerData;
     workerData["maxGen"] = 100;
-    workerData["popSize"] = 20;
-    workerData["name"] = "tata";
+    workerData["popSize"] = 40;
+    workerData["name"] = "reds" + QString::number(time(NULL));
     workerData["nbBestResults"] = 150;
     workerData["nbRandomResults"] = 150;
     QVariantMap selectionData;
-    selectionData["bestPop"] = 0.1;
-    selectionData["bestResult"] = 0.1;
+    selectionData["bestPop"] = 0.2;
+    selectionData["bestResult"] = 0.2;
     selectionData["randomPop"] = 0.1;
-    selectionData["randomResult"] = 0.1;
-    selectionData["randomNew"] = 0.1;
+    selectionData["randomResult"] = 0.2;
+    selectionData["randomNew"] = 0.2;
     workerData["selection"] = selectionData;
 
     Experiment* exp           = new Experiment(expdata);
@@ -137,5 +137,5 @@ int main(int argc, char *argv[])
     expMan->experiment();
     //expMan->broadcastResults();
 
-    return a.exec();
+//    return a.exec();
 }
