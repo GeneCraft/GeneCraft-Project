@@ -311,9 +311,9 @@ QVariant Bone::generateEmpty() {
     lowerlimits.insert("y",QVariant((double)lowerLimit_y));
     lowerlimits.insert("z",QVariant((double)lowerLimit_z));
 
-    upperlimits.insert("x",upperlimits_x);
-    upperlimits.insert("y",upperlimits_y);
-    upperlimits.insert("z",upperlimits_z);
+    upperlimits.insert("x",(double)upperlimits_x);
+    upperlimits.insert("y",(double)upperlimits_y);
+    upperlimits.insert("z",(double)upperlimits_z);
 
     bone.insert("lowerLimits",lowerlimits);
     bone.insert("upperLimits",upperlimits);
