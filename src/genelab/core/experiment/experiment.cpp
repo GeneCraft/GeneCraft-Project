@@ -45,7 +45,7 @@ namespace GeneLabCore {
         dateOfCreation = QDateTime::fromString(map["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
 
         // simulation
-        duration = 1;//map["duration"].toInt();
+        duration = map["duration"].toInt();
         timeToWaitForStability = map["timeToWaitForStability"].toInt();
         onlyIfEntityIsStable = map["onlyIfEntityIsStable"].toBool();
         stopIfEntityIsNotInOnePiece = map["stopIfEntityIsNotInOnePiece"].toBool();
