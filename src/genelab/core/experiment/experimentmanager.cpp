@@ -183,10 +183,13 @@ namespace GeneLabCore {
                 qDebug() << "new random snake entity";
             } else if(familyName == "virgin"){
                 qDebug() << "new random virgin entity";
-                Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 3.0), position);
+                Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
                 e->setup();
                 e->setGeneration(0);
                 QVariant genome = e->serialize();
+                // Tree starting mutations !
+                for(int i = 0; i < 3; i++)
+                    genome = mutations->mutateEntity(genome);
                 delete e;
                 return genome;
             }
