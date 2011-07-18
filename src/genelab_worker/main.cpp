@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     foreach(QVariant doc, docsList) {
         QVariantMap docMap = doc.toMap();
         QString id = docMap["id"].toString();
-        if(id.size() == 32 && id.left(1) != "_" && id.left(1) != "S") {
+        if(id.size() == 32 && id.left(1) != "_" && id.left(1) != "S" && id > "04a82cae4acfecf9c64c4bf790a58d4b") {
             qDebug() << id << "should be deleted";
             DbRecord * r = new DbRecord(database, id);
             r->deleteDoc(docMap["value"].toMap()["rev"].toString());

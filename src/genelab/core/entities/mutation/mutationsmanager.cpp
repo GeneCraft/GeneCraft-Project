@@ -428,8 +428,7 @@ namespace GeneLabCore {
         // ---------------------
         QVariantList bonesList = fixMap["bones"].toList();
 
-        int nbBones = bonesList.count();
-        for(int i=0;i<nbBones;++i) {
+        for(int i=0;i<bonesList.count();++i) {
            // Delete
            if(bonesStructural->checkDelete()) {
                 QVariantMap boneMap = bonesList.takeAt(i).toMap();
@@ -465,8 +464,7 @@ namespace GeneLabCore {
            }
            // Replace
            else if(bonesStructural->checkReplace()) {
-               QVariant bone = bonesList.takeAt(i);
-               QVariantMap boneMap = bone.toMap();
+               QVariantMap boneMap = bonesList.takeAt(i).toMap();
                QVariant endFix = boneMap["endFix"];
                addBone(bonesList,i, endFix); // Took the old endFix back
            }
