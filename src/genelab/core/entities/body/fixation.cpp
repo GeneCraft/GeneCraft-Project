@@ -117,6 +117,11 @@ namespace GeneLabCore {
 
     Fixation::~Fixation()
     {
+        while(bones.size()) {
+            delete bones.at(0);
+            bones.removeFirst();
+        }
+
         if(this->airFixation) {
             shapesFactory->getWorld()->getBulletWorld()->removeConstraint(airFixation);
             delete this->airFixation;
@@ -132,11 +137,6 @@ namespace GeneLabCore {
             entity->removeLinksToEffector(effectors.at(0));
             delete effectors.at(0);
             effectors.removeFirst();
-        }
-
-        while(bones.size()) {
-            delete bones.at(0);
-            bones.removeFirst();
         }
 
         if(!delegatedSetup && this->origin != 0)

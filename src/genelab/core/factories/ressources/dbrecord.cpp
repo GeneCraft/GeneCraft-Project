@@ -42,8 +42,10 @@ namespace GeneLabCore {
             r->deleteLater();
             if(r->error() == 0) {
                 QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
-                this->id = v.find("_id").value().toString();
-                this->rev = v.find("_rev").value().toString();
+                if(v.contains("_id")) {
+                    this->id = v.find("_id").value().toString();
+                    this->rev = v.find("_rev").value().toString();
+                }
                 return v;
             } else {
                 qDebug() << r->readAll();
@@ -79,8 +81,10 @@ namespace GeneLabCore {
         qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
-            this->id = v.find("id").value().toString();
-            this->rev = v.find("rev").value().toString();
+            if(v.contains("id")) {
+                this->id = v.find("id").value().toString();
+                this->rev = v.find("rev").value().toString();
+            }
             this->error = false;
 
         } else {
