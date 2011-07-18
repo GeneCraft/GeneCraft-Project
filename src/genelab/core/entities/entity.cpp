@@ -50,26 +50,6 @@ void Entity::setup() {
         this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
         this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"Root"));
         this->brainActivityStat = statisticsStorage->registerStat("Brain Activity", "a / step");
-
-//        StatisticsProvider *s;
-//        // Body
-//        this->stats.insert("bodyTotalBones", new EntityTotalBonesStat(this));
-//        this->stats.insert("bodyTotalBonesLength", new EntityTotalBonesLengthStat(this));
-//        this->stats.insert("bodyWeight", new EntityWeightStat(this));
-//        this->stats.insert("bodyHeight", new EntityHeightStat(this));
-
-//        // Root
-//        s = new FixDistanceStat(treeShape->getRoot());
-//        s->setName("Root distance traveled");
-//        this->stats.insert("rootDistance", s);
-
-//        s = new FixAverageVelocityStat(treeShape->getRoot());
-//        s->setName("Root average velocity");
-//        this->stats.insert("rootAverageVelocity", s);
-
-//        s = new FixDistanceFromOriginStat(treeShape->getRoot());
-//        s->setName("Root distance from origin");
-//        this->stats.insert("rootDistanceFromOrigin", s);
     }
 }
 
@@ -78,18 +58,6 @@ Entity::~Entity() {
     delete this->brain;
     delete this->r;
 }
-
-//EntityPropertiesController *Entity::getInspectorWidget(Entity * selectedCreature, btRigidBody *selectedBody)
-//{
-//    if(inspectorWidget == NULL)
-//        inspectorWidget = new EntityPropertiesController();
-
-
-//    inspectorWidget->setEntity(selectedCreature,selectedBody);
-
-//    return inspectorWidget;
-//}
-
 
 TreeShape* Entity::getShape() {
     return this->treeShape;
@@ -132,12 +100,6 @@ void Entity::addLinkToSensor(Sensor *sensor) {
 
     // Inputs connections to grid
     for(int i = 0; i < sensor->getInputs().size(); i++) {
-        // little cheat TODO ???
-        for(int j = sensor->getInputs()[i]->getConnexions().size(); j < 2; j++) {
-            sensor->getInputs()[i]->connectTo(Tools::random(0.0f,1.0f),
-                                              Tools::random(0.0f,1.0f),
-                                              Tools::random(-1.0f,1.0f));
-        }
         brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
     }
 }
@@ -159,8 +121,11 @@ void Entity::addLinkToEffector(Effector *modifier) {
 
     // Outputs connections to grid
     for(int i = 0; i < modifier->getOutputs().size(); i++) {
+        // No connexion is not an option, at least a one depth tree !
+        // But should not happend that often, except when creating
+        // Creatures from creature viewer
         if(modifier->getOutputs()[i]->getConnexionInfo() == "") {
-            QString randomFunc = brain->createRandomFunc(5);
+            QString randomFunc = brain->createRandomFunc(1);
             modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
         }
 

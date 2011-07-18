@@ -1,10 +1,10 @@
 {
-   "author":"Cyprien Huissoud",
-   "comments":"Let's go",
-   "dateOfCreation":"2011-07-15 20:37:31",
-   "description":"This experiment, computed by multiples worker accros 2 server and at least one personnal computer aim to create some basic running spider !",
+   "author":"",
+   "comments":"",
+   "dateOfCreation":"2011-07-17 22:58:21",
+   "description":"",
    "duration":1200,
-   "id":"RunningSpider",
+   "id":"NoId",
    "mutations":{
       "boneAngularOrigin":{
          "enable":true,
@@ -32,6 +32,12 @@
          "minValue":0.1,
          "probability":0.1,
          "type":1
+      },
+      "bonesStructural":{
+         "addProbability":0.01,
+         "deleteProbability":0.01,
+         "enable":true,
+         "replaceProbability":0.01
       },
       "brainFrequency":{
          "enable":true,
@@ -100,13 +106,42 @@
          "enable":true,
          "probability":1,
          "type":2
+      },
+      "sensorStructuralList":[
+         {
+            "name":"Accelerometer sensor",
+            "type":1,
+            "weight":1
+         },
+         {
+            "name":"Gyroscopic sensor",
+            "type":0,
+            "weight":1
+         },
+         {
+            "name":"Egocentric sensor",
+            "type":2,
+            "weight":1
+         },
+         {
+            "name":"Contact sensor",
+            "type":3,
+            "weight":1
+         }
+      ],
+      "sensorsStructural":{
+         "addProbability":0.1,
+         "deleteProbability":0.1,
+         "enable":true,
+         "replaceProbability":0.1
       }
    },
    "onlyIfEntityIsStable":true,
    "seedInfo":{
-      "familyName":"spider",
+      "familyName":"virgin",
       "type":"family"
    },
    "stopIfEntityIsNotInOnePiece":true,
-   "timeToWaitForStability":250
+   "timeToWaitForStability":300,
+   "version":0.1
 }

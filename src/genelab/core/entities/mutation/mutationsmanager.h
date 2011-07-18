@@ -112,7 +112,7 @@ private:
      * @param the QVariantList where add
      * @param the position to add (-1 = end of list)
      */
-    void addBone(QVariantList &bones, int i=-1);
+    void addBone(QVariantList &bones, int i=-1, QVariant endFix = QVariant());
 
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 

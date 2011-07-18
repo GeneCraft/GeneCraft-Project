@@ -100,23 +100,6 @@ void AccelerometerSensor::step()
     oldSpeed.setY( oldSpeed.getY()*(1-factor) + speed.getY()*factor);
     oldSpeed.setZ( oldSpeed.getZ()*(1-factor) + speed.getZ()*factor);
 
-
-    if(acceleration.x() < tmpMinAcc)
-        tmpMinAcc = acceleration.x();
-//    if(acceleration.y() < tmpMinAcc)
-//        tmpMinAcc = acceleration.y();
-    if(acceleration.z() < tmpMinAcc)
-        tmpMinAcc = acceleration.z();
-
-    if(acceleration.x() > tmpMaxAcc)
-        tmpMaxAcc = acceleration.x();
-//    if(acceleration.y() > tmpMaxAcc)
-//        tmpMaxAcc = acceleration.y();
-    if(acceleration.z() > tmpMaxAcc)
-        tmpMaxAcc = acceleration.z();
-
-    //qDebug() << tmpMinAcc << tmpMaxAcc;
-
     inputX->setValue(acceleration.x());
     inputY->setValue(acceleration.y());
     inputZ->setValue(acceleration.z());

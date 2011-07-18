@@ -39,6 +39,7 @@
 #include "widgets/entities/fixationpropertiescontroller.h"
 #include "widgets/entities/bonepropertiescontroller.h"
 #include "widgets/entities/entitypropertiescontroller.h"
+#include "widgets/experiments/workerctrl.h"
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -280,6 +281,8 @@ void CreatureViewerWindow::init() {
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
+    WorkerCtrl* worker = new WorkerCtrl();
+    this->ui->dwWorker->setWidget(worker);
 }
 
 void CreatureViewerWindow::openExperimentPropertiesController(){
@@ -392,7 +395,7 @@ void CreatureViewerWindow::spawnNew() {
 
     // RANDOM ENTITIES
     spawnRandomEntities(1);
-    Entity* e = entitiesEngine->getAllEntities().first();
+    //Entity* e = entitiesEngine->getAllEntities().first();
     //spawnMutationSample(e, 8);
 
     // MUTATION

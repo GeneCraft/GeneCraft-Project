@@ -196,7 +196,8 @@ SOURCES += \
     ../genelab/core/entities/sensors/smellsensor.cpp \
     ../genelab/core/entities/sensors/boxsmellsensor.cpp \
     ../genelab/core/entities/effectors/grippereffector.cpp \
-    ../genelab/core/entities/effectors/flyingeffector.cpp
+    ../genelab/core/entities/effectors/flyingeffector.cpp \
+    ../genelab/core/ui/widgets/experiments/workerctrl.cpp
 
 HEADERS += \
     ../genelab/core/engines/simulationmanager.h \
@@ -303,7 +304,8 @@ HEADERS += \
     ../genelab/core/entities/sensors/smellsensor.h \
     ../genelab/core/entities/sensors/boxsmellsensor.h \
     ../genelab/core/entities/effectors/grippereffector.h \
-    ../genelab/core/entities/effectors/flyingeffector.h
+    ../genelab/core/entities/effectors/flyingeffector.h \
+    ../genelab/core/ui/widgets/experiments/workerctrl.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -322,7 +324,8 @@ FORMS += \
     ../genelab/core/ui/widgets/experiments/integermutationcontroller.ui \
     ../genelab/core/ui/widgets/experiments/simpleprobabilitycontroller.ui \
     ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.ui \
-    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.ui
+    ../genelab/core/ui/widgets/experiments/mutationelementcontroller.ui \
+    ../genelab/core/ui/widgets/experiments/workerctrl.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

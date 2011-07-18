@@ -155,8 +155,8 @@ namespace GeneLabCore {
         // TODO !!!
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
-        boneAngularLimits->probability                  = -0.1;
-        boneAngularLimits->axisMutation->probability    = -0.1;
+        boneAngularLimits->probability                  = 0.1;
+        boneAngularLimits->axisMutation->probability    = 0.1;
         boneAngularLimits->axisMutation->minFact        = -0.01;
         boneAngularLimits->axisMutation->maxFact        =  0.01;
         boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
@@ -213,6 +213,8 @@ namespace GeneLabCore {
         QVariantMap bodyMap = entityMap["body"].toMap();
         QVariantMap treeShapeMap = bodyMap["shape"].toMap();
         QVariantMap brainMap = entityMap["brain"].toMap();
+        int generation = entityMap["generation"].toInt();
+        entityMap.insert("generation", generation+1);
 
         // treeshape mutation
         QVariant newTreeShapeMap = this->mutateTreeShape(treeShapeMap);
@@ -428,16 +430,45 @@ namespace GeneLabCore {
 
         int nbBones = bonesList.count();
         for(int i=0;i<nbBones;++i) {
-           // delete
+           // Delete
            if(bonesStructural->checkDelete()) {
-                bonesList.removeAt(i);
+                QVariantMap boneMap = bonesList.takeAt(i).toMap();
+                QVariantMap fixMap = boneMap["endFix"].toMap();
+                QVariantList bones = fixMap["bones"].toList();
+                int nbBones;
+                bonesList.append(bones);
                 i--;
-                nbBones--;
+                nbBones = bonesList.count();
            }
-           // or replace
+           // Insert
+           else if(bonesStructural->checkAdd()) {
+               // Un copie de l'os précédent est plus intéressante qu'un os totalement random
+               // The new bone
+               QVariant oldBone = bonesList.takeAt(i);
+               QVariantMap newBoneMap = oldBone.toMap();
+               this->boneLength->mutate(newBoneMap, "length");
+               this->boneRadius->mutate(newBoneMap, "radius");
+
+               // And his fixation
+               QVariantMap newEndFixation = newBoneMap["endFix"].toMap();
+               this->fixRadius->mutate(newEndFixation, "radius");
+
+               // The son
+               QVariantList newBones;
+               newBones.append(oldBone);
+               newEndFixation.insert("bones", newBones);
+               newBoneMap.insert("endFix", newEndFixation);
+
+               // Adding the child to the parent
+               bonesList.insert(i, newBoneMap);
+
+           }
+           // Replace
            else if(bonesStructural->checkReplace()) {
-               bonesList.removeAt(i);
-               addBone(bonesList,i);
+               QVariant bone = bonesList.takeAt(i);
+               QVariantMap boneMap = bone.toMap();
+               QVariant endFix = boneMap["endFix"];
+               addBone(bonesList,i, endFix); // Took the old endFix back
            }
         }
 
@@ -450,6 +481,19 @@ namespace GeneLabCore {
         fixMap.insert("bones", bonesList);
 
         return fixMap;
+    }
+
+    void MutationsManager::addBone(QVariantList &bonesList, int i, QVariant endFix) {
+        QVariantMap newBone = Bone::generateEmpty().toMap();
+
+        if(endFix != QVariant())
+            newBone.insert("endFix", endFix);
+
+        // insert in a specific position
+        if(i > -1 && i < bonesList.count())
+            bonesList.insert(i,newBone);
+        else
+            bonesList.append(newBone);
     }
 
     // add sensor
@@ -478,16 +522,6 @@ namespace GeneLabCore {
             sensorsList.insert(i,newSensor);
         else
             sensorsList.append(newSensor);
-    }
-
-    void MutationsManager::addBone(QVariantList &bonesList, int i) {
-        QVariant newBone = Bone::generateEmpty();
-
-        // insert in a specific position
-        if(i > -1 && i < bonesList.count())
-            bonesList.insert(i,newBone);
-        else
-            bonesList.append(newBone);
     }
 
     // Mutate the brain

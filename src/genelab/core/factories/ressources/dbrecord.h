@@ -23,6 +23,8 @@ namespace GeneLabCore {
         virtual QVariant load();
         virtual int save(QVariant data);
 
+        void deleteDoc(QString rev);
+
         bool error;
         QString errorString;
     signals:

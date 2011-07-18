@@ -51,6 +51,20 @@ int main(int argc, char *argv[])
     qsrand(time(NULL));
     srand(time(NULL));
     QCoreApplication a(argc, argv);
+    QStringList args = a.arguments();
+    QString expName = "../genelab_worker/spider.exp";
+    QString workerName = "worker.exp";
+
+    if(args.length() > 1) {
+        expName = args.at(1);
+        qDebug() << "loading experience" << args.first();
+    }
+
+    if(args.length() > 2) {
+        workerName = args.at(2);
+        qDebug() << "loading worker" << args.at(1);
+    }
+
     srand(time(NULL));
     qsrand(time(NULL));
 
@@ -80,11 +94,13 @@ int main(int argc, char *argv[])
     return 0;*/
 
 
-    Ressource* experience_res = new JsonFile("spider.exp");
-    Ressource* worker_res = new JsonFile("myworker.exp");
+    Ressource* experience_res = new JsonFile(expName);
+    Ressource* worker_res     = new JsonFile(workerName);
+
     QVariant expdata = experience_res->load();
     QVariant workerdata = worker_res->load();
-    Experiment* exp = new Experiment(expdata);
+
+    Experiment* exp           = new Experiment(expdata);
     ExperimentManager* expMan = new ExperimentManager(factory, exp, workerdata);
 
     expMan->experiment();

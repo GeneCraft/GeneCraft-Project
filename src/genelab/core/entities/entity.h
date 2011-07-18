@@ -31,10 +31,13 @@ public:
 
     // Origins
     const QString &getName() { return name; }
+    void setName(QString name) {this->name = name;}
     const QString &getFamily() { return family; }
+    void setFamily(QString family) { this->family = family; }
     const QString &getType() { return type; }
     void setType(QString type) { this->type = type; }
     int getGeneration() { return generation; }
+    void setGeneration(int gen) { this->generation = gen; }
 
     // Shape
     TreeShape* getShape();

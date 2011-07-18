@@ -10,21 +10,15 @@
 #include "btshapesfactory.h"
 
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+#include "BulletDynamics/Dynamics/btContinuousDynamicsWorld.h"
 #include "BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 #include "BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
 
+#include "BulletCollision/CollisionShapes/btCollisionShape.h"
+#include <btBulletDynamicsCommon.h>
+
 #include <QDebug>
-
-/*
-#include "BulletMultiThreaded/btParallelConstraintSolver.h"
-#include "BulletMultiThreaded/btThreadSupportInterface.h"
-#include "BulletMultiThreaded/SequentialThreadSupport.h"
-#include "BulletMultiThreaded/PosixThreadSupport.h"
-#include "BulletCollision/CollisionDispatch/btSimulationIslandManager.h"
- */
-
 namespace GeneLabCore {
 
     btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent) :
@@ -56,28 +50,42 @@ namespace GeneLabCore {
         btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
         btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
 
-//        SequentialThreadSupport::SequentialThreadConstructionInfo tci("solverThreads",SolverThreadFunc,SolverlsMemoryFunc);
-//        SequentialThreadSupport* threadSupport = new SequentialThreadSupport(tci);
-//        threadSupport->startSPU();
+        btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
+        world = new btDiscreteDynamicsWorld(dispatcher, broadphase,solver,collisionConfiguration);
 
 
-//	PosixThreadSupport::ThreadConstructionInfo solverConstructionInfo("solver", SolverThreadFunc, SolverlsMemoryFunc, 6);
-	
-//	PosixThreadSupport* threadSupport = new PosixThreadSupport(solverConstructionInfo);
+        /*
+        btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,1,0),1);
 
-//        btSequentialImpulseConstraintSolver* solver = new btParallelConstraintSolver(threadSupport);
-        //this solver requires the contacts to be in a contiguous pool, so avoid dynamic allocation
-//        dispatcher->setDispatcherFlags(btCollisionDispatcher::CD_DISABLE_CONTACTPOOL_DYNAMIC_ALLOCATION);
+        btCollisionShape* fallShape = new btSphereShape(1);
 
 
-        btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-        world = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
+        btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,-1,0)));
+        btRigidBody::btRigidBodyConstructionInfo
+                groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
+        btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+        world->addRigidBody(groundRigidBody);
 
-//        world->getSimulationIslandManager()->setSplitIslands(false);
-//        world->getSolverInfo().m_numIterations = 10; // A varier pour des contraintes plus fermes
-//        world->getSolverInfo().m_solverMode = SOLVER_SIMD+SOLVER_USE_WARMSTARTING;//+SOLVER_RANDMIZE_ORDER;
 
-//        world->getDispatchInfo().m_enableSPU = true;
+        btDefaultMotionState* fallMotionState =
+                new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,50,0)));
+        btScalar mass = 1;
+        btVector3 fallInertia(0,0,0);
+        fallShape->calculateLocalInertia(mass,fallInertia);
+        btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,fallShape,fallInertia);
+        btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
+        world->addRigidBody(fallRigidBody);
+
+
+        for (int i=0 ; i<300 ; i++) {
+                world->stepSimulation(1/60.f,10);
+
+                btTransform trans;
+                fallRigidBody->getMotionState()->getWorldTransform(trans);
+
+                qDebug() << "sphere height: "<< trans.getOrigin().getX() << trans.getOrigin().getY();
+        }
+        */
 
         // Set the world to the subworld classes
         this->biome->setBulletWorld(world);

@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>818</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -93,7 +93,7 @@
    <property name="maximumSize">
     <size>
      <width>320</width>
-     <height>16777215</height>
+     <height>524287</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -154,6 +154,15 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dwContent_Stats"/>
+  </widget>
+  <widget class="QDockWidget" name="dwWorker">
+   <property name="windowTitle">
+    <string>Worker</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3"/>
   </widget>
   <action name="actionSave_selected_creature">
    <property name="icon">
@@ -283,6 +292,7 @@
    </property>
   </action>
   <zorder>dwFixation</zorder>
+  <zorder>dwWorker</zorder>
  </widget>
  <resources>
   <include location="../../../../core/ressources/ressources.qrc"/>

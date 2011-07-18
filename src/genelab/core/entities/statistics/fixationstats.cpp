@@ -34,8 +34,13 @@ void FixationStats::step()
     fixationVelocity->setValue(previousOrigin.distance(origin));
 
     // relative distance
-    if(qAbs(origin.distance(refOrigin) - sum) > 0.001) // FIXME WTF ? ... need comment
+    // 0.001 because of little variantion create noise and cumulate lot of errors in the sum value
+    // And because it's impossible to attaint stability without this cheat
+    if(qAbs(origin.distance(refOrigin) - sum) < 0.0001)
+        fixationRelativeDistance->setValue(0.0);
+    else
         fixationRelativeDistance->setValue(origin.distance(refOrigin) - previousOrigin.distance(refOrigin));
+
     sum = origin.distance(refOrigin);
 
     // absolute Y position

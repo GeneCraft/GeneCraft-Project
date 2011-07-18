@@ -94,6 +94,29 @@ namespace GeneLabCore {
         return this->error;
     }
 
+    void DbRecord::deleteDoc(QString rev) {
+        QString url = QString("%1:%2/%3/%4?rev=%5").arg(db.url, QString::number(db.port), db.dbName,
+                                                         this->id, rev);
+
+
+        RequestType type = RDELETE;
+
+        this->request(url, type);
+        qDebug() << r->error();
+        if(r->error() == 0) {
+            QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+            qDebug() << v;
+            this->error = false;
+
+        } else {
+            this->error = true;
+            this->errorString = r->errorString();
+            qDebug() << r->readAll();
+        }
+
+        r->deleteLater();
+    }
+
     void DbRecord::request(QString url, RequestType verb, QString data) {
 
         QNetworkAccessManager * pnam = new QNetworkAccessManager(this);

@@ -30,8 +30,6 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
 //    this->initialPosition = position;
 //    this->initiaEulerlRotation = EulerRotation;
 
-    btScalar friction = 0.7;
-
     // shape
     this->shape = new btSphereShape(radius);
 
@@ -43,7 +41,6 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
     btVector3 fallInertia(0,0,0);
     this->shape->calculateLocalInertia(mass,fallInertia);
     this->rigidBody = new btRigidBody(mass,this->motionState,this->shape,fallInertia);
-    this->rigidBody->setFriction(friction);
 
     RigidBodyOrigin *origin = new RigidBodyOrigin(RigidBodyOrigin::BASIC_SHAPE,(QObject *)this);
     rigidBody->setUserPointer(origin);

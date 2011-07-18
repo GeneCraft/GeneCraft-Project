@@ -27,10 +27,6 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
         QString allAxis[] = {"x","y","z"};
         for(int i=0;i<3;i++){
 
-            // y axis created anarchy !
-            if(i == 1)
-                continue;
-
             // axis mutation ?
             if(Tools::random(0.f,1.f) <= axisMutation->probability) {
 
@@ -38,12 +34,23 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
                 float loValue = lowerLimits[axis].toDouble();
                 float upValue = upperLimits[axis].toDouble();
 
-                do
-                {
-                    loValue = axisMutation->mutate(loValue);
-                    upValue = axisMutation->mutate(upValue);
+                // If y axis
+                if(axis == "y") {
+                    if(loValue < -M_PI/2.+0.1) {
+                        loValue = -M_PI/2.+0.1;
+                    }
+                    if(upValue > M_PI/2.-0.1) {
+                        upValue = M_PI/2.-0.1;
+                    }
                 }
-                while(loValue > upValue); // lower value must be lower than the upper value
+
+                loValue = axisMutation->mutate(loValue);
+                upValue = axisMutation->mutate(upValue);
+
+                // lower value must be lower than the upper value
+                if(loValue > upValue) {
+                    loValue = upValue;
+                }
 
                 lowerLimits.insert(axis,QVariant((double)loValue));
                 upperLimits.insert(axis,QVariant((double)upValue));

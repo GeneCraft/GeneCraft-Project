@@ -31,6 +31,8 @@
 
 #include "ressources/dbrecord.h"
 
+#include "tools.h"
+
 
 namespace GeneLabCore {
 
@@ -114,10 +116,10 @@ namespace GeneLabCore {
         shapesFactory   = new btShapesFactory();
         creatureFactory = new CreatureFactory();
         mutations       = exp->getMutationsManager();
-        online = true;
+        online = false;
         this->bestResultsStored = 150;
         this->randomResultsStored = 150;
-        this->popSize = 40;
+        this->popSize = 20;
         this->maxGen = 100;
         this->probFromBestsPop     = 0.2;
         this->probFromBestsResult  = 0.3;
@@ -132,10 +134,10 @@ namespace GeneLabCore {
         // Nb gen to compute
         int nbGen = this->maxGen;
 
-        int nbLoaded;
+        int nbLoaded = 0;
         // from db (online experience)
         if(online) {
-            nbLoaded = this->retrieveResults();
+            //nbLoaded = this->retrieveResults();
             qDebug() << "loaded" << nbLoaded << "results from db.";
         } else { // of offline from file
             // Load result from files
@@ -412,6 +414,8 @@ namespace GeneLabCore {
             QString familyName = seedInfo["familyName"].toString();
             EntityFamily* family;
 
+            btVector3 position = world->getSpawnPosition();
+
             // The spider ! Scary !
             if(familyName == "spider") {
                 // New entity
@@ -426,15 +430,21 @@ namespace GeneLabCore {
             } else if(familyName == "snake") {
                 family = new SnakeFamily();
                 qDebug() << "new random snake entity";
-            } else {
-                qDebug() << "ERROR : FAMILY NAME NOT UNDERSTOOD, WILL TAKE CATERPILLAR INSTEAD";
-                family = new CaterpillarFamily();
+            } else if(familyName == "virgin"){
+                qDebug() << "new random virgin entity";
+                Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 3.0), position);
+                e->setup();
+                e->setGeneration(0);
+                QVariant genome = e->serialize();
+                delete e;
+                return genome;
             }
 
-            btVector3 position = world->getSpawnPosition();
             Entity* e = family->createEntity(shapesFactory, position);
+
             // Setup to be able to serialize
             e->setup();
+            e->setGeneration(0);
             // Serialisation
             QVariant genome = e->serialize();
             delete e;
@@ -600,7 +610,7 @@ namespace GeneLabCore {
         QVariantList docsList;
         foreach(Result* result, activePop) {
             // Only broadcast if less than the best of stored results
-            if(result->isBroadcasted() || ( bestResults.size() > 0 &&
+            if(result->isBroadcasted() ||  result->getFitness() <= 0 || (bestResults.size() > 0 &&
                     result->getFitness() < bestResults.last()->getFitness()))
                 continue;
 
@@ -635,7 +645,10 @@ namespace GeneLabCore {
         // 100 engines step
         for(int i = 0; i < 200; i++) {
             this->engineStep();
+            if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
+                return false;
         }
+
         // Outputs disables
         e->getShape()->getRoot()->setOutputsFrom(3); // To normal position
 
@@ -644,8 +657,6 @@ namespace GeneLabCore {
         // Get the specific velocity value
         Statistic* s = e->getStatisticByName("Root relative velocity");
 
-        // The last velocity
-        float lastVelocity = s->getValue();
         float EPSILON = 0.00001; // Stability needed
         int stableCpt = 0;
         int maxStableTry = 300;
@@ -656,14 +667,11 @@ namespace GeneLabCore {
 
         for(int i = 0; i < maxStableTry; i++) {
 
-            if(lastVelocity + EPSILON > s->getValue() &&
-               lastVelocity - EPSILON < s->getValue()) {
+            if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
                 stableCpt = 0;
             }
-
-            lastVelocity = s->getValue();
 
             if(stableCpt > neededStableCpt) {
                 stable = true;
@@ -672,7 +680,14 @@ namespace GeneLabCore {
             }
 
             this->engineStep();
+
+            if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
+                return false;
         }
+
+        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getX();
+        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getY();
+        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getZ();
 
         s->resetAll();
         ((FixationStats*)stat)->resetOrigin();
@@ -685,7 +700,7 @@ namespace GeneLabCore {
     bool ExperimentManager::simulateEntity(Entity* e) {
         for(int i = 0; i < exp->getDuration(); i++) {
             this->engineStep();
-            if(!e->isAlive()) {
+            if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece()) {
                 qDebug() << "entity died at age " << e->getAge();
                 return false;
             }
@@ -695,6 +710,9 @@ namespace GeneLabCore {
 
     float ExperimentManager::evaluateEntity(Entity* e) {
         Statistic* s = e->getStatisticByName("Root relative velocity");
+        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getX();
+        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getY();
+        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getZ();
         return s->getSum();
     }
 

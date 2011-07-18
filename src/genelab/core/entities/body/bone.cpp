@@ -282,8 +282,8 @@ QVariant Bone::generateEmpty() {
 
     // TODO right values ???
     // Length & radius
-    bone.insert("length",QVariant((double)Tools::random(0.1,1.0)));
-    bone.insert("radius",QVariant((double)Tools::random(0.1,0.5)));
+    bone.insert("length",QVariant((double)Tools::random(0.5,1.0)));
+    bone.insert("radius",QVariant((double)Tools::random(0.2,0.8)));
 
     // Yaw & Roll
     QVariantMap localRotation;
@@ -294,17 +294,26 @@ QVariant Bone::generateEmpty() {
     // Limits
     QVariantMap lowerlimits, upperlimits;
 
-    float lowerLimit_x = Tools::random(-M_PI,M_PI);
-    float lowerLimit_y = Tools::random(-M_PI,M_PI);
-    float lowerLimit_z = Tools::random(-M_PI,M_PI);
+    float lowerLimit_x = Tools::random(-M_PI+0.1,   M_PI-0.1);
+    float lowerLimit_y = Tools::random(-M_PI/2.+0.1,M_PI/2.-0.1);
+    float lowerLimit_z = Tools::random(-M_PI+0.1,   M_PI-0.1);
+
+    float upperlimits_x = Tools::random(-M_PI+0.1,    M_PI-0.1);
+    float upperlimits_y = Tools::random(-M_PI/2.+0.1, M_PI/2.-0.1);
+    float upperlimits_z = Tools::random(-M_PI+0.1,    M_PI-0.1);
+
+
+    if(lowerLimit_x > upperlimits_x) { lowerLimit_x = upperlimits_x; }
+    if(lowerLimit_y > upperlimits_y) { lowerLimit_y = upperlimits_y; }
+    if(lowerLimit_z > upperlimits_z) { lowerLimit_z = upperlimits_z; }
 
     lowerlimits.insert("x",QVariant((double)lowerLimit_x));
     lowerlimits.insert("y",QVariant((double)lowerLimit_y));
     lowerlimits.insert("z",QVariant((double)lowerLimit_z));
 
-    upperlimits.insert("x",QVariant((double)Tools::random(lowerLimit_x,(float)M_PI)));
-    upperlimits.insert("y",QVariant((double)Tools::random(lowerLimit_y,(float)M_PI)));
-    upperlimits.insert("z",QVariant((double)Tools::random(lowerLimit_z,(float)M_PI)));
+    upperlimits.insert("x",upperlimits_x);
+    upperlimits.insert("y",upperlimits_y);
+    upperlimits.insert("z",upperlimits_z);
 
     bone.insert("lowerLimits",lowerlimits);
     bone.insert("upperLimits",upperlimits);
