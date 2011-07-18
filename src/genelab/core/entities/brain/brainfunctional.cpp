@@ -358,7 +358,7 @@ float sigmoid(float x)
         QString func;
 
         int rand = qrand()%100;
-        if(rand < 30 && depth > 1) {
+        if(rand < 20 && depth > 1) {
             int subChoix = qrand()%7;
             if(subChoix == 6) {
                 func += "+ ,";
@@ -392,7 +392,7 @@ float sigmoid(float x)
                 func += createRandomFunc(depth -1);
             }
         }
-        else if(rand < 60 && depth > 1) {
+        else if(rand < 40 && depth > 1) {
             int subchoice = qrand()%7;
             switch(subchoice) {
             case 0:
@@ -462,7 +462,7 @@ float sigmoid(float x)
                 func += createRandomFunc(depth -1);
             }
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
-        } else if(rand < 50) {
+        } else if(rand < 30) {
             func += "CONST ";
             float x = ((float)qrand())/RAND_MAX*20 - 10; //  0.0 to 1.0
             func += QString::number(x) + ",";

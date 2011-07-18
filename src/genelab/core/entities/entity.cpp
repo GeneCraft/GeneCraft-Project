@@ -130,7 +130,7 @@ void Entity::addLinkToEffector(Effector *modifier) {
         // But should not happend that often, except when creating
         // Creatures from creature viewer
         if(modifier->getOutputs()[i]->getConnexionInfo() == "") {
-            QString randomFunc = brain->createRandomFunc(1);
+            QString randomFunc = brain->createRandomFunc(2);
             modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
         }
 
