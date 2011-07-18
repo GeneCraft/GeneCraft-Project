@@ -299,11 +299,23 @@ namespace GeneLabCore {
         // Best one ?
         if(this->bestResults.size() < this->bestResultsStored
            || (this->bestResultsStored > 0 && result->getFitness() > this->bestResults.last()->getFitness())) {
-            this->bestResults.append(new Result(*result));
-            while(bestResults.size() > this->bestResultsStored) {
-                    qSort(bestResults.begin(), bestResults.end(), myLessThan);
-                    Result *r = this->bestResults.takeLast();
-                    delete r;
+            bool already = false;
+            foreach(Result * r, bestResults) {
+                if(r->getFitness() == result->getFitness()) {
+                    // Check if genome is the same
+                    already = true;
+                    break;
+                }
+            }
+
+
+            if(!already) {
+                this->bestResults.append(new Result(*result));
+                while(bestResults.size() > this->bestResultsStored) {
+                        qSort(bestResults.begin(), bestResults.end(), myLessThan);
+                        Result *r = this->bestResults.takeLast();
+                        delete r;
+                }
             }
         }
 

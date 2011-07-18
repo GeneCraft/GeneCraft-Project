@@ -190,7 +190,9 @@ namespace GeneLabCore {
                 // Tree starting mutations !
                 for(int i = 0; i < 3; i++)
                     genome = mutations->mutateEntity(genome);
+
                 delete e;
+
                 return genome;
             }
 
