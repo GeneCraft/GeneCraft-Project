@@ -6,6 +6,13 @@
 #include <QVariantMap>
 
 namespace GeneLabCore {
+
+    // To sort result, descending
+    bool myLessThan( const Result *a, const Result *b )
+    {
+       return !((*a) < (*b));
+    }
+
     /**
       * Broadcast a result -> save it to the ressource
       */

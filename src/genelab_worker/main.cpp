@@ -98,10 +98,41 @@ int main(int argc, char *argv[])
     Ressource* worker_res     = new JsonFile(workerName);
 
     QVariant expdata = experience_res->load();
-    QVariant workerdata = worker_res->load();
+    //QVariant workerdata = worker_res->load();
+
+    /*
+        this->maxGen          = workerMap["maxGen"].toInt();
+        this->popSize         = workerMap["popSize"].toInt();
+        this->workerName      = workerMap["name"].toString();
+
+        int bestResultsStored   = workerMap["nbBestResults"].toInt();
+        int randomResultsStored = workerMap["nbRandomResults"].toInt();
+
+        this->results = new ResultsManager(exp,bestResultsStored, randomResultsStored);
+
+        QVariantMap selectionMap   = workerMap["selection"].toMap();
+        this->probFromBestsPop     = selectionMap["bestPop"].toDouble();
+        this->probFromBestsResult  = selectionMap["bestResult"].toDouble();
+        this->probFromRandomPop    = selectionMap["randomPop"].toDouble();
+        this->probFromRandomResult = selectionMap["randomResult"].toDouble();
+        this->probFromRandomNew    = selectionMap["randomNew"].toDouble();
+*/
+    QVariantMap workerData;
+    workerData["maxGen"] = 100;
+    workerData["popSize"] = 20;
+    workerData["name"] = "tata";
+    workerData["nbBestResults"] = 150;
+    workerData["nbRandomResults"] = 150;
+    QVariantMap selectionData;
+    selectionData["bestPop"] = 0.1;
+    selectionData["bestResult"] = 0.1;
+    selectionData["randomPop"] = 0.1;
+    selectionData["randomResult"] = 0.1;
+    selectionData["randomNew"] = 0.1;
+    workerData["selection"] = selectionData;
 
     Experiment* exp           = new Experiment(expdata);
-    ExperimentManager* expMan = new ExperimentManager(factory, exp, workerdata);
+    ExperimentManager* expMan = new ExperimentManager(factory, exp, workerData);
 
     expMan->experiment();
     //expMan->broadcastResults();

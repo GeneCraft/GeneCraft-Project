@@ -51,25 +51,21 @@ namespace GeneLabCore {
     ExperimentManager::ExperimentManager(btFactory* factory, QVariant expData, QVariant workerData) {
         this->factory = factory;
         this->exp = new Experiment(Ressource::load(expData));
-
         this->load(workerData);
     }
 
 
     //protected
     void ExperimentManager::load(QVariant workerData) {
-        db.dbName = "db/genecraft";
-        db.port = 80;
-        db.url = "http://www.genecraft-project.org";
-
         QVariantMap workerMap = workerData.toMap();
-        this->online          = workerMap["online"].toBool();
         this->maxGen          = workerMap["maxGen"].toInt();
         this->popSize         = workerMap["popSize"].toInt();
         this->workerName      = workerMap["name"].toString();
 
-        this->bestResultsStored   = workerMap["nbBestResults"].toInt();
-        this->randomResultsStored = workerMap["nbRandomResults"].toInt();
+        int bestResultsStored   = workerMap["nbBestResults"].toInt();
+        int randomResultsStored = workerMap["nbRandomResults"].toInt();
+
+        this->results = new ResultsManager(exp,bestResultsStored, randomResultsStored,workerName);
 
         QVariantMap selectionMap   = workerMap["selection"].toMap();
         this->probFromBestsPop     = selectionMap["bestPop"].toDouble();
@@ -87,24 +83,12 @@ namespace GeneLabCore {
         this->probFromRandomNew    /= sumProb;
         this->probFromRandomPop    /= sumProb;
         this->probFromRandomResult /= sumProb;
-
-        // default -> "results"
-        this->resultsDirectory = QDir(exp->getId()+"/"+workerMap["resultsDir"].toString());
-        if(!this->resultsDirectory.exists()) {
-            this->resultsDirectory.mkpath(".");
-        }
-
-        lastLoadedId = "";
-        lastModifiedResultLoaded = QDateTime();
     }
 
     /**
       * Experimentation loop
       */
     void ExperimentManager::experiment() {
-
-        // The result name cpt
-        this->resultNameCpt = 0;
 
         // The entity engine
         engines = factory->getEngines();
@@ -115,17 +99,6 @@ namespace GeneLabCore {
         shapesFactory   = new btShapesFactory();
         creatureFactory = new CreatureFactory();
         mutations       = exp->getMutationsManager();
-        online = false;
-        this->bestResultsStored = 150;
-        this->randomResultsStored = 150;
-        this->popSize = 20;
-        this->maxGen = 100;
-        this->probFromBestsPop     = 0.2;
-        this->probFromBestsResult  = 0.3;
-        this->probFromRandomNew    = 0.1;
-        this->probFromRandomPop    = 0.2;
-        this->probFromRandomResult = 0.2;
-        this->workerName = "redsguest" + QString::number(time(NULL));
 
         // The world to experiment inside
         world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
@@ -134,27 +107,12 @@ namespace GeneLabCore {
         // Nb gen to compute
         int nbGen = this->maxGen;
 
-        int nbLoaded = 0;
         // from db (online experience)
-        if(online) {
-            //nbLoaded = this->retrieveResults();
-            qDebug() << "loaded" << nbLoaded << "results from db.";
-        } else { // of offline from file
-            // Load result from files
-            nbLoaded = this->loadResults();
-            qDebug() << "loaded" << nbLoaded << "results from file.";
-        }
+        int nbLoaded = results->load();
+        qDebug() << "loaded" << nbLoaded << "results from db/file";
 
-        // No results so far
-        if(nbLoaded == 0) {
-            // New boostrap population
-            this->genRandomPop();
-            qDebug() << "generated" << this->popSize << "random new entities";
-        } else {
-            // New population from results
-            this->genNewPop();
-            qDebug() << "generated" << this->popSize << "mutated entities from results";
-        }
+        this->genNewPop();
+        qDebug() << "generated" << this->popSize << "mutated entities from results";
 
         // For each generations
         while(nbGen > 0 || nbGen == -1) {
@@ -166,18 +124,9 @@ namespace GeneLabCore {
             qDebug() << "Evaluation of population";
             evalPop();
 
-
             // Broadcast result to community
-            if(online) {
-                qDebug() << "Sending results to community";
-                broadcastResults();
-                retrieveNewResults();
-            } else {
-                // Saving results to file
-                qDebug() << "Saving results";
-                save();
-                loadNewResults();
-            }
+            results->save();
+            results->reload();
 
             // Generate new population
             qDebug() << "Generation of a new population";
@@ -187,199 +136,6 @@ namespace GeneLabCore {
 
     }
 
-    /**
-      * To load results from file system
-      */
-    // TODO : Use Bulk documents
-    int ExperimentManager::loadResults() {
-        qDebug() << "loading results";
-        QDir results = this->resultsDirectory;
-        int cptLoaded = 0;
-        foreach(QString f, results.entryList(QDir::NoDotAndDotDot
-                                             | QDir::Files
-                                             | QDir::Readable,
-                                             QDir::Time
-                                             | QDir::Reversed)) {
-            QFile realFile(results.absoluteFilePath(f));
-            QFileInfo fileInfo(realFile);
-            if(!realFile.exists()) {
-                continue;
-            }
-
-            this->lastModifiedResultLoaded
-                    = qMax(lastModifiedResultLoaded, fileInfo.lastModified());
-
-            JsonFile* file = new JsonFile(results.absoluteFilePath(f));
-            QVariant result = file->load();
-            bool valid = false;
-            Result* r = Result::loadResult(result, valid);
-            r->setRessource(file);
-            if(valid) {
-                qDebug() << "valid result from " << f;
-                this->addResult(r);
-                cptLoaded++;
-            } else {
-                qDebug() << "invalid file format" << f;
-            }
-
-            delete r;
-
-        }
-
-        this->resultNameCpt = cptLoaded;
-        qDebug() << cptLoaded;
-
-        return cptLoaded;
-    }
-
-    // TODO : Use Bulk documents
-    void ExperimentManager::loadNewResults() {
-        QDir results = this->resultsDirectory;
-        QDateTime newLastModified = lastModifiedResultLoaded;
-        foreach(QString f, results.entryList(QDir::NoDotAndDotDot
-                                             | QDir::Files
-                                             | QDir::Readable,
-                                             QDir::Time)) {
-            QFile realFile(results.absoluteFilePath(f));
-            QFileInfo fileInfo(realFile);
-            if(!realFile.exists()) {
-                continue;
-            }
-
-            if(this->lastModifiedResultLoaded < fileInfo.lastModified()) {
-                qDebug() << "new result : " << f;
-            } else {
-                break;
-            }
-
-            if(newLastModified < fileInfo.lastModified()){
-                newLastModified = fileInfo.lastModified();
-            }
-
-            JsonFile* file = new JsonFile(results.absoluteFilePath(f));
-            QVariant result = file->load();
-            bool valid = false;
-            Result* r = Result::loadResult(result, valid);
-            r->setRessource(file);
-            if(valid) {
-                qDebug() << "valid result from " << f << fileInfo.lastModified();
-                this->addResult(r);
-            } else {
-                qDebug() << "invalid file format" << f;
-            }
-
-            delete r;
-
-        }
-        this->lastModifiedResultLoaded = newLastModified;
-    }
-
-    /**
-      * To load results from online database
-      */
-    int ExperimentManager::retrieveResults() {
-        int cptLoaded = 0;
-        QString id = "_design/results/_view/all?group=true&group_level=2&startkey=[\""+
-                     exp->getId() +"\",\"a\"]&endkey=[\""+
-                     exp->getId() +"\",0]&limit="+
-                     QString::number(qMax(this->randomResultsStored, this->bestResultsStored))
-                     +"&descending=true";
-        DbRecord* r = new DbRecord(db, id);
-        QVariant data = r->load();
-        delete r;
-        QVariantMap results = data.toMap();
-        QVariantList rows = results["rows"].toList();
-        QVariantList ids;
-        foreach(QVariant row, rows) {
-            QString id = row.toMap()["value"].toList()[4].toString();
-            if(id.left(14) > lastLoadedId.left(14)) {
-                lastLoadedId = id;
-            }
-            ids.append(id);
-        }
-        QVariantMap postData;
-        postData.insert("keys", ids);
-        Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
-        QVariant genomes = re->load();
-
-        QVariantMap genomesMap = genomes.toMap();
-        QVariantList genomesList = genomesMap["rows"].toList();
-
-        foreach(QVariant genomeResult, genomesList) {
-            QVariant genome = genomeResult.toMap()["doc"];
-            bool valid;
-            Result* result = Result::loadResult(genome, valid);
-            if(valid) {
-                qDebug() << "valid result from " << id;
-                qDebug() << result->getDate() << result->getFitness() << result->getWorker();
-                result->setBroadcasted(true);
-                this->addResult(result);
-                cptLoaded++;
-            } else {
-                qDebug() << "invalid file format";
-            }
-
-            delete result;
-        }
-        delete re;
-
-        return cptLoaded;
-    }
-
-    void ExperimentManager::retrieveNewResults() {
-        QString id = "_design/results/_view/all?group=true&group_level=2&startkey=[\""+
-                     exp->getId() +"\",\"a\"]&endkey=[\""+
-                     exp->getId() +"\",0]&limit="+
-                     QString::number(qMax(this->randomResultsStored, this->bestResultsStored))
-                     +"&descending=true";
-        qDebug() << id;
-        DbRecord* r = new DbRecord(db, id);
-        QVariant data = r->load();
-        delete r;
-        QVariantMap results = data.toMap();
-        QVariantList rows = results["rows"].toList();
-        QString newLastLoadedId = lastLoadedId;
-        QVariantList ids;
-        foreach(QVariant row, rows) {
-            QString id = row.toMap()["value"].toList()[4].toString();
-
-            if(id.left(14) <= lastLoadedId.left(14)) {
-                continue;
-            }
-
-            if(id.left(14) > newLastLoadedId.left(14)) {
-                newLastLoadedId = id;
-            }
-            ids.append(id);
-        }
-
-        QVariantMap postData;
-        postData.insert("keys", ids);
-        qDebug() << postData;
-        Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
-        QVariant genomes = re->load();
-
-        QVariantMap genomesMap = genomes.toMap();
-        QVariantList genomesList = genomesMap["rows"].toList();
-
-        foreach(QVariant genomeResult, genomesList) {
-            QVariant genome = genomeResult.toMap()["doc"];
-            bool valid;
-            Result* result = Result::loadResult(genome, valid);
-            if(valid) {
-                qDebug() << "valid result from " << id;
-                qDebug() << result->getDate() << result->getFitness() << result->getWorker();
-                result->setBroadcasted(true);
-                this->addResult(result);
-            } else {
-                qDebug() << "invalid file format";
-            }
-
-            delete result;
-        }
-        delete re;
-        lastLoadedId = newLastLoadedId;
-    }
 
     /**
       * To create a boodstrap pop
@@ -449,26 +205,18 @@ namespace GeneLabCore {
         return QVariant();
     }
 
-    // To sort result, descending
-    bool myLessThan( const Result *a, const Result *b )
-    {
-       return !((*a) < (*b));
-    }
-
     /**
       * To generate a new population from last population
       */
     void ExperimentManager::genNewPop() {
-        // Sorting best results and active pop if needed
-        if(this->probFromBestsResult > 0.0f)
-            qSort(bestResults.begin(), bestResults.end(), myLessThan);
+        // Sorting active pop if needed
         if(this->probFromBestsPop > 0.0f)
             qSort(activePop.begin(), activePop.end(), myLessThan);
 
         QList<Result*> newActivePop;
 
         // For probFromBestsResult part
-        int max = this->bestResults.size();
+        int max = this->results->getBestResults().size();
         if(max)
         for(int i = 0; i < this->popSize*this->probFromBestsResult; i++) {
             // No bests results enough?
@@ -476,7 +224,7 @@ namespace GeneLabCore {
                 break;
 
             // Best 'i one
-            Result* r = bestResults.at(i);
+            Result* r = results->getBestResults().at(i);
 
             // Mutation of best one
             newActivePop.append(new Result(this->exp->getId(), -1,
@@ -485,12 +233,12 @@ namespace GeneLabCore {
         }
 
         // For probFromRandomResults part
-        max = randomResults.size();
+        max = results->getRandomResults().size();
         if(max)
         for(int i = 0; i < this->popSize*this->probFromRandomResult; i++) {
             // random new from results
             int id = qrand()%max;
-            Result* r = randomResults.at(id);
+            Result* r = results->getRandomResults().at(id);
             QVariant genome = r->getGenome();
 
             // Mutation
@@ -565,6 +313,7 @@ namespace GeneLabCore {
             if(stable && simulated) {
                 fitness = this->evaluateEntity(e);
                 r->setFitness(fitness);
+                results->addResult(r);
                 qDebug() << "entity evaluated, fitness =" << fitness;
             } else {
                 qDebug() << "corrupted entity";
@@ -577,55 +326,6 @@ namespace GeneLabCore {
         }
     }
 
-    /**
-      * To save the actual progression of the experiment
-      */
-    void ExperimentManager::save() {
-        foreach(Result* r, activePop) {
-            if(r->getFitness() >= 0.0) {
-
-                if(r->getRessource() != NULL)
-                    continue;
-
-                QString filename = this->workerName + QString::number(resultNameCpt++);
-                r->save(new JsonFile(this->getResultsDir().absoluteFilePath(filename)));
-                this->addResult(r);
-            }
-        }
-    }
-
-    /**
-      * To broadcast result to online database
-      */
-    void ExperimentManager::broadcastResults() {
-        // Neede to sort
-        qSort(activePop.begin(), activePop.end(), myLessThan);
-        qSort(bestResults.begin(), bestResults.end(), myLessThan);
-
-        QVariantList docsList;
-        foreach(Result* result, activePop) {
-            // Only broadcast if less than the best of stored results
-            if(result->isBroadcasted() ||  result->getFitness() <= 0 || (bestResults.size() > 0 &&
-                     result->getFitness() < bestResults.last()->getFitness())) {
-                this->addResult(result);
-                continue;
-            }
-            this->addResult(result);
-
-            qDebug() << "broadcast : " << result->getDate() << result->getFitness();
-
-            docsList.append(result->serialize());
-            result->setBroadcasted(true);
-        }
-
-        QVariantMap postData;
-        postData.insert("docs", docsList);
-        DbRecord* r = new DbRecord(db, "_bulk_docs");
-        r->save(postData);
-        delete r;
-
-        qDebug() << "saved !";
-    }
 
 
     // To simulate a specific entity
@@ -655,7 +355,6 @@ namespace GeneLabCore {
         // Get the specific velocity value
         Statistic* s = e->getStatisticByName("Root relative velocity");
 
-        float EPSILON = 0.00001; // Stability needed
         int stableCpt = 0;
         int maxStableTry = 300;
         int neededStableCpt = 60;
@@ -704,9 +403,6 @@ namespace GeneLabCore {
 
     float ExperimentManager::evaluateEntity(Entity* e) {
         Statistic* s = e->getStatisticByName("Root relative velocity");
-        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getX();
-        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getY();
-        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getZ();
         return s->getSum();
     }
 
@@ -724,30 +420,6 @@ namespace GeneLabCore {
         foreach(Engine* e, engines) {
 
             e->afterStep();
-        }
-    }
-
-    /**
-      * To add a new result to this experience
-      */
-    void ExperimentManager::addResult(Result* result) {
-        // Best one ?
-        if(this->bestResults.size() < this->bestResultsStored
-           || (this->bestResultsStored > 0 && result->getFitness() > this->bestResults.last()->getFitness())) {
-            this->bestResults.append(new Result(*result));
-            while(bestResults.size() > this->bestResultsStored) {
-                    qSort(bestResults.begin(), bestResults.end(), myLessThan);
-                    Result *r = this->bestResults.takeLast();
-                    delete r;
-            }
-        }
-
-        // Random one ?
-        this->randomResults.append(new Result(*result));
-        while(this->randomResults.size() > this->randomResultsStored) {
-            int at = qrand()%randomResults.size();
-            Result *r = this->randomResults.takeAt(at);
-            delete r;
         }
     }
 

@@ -6,6 +6,10 @@
 #include <QDateTime>
 
 namespace GeneLabCore {
+
+    class Result;
+    bool myLessThan( const Result *a, const Result *b );
+
     class Result
     {
     public:

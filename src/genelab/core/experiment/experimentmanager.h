@@ -3,6 +3,7 @@
 
 #include "ressources/dbrecord.h"
 #include "experiment.h"
+#include "resultsmanager.h"
 #include "mutation/mutationsmanager.h"
 
 class SelectionManager;
@@ -27,22 +28,6 @@ namespace GeneLabCore {
         void experiment();
 
         /**
-          * To load results from file system
-          * Return the number of loaded results
-          */
-        int loadResults();
-        // During the simulation, synchro with other worker
-        void loadNewResults();
-
-        /**
-          * To load results from online database
-          * Return the number of retrieved results
-          */
-        int retrieveResults();
-        // During the simulation, synchro with other worker
-        void retrieveNewResults();
-
-        /**
           * To generate a new population from last population
           */
         void genNewPop();
@@ -58,31 +43,10 @@ namespace GeneLabCore {
         void evalPop();
 
         /**
-          * To save the actual progression of the experiment
-          */
-        void save();
-
-        /**
-          * To broadcast result to online database
-          */
-        void broadcastResults();
-
-        /**
-          * To add a new result to this experience
-          */
-        void addResult(Result* result);
-
-        /**
           * To set the new generation of population
           */
         void setActivePopulation(QList<Result*> newPop);
 
-        /**
-          * The directory where the results are stored
-          */
-        QDir getResultsDir() {
-            return this->resultsDirectory;
-        }
 
     protected:
         // To simulate a specific entity
@@ -100,7 +64,6 @@ namespace GeneLabCore {
         MutationsManager* mutations;
         SelectionManager* selections;
         btFactory* factory;
-        bool online;
 
         btWorldFactory* worldFactory;
         btShapesFactory* shapesFactory;
@@ -112,14 +75,8 @@ namespace GeneLabCore {
 
         QMap<QString, Engine*> engines;
 
-        int resultNameCpt;
         int maxGen;
         int popSize;
-        int bestResultsStored;
-        int randomResultsStored;
-
-        QDateTime lastModifiedResultLoaded;
-        QString lastLoadedId;
 
         float probFromBestsResult;
         float probFromBestsPop;
@@ -129,12 +86,11 @@ namespace GeneLabCore {
 
         QString workerName;
 
-        QList<Result*> bestResults;
-        QList<Result*> randomResults;
         QList<Result*> activePop;
 
-        QDir resultsDirectory;
         DataBase db;
+
+        ResultsManager* results;
     };
 }
 

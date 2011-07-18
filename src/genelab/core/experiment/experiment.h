@@ -43,6 +43,10 @@ namespace GeneLabCore {
         QDateTime getDateOfCreation() { return this->dateOfCreation; }
         void setDateOfCreation(QDateTime dateOfCreation) { this->dateOfCreation = dateOfCreation; }
 
+        // if the experiment is online
+        bool isOnline() {return this->online;}
+        void setOnline(bool online) {this->online = online;}
+
         // ----------------
         // -- Simulation --
         // ----------------
@@ -98,6 +102,9 @@ namespace GeneLabCore {
         QString author;
         QString comments;
         QDateTime dateOfCreation;
+
+        // Online ?
+        bool online;
 
         // file
         Ressource* ressource;

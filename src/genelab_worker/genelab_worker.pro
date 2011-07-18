@@ -145,6 +145,7 @@ SOURCES += \
     ../genelab/core/entities/sensors/smellsensor.cpp \
     ../genelab/core/entities/effectors/grippereffector.cpp \
     ../genelab/core/entities/effectors/flyingeffector.cpp \
+    ../genelab/core/experiment/resultsmanager.cpp \
     ../genelab/core/entities/sensors/distancesensor.cpp
 
 HEADERS += \
@@ -225,6 +226,7 @@ HEADERS += \
     ../genelab/core/entities/sensors/smellsensor.h \
     ../genelab/core/entities/effectors/grippereffector.h \
     ../genelab/core/entities/effectors/flyingeffector.h \
+    ../genelab/core/experiment/resultsmanager.h \
     ../genelab/core/entities/sensors/distancesensor.h
 
 FORMS += \

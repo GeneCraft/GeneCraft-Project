@@ -22,6 +22,9 @@
 #include "sensors/positionsensor.h"
 #include "sensors/contactsensor.h"
 
+// effectors
+#include "effectors/effector.h"
+
 #include "qxtjson.h"
 
 namespace GeneLabCore {
@@ -244,8 +247,9 @@ namespace GeneLabCore {
         // mutate all bones
         QVariantMap rootFixMap = rootFixVariant.toMap(); // COPY !
         QVariantList newBonesList;
-        foreach(QVariant boneVariant, rootFixMap.value("bones").toList())
+        foreach(QVariant boneVariant, rootFixMap.value("bones").toList()) {
             newBonesList.append(recursiveMutateTreeShape(boneVariant));
+        }
 
         // add new bone to fix
         if(bonesStructural->checkAdd())
@@ -283,14 +287,11 @@ namespace GeneLabCore {
     }
 
     QVariant MutationsManager::mutateBone(const QVariant &boneVariant){
-
         QVariantMap boneMap = boneVariant.toMap();
 
         // ----------
         // -- size --
         // ----------
-
-        //qDebug() << boneLength->enable << boneLength->probability;
 
         // length mutation
         boneLength->mutate(boneMap, "length");
@@ -322,9 +323,9 @@ namespace GeneLabCore {
         // ----------------------
         // -- motors mutations --
         // ----------------------
-        QVariantMap newMuscle;
+        QVariantMap newMuscle = boneMap["muscle"].toMap();
         QVariantMap newOuts;
-        QVariantMap outs = boneMap["muscle"].toMap()["outs"].toMap();
+        QVariantMap outs = newMuscle["outs"].toMap();
 
         // foreach motor axis...
         for(int i=0; i<3; ++i){
@@ -353,7 +354,6 @@ namespace GeneLabCore {
             }
         }
 
-        newMuscle.insert("type",QVariant("RotationalMotor"));
         newMuscle.insert("outs",newOuts);
         boneMap.insert("muscle",newMuscle);
 
