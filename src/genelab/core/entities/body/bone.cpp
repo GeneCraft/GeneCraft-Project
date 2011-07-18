@@ -56,9 +56,9 @@ Bone::~Bone()
     shapesFactory->getWorld()->getBulletWorld()->removeConstraint(parentCt);
     delete body;
     delete origin;
-    delete endFix;
     delete motorsEffector;
     delete parentCt;
+    delete endFix;
 }
 
 void Bone::remove() {
