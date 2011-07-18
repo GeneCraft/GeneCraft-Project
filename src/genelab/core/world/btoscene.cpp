@@ -22,6 +22,10 @@ namespace GeneLabCore {
     void btoScene::setup() {
         btScene::setup();
 
+        // ------------
+        // -- Camera --
+        // ------------
+
         float camX, camY, camZ, lookX, lookY, lookZ;
         QVariantMap camData = data["camera"].toMap();
         camX = camData["posX"].toFloat();
@@ -32,22 +36,17 @@ namespace GeneLabCore {
         lookZ = camData["targetZ"].toFloat();
 
         BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
-
         Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
-
         Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
         cam->setPosition(Ogre::Vector3(camX, camY, camZ)); // -20, 10, 0
         cam->setDirection(Ogre::Vector3(lookX, lookY, lookZ)); // -20, 5, 0
 
 
-        // --------------------------
-        // -- Content of the scene --
-        // --------------------------
-
-        // Static Floor ?
+        // -----------
+        // -- Floor --
+        // -----------
 
         if(data["type"].toString() == "flatland") {
-            QString textureName = data["floor"].toString();
 
             Ogre::Entity *ent;
             Ogre::Plane p;
@@ -58,13 +57,21 @@ namespace GeneLabCore {
                                                 Ogre::Vector3::UNIT_Z);
 
            ent = sceneManager->createEntity("floorWorld", "FloorPlane");
-           ent->setMaterialName(textureName.toStdString());
+
+           if(data.contains("floor")) {
+                ent->setMaterialName(data["floor"].toString().toStdString());
+           }
+
            sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
         }
 
-        // Spawns zones and point
+        // ------------
+        // -- Spawns --
+        // ------------
+
         foreach(Spawn* sp, this->spawns) {
             switch(sp->getType()) {
+
             case Spawn::Position:
 
                 {
@@ -88,8 +95,8 @@ namespace GeneLabCore {
                                   sp->getSpawnPosition().y(),
                                   sp->getSpawnPosition().z());
             }
+            break;
 
-                break;
             case Spawn::Zone:
                 {
                 // Create Ogre Entity

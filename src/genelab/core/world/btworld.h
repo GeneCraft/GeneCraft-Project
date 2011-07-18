@@ -28,6 +28,9 @@ namespace GeneLabCore {
         // To create a world from serialization data
         btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
 
+        // To clean the bullet world
+        void cleanBulletWorld();
+
         // To create a new creature
         virtual btVector3 getSpawnPosition();
 

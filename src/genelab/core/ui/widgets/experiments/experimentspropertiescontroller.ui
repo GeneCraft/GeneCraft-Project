@@ -444,21 +444,12 @@ p, li { white-space: pre-wrap; }
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="cbGravity">
-            <item>
-             <property name="text">
-              <string>Earth</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Moon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Mars</string>
-             </property>
-            </item>
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>0</height>
+             </size>
+            </property>
            </widget>
           </item>
           <item row="0" column="0">
@@ -591,6 +582,12 @@ p, li { white-space: pre-wrap; }
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="cbFlat">
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="whatsThis">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;

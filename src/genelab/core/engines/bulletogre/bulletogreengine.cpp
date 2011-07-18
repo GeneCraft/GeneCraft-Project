@@ -62,4 +62,9 @@ void BulletOgreEngine::step()
                                    transform.getRotation().z());
     }
 }
+
+void BulletOgreEngine::clearAll(){
+    bodies.clear();
+}
+
 }

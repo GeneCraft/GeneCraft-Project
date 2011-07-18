@@ -41,9 +41,6 @@
 #include "widgets/entities/entitypropertiescontroller.h"
 #include "widgets/experiments/workerctrl.h"
 
-// Listeners
-#include "creatureviewerinputmanager.h"
-
 // Ressources
 #include "ressources/ressource.h"
 #include "ressources/jsonfile.h"
@@ -196,7 +193,7 @@ void CreatureViewerWindow::init() {
     // ----------------------
 
 
-    CreatureViewerInputManager *cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
+    cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
     EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     // add listener in events manager
     EventsManager *eventsManager =  static_cast<EventsManager*>(factory->getEngines().find("Events").value());
@@ -306,7 +303,33 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
 {
     this->experiment = experiment;
 
-    // TODO reload world...
+    // --------------
+    // -- Clearing --
+    // --------------
+
+    // entities
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
+    foreach(Entity * entity, entitiesEngine->getAllEntities())
+        emit sEntityDeleted(entity);
+    entitiesEngine->removeAndDeleteAllEntities();
+
+    // bullet ogre
+    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
+    btoEngine->clearAll();
+
+    // ogre
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
+    ogreEngine->getOgreSceneManager()->clearScene();
+
+    // bullet
+    world->cleanBulletWorld();
+
+    // --------------------------
+    // -- Create the new world --
+    // --------------------------
+    world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
+    cvim->setWorld(world);
+
 }
 
 void CreatureViewerWindow::loadEntityFromDb() {
@@ -391,7 +414,7 @@ void CreatureViewerWindow::createMutationSample(){
 
 void CreatureViewerWindow::spawnNew() {
 
-    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
+    //EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
 
     // Clear entities
     /*while(ents.size() != 0){
@@ -639,16 +662,12 @@ void CreatureViewerWindow::removeAllEntities()
     unfollowEntity();
 
     // Clear entities
-    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-    ents = entitiesEngine->getAllEntities();
-    while(ents.size() != 0){
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
 
-        Entity * old = ents.takeFirst();
-        entitiesEngine->removeEntity(old);
-        emit sEntityDeleted(old);
+    foreach(Entity * entity, entitiesEngine->getAllEntities())
+        emit sEntityDeleted(entity);
 
-        delete old;
-    }
+    entitiesEngine->removeAndDeleteAllEntities();
 }
 
 void CreatureViewerWindow::removeAllEntitiesExceptSelected() {

@@ -5,6 +5,7 @@
 namespace GeneLabCore {
 
     QVariant btWorldFactory::createSimpleWorld() {
+
         // World from program (soon from file)
         QVariantMap worldData;
         worldData.insert("name", "Earth");

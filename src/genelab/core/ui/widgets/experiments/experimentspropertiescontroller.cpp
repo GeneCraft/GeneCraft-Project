@@ -19,7 +19,12 @@
 #include "qxtjson.h"
 
 
+
+
 using namespace GeneLabCore;
+
+QList<QString> gravitiesName;
+QList<double> gravities;
 
 ExperimentsPropertiesController::ExperimentsPropertiesController(Experiment *experiment, QWidget *parent) :
     QWidget(parent), ui(new Ui::ExperimentsPropertiesController)
@@ -40,6 +45,15 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExp()));
     connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveToFile()));
 
+    gravitiesName << "Earth" << "Moon" << "Mercury" << "Venus" << "Mars" << "Jupiter"
+                  << "Io" << "Europa" << "Ganymede" << "Callisto" << "Saturn" << "Titan" << "Uranus"
+                  << "Titania" << "Oberon" << "Neptune" << "Triton" << "Pluto" << "Eris" << "Sun";
+
+    gravities << 9.81 << 1.625 << 3.703 << 8.872  << 3.728 << 25.93 << 1.789 << 1.314
+              << 1.426 << 1.24 << 11.19 << 1.3455 << 9.01 << 0.379 << 0.347 << 11.28 << 0.779 << 0.61 << 0.8 << 274.1;
+
+    for(int i=0; i<gravitiesName.count();++i)
+        ui->cbGravity->addItem(QString::number(gravities.at(i)) + " - " + gravitiesName.at(i));
 }
 
 void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
@@ -228,6 +242,7 @@ void ExperimentsPropertiesController::updateStructures() {
 
     // -- Biome --
     QVariantMap biomeMap;
+    biomeMap.insert("gravity",gravities[ui->cbGravity->currentIndex()]);
     biomeMap.insert("lights",QxtJSON::parse(ui->teLights->toPlainText()));
     worldMap.insert("biome",biomeMap);
 
@@ -247,6 +262,10 @@ void ExperimentsPropertiesController::updateStructures() {
     worldMap.insert("scene",sceneMap);
 
     experiment->setWorldData(worldMap);
+
+
+
+
 }
 
 void ExperimentsPropertiesController::loadExp() {

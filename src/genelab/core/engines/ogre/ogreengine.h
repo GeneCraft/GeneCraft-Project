@@ -18,6 +18,7 @@ namespace GeneLabCore {
         void initOgreRoot();
         void initResources();
         void initSceneManager();
+        void initOverlay();
 
         Ogre::Root*         getOgreRoot();
         Ogre::SceneManager* getOgreSceneManager();

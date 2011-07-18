@@ -57,6 +57,8 @@ public:
     OgreEngine *getOgreEngine()     { return this->ogreEngine;  }
     BulletEngine *getBulletEngine() { return this->btEngine;    }
 
+    void clearAll();
+
     void step();
 
 private:

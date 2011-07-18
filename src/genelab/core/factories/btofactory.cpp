@@ -41,6 +41,7 @@ btoFactory::btoFactory(QWidget* sceneWidget, unsigned long winId, QObject *paren
     sceneWidget->layout()->addWidget(oW1);
 
     ogreEngine->initResources();
+    ogreEngine->initOverlay();
 
     this->engines.insert("Ogre", ogreEngine);
 

@@ -35,8 +35,11 @@ namespace GeneLabCore {
         // ---------
         // -- Sky --
         // ---------
-        QString skyDomeName = data["sky"].toString();
-        sceneManager->setSkyDome(true, skyDomeName.toStdString(), 10, 8, 1000);
+
+        if(data.contains("sky")) {
+            QString skyDomeName = data["sky"].toString();
+            sceneManager->setSkyDome(true, skyDomeName.toStdString(), 10, 8, 1000);
+        }
 
         // -------------
         // -- Shadows --

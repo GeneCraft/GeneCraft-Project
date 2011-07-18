@@ -33,6 +33,8 @@ public:
         entities.removeAll(entity);
     }
 
+    void removeAndDeleteAllEntities();
+
     QList<Entity*> getAllEntities() {
         return QList<Entity*>(entities);
     }

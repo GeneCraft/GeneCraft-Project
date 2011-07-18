@@ -18,8 +18,8 @@ public:
 
 private:
 
-    btScalar maxAltitude;
     Fixation *fixation;
+    btScalar maxAltitude;
     BrainOut *impulseX, *impulseY, *impulseZ;
 };
 

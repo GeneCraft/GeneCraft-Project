@@ -11,6 +11,9 @@
 #include "ui/widgets/entities/entitypropertiescontroller.h"
 #include "widgets/experiments/experimentspropertiescontroller.h"
 
+// Listeners
+#include "creatureviewerinputmanager.h"
+
 namespace Ui {
     class CreatureViewer;
 }
@@ -105,6 +108,8 @@ private:
 
     Experiment *experiment;
     ExperimentsPropertiesController *epc;
+
+    CreatureViewerInputManager *cvim;
 
 private slots:
 

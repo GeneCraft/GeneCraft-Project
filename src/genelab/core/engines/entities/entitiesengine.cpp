@@ -77,4 +77,14 @@ void EntitiesEngine::afterStep()
             m->step();
     }
 }
+
+void EntitiesEngine::removeAndDeleteAllEntities() {
+
+    while(entities.size() != 0){
+
+        Entity * old = entities.takeFirst();
+        delete old;
+    }
+}
+
 }

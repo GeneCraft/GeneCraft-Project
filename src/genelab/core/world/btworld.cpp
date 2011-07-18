@@ -45,6 +45,47 @@ namespace GeneLabCore {
 
     }
 
+    void btWorld::cleanBulletWorld() {
+
+        // from : http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=9&t=638&view=next
+        //cleanup in the reverse order of creation/initialization
+
+        //remove the rigidbodies from the dynamics world and delete them
+        int i;
+        for (i=world->getNumCollisionObjects()-1; i>=0 ;i--)
+        {
+            btCollisionObject* obj = world->getCollisionObjectArray()[i];
+            world->removeCollisionObject( obj );
+            delete obj;
+        }
+
+//        //delete collision shapes
+//        for (unsigned int j=0;j<m_collisionShapes.size();j++)
+//        {
+//                btCollisionShape* shape = m_collisionShapes[j];
+//                delete shape;
+//        }
+
+//        //delete dynamics world
+//        delete m_dynamicsWorld;
+
+//        //delete collision algorithms creation functions
+//        delete m_sphereSphereCF;
+
+//        delete m_sphereBoxCF;
+//        delete m_boxSphereCF;
+
+//        //delete solver
+//        delete m_solver;
+
+//        //delete broadphase
+//        delete m_overlappingPairCache;
+
+//        //delete dispatcher
+//        delete m_dispatcher;
+
+    }
+
     // To create a new creature
     btVector3 btWorld::getSpawnPosition() {
         return scene->getSpawnPosition();
