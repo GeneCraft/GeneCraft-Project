@@ -611,8 +611,11 @@ namespace GeneLabCore {
         foreach(Result* result, activePop) {
             // Only broadcast if less than the best of stored results
             if(result->isBroadcasted() ||  result->getFitness() <= 0 || (bestResults.size() > 0 &&
-                    result->getFitness() < bestResults.last()->getFitness()))
+                     result->getFitness() < bestResults.last()->getFitness())) {
+                this->addResult(result);
                 continue;
+            }
+            this->addResult(result);
 
             qDebug() << "broadcast : " << result->getDate() << result->getFitness();
 
@@ -684,10 +687,6 @@ namespace GeneLabCore {
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
                 return false;
         }
-
-        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getX();
-        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getY();
-        qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().getZ();
 
         s->resetAll();
         ((FixationStats*)stat)->resetOrigin();
