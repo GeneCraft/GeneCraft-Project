@@ -9,10 +9,7 @@
 #include "body/treeshape.h"
 #include "body/fixation.h"
 #include "bullet/rigidbodyorigin.h"
-
 #include "world/btoworld.h"
-
-
 
 // Ogre
 #include "ogre/ogreengine.h"
@@ -31,7 +28,7 @@ CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngi
 {
 }
 
-void CreatureViewerInputManager::setWorld(btoWorld *world) {
+void CreatureViewerInputManager::setWorld(btWorld *world) {
     this->world = world;
 }
 

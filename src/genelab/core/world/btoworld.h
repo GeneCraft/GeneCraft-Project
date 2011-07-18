@@ -9,7 +9,12 @@ namespace GeneLabCore {
 class btoWorld : public btWorld
 {
 public:
-    explicit btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent = 0);
+
+    // To create a default world
+    btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QObject *parent = 0);
+
+    // To create a world from serialization data
+    btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent = 0);
 
     virtual void setup();
 

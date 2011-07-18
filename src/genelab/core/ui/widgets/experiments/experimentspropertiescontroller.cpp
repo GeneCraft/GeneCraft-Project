@@ -15,19 +15,11 @@
 #include "mutation/mutationsmanager.h"
 #include "ressources/jsonfile.h"
 
+#include "world/btobiome.h"
+#include "qxtjson.h"
+
 
 using namespace GeneLabCore;
-
-ExperimentsPropertiesController::ExperimentsPropertiesController(QWidget *parent) :
-    QWidget(parent), ui(new Ui::ExperimentsPropertiesController)
-{
-    ui->setupUi(this);
-
-    setupForm();
-
-    Experiment * exp = new Experiment();
-    setExperiment(exp);
-}
 
 ExperimentsPropertiesController::ExperimentsPropertiesController(Experiment *experiment, QWidget *parent) :
     QWidget(parent), ui(new Ui::ExperimentsPropertiesController)
@@ -119,6 +111,34 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     ui->vlBrainMutations->addWidget(brainFrequency);
     ui->vlBrainMutations->addWidget(constValue);
     ui->vlBrainMutations->addWidget(newBrainTree);
+
+    // -----------
+    // -- world --
+    // -----------
+
+    // -- Biome --
+    QVariantMap biomeMap = experiment->getWorldDataMap()["biome"].toMap();
+
+    // lights
+    ui->teLights->setText(QxtJSON::stringify(biomeMap["lights"]));
+
+    // -- Scene --
+    QVariantMap sceneMap = experiment->getWorldDataMap()["scene"].toMap();
+
+    // camera
+    QVariantMap camMap = sceneMap["camera"].toMap();
+    ui->leCamPosX->setText(camMap["posX"].toString());
+    ui->leCamPosY->setText(camMap["posY"].toString());
+    ui->leCamPosZ->setText(camMap["posZ"].toString());
+    ui->leCamTargetX->setText(camMap["targetX"].toString());
+    ui->leCamTargetY->setText(camMap["targetY"].toString());
+    ui->leCamTargetZ->setText(camMap["targetZ"].toString());
+
+    // shapes
+    ui->teStaticShapes->setText(QxtJSON::stringify(sceneMap["shapes"]));
+
+    // spawns
+    ui->teSpawns->setText(QxtJSON::stringify(sceneMap["spawns"]));
 }
 
 ExperimentsPropertiesController::~ExperimentsPropertiesController() {
@@ -202,6 +222,31 @@ void ExperimentsPropertiesController::updateStructures() {
     brainFrequency->save();
     constValue->save();
     newBrainTree->save();
+
+    // World
+    QVariantMap worldMap;
+
+    // -- Biome --
+    QVariantMap biomeMap;
+    biomeMap.insert("lights",QxtJSON::parse(ui->teLights->toPlainText()));
+    worldMap.insert("biome",biomeMap);
+
+    // -- Scene --
+    QVariantMap sceneMap = experiment->getWorldDataMap()["scene"].toMap();
+    QVariantMap camMap;
+    camMap.insert("posX",ui->leCamPosX->text().toDouble());
+    camMap.insert("posY",ui->leCamPosY->text().toDouble());
+    camMap.insert("posZ",ui->leCamPosZ->text().toDouble());
+    camMap.insert("targetX",ui->leCamTargetX->text().toDouble());
+    camMap.insert("targetY",ui->leCamTargetY->text().toDouble());
+    camMap.insert("targetZ",ui->leCamTargetZ->text().toDouble());
+    sceneMap.insert("camera",camMap);
+    sceneMap.insert("shapes",QxtJSON::parse(ui->teStaticShapes->toPlainText()));
+    sceneMap.insert("spawns",QxtJSON::parse(ui->teSpawns->toPlainText()));
+
+    worldMap.insert("scene",sceneMap);
+
+    experiment->setWorldData(worldMap);
 }
 
 void ExperimentsPropertiesController::loadExp() {
@@ -216,7 +261,7 @@ void ExperimentsPropertiesController::loadExp() {
 
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);
-        QVariant exp = from->load();
+        QVariant expData = from->load();
 
         // TODO Error ???
 //        if(exp.toMap().contains("Error")){
@@ -224,7 +269,7 @@ void ExperimentsPropertiesController::loadExp() {
 //        else {
 //        }
 
-        Experiment *experiment = new Experiment(exp);
+        Experiment *experiment = new Experiment(expData);
         experiment->setRessource(from);
         setExperiment(experiment);
         emit experimentLoaded(experiment);

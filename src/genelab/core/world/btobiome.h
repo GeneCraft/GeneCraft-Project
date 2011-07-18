@@ -13,8 +13,13 @@ public:
 
     virtual void setup();
 
+    QVariantList getLightsData() { return lightsData; }
+    void setLightsData(QVariantList lightsData) { this->lightsData = lightsData; }
+
 private:
     btoWorld* world;
+
+    QVariantList lightsData;
 };
 
 }

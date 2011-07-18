@@ -11,7 +11,7 @@ namespace GeneLabCore {
 class btoSphere : public btSphere
 {
 public:
-    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, QVariant params = QVariant());
+    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QVariant params = QVariant());
     ~btoSphere();
     void setup();
     void setSelected(bool selected);

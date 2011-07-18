@@ -4,12 +4,6 @@
 
 namespace GeneLabCore {
 
-    btWorldFactory::btWorldFactory(QObject *parent) :
-        QObject(parent)
-    {
-    }
-
-
     QVariant btWorldFactory::createSimpleWorld() {
         // World from program (soon from file)
         QVariantMap worldData;
@@ -19,23 +13,53 @@ namespace GeneLabCore {
         QVariantMap biomeData;
         biomeData.insert("gravity", 9.81);
         biomeData.insert("sky", "Examples/CloudySky");
-        biomeData.insert("aR", 0.8);
-        biomeData.insert("aG", 0.8);
-        biomeData.insert("aB", 0.8);
-        biomeData.insert("lR", 0.6);
-        biomeData.insert("lG", 0.6);
-        biomeData.insert("lB", 0.6);
 
-        // Camera
+        // ------------
+        // -- lights --
+        // ------------
+        QVariantList lights;
+
+        // ambiant
+        QVariantMap ambiantLightMap;
+        ambiantLightMap.insert("type","ambient");
+        ambiantLightMap.insert("r",(double)0.8);
+        ambiantLightMap.insert("g",(double)0.8);
+        ambiantLightMap.insert("b",(double)0.8);
+        lights.append(ambiantLightMap);
+
+        // point
+        QVariantMap pointLightMap;
+        pointLightMap.insert("type","point");
+        pointLightMap.insert("r",(double)0.9);
+        pointLightMap.insert("g",(double)0.1);
+        pointLightMap.insert("b",(double)0.1);
+        pointLightMap.insert("posX",(double)0);
+        pointLightMap.insert("posY",(double)1);
+        pointLightMap.insert("posZ",(double)0);
+        lights.append(pointLightMap);
+        biomeData.insert("lights",lights);
+
+
+        // -----------
+        // -- Scene --
+        // -----------
+        QVariantMap sceneData;
+
+        // ------------
+        // -- Camera --
+        // ------------
         QVariantMap camData;
-        camData.insert("cX",  -20);
-        camData.insert("cY",  10);
-        camData.insert("cZ",  -20);
-        camData.insert("lX",  15);
-        camData.insert("lY",  -5);
-        camData.insert("lZ",  15);
+        camData.insert("posX",  -20);
+        camData.insert("posY",  10);
+        camData.insert("posZ",  -20);
+        camData.insert("targetX",  15);
+        camData.insert("targetY",  -5);
+        camData.insert("targetZ",  15);
+        sceneData.insert("camera", camData);
 
-        // Spawn areas
+        // -----------------
+        // -- Spawn areas --
+        // -----------------
         QVariantList spawns;
         QVariantMap zoneSpawn;
         QVariantMap positionSpawn;
@@ -54,9 +78,13 @@ namespace GeneLabCore {
         positionSpawn.insert("y", 15);
         positionSpawn.insert("z", -10);
         spawns.append(positionSpawn);
+        sceneData.insert("spawns", spawns);
 
-        // Static boxes
-        QVariantList staticBoxes;
+        // ------------------
+        // -- Static boxes --
+        // ------------------
+
+        QVariantList shapes;
 
         // MineCraft Floor
         int sizeX = 10;
@@ -67,6 +95,8 @@ namespace GeneLabCore {
                 double sizeY = Tools::random(0.1, 3.0);
 
                 QVariantMap staticBox;
+                staticBox.insert("type","box");
+                staticBox.insert("density",0);
                 staticBox.insert("posX",i*10);
                 staticBox.insert("posY",sizeY/2.0);
                 staticBox.insert("posZ",j*10);
@@ -76,8 +106,39 @@ namespace GeneLabCore {
                 staticBox.insert("sizeX",sizeX);
                 staticBox.insert("sizeY",sizeY);
                 staticBox.insert("sizeZ",sizeZ);
-                staticBoxes.append(staticBox);
+                shapes.append(staticBox);
             }
+        }
+
+        // Spheres
+        for(int i=0;i<10;++i){
+            QVariantMap sphereMap;
+            sphereMap.insert("type","sphere");
+            sphereMap.insert("density",5);
+            sphereMap.insert("posX",0);
+            sphereMap.insert("posY",i*1+2);
+            sphereMap.insert("posZ",0);
+            sphereMap.insert("eulerX",0);
+            sphereMap.insert("eulerY",0);
+            sphereMap.insert("eulerZ",0);
+            sphereMap.insert("radius",(double)1.0);
+            shapes.append(sphereMap);
+        }
+
+        // Cylinders
+        for(int i=0;i<10;++i){
+            QVariantMap cylinderMap;
+            cylinderMap.insert("type","cylinder");
+            cylinderMap.insert("density",5);
+            cylinderMap.insert("posX",5);
+            cylinderMap.insert("posY",i*6+2);
+            cylinderMap.insert("posZ",0);
+            cylinderMap.insert("eulerX",0);
+            cylinderMap.insert("eulerY",0);
+            cylinderMap.insert("eulerZ",0);
+            cylinderMap.insert("radius",(double)1.0);
+            cylinderMap.insert("height",(double)5.0);
+            shapes.append(cylinderMap);
         }
 
     //    // Ruin Floor
@@ -102,14 +163,10 @@ namespace GeneLabCore {
     //        staticBox.insert("sizeZ",sizeZ);
     //        staticBoxes.append(staticBox);
     //    }
-
+        sceneData.insert("shapes", shapes);
 
         // Scene
-        QVariantMap sceneData;
         sceneData.insert("type", "flatland");
-        sceneData.insert("cam", camData);
-        sceneData.insert("spawns", spawns);
-        //sceneData.insert("staticBoxes", staticBoxes);
         sceneData.insert("floor", "Examples/GrassFloor");
 
         QVariantMap map;

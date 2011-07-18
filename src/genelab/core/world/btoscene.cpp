@@ -23,13 +23,13 @@ namespace GeneLabCore {
         btScene::setup();
 
         float camX, camY, camZ, lookX, lookY, lookZ;
-        QVariantMap camData = data["cam"].toMap();
-        camX = camData["cX"].toFloat();
-        camY = camData["cY"].toFloat();
-        camZ = camData["cZ"].toFloat();
-        lookX = camData["lX"].toFloat();
-        lookY = camData["lY"].toFloat();
-        lookZ = camData["lZ"].toFloat();
+        QVariantMap camData = data["camera"].toMap();
+        camX = camData["posX"].toFloat();
+        camY = camData["posY"].toFloat();
+        camZ = camData["posZ"].toFloat();
+        lookX = camData["targetX"].toFloat();
+        lookY = camData["targetY"].toFloat();
+        lookZ = camData["targetZ"].toFloat();
 
         BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
 

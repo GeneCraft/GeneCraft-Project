@@ -1,16 +1,16 @@
 #ifndef BTOWORLDFACTORY_H
 #define BTOWORLDFACTORY_H
 
-#include "btworldfactory.h"
+#include <QVariant>
 #include "genelabcoreclasses.h"
 
 namespace GeneLabCore {
 
-    class btoWorldFactory : public btWorldFactory
+    class btoWorldFactory
     {
     public:
-        btoWorldFactory();
-        virtual btoWorld* createWorld(btoFactory* factory,
+
+        static btoWorld* createWorld(btoFactory* factory,
                                      btoShapesFactory* shapesFactory,
                                      QVariant worldData);
     };

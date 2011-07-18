@@ -19,6 +19,7 @@
 #include "sensors/accelerometersensor.h"
 #include "sensors/contactsensor.h"
 #include "sensors/boxsmellsensor.h"
+#include "sensors/distancesensor.h"
 
 // Effectors
 #include "effectors/grippereffector.h"
@@ -197,6 +198,12 @@ void FixationPropertiesController::addSensor()
 
         if(fixation->getEntity())
             sensor = new BoxSmellSensor(fixation);
+        break;
+
+    case 5 : // Distance sensor
+
+        if(fixation->getEntity())
+            sensor = new DistanceSensor(fixation, btQuaternion::getIdentity());
         break;
     }
 

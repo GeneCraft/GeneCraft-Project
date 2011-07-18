@@ -16,6 +16,13 @@
 
 namespace GeneLabCore {
 
+
+    btoWorld::btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QObject *parent) :
+        btWorld(factory, shapesFactory, parent)
+    {
+        btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
+    }
+
     btoWorld::btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent) :
         btWorld(factory, shapesFactory, data, parent)
     {

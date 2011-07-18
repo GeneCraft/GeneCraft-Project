@@ -21,7 +21,12 @@ namespace GeneLabCore {
     {
 
     public:
-        explicit btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
+
+        // To create a default world
+        btWorld(btFactory* factory, btShapesFactory* shapesFactory, QObject *parent = 0);
+
+        // To create a world from serialization data
+        btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
 
         // To create a new creature
         virtual btVector3 getSpawnPosition();

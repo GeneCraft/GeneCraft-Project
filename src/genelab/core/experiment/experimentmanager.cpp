@@ -129,6 +129,7 @@ namespace GeneLabCore {
 
         // The world to experiment inside
         world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
+        world->setup();
 
         // Nb gen to compute
         int nbGen = this->maxGen;

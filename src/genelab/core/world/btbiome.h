@@ -22,6 +22,7 @@ public:
 
 protected:
     QVariantMap data;
+
     btDynamicsWorld* world;
 };
 

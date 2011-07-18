@@ -81,7 +81,7 @@ private:
     btoShapesFactory* shapesFactory;
     CreatureFactory* creatureFactory;
     btoWorldFactory* worldFactory;
-    btoWorld* world;
+    btoWorld *world;
 
     // components
     QAction *aTogglePhysics;

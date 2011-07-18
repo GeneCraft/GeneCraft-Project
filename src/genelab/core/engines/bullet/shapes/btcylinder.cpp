@@ -10,10 +10,10 @@
 
 namespace GeneLabCore {
 
-btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform) :
+btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density) :
         btShape(world), shape(NULL)
 {
-    init(radius,height,5.0,transform);
+    init(radius,height,density,transform);
 }
 
 btCylinder::~btCylinder() {

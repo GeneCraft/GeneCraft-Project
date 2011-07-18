@@ -144,7 +144,8 @@ SOURCES += \
     ../genelab/core/entities/sensors/boxsmellsensor.cpp \
     ../genelab/core/entities/sensors/smellsensor.cpp \
     ../genelab/core/entities/effectors/grippereffector.cpp \
-    ../genelab/core/entities/effectors/flyingeffector.cpp
+    ../genelab/core/entities/effectors/flyingeffector.cpp \
+    ../genelab/core/entities/sensors/distancesensor.cpp
 
 HEADERS += \
     ../genelab/core/engines/engine.h \
@@ -223,7 +224,8 @@ HEADERS += \
     ../genelab/core/entities/sensors/boxsmellsensor.h \
     ../genelab/core/entities/sensors/smellsensor.h \
     ../genelab/core/entities/effectors/grippereffector.h \
-    ../genelab/core/entities/effectors/flyingeffector.h
+    ../genelab/core/entities/effectors/flyingeffector.h \
+    ../genelab/core/entities/sensors/distancesensor.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

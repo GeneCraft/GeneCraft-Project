@@ -6,6 +6,7 @@
 #include "body/bone.h"
 #include "body/fixation.h"
 #include "body/treeshape.h"
+#include "entity.h"
 
 namespace GeneLabCore{
 
@@ -23,6 +24,12 @@ TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * tre
 
     treeshapeWeight = new Statistic("Treeshape Weight","kg");
     statsStorage->registerStat("Treeshape Weight",treeshapeWeight);
+
+    treeshapeNbSensors = new Statistic("Treeshape Nb Sensors","sensors");
+    statsStorage->registerStat("Treeshape Nb Sensors",treeshapeNbSensors);
+
+    treeshapeNbEffectors = new Statistic("Treeshape Nb Effectors","effectors");
+    statsStorage->registerStat("Treeshape Nb Effectors",treeshapeNbEffectors);
 }
 
 void TreeShapeStats::recursiveUpdate(Bone *b)
@@ -80,6 +87,8 @@ void TreeShapeStats::step()
     treeshapeBonesLength->setValue(length);
     treeshapeWeight->setValue(weight);
     treeshapeVerticalHeight->setValue(maxHeightY - minHeightY);
+    treeshapeNbSensors->setValue(treeshape->getRoot()->getEntity()->getSensors().count());
+    treeshapeNbEffectors->setValue(treeshape->getRoot()->getEntity()->getEffectors().count());
 }
 
 

@@ -11,7 +11,7 @@ namespace GeneLabCore {
 class btSphere : public btShape
 {
 public:
-    btSphere(btWorld *btWorld, btScalar radius, const btTransform &transform);
+    btSphere(btWorld *btWorld, btScalar radius, const btTransform &transform, const btScalar density);
     virtual ~btSphere();
     virtual void setup();
     virtual void setRadius(btScalar radius);

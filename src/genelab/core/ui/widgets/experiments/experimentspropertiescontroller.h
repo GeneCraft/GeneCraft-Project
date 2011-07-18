@@ -13,7 +13,7 @@ class ExperimentsPropertiesController : public QWidget
     Q_OBJECT
 
 public:
-    ExperimentsPropertiesController(QWidget *parent = 0);
+
     ExperimentsPropertiesController(GeneLabCore::Experiment *experiment, QWidget *parent = 0);
     ~ExperimentsPropertiesController();
 

@@ -34,7 +34,7 @@ public:
     void enterViewPortEvent(QEvent *e);
     void leaveViewPortEvent(QEvent *e);
 
-    void setWorld(btoWorld* world);
+    void setWorld(btWorld* world);
 
 signals:
 
@@ -50,7 +50,7 @@ private:
     BulletOgreEngine* btoEngine;
     int mNumEntitiesInstanced;
     QPoint mousePos;
-    btoWorld* world;
+    btWorld* world;
 
 };
 

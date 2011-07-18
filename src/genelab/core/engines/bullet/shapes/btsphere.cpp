@@ -12,9 +12,9 @@
 
 namespace GeneLabCore {
 
-btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform) : btShape(world), shape(NULL)
+btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform, const btScalar density) : btShape(world), shape(NULL)
 {
-    init(radius, 5, transform);
+    init(radius, density, transform);
 }
 
 btSphere::~btSphere() {
@@ -56,7 +56,6 @@ btScalar btSphere::getMass() const
 btScalar btSphere::computeMass() const
 {
     // volume * density
-    // TODO MOVE 5 into density !!
     return 4/3.*M_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * density ;
 }
 

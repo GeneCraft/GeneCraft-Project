@@ -8,9 +8,9 @@ namespace GeneLabCore {
 
 // To create
 GripperEffector::GripperEffector(Fixation *fixation) :
-    constraint(NULL), fixation(fixation)
+    fixation(fixation)
 {
-    typeName    = QString("Gripper Effector");
+    typeName   = QString("Gripper Effector");
     type       = gripperEffector;
 
     // create the air contraint

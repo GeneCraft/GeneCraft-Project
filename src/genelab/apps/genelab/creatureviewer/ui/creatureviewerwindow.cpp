@@ -89,10 +89,21 @@ CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
 
 void CreatureViewerWindow::init() {
 
+    // -------------------------
+    // -- Essential instances --
+    // -------------------------
     factory = new btoFactory(this->ui->centralwidget, (unsigned long) this->winId() );
+    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    shapesFactory   = new btoShapesFactory(btoEngine);
     creatureFactory = new CreatureFactory();
-    worldFactory    = new btoWorldFactory();
     experiment      = new Experiment();
+    world           = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
+
+
+
+    //experiment->getWorld()->setup();
+
 
     // ----------
     // -- Menu --
@@ -183,8 +194,7 @@ void CreatureViewerWindow::init() {
     // ----------------------
     // -- Events Listeners --
     // ----------------------
-    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
-    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+
 
     CreatureViewerInputManager *cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
     EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
@@ -261,9 +271,6 @@ void CreatureViewerWindow::init() {
 
     qDebug() << "[OK]\n";
 
-
-    shapesFactory = new btoShapesFactory(btoEngine);
-    world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
     cvim->setWorld(world);
 
     // Init Random

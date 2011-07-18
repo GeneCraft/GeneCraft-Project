@@ -50,10 +50,7 @@ namespace GeneLabCore {
         this->delegatedSetup    = true;
 
         this->rigidBody->setFriction(FIXATION_FRICTION);
-
-
     }
-
 
     // -------------------------------
     // -- ROOT FIXATION CONSTRUCTOR --
@@ -67,7 +64,7 @@ namespace GeneLabCore {
         this->shapesFactory = shapesFactory;
         this->localFixation.setIdentity();
 
-        sphere = shapesFactory->createSphere(radius, initTransform); // btScalar(FIXATION_DENSITY)
+        sphere = shapesFactory->createSphere(radius, initTransform, FIXATION_DENSITY);
         this->rigidBody     = sphere->getRigidBody();
         this->rigidBody->setFriction(FIXATION_FRICTION);
         delegatedSetup      = false;

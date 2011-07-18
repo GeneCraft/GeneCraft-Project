@@ -7,9 +7,6 @@
 #include "world/btobiome.h"
 
 namespace GeneLabCore {
-    btoWorldFactory::btoWorldFactory()
-    {
-    }
 
     btoWorld* btoWorldFactory::createWorld(btoFactory *factory,
                                  btoShapesFactory *shapesFactory,

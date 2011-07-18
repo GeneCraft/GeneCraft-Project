@@ -32,7 +32,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabBones">
       <attribute name="icon">
@@ -250,6 +250,11 @@ p, li { white-space: pre-wrap; }
          <item>
           <property name="text">
            <string>Box smell sensor</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Distance sensor</string>
           </property>
          </item>
         </widget>

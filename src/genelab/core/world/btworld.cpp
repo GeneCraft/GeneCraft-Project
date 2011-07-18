@@ -21,14 +21,27 @@
 #include <QDebug>
 namespace GeneLabCore {
 
+
+    btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QObject *parent) :
+        QObject(parent)
+    {
+        // TODO
+        this->data = QVariantMap();
+        this->factory = factory;
+        this->shapesFactory = shapesFactory;
+        this->btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));
+        entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
+
+    }
+
     btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent) :
         QObject(parent)
     {
         this->data = worldData.toMap();
         this->factory = factory;
         this->shapesFactory = shapesFactory;
-        this->btEngine = static_cast<BulletEngine*>(factory->getEngines().find("Bullet").value());
-        entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+        this->btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));
+        entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
 
     }
 

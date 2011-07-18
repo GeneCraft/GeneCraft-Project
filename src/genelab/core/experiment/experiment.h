@@ -7,6 +7,7 @@
 #include <QVariantMap>
 #include <QDir>
 #include "genelabcoreclasses.h"
+#include "world/btworld.h"
 
 namespace GeneLabCore {
 
@@ -66,9 +67,15 @@ namespace GeneLabCore {
         // -- Mutations --
         // ---------------
 
-        // Mutation parameters
         MutationsManager *getMutationsManager() { return mutationsManager; }
         void setMutationsManager(MutationsManager *mutationsManager) { this->mutationsManager = mutationsManager; }
+
+        // -----------
+        // -- World --
+        // -----------
+
+        QVariantMap getWorldDataMap() { return worldDataMap; }
+        void setWorldData(QVariantMap worldDataMap) { this->worldDataMap = worldDataMap; }
 
         // ----------
         // -- Seed --
@@ -104,9 +111,11 @@ namespace GeneLabCore {
         // Mutations
         MutationsManager *mutationsManager;
 
+        // World
+        QVariantMap worldDataMap;
+
         // Seed
         QVariantMap seedInfo;
-
     };
 }
 

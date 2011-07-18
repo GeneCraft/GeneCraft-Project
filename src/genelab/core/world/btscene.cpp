@@ -43,39 +43,53 @@ namespace GeneLabCore {
             bulletWorld->addRigidBody(rigidBody);
         }
 
-        // Static box
-        // ----------------
-        // FIXME PROBLEME :
-        //
-        // Si on creer des btoBox ici, qu'est-ce qu'on fait dans btScene::setup (appelée plus haut) ?
-        // btoBox gère déjà la partie Ogre et Bullet...
-        //
-        // Je propose de ne pas mettre d'héritage entre les entités btoScene - btScene,
-        // btoBiome - btBiome et btoWorld - btWorld car elles sont vraiment spécifiques au programme final.
-        //
-        // Pas besoin de polymorphisme, en tout cas j'en ai pas trouvé une utilité, a moins que...
-        //
-        // Tu en penses quoi ?
-        //
-        if(data.contains("staticBoxes")){
+        // Shapes
+        if(data.contains("shapes")){
 
-            QVariantList boxesData = data.value("staticBoxes").toList();
+            QVariantList staticShapesList = data.value("shapes").toList();
 
-            foreach(QVariant boxData, boxesData)
+            foreach(QVariant shapeData, staticShapesList)
             {
-                QVariantMap boxDataMap = boxData.toMap();
+                QVariantMap shapeMap = shapeData.toMap();
+                QString type = shapeMap["type"].toString();
 
-                // position and rotation
-                btTransform transform; transform.setIdentity();
-                transform.setOrigin(btVector3(boxDataMap.value("posX").toDouble(),boxDataMap.value("posY").toDouble(),boxDataMap.value("posZ").toDouble()));
-                transform.getBasis().setEulerZYX(boxDataMap.value("euleurX").toDouble(),boxDataMap.value("euleurY").toDouble(),boxDataMap.value("euleurZ").toDouble());
+                if(type.compare("box") == 0) {
 
-                // size
-                btVector3 size(boxDataMap.value("sizeX").toDouble(),boxDataMap.value("sizeY").toDouble(),boxDataMap.value("sizeZ").toDouble());
+                    // position and rotation
+                    btTransform transform; transform.setIdentity();
+                    transform.setOrigin(btVector3(shapeMap.value("posX").toDouble(),shapeMap.value("posY").toDouble(),shapeMap.value("posZ").toDouble()));
+                    transform.getBasis().setEulerZYX(shapeMap.value("euleurX").toDouble(),shapeMap.value("euleurY").toDouble(),shapeMap.value("euleurZ").toDouble());
 
-                // create the box
-                btBox *box = world->getShapesFactory()->createBox(size,transform, 0.0);
-                box->setup();
+                    // size
+                    btVector3 size(shapeMap.value("sizeX").toDouble(),shapeMap.value("sizeY").toDouble(),shapeMap.value("sizeZ").toDouble());
+
+                    // create the box
+                    btBox *box = world->getShapesFactory()->createBox(size,transform, shapeMap["density"].toFloat());
+                    box->setup();
+
+                }
+                else if(type.compare("sphere") == 0) {
+
+                    // position and rotation
+                    btTransform transform; transform.setIdentity();
+                    transform.setOrigin(btVector3(shapeMap.value("posX").toDouble(),shapeMap.value("posY").toDouble(),shapeMap.value("posZ").toDouble()));
+                    transform.getBasis().setEulerZYX(shapeMap.value("euleurX").toDouble(),shapeMap.value("euleurY").toDouble(),shapeMap.value("euleurZ").toDouble());
+
+                    // create the box
+                    btSphere *shere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
+                    shere->setup();
+                }
+                else if(type.compare("cylinder") == 0) {
+
+                    // position and rotation
+                    btTransform transform; transform.setIdentity();
+                    transform.setOrigin(btVector3(shapeMap.value("posX").toDouble(),shapeMap.value("posY").toDouble(),shapeMap.value("posZ").toDouble()));
+                    transform.getBasis().setEulerZYX(shapeMap.value("euleurX").toDouble(),shapeMap.value("euleurY").toDouble(),shapeMap.value("euleurZ").toDouble());
+
+                    // create the box
+                    btCylinder *cylinder = world->getShapesFactory()->createCylinder(shapeMap.value("radius").toFloat(), shapeMap.value("height").toFloat(), transform, shapeMap["density"].toFloat());
+                    cylinder->setup();
+                }
             }
         }
     }

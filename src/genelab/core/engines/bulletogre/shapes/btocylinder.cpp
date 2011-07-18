@@ -13,8 +13,8 @@ using namespace Ogre;
 
 int btoCylinder::mNumEntitiesInstanced = 0;
 
-btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform)
-    : btCylinder(world, radius, height, transform)
+btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform, const btScalar density)
+    : btCylinder(world, radius, height, transform, density)
 {
     this->btoEngine = btoEngine;
 

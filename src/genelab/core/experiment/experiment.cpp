@@ -1,12 +1,14 @@
 #include "experiment.h"
 
 #include "mutation/mutationsmanager.h"
+#include "factories/btworldfactory.h"
+#include "btoworldfactory.h"
 
 #define EXP_FORMAT_VERSION 0.1
 
 namespace GeneLabCore {
 
-    Experiment::Experiment() : ressource(NULL){
+Experiment::Experiment() : ressource(NULL){
 
         // information
         id = "NoId";
@@ -24,6 +26,9 @@ namespace GeneLabCore {
         // mutations
         mutationsManager = new MutationsManager();
 
+        // world
+        worldDataMap = btWorldFactory::createSimpleWorld().toMap();
+
         // seed
         seedInfo.insert("type", "family");
         seedInfo.insert("familyName", "ant");
@@ -38,11 +43,11 @@ namespace GeneLabCore {
         //  throw new FormatVersionError("Exp", map["version"]);
 
         // information
-        id          = map["id"].toString();
-        description = map["description"].toString();
-        author      = map["author"].toString();
-        comments    = map["comments"].toString();
-        dateOfCreation = QDateTime::fromString(map["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
+        id              = map["id"].toString();
+        description     = map["description"].toString();
+        author          = map["author"].toString();
+        comments        = map["comments"].toString();
+        dateOfCreation  = QDateTime::fromString(map["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
 
         // simulation
         duration = map["duration"].toInt();
@@ -52,6 +57,9 @@ namespace GeneLabCore {
 
         // mutations
         mutationsManager = new MutationsManager(map["mutations"]);
+
+        // world
+        worldDataMap = map["world"].toMap();
 
         // seed TODO
         seedInfo = map["seedInfo"].toMap();
@@ -78,6 +86,9 @@ namespace GeneLabCore {
 
         // mutations
         map.insert("mutations",mutationsManager->serialize());
+
+        // world
+        map.insert("world",worldDataMap);
 
         map.insert("seedInfo", seedInfo);
         return map;

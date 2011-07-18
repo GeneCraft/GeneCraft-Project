@@ -24,6 +24,8 @@ protected:
     Statistic *treeshapeBones;
     Statistic *treeshapeBonesLength;
     Statistic *treeshapeWeight;
+    Statistic *treeshapeNbSensors;
+    Statistic *treeshapeNbEffectors;
 
     // to browse the shape
     void recursiveUpdate(Bone *b);

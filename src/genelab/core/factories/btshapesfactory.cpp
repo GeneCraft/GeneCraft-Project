@@ -16,14 +16,14 @@ btBox *btShapesFactory::createBox(btVector3 size, const btTransform &transform, 
     return new btBox(world, size, transform, density);
 }
 
-btSphere *btShapesFactory::createSphere(btScalar radius, const btTransform &transform, QVariant)
+btSphere *btShapesFactory::createSphere(btScalar radius, const btTransform &transform, const btScalar density, QVariant)
 {
-    return new btSphere(world, radius, transform);
+    return new btSphere(world, radius, transform, density);
 }
 
-btCylinder *btShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform, QVariant)
+btCylinder *btShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform, const btScalar density, QVariant)
 {
-    return new btCylinder(world, radius, height, transform);
+    return new btCylinder(world, radius, height, transform, density);
 }
 
 btBone* btShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant) {
