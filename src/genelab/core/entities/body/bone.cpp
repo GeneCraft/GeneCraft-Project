@@ -321,9 +321,44 @@ QVariant Bone::generateEmpty() {
     // End fixation
     bone.insert("endFix",Fixation::generateEmpty());
 
-//    if(motorsEffector) // FIXME you can't serialize motorsEffector if entity isn't still setup !
-//        bone.insert("muscle", this->motorsEffector->serialize());
+    QVariantMap data;
 
+    data.insert("typeName", "RotationalMotor");
+    data.insert("type", rotationalMotorEffector);
+
+    /*"muscle":{"outs":{
+                "x": {"brainOuts": [
+                 {"connexionInfo":"SIN...","max":1,"min":0},
+                 {"connexionInfo":"SIN...","max":1,"min":0}
+                ]},
+                "y": {"brainOuts": [
+                 {"connexionInfo":"SIN...","max":1,"min":0},
+                 {"connexionInfo":"SIN...","max":1,"min":0}
+                ]},
+                "z":"y": {"brainOuts": [
+                 {"connexionInfo":"SIN...","max":1,"min":0},
+                 {"connexionInfo":"SIN...","max":1,"min":0}
+                ]},
+              "type":"RotationalMotor"}*/
+
+    // TODO DO IT BETHER
+    QVariantMap bOuts;
+    QString motors[] = {"x","y","z"};
+    QVariantMap emptyOut;
+    emptyOut.insert("connexionInfo", "");
+    QVariantList emptyOutList;
+    emptyOutList.append(emptyOut);
+    emptyOutList.append(emptyOut);
+    for(int i = 0; i < 3; i++) {
+        QVariantMap motorMap;
+        motorMap.insert("brainOuts", emptyOutList);
+        bOuts.insert(motors[i], motorMap);
+    }
+
+    data.insert("outs", bOuts);
+    bone.insert("muscle", data);
+
+    qDebug() << bone;
     return bone;
 }
 
