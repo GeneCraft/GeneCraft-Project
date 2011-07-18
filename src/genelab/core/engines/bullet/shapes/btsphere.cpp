@@ -22,6 +22,7 @@ btSphere::~btSphere() {
     delete rigidBody;
     delete shape;
     delete motionState;
+    delete origin;
 }
 
 void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
@@ -43,7 +44,7 @@ void btSphere::init(btScalar radius, btScalar density, const btTransform &transf
     this->shape->calculateLocalInertia(mass,fallInertia);
     this->rigidBody = new btRigidBody(mass,this->motionState,this->shape,fallInertia);
 
-    RigidBodyOrigin *origin = new RigidBodyOrigin(RigidBodyOrigin::BASIC_SHAPE,(QObject *)this);
+    origin = new RigidBodyOrigin(RigidBodyOrigin::BASIC_SHAPE,(QObject *)this);
     rigidBody->setUserPointer(origin);
 }
 
