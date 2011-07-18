@@ -206,6 +206,15 @@ namespace GeneLabCore {
             delete e;
             delete family;
             return genome;
+        } else if(type == "fixed") {
+            qDebug() << "loading from fixed genome";
+            static QVariant genome = QVariant();
+            if(genome == QVariant()) {
+                QVariant genomeInfo = seedInfo["genome"];
+                genome = Ressource::load(genomeInfo);
+                qDebug() << genome;
+            }
+            return genome;
         }
         return QVariant();
     }

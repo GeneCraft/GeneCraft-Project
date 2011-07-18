@@ -199,7 +199,8 @@ SOURCES += \
     ../genelab/core/entities/effectors/flyingeffector.cpp \
     ../genelab/core/entities/sensors/distancesensor.cpp \
     ../genelab/core/ui/widgets/experiments/workerctrl.cpp \
-    ../genelab/core/experiment/resultsmanager.cpp
+    ../genelab/core/experiment/resultsmanager.cpp \
+    ../genelab/core/factories/ressources/ressourcesmanager.cpp
 
 
 HEADERS += \
@@ -310,7 +311,8 @@ HEADERS += \
     ../genelab/core/entities/effectors/flyingeffector.h \
     ../genelab/core/entities/sensors/distancesensor.h \
     ../genelab/core/ui/widgets/experiments/workerctrl.h \
-    ../genelab/core/experiment/resultsmanager.h
+    ../genelab/core/experiment/resultsmanager.h \
+    ../genelab/core/factories/ressources/ressourcesmanager.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
