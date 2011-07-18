@@ -50,7 +50,6 @@ namespace GeneLabCore {
       */
     ExperimentManager::ExperimentManager(btFactory* factory, QVariant expData, QVariant workerData) {
         this->factory = factory;
-        qDebug() << "HUM";
         this->exp = new Experiment(Ressource::load(expData));
 
         this->load(workerData);
@@ -200,7 +199,6 @@ namespace GeneLabCore {
                                              | QDir::Readable,
                                              QDir::Time
                                              | QDir::Reversed)) {
-            qDebug() << f;
             QFile realFile(results.absoluteFilePath(f));
             QFileInfo fileInfo(realFile);
             if(!realFile.exists()) {
@@ -217,7 +215,6 @@ namespace GeneLabCore {
             r->setRessource(file);
             if(valid) {
                 qDebug() << "valid result from " << f;
-                qDebug() << r->getDate();
                 this->addResult(r);
                 cptLoaded++;
             } else {
@@ -265,7 +262,6 @@ namespace GeneLabCore {
             r->setRessource(file);
             if(valid) {
                 qDebug() << "valid result from " << f << fileInfo.lastModified();
-                qDebug() << r->getDate();
                 this->addResult(r);
             } else {
                 qDebug() << "invalid file format" << f;
@@ -287,7 +283,6 @@ namespace GeneLabCore {
                      exp->getId() +"\",0]&limit="+
                      QString::number(qMax(this->randomResultsStored, this->bestResultsStored))
                      +"&descending=true";
-        qDebug() << id;
         DbRecord* r = new DbRecord(db, id);
         QVariant data = r->load();
         delete r;
@@ -303,7 +298,6 @@ namespace GeneLabCore {
         }
         QVariantMap postData;
         postData.insert("keys", ids);
-        qDebug() << postData;
         Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
         QVariant genomes = re->load();
 
