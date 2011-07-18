@@ -100,6 +100,11 @@ void Entity::addLinkToSensor(Sensor *sensor) {
 
     // Inputs connections to grid
     for(int i = 0; i < sensor->getInputs().size(); i++) {
+        if(sensor->getInputs()[i]->getConnexions().size() == 0) {
+            sensor->getInputs()[i]->connectTo(Tools::random(0.0, 1.0),
+                                              Tools::random(0.0, 1.0),
+                                              Tools::random(-1.0, 1.0));
+        }
         brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
     }
 }
