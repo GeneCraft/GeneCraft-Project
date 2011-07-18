@@ -18,6 +18,7 @@ btBone::~btBone() {
     this->world->getBulletWorld()->removeRigidBody(rigidBody);
     shape->removeChildShape(cylinderShape);
     shape->removeChildShape(sphereShape);
+    delete rigidBody;
     delete shape;
     delete motionState;
     delete cylinderShape;

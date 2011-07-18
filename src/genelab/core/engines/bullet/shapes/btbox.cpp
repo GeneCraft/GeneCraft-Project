@@ -13,6 +13,7 @@ btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform, const
 
 btBox::~btBox() {
     this->world->getBulletWorld()->removeRigidBody(rigidBody);
+    delete rigidBody;
     delete shape;
     delete motionState;
 }

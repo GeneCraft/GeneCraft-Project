@@ -8,8 +8,6 @@ btShape::btShape(btWorld* world) :
 }
 
 btShape::~btShape() {
-    if(rigidBody)
-        delete rigidBody;
 }
 
 }

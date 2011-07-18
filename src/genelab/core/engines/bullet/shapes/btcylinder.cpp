@@ -18,6 +18,7 @@ btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const b
 
 btCylinder::~btCylinder() {
     this->world->getBulletWorld()->removeRigidBody(rigidBody);
+    delete rigidBody;
     delete shape;
     delete motionState;
 }
