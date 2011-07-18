@@ -25,7 +25,7 @@ TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * tre
     statsStorage->registerStat("Treeshape Weight",treeshapeWeight);
 }
 
-void TreeShapeStats::recurciveUpdate(Bone *b)
+void TreeShapeStats::recursiveUpdate(Bone *b)
 {
     // TREESHAPE BONES LENGTH
     length += b->getLength();
@@ -54,7 +54,7 @@ void TreeShapeStats::recurciveUpdate(Bone *b)
 
     // RECURCIVE BROWSING
     foreach (Bone *b, b->getEndFixation()->getBones())
-        recurciveUpdate(b);
+        recursiveUpdate(b);
 }
 
 void TreeShapeStats::step()
@@ -73,13 +73,13 @@ void TreeShapeStats::step()
     minHeightY = maxHeightY = treeshape->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
 
     foreach (Bone *b, treeshape->getRoot()->getBones())
-        recurciveUpdate(b);
+        recursiveUpdate(b);
 
     // UPDATE VALUES
     treeshapeBones->setValue(nbBones);
     treeshapeBonesLength->setValue(length);
-    treeshapeVerticalHeight->setValue(maxHeightY - minHeightY);
     treeshapeWeight->setValue(weight);
+    treeshapeVerticalHeight->setValue(maxHeightY - minHeightY);
 }
 
 

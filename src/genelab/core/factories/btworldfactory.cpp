@@ -137,7 +137,6 @@ namespace GeneLabCore {
 
         world->setup();
 
-
         return world;
     }
 }

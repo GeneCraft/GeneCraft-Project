@@ -50,6 +50,10 @@ RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, bt
 
     QString motors[] = {"x","y","z"};
 
+    // Stabilisation properties
+    normalPositionMaxError = 0.001;
+    normalPositionFactor   = 10.0;
+
     for(int i = 0; i < 3; i++) {
 
         QString key = motors[i];
@@ -63,19 +67,6 @@ RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, bt
         }
         else
             brainMotorOutputs[i] = NULL;
-
-//        // OLD VERSION
-
-//        if(outsMap["outs"].toList().size() < i+1)
-//            brainOutputs[i] = new BrainOutMotor(constraint->getRotationalLimitMotor(i));
-//        else
-//            brainOutputs[i] = new BrainOutMotor(outsMap["outs"].toList()[i], constraint->getRotationalLimitMotor(i));
-
-//        brainOutputs[i]->motor->m_enableMotor = true;
-//        brainOutputs[i]->motor->m_currentPosition = 0;
-//        this->outputsFrom = 1;
-//        this->outs.append(brainOutputs[i]->boMaxMotorForce);
-//        this->outs.append(brainOutputs[i]->boTargetVelocity);
     }
 
     for(int i = 0; i < 2; i++) {

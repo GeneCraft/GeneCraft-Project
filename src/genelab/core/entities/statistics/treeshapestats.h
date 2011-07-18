@@ -26,7 +26,7 @@ protected:
     Statistic *treeshapeWeight;
 
     // to browse the shape
-    void recurciveUpdate(Bone *b);
+    void recursiveUpdate(Bone *b);
 
     // vertical height
     float minHeightY, maxHeightY;
