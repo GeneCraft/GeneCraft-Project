@@ -164,7 +164,7 @@ namespace GeneLabCore {
     //        staticBox.insert("sizeZ",sizeZ);
     //        staticBoxes.append(staticBox);
     //    }
-        sceneData.insert("shapes", shapes);
+        //sceneData.insert("shapes", shapes);
 
         // Scene
         sceneData.insert("type", "flatland");
