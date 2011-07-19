@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl testlib network
+QT       += core gui opengl testlib network script
 TARGET = genelab_global
 TEMPLATE = app
 

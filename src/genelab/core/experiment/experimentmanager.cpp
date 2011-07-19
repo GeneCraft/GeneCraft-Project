@@ -33,6 +33,8 @@
 
 #include "tools.h"
 
+#include <QtScript>
+
 
 namespace GeneLabCore {
 
@@ -417,9 +419,16 @@ namespace GeneLabCore {
 
     float ExperimentManager::evaluateEntity(Entity* e) {
         Statistic* sY = e->getStatisticByName("Root absolute Y position");
-	Statistic* sDist = e->getStatisticByName("Root relative velocity");
-	qDebug() << sY->getMean() << sDist->getSum();
-        return sY->getMean()*sDist->getSum();
+        Statistic* sDist = e->getStatisticByName("Root relative velocity");
+        QScriptEngine engine;
+        QScriptValue scriptvelocity = engine.newQObject(sDist);
+        engine.globalObject().setProperty("velocity", scriptvelocity);
+        QScriptValue scripty = engine.newQObject(sY);
+        engine.globalObject().setProperty("ypos", scripty);
+        qDebug() << sDist->getSum() << sY->getMean() << sDist->getSum() * sY->getMean();
+        QScriptValue fitness = engine.evaluate("velocity.sum * ypos.mean");
+
+        return fitness.toNumber();
     }
 
     void ExperimentManager::engineStep() {

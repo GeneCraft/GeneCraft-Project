@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core testlib network gui
+QT       += core testlib network gui script
 
 TARGET = genelab_worker
 CONFIG   += console

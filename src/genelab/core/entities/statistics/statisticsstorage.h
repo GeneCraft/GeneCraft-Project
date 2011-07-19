@@ -11,6 +11,18 @@ namespace GeneLabCore{
 class Statistic : public QObject
 {
     Q_OBJECT
+    /*Q_PROPERTY(type name
+               READ getFunction
+               [WRITE setFunction]
+               [RESET resetFunction]
+               [DESIGNABLE bool]
+               [SCRIPTABLE bool]
+               [STORED bool])*/
+    Q_PROPERTY(float value READ getValue WRITE setValue)
+    Q_PROPERTY(float min READ getMinValue)
+    Q_PROPERTY(float max READ getMaxValue)
+    Q_PROPERTY(float mean READ getMean)
+    Q_PROPERTY(float sum READ getSum)
 
     public :
 
