@@ -61,7 +61,9 @@ void RessourcesBrowser::refreshLocalRessources() {
 }
 
 void RessourcesBrowser::refreshOnlineRessources() {
+    this->ui->lblDb->setText("Loading from database...");
     onlineRessourceManager->reloadDb();
+    this->ui->lblDb->setText("Ressources loaded from database...");
 
     // clear lists
     Tools::clearTreeWidget(this->ui->twOnlineExperiments);

@@ -1,12 +1,9 @@
 #include "ressourcesmanager.h"
 #include "jsonfile.h"
 #include "dbrecord.h"
+#include <QDebug>
 
 namespace GeneLabCore {
-
-
-
-
 
     RessourcesManager::RessourcesManager(DataBase db, QDir ressourceDir, QObject *parent) :
         QObject(parent)
@@ -17,6 +14,8 @@ namespace GeneLabCore {
 
 
     void RessourcesManager::reloadDb() {
+
+        qDebug() << "reload db !";
 
         // clear list
         experiments.clear();
@@ -34,6 +33,17 @@ namespace GeneLabCore {
     }
 
     void RessourcesManager::getAllCreatures() {
+        //http://www.genecraft-project.com/db/genecraft/_design/creature/_view/all?stale=ok&include_docs=true
+        DbRecord * listDb = new DbRecord(db, "_design/creature/_view/all?stale=ok&include_docs=true");
+        QVariant creatures = listDb->load();
+        delete listDb;
+
+        QVariantMap creaturesMap = creatures.toMap();
+        QVariantList creaturesList = creaturesMap["rows"].toList();
+        foreach(QVariant creature, creaturesList) {
+            DataWrapper dataw = {creature.toMap()["doc"].toMap(), NULL};
+            this->examine(dataw);
+        }
     }
 
     void RessourcesManager::getAllExperiments() {

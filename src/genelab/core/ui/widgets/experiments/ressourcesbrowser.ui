@@ -288,6 +288,13 @@
      </widget>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblDb">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
