@@ -9,6 +9,7 @@
 #include "ressources/ressource.h"
 #include "ressources/dbrecord.h"
 #include "ressources/jsonfile.h"
+#include "ressources/ressourcesmanager.h"
 
 #include <QDebug>
 
@@ -57,6 +58,19 @@ int main(int argc, char *argv[])
     getcwd(newPath, 500);
     qDebug() << "Current Path: " << directoryPath << newPath;
     #endif
+
+    DataBase database;
+    database.dbName = "/db/genecraft/";
+    database.url = "http://www.genecraft-project.org";
+    database.port = 80;
+
+    RessourcesManager* ressourceManager = new RessourcesManager(database, QDir("ressources"));
+    ressourceManager->reloadDir();
+
+    qDebug() << "WORLDS" << ressourceManager->getWorlds().size();
+    qDebug() << "CREATURES" << ressourceManager->getCreatures().size();
+    qDebug() << "EXPERIMENTS" << ressourceManager->getExperiments().size();
+
     a = new QApplication(argc, argv);
 
     CreatureViewerWindow cw;

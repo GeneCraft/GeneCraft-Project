@@ -16,13 +16,26 @@ namespace GeneLabCore {
         void reloadDb();
         void reloadDir();
 
-        QList<QVariant> getWorlds();
-        QList<QVariant> getCreatures();
-        QList<QVariant> getExperiments();
+        QList<QVariantMap> getWorlds();
+        QList<QVariantMap> getCreatures();
+        QList<QVariantMap> getExperiments();
 
     signals:
 
     public slots:
+    protected:
+        QDir directory;
+        DataBase db;
+        QList<QVariantMap> worlds;
+        QList<QVariantMap> creatures;
+        QList<QVariantMap> experiments;
+
+        void getAllWorld();
+        void getAllCreatures();
+        void getAllExperiments();
+
+        void examine(QVariant data);
+
 
     };
 }

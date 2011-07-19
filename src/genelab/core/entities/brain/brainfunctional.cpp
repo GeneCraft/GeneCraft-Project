@@ -434,7 +434,7 @@ float sigmoid(float x)
         }
         else if(rand <= 100  && depth > 1) {
             int maxMem = 20;
-            int subchoix = qrand()%5;
+            int subchoix = qrand()%6;
             if(subchoix == 3) {
                 func += "MEM ";
                 func += QString::number(qrand()%maxMem+1);
@@ -455,12 +455,22 @@ float sigmoid(float x)
                func += QString::number(qrand()%maxMem+1);
                func += ",";
                func += createRandomFunc(depth -1);
+           } else if(subchoix == 4){
+               func += "MAX ";
+               func += QString::number(qrand()%maxMem+1);
+               func += ",";
+               func += createRandomFunc(depth -1);
+           } else if(subchoix == 5){
+               func += "DIFF ";
+               func += QString::number(qrand()%maxMem+1);
+               func += ",";
+               func += createRandomFunc(depth -1);
            } else {
-                func += "MAX ";
-                func += QString::number(qrand()%maxMem+1);
-                func += ",";
-                func += createRandomFunc(depth -1);
-            }
+               func += "MIN ";
+               func += QString::number(qrand()%maxMem+1);
+               func += ",";
+               func += createRandomFunc(depth -1);
+           }
             //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         } else if(rand < 30) {
             func += "CONST ";

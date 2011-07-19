@@ -19,7 +19,6 @@ namespace GeneLabCore {
             // Decapsulate
             qDebug() << "decapsulation from result !";
             entityData = entityData["genome"].toMap();
-            qDebug() << entityData;
         }
 
         // Version check

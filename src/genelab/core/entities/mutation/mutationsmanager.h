@@ -90,13 +90,17 @@ public:
 
     // New brain tree luck
     SimpleProbabilityMutation* newBrainTree;
+    // Encapsulate brain tree luck
+    SimpleProbabilityMutation* encapsulateBrainTree;
+    // Delete brain tree luck
+    SimpleProbabilityMutation* deleteBrainTree;
 
 private:
 
     // To mutate a value in a map
     void mutate(QVariantMap &map, QString key, Mutation* mutation);
-    int treeDepth(QStringListIterator it);
-    void consumnSubTree(QStringListIterator it);
+    int treeDepth(QStringList::iterator& it);
+    void consumnSubTree(QStringList::iterator& it);
 
     /**
      * To add sensor

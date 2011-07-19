@@ -133,6 +133,13 @@ namespace GeneLabCore {
 
         // New brain tree probability
         newBrainTree = new SimpleProbabilityMutation();
+        newBrainTree->probability = 0.1;
+
+        encapsulateBrainTree = new SimpleProbabilityMutation();
+        encapsulateBrainTree->probability = 0.1;
+
+        deleteBrainTree = new SimpleProbabilityMutation();
+        deleteBrainTree->probability = 0.1;
 
         // Brain constant value
         constValue = new FloatMutation();
@@ -183,6 +190,8 @@ namespace GeneLabCore {
         brainMemorySize = new IntegerMutation(map["brainMemorySize"]);
         brainFrequency = new IntegerMutation(map["brainFrequency"]);
         newBrainTree = new SimpleProbabilityMutation(map["newBrainTree"]);
+        deleteBrainTree = new SimpleProbabilityMutation(map["deleteBrainTree"]);
+        encapsulateBrainTree = new SimpleProbabilityMutation(map["encapsulateBrainTree"]);
         constValue = new FloatMutation(map["constValue"]);
     }
 
@@ -200,6 +209,8 @@ namespace GeneLabCore {
         map.insert("brainMemorySize",brainMemorySize->serialize());
         map.insert("brainFrequency",brainFrequency->serialize());
         map.insert("newBrainTree",newBrainTree->serialize());
+        map.insert("encapsulateBrainTree",encapsulateBrainTree->serialize());
+        map.insert("deleteBrainTree",deleteBrainTree->serialize());
         map.insert("constValue",constValue->serialize());
 
         map.insert("sensorsStructural",sensorsStructural->serialize());
@@ -561,18 +572,141 @@ namespace GeneLabCore {
 
         QString treeData = outMap["connexionInfo"].toString();
         QStringList nodes = treeData.split(",", QString::SkipEmptyParts);
-
-        // Small change of replacing to entire brain tree
-
         QString newConnexionInfo;
 
-        if(newBrainTree->canMutate()) {
-            newConnexionInfo = BrainFunctional::createRandomFunc(Tools::random(1, 5));
-            outMap.insert("connexionInfo", newConnexionInfo);
-            return outMap;
-        }
+        qDebug() << "old connexion" << treeData;
 
-        foreach(QString node, nodes) {
+        QList<QString>::iterator it = nodes.begin();
+        while(it != nodes.end()){
+            // replace the entire subtree
+            if(newBrainTree->canMutate()) {
+                this->consumnSubTree(it);
+                newConnexionInfo.append(BrainFunctional::createRandomFunc(2));
+                continue;
+            } else if(deleteBrainTree->canMutate()) {
+                this->consumnSubTree(it);
+                newConnexionInfo.append(BrainFunctional::createRandomFunc(1));
+                continue;
+            } else if(encapsulateBrainTree->canMutate()) {
+                int subchoice = qrand()%21;
+                int nbsub = 0;
+                int maxmem = qrand()%20 + 1;
+                switch(subchoice) {
+                case 0:
+                    newConnexionInfo.append("+,");
+                    nbsub += 2;
+                    break;
+                case 1:
+                    newConnexionInfo.append("*,");
+                    nbsub += 2;
+                    break;
+                case 2:
+                    newConnexionInfo.append("/,");
+                    nbsub += 2;
+                    break;
+                case 3:
+                    newConnexionInfo.append("ATAN,");
+                    nbsub += 2;
+                    break;
+                case 4:
+                    newConnexionInfo.append("T,");
+                    nbsub += 2;
+                    break;
+                case 5:
+                    newConnexionInfo.append(">,");
+                    nbsub += 3;
+                    break;
+                case 6:
+                    newConnexionInfo.append("IF,");
+                    nbsub += 3;
+                    break;
+                case 7:
+                    newConnexionInfo.append("COS,");
+                    nbsub += 1;
+                    break;
+                case 8:
+                    newConnexionInfo.append("SIN,");
+                    nbsub += 1;
+                    break;
+                case 9:
+                    newConnexionInfo.append("ABS,");
+                    nbsub += 1;
+                    break;
+                case 10:
+                    newConnexionInfo.append("SIGN,");
+                    nbsub += 1;
+                    break;
+                case 11:
+                    newConnexionInfo.append("LOG,");
+                    nbsub += 1;
+                    break;
+                case 12:
+                    newConnexionInfo.append("EXP,");
+                    nbsub += 1;
+                    break;
+                case 13:
+                    newConnexionInfo.append("SIGM,");
+                    nbsub += 1;
+                    break;
+                case 14:
+                    newConnexionInfo.append("SINUS,");
+                    nbsub += 2;
+                    break;
+                case 15:
+                    newConnexionInfo.append("MEM ");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                case 16:
+                    newConnexionInfo.append("SMOOTH");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                case 17:
+                    newConnexionInfo.append("INT");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                case 18:
+                    newConnexionInfo.append("INTERPOLATE");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                case 19:
+                    newConnexionInfo.append("MAX");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                case 20:
+                    newConnexionInfo.append("MIN");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                case 21:
+                    newConnexionInfo.append("DIFF");
+                    newConnexionInfo.append(" " + QString::number(maxmem) + ",");
+                    nbsub += 1;
+                    break;
+                }
+
+                nbsub--;
+                // The actual tree
+                while(it != nodes.end()) {
+                    newConnexionInfo.append(*it);
+                    newConnexionInfo.append(",");
+                    it++;
+                }
+                // The missings params
+                while(nbsub) {
+                    nbsub--;
+                    newConnexionInfo.append(BrainFunctional::createRandomFunc(1));
+                }
+
+                continue;
+            }
+
+            QString node = *it;
+            it++;
             QStringList nodePart = node.split(" ", QString::SkipEmptyParts);
             NodeType t = fromString(nodePart[0]);
             switch(t) {
@@ -637,8 +771,66 @@ namespace GeneLabCore {
             }
         }
 
+        qDebug() << "new connexion" << newConnexionInfo;
+
         outMap.insert("connexionInfo", newConnexionInfo);
 
         return outMap;
+    }
+
+    void MutationsManager::consumnSubTree(QStringList::iterator &it) {
+        QString node = *it;
+        it++;
+        QStringList nodePart = node.split(" ", QString::SkipEmptyParts);
+        NodeType t = fromString(nodePart[0]);
+        switch(t) {
+            // 2 operands
+            case SUM:
+            case PRODUCT:
+            case DIVIDE:
+            case ATAN:
+            // 2 operands + decisions
+            case THRESOLD: // --------> THRESHOLD ;)
+                this->consumnSubTree(it);
+                this->consumnSubTree(it);
+                break;
+            case GT:
+            // 3 operands
+            case IFELSE:
+                this->consumnSubTree(it);
+                this->consumnSubTree(it);
+                this->consumnSubTree(it);
+                break;
+            // 1 operand
+            case COS:
+            case SIN:
+            case ABS:
+            case SIGN_OF:
+            case LOG:
+            case EXP:
+            case SIGM:
+                this->consumnSubTree(it);
+                break;
+            case IN:
+            case CONST:
+                break;
+            case INTEGRATE:
+            case INTERPOLATE:
+            case DIFFERENTIATE:
+            case MEMORY:
+            case SMOOTH:
+            case MIN:
+            case MAX:
+                this->consumnSubTree(it);
+                break;
+            case SINUS:
+                this->consumnSubTree(it);
+                this->consumnSubTree(it);
+                break;
+            case MEMORY_SPACE:
+            case BAD_TYPE:
+                qDebug() << "SHOULD NOT BE IN STRING memoryspace or badtype !!";
+                break;
+        }
     }
 }
