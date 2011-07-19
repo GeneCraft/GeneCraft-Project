@@ -35,10 +35,14 @@ namespace GeneLabCore {
         // ---------
         // -- Sky --
         // ---------
+        if(data.contains("skyMaterial")) {
 
-        if(data.contains("sky")) {
-            QString skyDomeName = data["sky"].toString();
-            sceneManager->setSkyDome(true, skyDomeName.toStdString(), 10, 8, 1000);
+            QString skyMaterial = data["skyMaterial"].toString();
+
+            if(skyMaterial.contains("box", Qt::CaseInsensitive))
+                sceneManager->setSkyBox(true, skyMaterial.toStdString(), 1000);
+            else
+                sceneManager->setSkyDome(true, skyMaterial.toStdString(), 10, 8, 1000);
         }
 
         // -------------
@@ -124,18 +128,18 @@ namespace GeneLabCore {
         // -------------------------
         // -- List of Material :) --
         // -------------------------
-        /*Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
-        while (materialIterator.hasMoreElements())
-        {
-            QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
+//        Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
+//        while (materialIterator.hasMoreElements())
+//        {
+//            QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
 
-            if(matName.contains("Axis") ||matName.contains("Debug"))
-                qDebug() << "****************************************************" ;
+//            if(matName.contains("Sky") || matName.contains("Debug"))
+//                qDebug() << "****************************************************" ;
 
-            qDebug() << matName;
+//            qDebug() << matName;
 
-            materialIterator.moveNext();
-        }*/
+//            materialIterator.moveNext();
+//        }
 
     }
 }

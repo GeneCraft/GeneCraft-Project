@@ -41,7 +41,9 @@ namespace GeneLabCore {
         // -- Floor --
         // -----------
 
-        if(data["type"].toString() == "flatland") {
+        QVariantMap floor = data["floor"].toMap();
+
+        if(floor["type"].toString() == "flatland") {
 
             Ogre::Entity *ent;
             Ogre::Plane p;
@@ -53,8 +55,8 @@ namespace GeneLabCore {
 
            ent = sceneManager->createEntity("floorWorld", "FloorPlane");
 
-           if(data.contains("floor")) {
-                ent->setMaterialName(data["floor"].toString().toStdString());
+           if(floor.contains("material")) {
+                ent->setMaterialName(floor["material"].toString().toStdString());
            }
 
            sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);

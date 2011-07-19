@@ -35,7 +35,7 @@ Experiment::Experiment() : ressource(NULL){
         seedInfo.insert("familyName", "ant");
     }
 
-    Experiment::Experiment(QVariant data) {
+    Experiment::Experiment(QVariant data) : ressource(NULL) {
 
         QVariantMap map = data.toMap();
 

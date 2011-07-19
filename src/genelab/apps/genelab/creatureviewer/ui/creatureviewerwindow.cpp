@@ -301,8 +301,11 @@ void CreatureViewerWindow::openExperimentPropertiesController(){
         epc = new ExperimentsPropertiesController(experiment);
         connect(epc, SIGNAL(experimentLoaded(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
     }
+    else
+       epc->setExperiment(experiment);
 
     epc->show();
+    epc->setFocus(Qt::MouseFocusReason);
 }
 
 void CreatureViewerWindow::setExperiment(Experiment* experiment)

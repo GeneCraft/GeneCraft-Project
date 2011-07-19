@@ -30,8 +30,9 @@ namespace GeneLabCore {
 
     void btScene::setup() {
 
-        QString type = data["type"].toString();
-        if(type == "flatland") {
+        QVariantMap floor = data["floor"].toMap();
+
+        if(floor["type"].toString() == "flatland") {
             btStaticPlaneShape *collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
             btTransform worldTransform;
             worldTransform.setIdentity();

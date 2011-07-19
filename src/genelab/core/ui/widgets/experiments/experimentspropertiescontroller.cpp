@@ -18,13 +18,11 @@
 #include "world/btobiome.h"
 #include "qxtjson.h"
 
-
-
-
 using namespace GeneLabCore;
 
 QList<QString> gravitiesName;
 QList<double> gravities;
+QList<QString> skyMaterials;
 
 ExperimentsPropertiesController::ExperimentsPropertiesController(Experiment *experiment, QWidget *parent) :
     QWidget(parent), ui(new Ui::ExperimentsPropertiesController)
@@ -57,6 +55,18 @@ void ExperimentsPropertiesController::setupForm() {
 
     for(int i=0; i<gravitiesName.count();++i)
         ui->cbGravity->addItem(QString::number(gravities.at(i)) + " - " + gravitiesName.at(i));
+
+    skyMaterials << "Examples/TrippySkyBox"
+                 << "Examples/SpaceSkyBox"
+                 << "Examples/CloudyNoonSkyBox"
+                 << "Examples/StormySkyBox"
+                 << "Examples/EarlyMorningSkyBox"
+                 << "Examples/MorningSkyBox"
+                 << "Examples/EveningSkyBox"
+                 << "Examples/CloudySky";
+
+    for(int i=0; i<skyMaterials.count();++i)
+        ui->cbSkyMaterial->addItem(skyMaterials.at(i));
 }
 
 void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
@@ -113,7 +123,6 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     constValue = new FloatMutationController(mutationsManager->constValue,"Constant Value");
     newBrainTree = new SimpleProbabilityController(mutationsManager->newBrainTree,"New Brain Tree");
 
-
     ui->vlBodyMutations->addWidget(boneLengthMutation);
     ui->vlBodyMutations->addWidget(boneRadiusMutation);
     ui->vlBodyMutations->addWidget(fixationRadiusMutation);
@@ -137,6 +146,9 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
 
 void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
 
+    // -- world --
+    ui->leWorldName->setText(worldData["name"].toString());
+
     // -- Biome --
     QVariantMap biomeMap = worldData["biome"].toMap();
     double gravity = biomeMap["gravity"].toDouble();
@@ -145,11 +157,23 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
         if(gravity == gravities.at(i))
             ui->cbGravity->setCurrentIndex(i);
 
+    QString skyMaterial = biomeMap["skyMaterial"].toString();
+    for(int i=0; i<skyMaterials.count();++i)
+        if(skyMaterial == skyMaterials.at(i))
+            ui->cbSkyMaterial->setCurrentIndex(i);
+
     // lights
     ui->teLights->setText(QxtJSON::stringify(biomeMap["lights"]));
 
     // -- Scene --
     QVariantMap sceneMap = worldData["scene"].toMap();
+
+    // floor
+    QVariantMap floorMap = sceneMap["floor"].toMap();
+    QString type = floorMap["type"].toString();
+    for(int i=0;i<ui->cbFloor->count();++i)
+        if(type == ui->cbFloor->itemText(i))
+            ui->cbFloor->setCurrentIndex(i);
 
     // camera
     QVariantMap camMap = sceneMap["camera"].toMap();
@@ -258,11 +282,13 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
 
     // World
     QVariantMap worldMap;
+    worldMap.insert("name",ui->leWorldName->text());
 
     // -- Biome --
     QVariantMap biomeMap;
     biomeMap.insert("gravity",gravities[ui->cbGravity->currentIndex()]);
     biomeMap.insert("lights",QxtJSON::parse(ui->teLights->toPlainText()));
+    biomeMap.insert("skyMaterial",skyMaterials[ui->cbSkyMaterial->currentIndex()]);
     worldMap.insert("biome",biomeMap);
 
     // -- Scene --
@@ -275,9 +301,16 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
     camMap.insert("targetY",ui->leCamTargetY->text().toDouble());
     camMap.insert("targetZ",ui->leCamTargetZ->text().toDouble());
     sceneMap.insert("camera",camMap);
+
+    QVariantMap floorMap;
+    floorMap.insert("type",ui->cbFloor->currentText());
+
+    if(ui->cbFloor->currentText() == "flatland")
+        floorMap.insert("material",ui->cbFloorMaterial->currentText());
+
+    sceneMap.insert("floor",floorMap);
     sceneMap.insert("shapes",QxtJSON::parse(ui->teStaticShapes->toPlainText()));
     sceneMap.insert("spawns",QxtJSON::parse(ui->teSpawns->toPlainText()));
-
     worldMap.insert("scene",sceneMap);
 
     return worldMap;

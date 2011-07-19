@@ -12,14 +12,14 @@ namespace GeneLabCore {
         QVariantMap worldData;
         worldData.insert("name", "Somewhere on Earth");
 
-        // Biome
+        // ------------
+        // -- Biome --
+        // ------------
         QVariantMap biomeData;
         biomeData.insert("gravity", 9.81);
-        biomeData.insert("sky", "Examples/CloudySky");
+        biomeData.insert("skyMaterial", "Examples/CloudySky");
 
-        // ------------
         // -- lights --
-        // ------------
         QVariantList lights;
 
         // ambiant
@@ -42,15 +42,15 @@ namespace GeneLabCore {
         lights.append(pointLightMap);
         biomeData.insert("lights",lights);
 
+        worldData.insert("biome", biomeData);
+
 
         // -----------
         // -- Scene --
         // -----------
         QVariantMap sceneData;
 
-        // ------------
         // -- Camera --
-        // ------------
         QVariantMap camData;
         camData.insert("posX",  -20);
         camData.insert("posY",  10);
@@ -60,9 +60,7 @@ namespace GeneLabCore {
         camData.insert("targetZ",  15);
         sceneData.insert("camera", camData);
 
-        // -----------------
         // -- Spawn areas --
-        // -----------------
         QVariantList spawns;
 
         //createBoxAreaSpawn(spawns,btVector3(100,1,100),btVector3(0,20,0));
@@ -80,10 +78,7 @@ namespace GeneLabCore {
 
         sceneData.insert("spawns", spawns);
 
-        // ------------------
         // -- Static boxes --
-        // ------------------
-
         QVariantList shapes;
 
 //        createRuins(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(1.0,1.0,1.0), btVector3(10.0,10.0,10.0), 100, 0);
@@ -105,16 +100,15 @@ namespace GeneLabCore {
 
         sceneData.insert("shapes", shapes);
 
-        // Scene
-        sceneData.insert("type", "flatland");
-        sceneData.insert("floor", "Examples/GrassFloor");
+        // Floor
+        QVariantMap floor;
+        floor.insert("type", "flatland");
+        floor.insert("material", "Examples/GrassFloor");
+        sceneData.insert("floor",floor);
 
-        QVariantMap map;
-        map.insert("world", worldData);
-        map.insert("scene", sceneData);
-        map.insert("biome", biomeData);
+        worldData.insert("scene", sceneData);
 
-        return map;
+        return worldData;
     }
 
     void btWorldFactory::createPositionSpawn(QVariantList &spawnsList,btVector3 pos) {
