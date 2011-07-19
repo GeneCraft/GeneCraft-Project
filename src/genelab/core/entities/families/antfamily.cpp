@@ -42,7 +42,7 @@ Entity* AntFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 
     Fixation* rootFix = new Fixation(shapesFactory,headRadius,initTransform);
     shape->setRoot(rootFix);
     ent->setShape(shape);
-    rootFix->addSensor(new GyroscopicSensor(rootFix));
+    //rootFix->addSensor(new GyroscopicSensor(rootFix));
 
     // legs
     btQuaternion legLocal;
@@ -81,7 +81,7 @@ void AntFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const 
                                       btScalar(kneeRadius),
                                       lowerLimits,upperLimits);
 
-    rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
+    //rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
 
     for(int i=1;i<nbBonesInLeg;++i)
     {
@@ -97,8 +97,8 @@ void AntFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const 
                                                        lowerLimits,
                                                        upperLimits);
 
-        rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
-        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
+        //rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
+        //rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
         yAxis = 0;
     }
 }

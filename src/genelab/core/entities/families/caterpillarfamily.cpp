@@ -90,8 +90,8 @@ namespace GeneLabCore {
 
             }
 
-            b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
-            b->getEndFixation()->addSensor(new PositionSensor(shape->getRoot(),b->getEndFixation()));
+            //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+            //b->getEndFixation()->addSensor(new PositionSensor(shape->getRoot(),b->getEndFixation()));
 
             root = b->getEndFixation();
 
@@ -104,9 +104,9 @@ namespace GeneLabCore {
                               btVector3(-M_PI / 10,0,-M_PI / 10),
                               btVector3(M_PI / 10,0,M_PI / 10));
 
-                b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+                //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
                 //b->getEndFixation()->addSensor(new PositionSensor(shape->getRoot(),b->getEndFixation()));
-                b->getEndFixation()->addSensor(new ContactSensor(b->getEndFixation()));
+                //b->getEndFixation()->addSensor(new ContactSensor(b->getEndFixation()));
             }
         }
 

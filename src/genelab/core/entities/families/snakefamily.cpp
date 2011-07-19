@@ -56,7 +56,7 @@ namespace GeneLabCore {
 
         root = b->getEndFixation();
 
-        b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+        //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
 
         for(int i = 0; i < length; i++) {
             Bone* b = root->addBone(0., 0.,
@@ -66,8 +66,8 @@ namespace GeneLabCore {
                                     btVector3(-angle,-M_PI/4,-angle),
                                     btVector3(angle,M_PI/4,angle));
 
-            b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
-            b->getEndFixation()->addSensor(new PositionSensor(snakeShape->getRoot(),b->getEndFixation()));
+            //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+            //b->getEndFixation()->addSensor(new PositionSensor(snakeShape->getRoot(),b->getEndFixation()));
 
             root = b->getEndFixation();
         }

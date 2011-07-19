@@ -138,14 +138,8 @@
    },
    "onlyIfEntityIsStable":true,
    "seedInfo":{
-      "type":"fixed",
-      "genome":{"type":"include", 
-		"data" : {"type":"db", 
-			  	  "dbName":"db/genecraft",
-				  "port":80,
-				  "url":"http://www.genecraft-project.com"
-				  "id" :"FixedGenome"
-			  }}
+      "type":"family",
+	  "familyName":"spider"
    },
    "stopIfEntityIsNotInOnePiece":true,
    "timeToWaitForStability":300,

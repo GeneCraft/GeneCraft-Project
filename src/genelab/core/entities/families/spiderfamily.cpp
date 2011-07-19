@@ -40,8 +40,8 @@ Entity* SpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVecto
     Fixation* rootFix = new Fixation(shapesFactory,btScalar(headRadius),initTransform);
     shape->setRoot(rootFix);
     ent->setShape(shape);
-    rootFix->addSensor(new GyroscopicSensor(rootFix));
-    rootFix->addSensor(new AccelerometerSensor(rootFix));
+    //rootFix->addSensor(new GyroscopicSensor(rootFix));
+    //rootFix->addSensor(new AccelerometerSensor(rootFix));
     // legs
     btQuaternion legLocal;
     btQuaternion legLocal2;
@@ -70,7 +70,7 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
                                       btScalar(kneeRadius),
                                       lowerLimits,upperLimits);
 
-    rootBone->getEndFixation()->addSensor(new GyroscopicSensor(rootBone->getEndFixation()));
+    //rootBone->getEndFixation()->addSensor(new GyroscopicSensor(rootBone->getEndFixation()));
 
 
 
@@ -86,7 +86,7 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
                                                        lowerLimits,
                                                        upperLimits);
 
-        rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
+        //rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
 
         //rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
 
@@ -103,7 +103,7 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
                                             btScalar(kneeRadius/3.),
                                             lowerLimits,
                                             upperLimits);
-        lastBone->getEndFixation()->addSensor(new ContactSensor(lastBone->getEndFixation()));
+        //lastBone->getEndFixation()->addSensor(new ContactSensor(lastBone->getEndFixation()));
     }
 }
 
