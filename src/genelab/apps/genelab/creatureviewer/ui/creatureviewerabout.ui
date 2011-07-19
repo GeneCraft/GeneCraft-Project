@@ -92,7 +92,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>0.1, July 2011, based on GeneCraft Core v0.1</string>
+    <string>0.2, July 2011, based on GeneCraft Core v0.2</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">

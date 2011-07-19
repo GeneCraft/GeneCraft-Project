@@ -57,7 +57,7 @@ public slots:
 
     // notifications
     void entitySelected(Entity *entity);
-    //void entityDeleted(Entity*);
+    void entityDeleted(Entity*);
     void boneDeleted(Bone* bone);
     void fixationDeleted(Fixation* fix);
     void boneSelected(Bone* bone);

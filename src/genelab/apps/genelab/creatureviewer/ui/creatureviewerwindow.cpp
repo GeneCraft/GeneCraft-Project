@@ -308,10 +308,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // --------------
 
     // entities
-    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
-    foreach(Entity * entity, entitiesEngine->getAllEntities())
-        emit sEntityDeleted(entity);
-    entitiesEngine->removeAndDeleteAllEntities();
+    removeAllEntities();
 
     // bullet ogre
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
@@ -706,6 +703,12 @@ void CreatureViewerWindow::boneDeleted(Bone* bone){
     }
 }
 
+void CreatureViewerWindow::entityDeleted(Entity* entity) {
+
+   if(selectedEntity == entity)
+       selectedEntity = NULL;
+}
+
 void CreatureViewerWindow::fixationDeleted(Fixation* fix){
     if(selectedFix == fix)
         selectedFix = NULL;
@@ -719,10 +722,13 @@ void CreatureViewerWindow::boneSelected(Bone* bone){
     if(selectedFix)
        selectedFix->setSelected(false);
 
-    if(bone)
+    if(bone) {
         bone->setSelected(true);
+        bone->getEndFixation()->setSelected(true);
 
-    selectedBone = bone;
+        selectedBone = bone;
+        selectedFix  = bone->getEndFixation();
+    }
 }
 
 void CreatureViewerWindow::fixationSelected(Fixation* fix){
@@ -737,6 +743,7 @@ void CreatureViewerWindow::fixationSelected(Fixation* fix){
         fix->setSelected(true);
 
     selectedFix = fix;
+    selectedBone = NULL;
 }
 
 void CreatureViewerWindow::followSelectedEntity() {
