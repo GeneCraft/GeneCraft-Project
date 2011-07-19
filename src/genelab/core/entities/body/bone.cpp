@@ -294,18 +294,13 @@ QVariant Bone::generateEmpty() {
     // Limits
     QVariantMap lowerlimits, upperlimits;
 
-    float lowerLimit_x = Tools::random(-M_PI+0.1,   M_PI-0.1);
-    float lowerLimit_y = Tools::random(-M_PI/2.+0.1,M_PI/2.-0.1);
-    float lowerLimit_z = Tools::random(-M_PI+0.1,   M_PI-0.1);
+    float lowerLimit_x = Tools::random(-M_PI+0.1,   0.);
+    float lowerLimit_y = Tools::random(-M_PI/2.+0.1,0.);
+    float lowerLimit_z = Tools::random(-M_PI+0.1,   0.);
 
-    float upperlimits_x = Tools::random(-M_PI+0.1,    M_PI-0.1);
-    float upperlimits_y = Tools::random(-M_PI/2.+0.1, M_PI/2.-0.1);
-    float upperlimits_z = Tools::random(-M_PI+0.1,    M_PI-0.1);
-
-
-    if(lowerLimit_x > upperlimits_x) { lowerLimit_x = upperlimits_x; }
-    if(lowerLimit_y > upperlimits_y) { lowerLimit_y = upperlimits_y; }
-    if(lowerLimit_z > upperlimits_z) { lowerLimit_z = upperlimits_z; }
+    float upperlimits_x = Tools::random(0.,    M_PI-0.1);
+    float upperlimits_y = Tools::random(0., M_PI/2.-0.1);
+    float upperlimits_z = Tools::random(0.,    M_PI-0.1);
 
     lowerlimits.insert("x",QVariant((double)lowerLimit_x));
     lowerlimits.insert("y",QVariant((double)lowerLimit_y));

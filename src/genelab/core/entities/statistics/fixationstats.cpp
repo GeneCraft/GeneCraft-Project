@@ -23,11 +23,11 @@ FixationStats::FixationStats(StatisticsStorage * statsStorage, Fixation * fixati
     fixationAbsoluteZPosition = statsStorage->registerStat(fixName + QString("ZRelVelocity"), "m / step");
 
 
-    connect(fixationAbsoluteVelocity,SIGNAL(reseted()), this, SLOT(resetOrigin()));
-    connect(fixationRelativeVelocity,SIGNAL(reseted()), this, SLOT(resetOrigin()));
-    connect(fixationAbsoluteYPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()));
-    connect(fixationAbsoluteXPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()));
-    connect(fixationAbsoluteZPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()));
+    connect(fixationAbsoluteVelocity,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationRelativeVelocity,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationAbsoluteYPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationAbsoluteXPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationAbsoluteZPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
 
 
     resetOrigin();
@@ -82,10 +82,10 @@ void FixationStats::step()
 }
 
 void FixationStats::resetOrigin(){
+
     if(fixationAbsoluteVelocity->getSum() == 0) {
         previousOriginAbs = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
     }
-
 
     if(fixationRelativeVelocity->getSum() == 0) {
         refOriginRel = previousOriginRel = this->fixation->getRigidBody()->getWorldTransform().getOrigin();

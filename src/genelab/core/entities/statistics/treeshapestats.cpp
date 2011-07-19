@@ -21,23 +21,23 @@ TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * tre
 
     treeshapeBones = new Statistic("bodyBones","bones / fix");
     statsStorage->registerStat(treeshapeBones->getName(),treeshapeBones);
-    connect(treeshapeBones, SIGNAL(reseted()), this, SLOT(reset()));
+    connect(treeshapeBones, SIGNAL(reseted()), this, SLOT(reset()), Qt::DirectConnection);
 
     treeshapeBonesLength = new Statistic("bodyLength","m / bones");
     statsStorage->registerStat(treeshapeBonesLength->getName(),treeshapeBonesLength);
-    connect(treeshapeBonesLength, SIGNAL(reseted()), this, SLOT(reset()));
+    connect(treeshapeBonesLength, SIGNAL(reseted()), this, SLOT(reset()), Qt::DirectConnection);
 
     treeshapeWeight = new Statistic("bodyWeight","kg / bones");
     statsStorage->registerStat(treeshapeWeight->getName(),treeshapeWeight);
-    connect(treeshapeWeight, SIGNAL(reseted()), this, SLOT(reset()));
+    connect(treeshapeWeight, SIGNAL(reseted()), this, SLOT(reset()), Qt::DirectConnection);
 
     treeshapeNbSensors = new Statistic("bodySensors","sensors / fix");
     statsStorage->registerStat(treeshapeNbSensors->getName(),treeshapeNbSensors);
-    connect(treeshapeNbSensors, SIGNAL(reseted()), this, SLOT(reset()));
+    connect(treeshapeNbSensors, SIGNAL(reseted()), this, SLOT(reset()), Qt::DirectConnection);
 
     treeshapeNbEffectors = new Statistic("bodyEffectors","effectors / (bone, fix)");
     statsStorage->registerStat(treeshapeNbEffectors->getName(),treeshapeNbEffectors);
-    connect(treeshapeNbEffectors, SIGNAL(reseted()), this, SLOT(reset()));
+    connect(treeshapeNbEffectors, SIGNAL(reseted()), this, SLOT(reset()), Qt::DirectConnection);
 
     this->reset();
 }

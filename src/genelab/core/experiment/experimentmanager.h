@@ -6,6 +6,8 @@
 #include "resultsmanager.h"
 #include "mutation/mutationsmanager.h"
 
+#include <QtScript>
+
 class SelectionManager;
 
 namespace GeneLabCore {
@@ -59,6 +61,10 @@ namespace GeneLabCore {
 
         void load(QVariant data);
 
+        void createEngine();
+        void bindEntity(Entity* e);
+        void loadFunctions();
+
     private:
         Experiment* exp;
         MutationsManager* mutations;
@@ -74,6 +80,14 @@ namespace GeneLabCore {
         EntitiesEngine* ee;
 
         QMap<QString, Engine*> engines;
+
+        // Scripting
+        QScriptEngine scriptEngine;
+        QScriptValue  entityObj;
+        QScriptValue  validityFunc;
+        QScriptValue  endFunc;
+        QScriptValue  dieFunc;
+        QScriptValue  fitnessFunc;
 
         int maxGen;
         int popSize;

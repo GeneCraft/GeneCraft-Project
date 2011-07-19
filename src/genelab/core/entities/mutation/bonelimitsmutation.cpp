@@ -34,6 +34,10 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
                 float loValue = lowerLimits[axis].toDouble();
                 float upValue = upperLimits[axis].toDouble();
 
+                loValue = axisMutation->mutate(loValue);
+                upValue = axisMutation->mutate(upValue);
+
+
                 // If y axis
                 if(axis == "y") {
                     if(loValue < -M_PI/2.+0.1) {
@@ -44,12 +48,13 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
                     }
                 }
 
-                loValue = axisMutation->mutate(loValue);
-                upValue = axisMutation->mutate(upValue);
+                // 0 must be included between lo and up
+                if(loValue > 0) {
+                    loValue = 0;
+                }
 
-                // lower value must be lower than the upper value
-                if(loValue > upValue) {
-                    loValue = upValue;
+                if(upValue < 0) {
+                    upValue = 0;
                 }
 
                 lowerLimits.insert(axis,QVariant((double)loValue));

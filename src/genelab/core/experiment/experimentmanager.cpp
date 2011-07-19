@@ -28,6 +28,7 @@
 #include "statistics/statisticsstorage.h"
 #include "statistics/statisticsprovider.h"
 #include "statistics/fixationstats.h"
+#include "statistics/treeshapestats.h"
 
 #include "ressources/dbrecord.h"
 
@@ -85,6 +86,24 @@ namespace GeneLabCore {
         this->probFromRandomNew    /= sumProb;
         this->probFromRandomPop    /= sumProb;
         this->probFromRandomResult /= sumProb;
+    }
+
+    void ExperimentManager::bindEntity(Entity* e) {
+        entityObj      = scriptEngine.newObject();
+
+        // Get the statistics
+        QMap<QString, Statistic*> stats = e->getStatisticsStorage()->getStatistics();
+        foreach(QString statName, stats.keys()) {
+            Statistic* stat = stats[statName];
+            QScriptValue statObject = scriptEngine.newQObject(stat);
+            entityObj.setProperty(statName, statObject);
+        }
+
+        scriptEngine.globalObject().setProperty("entity", entityObj);
+    }
+
+    void ExperimentManager::loadFunctions() {
+
     }
 
     /**
@@ -350,6 +369,10 @@ namespace GeneLabCore {
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         e->setup();
         ee->addEntity(e);
+
+        this->bindEntity(e);
+        this->loadFunctions();
+
         return e;
     }
 
@@ -359,6 +382,8 @@ namespace GeneLabCore {
         // 100 engines step
         for(int i = 0; i < 200; i++) {
             this->engineStep();
+            if(!e->isAlive())
+                qDebug() << e->isAlive();
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
                 return false;
         }
@@ -369,7 +394,7 @@ namespace GeneLabCore {
         // Get the fixationstat
         StatisticsProvider* stat = e->getStatistics().find("FixationStats").value();
         // Get the specific velocity value
-        Statistic* s = e->getStatisticByName("Root relative velocity");
+        Statistic* s = e->getStatisticByName("rootAbsVelocity");
 
         int stableCpt = 0;
         int maxStableTry = 300;
@@ -398,8 +423,10 @@ namespace GeneLabCore {
                 return false;
         }
 
-        s->resetAll();
-        ((FixationStats*)stat)->resetOrigin();
+        foreach(Statistic* stat, e->getStatisticsStorage()->getStatistics()) {
+            stat->resetAll();
+        }
+
         e->setAge(0);
         e->getShape()->getRoot()->setOutputsFrom(1); // From brain
 
@@ -418,31 +445,9 @@ namespace GeneLabCore {
     }
 
     float ExperimentManager::evaluateEntity(Entity* e) {
-        // Get the statistics
-        Statistic* sY    = e->getStatisticByName("Root absolute Y position");
-        Statistic* sDist = e->getStatisticByName("Root relative velocity");
-
-        // Create the engine
-        QScriptEngine engine;
-
-        // Bind the statistics to the engine
-        QScriptValue scriptvelocity = engine.newQObject(sDist);
-        QScriptValue entityObj = engine.newObject();
-
-        entityObj.setProperty("velocity", scriptvelocity);
-        QScriptValue scripty = engine.newQObject(sY);
-        entityObj.setProperty("ypos", scripty);
-
-        engine.globalObject().setProperty("entity", entityObj);
-
-        // Fitness function
-        QScriptValue fitnessFunc = engine.evaluate("(function() {return entity.velocity.sum * entity.ypos.mean})");
-
         // Call to the fitness function
+        fitnessFunc = scriptEngine.evaluate("(function() {print(entity.rootRelVelocity.sum); print(entity.bodyHeight.mean); return entity.bodyHeight.mean * entity.rootRelVelocity.sum})");
         QScriptValue fitness = fitnessFunc.call();
-
-        // Old fitness for comparaison
-        qDebug() << sDist->getSum() << sY->getMean() << sDist->getSum() * sY->getMean();
 
         return fitness.toNumber();
     }
