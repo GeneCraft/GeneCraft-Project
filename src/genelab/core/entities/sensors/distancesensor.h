@@ -12,7 +12,7 @@ class DistanceSensor : public Sensor
 public:
 
     // To create
-    DistanceSensor(Fixation * fixation, btQuaternion orientation);
+    DistanceSensor(Fixation * fixation, btScalar yAxis, btScalar zAxis);
 
     // To create from serialization data
     DistanceSensor(QVariant data, Fixation* fixation);
@@ -26,8 +26,8 @@ public:
 private:
 
     BrainIn *distanceInput;
-    btQuaternion orientation;
-
+    btScalar yAxis;
+    btScalar zAxis;
 };
 }
 

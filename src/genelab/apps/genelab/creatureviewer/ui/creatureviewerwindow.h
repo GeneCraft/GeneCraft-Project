@@ -10,6 +10,8 @@
 #include "ui/widgets/entities/statisticspropertiescontroller.h"
 #include "ui/widgets/entities/entitypropertiescontroller.h"
 #include "widgets/experiments/experimentspropertiescontroller.h"
+#include "widgets/experiments/ressourcesbrowser.h"
+
 
 // Listeners
 #include "creatureviewerinputmanager.h"
@@ -34,6 +36,8 @@ public:
     explicit CreatureViewerWindow(QWidget *parent = 0);
     ~CreatureViewerWindow();
 
+    btVector3 getCameraPosition();
+
 public slots:
 
     void init();
@@ -42,7 +46,10 @@ public slots:
     void showAbout();
 
     // new / load / save entity
-    void createNewEntity();
+    void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
+    Entity *createNewEntity();
+    Entity *createCreature(QVariant genotype, btVector3 position, Ressource *ressource);
+
     void loadEntityFromFile();
     void loadEntityFromDb();
     void saveEntityToFile();
@@ -105,6 +112,7 @@ private:
     BonePropertiesController *bonePropertiesController;
     StatisticsPropertiesController *statsPropertiesController;
     BrainPropertiesController *brainPropertiesController;
+    RessourcesBrowser *ressourcesBrowser;
 
     Experiment *experiment;
     ExperimentsPropertiesController *epc;

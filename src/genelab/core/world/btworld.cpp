@@ -47,6 +47,9 @@ namespace GeneLabCore {
 
     void btWorld::cleanBulletWorld() {
 
+//        scene->clean();
+//        biome->clean();
+
         // from : http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=9&t=638&view=next
         //cleanup in the reverse order of creation/initialization
 
@@ -58,6 +61,8 @@ namespace GeneLabCore {
             world->removeCollisionObject( obj );
             delete obj;
         }
+
+        // TODO...
 
 //        //delete collision shapes
 //        for (unsigned int j=0;j<m_collisionShapes.size();j++)

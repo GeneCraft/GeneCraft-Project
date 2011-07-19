@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>818</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -164,6 +164,15 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3"/>
   </widget>
+  <widget class="QDockWidget" name="dwRessourcesBrowser">
+   <property name="windowTitle">
+    <string>Ressources browser</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4"/>
+  </widget>
   <action name="actionSave_selected_creature">
    <property name="icon">
     <iconset resource="../../../../core/ressources/ressources.qrc">
@@ -293,6 +302,7 @@
   </action>
   <zorder>dwFixation</zorder>
   <zorder>dwWorker</zorder>
+  <zorder>dwRessourcesBrowser</zorder>
  </widget>
  <resources>
   <include location="../../../../core/ressources/ressources.qrc"/>

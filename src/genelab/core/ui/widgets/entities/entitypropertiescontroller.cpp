@@ -34,12 +34,22 @@ EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     connect(this->ui->pbOutsFromRandom,SIGNAL(clicked()),this,SLOT(setOutFromRandom()));
     connect(this->ui->pbViewGenotype,SIGNAL(clicked()),this,SLOT(viewGenotype()));
 
+    connect(this->ui->leName,SIGNAL(textChanged(QString)),this,SLOT(saveOrigins()));
+    connect(this->ui->leFamily,SIGNAL(textChanged(QString)),this,SLOT(saveOrigins()));
+
     this->setEnabled(false);
 }
 
 EntityPropertiesController::~EntityPropertiesController()
 {
     delete ui;
+}
+
+void EntityPropertiesController::saveOrigins() {
+    if(entity) {
+        entity->setName(ui->leName->text());
+        entity->setFamily(ui->leFamily->text());
+    }
 }
 
 void EntityPropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
@@ -167,8 +177,15 @@ void EntityPropertiesController::setEntity(Entity *entity, Bone *bone)
     if(entity)
     {
         // Origins
-        ui->lName->setText(entity->getName());
-        ui->lFamily->setText(entity->getFamily());
+        disconnect(this->ui->leName,SIGNAL(textChanged(QString)),this,SLOT(saveOrigins()));
+        disconnect(this->ui->leFamily,SIGNAL(textChanged(QString)),this,SLOT(saveOrigins()));
+
+        ui->leName->setText(entity->getName());
+        ui->leFamily->setText(entity->getFamily());
+
+        connect(this->ui->leName,SIGNAL(textChanged(QString)),this,SLOT(saveOrigins()));
+        connect(this->ui->leFamily,SIGNAL(textChanged(QString)),this,SLOT(saveOrigins()));
+
         ui->lGeneration->setText(QString::number(entity->getGeneration()));
         ui->pteGenotype->clear();
 

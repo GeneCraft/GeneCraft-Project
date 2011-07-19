@@ -246,6 +246,12 @@ void CreatureViewerWindow::init() {
     ui->dwStats->setWidget(statsPropertiesController);
     statsPropertiesController->connectToInspectorInputManager(cvim);
 
+    // Ressources browser
+    ressourcesBrowser = new RessourcesBrowser();
+    ui->dwRessourcesBrowser->setWidget(ressourcesBrowser);
+    connect(ressourcesBrowser, SIGNAL(setExperiment(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
+    connect(ressourcesBrowser, SIGNAL(addEntity(QVariantMap,GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap, GeneLabCore::Ressource*)));
+    //ressourcesBrowser->connectToInspectorInputManager(cvim)
 
     // ----------------------------------
     // -- Connections to input manager --
@@ -301,6 +307,8 @@ void CreatureViewerWindow::openExperimentPropertiesController(){
 
 void CreatureViewerWindow::setExperiment(Experiment* experiment)
 {
+    // TODO delete this->experiment;
+
     this->experiment = experiment;
 
     // --------------
@@ -310,13 +318,17 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // entities
     removeAllEntities();
 
-    // bullet ogre
+    // bullet ogre engine
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
     btoEngine->clearAll();
 
-    // ogre
+    // ogre engine
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
     ogreEngine->getOgreSceneManager()->clearScene();
+
+    // bullet engine
+    BulletEngine *btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));
+    btEngine->removeWorld(world->getBulletWorld());
 
     // bullet
     world->cleanBulletWorld();
@@ -352,7 +364,7 @@ void CreatureViewerWindow::loadEntityFromDb() {
     Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
     btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
 
-    Entity *e = creatureFactory->createEntity(genotype, shapesFactory, initPosition);
+    Entity *e = CreatureFactory::createEntity(genotype, shapesFactory, initPosition);
 
     if(e == NULL) {
         QMessageBox::warning(this, "Impossible to load entity",
@@ -457,7 +469,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
 
         btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 
-        e = creatureFactory->createEntity(newGenome, shapesFactory, pos + originPos);
+        e = CreatureFactory::createEntity(newGenome, shapesFactory, pos + originPos);
         if(e == NULL) {
             QMessageBox::warning(this, "Impossible to load entity",
     "Entity could not be created, maybe version of genotype don't match. Please update your client.");
@@ -531,7 +543,7 @@ void CreatureViewerWindow::showAbout()
     cwa->show();
 }
 
-void CreatureViewerWindow::createNewEntity()
+Entity * CreatureViewerWindow::createNewEntity()
 {
     // get initial position
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
@@ -549,8 +561,13 @@ void CreatureViewerWindow::createNewEntity()
 
     //entitySelected(e);
     //setEntity(e,e->getShape()->getRoot()->getRigidBody());
-
     QMessageBox::information(this, "Root fixation fixed in the air", "Default, the root fixation is fixed in the air.\n\nTo unfix it, select it and go to \"Tools\" tab of the fixation controller.");
+
+    return e;
+}
+
+void CreatureViewerWindow::addEntity(QVariantMap entityData, Ressource *ressource) {
+     createCreature(entityData, getCameraPosition(), ressource);
 }
 
 void CreatureViewerWindow::loadEntityFromFile()
@@ -568,29 +585,45 @@ void CreatureViewerWindow::loadEntityFromFile()
         Ressource* from = new JsonFile(selectedFile);
         QVariant genotype = from->load();
 
-        // get initial position
-        OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
-        Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
-        Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
-        btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
+        Entity *e = createCreature(genotype, getCameraPosition(),from);
 
-        Entity *e = creatureFactory->createEntity(genotype, shapesFactory, initPosition);
-
-        if(e == NULL) {
-            QMessageBox::warning(this, "Impossible to load entity",
-"Entity could not be created, maybe version of genotype don't match. Please update your client.");
-            return;
-        }
-
-        e->setup();
-        e->setRessource(from);
-        EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-        entitiesEngine->addEntity(e);
-
+        if(e != NULL)
+            e->setRessource(from);
     }
 
     simulationManager->start();
 }
+
+Entity * CreatureViewerWindow::createCreature(QVariant genotype, btVector3 position, Ressource *ressource) {
+
+    Entity *e = CreatureFactory::createEntity(genotype, shapesFactory, position);
+
+    if(e == NULL) {
+        QMessageBox::warning(this, "Impossible to create entity",
+"Entity could not be created, maybe version of genotype don't match. Please update your client.");
+        return NULL;
+    }
+
+    if(ressource)
+        e->setRessource(ressource);
+
+    e->setup();
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+    entitiesEngine->addEntity(e);
+
+    return e;
+}
+
+btVector3 CreatureViewerWindow::getCameraPosition() {
+
+    // get initial position
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
+    Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
+    btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
+    return initPosition;
+}
+
 
 void CreatureViewerWindow::saveEntityToFile()
 {
@@ -747,8 +780,6 @@ void CreatureViewerWindow::fixationSelected(Fixation* fix){
 }
 
 void CreatureViewerWindow::followSelectedEntity() {
-
-    qDebug() << Q_FUNC_INFO;
 
     if(selectedEntity) {
 

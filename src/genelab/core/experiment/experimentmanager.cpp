@@ -347,7 +347,7 @@ namespace GeneLabCore {
     // To simulate a specific entity
     Entity* ExperimentManager::spawnEntity(QVariant genome) {
         btVector3 position = world->getSpawnPosition();
-        Entity* e = creatureFactory->createEntity(genome, shapesFactory, position);
+        Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         e->setup();
         ee->addEntity(e);
         return e;

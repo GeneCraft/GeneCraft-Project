@@ -35,6 +35,7 @@ signals:
 
 public slots:
 
+    void saveOrigins();
     void setEntity(Entity *entity, Bone *selectedBone = NULL);
     void setOutFromNormalPosition();
     void setOutFromNone();

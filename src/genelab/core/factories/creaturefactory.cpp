@@ -4,11 +4,6 @@
 
 namespace GeneLabCore {
 
-    CreatureFactory::CreatureFactory(QObject *parent) :
-        QObject(parent)
-    {
-    }
-
     Entity* CreatureFactory::createEntity(QVariant data,
                                           btShapesFactory* shapesFactory,
                                           btVector3 position) {
@@ -23,8 +18,8 @@ namespace GeneLabCore {
 
         // Version check
         if(entityData["version"].toString() != Entity::genomeVersion) {
-            error = "Version de genome anterieur au logiciel actuel";
-            qDebug() << error;
+            //error = "Version de genome anterieur au logiciel actuel";
+            //qDebug() << error;
 
             // Maybe conversion if possible
 

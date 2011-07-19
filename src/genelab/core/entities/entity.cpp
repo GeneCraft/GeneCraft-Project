@@ -63,7 +63,9 @@ Entity::~Entity() {
 
     delete this->treeShape;
     delete this->brain;
-    delete this->r;
+
+    if(r)
+        delete this->r;
 }
 
 TreeShape* Entity::getShape() {

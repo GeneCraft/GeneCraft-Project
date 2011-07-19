@@ -7,18 +7,26 @@
 
 namespace GeneLabCore {
 
+    struct DataWrapper {
+
+        QVariantMap data;
+        Ressource *r;
+    };
+
+
     class RessourcesManager : public QObject
     {
         Q_OBJECT
     public:
-        explicit RessourcesManager(DataBase db, QDir ressourceDir, QObject *parent = 0);
+
+        RessourcesManager(DataBase db, QDir ressourceDir, QObject *parent = 0);
 
         void reloadDb();
         void reloadDir();
 
-        QList<QVariantMap> getWorlds();
-        QList<QVariantMap> getCreatures();
-        QList<QVariantMap> getExperiments();
+        QList<DataWrapper> getWorlds();
+        QList<DataWrapper> getCreatures();
+        QList<DataWrapper> getExperiments();
 
     signals:
 
@@ -26,15 +34,15 @@ namespace GeneLabCore {
     protected:
         QDir directory;
         DataBase db;
-        QList<QVariantMap> worlds;
-        QList<QVariantMap> creatures;
-        QList<QVariantMap> experiments;
+        QList<DataWrapper> worlds;
+        QList<DataWrapper> creatures;
+        QList<DataWrapper> experiments;
 
         void getAllWorld();
         void getAllCreatures();
         void getAllExperiments();
 
-        void examine(QVariant data);
+        void examine(DataWrapper dataw);
 
 
     };

@@ -3,6 +3,11 @@
 #include "dbrecord.h"
 
 namespace GeneLabCore {
+
+
+
+
+
     RessourcesManager::RessourcesManager(DataBase db, QDir ressourceDir, QObject *parent) :
         QObject(parent)
     {
@@ -12,11 +17,16 @@ namespace GeneLabCore {
 
 
     void RessourcesManager::reloadDb() {
+
+        // clear list
+        experiments.clear();
+        worlds.clear();
+        creatures.clear();
+
         // Get all world
         getAllWorld();
         getAllCreatures();
         getAllExperiments();
-
     }
 
 
@@ -30,38 +40,47 @@ namespace GeneLabCore {
     }
 
     void RessourcesManager::reloadDir() {
+
+        // clear list
+        experiments.clear();
+        worlds.clear();
+        creatures.clear();
+
+        // load
         foreach(QString filename, directory.entryList(QDir::NoDotAndDotDot
                                              | QDir::Files
                                              | QDir::Readable,
                                              QDir::Time
                                              | QDir::Reversed)) {
             JsonFile* f = new JsonFile(directory.absoluteFilePath(filename));
-            QVariant data = f->load();
-            this->examine(data);
+
+            DataWrapper dataw = {f->load().toMap(), f};
+            this->examine(dataw);
         }
     }
 
-    QList<QVariantMap> RessourcesManager::getWorlds() {
+    QList<DataWrapper> RessourcesManager::getWorlds() {
         return this->worlds;
     }
 
-    QList<QVariantMap> RessourcesManager::getCreatures() {
+    QList<DataWrapper> RessourcesManager::getCreatures() {
         return this->creatures;
     }
 
-    QList<QVariantMap> RessourcesManager::getExperiments() {
+    QList<DataWrapper> RessourcesManager::getExperiments() {
         return this->experiments;
     }
 
-    void RessourcesManager::examine(QVariant data) {
-        QVariantMap dataMap = data.toMap();
+    void RessourcesManager::examine(DataWrapper dataw) {
+        QVariantMap dataMap = dataw.data;
         // Experience ?
         if(dataMap.contains("author") && dataMap.contains("id") && dataMap.contains("duration")) {
-            this->experiments.append(dataMap);
+            this->experiments.append(dataw);
             // Take the inside world
             if(dataMap.contains("world")) {
                 QVariantMap worldMap = dataMap["world"].toMap();
-                worlds.append(worldMap);
+                DataWrapper dataWorld = {worldMap, NULL};
+                worlds.append(dataWorld);
             }
 
             return;
@@ -74,13 +93,13 @@ namespace GeneLabCore {
 
         // Creature ?
         if(dataMap.contains("body") && dataMap.contains("brain") && dataMap.contains("origins")) {
-            creatures.append(dataMap);
+            creatures.append(dataw);
             return;
         }
 
         // World ?
         if(dataMap.contains("type") && dataMap["type"].toString() == "world") {
-            worlds.append(dataMap);
+            worlds.append(dataw);
             return;
         }
     }
