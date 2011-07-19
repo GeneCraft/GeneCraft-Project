@@ -122,6 +122,7 @@ public:
 
     // To create the storage
     StatisticsStorage();
+    ~StatisticsStorage();
 
     // To register a statistics
     Statistic * registerStat(QString name, QString unit);

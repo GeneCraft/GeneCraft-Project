@@ -128,7 +128,6 @@ protected:
     Ressource* r;
 
     // Statistics
-    // TODO QList
     QMap<QString, StatisticsProvider *> stats;
     Statistic*         brainActivityStat;
     StatisticsStorage *statisticsStorage;

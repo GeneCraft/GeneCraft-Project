@@ -5,6 +5,14 @@ namespace GeneLabCore{
 // To create the storage
 StatisticsStorage::StatisticsStorage() {}
 
+StatisticsStorage::~StatisticsStorage() {
+    foreach(Statistic* stat, stats) {
+        delete stat;
+    }
+
+    stats.clear();
+}
+
 // To register a statistics
 Statistic * StatisticsStorage::registerStat(QString name, QString unit) {
 

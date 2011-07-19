@@ -9,6 +9,7 @@ namespace GeneLabCore{
 
 class TreeShapeStats : public StatisticsProvider
 {
+    Q_OBJECT
 public:
 
     TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * treeshape);
@@ -41,6 +42,11 @@ protected:
 
     // weight
     float weight;
+
+    // compute
+    bool compute;
+protected slots:
+    void reset();
 };
 
 }

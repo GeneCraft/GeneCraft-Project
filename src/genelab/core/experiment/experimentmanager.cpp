@@ -419,7 +419,7 @@ namespace GeneLabCore {
 
     float ExperimentManager::evaluateEntity(Entity* e) {
         // Get the statistics
-        Statistic* sY = e->getStatisticByName("Root absolute Y position");
+        Statistic* sY    = e->getStatisticByName("Root absolute Y position");
         Statistic* sDist = e->getStatisticByName("Root relative velocity");
 
         // Create the engine

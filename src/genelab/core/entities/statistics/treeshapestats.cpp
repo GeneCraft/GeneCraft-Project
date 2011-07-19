@@ -18,18 +18,25 @@ TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * tre
 
     treeshapeBones = new Statistic("Treeshape Bones","bones");
     statsStorage->registerStat("Treeshape Bones",treeshapeBones);
+    connect(treeshapeBones, SIGNAL(reseted()), this, SLOT(reset()));
 
     treeshapeBonesLength = new Statistic("Treeshape Bones Length","m");
     statsStorage->registerStat("Treeshape Bones Length",treeshapeBonesLength);
+    connect(treeshapeBonesLength, SIGNAL(reseted()), this, SLOT(reset()));
 
     treeshapeWeight = new Statistic("Treeshape Weight","kg");
     statsStorage->registerStat("Treeshape Weight",treeshapeWeight);
+    connect(treeshapeWeight, SIGNAL(reseted()), this, SLOT(reset()));
 
     treeshapeNbSensors = new Statistic("Treeshape Nb Sensors","sensors");
     statsStorage->registerStat("Treeshape Nb Sensors",treeshapeNbSensors);
+    connect(treeshapeNbSensors, SIGNAL(reseted()), this, SLOT(reset()));
 
     treeshapeNbEffectors = new Statistic("Treeshape Nb Effectors","effectors");
     statsStorage->registerStat("Treeshape Nb Effectors",treeshapeNbEffectors);
+    connect(treeshapeNbEffectors, SIGNAL(reseted()), this, SLOT(reset()));
+
+    compute = true;
 }
 
 void TreeShapeStats::recursiveUpdate(Bone *b)
@@ -83,12 +90,28 @@ void TreeShapeStats::step()
         recursiveUpdate(b);
 
     // UPDATE VALUES
-    treeshapeBones->setValue(nbBones);
-    treeshapeBonesLength->setValue(length);
-    treeshapeWeight->setValue(weight);
+    if(compute) {
+
+        if(treeshapeBones->getValue() == 0)
+            treeshapeBones->setValue(nbBones);
+        if(treeshapeBonesLength->getValue() == 0)
+            treeshapeBonesLength->setValue(length);
+        if(treeshapeWeight->getValue() == 0)
+            treeshapeWeight->setValue(weight);
+        if(treeshapeNbSensors->getValue() == 0)
+            treeshapeNbSensors->setValue(treeshape->getRoot()->getEntity()->getSensors().count());
+        if(treeshapeNbEffectors->getValue() == 0)
+            treeshapeNbEffectors->setValue(treeshape->getRoot()->getEntity()->getEffectors().count());
+
+        compute = false;
+    }
+
     treeshapeVerticalHeight->setValue(maxHeightY - minHeightY);
-    treeshapeNbSensors->setValue(treeshape->getRoot()->getEntity()->getSensors().count());
-    treeshapeNbEffectors->setValue(treeshape->getRoot()->getEntity()->getEffectors().count());
+}
+
+
+void TreeShapeStats::reset() {
+    compute = true;
 }
 
 

@@ -54,6 +54,13 @@ void Entity::setup() {
 }
 
 Entity::~Entity() {
+    delete this->statisticsStorage;
+    foreach(StatisticsProvider* stat, stats) {
+        delete stat;
+    }
+
+    stats.clear();
+
     delete this->treeShape;
     delete this->brain;
     delete this->r;
