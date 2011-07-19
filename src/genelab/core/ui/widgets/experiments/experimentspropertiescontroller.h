@@ -2,6 +2,7 @@
 #define EXPERIMENTSPROPERTIESCONTROLLER_H
 
 #include <QWidget>
+#include <QVariantMap>
 #include "genelabcoreclasses.h"
 
 namespace Ui {
@@ -17,16 +18,26 @@ public:
     ExperimentsPropertiesController(GeneLabCore::Experiment *experiment, QWidget *parent = 0);
     ~ExperimentsPropertiesController();
 
+    QVariantMap getWorldMap();
+
 signals:
     void experimentLoaded(GeneLabCore::Experiment *experiment);
 
 public slots:
     void setupForm();
+
     void save();
-    void saveToFile();
+    void saveExpToFile();
+
     void updateStructures();
     void enterInWhatsThisMode();
-    void loadExp();
+
+    void loadExpFromFile();
+
+    void loadWorldFromFile();
+    void saveWorldToFile();
+
+    void setWorld(QVariantMap worldData);
     void setExperiment(GeneLabCore::Experiment *exp);
 
 private:

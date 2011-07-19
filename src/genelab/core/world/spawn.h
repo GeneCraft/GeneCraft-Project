@@ -15,23 +15,23 @@ namespace GeneLabCore {
     {
 
     public:
-        enum SpawnType {
-            Zone,
-            Position,
-        };
+//        enum SpawnType {
+//            Zone,
+//            Position,
+//        };
 
         Spawn(QVariant data);
-        Spawn(SpawnType type, btVector3 position);
-        Spawn(SpawnType type, btVector3 topleftCorner, btVector3 bottomRightCorner);
+        Spawn(QString type, btVector3 position);
+        Spawn(QString type, btVector3 topleftCorner, btVector3 bottomRightCorner);
 
         btVector3 getSpawnPosition();
 
-        SpawnType getType() { return this->type; }
+        QString getType() { return this->type; }
         btVector3 getMinPos() { return this->minPosition; }
         btVector3 getMaxPos() { return this->maxPosition; }
 
     protected:
-        SpawnType type;
+        QString type;
         // Position
         btVector3 position;
         // Zone

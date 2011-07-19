@@ -42,15 +42,18 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->pbClose,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->pbHelp,SIGNAL(clicked()),this,SLOT(enterInWhatsThisMode()));
-    connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExp()));
-    connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveToFile()));
+    connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExpFromFile()));
+    connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveExpToFile()));
+
+    connect(ui->pbLoadWorldFromFile,SIGNAL(clicked()),this,SLOT(loadWorldFromFile()));
+    connect(ui->pbSaveWorldToFile,SIGNAL(clicked()),this,SLOT(saveWorldToFile()));
 
     gravitiesName << "Earth" << "Moon" << "Mercury" << "Venus" << "Mars" << "Jupiter"
                   << "Io" << "Europa" << "Ganymede" << "Callisto" << "Saturn" << "Titan" << "Uranus"
-                  << "Titania" << "Oberon" << "Neptune" << "Triton" << "Pluto" << "Eris" << "Sun";
+                  << "Titania" << "Oberon" << "Neptune" << "Triton" << "Pluto" << "Eris" << "Sun" << "Space";
 
     gravities << 9.81 << 1.625 << 3.703 << 8.872  << 3.728 << 25.93 << 1.789 << 1.314
-              << 1.426 << 1.24 << 11.19 << 1.3455 << 9.01 << 0.379 << 0.347 << 11.28 << 0.779 << 0.61 << 0.8 << 274.1;
+              << 1.426 << 1.24 << 11.19 << 1.3455 << 9.01 << 0.379 << 0.347 << 11.28 << 0.779 << 0.61 << 0.8 << 274.1 << 0.0;
 
     for(int i=0; i<gravitiesName.count();++i)
         ui->cbGravity->addItem(QString::number(gravities.at(i)) + " - " + gravitiesName.at(i));
@@ -129,15 +132,24 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     // -----------
     // -- world --
     // -----------
+    setWorld(experiment->getWorldDataMap());
+}
+
+void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
 
     // -- Biome --
-    QVariantMap biomeMap = experiment->getWorldDataMap()["biome"].toMap();
+    QVariantMap biomeMap = worldData["biome"].toMap();
+    double gravity = biomeMap["gravity"].toDouble();
+
+    for(int i=0; i<gravitiesName.count();++i)
+        if(gravity == gravities.at(i))
+            ui->cbGravity->setCurrentIndex(i);
 
     // lights
     ui->teLights->setText(QxtJSON::stringify(biomeMap["lights"]));
 
     // -- Scene --
-    QVariantMap sceneMap = experiment->getWorldDataMap()["scene"].toMap();
+    QVariantMap sceneMap = worldData["scene"].toMap();
 
     // camera
     QVariantMap camMap = sceneMap["camera"].toMap();
@@ -177,9 +189,11 @@ void ExperimentsPropertiesController::save() {
             experiment->setRessource(NULL);
         }
     }
+
+    emit experimentLoaded(experiment);
 }
 
-void ExperimentsPropertiesController::saveToFile() {
+void ExperimentsPropertiesController::saveExpToFile() {
 
     updateStructures();
 
@@ -237,6 +251,11 @@ void ExperimentsPropertiesController::updateStructures() {
     constValue->save();
     newBrainTree->save();
 
+    experiment->setWorldData(getWorldMap());
+}
+
+QVariantMap ExperimentsPropertiesController::getWorldMap() {
+
     // World
     QVariantMap worldMap;
 
@@ -261,14 +280,11 @@ void ExperimentsPropertiesController::updateStructures() {
 
     worldMap.insert("scene",sceneMap);
 
-    experiment->setWorldData(worldMap);
-
-
-
-
+    return worldMap;
 }
 
-void ExperimentsPropertiesController::loadExp() {
+
+void ExperimentsPropertiesController::loadExpFromFile() {
 
     const QString DEFAULT_DIR_KEY("default_dir");
     QSettings mySettings;
@@ -281,19 +297,51 @@ void ExperimentsPropertiesController::loadExp() {
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);
         QVariant expData = from->load();
-
-        // TODO Error ???
-//        if(exp.toMap().contains("Error")){
-//        }
-//        else {
-//        }
-
         Experiment *experiment = new Experiment(expData);
         experiment->setRessource(from);
         setExperiment(experiment);
         emit experimentLoaded(experiment);
     }
 }
+
+void ExperimentsPropertiesController::loadWorldFromFile() {
+
+    const QString DEFAULT_DIR_KEY("default_dir");
+    QSettings mySettings;
+    QString selectedFile = QFileDialog::getOpenFileName(this, "Select a world", mySettings.value(DEFAULT_DIR_KEY).toString(),"World (*.world)");
+
+    if (!selectedFile.isEmpty()) {
+        QDir CurrentDir;
+        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+
+        // Load Generic Entity
+        Ressource* from = new JsonFile(selectedFile);
+        QVariant data = from->load();
+        setWorld(data.toMap());
+    }
+}
+
+void ExperimentsPropertiesController::saveWorldToFile() {
+
+    // To new file
+    const QString DEFAULT_DIR_KEY("default_dir");
+    QSettings mySettings;
+    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", mySettings.value(DEFAULT_DIR_KEY).toString(),"World (*.world)");
+
+    if (!selectedFile.isEmpty()) {
+        QDir CurrentDir;
+        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+
+        Ressource* to = new JsonFile(selectedFile);
+        int code = to->save(getWorldMap());
+
+        if(code != 0) {
+            QMessageBox::warning(this, "Impossible to save world",
+                                 QString("Impossible to save world : error code : ") + QString::number(code));
+        }
+    }
+}
+
 
 void ExperimentsPropertiesController::enterInWhatsThisMode() {
     QWhatsThis::enterWhatsThisMode();

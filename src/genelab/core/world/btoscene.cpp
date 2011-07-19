@@ -25,21 +25,16 @@ namespace GeneLabCore {
         // ------------
         // -- Camera --
         // ------------
-
-        float camX, camY, camZ, lookX, lookY, lookZ;
         QVariantMap camData = data["camera"].toMap();
-        camX = camData["posX"].toFloat();
-        camY = camData["posY"].toFloat();
-        camZ = camData["posZ"].toFloat();
-        lookX = camData["targetX"].toFloat();
-        lookY = camData["targetY"].toFloat();
-        lookZ = camData["targetZ"].toFloat();
+
+        Ogre::Vector3 position(camData["posX"].toFloat(), camData["posY"].toFloat(), camData["posZ"].toFloat());
+        Ogre::Vector3 target(camData["targetX"].toFloat(), camData["targetY"].toFloat(), camData["targetZ"].toFloat());
 
         BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
         Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
         Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
-        cam->setPosition(Ogre::Vector3(camX, camY, camZ)); // -20, 10, 0
-        cam->setDirection(Ogre::Vector3(lookX, lookY, lookZ)); // -20, 5, 0
+        cam->setPosition(position);
+        cam->setDirection(target - position);
 
 
         // -----------
@@ -70,11 +65,12 @@ namespace GeneLabCore {
         // ------------
 
         foreach(Spawn* sp, this->spawns) {
-            switch(sp->getType()) {
 
-            case Spawn::Position:
+            QString type = sp->getType();
 
-                {
+
+            if(type == "position") {
+
                 // Create Ogre Entity
                 Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
 
@@ -94,11 +90,10 @@ namespace GeneLabCore {
                 node->setPosition(sp->getSpawnPosition().x(),
                                   sp->getSpawnPosition().y(),
                                   sp->getSpawnPosition().z());
-            }
-            break;
 
-            case Spawn::Zone:
-                {
+            }
+            else if(type == "minMaxArea" || type == "boxArea") {
+
                 // Create Ogre Entity
                 Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
 
@@ -107,8 +102,6 @@ namespace GeneLabCore {
 
                 // Attach
                 Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
-
-
 
                 node->attachObject(entity);
                 btVector3 minPos = sp->getMinPos();
@@ -125,10 +118,6 @@ namespace GeneLabCore {
                 Ogre::Vector3 scale = ogreSize  / boundingB.getSize();
                 node->scale(scale);
             }
-                break;
-            }
         }
-
     }
-
 }

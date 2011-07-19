@@ -24,7 +24,7 @@ namespace GeneLabCore {
         }
 
         if(this->spawns.size() == 0) { // Prevent no spawn bug !
-            this->spawns.append(new Spawn(Spawn::Position, btVector3(0, 10, 0)));
+            this->spawns.append(new Spawn("position", btVector3(0, 10, 0)));
         }
     }
 
@@ -58,13 +58,13 @@ namespace GeneLabCore {
                     // position and rotation
                     btTransform transform; transform.setIdentity();
                     transform.setOrigin(btVector3(shapeMap.value("posX").toDouble(),shapeMap.value("posY").toDouble(),shapeMap.value("posZ").toDouble()));
-                    transform.getBasis().setEulerZYX(shapeMap.value("euleurX").toDouble(),shapeMap.value("euleurY").toDouble(),shapeMap.value("euleurZ").toDouble());
+                    transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // size
                     btVector3 size(shapeMap.value("sizeX").toDouble(),shapeMap.value("sizeY").toDouble(),shapeMap.value("sizeZ").toDouble());
 
                     // create the box
-                    btBox *box = world->getShapesFactory()->createBox(size,transform, shapeMap["density"].toFloat());
+                    btBox *box = world->getShapesFactory()->createBox(size, transform, shapeMap["density"].toFloat());
                     box->setup();
 
                 }
@@ -73,7 +73,7 @@ namespace GeneLabCore {
                     // position and rotation
                     btTransform transform; transform.setIdentity();
                     transform.setOrigin(btVector3(shapeMap.value("posX").toDouble(),shapeMap.value("posY").toDouble(),shapeMap.value("posZ").toDouble()));
-                    transform.getBasis().setEulerZYX(shapeMap.value("euleurX").toDouble(),shapeMap.value("euleurY").toDouble(),shapeMap.value("euleurZ").toDouble());
+                    transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
                     btSphere *shere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
@@ -84,7 +84,7 @@ namespace GeneLabCore {
                     // position and rotation
                     btTransform transform; transform.setIdentity();
                     transform.setOrigin(btVector3(shapeMap.value("posX").toDouble(),shapeMap.value("posY").toDouble(),shapeMap.value("posZ").toDouble()));
-                    transform.getBasis().setEulerZYX(shapeMap.value("euleurX").toDouble(),shapeMap.value("euleurY").toDouble(),shapeMap.value("euleurZ").toDouble());
+                    transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
                     btCylinder *cylinder = world->getShapesFactory()->createCylinder(shapeMap.value("radius").toFloat(), shapeMap.value("height").toFloat(), transform, shapeMap["density"].toFloat());
