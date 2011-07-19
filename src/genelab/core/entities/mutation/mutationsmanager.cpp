@@ -574,8 +574,6 @@ namespace GeneLabCore {
         QStringList nodes = treeData.split(",", QString::SkipEmptyParts);
         QString newConnexionInfo;
 
-        qDebug() << "old connexion" << treeData;
-
         QList<QString>::iterator it = nodes.begin();
         while(it != nodes.end()){
             // replace the entire subtree
@@ -770,8 +768,6 @@ namespace GeneLabCore {
                 break;
             }
         }
-
-        qDebug() << "new connexion" << newConnexionInfo;
 
         outMap.insert("connexionInfo", newConnexionInfo);
 
