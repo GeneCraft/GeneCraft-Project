@@ -418,15 +418,27 @@ namespace GeneLabCore {
     }
 
     float ExperimentManager::evaluateEntity(Entity* e) {
+        // Get the statistics
         Statistic* sY = e->getStatisticByName("Root absolute Y position");
         Statistic* sDist = e->getStatisticByName("Root relative velocity");
+
+        // Create the engine
         QScriptEngine engine;
+
+        // Bind the statistics to the engine
         QScriptValue scriptvelocity = engine.newQObject(sDist);
         engine.globalObject().setProperty("velocity", scriptvelocity);
         QScriptValue scripty = engine.newQObject(sY);
         engine.globalObject().setProperty("ypos", scripty);
+
+        // Fitness function
+        QScriptValue fitnessFunc = engine.evaluate("(function() {return velocity.sum * ypos.mean})");
+
+        // Call to the fitness function
+        QScriptValue fitness = fitnessFunc.call();
+
+        // Old fitness for comparaison
         qDebug() << sDist->getSum() << sY->getMean() << sDist->getSum() * sY->getMean();
-        QScriptValue fitness = engine.evaluate("velocity.sum * ypos.mean");
 
         return fitness.toNumber();
     }
