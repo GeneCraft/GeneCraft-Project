@@ -48,8 +48,8 @@ void Entity::setup() {
         this->treeShape->setup();
 
         this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
-        this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"Root"));
-        this->brainActivityStat = statisticsStorage->registerStat("Brain Activity", "a / step");
+        this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"root"));
+        this->brainActivityStat = statisticsStorage->registerStat("brainActivity", "a / step");
     }
 }
 

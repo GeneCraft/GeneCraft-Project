@@ -8,47 +8,61 @@
 #include "body/treeshape.h"
 #include "entity.h"
 
+#include "effectors/effector.h"
+#include "effectors/rotationalmotorseffector.h"
+
 namespace GeneLabCore{
 
 TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * treeshape) :
     StatisticsProvider(statsStorage), treeshape(treeshape)
 {
-    treeshapeVerticalHeight = new Statistic("Treeshape Vertical Height","m");
-    statsStorage->registerStat("Treeshape Vertical Height",treeshapeVerticalHeight);
+    treeshapeVerticalHeight = new Statistic("bodyHeight","m");
+    statsStorage->registerStat(treeshapeVerticalHeight->getName(),treeshapeVerticalHeight);
 
-    treeshapeBones = new Statistic("Treeshape Bones","bones");
-    statsStorage->registerStat("Treeshape Bones",treeshapeBones);
+    treeshapeBones = new Statistic("bodyBones","bones / fix");
+    statsStorage->registerStat(treeshapeBones->getName(),treeshapeBones);
     connect(treeshapeBones, SIGNAL(reseted()), this, SLOT(reset()));
 
-    treeshapeBonesLength = new Statistic("Treeshape Bones Length","m");
-    statsStorage->registerStat("Treeshape Bones Length",treeshapeBonesLength);
+    treeshapeBonesLength = new Statistic("bodyLength","m / bones");
+    statsStorage->registerStat(treeshapeBonesLength->getName(),treeshapeBonesLength);
     connect(treeshapeBonesLength, SIGNAL(reseted()), this, SLOT(reset()));
 
-    treeshapeWeight = new Statistic("Treeshape Weight","kg");
-    statsStorage->registerStat("Treeshape Weight",treeshapeWeight);
+    treeshapeWeight = new Statistic("bodyWeight","kg / bones");
+    statsStorage->registerStat(treeshapeWeight->getName(),treeshapeWeight);
     connect(treeshapeWeight, SIGNAL(reseted()), this, SLOT(reset()));
 
-    treeshapeNbSensors = new Statistic("Treeshape Nb Sensors","sensors");
-    statsStorage->registerStat("Treeshape Nb Sensors",treeshapeNbSensors);
+    treeshapeNbSensors = new Statistic("bodySensors","sensors / fix");
+    statsStorage->registerStat(treeshapeNbSensors->getName(),treeshapeNbSensors);
     connect(treeshapeNbSensors, SIGNAL(reseted()), this, SLOT(reset()));
 
-    treeshapeNbEffectors = new Statistic("Treeshape Nb Effectors","effectors");
-    statsStorage->registerStat("Treeshape Nb Effectors",treeshapeNbEffectors);
+    treeshapeNbEffectors = new Statistic("bodyEffectors","effectors / (bone, fix)");
+    statsStorage->registerStat(treeshapeNbEffectors->getName(),treeshapeNbEffectors);
     connect(treeshapeNbEffectors, SIGNAL(reseted()), this, SLOT(reset()));
 
-    compute = true;
+    this->reset();
 }
 
 void TreeShapeStats::recursiveUpdate(Bone *b)
 {
     // TREESHAPE BONES LENGTH
-    length += b->getLength();
-
-    // TREESHAPE BONES NUMBER
-    nbBones++;
+    length = b->getLength();
 
     // TREESHAPE WEIGHT
-    weight += 1.0/b->getRigidBody()->getInvMass(); // (compound bone + fix)
+    weight = 1.0/b->getRigidBody()->getInvMass(); // (compound bone + fix)
+
+    if(computeBonesWeight)
+        treeshapeWeight->setValue(weight);
+    if(computeBonesLength)
+        treeshapeBonesLength->setValue(length);
+    if(computeBonesNb)
+        treeshapeBones->setValue(b->getEndFixation()->getBones().size());
+    if(computeEffectorsNb) {
+        treeshapeNbEffectors->setValue(1);
+        treeshapeNbEffectors->setValue(b->getEndFixation()->getEffectors().size());
+    }
+    if(computeSensorsNb) {
+        treeshapeNbSensors->setValue(b->getEndFixation()->getSensors().size());
+    }
 
     // TREESHAPE VERTICAL HEIGHT
     // Bone.rigidBody == Bone.endFixation.rigidBody (CompoundShape)
@@ -82,6 +96,22 @@ void TreeShapeStats::step()
     // TREESHAPE WEIGHT
     weight = 1.0/treeshape->getRoot()->getRigidBody()->getInvMass();
 
+    if(computeBonesWeight) {
+        treeshapeWeight->setValue(weight);
+    }
+
+    if(computeBonesNb) {
+        treeshapeBones->setValue(treeshape->getRoot()->getBones().size());
+    }
+
+    if(computeEffectorsNb) {
+        treeshapeNbEffectors->setValue(treeshape->getRoot()->getEffectors().size());
+    }
+
+    if(computeSensorsNb) {
+        treeshapeNbSensors->setValue(treeshape->getRoot()->getSensors().size());
+    }
+
     // TREESHAPE VERTICAL HEIGHT
     // Algo : find the heighter and the lower fixation in y axis, height = max - min
     minHeightY = maxHeightY = treeshape->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
@@ -89,29 +119,43 @@ void TreeShapeStats::step()
     foreach (Bone *b, treeshape->getRoot()->getBones())
         recursiveUpdate(b);
 
-    // UPDATE VALUES
-    if(compute) {
-
-        if(treeshapeBones->getValue() == 0)
-            treeshapeBones->setValue(nbBones);
-        if(treeshapeBonesLength->getValue() == 0)
-            treeshapeBonesLength->setValue(length);
-        if(treeshapeWeight->getValue() == 0)
-            treeshapeWeight->setValue(weight);
-        if(treeshapeNbSensors->getValue() == 0)
-            treeshapeNbSensors->setValue(treeshape->getRoot()->getEntity()->getSensors().count());
-        if(treeshapeNbEffectors->getValue() == 0)
-            treeshapeNbEffectors->setValue(treeshape->getRoot()->getEntity()->getEffectors().count());
-
-        compute = false;
-    }
-
     treeshapeVerticalHeight->setValue(maxHeightY - minHeightY);
+
+    /*if(computeBonesLength) {
+        treeshapeBonesLength->setValue(0);
+    }
+    if(computeBonesNb) {
+        treeshapeBones->setValue(0);
+    }
+    if(computeBonesWeight) {
+        treeshapeWeight->setValue(0);
+    }
+    if(computeEffectorsNb) {
+        treeshapeNbEffectors->setValue(0);
+    }
+    if(computeSensorsNb) {
+        treeshapeNbSensors->setValue(0);
+    }*/
+
+    computeBonesLength = false;
+    computeBonesNb = false;
+    computeBonesWeight = false;
+    computeEffectorsNb = false;
+    computeSensorsNb = false;
 }
 
 
 void TreeShapeStats::reset() {
-    compute = true;
+    if(treeshapeBones->getSum() == 0)
+        computeBonesNb = true;
+    if(treeshapeBonesLength->getSum() == 0)
+        computeBonesLength = true;
+    if(treeshapeWeight->getSum() == 0)
+        computeBonesWeight = true;
+    if(treeshapeNbSensors->getSum() == 0)
+        computeSensorsNb = true;
+    if(treeshapeNbEffectors->getSum() == 0)
+        computeEffectorsNb = true;
 }
 
 

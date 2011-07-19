@@ -44,7 +44,12 @@ protected:
     float weight;
 
     // compute
-    bool compute;
+    bool computeBonesNb;
+    bool computeBonesLength;
+    bool computeBonesWeight;
+    bool computeSensorsNb;
+    bool computeEffectorsNb;
+
 protected slots:
     void reset();
 };

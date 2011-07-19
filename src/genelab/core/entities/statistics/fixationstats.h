@@ -27,16 +27,18 @@ protected:
     Fixation * fixation;
 
     // Stats
-    Statistic *fixationVelocity;
-    Statistic *fixationRelativeDistance;
+    Statistic *fixationAbsoluteVelocity;
+    Statistic *fixationRelativeVelocity;
     Statistic *fixationAbsoluteYPosition;
-    Statistic *fixationAbsoluteDistance;
+    Statistic *fixationAbsoluteXPosition;
+    Statistic *fixationAbsoluteZPosition;
 
     // specific data
     int nbSteps;
-    float sum;
     float distance;
-    btVector3 previousOrigin, refOrigin;
+    btVector3 previousOriginAbs;
+    btVector3 previousOriginRel,previousOriginY,previousOriginX,previousOriginZ;
+    btVector3 refOriginRel, refOriginX, refOriginY, refOriginZ;
 };
 
 }

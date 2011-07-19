@@ -427,12 +427,16 @@ namespace GeneLabCore {
 
         // Bind the statistics to the engine
         QScriptValue scriptvelocity = engine.newQObject(sDist);
-        engine.globalObject().setProperty("velocity", scriptvelocity);
+        QScriptValue entityObj = engine.newObject();
+
+        entityObj.setProperty("velocity", scriptvelocity);
         QScriptValue scripty = engine.newQObject(sY);
-        engine.globalObject().setProperty("ypos", scripty);
+        entityObj.setProperty("ypos", scripty);
+
+        engine.globalObject().setProperty("entity", entityObj);
 
         // Fitness function
-        QScriptValue fitnessFunc = engine.evaluate("(function() {return velocity.sum * ypos.mean})");
+        QScriptValue fitnessFunc = engine.evaluate("(function() {return entity.velocity.sum * entity.ypos.mean})");
 
         // Call to the fitness function
         QScriptValue fitness = fitnessFunc.call();
