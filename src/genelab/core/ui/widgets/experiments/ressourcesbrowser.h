@@ -35,7 +35,7 @@ public slots:
 
     void openExperimentFolder();
 
-
+    void saveExperiment();
     void saveEntity();
 
 

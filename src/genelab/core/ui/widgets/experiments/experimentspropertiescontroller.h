@@ -44,10 +44,12 @@ public slots:
     void removeEntityFromSeed();
     void addEntityToSeed();
     void viewGenome();
+    void viewAvailableGenome();
 
     void gbFamilyToggled(bool);
     void gbFixedGenomes(bool);
     void refreshRessources();
+    void addFromGenome();
 
 
 private:

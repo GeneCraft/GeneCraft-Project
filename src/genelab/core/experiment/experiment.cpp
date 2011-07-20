@@ -60,7 +60,6 @@ Experiment::Experiment() : ressource(NULL){
         author          = map["author"].toString();
         comments        = map["comments"].toString();
         online          = map["online"].toBool();
-        online = true;
         dateOfCreation  = QDateTime::fromString(map["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
 
         // simulation
@@ -85,7 +84,7 @@ Experiment::Experiment() : ressource(NULL){
             evalFunction = "(function() {return -1;})";
         }
 
-        if(map.contains("evalFunction"))
+        if(map.contains("validityFunction"))
             validityFunction  = map["validityFunction"].toString();
         else
             validityFunction = "";
@@ -96,7 +95,7 @@ Experiment::Experiment() : ressource(NULL){
             validityFunction = "(function() {return true;})";
         }
 
-        if(map.contains("evalFunction"))
+        if(map.contains("endFunction"))
             endFunction = map["endFunction"].toString();
         else
             endFunction = "";
@@ -107,7 +106,7 @@ Experiment::Experiment() : ressource(NULL){
             endFunction = "(function(int step) {return step <"+QString::number(this->duration)+";})";
         }
 
-        if(map.contains("evalFunction"))
+        if(map.contains("dieFunction"))
             dieFunction = map["dieFunction"].toString();
         else
             dieFunction = "";

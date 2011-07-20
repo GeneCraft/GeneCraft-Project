@@ -5,6 +5,7 @@
    "description":"",
    "duration":1200,
    "id":"NewOneAgain2222",
+   "evalFunc" : "(function(){ return entity.rootRelVelocity.sum; })"
    "mutations":{
       "boneAngularOrigin":{
          "enable":true,
@@ -139,7 +140,7 @@
    "onlyIfEntityIsStable":true,
    "seedInfo":{
       "type":"family",
-	  "familyName":"spider"
+	  "family":"spider"
    },
    "stopIfEntityIsNotInOnePiece":true,
    "timeToWaitForStability":300,

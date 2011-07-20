@@ -128,9 +128,9 @@ void FixationPropertiesController::addBone()
     {
         btTransform local; local.setIdentity();
 
-        Bone *bone = fixation->addBone(0,0,ui->leAddBoneRadius->text().toFloat(),
-                                        ui->leAddBoneLenght->text().toFloat(),
-                                        ui->leAddBoneEndFixRadius->text().toFloat(),
+        Bone *bone = fixation->addBone(0,0,0.2,
+                                        0.8,
+                                        0.2,
                                         btVector3(0,0,0),
                                         btVector3(0,0,0));
 

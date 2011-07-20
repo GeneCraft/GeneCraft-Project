@@ -386,6 +386,10 @@ namespace GeneLabCore {
     Entity* ExperimentManager::spawnEntity(QVariant genome) {
         btVector3 position = world->getSpawnPosition();
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
+        if(e == NULL) {
+            qDebug() << "Entity genome corrupted !";
+            return GenericFamily::createVirginEntity(shapesFactory, 1, position);
+        }
         e->setup();
         ee->addEntity(e);
 

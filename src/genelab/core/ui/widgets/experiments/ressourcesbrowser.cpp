@@ -33,6 +33,7 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbLoadLocalExp,SIGNAL(clicked()),this,SLOT(loadLocalExperiment()));
     connect(ui->pbLoadOnlineExp,SIGNAL(clicked()),this,SLOT(loadOnlineExperiment()));
     connect(ui->pbOpenExperimentsFolder,SIGNAL(clicked()),this,SLOT(openExperimentFolder()));
+    connect(ui->pbSaveExp,SIGNAL(clicked()),this,SLOT(saveExperiment()));
 
     // worlds
 
@@ -135,6 +136,24 @@ void RessourcesBrowser::saveEntity() {
             // Load Generic Entity
             Ressource* to = new JsonFile(selectedFile);
             to->save(entityTWI->dataw.data);
+
+            refreshLocalRessources();
+       }
+    }
+}
+
+void RessourcesBrowser::saveExperiment() {
+
+    if(ui->twOnlineExperiments->currentItem()) {
+
+        ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
+        QString selectedFile = QFileDialog::getSaveFileName(this, "Save the experiment", "ressources", "Experiment (*.exp)");
+
+        if (!selectedFile.isEmpty()) {
+
+            // Load Generic Entity
+            Ressource* to = new JsonFile(selectedFile);
+            to->save(expTWI->dataw.data);
 
             refreshLocalRessources();
        }

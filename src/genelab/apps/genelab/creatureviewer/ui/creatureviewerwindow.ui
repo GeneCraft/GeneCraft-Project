@@ -74,6 +74,12 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dwCreature">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="windowIcon">
     <iconset resource="../../../../core/ressources/ressources.qrc">
      <normaloff>:/img/icons/entity</normaloff>:/img/icons/entity</iconset>
@@ -90,10 +96,10 @@
    <widget class="QWidget" name="dockWidgetContents_2"/>
   </widget>
   <widget class="QDockWidget" name="dwBone">
-   <property name="maximumSize">
+   <property name="minimumSize">
     <size>
-     <width>320</width>
-     <height>524287</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -123,6 +129,12 @@
    </attribute>
   </widget>
   <widget class="QDockWidget" name="dwBrain">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Brain</string>
    </property>
@@ -132,6 +144,12 @@
    <widget class="QWidget" name="dwContent_Brain"/>
   </widget>
   <widget class="QDockWidget" name="dwFixation">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="features">
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
@@ -144,6 +162,12 @@
    <widget class="QWidget" name="dwContent_Bone"/>
   </widget>
   <widget class="QDockWidget" name="dwStats">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="allowedAreas">
     <set>Qt::AllDockWidgetAreas</set>
    </property>
@@ -156,6 +180,12 @@
    <widget class="QWidget" name="dwContent_Stats"/>
   </widget>
   <widget class="QDockWidget" name="dwWorker">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Worker</string>
    </property>
@@ -165,6 +195,12 @@
    <widget class="QWidget" name="dockWidgetContents_3"/>
   </widget>
   <widget class="QDockWidget" name="dwRessourcesBrowser">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Ressources browser</string>
    </property>

@@ -67,6 +67,22 @@ namespace GeneLabCore {
         bool getStopIfEntityIsNotInOnePiece() { return this->stopIfEntityIsNotInOnePiece; }
         void setStopIfEntityIsNotInOnePiece(bool stopIfEntityIsNotInOnePiece) { this->stopIfEntityIsNotInOnePiece = stopIfEntityIsNotInOnePiece; }
 
+        QString getEndFunction() { return this->endFunction; }
+        QString getDieFunction() { return this->dieFunction; }
+
+        void setDieFunction(QString function) { dieFunction = function; }
+        void setEndFunction(QString function) { endFunction = function; }
+
+        // ----------------
+        // -- Evaluation --
+        // ----------------
+
+        QString getEvalFunction() { return this->evalFunction; }
+        QString getValidityFunction() { return this->validityFunction; }
+
+        void setValidityFunction(QString function) { validityFunction = function; }
+        void setEvalFunction(QString function) { evalFunction = function;  }
+
         // ---------------
         // -- Mutations --
         // ---------------
@@ -94,22 +110,6 @@ namespace GeneLabCore {
         bool hasRessource() { return ressource != NULL; }
         Ressource* getRessource() { return ressource; }
         void setRessource(Ressource* ressource) { this->ressource = ressource; }
-
-        /**
-          * To get the scripted functions
-          */
-        QString getEvalFunction() {
-            return this->evalFunction;
-        }
-        QString getValidityFunction() {
-            return this->validityFunction;
-        }
-        QString getEndFunction() {
-            return this->endFunction;
-        }
-        QString getDieFunction() {
-            return this->dieFunction;
-        }
 
     protected:
 

@@ -61,10 +61,13 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbAddEntityToSeed,SIGNAL(clicked()),this,SLOT(addEntityToSeed()));
     connect(ui->pbRemoveEntityFromSeed,SIGNAL(clicked()),this,SLOT(removeEntityFromSeed()));
     connect(ui->pbViewGenome,SIGNAL(clicked()),this,SLOT(viewGenome()));
+    connect(ui->pbViewAvailableGenome,SIGNAL(clicked()),this,SLOT(viewAvailableGenome()));
 
     connect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
     connect(ui->gbFixedGenomes,SIGNAL(toggled(bool)),this,SLOT(gbFixedGenomes(bool)));
     connect(ui->pbRefreshRessources,SIGNAL(clicked()),this,SLOT(refreshRessources()));
+    connect(ui->pbAddFromGenome,SIGNAL(clicked()),this,SLOT(addFromGenome()));
+
 
     // -----------
     // -- world --
@@ -139,12 +142,32 @@ void ExperimentsPropertiesController::addEntityToSeed() {
 
 void ExperimentsPropertiesController::viewGenome() {
 
-    if(ui->twEntitiesSelected->currentItem() && ui->twEntitiesAvailable->columnCount() > 0) {
+    if(ui->twEntitiesSelected->currentItem()) {
         EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *) ui->twEntitiesSelected->currentItem();
         ui->teGenome->setText(QxtJSON::stringify(entity->dataw.data));
     }
     else
         qDebug() << "no items selected";
+}
+
+void ExperimentsPropertiesController::viewAvailableGenome() {
+
+    if(ui->twEntitiesAvailable->currentItem()) {
+        EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *) ui->twEntitiesAvailable->currentItem();
+        ui->teGenome->setText(QxtJSON::stringify(entity->dataw.data));
+    }
+    else
+        qDebug() << "no items selected";
+}
+
+void ExperimentsPropertiesController::addFromGenome() {
+
+    QString text = ui->teGenome->toPlainText().trimmed();
+
+    if(!text.isEmpty())
+        ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(QxtJSON::parse(text).toMap()));
+    else
+        qDebug() << "genome empty";
 }
 
 void ExperimentsPropertiesController::refreshRessources() {
@@ -178,6 +201,14 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     ui->leTimeToWaitForStability->setText(QString::number(experiment->getTimeToWaitForStability()));
     ui->cbOnlyIfEntityIsStable->setChecked(experiment->getOnlyIfEntityIsStable());
     ui->cbStopIfEntityIsNotInOnePiece->setChecked(experiment->getStopIfEntityIsNotInOnePiece());
+    ui->teDieFunction->setText(experiment->getDieFunction());
+    ui->teEndFunction->setText(experiment->getEndFunction());
+
+    // ----------------
+    // -- evaluation --
+    // ----------------
+    ui->teValidateFunction->setText(experiment->getValidityFunction());
+    ui->teFitnessFunction->setText(experiment->getEvalFunction());
 
     // ---------------
     // -- mutations --
@@ -386,6 +417,12 @@ void ExperimentsPropertiesController::updateStructures() {
     experiment->setTimeToWaitForStability(ui->leTimeToWaitForStability->text().toInt());
     experiment->setOnlyIfEntityIsStable(ui->cbOnlyIfEntityIsStable->isChecked());
     experiment->setStopIfEntityIsNotInOnePiece(ui->cbStopIfEntityIsNotInOnePiece->isChecked());
+    experiment->setDieFunction(ui->teDieFunction->toPlainText());
+    experiment->setEndFunction(ui->teEndFunction->toPlainText());
+
+    // Evaluation
+    experiment->setValidityFunction(ui->teValidateFunction->toPlainText());
+    experiment->setEvalFunction(ui->teFitnessFunction->toPlainText());
 
     // Mutations
     boneLengthMutation->save();
@@ -548,3 +585,5 @@ void ExperimentsPropertiesController::gbFixedGenomes(bool checked) {
     connect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
 
 }
+
+
