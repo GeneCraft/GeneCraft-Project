@@ -6,17 +6,26 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#include "experiment/experiment.h"
+
+// mutations
 #include "floatmutationcontroller.h"
 #include "integermutationcontroller.h"
 #include "simpleprobabilitycontroller.h"
 #include "structuralmutationcontroller.h"
-
-#include "experiment/experiment.h"
 #include "mutation/mutationsmanager.h"
-#include "ressources/jsonfile.h"
 
+// world
 #include "world/btobiome.h"
+
+// ressources
+#include "ressources/jsonfile.h"
 #include "qxtjson.h"
+#include "ressourcesItems.h"
+#include "ressources/ressourcesmanager.h"
+
+// others
+#include "tools.h"
 
 using namespace GeneLabCore;
 
@@ -36,16 +45,30 @@ ExperimentsPropertiesController::ExperimentsPropertiesController(Experiment *exp
 
 void ExperimentsPropertiesController::setupForm() {
 
-    // Buttons
+    // ----------------
+    // -- connexions --
+    // ----------------
     connect(ui->pbSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(ui->pbClose,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->pbHelp,SIGNAL(clicked()),this,SLOT(enterInWhatsThisMode()));
+
     connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExpFromFile()));
     connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveExpToFile()));
 
     connect(ui->pbLoadWorldFromFile,SIGNAL(clicked()),this,SLOT(loadWorldFromFile()));
     connect(ui->pbSaveWorldToFile,SIGNAL(clicked()),this,SLOT(saveWorldToFile()));
 
+    connect(ui->pbAddEntityToSeed,SIGNAL(clicked()),this,SLOT(addEntityToSeed()));
+    connect(ui->pbRemoveEntityFromSeed,SIGNAL(clicked()),this,SLOT(removeEntityFromSeed()));
+    connect(ui->pbViewGenome,SIGNAL(clicked()),this,SLOT(viewGenome()));
+
+    connect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
+    connect(ui->gbFixedGenomes,SIGNAL(toggled(bool)),this,SLOT(gbFixedGenomes(bool)));
+    connect(ui->pbRefreshRessources,SIGNAL(clicked()),this,SLOT(refreshRessources()));
+
+    // -----------
+    // -- world --
+    // -----------
     gravitiesName << "Earth" << "Moon" << "Mercury" << "Venus" << "Mars" << "Jupiter"
                   << "Io" << "Europa" << "Ganymede" << "Callisto" << "Saturn" << "Titan" << "Uranus"
                   << "Titania" << "Oberon" << "Neptune" << "Triton" << "Pluto" << "Eris" << "Sun" << "Space";
@@ -67,6 +90,72 @@ void ExperimentsPropertiesController::setupForm() {
 
     for(int i=0; i<skyMaterials.count();++i)
         ui->cbSkyMaterial->addItem(skyMaterials.at(i));
+
+
+    // ----------------
+    // -- ressources --
+    // ----------------
+
+    // TODO QSettings
+    DataBase database;
+    database.dbName = "/db/genecraft/";
+    database.url = "http://www.genecraft-project.org";
+    database.port = 80;
+
+    localRessourceManager = new RessourcesManager(database,QDir("ressources"));
+}
+
+void ExperimentsPropertiesController::removeEntityFromSeed() {
+
+    if(ui->twEntitiesSelected->currentItem() > 0) {
+
+        QTreeWidgetItem * item = ui->twEntitiesSelected->currentItem();
+        int i = ui->twEntitiesSelected->indexOfTopLevelItem(item);
+        ui->twEntitiesSelected->takeTopLevelItem(i);
+        delete item;
+
+        //EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *) ui->twEntitiesSelected->currentItem();
+        //ui->twEntitiesSelected->removeItemWidget(entity,0);
+        //ui->twEntitiesSelected->setCurrentItem(NULL,0);
+        //delete entity;
+    }
+    else
+        qDebug() << "no items selected";
+}
+
+void ExperimentsPropertiesController::addEntityToSeed() {
+
+    if(ui->twEntitiesAvailable->currentItem() && ui->twEntitiesAvailable->columnCount() > 0) {
+
+        // can't copy directly the pointer !
+        // esle error during Tools::clearTreeWidget (double delete)
+        EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *)  ui->twEntitiesAvailable->currentItem();
+        EntityTreeWidgetItem *newEntity = new EntityTreeWidgetItem(entity->dataw.data);
+        ui->twEntitiesSelected->insertTopLevelItem(0,newEntity);
+    }
+    else
+        qDebug() << "no items selected";
+}
+
+void ExperimentsPropertiesController::viewGenome() {
+
+    if(ui->twEntitiesSelected->currentItem() && ui->twEntitiesAvailable->columnCount() > 0) {
+        EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *) ui->twEntitiesSelected->currentItem();
+        ui->teGenome->setText(QxtJSON::stringify(entity->dataw.data));
+    }
+    else
+        qDebug() << "no items selected";
+}
+
+void ExperimentsPropertiesController::refreshRessources() {
+
+    // clear lists
+    Tools::clearTreeWidget(this->ui->twEntitiesAvailable);
+
+    // available genomes
+    localRessourceManager->reloadDir();
+    foreach(DataWrapper entity, localRessourceManager->getCreatures())
+        ui->twEntitiesAvailable->insertTopLevelItem(0,new EntityTreeWidgetItem(entity));
 }
 
 void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
@@ -142,6 +231,45 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     // -- world --
     // -----------
     setWorld(experiment->getWorldDataMap());
+
+    // -----------
+    // -- seeds --
+    // -----------
+
+    // clear lists
+    Tools::clearTreeWidget(this->ui->twEntitiesAvailable);
+    Tools::clearTreeWidget(this->ui->twEntitiesSelected);
+
+    // available genomes
+    localRessourceManager->reloadDir();
+    foreach(DataWrapper entity, localRessourceManager->getCreatures())
+        ui->twEntitiesAvailable->insertTopLevelItem(0,new EntityTreeWidgetItem(entity));
+
+    // default check in QtCreator, check false to emit toggle and disable others...
+    ui->gbFixedGenomes->setChecked(false);
+
+    QVariantMap seedsMap = experiment->getSeedInfo();
+    QString seedType = seedsMap["type"].toString();
+    if(seedType == "family") {
+
+        ui->gbFamily->setChecked(true);
+        QString family = seedsMap["family"].toString();
+
+        for(int i=0;i < ui->cbFamily->count();++i)
+            if(family == ui->cbFamily->itemText(i).toLower())
+                ui->cbFamily->setCurrentIndex(i);
+
+    } else if(seedType == "fixedGenomes") {
+
+        ui->gbFixedGenomes->setChecked(true);
+        if(seedsMap.contains("genomes"))
+        {
+            QVariantList genomesList = seedsMap["genomes"].toList();
+
+            foreach(QVariant genome, genomesList)
+                ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(genome.toMap()));
+        }
+    }
 }
 
 void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
@@ -276,7 +404,33 @@ void ExperimentsPropertiesController::updateStructures() {
     newBrainTree->save();
 
     experiment->setWorldData(getWorldMap());
+
+    experiment->setSeedInfo(getSeedMap());
 }
+QVariantMap ExperimentsPropertiesController::getSeedMap() {
+
+    QVariantMap seedMap;
+    if(ui->gbFamily->isChecked()) {
+
+        seedMap.insert("type","family");
+        seedMap.insert("family",ui->cbFamily->currentText().toLower());
+
+    } else {
+
+        seedMap.insert("type","fixedGenomes");
+
+        QVariantList genomes;
+
+        for(int i=0; i < ui->twEntitiesSelected->topLevelItemCount(); ++i) {
+           EntityTreeWidgetItem *entityItem = (EntityTreeWidgetItem *) ui->twEntitiesSelected->topLevelItem(i);
+           genomes.append(entityItem->dataw.data);
+        }
+        seedMap.insert("genomes",genomes);
+    }
+
+    return seedMap;
+}
+
 
 QVariantMap ExperimentsPropertiesController::getWorldMap() {
 
@@ -378,4 +532,19 @@ void ExperimentsPropertiesController::saveWorldToFile() {
 
 void ExperimentsPropertiesController::enterInWhatsThisMode() {
     QWhatsThis::enterWhatsThisMode();
+}
+
+void ExperimentsPropertiesController::gbFamilyToggled(bool checked) {
+
+    disconnect(ui->gbFixedGenomes,SIGNAL(toggled(bool)),this,SLOT(gbFixedGenomes(bool)));
+    ui->gbFixedGenomes->setChecked(!checked);
+    connect(ui->gbFixedGenomes,SIGNAL(toggled(bool)),this,SLOT(gbFixedGenomes(bool)));
+}
+
+void ExperimentsPropertiesController::gbFixedGenomes(bool checked) {
+
+    disconnect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
+    ui->gbFamily->setChecked(!checked);
+    connect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
+
 }

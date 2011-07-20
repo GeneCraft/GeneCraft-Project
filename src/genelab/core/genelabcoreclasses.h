@@ -125,7 +125,7 @@ namespace GeneLabCore {
     // ----------------
     class Ressource;    // (file, db, etc.)
     class JsonLoader;   // Ressource management
-
+    class RessourcesManager;
 
     // --------
     // -- UI --

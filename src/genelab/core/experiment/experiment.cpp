@@ -32,8 +32,7 @@ Experiment::Experiment() : ressource(NULL){
 
         // seed
         seedInfo.insert("type", "family");
-        seedInfo.insert("familyName", "spider");
-
+        seedInfo.insert("family", "ant");
         QString evalFunction  = "(function() {return entity.relVelocity.sum;})";
         QString startFunction = "(function() {return entity.relVelocity.value == 0;})";
         QString dieFunction   = "(function() {return entity.isInOnePiece != true;})";

@@ -42,6 +42,18 @@ public:
         setText(2,origins["generation"].toString());
     }
 
+    EntityTreeWidgetItem(QVariantMap genomeMap)
+    {
+        dataw.data = genomeMap;
+        dataw.r = NULL;
+
+        QVariantMap origins = dataw.data["origins"].toMap();
+
+        setText(0,origins["name"].toString());
+        setText(1,origins["family"].toString());
+        setText(2,origins["generation"].toString());
+    }
+
     DataWrapper dataw;
 };
 

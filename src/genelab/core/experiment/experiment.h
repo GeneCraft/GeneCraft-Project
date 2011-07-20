@@ -86,6 +86,7 @@ namespace GeneLabCore {
         // ----------
 
         QVariantMap getSeedInfo() { return this->seedInfo; }
+        void setSeedInfo(QVariantMap seedInfo) { this->seedInfo = seedInfo; }
 
         // -----------
         // -- Other --

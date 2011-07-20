@@ -1,10 +1,14 @@
 #include "ressourcesbrowser.h"
 #include "ui_ressourcesbrowser.h"
 
+#include <QFileDialog>
+#include <QDesktopServices>
+
 #include "ressourcesItems.h"
 #include "experiment/experiment.h"
 #include "tools.h"
 #include "creaturefactory.h"
+#include "ressources/jsonfile.h"
 
 using namespace GeneLabCore;
 
@@ -14,6 +18,7 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // TODO QSettings
     DataBase database;
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
@@ -27,6 +32,7 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbRefreshOnlineExp,SIGNAL(clicked()),this,SLOT(refreshOnlineRessources()));
     connect(ui->pbLoadLocalExp,SIGNAL(clicked()),this,SLOT(loadLocalExperiment()));
     connect(ui->pbLoadOnlineExp,SIGNAL(clicked()),this,SLOT(loadOnlineExperiment()));
+    connect(ui->pbOpenExperimentsFolder,SIGNAL(clicked()),this,SLOT(openExperimentFolder()));
 
     // worlds
 
@@ -36,6 +42,9 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbRefreshOnlineEntity,SIGNAL(clicked()),this,SLOT(refreshOnlineRessources()));
     connect(ui->pbLoadLocalEntity,SIGNAL(clicked()),this,SLOT(loadLocalEntity()));
     connect(ui->pbLoadOnlineEntity,SIGNAL(clicked()),this,SLOT(loadOnlineEntity()));
+    connect(ui->pbOpenEntitiesFolder,SIGNAL(clicked()),this,SLOT(openExperimentFolder()));
+    connect(ui->pbSaveEntity,SIGNAL(clicked()),this,SLOT(saveEntity()));
+
 
     refreshLocalRessources();
 }
@@ -86,17 +95,48 @@ void RessourcesBrowser::loadLocalExperiment() {
 }
 
 void RessourcesBrowser::loadOnlineExperiment() {
-    ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
-    emit setExperiment(new Experiment(expTWI->dataw.data));
+
+    if(ui->twOnlineExperiments->currentItem()) {
+        ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
+        emit setExperiment(new Experiment(expTWI->dataw.data));
+    }
 }
 
 void RessourcesBrowser::loadLocalEntity() {
-    EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twLocalEntities->currentItem();
-    emit addEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
+    if(ui->twLocalEntities->currentItem()) {
+        EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twLocalEntities->currentItem();
+        emit addEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
+    }
 }
 
 void RessourcesBrowser::loadOnlineEntity() {
-    EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
-    emit addEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
+    if(ui->twOnlineEntities->currentItem()) {
+        EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
+        emit addEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
+    }
 }
 
+void RessourcesBrowser::openExperimentFolder() {
+
+    QString path = QDir::toNativeSeparators(QDir("ressources").absolutePath());
+    QDesktopServices::openUrl(QUrl("file:///" + path));
+}
+
+
+void RessourcesBrowser::saveEntity() {
+
+    if(ui->twOnlineEntities->currentItem()) {
+
+        EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
+        QString selectedFile = QFileDialog::getSaveFileName(this, "Save the genome", "ressources", "Genome (*.genome)");
+
+        if (!selectedFile.isEmpty()) {
+
+            // Load Generic Entity
+            Ressource* to = new JsonFile(selectedFile);
+            to->save(entityTWI->dataw.data);
+
+            refreshLocalRessources();
+       }
+    }
+}

@@ -19,6 +19,7 @@ public:
     ~ExperimentsPropertiesController();
 
     QVariantMap getWorldMap();
+    QVariantMap getSeedMap();
 
 signals:
     void experimentLoaded(GeneLabCore::Experiment *experiment);
@@ -40,6 +41,15 @@ public slots:
     void setWorld(QVariantMap worldData);
     void setExperiment(GeneLabCore::Experiment *exp);
 
+    void removeEntityFromSeed();
+    void addEntityToSeed();
+    void viewGenome();
+
+    void gbFamilyToggled(bool);
+    void gbFixedGenomes(bool);
+    void refreshRessources();
+
+
 private:
 
     Ui::ExperimentsPropertiesController *ui;
@@ -60,6 +70,8 @@ private:
     IntegerMutationController *brainFrequency;
     FloatMutationController *constValue;
     SimpleProbabilityController *newBrainTree;
+
+    GeneLabCore::RessourcesManager *localRessourceManager;
 };
 
 #endif // EXPERIMENTSPROPERTIESCONTROLLER_H

@@ -33,6 +33,11 @@ public slots:
     void loadLocalEntity();
     void loadOnlineEntity();
 
+    void openExperimentFolder();
+
+
+    void saveEntity();
+
 
 private:
     Ui::RessourcesBrowser *ui;

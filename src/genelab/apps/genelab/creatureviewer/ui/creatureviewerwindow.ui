@@ -151,7 +151,7 @@
     <string>Statistics</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>1</number>
+    <number>8</number>
    </attribute>
    <widget class="QWidget" name="dwContent_Stats"/>
   </widget>
@@ -160,7 +160,7 @@
     <string>Worker</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3"/>
   </widget>
