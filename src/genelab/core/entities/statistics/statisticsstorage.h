@@ -88,6 +88,9 @@ class Statistic : public QObject
 
     // To reset
     void resetAll();
+    void setResetable(bool resetable) {
+        this->resetable = resetable;
+    }
 
 signals:
 

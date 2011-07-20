@@ -130,6 +130,7 @@ protected:
     // Statistics
     QMap<QString, StatisticsProvider *> stats;
     Statistic*         brainActivityStat;
+    Statistic*         brainPlugGridSizeStat;
     StatisticsStorage *statisticsStorage;
 
     // Qt Render

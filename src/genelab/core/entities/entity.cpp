@@ -50,6 +50,9 @@ void Entity::setup() {
         this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
         this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"root"));
         this->brainActivityStat = statisticsStorage->registerStat("brainActivity", "a / step");
+        this->brainPlugGridSizeStat = statisticsStorage->registerStat("brainPlugGridSize", "edge size");
+        this->brainPlugGridSizeStat->setValue(brain->getPlugGrid()->getSize());
+        this->brainPlugGridSizeStat->setResetable(false);
     }
 }
 

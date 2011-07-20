@@ -40,10 +40,6 @@
 
 #include "experiment/experimentmanager.h"
 
-#define MAX_ENTITY 1
-#define MAX_TIME 1800
-#define EPSILON 0.00001
-
 using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
@@ -52,7 +48,7 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     QCoreApplication a(argc, argv);
     QStringList args = a.arguments();
-    QString expName = "../genelab_worker/spider.exp";
+    QString expName = "../genelab_worker/myOwnExp.exp";
     QString workerName = "worker.exp";
 
     if(args.length() > 1) {

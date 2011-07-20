@@ -103,7 +103,10 @@ namespace GeneLabCore {
     }
 
     void ExperimentManager::loadFunctions() {
-
+        fitnessFunc  = scriptEngine.evaluate(exp->getEvalFunction());
+        validityFunc = scriptEngine.evaluate(exp->getValidityFunction());
+        endFunc      = scriptEngine.evaluate(exp->getEndFunction());
+        dieFunc      = scriptEngine.evaluate(exp->getDieFunction());
     }
 
     /**
@@ -183,7 +186,7 @@ namespace GeneLabCore {
         // From a family
         if(type == "family") {
             // Which one ?
-            QString familyName = seedInfo["familyName"].toString();
+            QString familyName = seedInfo["family"].toString();
             EntityFamily* family;
 
             btVector3 position = world->getSpawnPosition();
@@ -204,6 +207,19 @@ namespace GeneLabCore {
                 qDebug() << "new random snake entity";
             } else if(familyName == "virgin"){
                 qDebug() << "new random virgin entity";
+                Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
+                e->setup();
+                e->setGeneration(0);
+                QVariant genome = e->serialize();
+                // Tree starting mutations !
+                for(int i = 0; i < 3; i++)
+                    genome = mutations->mutateEntity(genome);
+
+                delete e;
+
+                return genome;
+            } else {
+                qDebug() << "family not found !";
                 Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
                 e->setup();
                 e->setGeneration(0);
@@ -379,6 +395,14 @@ namespace GeneLabCore {
     bool ExperimentManager::stabilizeEntity(Entity* e) {
         // Outputs from brain
         e->getShape()->getRoot()->setOutputsFrom(1); // Brain
+        this->engineStep();
+
+        QScriptValue valid = this->validityFunc.call();
+        if(!valid.toBool()) {
+            qDebug() << "user validity check fail";
+            return false;
+        }
+
         // 100 engines step
         for(int i = 0; i < 200; i++) {
             this->engineStep();
@@ -434,11 +458,23 @@ namespace GeneLabCore {
     }
 
     bool ExperimentManager::simulateEntity(Entity* e) {
-        for(int i = 0; i < exp->getDuration(); i++) {
+        for(int i = 0; i < exp->getDuration() || exp->getDuration() == -1; i++) {
             this->engineStep();
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece()) {
-                qDebug() << "entity died at age " << e->getAge();
+                qDebug() << "entity exploded at age " << e->getAge();
                 return false;
+            }
+
+            QScriptValue died = dieFunc.call();
+            if(died.toBool()) {
+                qDebug() << "creature die (user function)";
+                return false;
+            }
+
+            QScriptValue endV = endFunc.call(QScriptValue(), QScriptValueList() << i);
+            if(endV.toBool()) {
+                qDebug() << "end of simulation (user triggered)";
+                return true;
             }
         }
         return true;
@@ -446,9 +482,7 @@ namespace GeneLabCore {
 
     float ExperimentManager::evaluateEntity(Entity* e) {
         // Call to the fitness function
-        fitnessFunc = scriptEngine.evaluate("(function() {print(entity.rootRelVelocity.sum); print(entity.bodyHeight.mean); return entity.bodyHeight.mean * entity.rootRelVelocity.sum})");
         QScriptValue fitness = fitnessFunc.call();
-
         return fitness.toNumber();
     }
 

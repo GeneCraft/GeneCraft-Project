@@ -95,6 +95,22 @@ namespace GeneLabCore {
         Ressource* getRessource() { return ressource; }
         void setRessource(Ressource* ressource) { this->ressource = ressource; }
 
+        /**
+          * To get the scripted functions
+          */
+        QString getEvalFunction() {
+            return this->evalFunction;
+        }
+        QString getValidityFunction() {
+            return this->validityFunction;
+        }
+        QString getEndFunction() {
+            return this->endFunction;
+        }
+        QString getDieFunction() {
+            return this->dieFunction;
+        }
+
     protected:
 
         // Information
@@ -124,6 +140,11 @@ namespace GeneLabCore {
 
         // Seed
         QVariantMap seedInfo;
+
+        QString evalFunction;
+        QString validityFunction;
+        QString endFunction;
+        QString dieFunction;
     };
 }
 

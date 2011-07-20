@@ -33,10 +33,17 @@ Experiment::Experiment() : ressource(NULL){
         // seed
         seedInfo.insert("type", "family");
         seedInfo.insert("family", "ant");
-        QString evalFunction  = "(function() {return entity.relVelocity.sum;})";
-        QString startFunction = "(function() {return entity.relVelocity.value == 0;})";
-        QString dieFunction   = "(function() {return entity.isInOnePiece != true;})";
-        QString endFunction   = "(function() {return false;})";
+
+        evalFunction  = QString("(function() {")+
+                                    QString("return entity.bodyHeight.mean * entity.rootRelVelocity.sum ")+
+                                    QString("- entity.bodySensors.sum + entity.bodyBrainSize.value")+
+                                    QString("})");
+
+        validityFunction = "(function() {return entity.bodySensors.max < 3; })";
+        endFunction     = "(function(int actualStep) { return entity.brainActivity.sum > 200; })";
+        dieFunction     = "(function() { return entity.rootYRelVelocity.sum < 0; })";
+
+
     }
 
     Experiment::Experiment(QVariant data) : ressource(NULL) {
@@ -70,6 +77,46 @@ Experiment::Experiment() : ressource(NULL){
 
         // seed TODO
         seedInfo = map["seedInfo"].toMap();
+
+        if(map.contains("evalFunction")) {
+            evalFunction     = map["evalFunction"].toString();
+        }
+        else {
+            evalFunction = "(function() {return -1;})";
+        }
+
+        if(map.contains("evalFunction"))
+            validityFunction  = map["validityFunction"].toString();
+        else
+            validityFunction = "";
+
+        if(validityFunction == "") {
+            qDebug() << "no validity check function found, will always return true";
+
+            validityFunction = "(function() {return true;})";
+        }
+
+        if(map.contains("evalFunction"))
+            endFunction = map["endFunction"].toString();
+        else
+            endFunction = "";
+
+        if(endFunction == "") {
+            qDebug() << "no end function found, will stop when maxStep occur";
+
+            endFunction = "(function(int step) {return step <"+QString::number(this->duration)+";})";
+        }
+
+        if(map.contains("evalFunction"))
+            dieFunction = map["dieFunction"].toString();
+        else
+            dieFunction = "";
+
+        if(dieFunction =="") {
+            qDebug() << "no die function found, will always return false";
+
+            dieFunction = "(function() {return false;})";
+        }
     }
 
     QVariant Experiment::serialize() {
@@ -99,6 +146,11 @@ Experiment::Experiment() : ressource(NULL){
         map.insert("world",worldDataMap);
 
         map.insert("seedInfo", seedInfo);
+
+        map.insert("endFunction", endFunction);
+        map.insert("evalFunction", evalFunction);
+        map.insert("validityFunction", validityFunction);
+        map.insert("dieFunction", dieFunction);
         return map;
     }
 }
