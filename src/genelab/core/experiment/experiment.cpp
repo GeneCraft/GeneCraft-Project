@@ -16,7 +16,7 @@ Experiment::Experiment() : ressource(NULL){
         author = "";
         comments = "";
         dateOfCreation = QDateTime::currentDateTime();
-        online = false;
+        online = true;
 
         // simulation
         onlyIfEntityIsStable = true;

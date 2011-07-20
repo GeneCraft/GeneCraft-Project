@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>818</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -76,8 +76,8 @@
   <widget class="QDockWidget" name="dwCreature">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -98,8 +98,8 @@
   <widget class="QDockWidget" name="dwBone">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -131,8 +131,8 @@
   <widget class="QDockWidget" name="dwBrain">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -146,8 +146,8 @@
   <widget class="QDockWidget" name="dwFixation">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="features">
@@ -164,8 +164,8 @@
   <widget class="QDockWidget" name="dwStats">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="allowedAreas">
@@ -182,8 +182,8 @@
   <widget class="QDockWidget" name="dwWorker">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -197,8 +197,8 @@
   <widget class="QDockWidget" name="dwRessourcesBrowser">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>78</width>
+     <height>42</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -208,6 +208,15 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4"/>
+  </widget>
+  <widget class="QDockWidget" name="dwExperiment">
+   <property name="windowTitle">
+    <string>Experiment</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5"/>
   </widget>
   <action name="actionSave_selected_creature">
    <property name="icon">
@@ -339,6 +348,7 @@
   <zorder>dwFixation</zorder>
   <zorder>dwWorker</zorder>
   <zorder>dwRessourcesBrowser</zorder>
+  <zorder>dwExperiment</zorder>
  </widget>
  <resources>
   <include location="../../../../core/ressources/ressources.qrc"/>

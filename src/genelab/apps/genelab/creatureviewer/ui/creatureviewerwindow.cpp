@@ -40,6 +40,7 @@
 #include "widgets/entities/bonepropertiescontroller.h"
 #include "widgets/entities/entitypropertiescontroller.h"
 #include "widgets/experiments/workerctrl.h"
+#include "widgets/experiments/experimentctrl.h"
 
 // Ressources
 #include "ressources/ressource.h"
@@ -291,8 +292,11 @@ void CreatureViewerWindow::init() {
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
-    WorkerCtrl* worker = new WorkerCtrl();
-    this->ui->dwWorker->setWidget(worker);
+    workerCtrl = new WorkerCtrl();
+    this->ui->dwWorker->setWidget(workerCtrl);
+    expCtrl    = new ExperimentCtrl();
+    connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap,GeneLabCore::Ressource*)));
+    this->ui->dwExperiment->setWidget(expCtrl);
 }
 
 void CreatureViewerWindow::openExperimentPropertiesController(){
@@ -341,6 +345,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // --------------------------
     world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
     cvim->setWorld(world);
+    expCtrl->setExperiment(experiment);
 
 }
 

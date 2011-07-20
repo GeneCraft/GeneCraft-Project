@@ -11,6 +11,8 @@
 #include "ui/widgets/entities/entitypropertiescontroller.h"
 #include "widgets/experiments/experimentspropertiescontroller.h"
 #include "widgets/experiments/ressourcesbrowser.h"
+#include "widgets/experiments/experimentctrl.h"
+#include "widgets/experiments/workerctrl.h"
 
 
 // Listeners
@@ -113,6 +115,8 @@ private:
     StatisticsPropertiesController *statsPropertiesController;
     BrainPropertiesController *brainPropertiesController;
     RessourcesBrowser *ressourcesBrowser;
+    ExperimentCtrl* expCtrl;
+    WorkerCtrl* workerCtrl;
 
     Experiment *experiment;
     ExperimentsPropertiesController *epc;

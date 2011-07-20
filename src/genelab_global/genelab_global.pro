@@ -201,7 +201,8 @@ SOURCES += \
     ../genelab/core/ui/widgets/experiments/workerctrl.cpp \
     ../genelab/core/experiment/resultsmanager.cpp \
     ../genelab/core/factories/ressources/ressourcesmanager.cpp \
-    ../genelab/core/ui/widgets/experiments/ressourcesbrowser.cpp
+    ../genelab/core/ui/widgets/experiments/ressourcesbrowser.cpp \
+    ../genelab/core/ui/widgets/experiments/experimentctrl.cpp
 
 
 HEADERS += \
@@ -315,7 +316,8 @@ HEADERS += \
     ../genelab/core/experiment/resultsmanager.h \
     ../genelab/core/factories/ressources/ressourcesmanager.h \
     ../genelab/core/ui/widgets/experiments/ressourcesbrowser.h \
-    ../genelab/core/ui/widgets/experiments/ressourcesItems.h
+    ../genelab/core/ui/widgets/experiments/ressourcesItems.h \
+    ../genelab/core/ui/widgets/experiments/experimentctrl.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -336,7 +338,8 @@ FORMS += \
     ../genelab/core/ui/widgets/experiments/structuralmutationcontroller.ui \
     ../genelab/core/ui/widgets/experiments/mutationelementcontroller.ui \
     ../genelab/core/ui/widgets/experiments/workerctrl.ui \
-    ../genelab/core/ui/widgets/experiments/ressourcesbrowser.ui
+    ../genelab/core/ui/widgets/experiments/ressourcesbrowser.ui \
+    ../genelab/core/ui/widgets/experiments/experimentctrl.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc
