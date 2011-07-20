@@ -3,6 +3,8 @@
 #include "jsonfile.h"
 #include <QVariantMap>
 #include <QDebug>
+#include <QtScript>
+#include <qxtjson.h>
 
 namespace GeneLabCore {
     int cptRessource = 0;
@@ -92,5 +94,23 @@ namespace GeneLabCore {
         ressourceMap.insert("data", data);
 
         return ressourceMap;
+    }
+
+    QString Ressource::beautifullJson(QVariant data) {
+        static QScriptEngine* e = NULL;
+
+        if(!e) {
+            e = new QScriptEngine();
+            QFile fjs(":/js/js-beautifull");
+            fjs.open(QIODevice::ReadOnly |QIODevice::Text);
+            QString js = fjs.readAll();
+            e->evaluate(js);
+        }
+
+        QScriptValue beautifullJson = e->evaluate("js_beautify");
+        QScriptValue bb = beautifullJson.call(QScriptValue(),
+                                              QScriptValueList() << QxtJSON::stringify(data));
+        //out << beautifullJson.toString();
+        return bb.toString();
     }
 }

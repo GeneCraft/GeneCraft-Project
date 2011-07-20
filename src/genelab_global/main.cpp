@@ -12,6 +12,8 @@
 #include "ressources/ressourcesmanager.h"
 
 #include <QDebug>
+#include <QtScript>
+#include <qxtjson.h>
 
 #ifdef __APPLE__
 #include "CoreFoundation/CoreFoundation.h"
@@ -59,6 +61,8 @@ int main(int argc, char *argv[])
     qDebug() << "Current Path: " << directoryPath << newPath;
     #endif
 
+    a = new QApplication(argc, argv);
+
     DataBase database;
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
@@ -71,7 +75,7 @@ int main(int argc, char *argv[])
     qDebug() << "CREATURES" << ressourceManager->getCreatures().size();
     qDebug() << "EXPERIMENTS" << ressourceManager->getExperiments().size();
 
-    a = new QApplication(argc, argv);
+    qDebug() << Ressource::beautifullJson(ressourceManager->getExperiments().first().data);
 
     CreatureViewerWindow cw;
     cw.showMaximized();

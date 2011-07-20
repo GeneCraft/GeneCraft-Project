@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "qxtjson.h"
+#include <QtScript>
 
 namespace GeneLabCore {
     JsonFile::JsonFile(QString filename, QObject *parent) :
@@ -16,7 +17,11 @@ namespace GeneLabCore {
     int JsonFile::save(QVariant data) {
         f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
         QTextStream out(&f);
-        out << QxtJSON::stringify(data);
+
+        QString beautifull = Ressource::beautifullJson(data);
+        out << beautifull;
+
+
         f.close();
 
         return f.error();

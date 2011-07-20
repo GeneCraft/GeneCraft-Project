@@ -36,7 +36,6 @@
 
 #include <QtScript>
 
-
 namespace GeneLabCore {
 
     /**
@@ -245,13 +244,17 @@ namespace GeneLabCore {
             return genome;
         } else if(type == "fixed") {
             qDebug() << "loading from fixed genome";
-            static QVariant genome = QVariant();
-            if(genome == QVariant()) {
-                QVariant genomeInfo = seedInfo["genome"];
-                genome = Ressource::load(genomeInfo);
-                qDebug() << genome;
+            // TODO FIXME !
+            static QVariantList genomes = QVariantList();
+            if(genomes == QVariantList()) {
+                QVariantList genomesInfo = seedInfo["genomes"].toList();
+                foreach(QVariant genome, genomesInfo) {
+                    genomes.append(Ressource::load(genome));
+                }
             }
-            return genome;
+            int randomGen = qrand()%genomes.size();
+
+            return mutations->mutateEntity(genomes.at(randomGen));
         }
         return QVariant();
     }
