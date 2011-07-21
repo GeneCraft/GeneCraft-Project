@@ -9,9 +9,9 @@ namespace GeneLabCore {
     {
     public:
         CrossoverManager();
-        QVariant onePointCross(QVariant a, QVariant b);
-        QVariant twoPointCross(QVariant a, QVariant b);
-        QVariant uniformCross (QVariant a, QVariant b);
+        static QVariant onePointCross(QVariant a, QVariant b);
+        static QVariant twoPointCross(QVariant a, QVariant b);
+        static QVariant uniformCross (QVariant a, QVariant b);
     };
 
 }

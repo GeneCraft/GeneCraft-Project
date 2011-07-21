@@ -96,6 +96,27 @@ namespace GeneLabCore {
         return ressourceMap;
     }
 
+    QString Ressource::beautifullJson(QString data) {
+
+        static QScriptEngine* e = NULL;
+
+        if(!e) {
+            e = new QScriptEngine();
+            QFile fjs(":/js/js-beautifull");
+            fjs.open(QIODevice::ReadOnly |QIODevice::Text);
+            QString js = fjs.readAll();
+            e->evaluate(js);
+        }
+
+        QScriptValue beautifullJson = e->evaluate("js_beautify");
+        QScriptValue bb = beautifullJson.call(QScriptValue(),
+                                              QScriptValueList()
+                                              << data
+                                              << e->evaluate("({'indent_size': 1,'indent_char': ' '})"));
+        //out << beautifullJson.toString();
+        return bb.toString();
+    }
+
     QString Ressource::beautifullJson(QVariant data) {
         static QScriptEngine* e = NULL;
 
@@ -109,7 +130,9 @@ namespace GeneLabCore {
 
         QScriptValue beautifullJson = e->evaluate("js_beautify");
         QScriptValue bb = beautifullJson.call(QScriptValue(),
-                                              QScriptValueList() << QxtJSON::stringify(data));
+                                              QScriptValueList()
+                                              << QxtJSON::stringify(data)
+                                              << e->evaluate("({'indent_size': 1,'indent_char': ' '})"));
         //out << beautifullJson.toString();
         return bb.toString();
     }

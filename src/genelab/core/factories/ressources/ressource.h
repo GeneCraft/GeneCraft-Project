@@ -47,6 +47,7 @@ namespace GeneLabCore {
         static QVariant load(QVariant data);
 
         static QString beautifullJson(QVariant data);
+        static QString beautifullJson(QString data);
 
     };
 

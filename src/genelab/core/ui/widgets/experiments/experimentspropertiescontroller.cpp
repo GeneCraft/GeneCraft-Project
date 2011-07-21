@@ -143,7 +143,7 @@ void ExperimentsPropertiesController::viewGenome() {
 
     if(ui->twEntitiesSelected->currentItem()) {
         EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *) ui->twEntitiesSelected->currentItem();
-        ui->teGenome->setText(QxtJSON::stringify(entity->dataw.data));
+        ui->teGenome->setText(Ressource::beautifullJson(entity->dataw.data));
     }
     else
         qDebug() << "no items selected";
@@ -153,7 +153,7 @@ void ExperimentsPropertiesController::viewAvailableGenome() {
 
     if(ui->twEntitiesAvailable->currentItem()) {
         EntityTreeWidgetItem *entity = (EntityTreeWidgetItem *) ui->twEntitiesAvailable->currentItem();
-        ui->teGenome->setText(QxtJSON::stringify(entity->dataw.data));
+        ui->teGenome->setText(Ressource::beautifullJson(entity->dataw.data));
     }
     else
         qDebug() << "no items selected";
@@ -200,14 +200,14 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     ui->leTimeToWaitForStability->setText(QString::number(experiment->getTimeToWaitForStability()));
     ui->cbOnlyIfEntityIsStable->setChecked(experiment->getOnlyIfEntityIsStable());
     ui->cbStopIfEntityIsNotInOnePiece->setChecked(experiment->getStopIfEntityIsNotInOnePiece());
-    ui->teDieFunction->setText(experiment->getDieFunction());
-    ui->teEndFunction->setText(experiment->getEndFunction());
+    ui->teDieFunction->setText(Ressource::beautifullJson(experiment->getDieFunction()));
+    ui->teEndFunction->setText(Ressource::beautifullJson(experiment->getEndFunction()));
 
     // ----------------
     // -- evaluation --
     // ----------------
-    ui->teValidateFunction->setText(experiment->getValidityFunction());
-    ui->teFitnessFunction->setText(experiment->getEvalFunction());
+    ui->teValidateFunction->setText(Ressource::beautifullJson(experiment->getValidityFunction()));
+    ui->teFitnessFunction->setText(Ressource::beautifullJson(experiment->getEvalFunction()));
 
     // ---------------
     // -- mutations --
@@ -322,7 +322,7 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
             ui->cbSkyMaterial->setCurrentIndex(i);
 
     // lights
-    ui->teLights->setText(QxtJSON::stringify(biomeMap["lights"]));
+    ui->teLights->setText(Ressource::beautifullJson(biomeMap["lights"]));
 
     // -- Scene --
     QVariantMap sceneMap = worldData["scene"].toMap();
@@ -344,10 +344,10 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
     ui->leCamTargetZ->setText(camMap["targetZ"].toString());
 
     // shapes
-    ui->teStaticShapes->setText(QxtJSON::stringify(sceneMap["shapes"]));
+    ui->teStaticShapes->setText(Ressource::beautifullJson(sceneMap["shapes"]));
 
     // spawns
-    ui->teSpawns->setText(QxtJSON::stringify(sceneMap["spawns"]));
+    ui->teSpawns->setText(Ressource::beautifullJson(sceneMap["spawns"]));
 }
 
 ExperimentsPropertiesController::~ExperimentsPropertiesController() {
@@ -417,12 +417,12 @@ void ExperimentsPropertiesController::updateStructures() {
     experiment->setTimeToWaitForStability(ui->leTimeToWaitForStability->text().toInt());
     experiment->setOnlyIfEntityIsStable(ui->cbOnlyIfEntityIsStable->isChecked());
     experiment->setStopIfEntityIsNotInOnePiece(ui->cbStopIfEntityIsNotInOnePiece->isChecked());
-    experiment->setDieFunction(ui->teDieFunction->toPlainText());
-    experiment->setEndFunction(ui->teEndFunction->toPlainText());
+    experiment->setDieFunction(Ressource::beautifullJson(ui->teDieFunction->toPlainText()));
+    experiment->setEndFunction(Ressource::beautifullJson(ui->teEndFunction->toPlainText()));
 
     // Evaluation
-    experiment->setValidityFunction(ui->teValidateFunction->toPlainText());
-    experiment->setEvalFunction(ui->teFitnessFunction->toPlainText());
+    experiment->setValidityFunction(Ressource::beautifullJson(ui->teValidateFunction->toPlainText()));
+    experiment->setEvalFunction(Ressource::beautifullJson(ui->teFitnessFunction->toPlainText()));
 
     // Mutations
     boneLengthMutation->save();

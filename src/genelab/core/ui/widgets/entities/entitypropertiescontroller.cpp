@@ -17,7 +17,7 @@
 #include "statistics/statisticsstorage.h"
 #include "tools.h"
 #include "events/inspectorsinputmanager.h"
-#include "qxtjson.h"
+#include "ressources/ressource.h"
 
 EntityPropertiesController::EntityPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::EntityPropertiesController), entity(NULL)
@@ -258,5 +258,5 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int)
 void EntityPropertiesController::viewGenotype() {
 
     if(entity != NULL)
-        ui->pteGenotype->setPlainText(QxtJSON::stringify(entity->serialize()));
+        ui->pteGenotype->setPlainText(Ressource::beautifullJson(entity->serialize()));
 }
