@@ -48,6 +48,7 @@ private:
     GeneLabCore::DataBase database;
 
 private slots:
+    void on_pbShareEntity_clicked();
     void on_pbShareExp_clicked();
     void on_pushButton_clicked();
 };

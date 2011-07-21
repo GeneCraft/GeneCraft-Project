@@ -19,7 +19,7 @@ public:
     {
         this->dataw = dataw;
 
-        setText(0,dataw.data["id"].toString());
+        setText(0,dataw.data["_id"].toString());
         setText(1,dataw.data["author"].toString());
         setText(2,dataw.data["dateOfCreation"].toString());
     }
@@ -37,6 +37,10 @@ public:
 
         QVariantMap origins = dataw.data["origins"].toMap();
 
+        if(dataw.data.contains("_id")) {
+            origins["name"] = dataw.data["_id"];
+        }
+
         setText(0,origins["name"].toString());
         setText(1,origins["family"].toString());
         setText(2,origins["generation"].toString());
@@ -48,6 +52,10 @@ public:
         dataw.r = NULL;
 
         QVariantMap origins = dataw.data["origins"].toMap();
+
+        if(dataw.data.contains("_id")) {
+            origins["name"] = dataw.data["_id"];
+        }
 
         setText(0,origins["name"].toString());
         setText(1,origins["family"].toString());

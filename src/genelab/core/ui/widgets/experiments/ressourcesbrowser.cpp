@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QInputDialog>
 
 #include "ressourcesItems.h"
 #include "experiment/experiment.h"
@@ -186,6 +187,44 @@ void RessourcesBrowser::on_pbShareExp_clicked()
                                                 QMessageBox::Yes, QMessageBox::No);
             if(replace == QMessageBox::Yes) {
                 to->save(expTWI->dataw.data);
+                refreshOnlineRessources();
+            }
+
+        }
+
+    }
+}
+
+void RessourcesBrowser::on_pbShareEntity_clicked()
+{
+    if(ui->twLocalEntities->currentItem()) {
+        QString id = QInputDialog::getText(this, "Share to genecraft-project db", "Please, enter the creature id");
+        if(id == "") {
+            QMessageBox::warning(this, "Share to genecraft-project db", "Error, no id provided.");
+            return;
+        }
+
+        EntityTreeWidgetItem *expTWI = (EntityTreeWidgetItem *) ui->twLocalEntities->currentItem();
+
+        // Load Generic Entity
+        Ressource* to = new DbRecord(database, id);
+        QVariantMap creatureData = expTWI->dataw.data;
+        QVariantMap origins = creatureData["origins"].toMap();
+        qDebug() << creatureData["origins"].toMap();
+        origins.insert("name", id);
+        creatureData.insert("origins", origins);
+        qDebug() << creatureData["origins"].toMap();
+
+        QVariant load = to->load();
+        if(load.toMap().contains("error")) {
+            to->save(creatureData);
+            refreshOnlineRessources();
+        } else {
+            int replace = QMessageBox::warning(this, "Share to online database", "A creature of "
+                                               "this id already exist online, would you like to replace it ?",
+                                                QMessageBox::Yes, QMessageBox::No);
+            if(replace == QMessageBox::Yes) {
+                to->save(creatureData);
                 refreshOnlineRessources();
             }
 
