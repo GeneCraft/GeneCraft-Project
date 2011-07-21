@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "genelabcoreclasses.h"
 #include "factories/ressources/ressourcesmanager.h"
+#include "ressources/dbrecord.h"
 
 namespace Ui {
     class RessourcesBrowser;
@@ -44,6 +45,11 @@ private:
 
     GeneLabCore::RessourcesManager *localRessourceManager;
     GeneLabCore::RessourcesManager *onlineRessourceManager;
+    GeneLabCore::DataBase database;
+
+private slots:
+    void on_pbShareExp_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // RESSOURCESBROWSER_H

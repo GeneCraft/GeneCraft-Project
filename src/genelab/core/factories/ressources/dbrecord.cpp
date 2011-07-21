@@ -19,8 +19,11 @@ namespace GeneLabCore {
     QVariant DbRecord::load() {
         if(postData == QVariant()) {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
+            r = NULL;
             this->request(url, RGET);
-            qDebug() << r->error();
+            if(!r)
+                return QVariant();
+
             r->deleteLater();
             if(r->error() == 0) {
                 QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
@@ -38,7 +41,10 @@ namespace GeneLabCore {
             return QVariant();
         } else {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
+            r = NULL;
             this->request(url, RPOST, QxtJSON::stringify(postData));
+            if(!r)
+                return QVariant();
 
             qDebug() << r->error();
             r->deleteLater();
@@ -79,8 +85,11 @@ namespace GeneLabCore {
         if(this->id == "" || this->id == "_bulk_docs")
             type = RPOST;
 
+        r = NULL;
         this->request(url, type, QxtJSON::stringify(mData));
-        qDebug() << r->error();
+        if(!r)
+            return -1;
+
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
             if(v.contains("id")) {
@@ -107,7 +116,11 @@ namespace GeneLabCore {
 
         RequestType type = RDELETE;
 
+        r = NULL;
         this->request(url, type);
+        if(!r)
+            return;
+
         qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();

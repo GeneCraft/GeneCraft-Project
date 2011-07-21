@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QMessageBox>
 
 #include "ressourcesItems.h"
 #include "experiment/experiment.h"
@@ -19,7 +20,7 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     ui->setupUi(this);
 
     // TODO QSettings
-    DataBase database;
+    database;
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
@@ -157,5 +158,38 @@ void RessourcesBrowser::saveExperiment() {
 
             refreshLocalRessources();
        }
+    }
+}
+
+void RessourcesBrowser::on_pushButton_clicked()
+{
+    QMessageBox::information(this, "Utilisation of genecraft database", "This database is not an online backup."
+                             "But a community tool. Everythings that you put online could be modified or deleted by someone else. So keep some backup of your loved creatures.");
+}
+
+void RessourcesBrowser::on_pbShareExp_clicked()
+{
+    if(ui->twLocalExperiments->currentItem()) {
+
+        ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twLocalExperiments->currentItem();
+
+        // Load Generic Entity
+        Ressource* to = new DbRecord(database, expTWI->dataw.data["id"].toString());
+        QVariant load = to->load();
+        qDebug() << load;
+        if(load.toMap().contains("error")) {
+            to->save(expTWI->dataw.data);
+            refreshOnlineRessources();
+        } else {
+            int replace = QMessageBox::warning(this, "Share to online database", "An experiment of "
+                                               "this id already exist, would you like to replace it ?",
+                                                QMessageBox::Yes, QMessageBox::No);
+            if(replace == QMessageBox::Yes) {
+                to->save(expTWI->dataw.data);
+                refreshOnlineRessources();
+            }
+
+        }
+
     }
 }

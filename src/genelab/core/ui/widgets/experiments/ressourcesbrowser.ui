@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>428</width>
-    <height>434</height>
+    <width>720</width>
+    <height>591</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,12 +30,12 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>428</width>
-        <height>434</height>
+        <width>720</width>
+        <height>591</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
           <number>0</number>
@@ -48,8 +48,42 @@
           <attribute name="title">
            <string>Experiments</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="1" column="0" colspan="6">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Local : ./ressources/</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbOpenExperimentsFolder">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Open folder</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/experiment_browse</normaloff>:/img/icons/experiment_browse</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <widget class="QTreeWidget" name="twLocalExperiments">
              <column>
               <property name="text">
@@ -68,7 +102,134 @@
              </column>
             </widget>
            </item>
-           <item row="4" column="0" colspan="6">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QPushButton" name="pbLoadLocalExp">
+               <property name="text">
+                <string>Load</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/experiment_load</normaloff>:/img/icons/experiment_load</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbShareExp">
+               <property name="toolTip">
+                <string>Upload</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/down</normaloff>:/img/icons/down</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSaveExp">
+               <property name="toolTip">
+                <string>Download</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/up</normaloff>:/img/icons/up</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbRefreshLocalExp">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Online : genecraft-project.org</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/information</normaloff>:/img/icons/information</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <widget class="QTreeWidget" name="twOnlineExperiments">
              <column>
               <property name="text">
@@ -87,134 +248,44 @@
              </column>
             </widget>
            </item>
-           <item row="2" column="4">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>5</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="0" colspan="4">
-            <widget class="QLabel" name="label_3">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Local : ./ressources/</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0" colspan="6">
-            <widget class="QLabel" name="label_4">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Online : genecraft-project.org</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <widget class="QPushButton" name="pbOpenExperimentsFolder">
-             <property name="text">
-              <string>Open folder</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/experiment_browse</normaloff>:/img/icons/experiment_browse</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QPushButton" name="pbShareExp">
-             <property name="text">
-              <string>Share</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/down</normaloff>:/img/icons/down</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QPushButton" name="pbSaveExp">
-             <property name="text">
-              <string>Save</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/up</normaloff>:/img/icons/up</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>5</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="pbLoadLocalExp">
-             <property name="text">
-              <string>Load</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/experiment_load</normaloff>:/img/icons/experiment_load</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QPushButton" name="pbLoadOnlineExp">
-             <property name="text">
-              <string>Load</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/experiment_load</normaloff>:/img/icons/experiment_load</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="5">
-            <widget class="QPushButton" name="pbRefreshOnlineExp">
-             <property name="text">
-              <string>Refresh</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="5">
-            <widget class="QPushButton" name="pbRefreshLocalExp">
-             <property name="text">
-              <string>Refresh</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-             </property>
-            </widget>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QPushButton" name="pbLoadOnlineExp">
+               <property name="text">
+                <string>Load</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/experiment_load</normaloff>:/img/icons/experiment_load</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbRefreshOnlineExp">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -235,32 +306,55 @@
           <attribute name="title">
            <string>Creatures</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0" colspan="6">
-            <widget class="QLabel" name="label">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Local : ./ressources/</string>
-             </property>
-            </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Local : ./ressources/</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbOpenEntitiesFolder">
+               <property name="text">
+                <string>Open folder</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/experiment_browse</normaloff>:/img/icons/experiment_browse</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item row="0" column="7">
-            <widget class="QPushButton" name="pbOpenEntitiesFolder">
-             <property name="text">
-              <string>Open folder</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/experiment_browse</normaloff>:/img/icons/experiment_browse</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="8">
+           <item>
             <widget class="QTreeWidget" name="twLocalEntities">
              <column>
               <property name="text">
@@ -279,8 +373,94 @@
              </column>
             </widget>
            </item>
-           <item row="3" column="0" colspan="8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QPushButton" name="pbLoadLocalEntity">
+               <property name="text">
+                <string>Load</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbShareEntity">
+               <property name="toolTip">
+                <string>Upload</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/down</normaloff>:/img/icons/down</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSaveEntity">
+               <property name="toolTip">
+                <string>Download</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/up</normaloff>:/img/icons/up</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbRefreshLocalEntity">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font">
               <font>
                <weight>75</weight>
@@ -292,7 +472,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="8">
+           <item>
             <widget class="QTreeWidget" name="twOnlineEntities">
              <column>
               <property name="text">
@@ -311,103 +491,50 @@
              </column>
             </widget>
            </item>
-           <item row="2" column="1" colspan="3">
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="6">
-            <spacer name="horizontalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="5">
-            <widget class="QPushButton" name="pbSaveEntity">
-             <property name="text">
-              <string>Save</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/up</normaloff>:/img/icons/up</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
-            <widget class="QPushButton" name="pbShareEntity">
-             <property name="text">
-              <string>Share</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/down</normaloff>:/img/icons/down</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="pbLoadLocalEntity">
-             <property name="text">
-              <string>Load</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="7">
-            <widget class="QPushButton" name="pbRefreshLocalEntity">
-             <property name="text">
-              <string>Refresh</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QPushButton" name="pbLoadOnlineEntity">
-             <property name="text">
-              <string>Load</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="7">
-            <widget class="QPushButton" name="pbRefreshOnlineEntity">
-             <property name="text">
-              <string>Refresh</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../../ressources/ressources.qrc">
-               <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-             </property>
-            </widget>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QPushButton" name="pbLoadOnlineEntity">
+               <property name="text">
+                <string>Load</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbRefreshOnlineEntity">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item>
         <widget class="QLabel" name="lblDb">
          <property name="text">
           <string/>

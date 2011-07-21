@@ -540,9 +540,7 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
 CreatureViewerWindow::~CreatureViewerWindow()
 {
     simulationManager->stop();
-    // Cheat anti double free
-    ui->dwCreature->setWidget(new QWidget());
-    delete ui;
+    //delete ui;
 }
 
 void CreatureViewerWindow::showAbout()

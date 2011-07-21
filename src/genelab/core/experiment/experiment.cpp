@@ -55,7 +55,11 @@ Experiment::Experiment() : ressource(NULL){
         //  throw new FormatVersionError("Exp", map["version"]);
 
         // information
-        id              = map["id"].toString();
+        id              = map["_id"].toString();
+        if(id == "" && map.contains("id")) {
+            id = map["id"].toString(); // Old version
+        }
+
         description     = map["description"].toString();
         author          = map["author"].toString();
         comments        = map["comments"].toString();
@@ -125,7 +129,7 @@ Experiment::Experiment() : ressource(NULL){
         map.insert("version",EXP_FORMAT_VERSION);
 
         // information
-        map.insert("id",id);
+        map.insert("_id",id);
         map.insert("description",description);
         map.insert("author",author);
         map.insert("comments",comments);

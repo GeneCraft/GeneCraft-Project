@@ -30,11 +30,21 @@ namespace GeneLabCore {
 
 
     void RessourcesManager::getAllWorld() {
+        DbRecord * listDb = new DbRecord(db, "_design/worlds/_view/all");
+        QVariant worlds = listDb->load();
+        delete listDb;
+
+        QVariantMap worldsMap = worlds.toMap();
+        QVariantList worldsList = worldsMap["rows"].toList();
+        foreach(QVariant world, worldsList) {
+            DataWrapper dataw = {world.toMap()["value"].toMap(), NULL};
+            this->examine(dataw);
+        }
     }
 
     void RessourcesManager::getAllCreatures() {
-        //http://www.genecraft-project.com/db/genecraft/_design/creature/_view/all?stale=ok&include_docs=true
-        DbRecord * listDb = new DbRecord(db, "_design/creature/_view/all?stale=ok&include_docs=true");
+        //http://www.genecraft-project.com/db/genecraft/_design/creature/_view/all?include_docs=true
+        DbRecord * listDb = new DbRecord(db, "_design/creature/_view/all?include_docs=true");
         QVariant creatures = listDb->load();
         delete listDb;
 
@@ -47,6 +57,16 @@ namespace GeneLabCore {
     }
 
     void RessourcesManager::getAllExperiments() {
+        DbRecord * listDb = new DbRecord(db, "_design/experiments/_view/all");
+        QVariant experiments = listDb->load();
+        delete listDb;
+
+        QVariantMap experimentsMap = experiments.toMap();
+        QVariantList experimentsList = experimentsMap["rows"].toList();
+        foreach(QVariant experiment, experimentsList) {
+            DataWrapper dataw = {experiment.toMap()["value"].toMap(), NULL};
+            this->examine(dataw);
+        }
     }
 
     void RessourcesManager::reloadDir() {
