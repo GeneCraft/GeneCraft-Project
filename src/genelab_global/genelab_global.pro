@@ -202,7 +202,8 @@ SOURCES += \
     ../genelab/core/experiment/resultsmanager.cpp \
     ../genelab/core/factories/ressources/ressourcesmanager.cpp \
     ../genelab/core/ui/widgets/experiments/ressourcesbrowser.cpp \
-    ../genelab/core/ui/widgets/experiments/experimentctrl.cpp
+    ../genelab/core/ui/widgets/experiments/experimentctrl.cpp \
+    ../genelab/core/entities/mutation/crossovermanager.cpp
 
 
 HEADERS += \
@@ -317,7 +318,8 @@ HEADERS += \
     ../genelab/core/factories/ressources/ressourcesmanager.h \
     ../genelab/core/ui/widgets/experiments/ressourcesbrowser.h \
     ../genelab/core/ui/widgets/experiments/ressourcesItems.h \
-    ../genelab/core/ui/widgets/experiments/experimentctrl.h
+    ../genelab/core/ui/widgets/experiments/experimentctrl.h \
+    ../genelab/core/entities/mutation/crossovermanager.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

@@ -234,6 +234,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     boneAngularOrigin = new FloatMutationController(mutationsManager->boneAngularOrigin,"Bones angular origin");
     bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
     sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorStructuralList);
+    brainStructuralMutation = new StructuralMutationController(mutationsManager->brainStructural, "Brain Structural", mutationsManager->brainNodeList);
 
     brainSize = new IntegerMutationController(mutationsManager->brainSize,"Brain Size");
     brainInPos = new FloatMutationController(mutationsManager->brainInPos,"BrainIn Position");
@@ -241,7 +242,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     brainMemorySize = new IntegerMutationController(mutationsManager->brainMemorySize,"Brain Mermory Size");
     brainFrequency = new IntegerMutationController(mutationsManager->brainFrequency,"Brain Frequency");
     constValue = new FloatMutationController(mutationsManager->constValue,"Constant Value");
-    newBrainTree = new SimpleProbabilityController(mutationsManager->newBrainTree,"New Brain Tree");
+    //newBrainTree = new SimpleProbabilityController(mutationsManager->newBrainTree,"New Brain Tree");
 
     ui->vlBodyMutations->addWidget(boneLengthMutation);
     ui->vlBodyMutations->addWidget(boneRadiusMutation);
@@ -256,7 +257,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     ui->vlBrainMutations->addWidget(brainMemorySize);
     ui->vlBrainMutations->addWidget(brainFrequency);
     ui->vlBrainMutations->addWidget(constValue);
-    ui->vlBrainMutations->addWidget(newBrainTree);
+    ui->vlBrainMutations->addWidget(brainStructuralMutation);
 
     // -----------
     // -- world --
@@ -431,6 +432,7 @@ void ExperimentsPropertiesController::updateStructures() {
     boneAngularOrigin->save();
     bonesStructuralMutation->save();
     sensorsStructuralMutation->save();
+    brainStructuralMutation->save();
 
     brainSize->save();
     brainInPos->save();
@@ -438,7 +440,6 @@ void ExperimentsPropertiesController::updateStructures() {
     brainMemorySize->save();
     brainFrequency->save();
     constValue->save();
-    newBrainTree->save();
 
     experiment->setWorldData(getWorldMap());
 

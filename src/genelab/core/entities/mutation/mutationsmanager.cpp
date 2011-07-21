@@ -132,14 +132,34 @@ namespace GeneLabCore {
         brainFrequency->maxValue     = 60;
 
         // New brain tree probability
-        newBrainTree = new SimpleProbabilityMutation();
-        newBrainTree->probability = 0.1;
+        brainStructural = new StructuralMutation();
+        brainStructural->addProbability = 0.1;
+        brainStructural->deleteProbability = 0.1;
+        brainStructural->replaceProbability = 0.1;
 
-        encapsulateBrainTree = new SimpleProbabilityMutation();
-        encapsulateBrainTree->probability = 0.1;
-
-        deleteBrainTree = new SimpleProbabilityMutation();
-        deleteBrainTree->probability = 0.1;
+        brainNodeList = new StructuralList();
+        brainNodeList->elements.append(new MutationElement("a + b", 0, 1));
+        brainNodeList->elements.append(new MutationElement("a * b", 1, 1));
+        brainNodeList->elements.append(new MutationElement("a / b", 2, 0));
+        brainNodeList->elements.append(new MutationElement("atan2(a, b)", 3, 0));
+        brainNodeList->elements.append(new MutationElement("(a > b) ? a : 0", 4, 0));
+        brainNodeList->elements.append(new MutationElement("(a > b) ? a : b", 5, 0));
+        brainNodeList->elements.append(new MutationElement("(a > 0) ? b : c", 6, 0));
+        brainNodeList->elements.append(new MutationElement("cos(a)", 7, 0));
+        brainNodeList->elements.append(new MutationElement("sin(a)", 8, 0));
+        brainNodeList->elements.append(new MutationElement("abs(a)", 9, 0));
+        brainNodeList->elements.append(new MutationElement("sign(a)", 10, 0));
+        brainNodeList->elements.append(new MutationElement("log(a)", 11, 0));
+        brainNodeList->elements.append(new MutationElement("a*a", 12, 0));
+        brainNodeList->elements.append(new MutationElement("sigmoid(a)", 13, 0));
+        brainNodeList->elements.append(new MutationElement("wave(freq : a, offset : b)", 14, 1));
+        brainNodeList->elements.append(new MutationElement("memory : a", 15, 1));
+        brainNodeList->elements.append(new MutationElement("smooth : a", 16, 0));
+        brainNodeList->elements.append(new MutationElement("integrate : a", 17, 1));
+        brainNodeList->elements.append(new MutationElement("interpolate : a", 18, 0));
+        brainNodeList->elements.append(new MutationElement("max : a", 19, 1));
+        brainNodeList->elements.append(new MutationElement("min : a", 20, 1));
+        brainNodeList->elements.append(new MutationElement("diff : a", 21, 1));
 
         // Brain constant value
         constValue = new FloatMutation();
@@ -193,6 +213,8 @@ namespace GeneLabCore {
         deleteBrainTree = new SimpleProbabilityMutation(map["deleteBrainTree"]);
         encapsulateBrainTree = new SimpleProbabilityMutation(map["encapsulateBrainTree"]);
         constValue = new FloatMutation(map["constValue"]);
+        brainNodeList = new StructuralList(map["brainNodes"]);
+        brainStructural = new StructuralMutation(map["brainStruct"]);
     }
 
     QVariant MutationsManager::serialize(){
@@ -217,6 +239,9 @@ namespace GeneLabCore {
         map.insert("sensorStructuralList",sensorStructuralList->serialize());
 
         map.insert("bonesStructural",bonesStructural->serialize());
+
+        map.insert("brainNodes", brainNodeList->serialize());
+        map.insert("brainStruct", brainStructural->serialize());
 
         return map;
     }
@@ -577,18 +602,18 @@ namespace GeneLabCore {
         QList<QString>::iterator it = nodes.begin();
         while(it != nodes.end()){
             // replace the entire subtree
-            if(newBrainTree->canMutate()) {
+            if(brainStructural->checkReplace()) {
                 this->consumnSubTree(it);
-                newConnexionInfo.append(BrainFunctional::createRandomFunc(2));
+                newConnexionInfo.append(BrainFunctional::createRandomFunc(2, brainNodeList));
                 continue;
-            } else if(deleteBrainTree->canMutate()) {
+            } else if(brainStructural->checkDelete()) {
                 this->consumnSubTree(it);
                 newConnexionInfo.append(BrainFunctional::createRandomFunc(1));
                 continue;
-            } else if(encapsulateBrainTree->canMutate()) {
-                int subchoice = qrand()%21;
+            } else if(brainStructural->checkAdd()) {
+                int subchoice = brainNodeList->pickOne()->type;
                 int nbsub = 0;
-                int maxmem = qrand()%20 + 1;
+                int maxmem = qrand() % 100 + 1;
                 switch(subchoice) {
                 case 0:
                     newConnexionInfo.append("+,");

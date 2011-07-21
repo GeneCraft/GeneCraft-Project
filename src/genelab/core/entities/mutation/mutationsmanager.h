@@ -89,6 +89,9 @@ public:
     IntegerMutation* brainFrequency;
 
     // New brain tree luck
+    StructuralMutation* brainStructural;
+    StructuralList*     brainNodeList;
+
     SimpleProbabilityMutation* newBrainTree;
     // Encapsulate brain tree luck
     SimpleProbabilityMutation* encapsulateBrainTree;

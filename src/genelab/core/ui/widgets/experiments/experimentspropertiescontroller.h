@@ -71,7 +71,7 @@ private:
     IntegerMutationController *brainMemorySize;
     IntegerMutationController *brainFrequency;
     FloatMutationController *constValue;
-    SimpleProbabilityController *newBrainTree;
+    StructuralMutationController *brainStructuralMutation;
 
     GeneLabCore::RessourcesManager *localRessourceManager;
 };

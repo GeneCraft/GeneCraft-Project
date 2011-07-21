@@ -21,9 +21,16 @@ void EntitiesEngine::beforeStep()
 {
     foreach(Entity* e, entities) {
 
+        if(e->getAge() % e->getBrain()->getFrequency())
+            continue;
+
+
         // step sensors
-        foreach(Sensor *s, e->getSensors())
+        foreach(Sensor *s, e->getSensors()) {
+
             s->step();
+
+        }
 
         // step statistics
         e->updadeStatistics();
@@ -35,7 +42,7 @@ void EntitiesEngine::step()
     foreach(Entity* e, entities) {
         // step brains
         if(e->getBrain() != NULL) {
-            e->getBrainActivityStat()->setValue(e->getBrain()->getFrequency()/60.);
+            e->getBrainActivityStat()->setValue(1./e->getBrain()->getFrequency());
             e->incrAge();
 
             if(e->getAge() % e->getBrain()->getFrequency())
@@ -54,13 +61,20 @@ void EntitiesEngine::step()
     }
 
     foreach(Entity* e, entities) {
+        if(e->getAge() % e->getBrain()->getFrequency())
+            continue;
+
         // step brains
+        qDebug() << "brain step!" << e->getAge() << e->getBrain()->getFrequency();
         if(e->getBrain() != NULL) {
             e->getBrain()->step();
         }
     }
 
     foreach(Entity* e, entities) {
+        if(e->getAge() % e->getBrain()->getFrequency())
+            continue;
+
         // step brains
         if(e->getBrain() != NULL) {
             e->getBrain()->getPlugGrid()->afterStep();
@@ -71,6 +85,10 @@ void EntitiesEngine::step()
 void EntitiesEngine::afterStep()
 {
     foreach(Entity* e, entities) {
+
+        if(e->getAge() % e->getBrain()->getFrequency())
+            continue;
+
         // step modifiers
         QList<Effector *> modifiers = e->getEffectors();
         foreach(Effector* m, modifiers)

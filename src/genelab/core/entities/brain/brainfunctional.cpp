@@ -8,6 +8,7 @@
 #include <cstdlib>
 
 #include <QStringList>
+#include "mutation/structurallist.h"
 
 #include <QDebug>
 
@@ -354,124 +355,120 @@ float sigmoid(float x)
 
     }
 
-    QString BrainFunctional::createRandomFunc(int depth) {
+    QString BrainFunctional::createRandomFunc(int depth, StructuralList* nodesList) {
         QString func;
 
-        int rand = qrand()%100;
-        if(rand < 20 && depth > 1) {
-            int subChoix = qrand()%7;
-            if(subChoix == 6) {
-                func += "+ ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            } else if(subChoix == 5) {
-                func += "* ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            } else if(subChoix == 4) {
-                func += "/ ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            } else if(subChoix == 3) {
-                func += "ATAN ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            } else if(subChoix == 2) {
-                func += "T ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            } else if(subChoix == 1) {
-                func += "IF ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            } else {
-                func += "> ,";
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-                func += createRandomFunc(depth -1);
-            }
-        }
-        else if(rand < 40 && depth > 1) {
-            int subchoice = qrand()%7;
-            switch(subchoice) {
+        int rand = qrand() % 100;
+        int maxmem = qrand() % 100 + 1;
+        if(depth > 1 && nodesList) {
+            int nodeType = nodesList->pickOne()->type;
+            switch(nodeType) {
             case 0:
-                func += "COS ,";
+                func.append("+,");
+                func += createRandomFunc(depth -1);
                 func += createRandomFunc(depth -1);
                 break;
             case 1:
-                func += "SIN ,";
+                func.append("*,");
+                func += createRandomFunc(depth -1);
                 func += createRandomFunc(depth -1);
                 break;
             case 2:
-                func += "ABS ,";
+                func.append("/,");
+                func += createRandomFunc(depth -1);
                 func += createRandomFunc(depth -1);
                 break;
             case 3:
-                func += "SIGN ,";
+                func.append("ATAN,");
+                func += createRandomFunc(depth -1);
                 func += createRandomFunc(depth -1);
                 break;
             case 4:
-                func += "LOG ,";
+                func.append("T,");
+                func += createRandomFunc(depth -1);
                 func += createRandomFunc(depth -1);
                 break;
             case 5:
-                func += "EXP ,";
+                func.append(">,");
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
                 func += createRandomFunc(depth -1);
                 break;
             case 6:
-                func += "SIGM ,";
+                func.append("IF,");
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                break;
+            case 7:
+                func.append("COS,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 8:
+                func.append("SIN,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 9:
+                func.append("ABS,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 10:
+                func.append("SIGN,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 11:
+                func.append("LOG,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 12:
+                func.append("EXP,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 13:
+                func.append("SIGM,");
+                func += createRandomFunc(depth -1);
+                break;
+            case 14:
+                func.append("SINUS,");
+                func += createRandomFunc(depth -1);
+                func += createRandomFunc(depth -1);
+                break;
+            case 15:
+                func.append("MEM ");
+                func.append(" " + QString::number(maxmem) + ",");
+                func += createRandomFunc(depth -1);
+                break;
+            case 16:
+                func.append("SMOOTH");
+                func.append(" " + QString::number(maxmem) + ",");
+                func += createRandomFunc(depth -1);
+                break;
+            case 17:
+                func.append("INT");
+                func.append(" " + QString::number(maxmem) + ",");
+                func += createRandomFunc(depth -1);
+                break;
+            case 18:
+                func.append("INTERPOLATE");
+                func.append(" " + QString::number(maxmem) + ",");
+                func += createRandomFunc(depth -1);
+                break;
+            case 19:
+                func.append("MAX");
+                func.append(" " + QString::number(maxmem) + ",");
+                func += createRandomFunc(depth -1);
+                break;
+            case 20:
+                func.append("MIN");
+                func.append(" " + QString::number(maxmem) + ",");
+                func += createRandomFunc(depth -1);
+                break;
+            case 21:
+                func.append("DIFF");
+                func.append(" " + QString::number(maxmem) + ",");
                 func += createRandomFunc(depth -1);
                 break;
             }
-
-        }
-        else if(rand < 80 && depth > 1) {
-            func += "SINUS ,";
-            func += createRandomFunc(depth -1);
-            func += createRandomFunc(depth -1);
-            //func += QString::number(((float)qrand())/RAND_MAX) + ",";
-        }
-        else if(rand <= 100  && depth > 1) {
-            int maxMem = 20;
-            int subchoix = qrand()%6;
-            if(subchoix == 3) {
-                func += "MEM ";
-                func += QString::number(qrand()%maxMem+1);
-                func += ",";
-                func += createRandomFunc(depth -1);
-            } else if(subchoix == 2) {
-                func += "SMOOTH ";
-                func += QString::number(qrand()%maxMem+1);
-                func += ",";
-                func += createRandomFunc(depth -1);
-            } else if(subchoix == 1) {
-                func += "INT ";
-                func += QString::number(qrand()%maxMem+1);
-                func += ",";
-                func += createRandomFunc(depth -1);
-            } else if(subchoix == 0) {
-               func += "INTERPOLATE ";
-               func += QString::number(qrand()%maxMem+1);
-               func += ",";
-               func += createRandomFunc(depth -1);
-           } else if(subchoix == 4){
-               func += "MAX ";
-               func += QString::number(qrand()%maxMem+1);
-               func += ",";
-               func += createRandomFunc(depth -1);
-           } else if(subchoix == 5){
-               func += "DIFF ";
-               func += QString::number(qrand()%maxMem+1);
-               func += ",";
-               func += createRandomFunc(depth -1);
-           } else {
-               func += "MIN ";
-               func += QString::number(qrand()%maxMem+1);
-               func += ",";
-               func += createRandomFunc(depth -1);
-           }
-            //func += QString::number(((float)qrand())/RAND_MAX) + ",";
         } else if(rand < 30) {
             func += "CONST ";
             float x = ((float)qrand())/RAND_MAX*20 - 10; //  0.0 to 1.0
