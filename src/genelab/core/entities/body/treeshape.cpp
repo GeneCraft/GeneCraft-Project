@@ -74,6 +74,8 @@ namespace GeneLabCore {
            case boxSmellSensor:{
 
                fix->addSensor(new BoxSmellSensor(sensorData, fix));
+
+               break;
            }
            case distanceSensor:{
 

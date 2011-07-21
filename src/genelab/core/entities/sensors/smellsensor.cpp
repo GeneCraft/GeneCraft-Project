@@ -38,11 +38,11 @@ SmellSensor::SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType
     this->smellType =  smellType;
 
     intensityInput = new BrainIn(map["intensityInput"]);
-    brainInputs.append(intensityInput);
-
     // the max value equals radius of smell !
     radiusOfSmell = map["radiusOfSmell"].toFloat();
-    intensityInput->setMax(radiusOfSmell);
+    //intensityInput->setMax(radiusOfSmell);
+    brainInputs.append(intensityInput);
+
 
     createRigidBody(radiusOfSmell);
 }
@@ -101,6 +101,7 @@ void SmellSensor::step() {
     */
 
     //if(nearestBodySmelled) {
+    qDebug() << radiusOfSmell - distanceOfNearestBodySmelled;
         intensityInput->setValue(radiusOfSmell - distanceOfNearestBodySmelled);
         //qDebug() << "Smell intensity :" << smellRadius - distanceOfNearestBodySmelled;
     //}
@@ -136,7 +137,7 @@ QVariant SmellSensor::generateEmpty(QString typeName, SensorType type, btScalar 
 {
     QVariantMap data = Sensor::generateEmpty(typeName, type).toMap();
 
-    BrainIn intensity(0,radiusOfSmell);
+    BrainIn intensity(0, radiusOfSmell);
     intensity.connectRandomly();
     data.insert("intensityInput", intensity.serialize());
     data.insert("radiusOfSmell", (double) radiusOfSmell);
