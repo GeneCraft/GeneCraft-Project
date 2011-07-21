@@ -10,12 +10,13 @@
 
 namespace GeneLabCore {
 
-RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofConstraint *constraint) :
+#define TYPE_NAME "Rotational Motor"
+#define TYPE rotationalMotorEffector
+
+RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofConstraint *constraint) :  Effector(TYPE_NAME, TYPE),
     constraint(constraint), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
 {
     this->bone = bone;
-    this->typeName = "RotationalMotor";
-    this->type = rotationalMotorEffector;
 
     // Stabilisation properties
     normalPositionMaxError = 0.001;

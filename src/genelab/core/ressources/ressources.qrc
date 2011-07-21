@@ -59,6 +59,8 @@
         <file alias="experiment_load">img/icons/report_go.png</file>
         <file alias="down">img/icons/arrow_down.png</file>
         <file alias="up">img/icons/arrow_up.png</file>
+        <file alias="edition">img/icons/bullet_edit.png</file>
+        <file alias="sensor_and_effector">img/icons/cog_feed.png</file>
     </qresource>
     <qresource prefix="/js">
         <file alias="js-beautifull">js/js-beautifull.js</file>

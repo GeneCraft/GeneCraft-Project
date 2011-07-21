@@ -34,6 +34,9 @@ namespace GeneLabCore {
         // To remove it without destructing entity
         void remove();
 
+        // To get the parent bone (return NULL it's a root fixation)
+        Bone *getParentBone() { return parentBone; }
+
         // -----------
         // -- bones --
         // -----------

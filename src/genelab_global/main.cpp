@@ -62,21 +62,6 @@ int main(int argc, char *argv[])
     #endif
 
     a = new QApplication(argc, argv);
-
-    DataBase database;
-    database.dbName = "/db/genecraft/";
-    database.url = "http://www.genecraft-project.org";
-    database.port = 80;
-
-    RessourcesManager* ressourceManager = new RessourcesManager(database, QDir("ressources"));
-    ressourceManager->reloadDir();
-
-    qDebug() << "WORLDS" << ressourceManager->getWorlds().size();
-    qDebug() << "CREATURES" << ressourceManager->getCreatures().size();
-    qDebug() << "EXPERIMENTS" << ressourceManager->getExperiments().size();
-
-    qDebug() << Ressource::beautifullJson(ressourceManager->getExperiments().first().data);
-
     CreatureViewerWindow cw;
     cw.showMaximized();
 

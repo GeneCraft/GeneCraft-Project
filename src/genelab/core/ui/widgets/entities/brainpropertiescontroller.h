@@ -21,6 +21,7 @@ public:
     ~BrainPropertiesController();
     void connectToInspectorInputManager(InspectorsInputManager *iim);
 
+
 public slots:
 
     void selectSensorFixation();
@@ -42,7 +43,9 @@ public slots:
 signals:
 
     void sEntityUpdated(Entity *entity);
+    void sFixationSelected(Fixation *fixation);
     void sFixationUpdated(Fixation *fixation);
+    void sBoneSelected(Bone *bone);
 
 private:
     Ui::BrainPropertiesController *ui;

@@ -82,8 +82,7 @@ void ExperimentsPropertiesController::setupForm() {
     for(int i=0; i<gravitiesName.count();++i)
         ui->cbGravity->addItem(QString::number(gravities.at(i)) + " - " + gravitiesName.at(i));
 
-    skyMaterials << "Examples/TrippySkyBox"
-                 << "Examples/SpaceSkyBox"
+    skyMaterials << "Examples/SpaceSkyBox"
                  << "Examples/CloudyNoonSkyBox"
                  << "Examples/StormySkyBox"
                  << "Examples/EarlyMorningSkyBox"

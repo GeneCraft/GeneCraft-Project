@@ -87,11 +87,11 @@ namespace GeneLabCore {
 
            case rotationalMotorEffector: break;
            case gripperEffector: {
-               fix->addEffector(new GripperEffector(fix));
+               fix->addEffector(new GripperEffector(effectorMap, fix));
            }
                break;
            case flyingEffector:{
-               fix->addEffector(new FlyingEffector(fix));
+               fix->addEffector(new FlyingEffector(effectorMap, fix));
            }
                break;
            }

@@ -2,12 +2,9 @@
 #include <QVariant>
 namespace GeneLabCore {
 
-Effector::Effector(QObject *parent) :
-    QObject(parent)
+Effector::Effector(QString typeName, EffectorType type) : typeName(typeName), type(type)
 {
-
 }
-
 
 Effector::Effector(QVariant data) {
     this->typeName = data.toMap()["typeName"].toString();

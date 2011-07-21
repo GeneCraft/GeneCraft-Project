@@ -11,15 +11,22 @@ namespace GeneLabCore {
 class FlyingEffector : public Effector
 {
 public:
-    FlyingEffector(Fixation *fixation, btScalar maxAltitude = 20.0);
+
+    // To create
+    FlyingEffector(Fixation *fixation);
+
+    // To create from data
+    FlyingEffector(QVariant data, Fixation *fixation);
 
     // To update world.
     void step();
 
+    // To serialize
+    QVariant serialize();
+
 private:
 
     Fixation *fixation;
-    btScalar maxAltitude;
     BrainOut *impulseX, *impulseY, *impulseZ;
 };
 

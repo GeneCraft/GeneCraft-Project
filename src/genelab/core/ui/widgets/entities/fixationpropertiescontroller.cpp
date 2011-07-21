@@ -213,7 +213,10 @@ void FixationPropertiesController::addSensor()
     if(sensor != NULL)
     {
         fixation->addSensor(sensor);
-        setFixation(fixation); // refresh widget
+
+        // refresh ui
+        setFixation(fixation);
+        emit sFixationUpdated(fixation);
     }
 }
 
@@ -238,7 +241,10 @@ void FixationPropertiesController::addEffector()
     if(effector != NULL)
     {
         fixation->addEffector(effector);
-        setFixation(fixation); // refresh widget
+
+        // refresh ui
+        setFixation(fixation);
+        emit sFixationUpdated(fixation);
     }
 }
 
@@ -293,10 +299,8 @@ void FixationPropertiesController::removeSelectedSensor()
                 // delete sensor
                 delete sensorItem->sensor;
 
-                // update ui TODO emit
+                // update ui
                 setFixation(fixation);
-
-                // FIXME check update entityPropertiesController !!!!!!!!!!!!!!!!!!!!!!!!!
                 emit sFixationUpdated(fixation);
             }
         }
@@ -319,10 +323,8 @@ void FixationPropertiesController::removeSelectedEffector()
                 // delete sensor
                 delete effectorItem->effector;
 
-                // update ui TODO emit
+                // update ui
                 setFixation(fixation);
-
-                // FIXME check update entityPropertiesController !!!!!!!!!!!!!!!!!!!!!!!!!
                 emit sFixationUpdated(fixation);
             }
         }

@@ -55,6 +55,8 @@ void BrainPropertiesController::connectToInspectorInputManager(InspectorsInputMa
     // emissions
     connect(this,SIGNAL(sEntityUpdated(Entity *)),iim,SLOT(entityUpdated(Entity *)));
     connect(this,SIGNAL(sFixationUpdated(Fixation*)),iim,SLOT(fixationUpdated(Fixation*)));
+    connect(this,SIGNAL(sFixationSelected(Fixation*)),iim,SLOT(fixationSelected(Fixation*)));
+    connect(this,SIGNAL(sBoneSelected(Bone*)),iim,SLOT(boneSelected(Bone*)));
 }
 
 void BrainPropertiesController::entityUpdated(Entity *entity){
@@ -147,15 +149,14 @@ void BrainPropertiesController::setBrainDesignViz(PlugGridDesignVisualizer *brai
 
 void BrainPropertiesController::selectSensorFixation()
 {
-    if(ui->lwSensors->selectedItems().size() > 0)
-    {
-        SensorListWidgetItem * sensorItem = dynamic_cast<SensorListWidgetItem*>(ui->lwSensors->selectedItems()[0]);
+    if(ui->lwSensors->currentItem()) {
+        SensorListWidgetItem * sensorItem = (SensorListWidgetItem*) ui->lwSensors->currentItem();
 
-        if (sensorItem)
-        {
-            // TODO A REMETTRE !
-            //emit rigidBodySelected(sensorItem->sensor->getFixation()->getRigidBody());
-        }
+        // root fixation
+        if(sensorItem->sensor->getFixation()->getParentBone())
+            emit sBoneSelected(sensorItem->sensor->getFixation()->getParentBone());
+        else
+            emit sFixationSelected(sensorItem->sensor->getFixation());
     }
 }
 

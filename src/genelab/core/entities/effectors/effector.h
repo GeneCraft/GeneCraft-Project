@@ -1,8 +1,8 @@
 #ifndef EFFECTOR_H
 #define EFFECTOR_H
 
-#include <QObject>
 #include <QString>
+#include <QVariant>
 #include "genelabcoreclasses.h"
 
 namespace GeneLabCore {
@@ -20,13 +20,13 @@ enum EffectorType { rotationalMotorEffector = 0, gripperEffector, flyingEffector
  * @author Aurelien Da Campo
  * @author Cyprien Huissoud
  */
-class Effector : public QObject
+class Effector
 {
 
 public:
 
     // To create
-    explicit Effector(QObject *parent = 0);
+    Effector(QString typeName, EffectorType type);
 
     // To create from serialization data
     Effector(QVariant data);
