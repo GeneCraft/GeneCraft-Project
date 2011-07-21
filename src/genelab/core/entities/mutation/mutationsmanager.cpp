@@ -209,9 +209,6 @@ namespace GeneLabCore {
         brainWeight = new FloatMutation(map["brainWeight"]);
         brainMemorySize = new IntegerMutation(map["brainMemorySize"]);
         brainFrequency = new IntegerMutation(map["brainFrequency"]);
-        newBrainTree = new SimpleProbabilityMutation(map["newBrainTree"]);
-        deleteBrainTree = new SimpleProbabilityMutation(map["deleteBrainTree"]);
-        encapsulateBrainTree = new SimpleProbabilityMutation(map["encapsulateBrainTree"]);
         constValue = new FloatMutation(map["constValue"]);
         brainNodeList = new StructuralList(map["brainNodes"]);
         brainStructural = new StructuralMutation(map["brainStruct"]);
@@ -230,9 +227,6 @@ namespace GeneLabCore {
         map.insert("brainWeight",brainWeight->serialize());
         map.insert("brainMemorySize",brainMemorySize->serialize());
         map.insert("brainFrequency",brainFrequency->serialize());
-        map.insert("newBrainTree",newBrainTree->serialize());
-        map.insert("encapsulateBrainTree",encapsulateBrainTree->serialize());
-        map.insert("deleteBrainTree",deleteBrainTree->serialize());
         map.insert("constValue",constValue->serialize());
 
         map.insert("sensorsStructural",sensorsStructural->serialize());

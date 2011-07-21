@@ -92,11 +92,6 @@ public:
     StructuralMutation* brainStructural;
     StructuralList*     brainNodeList;
 
-    SimpleProbabilityMutation* newBrainTree;
-    // Encapsulate brain tree luck
-    SimpleProbabilityMutation* encapsulateBrainTree;
-    // Delete brain tree luck
-    SimpleProbabilityMutation* deleteBrainTree;
 
 private:
 
