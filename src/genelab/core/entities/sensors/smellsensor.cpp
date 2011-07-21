@@ -101,7 +101,6 @@ void SmellSensor::step() {
     */
 
     //if(nearestBodySmelled) {
-    qDebug() << radiusOfSmell - distanceOfNearestBodySmelled;
         intensityInput->setValue(radiusOfSmell - distanceOfNearestBodySmelled);
         //qDebug() << "Smell intensity :" << smellRadius - distanceOfNearestBodySmelled;
     //}
