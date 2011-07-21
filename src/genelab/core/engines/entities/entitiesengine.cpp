@@ -64,8 +64,6 @@ void EntitiesEngine::step()
         if(e->getAge() % e->getBrain()->getFrequency())
             continue;
 
-        // step brains
-        qDebug() << "brain step!" << e->getAge() << e->getBrain()->getFrequency();
         if(e->getBrain() != NULL) {
             e->getBrain()->step();
         }
