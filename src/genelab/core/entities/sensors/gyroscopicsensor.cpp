@@ -50,9 +50,9 @@ QVariant GyroscopicSensor::generateEmpty()
     BrainIn inputPitch(-M_PI, M_PI);
     BrainIn inputRoll(-M_PI, M_PI);
 
-    inputYaw.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
-    inputPitch.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
-    inputRoll.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputYaw.connectRandomly();
+    inputPitch.connectRandomly();
+    inputRoll.connectRandomly();
 
     data.insert("inputYaw", inputYaw.serialize());
     data.insert("inputPitch", inputPitch.serialize());

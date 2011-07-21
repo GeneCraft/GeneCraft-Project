@@ -21,6 +21,8 @@
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/positionsensor.h"
 #include "sensors/contactsensor.h"
+#include "sensors/boxsmellsensor.h"
+#include "sensors/distancesensor.h"
 
 // effectors
 #include "effectors/effector.h"
@@ -64,8 +66,8 @@ namespace GeneLabCore {
         boneAngularOrigin->probability   = 0.05;
         boneAngularOrigin->minFact       = -0.01;
         boneAngularOrigin->maxFact       =  0.01;
-        boneAngularOrigin->minValue      = -M_PI+0.01; // -INF (cyclic) ?
-        boneAngularOrigin->maxValue      =  M_PI-0.01; // +INF (cyclic) ?
+        boneAngularOrigin->minValue      = -M_PI;
+        boneAngularOrigin->maxValue      =  M_PI;
 
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
@@ -80,6 +82,16 @@ namespace GeneLabCore {
         sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
+        sensorStructuralList->elements.append(new MutationElement("Box smell sensor",boxSmellSensor,1.0));
+        sensorStructuralList->elements.append(new MutationElement("Distance sensor",distanceSensor,1.0));
+
+        // TODO serialize and add to ui
+        distanceSensorYZ = new FloatMutation();
+        distanceSensorYZ->probability   = 0.05;
+        distanceSensorYZ->minFact       = -0.01;
+        distanceSensorYZ->maxFact       =  0.01;
+        distanceSensorYZ->minValue      = -M_PI;
+        distanceSensorYZ->maxValue      =  M_PI;
 
         // bones
         bonesStructural = new StructuralMutation();
@@ -195,6 +207,14 @@ namespace GeneLabCore {
         // sensors
         sensorsStructural = new StructuralMutation(map["sensorsStructural"]);
         sensorStructuralList = new StructuralList(map["sensorStructuralList"]);
+
+        // TODO serialize and add to ui
+        distanceSensorYZ = new FloatMutation();
+        distanceSensorYZ->probability   = 0.05;
+        distanceSensorYZ->minFact       = -0.01;
+        distanceSensorYZ->maxFact       =  0.01;
+        distanceSensorYZ->minValue      = -M_PI;
+        distanceSensorYZ->maxValue      =  M_PI;
 
         // bones
         bonesStructural = new StructuralMutation(map["bonesStructural"]);
@@ -422,8 +442,8 @@ namespace GeneLabCore {
         // mutate sensor brain in
         foreach(QVariant sensor, sensorList) {
             QVariantMap sensorMap = sensor.toMap();
-            SensorType type = (SensorType)sensorMap["type"].toInt();
-            switch(type) {
+
+            switch((SensorType) sensorMap["type"].toInt()) {
                 case accelerometerSensor:
                     sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"]));
                     sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"]));
@@ -442,6 +462,16 @@ namespace GeneLabCore {
                 case contactSensor:
                     sensorMap.insert("collisionInput", mutateBrainIn(sensorMap["collisionInput"]));
                     break;
+                case boxSmellSensor:
+//                    sensorMap.insert("intensityInput", mutateBrainIn(sensorMap["intensityInput"]));
+                    break;
+                case distanceSensor:
+//                    sensorMap.insert("distanceInput", mutateBrainIn(sensorMap["distanceInput"]));
+//                    QVariantMap orientationMap = sensorMap["orientation"].toMap();
+//                    distanceSensorYZ->mutate(orientationMap,"y");
+//                    distanceSensorYZ->mutate(orientationMap,"z");
+//                    sensorMap.insert("orientation",orientationMap);
+                   break;
             }
 
             newSensorList.append(sensorMap);
@@ -452,6 +482,36 @@ namespace GeneLabCore {
             addSensor(newSensorList);
 
         fixMap.insert("sensors", newSensorList);
+
+
+        // ------------------------
+        // -- Effector mutations --
+        // ------------------------
+        QVariantList effectorList = fixMap["effectors"].toList();
+        QVariantList newEffectorsList;
+
+        // if motor exists
+        foreach(QVariant effector, effectorList) {
+            QVariantMap effectorMap = effector.toMap();
+
+            switch((EffectorType) effectorMap["type"].toInt()) {
+                case rotationalMotorEffector:
+                    // do in bone mutation...
+                    break;
+                case gripperEffector :
+                    effectorMap.insert("gripperOutput", mutateBrainOut(effectorMap["gripperOutput"]));
+                    break;
+                case flyingEffector :
+                    effectorMap.insert("impulseX", mutateBrainOut(effectorMap["impulseX"]));
+                    effectorMap.insert("impulseY", mutateBrainOut(effectorMap["impulseY"]));
+                    effectorMap.insert("impulseZ", mutateBrainOut(effectorMap["impulseZ"]));
+                    break;
+            }
+
+            newEffectorsList.append(effectorMap);
+        }
+        fixMap.insert("effectors", newEffectorsList);
+
 
         // ---------------------
         // -- Bones mutations --
@@ -530,7 +590,7 @@ namespace GeneLabCore {
         MutationElement *me = sensorStructuralList->pickOne();
         QVariant newSensor;
 
-        switch(me->type) {
+        switch((SensorType) me->type) {
             case accelerometerSensor:
                 newSensor = AccelerometerSensor::generateEmpty();
                 break;
@@ -543,6 +603,14 @@ namespace GeneLabCore {
             case contactSensor:
                 newSensor = ContactSensor::generateEmpty();
                 break;
+            case boxSmellSensor:
+                qDebug() << QxtJSON::stringify(BoxSmellSensor::generateEmpty());
+                newSensor = BoxSmellSensor::generateEmpty();
+                break;
+            case distanceSensor :
+                qDebug() << QxtJSON::stringify(BoxSmellSensor::generateEmpty());
+                newSensor = BoxSmellSensor::generateEmpty();
+            break;
         }
 
         // insert in a specific position

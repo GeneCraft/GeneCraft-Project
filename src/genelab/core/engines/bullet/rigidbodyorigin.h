@@ -14,8 +14,7 @@ public:
     {
         BONE = 0,
         FIXATION,
-        BASIC_SHAPE,
-        FOOD
+        BASIC_SHAPE
     };
 
     RigidBodyOrigin(RigidBodyType typeOrigin, QObject * object);

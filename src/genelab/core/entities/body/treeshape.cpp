@@ -15,6 +15,7 @@
 #include "sensors/positionsensor.h"
 #include "sensors/contactsensor.h"
 #include "sensors/boxsmellsensor.h"
+#include "sensors/distancesensor.h"
 
 #include "effectors/grippereffector.h"
 #include "effectors/flyingeffector.h"
@@ -48,31 +49,35 @@ namespace GeneLabCore {
         // -------------
         // -- sensors --
         // -------------
-        foreach(QVariant sensor, fixGenotype.toMap()["sensors"].toList()) {
-           QVariantMap sensorMap = sensor.toMap();
+        foreach(QVariant sensorData, fixGenotype.toMap()["sensors"].toList()) {
+           QVariantMap sensorMap = sensorData.toMap();
            switch((SensorType)sensorMap["type"].toInt()) {
            case accelerometerSensor: {
-               fix->addSensor(new AccelerometerSensor(sensor, fix));
+               fix->addSensor(new AccelerometerSensor(sensorData, fix));
            }
                break;
            case gyroscopicSensor: {
 
-               fix->addSensor(new GyroscopicSensor(sensor, fix));
+               fix->addSensor(new GyroscopicSensor(sensorData, fix));
            }
                break;
            case positionSensor:{
 
-               fix->addSensor(new PositionSensor(sensor, this->root, fix));
+               fix->addSensor(new PositionSensor(sensorData, this->root, fix));
            }
                break;
            case contactSensor:{
 
-               fix->addSensor(new ContactSensor(sensor, fix));
+               fix->addSensor(new ContactSensor(sensorData, fix));
            }
                break;
            case boxSmellSensor:{
 
-               fix->addSensor(new BoxSmellSensor(sensor, fix));
+               fix->addSensor(new BoxSmellSensor(sensorData, fix));
+           }
+           case distanceSensor:{
+
+               fix->addSensor(new DistanceSensor(sensorData, fix));
            }
                break;
            }

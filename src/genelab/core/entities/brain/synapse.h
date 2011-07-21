@@ -4,6 +4,7 @@
 #include <QObject>
 #include "genelabcoreclasses.h"
 #include <QDebug>
+#include "tools.h"
 
 namespace GeneLabCore {
 
@@ -36,6 +37,10 @@ namespace GeneLabCore {
 
         QList<NeuralConnexion> getConnexions() {
             return this->connexions;
+        }
+
+        void connectRandomly() {
+            this->connexions.append(NeuralConnexion(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0)));
         }
 
         void connectTo(float x, float y, float weight = 1.0f) {

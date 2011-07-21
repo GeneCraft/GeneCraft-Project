@@ -57,9 +57,9 @@ QVariant AccelerometerSensor::generateEmpty()
     BrainIn inputY(MIN_ACCELERATION,MAX_ACCELERATION);
     BrainIn inputZ(MIN_ACCELERATION,MAX_ACCELERATION);
 
-    inputX.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
-    inputY.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
-    inputZ.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    inputX.connectRandomly();
+    inputY.connectRandomly();
+    inputZ.connectRandomly();
 
     data.insert("inputX", inputX.serialize());
     data.insert("inputY", inputY.serialize());

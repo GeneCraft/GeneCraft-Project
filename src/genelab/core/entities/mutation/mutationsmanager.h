@@ -44,7 +44,9 @@ public:
     // Mutate the tree of a brainOutput
     QVariant mutateBrainOutTree(QVariant brainOut);
 
-    // BODY
+    // ----------
+    // -- body --
+    // ----------
 
     // Bone Length mutation
     FloatMutation* boneLength;
@@ -68,7 +70,9 @@ public:
     // Add / Remove / Replace sensor
     StructuralMutation *bonesStructural;
 
-    // BRAIN
+    // -----------
+    // -- brain --
+    // -----------
 
     // Brain size
     IntegerMutation* brainSize;
@@ -92,6 +96,8 @@ public:
     StructuralMutation* brainStructural;
     StructuralList*     brainNodeList;
 
+    // Sensors params
+    FloatMutation *distanceSensorYZ;
 
 private:
 

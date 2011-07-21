@@ -15,30 +15,48 @@
 
 namespace GeneLabCore {
 
-SmellSensor::SmellSensor(Fixation *fixation, QString typeName, SensorType type, RigidBodyOrigin::RigidBodyType smellType, btScalar smellRadius) : Sensor(fixation)
+SmellSensor::SmellSensor(Fixation *fixation, QString typeName, SensorType type,
+                         RigidBodyOrigin::RigidBodyType smellType, btScalar smellRadius) :
+    Sensor(fixation)
 {
     this->typeName      = typeName;
     this->type          = type;
     this->smellType     = smellType;
-    this->smellRadius   = smellRadius;
+    this->radiusOfSmell   = smellRadius;
 
     intensityInput = new BrainIn(0, smellRadius);
-
     brainInputs.append(intensityInput);
 
-    // TODO create the rigid to do contact test...
-    btMotionState *motion = new btDefaultMotionState();
-    btCollisionShape *shape = new btSphereShape(smellRadius);
-    smellSphere = new btRigidBody(0,motion,shape);
-
-    callback = new ContactSensorCallback(smellSphere, this);
+    createRigidBody(smellRadius);
 }
 
 // To create from serialization data
-SmellSensor::SmellSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation)
+SmellSensor::SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation) : Sensor(data, fixation)
 {
-    intensityInput = new BrainIn(data.toMap()["intensityInput"]);
+    QVariantMap map = data.toMap();
+
+    this->smellType =  smellType;
+
+    intensityInput = new BrainIn(map["intensityInput"]);
     brainInputs.append(intensityInput);
+
+    // the max value equals radius of smell !
+    radiusOfSmell = map["radiusOfSmell"].toFloat();
+    intensityInput->setMax(radiusOfSmell);
+
+    createRigidBody(radiusOfSmell);
+}
+
+void SmellSensor::createRigidBody(btScalar radiusOfSmell) {
+
+    qDebug() << radiusOfSmell;
+
+    // create the rigid to do contact test...
+    btMotionState *motion = new btDefaultMotionState();
+    btCollisionShape *shape = new btSphereShape(radiusOfSmell);
+    smellSphere = new btRigidBody(0,motion,shape);
+
+    callback = new ContactSensorCallback(smellSphere, this);
 }
 
 // To serialize
@@ -46,6 +64,8 @@ QVariant SmellSensor::serialize()
 {
     QVariantMap data = Sensor::serialize().toMap();
     data.insert("intensityInput", intensityInput->serialize());
+    data.insert("radiusOfSmell", (double) radiusOfSmell);
+
     return data;
 }
 
@@ -54,7 +74,7 @@ void SmellSensor::step() {
     //qDebug() << "STEP START";
 
     nearestBodySmelled = NULL;
-    distanceOfNearestBodySmelled = smellRadius;
+    distanceOfNearestBodySmelled = radiusOfSmell;
 
     btVector3 origin = fixation->getRigidBody()->getWorldTransform().getOrigin();
     smellSphere->getWorldTransform().setOrigin(origin);
@@ -81,7 +101,7 @@ void SmellSensor::step() {
     */
 
     //if(nearestBodySmelled) {
-        intensityInput->setValue(smellRadius - distanceOfNearestBodySmelled);
+        intensityInput->setValue(radiusOfSmell - distanceOfNearestBodySmelled);
         //qDebug() << "Smell intensity :" << smellRadius - distanceOfNearestBodySmelled;
     //}
 
@@ -110,6 +130,18 @@ void SmellSensor::objectSmelled(const btRigidBody *body) {
         nearestBodySmelled = body;
         distanceOfNearestBodySmelled = distance;
     }
+}
+
+QVariant SmellSensor::generateEmpty(QString typeName, SensorType type, btScalar radiusOfSmell)
+{
+    QVariantMap data = Sensor::generateEmpty(typeName, type).toMap();
+
+    BrainIn intensity(0,radiusOfSmell);
+    intensity.connectRandomly();
+    data.insert("intensityInput", intensity.serialize());
+    data.insert("radiusOfSmell", (double) radiusOfSmell);
+
+    return data;
 }
 
 }

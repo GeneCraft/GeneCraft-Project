@@ -16,13 +16,16 @@ class ContactSensorCallback;
 class SmellSensor : public Sensor
 {
 public:
-    SmellSensor(Fixation *fixation, QString typeName, SensorType type, RigidBodyOrigin::RigidBodyType smellType, btScalar smellRadius);
+    SmellSensor(Fixation *fixation, QString typeName, SensorType type, RigidBodyOrigin::RigidBodyType smellType, btScalar radiusOfSmell);
 
     // To create from serialization data
-    SmellSensor(QVariant data, Fixation * fixation);
+    SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation);
 
     // To serialize
     QVariant serialize();
+
+    // To generate en empty sensor serialization data
+    static QVariant generateEmpty(QString typeName, SensorType type, btScalar radiusOfSmell);
 
     // To update brain inputs values
     void step();
@@ -36,7 +39,7 @@ protected:
     RigidBodyOrigin::RigidBodyType smellType;
     btRigidBody * smellSphere;
 
-    btScalar smellRadius;
+    btScalar radiusOfSmell;
     const btRigidBody *nearestBodySmelled;
     btScalar distanceOfNearestBodySmelled;
 
@@ -44,8 +47,9 @@ protected:
 
 private:
 
-    ContactSensorCallback *callback;
+    void createRigidBody(btScalar radiusOfSmell);
 
+    ContactSensorCallback *callback;
 };
 
 struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {

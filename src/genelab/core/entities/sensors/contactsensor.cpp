@@ -41,7 +41,7 @@ QVariant ContactSensor::generateEmpty()
 
     BrainIn collided(0,1);
 
-    collided.connectTo(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0));
+    collided.connectRandomly();
 
     data.insert("collisionInput", collided.serialize());
 

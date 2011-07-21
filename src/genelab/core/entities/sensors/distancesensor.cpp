@@ -76,8 +76,6 @@ void DistanceSensor::step() {
 
                 btScalar distance = rayFrom.distance(body->getWorldTransform().getOrigin());
 
-                qDebug() << distance << rayFrom.x() << rayFrom.y() << rayFrom.z() << realRayTo.x() << realRayTo.y() << realRayTo.z();
-
                 distanceInput->setValue(distance);
                 return;
             }
