@@ -1,148 +1,279 @@
 {
-   "author":"",
-   "comments":"",
-   "dateOfCreation":"2011-07-17 22:58:21",
-   "description":"",
-   "duration":1200,
-   "id":"NewOneAgain2222",
-   "evalFunc" : "(function(){ return entity.rootRelVelocity.sum; })"
-   "mutations":{
-      "boneAngularOrigin":{
-         "enable":true,
-         "maxFact":0,
-         "maxValue":3.13159,
-         "minFact":0,
-         "minValue":-3.13159,
-         "probability":0.1,
-         "type":1
-      },
-      "boneLength":{
-         "enable":true,
-         "maxFact":0.05,
-         "maxValue":5,
-         "minFact":-0.05,
-         "minValue":0.1,
-         "probability":0.1,
-         "type":1
-      },
-      "boneRadius":{
-         "enable":true,
-         "maxFact":0.05,
-         "maxValue":2,
-         "minFact":-0.05,
-         "minValue":0.1,
-         "probability":0.1,
-         "type":1
-      },
-      "bonesStructural":{
-         "addProbability":0.01,
-         "deleteProbability":0.01,
-         "enable":true,
-         "replaceProbability":0.01
-      },
-      "brainFrequency":{
-         "enable":true,
-         "maxIncr":2,
-         "maxValue":60,
-         "minIncr":-2,
-         "minValue":1,
-         "probability":0.1,
-         "type":0
-      },
-      "brainInPos":{
-         "enable":true,
-         "maxFact":0.1,
-         "maxValue":1,
-         "minFact":-0.1,
-         "minValue":0,
-         "probability":0.2,
-         "type":1
-      },
-      "brainMemorySize":{
-         "enable":true,
-         "maxIncr":5,
-         "maxValue":100,
-         "minIncr":-5,
-         "minValue":1,
-         "probability":0.2,
-         "type":0
-      },
-      "brainSize":{
-         "enable":true,
-         "maxIncr":5,
-         "maxValue":100,
-         "minIncr":-5,
-         "minValue":1,
-         "probability":0.1,
-         "type":0
-      },
-      "brainWeight":{
-         "enable":true,
-         "maxFact":0.1,
-         "maxValue":1,
-         "minFact":-0.1,
-         "minValue":-1,
-         "probability":0.2,
-         "type":1
-      },
-      "constValue":{
-         "enable":true,
-         "maxFact":0.1,
-         "maxValue":10,
-         "minFact":-0.1,
-         "minValue":-10,
-         "probability":0.2,
-         "type":1
-      },
-      "fixRadius":{
-         "enable":true,
-         "maxFact":0.05,
-         "maxValue":2,
-         "minFact":-0.05,
-         "minValue":0.1,
-         "probability":0.1,
-         "type":1
-      },
-      "newBrainTree":{
-         "enable":true,
-         "probability":0.05,
-         "type":2
-      },
-      "sensorStructuralList":[
-         {
-            "name":"Accelerometer sensor",
-            "type":1,
-            "weight":1
-         },
-         {
-            "name":"Gyroscopic sensor",
-            "type":0,
-            "weight":1
-         },
-         {
-            "name":"Egocentric sensor",
-            "type":2,
-            "weight":1
-         },
-         {
-            "name":"Contact sensor",
-            "type":3,
-            "weight":1
-         }
-      ],
-      "sensorsStructural":{
-         "addProbability":0.1,
-         "deleteProbability":0.1,
-         "enable":true,
-         "replaceProbability":0.1
-      }
-   },
-   "onlyIfEntityIsStable":true,
-   "seedInfo":{
-      "type":"family",
-	  "family":"spider"
-   },
-   "stopIfEntityIsNotInOnePiece":true,
-   "timeToWaitForStability":300,
-   "version":0.1
+    "author": "Cyprien",
+    "comments": "",
+    "dateOfCreation": "2011-07-21 14:32:48",
+    "description": "",
+    "dieFunction": "",
+    "duration": 1200,
+    "endFunction": "(function(int actualStep) { return entity.brainActivity.sum > 200; })",
+    "evalFunction": "(function() {return entity.rootRelVelocity.sum - entity.bodySensors.sum + entity.brainPlugGridSize.value})",
+    "id": "SpiderMovingFor200BrainTicks",
+    "mutations": {
+        "boneAngularOrigin": {
+            "enable": true,
+            "maxFact": 0,
+            "maxValue": 3.13159,
+            "minFact": 0,
+            "minValue": -3.13159,
+            "probability": 0.05,
+            "type": 1
+        },
+        "boneLength": {
+            "enable": true,
+            "maxFact": 0.05,
+            "maxValue": 5,
+            "minFact": -0.05,
+            "minValue": 0.1,
+            "probability": 0.05,
+            "type": 1
+        },
+        "boneRadius": {
+            "enable": true,
+            "maxFact": 0.05,
+            "maxValue": 2,
+            "minFact": -0.05,
+            "minValue": 0.1,
+            "probability": 0.05,
+            "type": 1
+        },
+        "bonesStructural": {
+            "addProbability": 0.01,
+            "deleteProbability": 0.02,
+            "enable": true,
+            "replaceProbability": 0.01
+        },
+        "brainFrequency": {
+            "enable": true,
+            "maxIncr": 2,
+            "maxValue": 60,
+            "minIncr": -2,
+            "minValue": 1,
+            "probability": 0.05,
+            "type": 0
+        },
+        "brainInPos": {
+            "enable": true,
+            "maxFact": 0.1,
+            "maxValue": 1,
+            "minFact": -0.1,
+            "minValue": 0,
+            "probability": 0.05,
+            "type": 1
+        },
+        "brainMemorySize": {
+            "enable": true,
+            "maxIncr": 5,
+            "maxValue": 100,
+            "minIncr": -5,
+            "minValue": 1,
+            "probability": 0.05,
+            "type": 0
+        },
+        "brainNodes": [{
+            "name": "a + b",
+            "type": 0,
+            "weight": 1
+        }, {
+            "name": "a * b",
+            "type": 1,
+            "weight": 1
+        }, {
+            "name": "a / b",
+            "type": 2,
+            "weight": 0
+        }, {
+            "name": "atan2(a, b)",
+            "type": 3,
+            "weight": 1
+        }, {
+            "name": "(a > b) ? a : 0",
+            "type": 4,
+            "weight": 1
+        }, {
+            "name": "(a > b) ? a : b",
+            "type": 5,
+            "weight": 1
+        }, {
+            "name": "(a > 0) ? b : c",
+            "type": 6,
+            "weight": 1
+        }, {
+            "name": "cos(a)",
+            "type": 7,
+            "weight": 1
+        }, {
+            "name": "sin(a)",
+            "type": 8,
+            "weight": 1
+        }, {
+            "name": "abs(a)",
+            "type": 9,
+            "weight": 1
+        }, {
+            "name": "sign(a)",
+            "type": 10,
+            "weight": 1
+        }, {
+            "name": "log(a)",
+            "type": 11,
+            "weight": 1
+        }, {
+            "name": "a*a",
+            "type": 12,
+            "weight": 1
+        }, {
+            "name": "sigmoid(a)",
+            "type": 13,
+            "weight": 1
+        }, {
+            "name": "wave(freq : a, offset : b)",
+            "type": 14,
+            "weight": 4
+        }, {
+            "name": "memory : a",
+            "type": 15,
+            "weight": 2
+        }, {
+            "name": "smooth : a",
+            "type": 16,
+            "weight": 2
+        }, {
+            "name": "integrate : a",
+            "type": 17,
+            "weight": 2
+        }, {
+            "name": "interpolate : a",
+            "type": 18,
+            "weight": 2
+        }, {
+            "name": "max : a",
+            "type": 19,
+            "weight": 2
+        }, {
+            "name": "min : a",
+            "type": 20,
+            "weight": 2
+        }, {
+            "name": "diff : a",
+            "type": 21,
+            "weight": 2
+        }],
+        "brainSize": {
+            "enable": true,
+            "maxIncr": 5,
+            "maxValue": 100,
+            "minIncr": -5,
+            "minValue": 1,
+            "probability": 0.05,
+            "type": 0
+        },
+        "brainStruct": {
+            "addProbability": 0.01,
+            "deleteProbability": 0.02,
+            "enable": true,
+            "replaceProbability": 0.01
+        },
+        "brainWeight": {
+            "enable": true,
+            "maxFact": 0.1,
+            "maxValue": 1,
+            "minFact": -0.1,
+            "minValue": -1,
+            "probability": 0.05,
+            "type": 1
+        },
+        "constValue": {
+            "enable": true,
+            "maxFact": 0.1,
+            "maxValue": 10,
+            "minFact": -0.1,
+            "minValue": -10,
+            "probability": 0.05,
+            "type": 1
+        },
+        "fixRadius": {
+            "enable": true,
+            "maxFact": 0.05,
+            "maxValue": 2,
+            "minFact": -0.05,
+            "minValue": 0.1,
+            "probability": 0.05,
+            "type": 1
+        },
+        "sensorStructuralList": [{
+            "name": "Accelerometer sensor",
+            "type": 1,
+            "weight": 1
+        }, {
+            "name": "Gyroscopic sensor",
+            "type": 0,
+            "weight": 1
+        }, {
+            "name": "Egocentric sensor",
+            "type": 2,
+            "weight": 1
+        }, {
+            "name": "Contact sensor",
+            "type": 3,
+            "weight": 1
+        }],
+        "sensorsStructural": {
+            "addProbability": 0.01,
+            "deleteProbability": 0.02,
+            "enable": true,
+            "replaceProbability": 0.01
+        }
+    },
+    "online": true,
+    "onlyIfEntityIsStable": true,
+    "seedInfo": {
+        "family": "spider",
+        "type": "family"
+    },
+    "stopIfEntityIsNotInOnePiece": true,
+    "timeToWaitForStability": 300,
+    "validityFunction": "(function() {return entity.bodySensors.max < 3; })",
+    "version": 0.1,
+    "world": {
+        "biome": {
+            "gravity": 9.81,
+            "lights": [{
+                "b": 0.8,
+                "g": 0.8,
+                "r": 0.8,
+                "type": "ambient"
+            }, {
+                "b": 0.1,
+                "g": 0.1,
+                "posX": 0,
+                "posY": 1,
+                "posZ": 0,
+                "r": 0.9,
+                "type": "point"
+            }],
+            "skyMaterial": "Examples/CloudySky"
+        },
+        "name": "Somewhere on Earth",
+        "scene": {
+            "camera": {
+                "posX": -20,
+                "posY": 10,
+                "posZ": -20,
+                "targetX": 15,
+                "targetY": -5,
+                "targetZ": 15
+            },
+            "floor": {
+                "material": "Examples/GrassFloor",
+                "type": "flatland"
+            },
+            "shapes": [],
+            "spawns": [{
+                "posX": 0,
+                "posY": 10,
+                "posZ": 0,
+                "type": "position"
+            }]
+        }
+    }
 }

@@ -37,7 +37,7 @@ namespace GeneLabCore {
 
         // Bone Length
         boneLength = new FloatMutation();
-        boneLength->probability  = 0.1;
+        boneLength->probability  = 0.05;
         boneLength->minFact      = -0.05;
         boneLength->maxFact      =  0.05;
         boneLength->minValue     = 0.1;
@@ -45,7 +45,7 @@ namespace GeneLabCore {
 
         // Bone radius mutation
         boneRadius = new FloatMutation();
-        boneRadius->probability  = 0.1;
+        boneRadius->probability  = 0.05;
         boneRadius->minFact      = -0.05;
         boneRadius->maxFact      =  0.05;
         boneRadius->minValue     = 0.1;
@@ -53,7 +53,7 @@ namespace GeneLabCore {
 
         // Fixation radius mutation
         fixRadius = new FloatMutation();
-        fixRadius->probability   = 0.1;
+        fixRadius->probability   = 0.05;
         fixRadius->minFact       = -0.05;
         fixRadius->maxFact       =  0.05;
         fixRadius->minValue      = 0.1;
@@ -61,7 +61,7 @@ namespace GeneLabCore {
 
         // Bone angular origin (Yaw and Roll)
         boneAngularOrigin = new FloatMutation();
-        boneAngularOrigin->probability   = 0.1;
+        boneAngularOrigin->probability   = 0.05;
         boneAngularOrigin->minFact       = -0.01;
         boneAngularOrigin->maxFact       =  0.01;
         boneAngularOrigin->minValue      = -M_PI+0.01; // -INF (cyclic) ?
@@ -72,9 +72,9 @@ namespace GeneLabCore {
 
         // sensors
         sensorsStructural = new StructuralMutation();
-        sensorsStructural->addProbability = 0.1f;
-        sensorsStructural->deleteProbability = 0.1f;
-        sensorsStructural->replaceProbability = 0.1f;
+        sensorsStructural->addProbability = 0.01f;
+        sensorsStructural->deleteProbability = 0.02f;
+        sensorsStructural->replaceProbability = 0.01f;
         sensorStructuralList = new StructuralList();
         sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
         sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
@@ -84,7 +84,7 @@ namespace GeneLabCore {
         // bones
         bonesStructural = new StructuralMutation();
         bonesStructural->addProbability = 0.01f;
-        bonesStructural->deleteProbability = 0.01f;
+        bonesStructural->deleteProbability = 0.02f;
         bonesStructural->replaceProbability = 0.01f;
 
         // ---------------------
@@ -93,7 +93,7 @@ namespace GeneLabCore {
 
         // Plug grid size
         brainSize = new IntegerMutation();
-        brainSize->probability   = 0.1;
+        brainSize->probability   = 0.05;;
         brainSize->minIncr       = -5;
         brainSize->maxIncr       =  5;
         brainSize->minValue      = 1;
@@ -101,7 +101,7 @@ namespace GeneLabCore {
 
         // Position X of Input
         brainInPos = new FloatMutation();
-        brainInPos->probability = 0.2;
+        brainInPos->probability = 0.05;
         brainInPos->minFact     = -0.1;
         brainInPos->maxFact     =  0.1;
         brainInPos->minValue    = 0;
@@ -109,7 +109,7 @@ namespace GeneLabCore {
 
         // BrainWeight
         brainWeight = new FloatMutation();
-        brainWeight->probability = 0.2;
+        brainWeight->probability = 0.05;
         brainWeight->minFact    = -0.1;
         brainWeight->maxFact    =  0.1;
         brainWeight->minValue   = -1.0;
@@ -117,7 +117,7 @@ namespace GeneLabCore {
 
         // Brain memory size
         brainMemorySize = new IntegerMutation();
-        brainMemorySize->probability    = 0.2;
+        brainMemorySize->probability    = 0.05;
         brainMemorySize->minIncr        = -5;
         brainMemorySize->maxIncr        =  5;
         brainMemorySize->minValue       = 1;
@@ -125,7 +125,7 @@ namespace GeneLabCore {
 
         // Brain frequency
         brainFrequency = new IntegerMutation();
-        brainFrequency->probability     = 0.1;
+        brainFrequency->probability     = 0.05;
         brainFrequency->minIncr      = -2;
         brainFrequency->maxIncr      =  2;
         brainFrequency->minValue     =  1;
@@ -133,37 +133,37 @@ namespace GeneLabCore {
 
         // New brain tree probability
         brainStructural = new StructuralMutation();
-        brainStructural->addProbability = 0.1;
-        brainStructural->deleteProbability = 0.1;
-        brainStructural->replaceProbability = 0.1;
+        brainStructural->addProbability = 0.01;
+        brainStructural->deleteProbability = 0.02;
+        brainStructural->replaceProbability = 0.01;
 
         brainNodeList = new StructuralList();
         brainNodeList->elements.append(new MutationElement("a + b", 0, 1));
         brainNodeList->elements.append(new MutationElement("a * b", 1, 1));
         brainNodeList->elements.append(new MutationElement("a / b", 2, 0));
-        brainNodeList->elements.append(new MutationElement("atan2(a, b)", 3, 0));
-        brainNodeList->elements.append(new MutationElement("(a > b) ? a : 0", 4, 0));
-        brainNodeList->elements.append(new MutationElement("(a > b) ? a : b", 5, 0));
-        brainNodeList->elements.append(new MutationElement("(a > 0) ? b : c", 6, 0));
-        brainNodeList->elements.append(new MutationElement("cos(a)", 7, 0));
-        brainNodeList->elements.append(new MutationElement("sin(a)", 8, 0));
-        brainNodeList->elements.append(new MutationElement("abs(a)", 9, 0));
-        brainNodeList->elements.append(new MutationElement("sign(a)", 10, 0));
-        brainNodeList->elements.append(new MutationElement("log(a)", 11, 0));
-        brainNodeList->elements.append(new MutationElement("a*a", 12, 0));
-        brainNodeList->elements.append(new MutationElement("sigmoid(a)", 13, 0));
-        brainNodeList->elements.append(new MutationElement("wave(freq : a, offset : b)", 14, 1));
-        brainNodeList->elements.append(new MutationElement("memory : a", 15, 1));
-        brainNodeList->elements.append(new MutationElement("smooth : a", 16, 0));
-        brainNodeList->elements.append(new MutationElement("integrate : a", 17, 1));
-        brainNodeList->elements.append(new MutationElement("interpolate : a", 18, 0));
-        brainNodeList->elements.append(new MutationElement("max : a", 19, 1));
-        brainNodeList->elements.append(new MutationElement("min : a", 20, 1));
-        brainNodeList->elements.append(new MutationElement("diff : a", 21, 1));
+        brainNodeList->elements.append(new MutationElement("atan2(a, b)", 3, 1));
+        brainNodeList->elements.append(new MutationElement("(a > b) ? a : 0", 4, 1));
+        brainNodeList->elements.append(new MutationElement("(a > b) ? a : b", 5, 1));
+        brainNodeList->elements.append(new MutationElement("(a > 0) ? b : c", 6, 1));
+        brainNodeList->elements.append(new MutationElement("cos(a)", 7, 1));
+        brainNodeList->elements.append(new MutationElement("sin(a)", 8, 1));
+        brainNodeList->elements.append(new MutationElement("abs(a)", 9, 1));
+        brainNodeList->elements.append(new MutationElement("sign(a)", 10, 1));
+        brainNodeList->elements.append(new MutationElement("log(a)", 11, 1));
+        brainNodeList->elements.append(new MutationElement("a*a", 12, 1));
+        brainNodeList->elements.append(new MutationElement("sigmoid(a)", 13, 1));
+        brainNodeList->elements.append(new MutationElement("wave(freq : a, offset : b)", 14, 4));
+        brainNodeList->elements.append(new MutationElement("memory : a", 15, 2));
+        brainNodeList->elements.append(new MutationElement("smooth : a", 16, 2));
+        brainNodeList->elements.append(new MutationElement("integrate : a", 17, 2));
+        brainNodeList->elements.append(new MutationElement("interpolate : a", 18, 2));
+        brainNodeList->elements.append(new MutationElement("max : a", 19, 2));
+        brainNodeList->elements.append(new MutationElement("min : a", 20, 2));
+        brainNodeList->elements.append(new MutationElement("diff : a", 21, 2));
 
         // Brain constant value
         constValue = new FloatMutation();
-        constValue->probability = 0.2;
+        constValue->probability = 0.05;
         constValue->minFact = -0.1;
         constValue->maxFact = 0.1;
         constValue->minValue = -10;
@@ -185,8 +185,8 @@ namespace GeneLabCore {
         // TODO !!!
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
-        boneAngularLimits->probability                  = 0.1;
-        boneAngularLimits->axisMutation->probability    = 0.1;
+        boneAngularLimits->probability                  = 0.01;
+        boneAngularLimits->axisMutation->probability    = 0.01;
         boneAngularLimits->axisMutation->minFact        = -0.01;
         boneAngularLimits->axisMutation->maxFact        =  0.01;
         boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
