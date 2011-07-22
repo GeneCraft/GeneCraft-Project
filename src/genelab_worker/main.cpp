@@ -1,4 +1,5 @@
 #include <QtCore/QCoreApplication>
+#include <QApplication>
 
 #include "btfactory.h"
 
@@ -40,13 +41,15 @@
 
 #include "experiment/experimentmanager.h"
 
+#include "widgets/experiments/workerconfiguration.h"
+
 using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
 {
     qsrand(time(NULL));
     srand(time(NULL));
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
     QStringList args = a.arguments();
     QString expName = "../genelab_worker/myOwnExp.exp";
     QString workerName = "worker.exp";
@@ -61,6 +64,10 @@ int main(int argc, char *argv[])
         qDebug() << "loading worker" << args.at(1);
     }
 
+    WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
+    workerConfiguration->show();
+    a.exec();
+
     srand(time(NULL));
     qsrand(time(NULL));
 
@@ -72,7 +79,7 @@ int main(int argc, char *argv[])
     database.port = 80;
 
     // Delete all fucking doc from database
-    DbRecord* r = new DbRecord(database, "_all_docs");
+    /*DbRecord* r = new DbRecord(database, "_all_docs");
     QVariant data = r->load();
     QVariantMap docsMap = data.toMap();
     QVariantList docsList = docsMap["rows"].toList();
@@ -87,7 +94,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    return 0;
+    return 0;*/
 
 
     Ressource* experience_res = new JsonFile(expName);
@@ -96,19 +103,7 @@ int main(int argc, char *argv[])
     QVariant expdata = experience_res->load();
     //QVariant workerdata = worker_res->load();
 
-    QVariantMap workerData;
-    workerData["maxGen"] = 100;
-    workerData["popSize"] = 40;
-    workerData["name"] = "reds" + QString::number(time(NULL));
-    workerData["nbBestResults"] = 150;
-    workerData["nbRandomResults"] = 150;
-    QVariantMap selectionData;
-    selectionData["bestPop"] = 0.2;
-    selectionData["bestResult"] = 0.2;
-    selectionData["randomPop"] = 0.1;
-    selectionData["randomResult"] = 0.2;
-    selectionData["randomNew"] = 0.2;
-    workerData["selection"] = selectionData;
+    QVariant workerData = workerConfiguration->getWorkerData();
 
     Experiment* exp           = new Experiment(expdata);
     ExperimentManager* expMan = new ExperimentManager(factory, exp, workerData);
