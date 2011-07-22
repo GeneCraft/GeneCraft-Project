@@ -31,6 +31,7 @@ namespace GeneLabCore {
         resultData.insert("genome", this->genome);
         resultData.insert("date", date);
         resultData.insert("worker", worker);
+        resultData.insert("statistics", statistics);
 
         return resultData;
     }
@@ -45,6 +46,7 @@ namespace GeneLabCore {
         this->genome = QVariant();
         this->worker = "";
         this->broadcasted = false;
+        this->statistics = QVariant();
     }
 
     Result::~Result() {
@@ -65,6 +67,7 @@ namespace GeneLabCore {
         this->date = date;
         this->worker = worker;
         this->broadcasted = false;
+        this->statistics = QVariant();
     }
 
     /**
@@ -78,6 +81,7 @@ namespace GeneLabCore {
         this->date = r.date;
         this->worker = r.worker;
         this->broadcasted = r.broadcasted;
+        this->statistics = r.statistics;
     }
 
 
@@ -92,6 +96,7 @@ namespace GeneLabCore {
         this->date = r.date;
         this->worker = r.worker;
         this->broadcasted = r.broadcasted;
+        this->statistics = r.statistics;
     }
 
     Result* Result::loadResult(QVariant data, bool& ok) {
@@ -126,9 +131,16 @@ namespace GeneLabCore {
             worker = dataMap["worker"].toString();
         }
 
+        QVariant statistics = QVariant();
+        if(dataMap.contains("statistics")) {
+            statistics = dataMap["statistics"];
+        }
+
         QVariantMap genome = dataMap["genome"].toMap();
         QString exp        = dataMap["experiment"].toString();
         QString date       = dataMap["date"].toString();
-        return new Result(exp, fitness, genome, worker, date);
+        Result* r = new Result(exp, fitness, genome, worker, date);
+        r->setStatistics(statistics);
+        return r;
     }
 }

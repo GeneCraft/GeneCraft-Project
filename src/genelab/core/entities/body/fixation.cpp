@@ -372,7 +372,7 @@ namespace GeneLabCore {
         QVariantMap fixation;
 
         // TODO right values ???
-        fixation.insert("radius",(double) Tools::random(0.2,.8));
+        fixation.insert("radius",(double) Tools::random(0.1,.5));
         fixation.insert("bones", QVariantList());
         fixation.insert("sensors", QVariantList());
         fixation.insert("effectors", QVariantList());

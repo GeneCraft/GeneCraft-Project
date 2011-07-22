@@ -11,7 +11,7 @@ BoneLimitsMutation::BoneLimitsMutation()
     probability                  = 0.1;
 
     axisMutation = new FloatMutation();
-    axisMutation->probability    = -0.1;
+    axisMutation->probability    =  probability;
     axisMutation->minFact        = -0.01;
     axisMutation->maxFact        =  0.01;
     axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?

@@ -35,6 +35,7 @@
 #include "tools.h"
 
 #include <QtScript>
+#include <qxtjson.h>
 
 namespace GeneLabCore {
 
@@ -367,6 +368,8 @@ namespace GeneLabCore {
             if(stable && simulated) {
                 fitness = this->evaluateEntity(e);
                 r->setFitness(fitness);
+                QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
+                r->setStatistics(QxtJSON::parse(stats));
                 results->addResult(r);
                 qDebug() << "entity evaluated, fitness =" << fitness;
             } else {

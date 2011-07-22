@@ -32,6 +32,7 @@ public slots:
     void setBone(Bone * bone);
     void boneDeleted(Bone *bone);
     void entityDeleted(Entity *entity);
+    void update();
 
 private:
     Ui::BonePropertiesController *ui;

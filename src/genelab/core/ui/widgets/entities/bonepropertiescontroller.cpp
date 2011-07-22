@@ -22,6 +22,8 @@
 
 #include "events/inspectorsinputmanager.h"
 
+#include <QTimer>
+
 
 float roundPrecision(float n, int precision = 2)
 {
@@ -78,6 +80,11 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     //connect(this->ui->fixationProperties,SIGNAL(rigidBodySelected(btRigidBody*)),this,SLOT(rigidBodySelectedFromFix(btRigidBody*)));
 
     this->setEnabled(false);
+
+    QTimer* timer = new QTimer();
+    timer->setInterval(100);
+    timer->start();
+    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 }
 
 void BonePropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
@@ -100,6 +107,38 @@ void BonePropertiesController::boneDeleted(Bone *bone){
 void BonePropertiesController::entityDeleted(Entity *) {
 
     setBone(NULL);
+}
+
+void BonePropertiesController::update() {
+    if(this->bone != NULL) {
+        // X
+        BrainOutMotor* muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(0);
+        if(muscle) {
+            this->ui->lblContractX->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
+            this->ui->lblExpandX->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
+        } else {
+            this->ui->lblContractX->setText(QString::number(0));
+            this->ui->lblExpandX->setText(QString::number(0));
+        }
+        // Y
+        muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(1);
+        if(muscle) {
+            this->ui->lblContractY->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
+            this->ui->lblExpandY->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
+        } else {
+            this->ui->lblContractX->setText(QString::number(0));
+            this->ui->lblExpandX->setText(QString::number(0));
+        }
+        // Z
+        muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(2);
+        if(muscle) {
+            this->ui->lblContractZ->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
+            this->ui->lblExpandZ->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
+        } else {
+            this->ui->lblContractX->setText(QString::number(0));
+            this->ui->lblExpandX->setText(QString::number(0));
+        }
+    }
 }
 
 void BonePropertiesController::setOutFrom()
@@ -238,6 +277,47 @@ void BonePropertiesController::setBone(Bone * bone)
     if(bone)
     {
         this->setEnabled(true);
+
+        // Bone outputs
+        // X
+        BrainOutMotor* muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(0);
+        if(muscle) {
+            this->ui->txtContractX->setText(muscle->boMaxMotorForce->getConnexionInfo().toString());
+            this->ui->lblContractX->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
+            this->ui->txtExpandX->setText(muscle->boTargetVelocity->getConnexionInfo().toString());
+            this->ui->lblExpandX->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
+        } else {
+            this->ui->txtContractX->setText("No muscle");
+            this->ui->txtExpandX->setText("No muscle");
+            this->ui->lblContractX->setText(QString::number(0));
+            this->ui->lblExpandX->setText(QString::number(0));
+        }
+        // Y
+        muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(1);
+        if(muscle) {
+            this->ui->txtContractY->setText(muscle->boMaxMotorForce->getConnexionInfo().toString());
+            this->ui->lblContractY->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
+            this->ui->txtExpandY->setText(muscle->boTargetVelocity->getConnexionInfo().toString());
+            this->ui->lblExpandY->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
+        } else {
+            this->ui->txtContractX->setText("No muscle");
+            this->ui->txtExpandX->setText("No muscle");
+            this->ui->lblContractX->setText(QString::number(0));
+            this->ui->lblExpandX->setText(QString::number(0));
+        }
+        // Z
+        muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(2);
+        if(muscle) {
+            this->ui->txtContractZ->setText(muscle->boMaxMotorForce->getConnexionInfo().toString());
+            this->ui->lblContractZ->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
+            this->ui->txtExpandZ->setText(muscle->boTargetVelocity->getConnexionInfo().toString());
+            this->ui->lblExpandZ->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
+        } else {
+            this->ui->txtContractX->setText("No muscle");
+            this->ui->txtExpandX->setText("No muscle");
+            this->ui->lblContractX->setText(QString::number(0));
+            this->ui->lblExpandX->setText(QString::number(0));
+        }
 
         // ANGULAR PARAMETERS
         btGeneric6DofConstraint *constraint = bone->getParentConstraint();

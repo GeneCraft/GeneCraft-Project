@@ -104,7 +104,7 @@ namespace GeneLabCore {
     void RessourcesManager::examine(DataWrapper dataw) {
         QVariantMap dataMap = dataw.data;
         // Experience ?
-        if(dataMap.contains("author") && dataMap.contains("id") && dataMap.contains("duration")) {
+        if(dataMap.contains("author") && dataMap.contains("duration")) {
             this->experiments.append(dataw);
             // Take the inside world
             if(dataMap.contains("world")) {

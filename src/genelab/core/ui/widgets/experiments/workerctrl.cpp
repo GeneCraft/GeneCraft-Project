@@ -49,6 +49,7 @@ void WorkerCtrl::on_btnStart_clicked()
 }
 void WorkerCtrl::readyRead() {
     // Suppression au bout d'un moment
+    // TODO : Remove static
     static int readyRead = 0;
     readyRead++;
     if(readyRead%200 == 0) {

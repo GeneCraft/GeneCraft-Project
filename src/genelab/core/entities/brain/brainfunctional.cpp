@@ -471,7 +471,7 @@ float sigmoid(float x)
             }
         } else if(rand < 30) {
             func += "CONST ";
-            float x = ((float)qrand())/RAND_MAX*20 - 10; //  0.0 to 1.0
+            float x = ((float)qrand())/RAND_MAX*2. -  1. ; //  0.0 to 1.0
             func += QString::number(x) + ",";
         }
         else {

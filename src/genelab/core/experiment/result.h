@@ -102,6 +102,14 @@ namespace GeneLabCore {
             return this->broadcasted;
         }
 
+        void setStatistics(QVariant statistics) {
+            this->statistics = statistics;
+        }
+
+        QVariant getStatistics() {
+            return this->statistics;
+        }
+
     protected:
         // Score
         float fitness;
@@ -117,6 +125,8 @@ namespace GeneLabCore {
         QString worker;
         // Broadcasted online already ?
         bool broadcasted;
+        // The entity statistics
+        QVariant statistics;
     };
 }
 

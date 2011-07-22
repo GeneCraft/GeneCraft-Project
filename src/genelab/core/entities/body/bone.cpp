@@ -282,8 +282,8 @@ QVariant Bone::generateEmpty() {
 
     // TODO right values ???
     // Length & radius
-    bone.insert("length",QVariant((double)Tools::random(0.5,1.0)));
-    bone.insert("radius",QVariant((double)Tools::random(0.2,0.8)));
+    bone.insert("length",QVariant((double)Tools::random(0.5,3.0)));
+    bone.insert("radius",QVariant((double)Tools::random(0.1,0.5)));
 
     // Yaw & Roll
     QVariantMap localRotation;
@@ -294,13 +294,13 @@ QVariant Bone::generateEmpty() {
     // Limits
     QVariantMap lowerlimits, upperlimits;
 
-    float lowerLimit_x = Tools::random(-M_PI+0.1,   0.);
-    float lowerLimit_y = Tools::random(-M_PI/2.+0.1,0.);
-    float lowerLimit_z = Tools::random(-M_PI+0.1,   0.);
+    float lowerLimit_x = Tools::random(-M_PI/6.,   0.);
+    float lowerLimit_y = Tools::random(-M_PI/6.,   0.);
+    float lowerLimit_z = Tools::random(-M_PI/6.,   0.);
 
-    float upperlimits_x = Tools::random(0.,    M_PI-0.1);
-    float upperlimits_y = Tools::random(0., M_PI/2.-0.1);
-    float upperlimits_z = Tools::random(0.,    M_PI-0.1);
+    float upperlimits_x = Tools::random(0.,    M_PI/6.);
+    float upperlimits_y = Tools::random(0.,    M_PI/6.);
+    float upperlimits_z = Tools::random(0.,    M_PI/6.);
 
     lowerlimits.insert("x",QVariant((double)lowerLimit_x));
     lowerlimits.insert("y",QVariant((double)lowerLimit_y));
