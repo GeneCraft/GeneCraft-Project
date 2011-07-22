@@ -3,8 +3,23 @@
 #include "entity.h"
 #include "body/treeshape.h"
 #include "body/fixation.h"
+#include "body/bone.h"
 #include "brain/brainfunctional.h"
 #include "tools.h"
+
+#include "sensors/accelerometersensor.h"
+#include "sensors/boxsmellsensor.h"
+#include "sensors/contactsensor.h"
+#include "sensors/distancesensor.h"
+#include "sensors/gyroscopicsensor.h"
+#include "sensors/positionsensor.h"
+#include "sensors/sensor.h"
+#include "sensors/smellsensor.h"
+
+#include "effectors/effector.h"
+#include "effectors/flyingeffector.h"
+#include "effectors/grippereffector.h"
+#include "effectors/rotationalmotorseffector.h"
 
 namespace GeneLabCore {
 GenericFamily::GenericFamily()
@@ -36,9 +51,10 @@ Entity *GenericFamily::createEntity(QVariant genotype,
         initTransform.setIdentity();
         initTransform.setOrigin(initialPosition);
 
-        treeShape->createRootFromGenotype(body.value("shape"), initTransform);
+        Fixation* root = GenericFamily::createRootFromGenotype(shapesFactory, body.value("shape"), initTransform);
+        treeShape->setRoot(root);
         entity->setShape(treeShape);
-        treeShape->buildFixFromGenotype(treeShape->getRoot(),body.value("shape").toMap().value("rootFix"));
+        GenericFamily::buildFixFromGenotype(shapesFactory, root, root,body.value("shape").toMap().value("rootFix"));
     }
 
 
@@ -63,5 +79,115 @@ Entity *GenericFamily::createVirginEntity(btShapesFactory *shapesFactory,
     entity->setShape(shape);
 
     return entity;
+}
+
+Fixation* GenericFamily::createRootFromGenotype(btShapesFactory *shapesFactory, QVariant genotype, btTransform initTransform) {
+    QVariantMap treeShapeMap = genotype.toMap();
+
+    // Root fix
+    QVariantMap rootFixMap = treeShapeMap.value("rootFix").toMap();
+
+    return new Fixation(shapesFactory, rootFixMap.value("radius").toDouble(), initTransform);
+
+}
+
+void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QVariant fixGenotype)
+{
+
+    // -------------
+    // -- sensors --
+    // -------------
+    foreach(QVariant sensorData, fixGenotype.toMap()["sensors"].toList()) {
+       QVariantMap sensorMap = sensorData.toMap();
+       switch((SensorType)sensorMap["type"].toInt()) {
+       case accelerometerSensor: {
+           fix->addSensor(new AccelerometerSensor(sensorData, fix));
+       }
+           break;
+       case gyroscopicSensor: {
+
+           fix->addSensor(new GyroscopicSensor(sensorData, fix));
+       }
+           break;
+       case positionSensor:{
+
+           fix->addSensor(new PositionSensor(sensorData, root, fix));
+       }
+           break;
+       case contactSensor:{
+
+           fix->addSensor(new ContactSensor(sensorData, fix));
+       }
+           break;
+       case boxSmellSensor:{
+
+           fix->addSensor(new BoxSmellSensor(sensorData, fix));
+
+           break;
+       }
+       case distanceSensor:{
+
+           fix->addSensor(new DistanceSensor(sensorData, fix));
+       }
+           break;
+       }
+    }
+
+    // --------------
+    // -- effector --
+    // --------------
+    foreach(QVariant effector, fixGenotype.toMap()["effectors"].toList()) {
+       QVariantMap effectorMap = effector.toMap();
+       switch((EffectorType)effectorMap["type"].toInt()) {
+
+       case rotationalMotorEffector: break;
+       case gripperEffector: {
+           fix->addEffector(new GripperEffector(effectorMap, fix));
+       }
+           break;
+       case flyingEffector:{
+           fix->addEffector(new FlyingEffector(effectorMap, fix));
+       }
+           break;
+       }
+    }
+
+    // -----------
+    // -- bones --
+    // -----------
+    QVariantList bonesVariantList = fixGenotype.toMap().value("bones").toList();
+
+    foreach(QVariant bone, bonesVariantList)
+    {
+        QVariantMap boneMap = bone.toMap();
+
+        // Radius & lenght
+        btScalar boneRadius = boneMap.value("radius").toDouble();
+        btScalar boneLength = boneMap.value("length").toDouble();
+
+        btScalar endFixRadius = boneMap.value("endFix").toMap().value("radius").toDouble();
+
+        // Yaw & Roll (local)
+        QVariantMap localRotationMap = boneMap.value("localRotation").toMap();
+        btScalar yAxisRot = localRotationMap.value("y").toDouble();
+        btScalar zAxisRot = localRotationMap.value("z").toDouble();
+
+        // Limits
+        btVector3 lowerLimits, upperLimits;
+        QVariantMap lowerLimitsMap = boneMap.value("lowerLimits").toMap();
+        QVariantMap upperLimitsMap = boneMap.value("upperLimits").toMap();
+
+        lowerLimits.setValue(lowerLimitsMap.value("x").toDouble(),
+                             lowerLimitsMap.value("y").toDouble(),
+                             lowerLimitsMap.value("z").toDouble());
+        upperLimits.setValue(upperLimitsMap.value("x").toDouble(),
+                             upperLimitsMap.value("y").toDouble(),
+                             upperLimitsMap.value("z").toDouble());
+
+        Bone *bone = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
+        bone->setMotorModifierData(boneMap["muscle"]);
+        // Add bone recurcively
+        GenericFamily::buildFixFromGenotype(shapesFactory, bone->getEndFixation(), root, boneMap.value("endFix"));
+    }
 }
 }

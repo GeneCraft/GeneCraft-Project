@@ -11,7 +11,6 @@ namespace GeneLabCore {
 
     public:
         explicit TreeShape(btShapesFactory* shapesFactory, QObject *parent = 0);
-        void createRootFromGenotype(QVariant genotype, btTransform initTransform);
         ~TreeShape();
 
         /**
@@ -30,7 +29,6 @@ namespace GeneLabCore {
         void setup();
 
         QVariant serialize();
-        void buildFixFromGenotype(Fixation *fix, QVariant fixGenotype);
 
     private:
 

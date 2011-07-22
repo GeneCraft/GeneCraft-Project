@@ -4,6 +4,7 @@
 #include <QVariant>
 #include "genelabcoreclasses.h"
 #include "LinearMath/btVector3.h"
+#include "LinearMath/btTransform.h"
 
 namespace GeneLabCore {
 
@@ -31,6 +32,12 @@ public:
     static Entity *createVirginEntity(btShapesFactory *shapesFactory,
                                      btScalar rootFixRadius,
                                      const btVector3 &initialPosition);
+
+
+    static Fixation* createRootFromGenotype(btShapesFactory *shapesFactory, QVariant genotype, btTransform initTransform);
+    static void buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QVariant fixGenotype);
+
+
 };
 }
 #endif // GENERICFAMILY_H
