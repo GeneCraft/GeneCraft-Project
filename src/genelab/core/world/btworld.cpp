@@ -112,6 +112,8 @@ namespace GeneLabCore {
         btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
         world = new btDiscreteDynamicsWorld(dispatcher, broadphase,solver,collisionConfiguration);
 
+        btContactSolverInfo& info = world->getSolverInfo();
+        info.m_numIterations = 20; // 20
 
         /*
         btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,1,0),1);

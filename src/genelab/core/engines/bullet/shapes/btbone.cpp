@@ -6,7 +6,7 @@
 
 namespace GeneLabCore {
 
-const btScalar btBone::DENSITY = 5.0;
+const btScalar btBone::DENSITY = 1010.0; // Average body density
 
 btBone::btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
     btShape(world)
@@ -31,7 +31,7 @@ void btBone::init(btScalar length,
                   btScalar density,
                   const btTransform &transform) {
 
-    btScalar friction = 0.7; // TODO
+    btScalar friction = 0.7;
 
     // shape
     this->shape = new btCompoundShape(true); 

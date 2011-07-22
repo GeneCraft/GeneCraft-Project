@@ -12,6 +12,7 @@ namespace GeneLabCore {
 
 #define TYPE_NAME "Rotational Motor"
 #define TYPE rotationalMotorEffector
+#define MOTOR_MAX_FORCE 20000
 
 RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofConstraint *constraint) :  Effector(TYPE_NAME, TYPE),
     constraint(constraint), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
@@ -149,7 +150,7 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
             if(brainMotorOutputs[i]){
                 btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                 motor->m_enableMotor = true;
-                motor->m_maxMotorForce = 20.0;
+                motor->m_maxMotorForce = MOTOR_MAX_FORCE;
                 motor->m_targetVelocity = 0;
                 motor->m_currentPosition = 0;
             }
@@ -164,7 +165,7 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
             if(brainMotorOutputs[i]){
                 btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                 motor->m_enableMotor = true;
-                motor->m_maxMotorForce = 20.0;
+                motor->m_maxMotorForce = MOTOR_MAX_FORCE;
                 motor->m_targetVelocity = 0;
                 motor->m_currentPosition = 0;
             }
@@ -177,7 +178,7 @@ void RotationalMotorsEffector::setOutputsFrom(int outputsFrom)
             if(brainMotorOutputs[i]){
                 btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
                 motor->m_enableMotor = true;
-                motor->m_maxMotorForce = 20.0;
+                motor->m_maxMotorForce = MOTOR_MAX_FORCE;
                 motor->m_targetVelocity = 0;
                 motor->m_currentPosition = 0;
             }
@@ -204,7 +205,7 @@ void RotationalMotorsEffector::step()
             for(int i=0;i<3;i++)
                 if(brainMotorOutputs[i]){
                     btRotationalLimitMotor * motor = brainMotorOutputs[i]->motor;
-                    motor->m_maxMotorForce = ( sinusIn[1]->getValue())*10 + 10;
+                    motor->m_maxMotorForce = MOTOR_MAX_FORCE;
                     motor->m_targetVelocity = (sinusIn[0]->getValue())*5;
                 }
 

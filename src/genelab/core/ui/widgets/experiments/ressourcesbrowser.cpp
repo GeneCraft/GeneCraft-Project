@@ -92,7 +92,9 @@ void RessourcesBrowser::loadLocalExperiment() {
 
     if(ui->twLocalExperiments->currentItem()) {
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twLocalExperiments->currentItem();
-        emit setExperiment(new Experiment(expTWI->dataw.data));
+        Experiment* e = new Experiment(expTWI->dataw.data);
+        e->setOnline(false); // Local experimentation
+        emit setExperiment(e);
     }
 }
 
@@ -100,7 +102,9 @@ void RessourcesBrowser::loadOnlineExperiment() {
 
     if(ui->twOnlineExperiments->currentItem()) {
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
-        emit setExperiment(new Experiment(expTWI->dataw.data));
+        Experiment* e = new Experiment(expTWI->dataw.data);
+        e->setOnline(true); // Online experimentation
+        emit setExperiment(e);
     }
 }
 

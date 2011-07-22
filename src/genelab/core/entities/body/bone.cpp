@@ -85,13 +85,16 @@ void Bone::setup()
         {
             btRotationalLimitMotor * motor = parentCt->getRotationalLimitMotor(i);
             motor->m_enableMotor = true;
-            motor->m_stopERP = 0.1f; // Error tolerance factor when joint is at limit.
-            motor->m_stopCFM = 1.f; // Constraint force mixing factor when joint is at limit.
+
+            motor->m_limitSoftness = 0.0f;
+            motor->m_normalCFM = 0.0;
+            motor->m_stopERP = 0.8f; // Error tolerance factor when joint is at limit.
+            motor->m_stopCFM = 0.0f ; // Constraint force mixing factor when joint is at limit.
             motor->m_maxMotorForce = 0.001f;
             motor->m_maxLimitForce = 0.001f;
             motor->m_targetVelocity = 0;
-            motor->m_bounce = 0.1;
-            motor->m_damping = 1.0;
+            motor->m_bounce = 0.0;
+            motor->m_damping = 0.0;
         }
 
         // add motor modifier

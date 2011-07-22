@@ -26,8 +26,8 @@ namespace GeneLabCore {
 
     const btScalar Fixation::PERCENT_BONE_INSIDE_FIX = 0.15f;
 
-    #define FIXATION_DENSITY 1.0f
-    #define FIXATION_FRICTION 0.6f
+    #define FIXATION_DENSITY btBone::DENSITY/10
+    #define FIXATION_FRICTION 0.7f
 
     // --------------------------
     // -- DELEGATE CONSTRUCTOR --

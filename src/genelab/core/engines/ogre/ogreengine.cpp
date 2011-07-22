@@ -33,9 +33,12 @@ namespace GeneLabCore {
 
     void OgreEngine::initOgreRoot() {
         ogreRoot = new Ogre::Root();
-        bool ok = ogreRoot->showConfigDialog();
-        if(!ok)
-            QApplication::exit(-1);
+        bool reload = ogreRoot->restoreConfig();
+        if(!reload) {
+            bool ok = ogreRoot->showConfigDialog();
+            if(!ok)
+                QApplication::exit(-1);
+        }
 
         ogreRoot->getRenderSystem()->setConfigOption( "Full Screen", "No" );
         ogreRoot->saveConfig();
