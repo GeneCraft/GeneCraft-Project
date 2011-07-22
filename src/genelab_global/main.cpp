@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QtScript>
 #include <qxtjson.h>
+#include <QSplashScreen>
 
 #ifdef __APPLE__
 #include "CoreFoundation/CoreFoundation.h"
@@ -61,11 +62,23 @@ int main(int argc, char *argv[])
     qDebug() << "Current Path: " << directoryPath << newPath;
     #endif
 
+    // create application
     a = new QApplication(argc, argv);
-    CreatureViewerWindow cw;
-    cw.showMaximized();
 
+    // shpow splash
+    QPixmap pixmap(":img/logos/splash");
+    QSplashScreen splash(pixmap);
+    splash.show();
+
+    // loading...
+    CreatureViewerWindow cw;
+    splash.showMessage("Wait...");
+    a->processEvents(); // This is used to accept a click on the screen so that user can cancel the screen
     loadStyleSheet("styleSheet");
+
+    // shows
+    cw.showMaximized();
+    splash.finish(&cw);
 
     return a->exec();
 }

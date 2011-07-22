@@ -71,5 +71,6 @@
     </qresource>
     <qresource prefix="/img/logos">
         <file alias="GeneCraft_logo">img/logos/GeneCraft.png</file>
+        <file alias="splash">img/logos/splash.png</file>
     </qresource>
 </RCC>
