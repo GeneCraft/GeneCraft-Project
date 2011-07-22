@@ -44,22 +44,22 @@ int main(int argc, char *argv[])
     // ----------------------------------------------------------------------------
 
     #ifdef __APPLE__
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    CFURLRef resourcesURL = CFBundleCopyBundleURL(mainBundle);
-    char path[PATH_MAX];
-    if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
-    {
-    // error!
-    }
-    CFRelease(resourcesURL);
+        CFBundleRef mainBundle = CFBundleGetMainBundle();
+        CFURLRef resourcesURL = CFBundleCopyBundleURL(mainBundle);
+        char path[PATH_MAX];
+        if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
+        {
+        // error!
+        }
+        CFRelease(resourcesURL);
 
-    QString directoryPath = path;
-    directoryPath += "/Contents/MacOS/";
-    chdir(directoryPath.toStdString().c_str());
-    //system((QString("cd ") + directoryPath).toStdString().c_str());
-    char newPath[500];
-    getcwd(newPath, 500);
-    qDebug() << "Current Path: " << directoryPath << newPath;
+        QString directoryPath = path;
+        directoryPath += "/Contents/MacOS/";
+        chdir(directoryPath.toStdString().c_str());
+        //system((QString("cd ") + directoryPath).toStdString().c_str());
+        char newPath[500];
+        getcwd(newPath, 500);
+        qDebug() << "Current Path: " << directoryPath << newPath;
     #endif
 
     // create application
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
     // loading...
     CreatureViewerWindow cw;
-    splash.showMessage("Wait...");
+    splash.showMessage("Loading...");
     a->processEvents(); // This is used to accept a click on the screen so that user can cancel the screen
     loadStyleSheet("styleSheet");
 

@@ -49,7 +49,14 @@ int main(int argc, char *argv[])
 {
     qsrand(time(NULL));
     srand(time(NULL));
-    QCoreApplication a(argc, argv);
+    bool gui = false;
+    for(int i=1; i<argc; i++)
+        if(!strcmp(argv[i], "--gui")){
+        gui = true;
+        break;
+    }
+
+    QApplication a(argc, argv, gui);
     QStringList args = a.arguments();
     QString expName = "";
     QString workerName = "";
@@ -110,7 +117,6 @@ int main(int argc, char *argv[])
         qDebug() << "Didn't find any worker configuration, or incomplete one. Starting the gui-config";
 	WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
 
-	QApplication a(argc, argv);
         workerConfiguration->show();
         a.exec();
         workerData = workerConfiguration->getWorkerData();

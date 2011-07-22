@@ -18,6 +18,8 @@ WorkerConfiguration::WorkerConfiguration(QWidget *parent) :
     ui->spbBestResults->setValue(20);
     ui->spbRandomResults->setValue(200);
     ui->txtWorkerName->setText("Anonymous");
+
+    connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 QVariant WorkerConfiguration::getWorkerData() {
