@@ -51,32 +51,74 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     QApplication a(argc, argv);
     QStringList args = a.arguments();
-    QString expName = "../genelab_worker/myOwnExp.exp";
-    QString workerName = "worker.exp";
+    QString expName = "";
+    QString workerName = "";
 
+    DataBase database;
+    database.dbName = "/db/genecraft/";
+    database.url = "http://www.genecraft-project.org";
+    database.port = 80;
+
+    // Loading the worker data
+    QVariant workerData;
+    QVariant expdata;
+
+    // One argument, the experience (id or file)
     if(args.length() > 1) {
         expName = args.at(1);
-        qDebug() << "loading experience" << args.first();
+        qDebug() << "loading experience at" << args.at(1);
+        Ressource* experience_res = new JsonFile(expName);
+        expdata = experience_res->load();
+
+        if(expdata == QVariant()) {
+            qDebug() << expName << "not found in file system, looking online";
+            Ressource* experience_db = new DbRecord(database, expName);
+            expdata = experience_db->load();
+        }
+
+    } else {
+        qDebug() << "usage : genecraft_worker EXP_FILE|EXP_ID [WORKER_CONFIG]";
+        return -1;
     }
 
+    if(expdata == QVariant() || expdata.toMap().contains("error")) {
+        qDebug() << expName << "not found in file system nor online... first argument should be the experiment";
+        return -1;
+    }
+
+    if(!expdata.toMap().contains("author") || !expdata.toMap().contains("evalFunction") || !expdata.toMap().contains("mutations")) {
+        qDebug() << expName << "does not contains experiment data. It should by an experiment file name or online db id.";
+        return -1;
+    }
+
+    // Two argument, the experience and the worker data
     if(args.length() > 2) {
         workerName = args.at(2);
-        qDebug() << "loading worker" << args.at(1);
+        qDebug() << "loading worker configuration at" << workerName;
+        Ressource* worker_res = new JsonFile(workerName);
+        workerData = worker_res->load();
     }
 
     WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
-    workerConfiguration->show();
-    a.exec();
+
+    if(workerData == QVariant() ||
+       !workerData.toMap().contains("name") ||
+       !workerData.toMap().contains("maxGen") ||
+       !workerData.toMap().contains("popSize") ||
+       !workerData.toMap().contains("selection")) {
+
+        qDebug() << "Didn't find any worker configuration, or incomplete one. Starting the gui-config";
+
+        workerConfiguration->show();
+        a.exec();
+        workerData = workerConfiguration->getWorkerData();
+    }
 
     srand(time(NULL));
     qsrand(time(NULL));
 
     btFactory* factory = new btFactory();
 
-    DataBase database;
-    database.dbName = "/db/genecraft/";
-    database.url = "http://www.genecraft-project.org";
-    database.port = 80;
 
     // Delete all fucking doc from database
     /*DbRecord* r = new DbRecord(database, "_all_docs");
@@ -97,13 +139,8 @@ int main(int argc, char *argv[])
     return 0;*/
 
 
-    Ressource* experience_res = new JsonFile(expName);
-    //Ressource* worker_res     = new JsonFile(workerName);
-
-    QVariant expdata = experience_res->load();
     //QVariant workerdata = worker_res->load();
 
-    QVariant workerData = workerConfiguration->getWorkerData();
 
     Experiment* exp           = new Experiment(expdata);
     ExperimentManager* expMan = new ExperimentManager(factory, exp, workerData);

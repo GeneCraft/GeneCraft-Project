@@ -6,7 +6,7 @@
 
 QT       += core testlib network gui script
 
-TARGET = genelab_worker
+TARGET = genecraft_worker
 CONFIG   += console
 CONFIG   += qxt
 QXT	 += core
