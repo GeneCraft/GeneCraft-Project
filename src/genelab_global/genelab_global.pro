@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl testlib network script
+QT       += core gui opengl testlib network script webkit
 TARGET = genelab_global
 TEMPLATE = app
 
@@ -200,7 +200,8 @@ SOURCES += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.cpp \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.cpp \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
-    main.cpp
+    main.cpp \
+    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.cpp
 
 
 HEADERS += \
@@ -315,7 +316,8 @@ HEADERS += \
     ../genelab/core/utils/tools.h \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.h \
-    ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h
+    ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
+    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -335,7 +337,8 @@ FORMS += \
     ../genelab/core/ui/widgets/experiments/ressourcesbrowser.ui \
     ../genelab/core/ui/widgets/experiments/experimentctrl.ui \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui \
-    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui
+    ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui \
+    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

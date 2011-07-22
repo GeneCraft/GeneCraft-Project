@@ -73,4 +73,7 @@
         <file alias="GeneCraft_logo">img/logos/GeneCraft.png</file>
         <file alias="splash">img/logos/splash.png</file>
     </qresource>
+    <qresource prefix="/help">
+        <file alias="welcome.html">help/welcome.html</file>
+    </qresource>
 </RCC>

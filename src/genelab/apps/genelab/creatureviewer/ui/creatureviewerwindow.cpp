@@ -41,6 +41,7 @@
 #include "widgets/entities/entitypropertiescontroller.h"
 #include "widgets/experiments/workerctrl.h"
 #include "widgets/experiments/experimentctrl.h"
+#include "welcomewidget.h"
 
 // Ressources
 #include "ressources/ressource.h"
@@ -235,6 +236,10 @@ void CreatureViewerWindow::init() {
     // -- Create docks --
     // ------------------
 
+    // Welcome
+    WelcomeWidget *welcomeWidget = new WelcomeWidget();
+    ui->dwWelcome->setWidget(welcomeWidget);
+
     // Entity
     entityPropertiesController = new EntityPropertiesController();
     ui->dwCreature->setWidget(entityPropertiesController);
@@ -316,6 +321,9 @@ void CreatureViewerWindow::init() {
     expCtrl    = new ExperimentCtrl();
     connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap,GeneLabCore::Ressource*)));
     this->ui->dwExperiment->setWidget(expCtrl);
+
+
+    switchToWelcomeMode();
 }
 
 void CreatureViewerWindow::openExperimentPropertiesController(){
@@ -829,13 +837,15 @@ void CreatureViewerWindow::unfollowEntity() {
 
 
 void CreatureViewerWindow::switchToWelcomeMode() {
+    ui->dwWelcome->setVisible(true);
+
     ui->dwBone->setVisible(false);
     ui->dwBrain->setVisible(false);
     ui->dwFixation->setVisible(false);
     ui->dwCreature->setVisible(false);
     ui->dwExperiment->setVisible(false);
     ui->dwWorker->setVisible(false);
-    ui->dwRessourcesBrowser->setVisible(true);
+    ui->dwRessourcesBrowser->setVisible(false);
     ui->dwStats->setVisible(false);
 }
 
@@ -845,6 +855,7 @@ void CreatureViewerWindow::switchToDesignerMode() {
     ui->dwFixation->setVisible(true);
     ui->dwCreature->setVisible(true);
 
+    ui->dwWelcome->setVisible(false);
     ui->dwExperiment->setVisible(false);
     ui->dwWorker->setVisible(false);
     ui->dwRessourcesBrowser->setVisible(false);
@@ -852,6 +863,8 @@ void CreatureViewerWindow::switchToDesignerMode() {
 }
 
 void CreatureViewerWindow::switchToExperimentMode() {
+
+    ui->dwWelcome->setVisible(false);
     ui->dwBone->setVisible(false);
     ui->dwBrain->setVisible(false);
     ui->dwFixation->setVisible(false);
@@ -860,17 +873,18 @@ void CreatureViewerWindow::switchToExperimentMode() {
     ui->dwExperiment->setVisible(true);
     ui->dwWorker->setVisible(true);
     ui->dwRessourcesBrowser->setVisible(true);
-    ui->dwStats->setVisible(true);
+    ui->dwStats->setVisible(false);
 }
 
 void CreatureViewerWindow::switchToTheaterMode() {
+    ui->dwWelcome->setVisible(false);
     ui->dwBone->setVisible(false);
     ui->dwBrain->setVisible(false);
     ui->dwFixation->setVisible(false);
     ui->dwCreature->setVisible(false);
     ui->dwExperiment->setVisible(false);
     ui->dwWorker->setVisible(false);
-    ui->dwRessourcesBrowser->setVisible(false);
+    ui->dwRessourcesBrowser->setVisible(true);
     ui->dwStats->setVisible(false);
 }
 

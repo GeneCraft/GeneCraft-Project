@@ -125,7 +125,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
   </widget>
   <widget class="QDockWidget" name="dwBrain">
@@ -168,9 +168,6 @@
      <height>42</height>
     </size>
    </property>
-   <property name="allowedAreas">
-    <set>Qt::AllDockWidgetAreas</set>
-   </property>
    <property name="windowTitle">
     <string>Statistics</string>
    </property>
@@ -180,12 +177,6 @@
    <widget class="QWidget" name="dwContent_Stats"/>
   </widget>
   <widget class="QDockWidget" name="dwWorker">
-   <property name="minimumSize">
-    <size>
-     <width>80</width>
-     <height>42</height>
-    </size>
-   </property>
    <property name="windowTitle">
     <string>Worker</string>
    </property>
@@ -205,7 +196,7 @@
     <string>Ressources browser</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
@@ -217,6 +208,21 @@
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_5"/>
+  </widget>
+  <widget class="QDockWidget" name="dwWelcome">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="windowTitle">
+    <string>Welcome</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6"/>
   </widget>
   <action name="actionSave_selected_creature">
    <property name="icon">
@@ -349,6 +355,7 @@
   <zorder>dwWorker</zorder>
   <zorder>dwRessourcesBrowser</zorder>
   <zorder>dwExperiment</zorder>
+  <zorder>dwWelcome</zorder>
  </widget>
  <resources>
   <include location="../../../../core/ressources/ressources.qrc"/>
