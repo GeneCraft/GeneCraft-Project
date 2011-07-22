@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 {
     qsrand(time(NULL));
     srand(time(NULL));
-    QApplication a(argc, argv);
+    QCoreApplication a(argc, argv);
     QStringList args = a.arguments();
     QString expName = "";
     QString workerName = "";
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
         workerData = worker_res->load();
     }
 
-    WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
+//    WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
 
     if(workerData == QVariant() ||
        !workerData.toMap().contains("name") ||
@@ -108,7 +108,9 @@ int main(int argc, char *argv[])
        !workerData.toMap().contains("selection")) {
 
         qDebug() << "Didn't find any worker configuration, or incomplete one. Starting the gui-config";
+	WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
 
+	QApplication a(argc, argv);
         workerConfiguration->show();
         a.exec();
         workerData = workerConfiguration->getWorkerData();
