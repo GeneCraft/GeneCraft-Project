@@ -80,6 +80,12 @@ public slots:
     void togglePhysics();
     void setExperiment(GeneLabCore::Experiment* experiment);
 
+    // Modes
+    void switchToWelcomeMode();
+    void switchToDesignerMode();
+    void switchToExperimentMode();
+    void switchToTheaterMode();
+
 signals:
 
     void sEntityDeleted(Entity *);

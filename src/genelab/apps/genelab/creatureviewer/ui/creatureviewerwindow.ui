@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>818</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -76,7 +76,7 @@
   <widget class="QDockWidget" name="dwCreature">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>
@@ -98,7 +98,7 @@
   <widget class="QDockWidget" name="dwBone">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>
@@ -125,13 +125,13 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
   </widget>
   <widget class="QDockWidget" name="dwBrain">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>
@@ -146,7 +146,7 @@
   <widget class="QDockWidget" name="dwFixation">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>
@@ -164,7 +164,7 @@
   <widget class="QDockWidget" name="dwStats">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>
@@ -182,7 +182,7 @@
   <widget class="QDockWidget" name="dwWorker">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>
@@ -197,7 +197,7 @@
   <widget class="QDockWidget" name="dwRessourcesBrowser">
    <property name="minimumSize">
     <size>
-     <width>78</width>
+     <width>80</width>
      <height>42</height>
     </size>
    </property>

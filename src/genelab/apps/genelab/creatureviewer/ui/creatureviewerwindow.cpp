@@ -116,8 +116,27 @@ void CreatureViewerWindow::init() {
     connect(this->ui->aEnterInWhatsThisMode,SIGNAL(triggered()),this,SLOT(enterInWhatsThisMode()));
 
     // --------------
-    // -- Tool bar --
+    // -- Mode Tool bar --
     // --------------
+
+    QToolBar *tb = new QToolBar(this);
+    addToolBar(Qt::LeftToolBarArea, tb);
+    tb->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    tb->setIconSize(QSize(32,32));
+
+    QAction *aWelcomeMode = tb->addAction(QIcon(":img/logos/GeneCraft_logo"),"Welcome");
+    QAction *aDesignerMode = tb->addAction(QIcon(":img/icons/ruler_pencil_32"),"Designer");
+    QAction *aExperimentMode = tb->addAction(QIcon(":img/icons/dna_32"),"Experiment");
+    QAction *aTheaterMode = tb->addAction(QIcon(":img/icons/theater_32"),"Theater");
+
+    connect(aWelcomeMode,SIGNAL(triggered()),this,SLOT(switchToWelcomeMode()));
+    connect(aDesignerMode,SIGNAL(triggered()),this,SLOT(switchToDesignerMode()));
+    connect(aExperimentMode,SIGNAL(triggered()),this,SLOT(switchToExperimentMode()));
+    connect(aTheaterMode,SIGNAL(triggered()),this,SLOT(switchToTheaterMode()));
+
+    // -------------------
+    // -- Main Tool bar --
+    // -------------------
 
     // create actions & add to bar
     QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString(tr("New creature")));
@@ -806,6 +825,53 @@ void CreatureViewerWindow::unfollowEntity() {
     OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
     cam->unfollowBody();
 
+}
+
+
+void CreatureViewerWindow::switchToWelcomeMode() {
+    ui->dwBone->setVisible(false);
+    ui->dwBrain->setVisible(false);
+    ui->dwFixation->setVisible(false);
+    ui->dwCreature->setVisible(false);
+    ui->dwExperiment->setVisible(false);
+    ui->dwWorker->setVisible(false);
+    ui->dwRessourcesBrowser->setVisible(true);
+    ui->dwStats->setVisible(false);
+}
+
+void CreatureViewerWindow::switchToDesignerMode() {
+    ui->dwBone->setVisible(true);
+    ui->dwBrain->setVisible(true);
+    ui->dwFixation->setVisible(true);
+    ui->dwCreature->setVisible(true);
+
+    ui->dwExperiment->setVisible(false);
+    ui->dwWorker->setVisible(false);
+    ui->dwRessourcesBrowser->setVisible(false);
+    ui->dwStats->setVisible(false);
+}
+
+void CreatureViewerWindow::switchToExperimentMode() {
+    ui->dwBone->setVisible(false);
+    ui->dwBrain->setVisible(false);
+    ui->dwFixation->setVisible(false);
+    ui->dwCreature->setVisible(false);
+
+    ui->dwExperiment->setVisible(true);
+    ui->dwWorker->setVisible(true);
+    ui->dwRessourcesBrowser->setVisible(true);
+    ui->dwStats->setVisible(true);
+}
+
+void CreatureViewerWindow::switchToTheaterMode() {
+    ui->dwBone->setVisible(false);
+    ui->dwBrain->setVisible(false);
+    ui->dwFixation->setVisible(false);
+    ui->dwCreature->setVisible(false);
+    ui->dwExperiment->setVisible(false);
+    ui->dwWorker->setVisible(false);
+    ui->dwRessourcesBrowser->setVisible(false);
+    ui->dwStats->setVisible(false);
 }
 
 
