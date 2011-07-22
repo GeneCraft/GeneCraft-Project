@@ -195,8 +195,8 @@ void CreatureViewerWindow::init() {
     // -- Docks --
     // -----------
 
-    tabifyDockWidget(ui->dwCreature,ui->dwBone);
-    tabifyDockWidget(ui->dwCreature,ui->dwFixation);
+    tabifyDockWidget(ui->dwFixation,ui->dwBone);
+
     tabifyDockWidget(ui->dwCreature,ui->dwBrain);
     setTabPosition(Qt::LeftDockWidgetArea,QTabWidget::North);
     //setTabShape(QTabWidget::Triangular);
@@ -208,11 +208,13 @@ void CreatureViewerWindow::init() {
         tabBar->setCurrentIndex(0);
     }
 
+    tabifyDockWidget(ui->dwExperiment,ui->dwWorker);
+    setTabPosition(Qt::RightDockWidgetArea,QTabWidget::North);
+
 
     // ----------------------
     // -- Events Listeners --
     // ----------------------
-
 
     cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
     EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
