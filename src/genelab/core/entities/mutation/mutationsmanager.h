@@ -65,10 +65,14 @@ public:
 
     // Add / Remove / Replace sensor
     StructuralMutation *sensorsStructural;
-    StructuralList *sensorStructuralList;
+    StructuralList *sensorsStructuralList;
 
-    // Add / Remove / Replace sensor
+    // Add / Remove / Replace bone
     StructuralMutation *bonesStructural;
+
+    // Add / Remove / Replace effector
+    StructuralMutation *effectorsStructural;
+    StructuralList *effectorsStructuralList;
 
     // -----------
     // -- brain --
@@ -115,12 +119,21 @@ private:
     void addSensor(QVariantList &sensors, int i=-1);
 
     /**
+     * To add effector
+     *
+     * @param the QVariantList where add
+     * @param the position to add (-1 = end of list)
+     */
+    void addEffector(QVariantList &effectorsList, int i=-1);
+
+    /**
      * To add bone
      *
      * @param the QVariantList where add
      * @param the position to add (-1 = end of list)
      */
     void addBone(QVariantList &bones, int i=-1, QVariant endFix = QVariant());
+
 
     QVariant recursiveMutateTreeShape(QVariant &boneVariant);
 

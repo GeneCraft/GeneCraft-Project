@@ -31,6 +31,9 @@ public:
     // To create from serialization data
     Effector(QVariant data);
 
+    // To create empty sensor serialization data
+    static QVariant generateEmpty(QString typeName, int type);
+
     // To serialize
     virtual QVariant serialize();
 

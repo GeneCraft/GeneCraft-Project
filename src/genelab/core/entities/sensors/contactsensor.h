@@ -36,7 +36,7 @@ public:
     // To serialize
     virtual QVariant serialize();
 
-    // To create an empty sensor
+    // To create empty sensor serialization data
     static QVariant generateEmpty();
 
     // To update brain inputs values

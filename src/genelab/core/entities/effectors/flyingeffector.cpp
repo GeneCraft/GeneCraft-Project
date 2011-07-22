@@ -26,9 +26,19 @@ FlyingEffector::FlyingEffector(QVariant data, Fixation *fixation) : Effector(dat
 {
     QVariantMap outs = data.toMap()["outs"].toMap();
 
+    btScalar mass = 1/fixation->getRigidBody()->getInvMass();
+
     impulseX = new BrainOut(outs["impulseX"]);
+    impulseX->setMin(-mass*MASS_FACTOR);
+    impulseX->setMin(mass*MASS_FACTOR);
+
     impulseY = new BrainOut(outs["impulseY"]);
-    impulseZ = new BrainOut(outs["impulseX"]);
+    impulseY->setMin(-mass*MASS_FACTOR*10.0);
+    impulseY->setMin(mass*MASS_FACTOR*10.0);
+
+    impulseZ = new BrainOut(outs["impulseZ"]);
+    impulseZ->setMin(-mass*MASS_FACTOR);
+    impulseZ->setMin(mass*MASS_FACTOR);
 
     brainOutputs.append(impulseX);
     brainOutputs.append(impulseY);
@@ -50,6 +60,24 @@ QVariant FlyingEffector::serialize() {
     bOuts.insert("impulseX", impulseX->serialize());
     bOuts.insert("impulseY", impulseY->serialize());
     bOuts.insert("impulseZ", impulseZ->serialize());
+    data.insert("outs", bOuts);
+
+    return data;
+}
+
+QVariant FlyingEffector::generateEmpty()
+{
+    QVariantMap data = Effector::generateEmpty(TYPE_NAME, TYPE).toMap();
+
+    // min & max init in contructor according mass of fixation
+    BrainOut impulseX(0,0);
+    BrainOut impulseY(0,0);
+    BrainOut impulseZ(0,0);
+
+    QVariantMap bOuts;
+    bOuts.insert("impulseX", impulseX.serialize());
+    bOuts.insert("impulseY", impulseY.serialize());
+    bOuts.insert("impulseZ", impulseZ.serialize());
     data.insert("outs", bOuts);
 
     return data;

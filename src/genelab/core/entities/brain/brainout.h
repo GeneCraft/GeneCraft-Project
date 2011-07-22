@@ -50,6 +50,9 @@ namespace GeneLabCore {
             return this->connexionInfo;
         }
 
+        void setMin(float min) { this->min = min; }
+        void setMax(float max) { this->max = max; }
+
     private:
         float min;
         float max;

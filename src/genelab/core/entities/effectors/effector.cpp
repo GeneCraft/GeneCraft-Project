@@ -12,10 +12,16 @@ Effector::Effector(QVariant data) {
 }
 
 QVariant Effector::serialize() {
-
     QVariantMap data;
     data.insert("typeName", this->typeName);
     data.insert("type", (int)this->type);
+    return data;
+}
+
+QVariant Effector::generateEmpty(QString typeName, int type) {
+    QVariantMap data;
+    data.insert("typeName", typeName);
+    data.insert("type", type);
     return data;
 }
 

@@ -18,6 +18,9 @@ public:
     // To create from data
     FlyingEffector(QVariant data, Fixation *fixation);
 
+    // To create empty effector serialization data
+    static QVariant generateEmpty();
+
     // To update world.
     void step();
 

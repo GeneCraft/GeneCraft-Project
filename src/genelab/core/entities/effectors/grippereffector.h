@@ -16,6 +16,9 @@ public:
     // To create from serialization data
     GripperEffector(QVariant data, Fixation * fixation);
 
+    // To create empty effector serialization data
+    static QVariant generateEmpty();
+
     // Destructor
     ~GripperEffector();
 

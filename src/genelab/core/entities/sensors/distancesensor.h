@@ -17,6 +17,9 @@ public:
     // To create from serialization data
     DistanceSensor(QVariant data, Fixation* fixation);
 
+    // To create empty sensor serialization data
+    static QVariant generateEmpty();
+
     // To serialize
     virtual QVariant serialize();
 

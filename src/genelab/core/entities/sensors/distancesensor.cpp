@@ -85,4 +85,15 @@ void DistanceSensor::step() {
     distanceInput->setValue(0);
 }
 
+QVariant DistanceSensor::generateEmpty()
+{
+    QVariantMap data = Sensor::generateEmpty("Distance sensor", distanceSensor).toMap();
+
+    BrainIn distanceInput(0,MAX_DISTANCE);
+    distanceInput.connectRandomly();
+    data.insert("distanceInput", distanceInput.serialize());
+
+    return data;
+}
+
 }

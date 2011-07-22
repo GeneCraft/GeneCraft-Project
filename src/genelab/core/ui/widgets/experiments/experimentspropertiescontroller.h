@@ -64,6 +64,7 @@ private:
     FloatMutationController *boneAngularOrigin;
     StructuralMutationController *bonesStructuralMutation;
     StructuralMutationController *sensorsStructuralMutation;
+    StructuralMutationController *effectorsStructuralMutation;
 
     IntegerMutationController *brainSize;
     FloatMutationController *brainInPos;

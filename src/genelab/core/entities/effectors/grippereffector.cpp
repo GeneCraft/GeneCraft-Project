@@ -72,4 +72,14 @@ void GripperEffector::step() {
         constraint->setEnabled(false);
 }
 
+QVariant GripperEffector::generateEmpty()
+{
+    QVariantMap data = Effector::generateEmpty(TYPE_NAME, TYPE).toMap();
+
+    BrainOut gripperOutput(-1,1);
+    data.insert("gripperOutput", gripperOutput.serialize());
+
+    return data;
+}
+
 }

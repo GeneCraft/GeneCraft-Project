@@ -26,6 +26,9 @@
 
 // effectors
 #include "effectors/effector.h"
+#include "effectors/rotationalmotorseffector.h"
+#include "effectors/grippereffector.h"
+#include "effectors/flyingeffector.h"
 
 #include "qxtjson.h"
 
@@ -77,13 +80,13 @@ namespace GeneLabCore {
         sensorsStructural->addProbability = 0.01f;
         sensorsStructural->deleteProbability = 0.02f;
         sensorsStructural->replaceProbability = 0.01f;
-        sensorStructuralList = new StructuralList();
-        sensorStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Box smell sensor",boxSmellSensor,1.0));
-        sensorStructuralList->elements.append(new MutationElement("Distance sensor",distanceSensor,1.0));
+        sensorsStructuralList = new StructuralList();
+        sensorsStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
+        sensorsStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
+        sensorsStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,1.0));
+        sensorsStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
+        sensorsStructuralList->elements.append(new MutationElement("Box smell sensor",boxSmellSensor,1.0));
+        sensorsStructuralList->elements.append(new MutationElement("Distance sensor",distanceSensor,1.0));
 
         // TODO serialize and add to ui
         distanceSensorYZ = new FloatMutation();
@@ -92,6 +95,15 @@ namespace GeneLabCore {
         distanceSensorYZ->maxFact       =  0.01;
         distanceSensorYZ->minValue      = -M_PI;
         distanceSensorYZ->maxValue      =  M_PI;
+
+        // effectors
+        effectorsStructural = new StructuralMutation();
+        effectorsStructural->addProbability = 0.0f;
+        effectorsStructural->deleteProbability = 0.0f;
+        effectorsStructural->replaceProbability = 0.0f;
+        effectorsStructuralList = new StructuralList();
+        effectorsStructuralList->elements.append(new MutationElement("Gripper effector",gripperEffector,1.0));
+        effectorsStructuralList->elements.append(new MutationElement("Flying effector",flyingEffector,1.0));
 
         // bones
         bonesStructural = new StructuralMutation();
@@ -206,7 +218,11 @@ namespace GeneLabCore {
 
         // sensors
         sensorsStructural = new StructuralMutation(map["sensorsStructural"]);
-        sensorStructuralList = new StructuralList(map["sensorStructuralList"]);
+        sensorsStructuralList = new StructuralList(map["sensorsStructuralList"]);
+
+        // effectors
+        effectorsStructural = new StructuralMutation(map["effectorsStructural"]);
+        effectorsStructuralList = new StructuralList(map["effectorsStructuralList"]);
 
         // TODO serialize and add to ui
         distanceSensorYZ = new FloatMutation();
@@ -250,7 +266,10 @@ namespace GeneLabCore {
         map.insert("constValue",constValue->serialize());
 
         map.insert("sensorsStructural",sensorsStructural->serialize());
-        map.insert("sensorStructuralList",sensorStructuralList->serialize());
+        map.insert("sensorsStructuralList",sensorsStructuralList->serialize());
+
+        map.insert("effectorsStructural",effectorsStructural->serialize());
+        map.insert("effectorsStructuralList",effectorsStructuralList->serialize());
 
         map.insert("bonesStructural",bonesStructural->serialize());
 
@@ -423,6 +442,7 @@ namespace GeneLabCore {
         QVariantList sensorList = fixMap["sensors"].toList();
         QVariantList newSensorList;
 
+        // remove / replace
         int nbSensors = sensorList.count();
         for(int i=0;i<nbSensors;++i) {
 
@@ -463,14 +483,15 @@ namespace GeneLabCore {
                     sensorMap.insert("collisionInput", mutateBrainIn(sensorMap["collisionInput"]));
                     break;
                 case boxSmellSensor:
-//                    sensorMap.insert("intensityInput", mutateBrainIn(sensorMap["intensityInput"]));
+                    sensorMap.insert("intensityInput", mutateBrainIn(sensorMap["intensityInput"]));
+                    // TODO mutate radius of smell...
                     break;
                 case distanceSensor:
-//                    sensorMap.insert("distanceInput", mutateBrainIn(sensorMap["distanceInput"]));
-//                    QVariantMap orientationMap = sensorMap["orientation"].toMap();
-//                    distanceSensorYZ->mutate(orientationMap,"y");
-//                    distanceSensorYZ->mutate(orientationMap,"z");
-//                    sensorMap.insert("orientation",orientationMap);
+                    sensorMap.insert("distanceInput", mutateBrainIn(sensorMap["distanceInput"]));
+                    QVariantMap orientationMap = sensorMap["orientation"].toMap();
+                    distanceSensorYZ->mutate(orientationMap,"y");
+                    distanceSensorYZ->mutate(orientationMap,"z");
+                    sensorMap.insert("orientation",orientationMap);
                    break;
             }
 
@@ -489,6 +510,23 @@ namespace GeneLabCore {
         // ------------------------
         QVariantList effectorList = fixMap["effectors"].toList();
         QVariantList newEffectorsList;
+
+        // remove / replace
+        int nbEffectors = effectorList.count();
+        for(int i=0;i<nbEffectors;++i) {
+
+           // delete sensor
+           if(effectorsStructural->checkDelete()) {
+                effectorList.removeAt(i);
+                i--;
+                nbEffectors--;
+           }
+           // replace sensor
+           else if(effectorsStructural->checkReplace()) {
+               effectorList.removeAt(i);
+               addEffector(effectorList,i);
+           }
+        }
 
         // if motor exists
         foreach(QVariant effector, effectorList) {
@@ -510,6 +548,11 @@ namespace GeneLabCore {
 
             newEffectorsList.append(effectorMap);
         }
+
+        // add effector ?
+        if(effectorsStructural->checkAdd())
+            addEffector(newEffectorsList);
+
         fixMap.insert("effectors", newEffectorsList);
 
 
@@ -587,7 +630,7 @@ namespace GeneLabCore {
     // add sensor
     void MutationsManager::addSensor(QVariantList &sensorsList, int i) {
 
-        MutationElement *me = sensorStructuralList->pickOne();
+        MutationElement *me = sensorsStructuralList->pickOne();
         QVariant newSensor;
 
         switch((SensorType) me->type) {
@@ -604,13 +647,11 @@ namespace GeneLabCore {
                 newSensor = ContactSensor::generateEmpty();
                 break;
             case boxSmellSensor:
-                qDebug() << QxtJSON::stringify(BoxSmellSensor::generateEmpty());
                 newSensor = BoxSmellSensor::generateEmpty();
                 break;
             case distanceSensor :
-                qDebug() << QxtJSON::stringify(BoxSmellSensor::generateEmpty());
-                newSensor = BoxSmellSensor::generateEmpty();
-            break;
+                newSensor = DistanceSensor::generateEmpty();
+                break;
         }
 
         // insert in a specific position
@@ -619,6 +660,33 @@ namespace GeneLabCore {
         else
             sensorsList.append(newSensor);
     }
+
+    // add effector
+    void MutationsManager::addEffector(QVariantList &effectorsList, int i) {
+
+        MutationElement *me = effectorsStructuralList->pickOne();
+        QVariant newEffector;
+
+        switch((EffectorType) me->type) {
+            case rotationalMotorEffector:
+                // impossible, not in effectorsStructuralList!
+                qDebug() << "RotationalMotorEffector must to be in effectorsStructuralList !";
+            break;
+            case gripperEffector:
+                newEffector = GripperEffector::generateEmpty();
+                break;
+            case flyingEffector:
+                newEffector = FlyingEffector::generateEmpty();
+                break;
+        }
+
+        // insert in a specific position
+        if(i > -1 && i < effectorsList.count())
+            effectorsList.insert(i,newEffector);
+        else
+            effectorsList.append(newEffector);
+    }
+
 
     // Mutate the brain
     QVariant MutationsManager::mutateBrain(QVariant brain) {

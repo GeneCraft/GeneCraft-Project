@@ -232,7 +232,8 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
     boneAngularOrigin = new FloatMutationController(mutationsManager->boneAngularOrigin,"Bones angular origin");
     bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
-    sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorStructuralList);
+    sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorsStructuralList);
+    effectorsStructuralMutation = new StructuralMutationController(mutationsManager->effectorsStructural,"Effectors Structural", mutationsManager->effectorsStructuralList);
     brainStructuralMutation = new StructuralMutationController(mutationsManager->brainStructural, "Brain Structural", mutationsManager->brainNodeList);
 
     brainSize = new IntegerMutationController(mutationsManager->brainSize,"Brain Size");
@@ -249,6 +250,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     ui->vlBodyMutations->addWidget(boneAngularOrigin);
     ui->vlBodyMutations->addWidget(bonesStructuralMutation);
     ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
+    ui->vlBodyMutations->addWidget(effectorsStructuralMutation);
 
     ui->vlBrainMutations->addWidget(brainSize);
     ui->vlBrainMutations->addWidget(brainInPos);
@@ -431,6 +433,7 @@ void ExperimentsPropertiesController::updateStructures() {
     boneAngularOrigin->save();
     bonesStructuralMutation->save();
     sensorsStructuralMutation->save();
+    effectorsStructuralMutation->save();
     brainStructuralMutation->save();
 
     brainSize->save();
