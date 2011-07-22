@@ -205,16 +205,9 @@ namespace GeneLabCore {
         boneRadius = new FloatMutation(map["boneRadius"]);
         fixRadius = new FloatMutation(map["fixRadius"]);
         boneAngularOrigin = new FloatMutation(map["boneAngularOrigin"]);
-
-        // TODO !!!
-        // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
-        boneAngularLimits->probability                  = 0.01;
-        boneAngularLimits->axisMutation->probability    = 0.01;
-        boneAngularLimits->axisMutation->minFact        = -0.01;
-        boneAngularLimits->axisMutation->maxFact        =  0.01;
-        boneAngularLimits->axisMutation->minValue       = -M_PI+0.01; // -INF (cyclic) ?
-        boneAngularLimits->axisMutation->maxValue       =  M_PI-0.01; // +INF (cyclic) ?
+        delete boneAngularLimits->axisMutation;
+        boneAngularLimits->axisMutation = new FloatMutation(map["boneAngularLimits"]);
 
         // sensors
         sensorsStructural = new StructuralMutation(map["sensorsStructural"]);
@@ -256,14 +249,11 @@ namespace GeneLabCore {
 
         map.insert("boneLength",boneLength->serialize());
         map.insert("boneRadius",boneRadius->serialize());
-        map.insert("fixRadius",fixRadius->serialize());
         map.insert("boneAngularOrigin",boneAngularOrigin->serialize());
-        map.insert("brainSize",brainSize->serialize());
-        map.insert("brainInPos",brainInPos->serialize());
-        map.insert("brainWeight",brainWeight->serialize());
-        map.insert("brainMemorySize",brainMemorySize->serialize());
-        map.insert("brainFrequency",brainFrequency->serialize());
-        map.insert("constValue",constValue->serialize());
+        map.insert("boneAngularLimits",boneAngularLimits->axisMutation->serialize());
+        map.insert("bonesStructural",bonesStructural->serialize());
+
+        map.insert("fixRadius",fixRadius->serialize());
 
         map.insert("sensorsStructural",sensorsStructural->serialize());
         map.insert("sensorsStructuralList",sensorsStructuralList->serialize());
@@ -271,8 +261,12 @@ namespace GeneLabCore {
         map.insert("effectorsStructural",effectorsStructural->serialize());
         map.insert("effectorsStructuralList",effectorsStructuralList->serialize());
 
-        map.insert("bonesStructural",bonesStructural->serialize());
-
+        map.insert("brainSize",brainSize->serialize());
+        map.insert("brainInPos",brainInPos->serialize());
+        map.insert("brainWeight",brainWeight->serialize());
+        map.insert("brainMemorySize",brainMemorySize->serialize());
+        map.insert("brainFrequency",brainFrequency->serialize());
+        map.insert("constValue",constValue->serialize());
         map.insert("brainNodes", brainNodeList->serialize());
         map.insert("brainStruct", brainStructural->serialize());
 
@@ -388,42 +382,65 @@ namespace GeneLabCore {
         boneMap.insert("lowerLimits",lowerLimits);
         boneMap.insert("upperLimits",upperLimits);
 
-
         // ----------------------
         // -- motors mutations --
         // ----------------------
         QVariantMap newMuscle = boneMap["muscle"].toMap();
-        QVariantMap newOuts;
-        QVariantMap outs = newMuscle["outs"].toMap();
+        QVariantMap newMotors;
+        QVariantMap motors = newMuscle["outs"].toMap();
 
+        QString allAxis[] = {"x","y","z"};
         // foreach motor axis...
         for(int i=0; i<3; ++i){
 
             // get motor name
-            QString motor;
-            if(i == 0) motor = "x";
-            else if(i == 1) motor = "y";
-            else motor = "z";
+            QString motor = allAxis[i];
 
             // if motor exists
-            if(outs.contains(motor))
+            if(motors.contains(motor))
             {
-                QVariantMap newOut;
-                QVariantMap out = outs[motor].toMap();
-                QVariantList newBrainOuts;
-                QVariantList brainOuts = out["brainOuts"].toList();
+                // need to delete motor ?
+                if(lowerLimits[motor].toFloat() == 0.0f
+                && upperLimits[motor].toFloat() == 0.0f) {
 
-                foreach(QVariant brainOut, brainOuts){
-                    // add new brainOut
-                    newBrainOuts.append(mutateBrainOut(brainOut));
+                    qDebug() << Q_FUNC_INFO << "Deleted Motor";
+                    continue; // not insert in newMotors
                 }
 
-                newOut.insert("brainOuts",newBrainOuts);
-                newOuts.insert(motor,newOut);
+                QVariantMap motorMap = motors[motor].toMap();
+
+                // new version
+                if(motorMap.contains("contractionOutput")) {
+                    motorMap.insert("contractionOutput", mutateBrainOut(motorMap["contractionOutput"]));
+                    motorMap.insert("expansionOutput", mutateBrainOut(motorMap["expansionOutput"]));
+                    newMotors.insert(motor,motorMap);
+                }
+                // old version (convert in new version)
+                else {
+
+                    // mutate all brainouts
+                    QVariantList brainOuts = motorMap["brainOuts"].toList();
+
+                    motorMap.insert("contractionOutput", mutateBrainOut(brainOuts[0]));
+                    motorMap.insert("expansionOutput", mutateBrainOut(brainOuts[1]));
+                    motorMap.remove("brainOuts");
+
+                    newMotors.insert(motor,motorMap);
+                }
+
+            } else {
+
+                // need to create a new motor ?
+                if(lowerLimits[motor].toFloat() != 0.0f
+                || upperLimits[motor].toFloat() != 0.0f) {
+
+                   qDebug() <<  Q_FUNC_INFO << "Add motor";
+                   newMotors.insert(motor,BrainOutMotor::generateEmpty());
+                }
             }
         }
 
-        newMuscle.insert("outs",newOuts);
+        newMuscle.insert("outs",newMotors);
         boneMap.insert("muscle",newMuscle);
 
         return boneMap;

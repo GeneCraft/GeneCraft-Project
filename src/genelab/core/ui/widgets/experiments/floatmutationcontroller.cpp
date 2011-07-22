@@ -2,9 +2,10 @@
 #include "ui_floatmutationcontroller.h"
 
 #include "mutation/floatmutation.h"
+#include <QDebug>
 
-#define FACTOR_PRECISION 100.0
-#define PROBABILITY_PRECISION 1000.0
+#define FACTOR_PRECISION 100.0f
+#define PROBABILITY_PRECISION 1000.0f
 
 using namespace GeneLabCore;
 
@@ -16,9 +17,9 @@ FloatMutationController::FloatMutationController(FloatMutation *mutation, QStrin
 
     createForm(name);
 
-    ui->sProbability->setValue(mutation->probability * PROBABILITY_PRECISION);
-    ui->sMinFactor->setValue(mutation->minFact * FACTOR_PRECISION);
-    ui->sMaxFactor->setValue(mutation->maxFact * FACTOR_PRECISION);
+    ui->sProbability->setValue(qRound(mutation->probability * PROBABILITY_PRECISION));
+    ui->sMinFactor->setValue(qRound(mutation->minFact * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
+    ui->sMaxFactor->setValue(qRound(mutation->maxFact * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
     ui->cbName->setChecked(mutation->enable);
     nameToggled(mutation->enable);
 }

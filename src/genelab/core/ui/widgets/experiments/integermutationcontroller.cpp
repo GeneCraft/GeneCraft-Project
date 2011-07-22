@@ -3,7 +3,7 @@
 
 #include "mutation/integermutation.h"
 
-#define PROBABILITY_PRECISION 1000.0
+#define PROBABILITY_PRECISION 1000.0f
 
 using namespace GeneLabCore;
 
@@ -22,7 +22,7 @@ IntegerMutationController::IntegerMutationController(IntegerMutation *mutation, 
 
     createForm(name);
 
-    ui->sProbability->setValue(mutation->probability * PROBABILITY_PRECISION);
+    ui->sProbability->setValue(qRound(mutation->probability * PROBABILITY_PRECISION));
     ui->sMinIncr->setValue(mutation->minIncr);
     ui->sMaxIncr->setValue(mutation->maxIncr);
     ui->cbName->setChecked(mutation->enable);

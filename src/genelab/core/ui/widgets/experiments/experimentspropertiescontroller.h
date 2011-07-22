@@ -58,14 +58,21 @@ private:
 
     GeneLabCore::Experiment *experiment;
 
+    // bone
     FloatMutationController *boneLengthMutation;
     FloatMutationController *boneRadiusMutation;
-    FloatMutationController *fixationRadiusMutation;
     FloatMutationController *boneAngularOrigin;
+    FloatMutationController *boneAngularLimitsMutation;
     StructuralMutationController *bonesStructuralMutation;
+
+    // fixation
+    FloatMutationController *fixationRadiusMutation;
+
+    // sensors & effectors
     StructuralMutationController *sensorsStructuralMutation;
     StructuralMutationController *effectorsStructuralMutation;
 
+    // brain
     IntegerMutationController *brainSize;
     FloatMutationController *brainInPos;
     FloatMutationController *brainInWeight;

@@ -47,7 +47,7 @@ RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, bt
     constraint(ct), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
 {
     this->bone = bone;
-    QVariantMap outsMap = data.toMap()["outs"].toMap();
+    QVariantMap motorsMap = data.toMap()["outs"].toMap();
 
     QString motors[] = {"x","y","z"};
 
@@ -57,9 +57,9 @@ RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, bt
 
     for(int i = 0; i < 3; i++) {
 
-        QString key = motors[i];
-        if(outsMap.contains(key)) {
-            brainMotorOutputs[i] = new BrainOutMotor(outsMap.value(key), constraint->getRotationalLimitMotor(i));
+        QString motor = motors[i];
+        if(motorsMap.contains(motor)) {
+            brainMotorOutputs[i] = new BrainOutMotor(motorsMap.value(motor), constraint->getRotationalLimitMotor(i));
             brainMotorOutputs[i]->motor->m_enableMotor = true;
             brainMotorOutputs[i]->motor->m_currentPosition = 0;
             this->outputsFrom = 1;

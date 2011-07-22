@@ -7,6 +7,12 @@
 #include "brain/brainout.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
+#define MIN_CONTRACTION 0.0f
+#define MAX_CONTRACTION 1.0f
+#define MIN_EXPANSION 0.0f
+#define MAX_EXPANSION 1.0f
+
+
 namespace GeneLabCore {
 
 /**
@@ -17,11 +23,11 @@ class BrainOutMotor
 public:
 
     BrainOutMotor(btRotationalLimitMotor * motor,
-                  float min_MaxMotorForce = 0.0f, float max_MaxMotorForce = 1.0f,
-                  float min_TargetVelocity = 0.0f, float max_TargetVelocity = 1.0f) : motor(motor)
+                  float min_Contraction = MIN_CONTRACTION, float max_Contraction = MAX_CONTRACTION,
+                  float min_Expansion = MIN_EXPANSION, float max_Expansion = MAX_EXPANSION) : motor(motor)
     {
-        boMaxMotorForce = new BrainOut(min_MaxMotorForce,max_MaxMotorForce);
-        boTargetVelocity = new BrainOut(min_TargetVelocity,max_TargetVelocity);
+        boMaxMotorForce = new BrainOut(min_Contraction,max_Contraction);
+        boTargetVelocity = new BrainOut(min_Expansion,max_Expansion);
     }
     ~BrainOutMotor() {
         delete this->boMaxMotorForce;
@@ -30,17 +36,45 @@ public:
 
     BrainOutMotor(QVariant data, btRotationalLimitMotor* motor) : motor(motor){
         QVariantMap outMap = data.toMap();
-        QVariantList dataL = outMap["brainOuts"].toList();
-        boMaxMotorForce = new BrainOut(dataL[0]);
-        boTargetVelocity = new BrainOut(dataL[1]);
+
+        // new version
+        if(outMap.contains("contractionOutput")) {
+            boMaxMotorForce = new BrainOut(outMap["contractionOutput"]);
+            boTargetVelocity = new BrainOut(outMap["expansionOutput"]);
+        }
+        // old version
+        else {
+            QVariantList dataL = outMap["brainOuts"].toList();
+            boMaxMotorForce = new BrainOut(dataL[0]);
+            boTargetVelocity = new BrainOut(dataL[1]);
+        }
     }
 
     QVariant serialize()  {
+
         QVariantMap data;
-        QVariantList outs;
-        outs.append(boMaxMotorForce->serialize());
-        outs.append(boTargetVelocity->serialize());
-        data.insert("brainOuts", (QVariantList)outs);
+
+        // old version
+        // QVariantList outs;
+        // outs.append(boMaxMotorForce->serialize());
+        // outs.append(boTargetVelocity->serialize());
+        // data.insert("brainOuts", (QVariantList)outs);
+
+        // new version
+        data.insert("contractionOutput",boMaxMotorForce->serialize());
+        data.insert("expansionOutput",boTargetVelocity->serialize());
+
+        return data;
+    }
+
+    // To generate an empty version
+    static QVariant generateEmpty(){
+
+        QVariantMap data;
+        BrainOut boContraction(MIN_CONTRACTION,MAX_CONTRACTION);
+        BrainOut boExpansion(MIN_EXPANSION,MAX_EXPANSION);
+        data.insert("contractionOutput",boContraction.serialize());
+        data.insert("expansionOutput",boExpansion.serialize());
         return data;
     }
 
@@ -94,10 +128,7 @@ public:
 
     BrainOutMotor *getBrainOutputs(int i) { return brainMotorOutputs[i]; }
 
-    /**
-     * used to get a seralised representation of effector
-     * (don't return the state of the motors but only the structure)
-     */
+    // To get a seralised representation of effector
     virtual QVariant serialize();
 
 //    static const int OUTPUTS_FROM_NORMAL_POSITION;

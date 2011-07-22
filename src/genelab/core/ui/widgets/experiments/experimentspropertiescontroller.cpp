@@ -224,31 +224,42 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         delete w;
     }
 
-    // Create mutations widgets
+
+    // -- Create mutations widgets --
     MutationsManager *mutationsManager = experiment->getMutationsManager();
 
+    // bone
     boneLengthMutation = new FloatMutationController(mutationsManager->boneLength,"Bones Length");
     boneRadiusMutation = new FloatMutationController(mutationsManager->boneRadius,"Bones Radius");
-    fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
     boneAngularOrigin = new FloatMutationController(mutationsManager->boneAngularOrigin,"Bones angular origin");
+    boneAngularLimitsMutation = new FloatMutationController(mutationsManager->boneAngularLimits->axisMutation,"Bones angular limits");
     bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
+
+    // fixation
+    fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
+
+    // snesors & effectors
     sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorsStructuralList);
     effectorsStructuralMutation = new StructuralMutationController(mutationsManager->effectorsStructural,"Effectors Structural", mutationsManager->effectorsStructuralList);
-    brainStructuralMutation = new StructuralMutationController(mutationsManager->brainStructural, "Brain Structural", mutationsManager->brainNodeList);
 
+    // brain
     brainSize = new IntegerMutationController(mutationsManager->brainSize,"Brain Size");
     brainInPos = new FloatMutationController(mutationsManager->brainInPos,"BrainIn Position");
     brainInWeight = new FloatMutationController(mutationsManager->brainWeight,"BrainIn Weight");
     brainMemorySize = new IntegerMutationController(mutationsManager->brainMemorySize,"Brain Mermory Size");
     brainFrequency = new IntegerMutationController(mutationsManager->brainFrequency,"Brain Frequency");
     constValue = new FloatMutationController(mutationsManager->constValue,"Constant Value");
-    //newBrainTree = new SimpleProbabilityController(mutationsManager->newBrainTree,"New Brain Tree");
+    brainStructuralMutation = new StructuralMutationController(mutationsManager->brainStructural, "Brain Structural", mutationsManager->brainNodeList);
 
+    // -- Add mutations widgets --
     ui->vlBodyMutations->addWidget(boneLengthMutation);
     ui->vlBodyMutations->addWidget(boneRadiusMutation);
-    ui->vlBodyMutations->addWidget(fixationRadiusMutation);
     ui->vlBodyMutations->addWidget(boneAngularOrigin);
+    ui->vlBodyMutations->addWidget(boneAngularLimitsMutation);
     ui->vlBodyMutations->addWidget(bonesStructuralMutation);
+
+    ui->vlBodyMutations->addWidget(fixationRadiusMutation);
+
     ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
     ui->vlBodyMutations->addWidget(effectorsStructuralMutation);
 
@@ -428,13 +439,15 @@ void ExperimentsPropertiesController::updateStructures() {
 
     // Mutations
     boneLengthMutation->save();
-    boneRadiusMutation->save();
-    fixationRadiusMutation->save();
+    boneRadiusMutation->save(); 
     boneAngularOrigin->save();
+    boneAngularLimitsMutation->save();
     bonesStructuralMutation->save();
+
+    fixationRadiusMutation->save();
+
     sensorsStructuralMutation->save();
     effectorsStructuralMutation->save();
-    brainStructuralMutation->save();
 
     brainSize->save();
     brainInPos->save();
@@ -442,9 +455,12 @@ void ExperimentsPropertiesController::updateStructures() {
     brainMemorySize->save();
     brainFrequency->save();
     constValue->save();
+    brainStructuralMutation->save();
 
+    // World
     experiment->setWorldData(getWorldMap());
 
+    // Seed
     experiment->setSeedInfo(getSeedMap());
 }
 QVariantMap ExperimentsPropertiesController::getSeedMap() {
