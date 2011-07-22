@@ -88,13 +88,13 @@ void Bone::setup()
 
             motor->m_limitSoftness = 0.0f;
             motor->m_normalCFM = 0.0;
-            motor->m_stopERP = 0.8f; // Error tolerance factor when joint is at limit.
+            motor->m_stopERP = 0.2f; // Error tolerance factor when joint is at limit.
             motor->m_stopCFM = 0.0f ; // Constraint force mixing factor when joint is at limit.
             motor->m_maxMotorForce = 0.001f;
             motor->m_maxLimitForce = 0.001f;
             motor->m_targetVelocity = 0;
             motor->m_bounce = 0.0;
-            motor->m_damping = 0.0;
+            motor->m_damping = 0.5;
         }
 
         // add motor modifier
