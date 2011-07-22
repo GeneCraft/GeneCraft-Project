@@ -29,8 +29,6 @@
 
 namespace GeneLabCore {
 
-BonePropertiesController* Bone::inspectorWidget = 0;
-
 Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform)
     : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL)
 {
@@ -111,25 +109,6 @@ void Bone::setup()
 
     //bulletEngine->getBulletDynamicsWorld()->addConstraint(endFixConstraint, true);
     endFix->setup();
-}
-
-
-BonePropertiesController *Bone::getInspectorWidget()
-{
-    if(inspectorWidget == 0)
-        inspectorWidget = new BonePropertiesController();
-
-    inspectorWidget->setBone(this);
-
-    return inspectorWidget;
-}
-
-BonePropertiesController *Bone::getEmptyInspectorWidget()
-{
-    if(inspectorWidget == 0)
-        inspectorWidget = new BonePropertiesController();
-
-    return inspectorWidget;
 }
 
 void Bone::setEntity(Entity *entity)

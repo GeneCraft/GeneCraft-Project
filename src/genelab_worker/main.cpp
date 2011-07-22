@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     database.port = 80;
 
     // Delete all fucking doc from database
-    /*DbRecord* r = new DbRecord(database, "_all_docs");
+    DbRecord* r = new DbRecord(database, "_all_docs");
     QVariant data = r->load();
     QVariantMap docsMap = data.toMap();
     QVariantList docsList = docsMap["rows"].toList();
@@ -87,11 +87,11 @@ int main(int argc, char *argv[])
         }
     }
 
-    return 0;*/
+    return 0;
 
 
     Ressource* experience_res = new JsonFile(expName);
-    Ressource* worker_res     = new JsonFile(workerName);
+    //Ressource* worker_res     = new JsonFile(workerName);
 
     QVariant expdata = experience_res->load();
     //QVariant workerdata = worker_res->load();

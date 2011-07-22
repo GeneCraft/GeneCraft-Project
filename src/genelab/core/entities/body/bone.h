@@ -48,10 +48,6 @@ public:
    inline RotationalMotorsEffector *getRotationalMotorsEffector() { return motorsEffector; }
    inline void setMotorModifierData(QVariant data)         { this->motorModifierData = data; }
 
-   // inspector
-   BonePropertiesController *getInspectorWidget();
-   static BonePropertiesController *getEmptyInspectorWidget();
-
    // body & size
    btRigidBody* getRigidBody()                             { return rigidBody;             }
    btScalar getLength()                                    { return body->getLength();     }
@@ -106,9 +102,6 @@ protected:
 
    // Shape factory
    btShapesFactory* shapesFactory;
-
-   // Qt Render
-   static BonePropertiesController *inspectorWidget;
 
 };
 

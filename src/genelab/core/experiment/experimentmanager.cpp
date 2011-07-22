@@ -425,8 +425,6 @@ namespace GeneLabCore {
         // Outputs disables
         e->getShape()->getRoot()->setOutputsFrom(3); // To normal position
 
-        // Get the fixationstat
-        StatisticsProvider* stat = e->getStatistics().find("FixationStats").value();
         // Get the specific velocity value
         Statistic* s = e->getStatisticByName("rootAbsVelocity");
 
@@ -490,7 +488,7 @@ namespace GeneLabCore {
         return true;
     }
 
-    float ExperimentManager::evaluateEntity(Entity* e) {
+    float ExperimentManager::evaluateEntity(Entity*) {
         // Call to the fitness function
         QScriptValue fitness = fitnessFunc.call();
         return fitness.toNumber();

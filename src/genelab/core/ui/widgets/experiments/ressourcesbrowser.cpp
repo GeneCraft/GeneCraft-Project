@@ -21,7 +21,6 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     ui->setupUi(this);
 
     // TODO QSettings
-    database;
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;

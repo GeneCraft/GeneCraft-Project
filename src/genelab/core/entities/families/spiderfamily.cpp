@@ -96,7 +96,7 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
     {
         btVector3 lowerLimits(0,0,-M_PI/4.);
         btVector3 upperLimits(0,0,0);
-        Bone* lastBone = rootBone->getEndFixation()->addBone(0,
+        rootBone->getEndFixation()->addBone(0,
                                             - M_PI / 4.,
                                             btScalar(legRadius),
                                             btScalar(legLenght/2.),

@@ -34,13 +34,11 @@ INCLUDEPATH += \
 INCLUDEPATH  += \
     ../lib/bullet/src \
     ../lib/bullet/Extra/ConvexDecomposition \
-    ../lib/qxt/src/core \
-    ../lib/qwt/src
+    ../lib/qxt/src/core
 
 QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
 QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
 QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
-QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
 
 #win32 {
     LIBS += -L../lib/bullet/lib
@@ -58,8 +56,8 @@ LIBS += -lBulletCollision
 LIBS += -lLinearMath
 #LIBS += -lConvexDecomposition
 #LIBS += -lBulletWorldImporter -lBulletFileLoader
-LIBS += -lBulletMultiThreaded
-LIBS += -lBulletSoftBody
+#LIBS += -lBulletMultiThreaded
+#LIBS += -lBulletSoftBody
 #LIBS += -lGIMPACTUtils
 #LIBS += -lgle
 #LIBS += -lglsmap
@@ -104,8 +102,13 @@ SOURCES += \
     ../genelab/core/entities/sensors/gyroscopicsensor.cpp \
     ../genelab/core/entities/sensors/accelerometersensor.cpp \
     ../genelab/core/entities/sensors/contactsensor.cpp \
+    ../genelab/core/entities/sensors/boxsmellsensor.cpp \
+    ../genelab/core/entities/sensors/smellsensor.cpp \
+    ../genelab/core/entities/sensors/distancesensor.cpp \
     ../genelab/core/entities/effectors/effector.cpp \
     ../genelab/core/entities/effectors/rotationalmotorseffector.cpp \
+    ../genelab/core/entities/effectors/grippereffector.cpp \
+    ../genelab/core/entities/effectors/flyingeffector.cpp \
     ../genelab/core/entities/statistics/statisticsstorage.cpp \
     ../genelab/core/entities/statistics/treeshapestats.cpp \
     ../genelab/core/entities/statistics/statisticsprovider.cpp \
@@ -126,10 +129,6 @@ SOURCES += \
     ../genelab/core/factories/ressources/jsonfile.cpp \
     ../genelab/core/factories/ressources/dbrecord.cpp \
     ../genelab/core/factories/creaturefactory.cpp \
-    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.cpp \
-    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.cpp \
-    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.cpp \
-    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.cpp \
     ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp \
     ../genelab/core/world/btworld.cpp \
@@ -138,15 +137,10 @@ SOURCES += \
     ../genelab/core/world/spawn.cpp \
     ../genelab/core/experiment/experiment.cpp \
     ../genelab/core/experiment/experimentmanager.cpp \
-    ../genelab/core/utils/tools.cpp \
-    main.cpp \
     ../genelab/core/experiment/result.cpp \
-    ../genelab/core/entities/sensors/boxsmellsensor.cpp \
-    ../genelab/core/entities/sensors/smellsensor.cpp \
-    ../genelab/core/entities/effectors/grippereffector.cpp \
-    ../genelab/core/entities/effectors/flyingeffector.cpp \
     ../genelab/core/experiment/resultsmanager.cpp \
-    ../genelab/core/entities/sensors/distancesensor.cpp
+    ../genelab/core/utils/tools.cpp \
+    main.cpp
 
 HEADERS += \
     ../genelab/core/engines/engine.h \
@@ -179,8 +173,13 @@ HEADERS += \
     ../genelab/core/entities/sensors/gyroscopicsensor.h \
     ../genelab/core/entities/sensors/accelerometersensor.h \
     ../genelab/core/entities/sensors/contactsensor.h \
+    ../genelab/core/entities/sensors/boxsmellsensor.h \
+    ../genelab/core/entities/sensors/smellsensor.h \
+    ../genelab/core/entities/sensors/distancesensor.h \
     ../genelab/core/entities/effectors/effector.h \
     ../genelab/core/entities/effectors/rotationalmotorseffector.h \
+    ../genelab/core/entities/effectors/grippereffector.h \
+    ../genelab/core/entities/effectors/flyingeffector.h \
     ../genelab/core/entities/families/antfamily.h \
     ../genelab/core/entities/families/genericfamily.h \
     ../genelab/core/entities/families/spiderfamily.h \
@@ -206,35 +205,19 @@ HEADERS += \
     ../genelab/core/factories/ressources/dbrecord.h \
     ../genelab/core/factories/btshapesfactory.h \
     ../genelab/core/factories/creaturefactory.h \
-    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
-    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.h \
-    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
-    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/pluggridvisualizer.h \
     ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h \
-    ../genelab/core/ui/widgets/entities/bodyitems.h \
     ../genelab/core/world/btworld.h \
     ../genelab/core/world/btscene.h \
     ../genelab/core/world/btbiome.h \
     ../genelab/core/world/spawn.h \
     ../genelab/core/experiment/experiment.h \
     ../genelab/core/experiment/experimentmanager.h \
-    ../genelab/core/utils/tools.h \
-    ../genelab/core/genelabcoreclasses.h \
     ../genelab/core/experiment/result.h \
-    ../genelab/core/entities/sensors/boxsmellsensor.h \
-    ../genelab/core/entities/sensors/smellsensor.h \
-    ../genelab/core/entities/effectors/grippereffector.h \
-    ../genelab/core/entities/effectors/flyingeffector.h \
     ../genelab/core/experiment/resultsmanager.h \
-    ../genelab/core/entities/sensors/distancesensor.h
+    ../genelab/core/utils/tools.h \
+    ../genelab/core/genelabcoreclasses.h
 
-FORMS += \
-    ../genelab/core/ui/widgets/ogrebulletwindows.ui \
-    ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.ui \
-    ../genelab/core/ui/widgets/entities/fixationpropertiescontroller.ui \
-    ../genelab/core/ui/widgets/entities/bonepropertiescontroller.ui \
-    ../genelab/core/ui/widgets/entities/entitypropertiescontroller.ui \
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc
