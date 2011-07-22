@@ -152,6 +152,7 @@ void BonePropertiesController::setOutFrom()
     else if(ui->rbOutFrom_NormalPosition->isChecked())
         bone->setNormalPositionMotors();
 
+
     // enable only for disabled outputs
     this->ui->gbMotorsTest->setEnabled(ui->rbOutFrom_Disable->isChecked());
 
