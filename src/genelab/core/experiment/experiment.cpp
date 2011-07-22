@@ -16,7 +16,7 @@ Experiment::Experiment() : ressource(NULL){
         author = "";
         comments = "";
         dateOfCreation = QDateTime::currentDateTime();
-        online = true;
+        online = false;
 
         // simulation
         onlyIfEntityIsStable = true;
@@ -49,6 +49,7 @@ Experiment::Experiment() : ressource(NULL){
     Experiment::Experiment(QVariant data) : ressource(NULL) {
 
         QVariantMap map = data.toMap();
+        online = false;
 
         // TODO
         //if(map["version"].toString().compare(EXP_FORMAT_VERSION) != 0)
@@ -63,7 +64,6 @@ Experiment::Experiment() : ressource(NULL){
         description     = map["description"].toString();
         author          = map["author"].toString();
         comments        = map["comments"].toString();
-        online          = map["online"].toBool();
         dateOfCreation  = QDateTime::fromString(map["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
 
         // simulation
@@ -134,7 +134,6 @@ Experiment::Experiment() : ressource(NULL){
         map.insert("author",author);
         map.insert("comments",comments);
         map.insert("dateOfCreation",dateOfCreation.toString("yyyy-MM-dd hh:mm:ss"));
-        map.insert("online", online);
 
         // Simulation
         map.insert("onlyIfEntityIsStable",onlyIfEntityIsStable);
