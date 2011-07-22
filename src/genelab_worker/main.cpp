@@ -73,6 +73,11 @@ int main(int argc, char *argv[])
     // One argument, the experience (id or file)
     if(args.length() > 1) {
         expName = args.at(1);
+        if(expName == "--gui") {
+            if(args.length() > 2) {
+                expName = args.at(2);
+            }
+        }
         qDebug() << "loading experience at" << args.at(1);
         Ressource* experience_res = new JsonFile(expName);
         expdata = experience_res->load();
@@ -101,9 +106,18 @@ int main(int argc, char *argv[])
     // Two argument, the experience and the worker data
     if(args.length() > 2) {
         workerName = args.at(2);
-        qDebug() << "loading worker configuration at" << workerName;
-        Ressource* worker_res = new JsonFile(workerName);
-        workerData = worker_res->load();
+        if(args.at(1) == "--gui" || workerName == "--gui") {
+            if(args.length() > 3) {
+                workerName = args.at(3);
+            } else {
+                workerName = "";
+            }
+        }
+        if(workerName != "") {
+            qDebug() << "loading worker configuration at" << workerName;
+            Ressource* worker_res = new JsonFile(workerName);
+            workerData = worker_res->load();
+        }
     }
 
 //    WorkerConfiguration* workerConfiguration = new WorkerConfiguration();

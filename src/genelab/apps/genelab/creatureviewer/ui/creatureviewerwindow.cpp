@@ -240,6 +240,7 @@ void CreatureViewerWindow::init() {
 
     // Welcome
     WelcomeWidget *welcomeWidget = new WelcomeWidget();
+    welcomeWidget->setMaximumSize(400, 166725);
     ui->dwWelcome->setWidget(welcomeWidget);
 
     // Entity

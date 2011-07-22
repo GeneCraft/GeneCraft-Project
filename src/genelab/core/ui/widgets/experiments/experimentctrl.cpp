@@ -33,6 +33,10 @@ namespace GeneLabCore {
     }
 
     void ExperimentCtrl::refresh() {
+        if(!resultsManager) {
+            return;
+        }
+
         this->refreshInProgress();
         if(loaded)
             resultsManager->reload();

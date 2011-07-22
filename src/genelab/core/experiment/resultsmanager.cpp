@@ -60,7 +60,6 @@ namespace GeneLabCore {
       * To load results from file system
       */
     int ResultsManager::loadResults() {
-        qDebug() << "loading results";
         QDir results = this->resultsDirectory;
         int cptLoaded = 0;
         foreach(QString f, results.entryList(QDir::NoDotAndDotDot
@@ -84,11 +83,8 @@ namespace GeneLabCore {
             r->setRessource(file);
             r->setBroadcasted(true);
             if(valid) {
-                qDebug() << "valid result from " << f;
                 this->addResult(r);
                 cptLoaded++;
-            } else {
-                qDebug() << "invalid file format" << f;
             }
 
             delete r;
@@ -96,7 +92,6 @@ namespace GeneLabCore {
         }
 
         this->resultNameCpt = cptLoaded;
-        qDebug() << cptLoaded;
 
         return cptLoaded;
     }
@@ -121,7 +116,6 @@ namespace GeneLabCore {
             }
 
             if(newLastModified < fileInfo.lastModified()){
-                qDebug() << "new last modified" << fileInfo.lastModified();
                 newLastModified = fileInfo.lastModified();
             }
 
@@ -133,10 +127,7 @@ namespace GeneLabCore {
             r->setBroadcasted(true);
             if(valid && r->getWorker() != this->workerName) {
                 cptNew++;
-                //qDebug() << "valid result from " << f << fileInfo.lastModified();
                 this->addResult(r);
-            } else {
-                //qDebug() << "invalid file format" << f;
             }
 
             delete r;
@@ -182,13 +173,9 @@ namespace GeneLabCore {
             bool valid;
             Result* result = Result::loadResult(genome, valid);
             if(valid) {
-                qDebug() << "valid result from " << id;
-                qDebug() << result->getDate() << result->getFitness() << result->getWorker();
                 result->setBroadcasted(true);
                 this->addResult(result);
                 cptLoaded++;
-            } else {
-                qDebug() << "invalid file format";
             }
 
             delete result;
@@ -205,7 +192,6 @@ namespace GeneLabCore {
                      experiment->getId() +"\",0]&limit="+
                      QString::number(qMax(this->randomResultsStored, this->bestResultsStored))
                      +"&descending=true";
-        qDebug() << id;
         DbRecord* r = new DbRecord(db, id);
         QVariant data = r->load();
         delete r;
@@ -228,7 +214,6 @@ namespace GeneLabCore {
 
         QVariantMap postData;
         postData.insert("keys", ids);
-        qDebug() << postData;
         Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
         QVariant genomes = re->load();
 
@@ -240,13 +225,9 @@ namespace GeneLabCore {
             bool valid;
             Result* result = Result::loadResult(genome, valid);
             if(valid && result->getWorker() != this->workerName) {
-                qDebug() << "valid result from " << id;
-                qDebug() << result->getDate() << result->getFitness() << result->getWorker();
                 result->setBroadcasted(true);
                 this->addResult(result);
                 cptNew++;
-            } else {
-                qDebug() << "invalid file format";
             }
 
             delete result;

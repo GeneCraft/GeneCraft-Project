@@ -29,17 +29,22 @@ void WorkerCtrl::on_btnStart_clicked()
     if(this->process)
         return;
 
+    QString workerExe = "./genecraft_worker";
     //QString workerExe = "/Users/cyprienhuissoud/Desktop/genelab/genelab/src/genelab_worker-build-desktop/genelab_worker";
-    QString workerExe  = QFileDialog::getOpenFileName(this, "Select the worker binary","genelab_worker");
+    QFile workerFile(workerExe);
+    if(!workerFile.exists()) {
+        QString workerExe  = QFileDialog::getOpenFileName(this, "Select the worker binary","genelab_worker");
+        workerFile.setFileName(workerExe);
+    }
+
     QString expFile    = QFileDialog::getOpenFileName(this, "Select the experience file","Experience (*.exp)");
-    QString workerParams = QFileDialog::getOpenFileName(this, "Select the worker file","Worker (*.worker)");
-    qDebug() << workerExe << expFile << workerParams;
+    //QString workerParams = QFileDialog::getOpenFileName(this, "Select the worker file","Worker (*.worker)");
+    //qDebug() << workerExe << expFile << workerParams;
     process = new QProcess();
     connect(process, SIGNAL(readyReadStandardError()), this, SLOT(readyRead()));
-    QFile workerFile(workerExe);
     QFileInfo workerFileInfo(workerFile);
     QStringList params;
-    params << expFile << workerParams;
+    params << "--gui" << expFile;
     QDir workerDir = workerFileInfo.absoluteDir();
     process->setWorkingDirectory(workerDir.absolutePath());
     process->setReadChannel(QProcess::StandardError);
