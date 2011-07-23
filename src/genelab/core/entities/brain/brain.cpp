@@ -17,6 +17,9 @@ namespace GeneLabCore {
         this->plugGrid = new BrainPlugGrid();
         bool ok = false;
         this->frequency = data.toMap()["frequency"].toInt(&ok);
+        if(frequency <= 0) {
+            frequency = 1;
+        }
         if(!ok) {
             frequency = 6; // 10 per sec
         }

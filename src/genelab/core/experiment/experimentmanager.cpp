@@ -140,12 +140,10 @@ namespace GeneLabCore {
 
         // For each generations
         while(nbGen > 0 || nbGen == -1) {
-            qDebug() << nbGen;
-            qDebug() << "------ GENERATION" << this->maxGen - nbGen << "-------";
+            qDebug() << "------ GENERATION" << this->maxGen - nbGen << "/" << nbGen << "-------";
             nbGen--;
 
             // Evaluation of population
-            qDebug() << "Evaluation of population";
             evalPop();
 
             // Broadcast result to community
@@ -195,18 +193,18 @@ namespace GeneLabCore {
             if(familyName == "spider") {
                 // New entity
                 family = new SpiderFamily();
-                qDebug() << "new random spider entity";
+                //qDebug() << "new random spider entity";
             } else if(familyName == "ant") {
                 family = new AntFamily();
-                qDebug() << "new random ant entitiy";
+                //qDebug() << "new random ant entitiy";
             } else if(familyName == "caterpillar") {
                 family = new CaterpillarFamily();
-                qDebug() << "new random caterpillar entity";
+                //qDebug() << "new random caterpillar entity";
             } else if(familyName == "snake") {
                 family = new SnakeFamily();
-                qDebug() << "new random snake entity";
+                //qDebug() << "new random snake entity";
             } else if(familyName == "virgin"){
-                qDebug() << "new random virgin entity";
+                //qDebug() << "new random virgin entity";
                 Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
                 e->setup();
                 e->setGeneration(0);
@@ -243,8 +241,8 @@ namespace GeneLabCore {
             delete e;
             delete family;
             return genome;
-        } else if(type == "fixed") {
-            qDebug() << "loading from fixed genome";
+        } else if(type == "fixedGenomes") {
+            //qDebug() << "loading from fixed genome";
             // TODO FIXME !
             static QVariantList genomes = QVariantList();
             if(genomes == QVariantList()) {
@@ -253,8 +251,10 @@ namespace GeneLabCore {
                     genomes.append(Ressource::load(genome));
                 }
             }
+            qDebug() << genomes.size();
             int randomGen = qrand()%genomes.size();
-
+            qDebug() << randomGen;
+            qDebug() << genomes.at(randomGen);
             return mutations->mutateEntity(genomes.at(randomGen));
         }
         return QVariant();
@@ -342,7 +342,7 @@ namespace GeneLabCore {
         for(int i = 0; i < needed; i++) {
             QVariant newGenome = this->randomNewEntity();
             newActivePop.append(new Result(exp->getId(), -1, newGenome, workerName));
-            qDebug() << "new random genome !";
+            qDebug() << "new random genome from seeds !";
         }
 
         this->setActivePopulation(newActivePop);
@@ -416,8 +416,6 @@ namespace GeneLabCore {
         // 100 engines step
         for(int i = 0; i < 200; i++) {
             this->engineStep();
-            if(!e->isAlive())
-                qDebug() << e->isAlive();
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
                 return false;
         }

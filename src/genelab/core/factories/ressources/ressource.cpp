@@ -12,12 +12,10 @@ namespace GeneLabCore {
         QObject(parent)
     {
         cptRessource++;
-        qDebug() << "res" << cptRessource;
     }
     Ressource::~Ressource() {
 
         cptRessource--;
-        qDebug() << "res" <<cptRessource;
     }
 
 

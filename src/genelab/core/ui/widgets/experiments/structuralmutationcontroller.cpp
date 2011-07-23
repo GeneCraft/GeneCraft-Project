@@ -36,10 +36,7 @@ StructuralMutationController::StructuralMutationController(StructuralMutation *m
         }
     }
 
-    // WTF ??? if a pass directly mutation->addProbability * PROBABILITY_PRECISION to the setValue, 0.01 doesn't work
     float tmp;
-    //qDebug() << mutation->addProbability * PROBABILITY_PRECISION;
-    //qDebug() << tmp;
 
     tmp = mutation->addProbability * PROBABILITY_PRECISION;
     ui->sAddProbability->setValue(tmp);

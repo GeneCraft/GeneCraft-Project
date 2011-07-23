@@ -73,8 +73,6 @@ void BrainPropertiesController::entityDeleted(Entity *entity){
 
 void BrainPropertiesController::refresh()
 {
-
-    qDebug() << Q_FUNC_INFO;
     setEntity(entity);
 }
 

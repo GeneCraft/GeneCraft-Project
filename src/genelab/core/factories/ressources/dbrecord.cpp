@@ -78,8 +78,6 @@ namespace GeneLabCore {
         if(this->rev != "")
             mData.insert("_rev", this->rev);
 
-
-        qDebug() << url;
         RequestType type = RPUT;
 
         if(this->id == "" || this->id == "_bulk_docs")
@@ -124,7 +122,6 @@ namespace GeneLabCore {
         qDebug() << r->error();
         if(r->error() == 0) {
             QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
-            qDebug() << v;
             this->error = false;
 
         } else {

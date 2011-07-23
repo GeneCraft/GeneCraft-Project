@@ -567,9 +567,6 @@ void BonePropertiesController::validateAngularInputs()
                     connect(this->ui->dAngularLowerLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
                     connect(this->ui->dAngularUpperLimitZ,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
 
-
-                    qDebug() << motor->m_loLimit << motor->m_hiLimit ;
-
                     if(motor->m_loLimit == motor->m_hiLimit)
                     {
                         ui->cbEffectorZ->setChecked(false);

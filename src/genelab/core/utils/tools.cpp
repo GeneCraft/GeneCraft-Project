@@ -22,31 +22,14 @@ namespace GeneLabCore {
         return ((max - min) * ((double) qrand()/RAND_MAX)) + min;
     }
 
-    // Used to clear a recurcively QTreeWidgetItem
-    void Tools::clearTreeWidgetItem(QTreeWidgetItem * item)
-    {
-        QTreeWidgetItem * child;
-        while(item->childCount()) {
-            child = item->child(0);
-            Tools::clearTreeWidgetItem(child);
-            item->removeChild(child);
-            delete child;
-        }
-    }
-
     // Used to clear a QTreeWidget
     void Tools::clearTreeWidget(QTreeWidget * tree)
     {
-        QTreeWidgetItem * topItem;
-        while(tree->topLevelItemCount()) {
-
-            topItem = tree->topLevelItem(0);
-
-            Tools::clearTreeWidgetItem(topItem);
-            tree->removeItemWidget(topItem,0);
-
-            delete topItem;
+        for(int i = 0; i < tree->topLevelItemCount(); i++) {
+            delete tree->topLevelItem(i);
         }
+
+        tree->clear();
     }
 
 }

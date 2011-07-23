@@ -65,9 +65,6 @@ namespace GeneLabCore {
             expFile = QFileDialog::getOpenFileName(this, "Select the experience file","Experience (*.exp)");
         }
 
-        qDebug() << expFile;
-        //QString workerParams = QFileDialog::getOpenFileName(this, "Select the worker file","Worker (*.worker)");
-        //qDebug() << workerExe << expFile << workerParams;
         process = new QProcess();
         connect(process, SIGNAL(readyReadStandardError()), this, SLOT(readyRead()));
         QFileInfo workerFileInfo(workerFile);
@@ -77,7 +74,6 @@ namespace GeneLabCore {
         process->setWorkingDirectory(workerDir.absolutePath());
         process->setReadChannel(QProcess::StandardError);
         process->start(workerFileInfo.absoluteFilePath(), params);
-        qDebug() << process->state();
         this->ui->btnStart->setText("Stop worker");
     }
     void WorkerCtrl::readyRead() {

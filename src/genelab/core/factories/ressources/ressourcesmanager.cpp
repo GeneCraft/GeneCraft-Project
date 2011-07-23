@@ -14,9 +14,6 @@ namespace GeneLabCore {
 
 
     void RessourcesManager::reloadDb() {
-
-        qDebug() << "reload db !";
-
         // clear list
         experiments.clear();
         worlds.clear();

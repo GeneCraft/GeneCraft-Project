@@ -125,21 +125,5 @@ namespace GeneLabCore {
            }
         }
 
-        // -------------------------
-        // -- List of Material :) --
-        // -------------------------
-//        Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingleton().getResourceIterator();
-//        while (materialIterator.hasMoreElements())
-//        {
-//            QString matName = QString((static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue())).getPointer()->getName().c_str());
-
-//            if(matName.contains("Sky") || matName.contains("Debug"))
-//                qDebug() << "****************************************************" ;
-
-//            qDebug() << matName;
-
-//            materialIterator.moveNext();
-//        }
-
     }
 }

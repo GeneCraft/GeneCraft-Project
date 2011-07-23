@@ -80,7 +80,6 @@ namespace GeneLabCore {
         Ogre::SceneType scene_manager_type = Ogre::ST_GENERIC;
 
         scnManager = ogreRoot->createSceneManager( scene_manager_type );
-        qDebug() << scnManager << "scn manager inited !";
     }
 
     void OgreEngine::initOverlay() {

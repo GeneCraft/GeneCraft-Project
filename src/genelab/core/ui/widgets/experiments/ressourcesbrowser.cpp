@@ -181,7 +181,6 @@ void RessourcesBrowser::on_pbShareExp_clicked()
         // Load Generic Entity
         Ressource* to = new DbRecord(database, expTWI->dataw.data["id"].toString());
         QVariant load = to->load();
-        qDebug() << load;
         if(load.toMap().contains("error")) {
             to->save(expTWI->dataw.data);
             refreshOnlineRessources();

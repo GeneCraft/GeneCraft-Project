@@ -30,7 +30,6 @@
 
 #include "tools.h"
 #include <ctime>
-#include <direct.h>
 
 #include "ressources/dbrecord.h"
 #include "ressources/jsonfile.h"
@@ -48,9 +47,6 @@ using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
 {
-    char newPath[500];
-    getcwd(newPath, 500);
-    qDebug() << "Current Path: " << newPath;
     qsrand(time(NULL));
     srand(time(NULL));
     bool gui = false;
