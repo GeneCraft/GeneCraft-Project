@@ -97,7 +97,7 @@ void Bone::setup()
         }
 
         // add motor modifier
-        if(motorModifierData != QVariant(0))
+        if(motorModifierData != QVariant())
             motorsEffector = new RotationalMotorsEffector(motorModifierData, this, parentCt);
         else
             motorsEffector = new RotationalMotorsEffector(this, parentCt);

@@ -99,11 +99,6 @@ void CreatureViewerWindow::init() {
     experiment      = new Experiment();
     world           = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
 
-
-
-    //experiment->getWorld()->setup();
-
-
     // ----------
     // -- Menu --
     // ----------
@@ -277,7 +272,6 @@ void CreatureViewerWindow::init() {
     ui->dwRessourcesBrowser->setWidget(ressourcesBrowser);
     ressourcesBrowser->connectToInspectorInputManager(cvim);
 
-    //connect(ressourcesBrowser, SIGNAL(setExperiment(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
     connect(ressourcesBrowser, SIGNAL(addEntity(QVariantMap,GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap, GeneLabCore::Ressource*)));
     //ressourcesBrowser->connectToInspectorInputManager(cvim)
 
@@ -288,7 +282,7 @@ void CreatureViewerWindow::init() {
     expCtrl    = new ExperimentCtrl();
     this->ui->dwExperiment->setWidget(expCtrl);
     expCtrl->connectToInspectorInputManager(cvim);
-    connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap,GeneLabCore::Ressource*)));
+    connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addResult(QVariantMap,GeneLabCore::Ressource*)));
 
     // ----------------------------------
     // -- Connections to input manager --
@@ -558,7 +552,11 @@ Entity * CreatureViewerWindow::createNewEntity()
 }
 
 void CreatureViewerWindow::addEntity(QVariantMap entityData, Ressource *ressource) {
-     createCreature(entityData, getCameraPosition(), ressource);
+    createCreature(entityData, getCameraPosition(), ressource);
+}
+
+void CreatureViewerWindow::addResult(QVariantMap resultData, GeneLabCore::Ressource *ressource) {
+    createCreature(resultData, world->getSpawnPosition(), ressource);
 }
 
 void CreatureViewerWindow::loadEntityFromFile()

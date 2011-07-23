@@ -36,7 +36,7 @@ signals:
     void sFixationUpdated(Fixation *fix);
     void sEntityUpdated(Entity * entity);
 
-    // experiment
+    // loading
     void sLoadExperiment(Experiment *experiment);
 
 public slots:
@@ -58,7 +58,7 @@ public slots:
     void fixationUpdated(Fixation *fix);
     void entityUpdated(Entity * entity);
 
-    // experiment
+    // loading
     void loadExperiment(Experiment *experiment);
 
 };

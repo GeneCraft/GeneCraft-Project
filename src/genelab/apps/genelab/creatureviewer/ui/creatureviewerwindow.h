@@ -49,6 +49,7 @@ public slots:
 
     // new / load / save entity
     void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
+    void addResult(QVariantMap resultData, GeneLabCore::Ressource *ressource);
     Entity *createNewEntity();
     Entity *createCreature(QVariant genotype, btVector3 position, Ressource *ressource);
 
