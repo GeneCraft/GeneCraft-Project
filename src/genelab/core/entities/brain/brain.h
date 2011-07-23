@@ -24,8 +24,6 @@ public:
 
     virtual QVariant serialize();
 
-    //static int randomPlugGridSize();
-
     virtual void step() = 0;
     int getFrequency() {
         return frequency;

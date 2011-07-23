@@ -32,15 +32,14 @@ Experiment::Experiment() : ressource(NULL){
 
         // seed
         seedInfo.insert("type", "family");
-        seedInfo.insert("family", "ant");
+        seedInfo.insert("family", "spider");
 
         evalFunction  = QString("(function() {")+
-                                    QString("return entity.bodyHeight.mean * entity.rootRelVelocity.sum ")+
-                                    QString("- entity.bodySensors.sum + entity.bodyBrainSize.value")+
+                                    QString("return entity.rootRelVelocity.sum; ")+
                                     QString("})");
 
         validityFunction = "(function() {return entity.bodySensors.max < 3; })";
-        endFunction     = "(function(int actualStep) { return entity.brainActivity.sum > 200; })";
+        endFunction     = "(function(actualStep) { return entity.brainActivity.sum > 200; })";
         dieFunction     = "(function() { return entity.rootYRelVelocity.sum < 0; })";
 
 
