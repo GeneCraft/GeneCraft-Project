@@ -1,6 +1,5 @@
 #include "bulletogreengine.h"
 
-#include <QDebug>
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "bullet/bulletengine.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
@@ -45,12 +44,6 @@ void BulletOgreEngine::step()
     {
         body = it.next();
         btTransform transform = body.rigidBody->getWorldTransform();
-
-        // TODO always necessary ?
-        if(transform.getOrigin().x() != transform.getOrigin().x()) {
-            qDebug() << body.entity << body.node << body.rigidBody;
-            continue;
-        }
 
         body.node->setPosition(transform.getOrigin().x(),
                                 transform.getOrigin().y(),

@@ -1,5 +1,4 @@
 #include "ogrefreecamera.h"
-#include <QDebug>
 
 namespace GeneLabCore {
 
@@ -148,7 +147,6 @@ void OgreFreeCamera::step()
     if(t.elapsed() == 0.0)
        t.start();
 
-    //qDebug() << t.elapsed()/1000.0;
     Ogre::Real elapsedTime = t.elapsed()/1000.0;
     t.restart();
 

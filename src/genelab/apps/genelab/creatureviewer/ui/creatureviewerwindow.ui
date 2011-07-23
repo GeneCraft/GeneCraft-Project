@@ -210,12 +210,6 @@
    <widget class="QWidget" name="dockWidgetContents_5"/>
   </widget>
   <widget class="QDockWidget" name="dwWelcome">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
    <property name="windowTitle">
     <string>Welcome</string>
    </property>

@@ -156,36 +156,33 @@ void CreatureViewerInputManager::pickBody()
                         {
                             switch((RigidBodyOrigin::RigidBodyType)origin->getType())
                             {
-                                case RigidBodyOrigin::BONE:{
+                            case RigidBodyOrigin::BONE:{
 
-                                    Bone *bone = dynamic_cast<Bone*>(origin->getObject());
-                                    emit sBoneSelected(bone);
-                                    emit sEntitySelected(bone->getEntity());
+                                Bone *bone = dynamic_cast<Bone*>(origin->getObject());
+                                emit sBoneSelected(bone);
+                                emit sEntitySelected(bone->getEntity());
 
-                                    }
-                                    break;
+                            }
+                            break;
 
-                                case RigidBodyOrigin::FIXATION:{
+                            case RigidBodyOrigin::FIXATION:{
 
-                                    Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
-                                    emit sFixationSelected(fix);
-                                    emit sEntitySelected(fix->getEntity());
+                                Fixation *fix = dynamic_cast<Fixation*>(origin->getObject());
+                                emit sFixationSelected(fix);
+                                emit sEntitySelected(fix->getEntity());
 
-                                    }
-                                    break;
+                            }
+                            break;
 
-                                case RigidBodyOrigin::BASIC_SHAPE:{
+                            case RigidBodyOrigin::BASIC_SHAPE:{
 
-                                    //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
-                                    //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
-                                    //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
-                                    //setInspector(new QLabel("BASIC_SHAPE"));
+                                //BasicShape *shape = dynamic_cast<BasicShape*>(reinterpret_cast<QObject*>(origin->getObject()));
+                                //game->getOpenGLEngine()->getScene()->removeDrawableObject(shape);
+                                //game->getBulletEngine()->getDynamicsWorld()->removeRigidBody(shape->getRigidBody());
+                                //setInspector(new QLabel("BASIC_SHAPE"));
 
-                                    }
-                                    break;
-
-                                //default:
-                                //    setInspector(0);
+                            }
+                            break;
                             }
                         }
                         else

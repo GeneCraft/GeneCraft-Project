@@ -30,6 +30,7 @@
 
 #include "tools.h"
 #include <ctime>
+#include <direct.h>
 
 #include "ressources/dbrecord.h"
 #include "ressources/jsonfile.h"

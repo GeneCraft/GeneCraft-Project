@@ -1,7 +1,6 @@
 #include "ogrewidget.h"
 #include "Ogre.h"
 #include "OgreViewport.h"
-#include <QDebug>
 #include "bullet/bulletengine.h"
 #include "ogre/ogreengine.h"
 
@@ -110,7 +109,7 @@ namespace GeneLabCore {
 
     void OgreWidget::resize() {
 
-        /*qDebug() << "resized !";
+        /*
          QString dimensions = QString( "%1x%2" )
                            .arg(width)
                            .arg(height);

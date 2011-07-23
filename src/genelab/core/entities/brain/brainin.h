@@ -5,7 +5,6 @@
 
 #include "genelabcoreclasses.h"
 #include "synapse.h"
-#include <QDebug>
 
 namespace GeneLabCore {
 

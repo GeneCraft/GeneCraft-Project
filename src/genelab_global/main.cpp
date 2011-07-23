@@ -25,6 +25,9 @@ using namespace std;
 
 QApplication *a;
 
+#define RESSOURCES_FOLDER_SETTING_KEY "RESSOURCES_FOLDER"
+#define NB_LAUNCHES_SETTING_KEY "NB_LAUNCHES"
+
 void loadStyleSheet(const QString &sheetName)
 {
     QFile file(/*":/qss/" + */sheetName + ".qss");
@@ -64,6 +67,16 @@ int main(int argc, char *argv[])
 
     // create application
     a = new QApplication(argc, argv);
+
+    // First launch
+    QSettings mySettings;
+    if(!mySettings.contains(NB_LAUNCHES_SETTING_KEY)) {
+        mySettings.setValue(NB_LAUNCHES_SETTING_KEY, 1);
+        mySettings.setValue(RESSOURCES_FOLDER_SETTING_KEY, "ressources");
+    }
+    else {
+        mySettings.setValue(NB_LAUNCHES_SETTING_KEY, mySettings.value(NB_LAUNCHES_SETTING_KEY).toInt() + 1);
+    }
 
     // shpow splash
     QPixmap pixmap(":img/logos/splash");

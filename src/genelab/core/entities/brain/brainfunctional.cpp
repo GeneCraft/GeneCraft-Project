@@ -114,8 +114,6 @@ float sigmoid(float x)
 
     void BrainFunctional::removeOut(BrainOut* out)
     {
-        qDebug() << Q_FUNC_INFO;
-
         int iOut = outputs.indexOf(out);
         if(iOut != -1)
         {

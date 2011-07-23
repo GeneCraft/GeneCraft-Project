@@ -116,6 +116,11 @@ void CreatureViewerWindow::init() {
     connect(this->ui->actionAbout_CreatureViewer,SIGNAL(triggered()),this,SLOT(showAbout()));
     connect(this->ui->aEnterInWhatsThisMode,SIGNAL(triggered()),this,SLOT(enterInWhatsThisMode()));
 
+    // FIXME What's mode doesn't work on MacOS
+    #ifdef __APPLE__
+        this->ui->aEnterInWhatsThisMode->setEnabled(false);
+    #endif
+
     // --------------
     // -- Mode Tool bar --
     // --------------
@@ -208,7 +213,7 @@ void CreatureViewerWindow::init() {
         tabBar->setCurrentIndex(0);
     }
 
-    tabifyDockWidget(ui->dwExperiment,ui->dwWorker);
+    //tabifyDockWidget(ui->dwExperiment,ui->dwWorker);
     setTabPosition(Qt::RightDockWidgetArea,QTabWidget::North);
 
 

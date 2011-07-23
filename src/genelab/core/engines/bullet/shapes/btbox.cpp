@@ -1,5 +1,6 @@
 #include "btbox.h"
 
+#include <QDebug>
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
 #include "world/btworld.h"
@@ -46,7 +47,7 @@ void btBox::setup()
     if(world != NULL && rigidBody != NULL)
         world->getBulletWorld()->addRigidBody(rigidBody);
     else
-        qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
+        qDebug() << Q_FUNC_INFO << "btEngine == NULL || rigidBody == NULL";
 }
 
 }

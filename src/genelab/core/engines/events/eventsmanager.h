@@ -6,7 +6,6 @@
 #include <QKeyEvent>
 #include <QEvent>
 #include <QQueue>
-#include <QDebug>
 #include "genelabcoreclasses.h"
 #include "engine.h"
 #include "inputlistener.h"

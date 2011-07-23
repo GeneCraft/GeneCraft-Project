@@ -52,6 +52,11 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbClose,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->pbHelp,SIGNAL(clicked()),this,SLOT(enterInWhatsThisMode()));
 
+    // FIXME What's mode doesn't work on MacOS
+    #ifdef __APPLE__
+        this->ui->pbHelp->setEnabled(false);
+    #endif
+
     connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExpFromFile()));
     connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveExpToFile()));
 
@@ -529,13 +534,12 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
 
 void ExperimentsPropertiesController::loadExpFromFile() {
 
-    const QString DEFAULT_DIR_KEY("default_dir");
     QSettings mySettings;
-    QString selectedFile = QFileDialog::getOpenFileName(this, "Select an experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Exp (*.exp)");
+    QString selectedFile = QFileDialog::getOpenFileName(this, "Select an experiment", mySettings.value("RESSOURCES_FOLDER").toString(),"Exp (*.exp)");
 
     if (!selectedFile.isEmpty()) {
         QDir CurrentDir;
-        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+        mySettings.setValue("RESSOURCES_FOLDER", CurrentDir.absoluteFilePath(selectedFile));
 
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);

@@ -1,5 +1,4 @@
 #include "bulletengine.h"
-#include <QDebug>
 
 namespace GeneLabCore {
     using namespace Ogre;

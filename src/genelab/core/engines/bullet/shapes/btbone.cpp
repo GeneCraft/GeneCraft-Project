@@ -101,8 +101,6 @@ void btBone::setSize(btScalar radius, btScalar length)
 
 void btBone::setEndFixationRadius(btScalar fixationRadius)
 {
-    //qDebug() << "resize" << fixationRadius;
-
     if(cylinderShape != NULL && sphereShape != NULL) {
 
         // remove shapes from compound

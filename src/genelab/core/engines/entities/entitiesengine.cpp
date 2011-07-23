@@ -1,7 +1,5 @@
 #include "entitiesengine.h"
 
-#include <QDebug>
-
 #include "entity.h"
 #include "brain/brain.h"
 #include "brain/brainpluggrid.h"

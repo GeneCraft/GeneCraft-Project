@@ -400,10 +400,7 @@ namespace GeneLabCore {
             if(motors.contains(motor))
             {
                 // need to delete motor ?
-                if(lowerLimits[motor].toFloat() == 0.0f
-                && upperLimits[motor].toFloat() == 0.0f) {
-
-                    qDebug() << Q_FUNC_INFO << "Deleted Motor";
+                if(lowerLimits[motor].toFloat() == 0.0f && upperLimits[motor].toFloat() == 0.0f) {
                     continue; // not insert in newMotors
                 }
 
@@ -431,10 +428,7 @@ namespace GeneLabCore {
             } else {
 
                 // need to create a new motor ?
-                if(lowerLimits[motor].toFloat() != 0.0f
-                || upperLimits[motor].toFloat() != 0.0f) {
-
-                   qDebug() <<  Q_FUNC_INFO << "Add motor";
+                if(lowerLimits[motor].toFloat() != 0.0f || upperLimits[motor].toFloat() != 0.0f) {
                    newMotors.insert(motor,BrainOutMotor::generateEmpty());
                 }
             }
@@ -687,7 +681,7 @@ namespace GeneLabCore {
         switch((EffectorType) me->type) {
             case rotationalMotorEffector:
                 // impossible, not in effectorsStructuralList!
-                qDebug() << "RotationalMotorEffector must to be in effectorsStructuralList !";
+                qDebug() << Q_FUNC_INFO << "RotationalMotorEffector must to be in effectorsStructuralList !";
             break;
             case gripperEffector:
                 newEffector = GripperEffector::generateEmpty();

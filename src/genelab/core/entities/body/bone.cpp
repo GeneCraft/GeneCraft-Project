@@ -1,7 +1,6 @@
 #include "bone.h"
 
 // Qt
-#include <QDebug>
 #include <QTest>
 #include "widgets/entities/bonepropertiescontroller.h"
 
@@ -171,8 +170,6 @@ void Bone::disconnectMotor(int i)
 
         motorsEffector->disconnectMotor(i);
     }
-    //else
-        //qDebug() << Q_FUNC_INFO << " ERROR : entity == " << entity << ", motorsEffector->getBrainOutputs(" << i << ") == " << motorsEffector->getBrainOutputs(i);
 }
 
 void Bone::connectMotor(int i)
@@ -335,7 +332,6 @@ QVariant Bone::generateEmpty() {
     data.insert("outs", bOuts);
     bone.insert("muscle", data);
 
-//    qDebug() << bone;
     return bone;
 }
 

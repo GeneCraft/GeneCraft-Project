@@ -1,7 +1,6 @@
 #include "btobone.h"
 #include "world/btoworld.h"
 
-#include <QDebug>
 #include "ogre/ogreengine.h"
 #include "OgreSceneManager.h"
 #include "bulletogre/bulletogreengine.h"
@@ -110,8 +109,6 @@ void btoBone::setSize(btScalar radius, btScalar length)
 void btoBone::setEndFixationRadius(btScalar radius)
 {
     btBone::setEndFixationRadius(radius);
-
-    qDebug() << Q_FUNC_INFO << radius << originalSphereBB.getSize().y;
 
     Ogre::Vector3 size(radius*2,radius*2,radius*2);
     nodeS->setScale(size / originalSphereBB.getSize());

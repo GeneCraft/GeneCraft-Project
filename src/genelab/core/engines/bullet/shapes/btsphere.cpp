@@ -64,7 +64,7 @@ void btSphere::setup()
     if(world != NULL && rigidBody != NULL)
         world->getBulletWorld()->addRigidBody(rigidBody);
     else
-        qDebug("btSphere::setup btEngine == NULL || rigidBody == NULL");
+        qDebug() << Q_FUNC_INFO << "btSphere::setup btEngine == NULL || rigidBody == NULL";
 }
 
 void btSphere::setRadius(btScalar radius)
