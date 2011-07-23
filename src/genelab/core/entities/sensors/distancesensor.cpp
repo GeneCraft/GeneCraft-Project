@@ -6,7 +6,7 @@
 #include "world/btworld.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
-#define MAX_DISTANCE 100.0f
+#define MAX_DISTANCE 4.0f
 
 namespace GeneLabCore {
 

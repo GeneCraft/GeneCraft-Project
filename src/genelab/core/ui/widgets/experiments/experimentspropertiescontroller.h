@@ -73,7 +73,7 @@ private:
     StructuralMutationController *effectorsStructuralMutation;
 
     // brain
-    IntegerMutationController *brainSize;
+    FloatMutationController *brainDistance;
     FloatMutationController *brainInPos;
     FloatMutationController *brainInWeight;
     IntegerMutationController *brainMemorySize;

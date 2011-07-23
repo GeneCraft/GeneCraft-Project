@@ -4,16 +4,17 @@
 #include "qmath.h"
 
 namespace GeneLabCore {
-    Brain::Brain(int plugGridSize, QObject *parent) :
+    Brain::Brain(QObject *parent) :
         QObject(parent)
     {
-        this->plugGrid = new BrainPlugGrid(plugGridSize);
+        // BRAIN MODIF TRY
+        this->plugGrid = new BrainPlugGrid(/*plugGridSize*/);
         this->frequency = qrand()%10 + 1;
     }
 
     Brain::Brain(QVariant data) {
-        int size = data.toMap()["plugGridSize"].toInt();
-        this->plugGrid = new BrainPlugGrid(size);
+        //int size = data.toMap()["plugGridSize"].toInt();
+        this->plugGrid = new BrainPlugGrid();
         bool ok = false;
         this->frequency = data.toMap()["frequency"].toInt(&ok);
         if(!ok) {
@@ -23,13 +24,13 @@ namespace GeneLabCore {
 
     QVariant Brain::serialize() {
         QVariantMap data;
-        data.insert("plugGridSize", this->plugGrid->getSize());
+        //data.insert("plugGridSize", this->plugGrid->getSize());
         data.insert("frequency", this->frequency);
         return data;
     }
 
-    int Brain::randomPlugGridSize()
+    /*int Brain::randomPlugGridSize()
     {
         return pow(2,Tools::random(1,6));
-    }
+    }*/
 }

@@ -32,7 +32,7 @@ Entity* SpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVecto
     this->shapesFactory = shapesFactory;
     // root fixation
     Entity* ent = new Entity("Spider !", "SpiderFamily","generic", 1);
-    ent->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
+    ent->setBrain(new BrainFunctional());
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(position);

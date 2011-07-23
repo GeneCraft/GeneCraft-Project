@@ -9,10 +9,11 @@
 namespace GeneLabCore {
 
     typedef struct NeuralConnexion {
-        NeuralConnexion(float x, float y, float weight) {
+        NeuralConnexion(float x, float y, float distance, float weight) {
             this->x = x;
             this->y = y;
             this->weight = weight;
+            this->distance = distance;
         }
 
         /**
@@ -22,8 +23,9 @@ namespace GeneLabCore {
             return this->x == b.x && this->y == b.y;
         }
 
-        float x, y;   // Connexion point. grid's pourcent position [0.0-1.0]
-        float weight; // Weight of the connexion
+        float x, y;     // Connexion point. grid's pourcent position [0.0-1.0]
+        float weight;   // Weight of the connexion
+        float distance; // distance of propagation
 
     } NeuralConnexion;
 
@@ -40,11 +42,14 @@ namespace GeneLabCore {
         }
 
         void connectRandomly() {
-            this->connexions.append(NeuralConnexion(Tools::random(0.0,1.0),Tools::random(0.0,1.0),Tools::random(-1.0,1.0)));
+            this->connexions.append(NeuralConnexion(Tools::random(0.0,1.0), // X
+                                                    Tools::random(0.0,1.0), // Y
+                                                    Tools::random(0.0,0.2), // dist
+                                                    Tools::random(-1.0,1.0))); // Poid
         }
 
-        void connectTo(float x, float y, float weight = 1.0f) {
-            this->connexions.append(NeuralConnexion(x, y, weight));
+        void connectTo(float x, float y, float dist, float weight = 1.0f) {
+            this->connexions.append(NeuralConnexion(x, y, dist, weight));
         }
 
         void disconnectTotally() {

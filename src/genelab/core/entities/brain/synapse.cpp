@@ -16,7 +16,13 @@ namespace GeneLabCore {
             float x = v.toMap()["x"].toDouble();
             float y = v.toMap()["y"].toDouble();
             float w = v.toMap()["w"].toDouble();
-            this->connectTo(x, y, w);
+            float distance = 0.0f;
+            if(v.toMap().contains("d"))
+                distance = v.toMap()["d"].toDouble();
+            else
+                distance = Tools::random(0.0, 0.2);
+
+            this->connectTo(x, y, distance, w);
         }
     }
 
@@ -30,6 +36,7 @@ namespace GeneLabCore {
             dataC.insert("x", (double)c.x);
             dataC.insert("y", (double)c.y);
             dataC.insert("w", (double)c.weight);
+            dataC.insert("d", (double)c.distance);
             l.append(dataC);
         }
 

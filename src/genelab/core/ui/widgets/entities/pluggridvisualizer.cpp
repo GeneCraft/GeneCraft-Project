@@ -21,15 +21,15 @@ namespace GeneLabCore {
 
         this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight));
         //this->view->setFixedSize(WIDGET_SIZE, WIDGET_SIZE);
-        this->view->setScene(new QGraphicsScene(0, 0, 1000, 1000, this));
+        this->view->setScene(new QGraphicsScene(0, 0, 1, 1, this));
         this->layout()->addWidget(this->view);
     }
 
     int cptP;
     void PlugGridVisualizer::step() {
-        //cptP++;
-        //if(cptP%10 == 0)
-        this->update();
+        cptP++;
+        if(cptP%10 == 0)
+            this->update();
     }
 
     void PlugGridVisualizer::paintEvent(QPaintEvent *) {
@@ -39,30 +39,40 @@ namespace GeneLabCore {
             return;
 
         this->view->scene()->clear();
-        this->view->scene()->setSceneRect(0, 0,brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
-        this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10, Qt::KeepAspectRatio);
+        this->view->scene()->setSceneRect(0, 0,1, 1);
+        this->view->fitInView(0, 0, 1, 1, Qt::KeepAspectRatio);
 
 
         // On récupère le bon réseau de neurone
         BrainPlugGrid* n = brain->getPlugGrid();
-        int size = n->getSize();
+        //int size = n->getSize();
 
         QBrush b;
         QPen p;
-        p.setStyle(Qt::NoPen);
+        p.setStyle(Qt::SolidLine);
         b.setStyle(Qt::SolidPattern);
-        float width = 10;
+        foreach(BrainIn* in, n->getInputs()) {
+            foreach(NeuralConnexion c, in->getConnexions()) {
+                int bleu  = qMin(255., qMax(0., (-(in->getValue()*c.weight)) * 255.));
+                int rouge = qMin(255., qMax(0., ((in->getValue()*c.weight)) * 255.));
+                int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+                b.setColor(QColor(rouge, vert, bleu, 50));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+
+                this->view->scene()->addEllipse(c.x - c.distance, c.y - c.distance, c.distance*2., c.distance*2., p, b);
+            }
+        }
+
         // On dessine les neurones
-        for(int i = 0; i < size; i++) {
+        /*for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
                 int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
                 int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
                 int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
                 b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
                 this->view->scene()->addRect(width * i,
-                                             width * j /*+ 70*/, width, width, p, b);
+                                             width * j, width, width, p, b);
             }
-        }
+        }*/
 
 
         /*for(int i = 0; i < n->getInputs().size(); i++) {

@@ -11,16 +11,16 @@ namespace GeneLabCore {
     {
 
     public:
-        explicit BrainPlugGrid(int size, QObject *parent = 0);
+        explicit BrainPlugGrid(QObject *parent = 0);
         ~BrainPlugGrid();
 
         // Size of the edge of the grid
-        int getSize() {
-            return this->size;
-        }
+        //int getSize() {
+        //    return this->size;
+        //}
 
         // Set the of the plug grid
-        void setSize(int size);
+        //void setSize(int size);
 
         // Input connected to the grid
         QList<BrainIn*> getInputs() {
@@ -31,9 +31,9 @@ namespace GeneLabCore {
         float getValue(float x, float y);
 
         // Return the entire grid
-        float* getNeurons() {
-            return this->neurons;
-        }
+        //float* getNeurons() {
+        //    return this->neurons;
+        //}
 
 
         // Adding an input
@@ -60,10 +60,10 @@ namespace GeneLabCore {
     private:
         QList<BrainIn*> inputs;
 
-        int size;
+        //int size;
 
         // size-squared neurons matrice
-        float* neurons;
+        //float* neurons;
         int propagation;
 
     };

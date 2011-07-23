@@ -45,7 +45,7 @@ namespace GeneLabCore {
         Entity* entity = new Entity("Yet Another Caterpillar", "Caterpillar","generic", 1);
 
         // create brain
-        entity->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
+        entity->setBrain(new BrainFunctional());
 
         // create root fixation
         btTransform initTransform;

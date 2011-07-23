@@ -67,7 +67,7 @@ Entity *GenericFamily::createVirginEntity(btShapesFactory *shapesFactory,
                                                 const btVector3 &initialPosition)
 {
     Entity * entity = new Entity("no name", "no family","generic", 1);
-    entity->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
+    entity->setBrain(new BrainFunctional());
 
     TreeShape *shape = new TreeShape(shapesFactory);
 

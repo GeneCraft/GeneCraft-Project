@@ -11,7 +11,7 @@ class Brain : public QObject
 {
 
 public:
-    explicit Brain(int plugGridSize, QObject *parent = 0);
+    explicit Brain(QObject *parent = 0);
     Brain(QVariant data);
 
     BrainPlugGrid* getPlugGrid() {
@@ -24,7 +24,7 @@ public:
 
     virtual QVariant serialize();
 
-    static int randomPlugGridSize();
+    //static int randomPlugGridSize();
 
     virtual void step() = 0;
     int getFrequency() {

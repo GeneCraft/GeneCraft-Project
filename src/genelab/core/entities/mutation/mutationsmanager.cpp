@@ -115,14 +115,6 @@ namespace GeneLabCore {
         // -- BRAIN MUTATIONS --
         // ---------------------
 
-        // Plug grid size
-        brainSize = new IntegerMutation();
-        brainSize->probability   = 0.05;;
-        brainSize->minIncr       = -5;
-        brainSize->maxIncr       =  5;
-        brainSize->minValue      = 1;
-        brainSize->maxValue      = 100;
-
         // Position X of Input
         brainInPos = new FloatMutation();
         brainInPos->probability = 0.05;
@@ -192,6 +184,13 @@ namespace GeneLabCore {
         constValue->maxFact = 0.1;
         constValue->minValue = -10;
         constValue->maxValue = 10;
+
+        brainDistance = new FloatMutation();
+        brainDistance->probability = 0.1;
+        brainDistance->minFact = -0.3;
+        brainDistance->maxFact = 0.1;
+        brainDistance->minValue = 0.0;
+        brainDistance->maxValue = 1.0;
     }
 
     MutationsManager::MutationsManager(QVariant mutationsParams)
@@ -233,9 +232,9 @@ namespace GeneLabCore {
         // ---------------------
 
         // Plug grid size
-        brainSize = new IntegerMutation(map["brainSize"]);
         brainInPos = new FloatMutation(map["brainInPos"]);
         brainWeight = new FloatMutation(map["brainWeight"]);
+        brainDistance = new FloatMutation(map["brainDistance"]);
         brainMemorySize = new IntegerMutation(map["brainMemorySize"]);
         brainFrequency = new IntegerMutation(map["brainFrequency"]);
         constValue = new FloatMutation(map["constValue"]);
@@ -261,9 +260,9 @@ namespace GeneLabCore {
         map.insert("effectorsStructural",effectorsStructural->serialize());
         map.insert("effectorsStructuralList",effectorsStructuralList->serialize());
 
-        map.insert("brainSize",brainSize->serialize());
         map.insert("brainInPos",brainInPos->serialize());
         map.insert("brainWeight",brainWeight->serialize());
+        map.insert("brainDistance", brainDistance->serialize());
         map.insert("brainMemorySize",brainMemorySize->serialize());
         map.insert("brainFrequency",brainFrequency->serialize());
         map.insert("constValue",constValue->serialize());
@@ -702,7 +701,6 @@ namespace GeneLabCore {
     // Mutate the brain
     QVariant MutationsManager::mutateBrain(QVariant brain) {
         QVariantMap brainMap = brain.toMap();
-        brainSize->mutate(brainMap, "plugGridSize");
         brainFrequency->mutate(brainMap, "frequency");
         return brainMap;
     }
@@ -724,6 +722,9 @@ namespace GeneLabCore {
 
             // mutation of weight
             brainWeight->mutate(connexionMap, "w");
+
+            // mutation of distance
+            brainDistance->mutate(connexionMap, "d");
             newConnexions.append(connexionMap);
         }
 

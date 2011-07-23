@@ -25,14 +25,14 @@ float sigmoid(float x)
 
 namespace GeneLabCore {
 
-    BrainPlugGrid::BrainPlugGrid(const int size, QObject *parent) :
+    BrainPlugGrid::BrainPlugGrid(QObject *parent) :
         QObject(parent)
     {
-        this->size = size;
-        this->neurons = new float[size*size];
-        for(int i = 0; i < size*size; i++) {
-            neurons[i] = 0.0f;
-        }
+        //this->size = size;
+        //this->neurons = new float[size*size];
+        //for(int i = 0; i < size*size; i++) {
+        //    neurons[i] = 0.0f;
+        //}
 
         // On crée quelques inputs
         /*for(int i = 0; i < 3; i++) {
@@ -46,18 +46,29 @@ namespace GeneLabCore {
         // On crée quelques outputs
 
         // FIXME Pour les tests :P
-        this->propagation = qRound(size/10.0);
+        //this->propagation = qRound(size/10.0);
     }
 
     BrainPlugGrid::~BrainPlugGrid() {
-        delete[] this->neurons;
+        //delete[] this->neurons;
     }
 
     float BrainPlugGrid::getValue(float x, float y) {
-        return this->neurons[qRound(x * (size-1)) + qRound(y * (size-1)) * size];
+        // BRAIN MODIF TRY
+        float value = 0;
+        foreach(BrainIn* in, this->inputs) {
+            foreach(NeuralConnexion c, in->getConnexions()) {
+                float dist = sqrt((x - c.x)*(x - c.x) + (y - c.y)*(y - c.y));
+                if( dist < c.distance) {
+                    value += in->getValue()*c.weight*((c.distance-dist)/c.distance);
+                }
+            }
+        }
+
+        return this->activation(value);
     }
 
-    void BrainPlugGrid::setSize(int size)
+    /*void BrainPlugGrid::setSize(int size)
     {
         this->size = size;
         delete[] neurons;
@@ -67,17 +78,19 @@ namespace GeneLabCore {
 
         // FIXME Pour les tests :P
         this->propagation = qRound(size/10.0);
-    }
+    }*/
 
     void BrainPlugGrid::beforeStep() {
 
         // Clean the neurons
-        for(int i = 0; i < size*size; i++) {
+        // BRAIN MODIF TRY
+        /*for(int i = 0; i < size*size; i++) {
             this->neurons[i] = 0;
-        }
+        }*/
 
         // For each inputs
-        foreach(BrainIn* in, this->inputs) {
+        // BRAIN MODIF TRY
+        /*foreach(BrainIn* in, this->inputs) {
             // For each connexion of this synapse
             // If it fit in the network size
             float value = in->getValue();
@@ -103,7 +116,7 @@ namespace GeneLabCore {
                     }
                 //}
             }
-        }
+        }*/
     }
 
     void BrainPlugGrid::afterStep() {

@@ -78,14 +78,14 @@ public:
     // -- brain --
     // -----------
 
-    // Brain size
-    IntegerMutation* brainSize;
-
     // Input positions
     FloatMutation* brainInPos;
 
     // Input weight
     FloatMutation* brainWeight;
+
+    // Input distance
+    FloatMutation* brainDistance;
 
     // Constant value
     FloatMutation *constValue;

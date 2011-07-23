@@ -4,6 +4,8 @@
 #include "brain/brainpluggrid.h"
 #include "brain/brainin.h"
 #include "brain/synapse.h"
+#include "brain/brainfunctional.h"
+#include "brain/brainnode.h"
 #include "sensors/sensor.h"
 #include "effectors/effector.h"
 #include <QLayout>
@@ -20,16 +22,16 @@ PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
     this->view = new QGraphicsView(this);
     this->setLayout(new QBoxLayout(QBoxLayout::LeftToRight));
     //this->view->setFixedSize(WIDGET_SIZE, WIDGET_SIZE);
-    this->view->setScene(new QGraphicsScene(0, 0, 1000, 1000, this));
+    this->view->setScene(new QGraphicsScene(0, 0, 1, 1, this));
 
     this->layout()->addWidget(this->view);
 }
 
 int cptD = 0;
 void PlugGridDesignVisualizer::step() {
-    //cptD++;
-    //if(cptD%10 == 0)
-    this->update();
+    cptD++;
+    if(cptD%10 == 0)
+        this->update();
 }
 
 void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
@@ -38,64 +40,69 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
         return;
 
     this->view->scene()->clear();
-    this->view->scene()->setSceneRect(0, 0,brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10);
-    this->view->fitInView(0, 0, brain->getPlugGrid()->getSize()*10, brain->getPlugGrid()->getSize()*10, Qt::KeepAspectRatio);
+    this->view->scene()->setSceneRect(0, 0,1, 1);
+    this->view->fitInView(0, 0, 1, 1, Qt::KeepAspectRatio);
 
 
     // On récupère le bon réseau de neurone
     BrainPlugGrid* n = brain->getPlugGrid();
-    int size = n->getSize();
+    //int size = n->getSize();
 
     QBrush b;
     QPen p;
-    //p.setStyle(Qt::NoPen);
+    p.setStyle(Qt::SolidLine);
     b.setStyle(Qt::SolidPattern);
-    float width = 10;
+    foreach(BrainIn* in, n->getInputs()) {
+        foreach(NeuralConnexion c, in->getConnexions()) {
+            int bleu  = qMin(255., qMax(0., (-(c.weight)) * 255.));
+            int rouge = qMin(255., qMax(0., ((c.weight)) * 255.));
+            int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+            b.setColor(QColor(rouge, vert, bleu, 50));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+
+            this->view->scene()->addEllipse(c.x - c.distance, c.y - c.distance, c.distance*2., c.distance*2., p, b);
+        }
+    }
+
+    p.setStyle(Qt::SolidLine);
+    b.setStyle(Qt::SolidPattern);
+    foreach(BrainNodeIn* in, ((BrainFunctional*)brain)->getBrainNodeIn()) {
+        int bleu  = qMin(255., qMax(0., (-(n->getValue(in->x, in->y))) * 255.));
+        int rouge = qMin(255., qMax(0., ((n->getValue(in->x, in->y))) * 255.));
+        int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+        b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+
+        this->view->scene()->addRect(in->x, in->y, 0.02, 0.02, p, b);
+    }
 
     // On dessine les neurones
-    //if(neurones.size() == 0)
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
-                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
-                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
-                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
-                /*neurones.append(*/this->view->scene()->addRect(width * i,
-                                             width * j /*+ 70*/, width, width, p, b)/*)*/;
-
-            }
+    /*for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
+            int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
+            int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
+            b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
+            this->view->scene()->addRect(width * i,
+                                         width * j, width, width, p, b);
         }
-    /*else
-    // On réutilise les vieux neurones
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
-                int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
-                int vert  = 0;//qMin(255., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
-                b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
-                neurones.at(i + j * size)->setBrush(b);
-            }
-        }
-*/
+    }*/
 
-    for(int i = 0; i < n->getInputs().size(); i++) {
+
+    /*for(int i = 0; i < n->getInputs().size(); i++) {
 
         // On dessine les entrées
-//        QPointF startingPoint(brain->getPlugGrid()->getSize()*10/n->getInputs().size() * i + brain->getPlugGrid()->getSize()*10/n->getInputs().size() * 0.5 - 10,
- //                             brain->getPlugGrid()->getSize()*10 + 100);
+        QPointF startingPoint(SCENE_SIZE/n->getInputs().size() * i + SCENE_SIZE/n->getInputs().size() * 0.5 - 10,
+                              SCENE_SIZE + 100);
 
         // The input point
         BrainIn* in = n->getInputs().at(i);
         QPen p;
+        p.setColor(QColor(0, 255/n->getInputs().size()*i, 255 - 255/n->getInputs().size()*i));
+        b.setColor(QColor( p.color().red(), p.color().green(), p.color().blue(), (in->getValue() + 1) * 255/2.0f));
+
+        this->view->scene()->addEllipse(startingPoint.x(), startingPoint.y(), 20, 20, p, b);
 
         foreach(NeuralConnexion c, in->getConnexions()) {
-            int bleu  = qMin(255., qMax(0., -c.weight * 255.));
-            int rouge = qMin(255., qMax(0., c.weight * 255.));
-            int vert  = 0;//Min(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
-            p.setColor(QColor(rouge, vert, bleu));
-            b.setColor(QColor(rouge, vert, bleu));
-
-            p.setWidthF(qAbs(c.weight));
+            p.setWidthF(qAbs(c.weight*5));
 
             if(c.weight < 0)
                 p.setStyle(Qt::DotLine);
@@ -103,36 +110,16 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
                 p.setStyle(Qt::SolidLine);
 
 
-            this->view->scene()->addEllipse(10*qRound(c.x*(size-1)), 10*qRound(c.y*(size-1)), 10, 10, p, b);
-
-            }
-    }
-
-    foreach(Sensor* selectedSensor, selectedSensors) {
-        for(int i = 0; i < selectedSensor->getInputs().size(); i++) {
-            // The input point
-            BrainIn* in = selectedSensor->getInputs().at(i);
-            QPen p;
-
-            foreach(NeuralConnexion c, in->getConnexions()) {
-                int bleu  = 255;//qMin(255., qMax(0., -c.weight * 255.));
-                int rouge = 255;//qMin(255., qMax(0., c.weight * 255.));
-                int vert  = 255;//qMin(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
-
-                p.setColor(QColor(rouge, vert, bleu));
-                bleu  = qMin(255., qMax(0., -c.weight * 255.));
-                rouge = qMin(255., qMax(0., c.weight * 255.));
-                vert  = 0;//qMin(255., qMax(0., (255 - qAbs(c.weight) * 255.)));
-                b.setColor(QColor(rouge, vert, bleu));
-
-                p.setWidthF(2);
-
-
-                this->view->scene()->addEllipse(10*qRound(c.x*(size-1)), 10*qRound(c.y*(size-1)), 10, 10, p, b);
-
-                }
-            }
+            this->view->scene()->addLine(startingPoint.x() + 10, startingPoint.y() + 10,
+                                         SCENE_SIZE/size*c.x + SCENE_SIZE/size * 0.5,
+                                         SCENE_SIZE/size*c.y + SCENE_SIZE/size * 0.5 + 70, p);
         }
+    }*/
+
+
+    // On dessine les sorties
+
+
     }
 
     void PlugGridDesignVisualizer::setBrain(Brain* b) {

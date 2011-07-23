@@ -30,8 +30,8 @@ float sigmoid(float x)
 }
 
 
-    BrainFunctional::BrainFunctional(int plugGridSize, QObject *parent) :
-        Brain(plugGridSize, parent)
+    BrainFunctional::BrainFunctional(QObject *parent) :
+        Brain(parent)
     {
     }
 
@@ -81,7 +81,11 @@ float sigmoid(float x)
                 tree.append(new BrainNode(t));
                 break;
             case IN:
-                tree.append(new BrainNodeIn(nodePart[1].toFloat(), nodePart[2].toFloat()));
+                {
+                    BrainNodeIn* in =  new BrainNodeIn(nodePart[1].toFloat(), nodePart[2].toFloat());
+                    tree.append(in);
+                    this->brainins.append(in); // display purpose
+                }
                 break;
             case CONST:
                 tree.append(new BrainNodeConst(nodePart[1].toFloat()));
@@ -137,7 +141,6 @@ float sigmoid(float x)
         float value = apply(it, tree.end());
         if(value != value) {
             qDebug() << "NAN ! " << value << out->getConnexionInfo().toString();
-            qDebug() << this->plugGrid->getSize();
         } else {
             out->setValue(value);
         }

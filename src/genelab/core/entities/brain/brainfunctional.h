@@ -3,6 +3,7 @@
 
 #include "genelabcoreclasses.h"
 #include "brain.h"
+#include "brainnode.h"
 
 #include <QMap>
 #include <QVariant>
@@ -13,12 +14,16 @@ class BrainFunctional : public Brain
 {
 
 public:
-    explicit BrainFunctional(int plugGridSize, QObject *parent = 0);
+    explicit BrainFunctional(QObject *parent = 0);
     BrainFunctional(QVariant data);
     ~BrainFunctional();
 
     void addOut(BrainOut* out);
     void removeOut(BrainOut* out);
+
+    QList<BrainNodeIn*> getBrainNodeIn() {
+        return brainins;
+    }
 
     static QString createRandomFunc(int depth, StructuralList* nodesList = NULL);
 
@@ -32,6 +37,8 @@ protected:
 
     QList<BrainOut*> outputs;
     QList<QList<BrainNode*> > trees;
+
+    QList<BrainNodeIn*> brainins;
 
     PlugGridVisualizer * viz;
 

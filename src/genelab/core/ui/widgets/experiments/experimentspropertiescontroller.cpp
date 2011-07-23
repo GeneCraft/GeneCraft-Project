@@ -248,7 +248,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     effectorsStructuralMutation = new StructuralMutationController(mutationsManager->effectorsStructural,"Effectors Structural", mutationsManager->effectorsStructuralList);
 
     // brain
-    brainSize = new IntegerMutationController(mutationsManager->brainSize,"Brain Size");
+    brainDistance = new FloatMutationController(mutationsManager->brainDistance,"Input propagation");
     brainInPos = new FloatMutationController(mutationsManager->brainInPos,"BrainIn Position");
     brainInWeight = new FloatMutationController(mutationsManager->brainWeight,"BrainIn Weight");
     brainMemorySize = new IntegerMutationController(mutationsManager->brainMemorySize,"Brain Mermory Size");
@@ -268,7 +268,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
     ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
     ui->vlBodyMutations->addWidget(effectorsStructuralMutation);
 
-    ui->vlBrainMutations->addWidget(brainSize);
+    ui->vlBrainMutations->addWidget(brainDistance);
     ui->vlBrainMutations->addWidget(brainInPos);
     ui->vlBrainMutations->addWidget(brainInWeight);
     ui->vlBrainMutations->addWidget(brainMemorySize);
@@ -454,7 +454,7 @@ void ExperimentsPropertiesController::updateStructures() {
     sensorsStructuralMutation->save();
     effectorsStructuralMutation->save();
 
-    brainSize->save();
+    brainDistance->save();
     brainInPos->save();
     brainInWeight->save();
     brainMemorySize->save();

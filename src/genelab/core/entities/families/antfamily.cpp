@@ -32,7 +32,7 @@ Entity* AntFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 
     this->shapesFactory = shapesFactory;
 
     Entity* ent = new Entity("Ant", "AntFamily", "generic", 1);
-    ent->setBrain(new BrainFunctional(Brain::randomPlugGridSize()));
+    ent->setBrain(new BrainFunctional());
 
     // root fixation
     btTransform initTransform;

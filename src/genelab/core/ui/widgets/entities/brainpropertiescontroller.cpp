@@ -119,8 +119,8 @@ void BrainPropertiesController::setEntity(Entity *entity)
         this->ui->lNbrEffectors->setText(QString::number(entity->getEffectors().size()));
 
         // Brain
-        ui->sBrainPluggridSize->setValue(entity->getBrain()->getPlugGrid()->getSize());
-        ui->lBrainPluggridSize->setText(QString::number(entity->getBrain()->getPlugGrid()->getSize()));
+        //ui->sBrainPluggridSize->setValue(entity->getBrain()->getPlugGrid()->getSize());
+        //ui->lBrainPluggridSize->setText(QString::number(entity->getBrain()->getPlugGrid()->getSize()));
         this->brainViz->setBrain(entity->getBrain());
         this->brainDezViz->setBrain(entity->getBrain());
 
@@ -164,13 +164,13 @@ void BrainPropertiesController::setBrainSize()
 {
     if(entity){
         //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
-        int size = ui->sBrainPluggridSize->value();
-        ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));
-        entity->getBrain()->getPlugGrid()->setSize(size);
+        //int size = ui->sBrainPluggridSize->value();
+        //ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));
+        //entity->getBrain()->getPlugGrid()->setSize(size);
 
         // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
-        this->brainViz->setBrain(entity->getBrain());
-        this->brainDezViz->setBrain(entity->getBrain());
+        //this->brainViz->setBrain(entity->getBrain());
+        //this->brainDezViz->setBrain(entity->getBrain());
 
         //emit sEntityUpdated(entity);
     }

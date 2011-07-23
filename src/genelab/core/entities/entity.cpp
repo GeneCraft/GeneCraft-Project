@@ -50,9 +50,10 @@ void Entity::setup() {
         this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
         this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"root"));
         this->brainActivityStat = statisticsStorage->registerStat("brainActivity", "a / step");
-        this->brainPlugGridSizeStat = statisticsStorage->registerStat("brainPlugGridSize", "edge size");
-        this->brainPlugGridSizeStat->setValue(brain->getPlugGrid()->getSize());
-        this->brainPlugGridSizeStat->setResetable(false);
+        // BRAIN MODIF TRY
+        //this->brainPlugGridSizeStat = statisticsStorage->registerStat("brainPlugGridSize", "edge size");
+        //this->brainPlugGridSizeStat->setValue(brain->getPlugGrid()->getSize());
+        //this->brainPlugGridSizeStat->setResetable(false);
     }
 }
 
@@ -113,9 +114,7 @@ void Entity::addLinkToSensor(Sensor *sensor) {
     // Inputs connections to grid
     for(int i = 0; i < sensor->getInputs().size(); i++) {
         if(sensor->getInputs()[i]->getConnexions().size() == 0) {
-            sensor->getInputs()[i]->connectTo(Tools::random(0.0, 1.0),
-                                              Tools::random(0.0, 1.0),
-                                              Tools::random(-1.0, 1.0));
+            sensor->getInputs()[i]->connectRandomly();
         }
         brain->getPlugGrid()->connectInput(sensor->getInputs()[i]);
     }
