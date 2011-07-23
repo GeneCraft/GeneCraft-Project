@@ -9,20 +9,25 @@ namespace Ui {
     class ExperimentsPropertiesController;
 }
 
+
+namespace GeneLabCore {
+
 class ExperimentsPropertiesController : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    ExperimentsPropertiesController(GeneLabCore::Experiment *experiment, QWidget *parent = 0);
+    ExperimentsPropertiesController(QWidget *parent = 0);
     ~ExperimentsPropertiesController();
+
+    void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
 
     QVariantMap getWorldMap();
     QVariantMap getSeedMap();
 
 signals:
-    void experimentLoaded(GeneLabCore::Experiment *experiment);
+    void sLoadExperiment(Experiment *experiment);
 
 public slots:
     void setupForm();
@@ -83,5 +88,7 @@ private:
 
     GeneLabCore::RessourcesManager *localRessourceManager;
 };
+
+}
 
 #endif // EXPERIMENTSPROPERTIESCONTROLLER_H

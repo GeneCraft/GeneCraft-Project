@@ -36,6 +36,9 @@ signals:
     void sFixationUpdated(Fixation *fix);
     void sEntityUpdated(Entity * entity);
 
+    // experiment
+    void sLoadExperiment(Experiment *experiment);
+
 public slots:
 
     // selection
@@ -54,6 +57,9 @@ public slots:
     void boneUpdated(Bone * bone);
     void fixationUpdated(Fixation *fix);
     void entityUpdated(Entity * entity);
+
+    // experiment
+    void loadExperiment(Experiment *experiment);
 
 };
 

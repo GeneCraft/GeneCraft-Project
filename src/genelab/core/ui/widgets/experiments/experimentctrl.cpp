@@ -3,6 +3,7 @@
 #include "experiment/result.h"
 #include "tools.h"
 #include "ressourcesItems.h"
+#include "events/inspectorsinputmanager.h"
 
 namespace GeneLabCore {
 
@@ -13,24 +14,25 @@ namespace GeneLabCore {
         ui->setupUi(this);
         this->experiment = NULL;
         this->resultsManager = NULL;
+
+        epc = new ExperimentsPropertiesController();
+
+        // refresh events
         autorefresh = new QTimer();
         autorefresh->setInterval(1000);
         connect(autorefresh, SIGNAL(timeout()), this, SLOT(refresh()));
         connect(this->ui->checkBox, SIGNAL(stateChanged(int)), this, SLOT(toggleRefresh()));
+        connect(ui->pbRefresh,SIGNAL(clicked()),this,SLOT(refresh()));
+
+        connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
+
+        setEnabled(false);
     }
 
-    void ExperimentCtrl::setExperiment(Experiment* experiment) {
-        this->ui->lblId->setText(experiment->getId());
-        this->ui->lblAuthor->setText(experiment->getAuthor());
-        this->ui->lblDate->setText(experiment->getDateOfCreation().toString());
-        this->ui->lblDescription->setText(experiment->getDescription());
+    void ExperimentCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
 
-        this->oldResultsManager = resultsManager;
-        this->resultsManager    = new ResultsManager(experiment, 100, 100, "CreatureViewer");
-
-        loaded = false;
-        this->refresh();
-//        this->autorefresh->start();
+        epc->connectToInspectorInputManager(iim);
+        connect(iim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
     }
 
     void ExperimentCtrl::refresh() {
@@ -105,6 +107,34 @@ namespace GeneLabCore {
         if(this->ui->treeWidget->currentIndex().row() > -1) {
             Result* r = this->results[this->ui->treeWidget->currentIndex().row()];
             emit addEntity(r->getGenome().toMap(), NULL);
+        }
+    }
+
+    void ExperimentCtrl::openExperimentPropertiesController(){
+
+        epc->setExperiment(experiment);
+        epc->show();
+        epc->setFocus(Qt::MouseFocusReason);
+    }
+
+    void ExperimentCtrl::loadExperiment(Experiment *experiment) {
+
+        this->experiment = experiment;
+        setEnabled((bool)experiment);
+
+        if(experiment) {
+
+            this->ui->lblId->setText(experiment->getId());
+            this->ui->lblAuthor->setText(experiment->getAuthor());
+            this->ui->lblDate->setText(experiment->getDateOfCreation().toString());
+            this->ui->lblDescription->setText(experiment->getDescription());
+
+            this->oldResultsManager = resultsManager;
+            this->resultsManager    = new ResultsManager(experiment, 100, 100, "CreatureViewer");
+
+            loaded = false;
+            this->refresh();
+            // this->autorefresh->start();
         }
     }
 }

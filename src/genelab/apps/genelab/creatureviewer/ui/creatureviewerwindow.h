@@ -53,7 +53,6 @@ public slots:
     Entity *createCreature(QVariant genotype, btVector3 position, Ressource *ressource);
 
     void loadEntityFromFile();
-    void loadEntityFromDb();
     void saveEntityToFile();
     void saveEntityToDb();
     void removeEntity();
@@ -74,11 +73,10 @@ public slots:
 
     void addRandomEntity();
     void createMutationSample();
-    void openExperimentPropertiesController();
 
     // physics
     void togglePhysics();
-    void setExperiment(GeneLabCore::Experiment* experiment);
+    void setExperiment(Experiment* experiment);
 
     // Modes
     void switchToWelcomeMode();
@@ -125,7 +123,6 @@ private:
     WorkerCtrl* workerCtrl;
 
     Experiment *experiment;
-    ExperimentsPropertiesController *epc;
 
     CreatureViewerInputManager *cvim;
 

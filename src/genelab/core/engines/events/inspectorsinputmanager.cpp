@@ -49,4 +49,9 @@ void InspectorsInputManager::entityUpdated(Entity *entity){
     emit sEntityUpdated(entity);
 }
 
+// experiment
+void InspectorsInputManager::loadExperiment(Experiment *experiment){
+    emit sLoadExperiment(experiment);
+}
+
 }

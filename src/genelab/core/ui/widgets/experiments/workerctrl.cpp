@@ -8,6 +8,7 @@
 #include <QProcess>
 
 #include "ressources/jsonfile.h"
+#include "events/inspectorsinputmanager.h"
 
 namespace GeneLabCore {
 
@@ -18,6 +19,8 @@ namespace GeneLabCore {
         ui->setupUi(this);
         process = NULL;
         exp = NULL;
+
+        setEnabled(false);
     }
 
     WorkerCtrl::~WorkerCtrl()
@@ -29,9 +32,19 @@ namespace GeneLabCore {
         delete ui;
     }
 
+    void WorkerCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
+
+        connect(iim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
+    }
+
     void WorkerCtrl::setExperiment(Experiment *exp) {
         this->exp = exp;
-        this->ui->label->setText("Experiment : " + exp->getId());
+
+        setEnabled((bool)exp);
+
+        if(exp) {
+            this->ui->label->setText("Experiment : " + exp->getId());
+        }
     }
 
     void WorkerCtrl::on_btnStart_clicked()
@@ -76,6 +89,7 @@ namespace GeneLabCore {
         process->start(workerFileInfo.absoluteFilePath(), params);
         this->ui->btnStart->setText("Stop worker");
     }
+
     void WorkerCtrl::readyRead() {
         // Suppression au bout d'un moment
         // TODO : Remove static
@@ -84,7 +98,7 @@ namespace GeneLabCore {
         if(readyRead%200 == 0) {
             this->ui->txtOut->clear();
         }
-        // Ajout du text Ã  la sortie de la console
+        // Ajout du text Ã  la sortie de la console
         QString data = process->readAllStandardError();
         this->ui->txtOut->append(data.left(data.size()-1));
     }

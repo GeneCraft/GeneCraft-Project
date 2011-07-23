@@ -26,21 +26,23 @@
 
 // others
 #include "tools.h"
+#include "events/inspectorsinputmanager.h"
 
-using namespace GeneLabCore;
+
+namespace GeneLabCore {
 
 QList<QString> gravitiesName;
 QList<double> gravities;
 QList<QString> skyMaterials;
 
-ExperimentsPropertiesController::ExperimentsPropertiesController(Experiment *experiment, QWidget *parent) :
+ExperimentsPropertiesController::ExperimentsPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::ExperimentsPropertiesController)
 {
     ui->setupUi(this);
 
     setupForm();
 
-    setExperiment(experiment);
+    setExperiment(NULL);
 }
 
 void ExperimentsPropertiesController::setupForm() {
@@ -110,6 +112,12 @@ void ExperimentsPropertiesController::setupForm() {
     database.port = 80;
 
     localRessourceManager = new RessourcesManager(database,QDir("ressources"));
+}
+
+void ExperimentsPropertiesController::connectToInspectorInputManager(InspectorsInputManager * iim) {
+
+    connect(this,SIGNAL(sLoadExperiment(Experiment *)),iim,SLOT(loadExperiment(Experiment*)));
+
 }
 
 void ExperimentsPropertiesController::removeEntityFromSeed() {
@@ -189,134 +197,139 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
 
     this->experiment = experiment;
 
-    // -----------------
-    // -- information --
-    // -----------------
-    ui->lDateOfCreation->setText(experiment->getDateOfCreation().toString("yyyy-MM-dd hh:mm:ss"));
-    ui->leId->setText(experiment->getId());
-    ui->leDescription->setText(experiment->getDescription());
-    ui->leAuthor->setText(experiment->getAuthor());
-    ui->leComments->setText(experiment->getComments());
+    setEnabled((bool) experiment);
 
-    // ----------------
-    // -- simulation --
-    // ----------------
-    ui->leDuration->setText(QString::number(experiment->getDuration()));
-    ui->leTimeToWaitForStability->setText(QString::number(experiment->getTimeToWaitForStability()));
-    ui->cbOnlyIfEntityIsStable->setChecked(experiment->getOnlyIfEntityIsStable());
-    ui->cbStopIfEntityIsNotInOnePiece->setChecked(experiment->getStopIfEntityIsNotInOnePiece());
-    ui->teDieFunction->setText(Ressource::beautifullJson(experiment->getDieFunction()));
-    ui->teEndFunction->setText(Ressource::beautifullJson(experiment->getEndFunction()));
+    if(experiment) {
 
-    // ----------------
-    // -- evaluation --
-    // ----------------
-    ui->teValidateFunction->setText(Ressource::beautifullJson(experiment->getValidityFunction()));
-    ui->teFitnessFunction->setText(Ressource::beautifullJson(experiment->getEvalFunction()));
+        // -----------------
+        // -- information --
+        // -----------------
+        ui->lDateOfCreation->setText(experiment->getDateOfCreation().toString("yyyy-MM-dd hh:mm:ss"));
+        ui->leId->setText(experiment->getId());
+        ui->leDescription->setText(experiment->getDescription());
+        ui->leAuthor->setText(experiment->getAuthor());
+        ui->leComments->setText(experiment->getComments());
 
-    // ---------------
-    // -- mutations --
-    // ---------------
-    // clean mutations widgets
-    while(ui->vlBodyMutations->count() != 0) {
-        QWidget *w = ui->vlBodyMutations->itemAt(0)->widget();
-        ui->vlBodyMutations->removeWidget(w);
-        delete w;
-    }
-    while(ui->vlBrainMutations->count() != 0) {
-        QWidget *w = ui->vlBrainMutations->itemAt(0)->widget();
-        ui->vlBrainMutations->removeWidget(w);
-        delete w;
-    }
+        // ----------------
+        // -- simulation --
+        // ----------------
+        ui->leDuration->setText(QString::number(experiment->getDuration()));
+        ui->leTimeToWaitForStability->setText(QString::number(experiment->getTimeToWaitForStability()));
+        ui->cbOnlyIfEntityIsStable->setChecked(experiment->getOnlyIfEntityIsStable());
+        ui->cbStopIfEntityIsNotInOnePiece->setChecked(experiment->getStopIfEntityIsNotInOnePiece());
+        ui->teDieFunction->setText(Ressource::beautifullJson(experiment->getDieFunction()));
+        ui->teEndFunction->setText(Ressource::beautifullJson(experiment->getEndFunction()));
+
+        // ----------------
+        // -- evaluation --
+        // ----------------
+        ui->teValidateFunction->setText(Ressource::beautifullJson(experiment->getValidityFunction()));
+        ui->teFitnessFunction->setText(Ressource::beautifullJson(experiment->getEvalFunction()));
+
+        // ---------------
+        // -- mutations --
+        // ---------------
+        // clean mutations widgets
+        while(ui->vlBodyMutations->count() != 0) {
+            QWidget *w = ui->vlBodyMutations->itemAt(0)->widget();
+            ui->vlBodyMutations->removeWidget(w);
+            delete w;
+        }
+        while(ui->vlBrainMutations->count() != 0) {
+            QWidget *w = ui->vlBrainMutations->itemAt(0)->widget();
+            ui->vlBrainMutations->removeWidget(w);
+            delete w;
+        }
 
 
-    // -- Create mutations widgets --
-    MutationsManager *mutationsManager = experiment->getMutationsManager();
+        // -- Create mutations widgets --
+        MutationsManager *mutationsManager = experiment->getMutationsManager();
 
-    // bone
-    boneLengthMutation = new FloatMutationController(mutationsManager->boneLength,"Bones Length");
-    boneRadiusMutation = new FloatMutationController(mutationsManager->boneRadius,"Bones Radius");
-    boneAngularOrigin = new FloatMutationController(mutationsManager->boneAngularOrigin,"Bones angular origin");
-    boneAngularLimitsMutation = new FloatMutationController(mutationsManager->boneAngularLimits->axisMutation,"Bones angular limits");
-    bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
+        // bone
+        boneLengthMutation = new FloatMutationController(mutationsManager->boneLength,"Bones Length");
+        boneRadiusMutation = new FloatMutationController(mutationsManager->boneRadius,"Bones Radius");
+        boneAngularOrigin = new FloatMutationController(mutationsManager->boneAngularOrigin,"Bones angular origin");
+        boneAngularLimitsMutation = new FloatMutationController(mutationsManager->boneAngularLimits->axisMutation,"Bones angular limits");
+        bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
 
-    // fixation
-    fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
+        // fixation
+        fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
 
-    // snesors & effectors
-    sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorsStructuralList);
-    effectorsStructuralMutation = new StructuralMutationController(mutationsManager->effectorsStructural,"Effectors Structural", mutationsManager->effectorsStructuralList);
+        // snesors & effectors
+        sensorsStructuralMutation = new StructuralMutationController(mutationsManager->sensorsStructural,"Sensors Structural", mutationsManager->sensorsStructuralList);
+        effectorsStructuralMutation = new StructuralMutationController(mutationsManager->effectorsStructural,"Effectors Structural", mutationsManager->effectorsStructuralList);
 
-    // brain
-    brainDistance = new FloatMutationController(mutationsManager->brainDistance,"Input propagation");
-    brainInPos = new FloatMutationController(mutationsManager->brainInPos,"BrainIn Position");
-    brainInWeight = new FloatMutationController(mutationsManager->brainWeight,"BrainIn Weight");
-    brainMemorySize = new IntegerMutationController(mutationsManager->brainMemorySize,"Brain Mermory Size");
-    brainFrequency = new IntegerMutationController(mutationsManager->brainFrequency,"Brain Frequency");
-    constValue = new FloatMutationController(mutationsManager->constValue,"Constant Value");
-    brainStructuralMutation = new StructuralMutationController(mutationsManager->brainStructural, "Brain Structural", mutationsManager->brainNodeList);
+        // brain
+        brainDistance = new FloatMutationController(mutationsManager->brainDistance,"Input propagation");
+        brainInPos = new FloatMutationController(mutationsManager->brainInPos,"BrainIn Position");
+        brainInWeight = new FloatMutationController(mutationsManager->brainWeight,"BrainIn Weight");
+        brainMemorySize = new IntegerMutationController(mutationsManager->brainMemorySize,"Brain Mermory Size");
+        brainFrequency = new IntegerMutationController(mutationsManager->brainFrequency,"Brain Frequency");
+        constValue = new FloatMutationController(mutationsManager->constValue,"Constant Value");
+        brainStructuralMutation = new StructuralMutationController(mutationsManager->brainStructural, "Brain Structural", mutationsManager->brainNodeList);
 
-    // -- Add mutations widgets --
-    ui->vlBodyMutations->addWidget(boneLengthMutation);
-    ui->vlBodyMutations->addWidget(boneRadiusMutation);
-    ui->vlBodyMutations->addWidget(boneAngularOrigin);
-    ui->vlBodyMutations->addWidget(boneAngularLimitsMutation);
-    ui->vlBodyMutations->addWidget(bonesStructuralMutation);
+        // -- Add mutations widgets --
+        ui->vlBodyMutations->addWidget(boneLengthMutation);
+        ui->vlBodyMutations->addWidget(boneRadiusMutation);
+        ui->vlBodyMutations->addWidget(boneAngularOrigin);
+        ui->vlBodyMutations->addWidget(boneAngularLimitsMutation);
+        ui->vlBodyMutations->addWidget(bonesStructuralMutation);
 
-    ui->vlBodyMutations->addWidget(fixationRadiusMutation);
+        ui->vlBodyMutations->addWidget(fixationRadiusMutation);
 
-    ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
-    ui->vlBodyMutations->addWidget(effectorsStructuralMutation);
+        ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
+        ui->vlBodyMutations->addWidget(effectorsStructuralMutation);
 
-    ui->vlBrainMutations->addWidget(brainDistance);
-    ui->vlBrainMutations->addWidget(brainInPos);
-    ui->vlBrainMutations->addWidget(brainInWeight);
-    ui->vlBrainMutations->addWidget(brainMemorySize);
-    ui->vlBrainMutations->addWidget(brainFrequency);
-    ui->vlBrainMutations->addWidget(constValue);
-    ui->vlBrainMutations->addWidget(brainStructuralMutation);
+        ui->vlBrainMutations->addWidget(brainDistance);
+        ui->vlBrainMutations->addWidget(brainInPos);
+        ui->vlBrainMutations->addWidget(brainInWeight);
+        ui->vlBrainMutations->addWidget(brainMemorySize);
+        ui->vlBrainMutations->addWidget(brainFrequency);
+        ui->vlBrainMutations->addWidget(constValue);
+        ui->vlBrainMutations->addWidget(brainStructuralMutation);
 
-    // -----------
-    // -- world --
-    // -----------
-    setWorld(experiment->getWorldDataMap());
+        // -----------
+        // -- world --
+        // -----------
+        setWorld(experiment->getWorldDataMap());
 
-    // -----------
-    // -- seeds --
-    // -----------
+        // -----------
+        // -- seeds --
+        // -----------
 
-    // clear lists
-    Tools::clearTreeWidget(this->ui->twEntitiesAvailable);
-    Tools::clearTreeWidget(this->ui->twEntitiesSelected);
+        // clear lists
+        Tools::clearTreeWidget(this->ui->twEntitiesAvailable);
+        Tools::clearTreeWidget(this->ui->twEntitiesSelected);
 
-    // available genomes
-    localRessourceManager->reloadDir();
-    foreach(DataWrapper entity, localRessourceManager->getCreatures())
-        ui->twEntitiesAvailable->insertTopLevelItem(0,new EntityTreeWidgetItem(entity));
+        // available genomes
+        localRessourceManager->reloadDir();
+        foreach(DataWrapper entity, localRessourceManager->getCreatures())
+            ui->twEntitiesAvailable->insertTopLevelItem(0,new EntityTreeWidgetItem(entity));
 
-    // default check in QtCreator, check false to emit toggle and disable others...
-    ui->gbFixedGenomes->setChecked(false);
+        // default check in QtCreator, check false to emit toggle and disable others...
+        ui->gbFixedGenomes->setChecked(false);
 
-    QVariantMap seedsMap = experiment->getSeedInfo();
-    QString seedType = seedsMap["type"].toString();
-    if(seedType == "family") {
+        QVariantMap seedsMap = experiment->getSeedInfo();
+        QString seedType = seedsMap["type"].toString();
+        if(seedType == "family") {
 
-        ui->gbFamily->setChecked(true);
-        QString family = seedsMap["family"].toString();
+            ui->gbFamily->setChecked(true);
+            QString family = seedsMap["family"].toString();
 
-        for(int i=0;i < ui->cbFamily->count();++i)
-            if(family == ui->cbFamily->itemText(i).toLower())
-                ui->cbFamily->setCurrentIndex(i);
+            for(int i=0;i < ui->cbFamily->count();++i)
+                if(family == ui->cbFamily->itemText(i).toLower())
+                    ui->cbFamily->setCurrentIndex(i);
 
-    } else if(seedType == "fixedGenomes") {
+        } else if(seedType == "fixedGenomes") {
 
-        ui->gbFixedGenomes->setChecked(true);
-        if(seedsMap.contains("genomes"))
-        {
-            QVariantList genomesList = seedsMap["genomes"].toList();
+            ui->gbFixedGenomes->setChecked(true);
+            if(seedsMap.contains("genomes"))
+            {
+                QVariantList genomesList = seedsMap["genomes"].toList();
 
-            foreach(QVariant genome, genomesList)
-                ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(genome.toMap()));
+                foreach(QVariant genome, genomesList)
+                    ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(genome.toMap()));
+            }
         }
     }
 }
@@ -391,7 +404,7 @@ void ExperimentsPropertiesController::save() {
         }
     }
 
-    emit experimentLoaded(experiment);
+    emit sLoadExperiment(experiment);
 }
 
 void ExperimentsPropertiesController::saveExpToFile() {
@@ -547,7 +560,7 @@ void ExperimentsPropertiesController::loadExpFromFile() {
         Experiment *experiment = new Experiment(expData);
         experiment->setRessource(from);
         setExperiment(experiment);
-        emit experimentLoaded(experiment);
+        //emit sLoadExperiment(experiment);
     }
 }
 
@@ -606,6 +619,8 @@ void ExperimentsPropertiesController::gbFixedGenomes(bool checked) {
     disconnect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
     ui->gbFamily->setChecked(!checked);
     connect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
+
+}
 
 }
 

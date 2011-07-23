@@ -11,8 +11,9 @@
 #include "tools.h"
 #include "creaturefactory.h"
 #include "ressources/jsonfile.h"
+#include "events/inspectorsinputmanager.h"
 
-using namespace GeneLabCore;
+namespace GeneLabCore {
 
 RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     QWidget(parent),
@@ -56,6 +57,10 @@ RessourcesBrowser::~RessourcesBrowser()
     delete ui;
 }
 
+void RessourcesBrowser::connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim) {
+    connect(this,SIGNAL(loadExperiment(Experiment*)),iim,SLOT(loadExperiment(Experiment*)));
+}
+
 void RessourcesBrowser::refreshLocalRessources() {
     localRessourceManager->reloadDir();
 
@@ -95,7 +100,7 @@ void RessourcesBrowser::loadLocalExperiment() {
         Experiment* e = new Experiment(expTWI->dataw.data);
         e->setOnline(false); // Local experimentation
         e->setRessource(expTWI->dataw.r);
-        emit setExperiment(e);
+        emit loadExperiment(e);
     }
 }
 
@@ -105,7 +110,7 @@ void RessourcesBrowser::loadOnlineExperiment() {
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
         Experiment* e = new Experiment(expTWI->dataw.data);
         e->setOnline(true); // Online experimentation
-        emit setExperiment(e);
+        emit loadExperiment(e);
     }
 }
 
@@ -234,4 +239,6 @@ void RessourcesBrowser::on_pbShareEntity_clicked()
         }
 
     }
+}
+
 }

@@ -80,7 +80,7 @@ using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CreatureViewer), selectedEntity(NULL), selectedBone(NULL), selectedFix(NULL), epc(NULL)
+    ui(new Ui::CreatureViewer), selectedEntity(NULL), selectedBone(NULL), selectedFix(NULL)
 {
     ui->setupUi(this);
     init();
@@ -121,9 +121,9 @@ void CreatureViewerWindow::init() {
         this->ui->aEnterInWhatsThisMode->setEnabled(false);
     #endif
 
-    // --------------
+    // -------------------
     // -- Mode Tool bar --
-    // --------------
+    // -------------------
 
     QToolBar *tb = new QToolBar(this);
     addToolBar(Qt::LeftToolBarArea, tb);
@@ -147,27 +147,23 @@ void CreatureViewerWindow::init() {
     // create actions & add to bar
     QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString(tr("New creature")));
     QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString(tr("Add creature")));
-    QAction *aAddCreatureFromBdd = ui->toolBar->addAction(QIcon(":img/icons/entity_add_from_bdd"),QString(tr("Add creature from database")));
-    QAction *aAddRandomCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_add_random"),QString(tr("Add random creature")));
-    ui->toolBar->addSeparator();
     QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString(tr("Save creature")));
+
     ui->toolBar->addSeparator();
     QAction *aRemoveCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete"),QString(tr("Remove creature")));
     QAction *aRemoveAllCreatures =  ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all"),QString(tr("Remove all creatures")));
     QAction *aRemoveAllCreaturesExceptSelected = ui->toolBar->addAction(QIcon(":img/icons/entity_delete_all_except_one"),QString(tr("Remove all creatures except that selected")));
 
-
     ui->toolBar->addSeparator();
+    QAction *aAddRandomCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_add_random"),QString(tr("Add random creature")));
     QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
-    QAction *aEditExperiment =  ui->toolBar->addAction(QIcon(":img/icons/report"),QString(tr("Edit current experiment")));
+
     ui->toolBar->addSeparator();
-
     QAction *aFollowCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_follow"),QString(tr("Follow selected creature")));
-
-
 
     // step manager
     //ui->toolBar->addWidget(new QLabel(tr("Step manager :"));
+    ui->toolBar->addSeparator();
     aTogglePhysics = ui->toolBar->addAction(QIcon(":img/icons/bullet_physics_library_stop"),QString(tr("Toggle physics")));
     QSlider *sPhysicStep = new QSlider();
     sPhysicStep->setToolTip(tr("Physical steps by sec. [1..1000]"));
@@ -182,19 +178,16 @@ void CreatureViewerWindow::init() {
     // connections
     connect(aNewCreature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(aAddCreature,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
-    connect(aAddCreatureFromBdd,SIGNAL(triggered()),this,SLOT(loadEntityFromDb()));
-    connect(aAddRandomCreature,SIGNAL(triggered()),this,SLOT(addRandomEntity()));
     connect(aSaveCreature,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
+
     connect(aRemoveCreature,SIGNAL(triggered()),this,SLOT(removeEntity()));
     connect(aRemoveAllCreatures,SIGNAL(triggered()),this,SLOT(removeAllEntities()));
     connect(aRemoveAllCreaturesExceptSelected,SIGNAL(triggered()),this,SLOT(removeAllEntitiesExceptSelected()));
 
-    connect(aFollowCreature,SIGNAL(triggered()),this,SLOT(followSelectedEntity()));
-
+    connect(aAddRandomCreature,SIGNAL(triggered()),this,SLOT(addRandomEntity()));
     connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
-    connect(aEditExperiment,SIGNAL(triggered()),this,SLOT(openExperimentPropertiesController()));
 
-
+    connect(aFollowCreature,SIGNAL(triggered()),this,SLOT(followSelectedEntity()));
 
     // -----------
     // -- Docks --
@@ -280,11 +273,22 @@ void CreatureViewerWindow::init() {
     statsPropertiesController->connectToInspectorInputManager(cvim);
 
     // Ressources browser
-    ressourcesBrowser = new RessourcesBrowser();
+    ressourcesBrowser = new GeneLabCore::RessourcesBrowser();
     ui->dwRessourcesBrowser->setWidget(ressourcesBrowser);
-    connect(ressourcesBrowser, SIGNAL(setExperiment(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
+    ressourcesBrowser->connectToInspectorInputManager(cvim);
+
+    //connect(ressourcesBrowser, SIGNAL(setExperiment(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
     connect(ressourcesBrowser, SIGNAL(addEntity(QVariantMap,GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap, GeneLabCore::Ressource*)));
     //ressourcesBrowser->connectToInspectorInputManager(cvim)
+
+    workerCtrl = new WorkerCtrl();
+    this->ui->dwWorker->setWidget(workerCtrl);
+    workerCtrl->connectToInspectorInputManager(cvim);
+
+    expCtrl    = new ExperimentCtrl();
+    this->ui->dwExperiment->setWidget(expCtrl);
+    expCtrl->connectToInspectorInputManager(cvim);
+    connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap,GeneLabCore::Ressource*)));
 
     // ----------------------------------
     // -- Connections to input manager --
@@ -297,7 +301,7 @@ void CreatureViewerWindow::init() {
     connect(cvim,SIGNAL(sFixationDeleted(Fixation*)),this,SLOT(fixationDeleted(Fixation*)),Qt::DirectConnection);
     connect(cvim,SIGNAL(sBoneSelected(Bone*)),this,SLOT(boneSelected(Bone*)));
     connect(cvim,SIGNAL(sFixationSelected(Fixation*)),this,SLOT(fixationSelected(Fixation*)));
-
+    connect(cvim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
 
     qDebug() << "Start simulation";
     simulationManager->start();
@@ -324,27 +328,8 @@ void CreatureViewerWindow::init() {
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
-    workerCtrl = new WorkerCtrl();
-    this->ui->dwWorker->setWidget(workerCtrl);
-    expCtrl    = new ExperimentCtrl();
-    connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap,GeneLabCore::Ressource*)));
-    this->ui->dwExperiment->setWidget(expCtrl);
-
 
     switchToWelcomeMode();
-}
-
-void CreatureViewerWindow::openExperimentPropertiesController(){
-
-    if(epc == NULL) {
-        epc = new ExperimentsPropertiesController(experiment);
-        connect(epc, SIGNAL(experimentLoaded(GeneLabCore::Experiment*)), this, SLOT(setExperiment(GeneLabCore::Experiment*)));
-    }
-    else
-       epc->setExperiment(experiment);
-
-    epc->show();
-    epc->setFocus(Qt::MouseFocusReason);
 }
 
 void CreatureViewerWindow::setExperiment(Experiment* experiment)
@@ -380,46 +365,10 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // --------------------------
     world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
     cvim->setWorld(world);
-    expCtrl->setExperiment(experiment);
-    workerCtrl->setExperiment(experiment);
 
-}
-
-void CreatureViewerWindow::loadEntityFromDb() {
-    QString id = QInputDialog::getText(this, "Loading from database genecraft-project", "Please, enter the creature id");
-    Ressource* r = new DbRecord(this->base, id);
-    QVariant genotype = r->load();
-
-    QVariantMap data = genotype.toMap();
-    if(data.contains("error")) {
-
-        QMessageBox msg;
-        msg.setDetailedText(data["error"].toString());
-        msg.setText("this creature didn't exist in the database, please check your internet connexion and the creature id.");
-        msg.setIcon(QMessageBox::Critical);
-        msg.setWindowTitle("Loading from database genecraft-project");
-        msg.exec();
-        return;
-    }
-
-    // get initial position
-    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
-    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
-    Ogre::Vector3 initOgrePosition = camera->getPosition() + camera->getDirection() * 10;
-    btVector3 initPosition(btScalar(initOgrePosition.x),btScalar(initOgrePosition.y),btScalar(initOgrePosition.z));
-
-    Entity *e = CreatureFactory::createEntity(genotype, shapesFactory, initPosition);
-
-    if(e == NULL) {
-        QMessageBox::warning(this, "Impossible to load entity",
-"Entity could not be created, maybe version of genotype don't match. Please update your client.");
-        return;
-    }
-
-    e->setup();
-    e->setRessource(r);
-    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
-    entitiesEngine->addEntity(e);
+    // receive by inspector manager
+    //expCtrl->setExperiment(experiment);
+    //workerCtrl->setExperiment(experiment);
 }
 
 void CreatureViewerWindow::saveEntityToDb() {

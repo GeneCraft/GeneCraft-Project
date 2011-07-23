@@ -10,6 +10,8 @@ namespace Ui {
     class RessourcesBrowser;
 }
 
+namespace GeneLabCore {
+
 class RessourcesBrowser : public QWidget
 {
     Q_OBJECT
@@ -18,9 +20,11 @@ public:
     explicit RessourcesBrowser(QWidget *parent = 0);
     ~RessourcesBrowser();
 
+    void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
+
 signals:
 
-    void setExperiment(GeneLabCore::Experiment *);
+    void loadExperiment(Experiment *);
     void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
 
 public slots:
@@ -53,4 +57,5 @@ private slots:
     void on_pushButton_clicked();
 };
 
+}
 #endif // RESSOURCESBROWSER_H

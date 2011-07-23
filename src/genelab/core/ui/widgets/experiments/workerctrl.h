@@ -20,8 +20,10 @@ public:
     explicit WorkerCtrl(QWidget *parent = 0);
     ~WorkerCtrl();
 
+    void connectToInspectorInputManager(InspectorsInputManager * iim);
+
 public slots:
-    void setExperiment(GeneLabCore::Experiment* exp);
+    void setExperiment(Experiment* exp);
 
 private:
     Ui::WorkerCtrl *ui;
