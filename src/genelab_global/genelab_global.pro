@@ -343,4 +343,4 @@ FORMS += \
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc
 
-OTHER_FILES +=
+TRANSLATIONS = genelab_global_fr.ts
