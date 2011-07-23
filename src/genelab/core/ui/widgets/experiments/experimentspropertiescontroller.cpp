@@ -399,7 +399,7 @@ void ExperimentsPropertiesController::saveExpToFile() {
     updateStructures();
 
     // To new file
-    const QString DEFAULT_DIR_KEY("default_dir");
+    const QString DEFAULT_DIR_KEY("RESSOURCES_FOLDER");
     QSettings mySettings;
     QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Experiment (*.exp)");
 
@@ -553,7 +553,7 @@ void ExperimentsPropertiesController::loadExpFromFile() {
 
 void ExperimentsPropertiesController::loadWorldFromFile() {
 
-    const QString DEFAULT_DIR_KEY("default_dir");
+    const QString DEFAULT_DIR_KEY("RESSOURCES_FOLDER");
     QSettings mySettings;
     QString selectedFile = QFileDialog::getOpenFileName(this, "Select a world", mySettings.value(DEFAULT_DIR_KEY).toString(),"World (*.world)");
 
@@ -571,7 +571,7 @@ void ExperimentsPropertiesController::loadWorldFromFile() {
 void ExperimentsPropertiesController::saveWorldToFile() {
 
     // To new file
-    const QString DEFAULT_DIR_KEY("default_dir");
+    const QString DEFAULT_DIR_KEY("RESSOURCES_FOLDER");
     QSettings mySettings;
     QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", mySettings.value(DEFAULT_DIR_KEY).toString(),"World (*.world)");
 

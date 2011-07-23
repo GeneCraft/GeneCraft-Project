@@ -1,6 +1,8 @@
 #include "experimentctrl.h"
 #include "ui_experimentctrl.h"
 #include "experiment/result.h"
+#include "tools.h"
+#include "ressourcesItems.h"
 
 namespace GeneLabCore {
 
@@ -53,15 +55,31 @@ namespace GeneLabCore {
     void ExperimentCtrl::refreshUI() {
         this->ui->lblDb->setText("");
         results = resultsManager->getBestResults();
-        this->ui->treeWidget->clear();
 
+        // save the selected result
+        Result *selectedResult = NULL;
+        if(ui->treeWidget->currentItem())
+            selectedResult = ((ResultTreeWidgetItem *) ui->treeWidget->currentItem())->r;
+
+        // clear
+        Tools::clearTreeWidget(this->ui->treeWidget);
+
+        // fill
         foreach(Result* r, results) {
-            QTreeWidgetItem* item = new QTreeWidgetItem();
-            item->setText(0, QString::number(r->getFitness(), 10, 2));
-            item->setText(1, r->getWorker());
-            item->setText(2, r->getDate());
-
+            ResultTreeWidgetItem * item = new ResultTreeWidgetItem(r);
             this->ui->treeWidget->addTopLevelItem(item);
+        }
+
+        // select previous selected item
+        if(selectedResult) {
+            int nbItems = ui->treeWidget->topLevelItemCount();
+            for(int i=0;i<nbItems; ++i) {
+               ResultTreeWidgetItem *item = (ResultTreeWidgetItem *) ui->treeWidget->topLevelItem(i);
+               if(selectedResult == item->r) {
+                    ui->treeWidget->setCurrentItem(item,0);
+                    return;
+               }
+            }
         }
     }
 

@@ -6,6 +6,7 @@
 #include <QTableWidgetItem>
 #include <QVariantMap>
 #include <ressources/ressourcesmanager.h>
+#include "result.h"
 
 namespace GeneLabCore{
 
@@ -25,6 +26,23 @@ public:
     }
 
     DataWrapper dataw;
+};
+
+
+class ResultTreeWidgetItem : public QTreeWidgetItem
+{
+public:
+
+    ResultTreeWidgetItem(Result *r)
+    {
+        this->r = r;
+
+        setText(0, QString::number(r->getFitness(), 10, 2));
+        setText(1, r->getWorker());
+        setText(2, r->getDate());
+    }
+
+    Result * r;
 };
 
 class EntityTreeWidgetItem : public QTreeWidgetItem

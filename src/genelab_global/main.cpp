@@ -68,16 +68,6 @@ int main(int argc, char *argv[])
     // create application
     a = new QApplication(argc, argv);
 
-    // First launch
-    QSettings mySettings;
-    if(!mySettings.contains(NB_LAUNCHES_SETTING_KEY)) {
-        mySettings.setValue(NB_LAUNCHES_SETTING_KEY, 1);
-        mySettings.setValue(RESSOURCES_FOLDER_SETTING_KEY, "ressources");
-    }
-    else {
-        mySettings.setValue(NB_LAUNCHES_SETTING_KEY, mySettings.value(NB_LAUNCHES_SETTING_KEY).toInt() + 1);
-    }
-
     // shpow splash
     QPixmap pixmap(":img/logos/splash");
     QSplashScreen splash(pixmap);
@@ -92,6 +82,22 @@ int main(int argc, char *argv[])
     // shows
     cw.showMaximized();
     splash.finish(&cw);
+
+
+    // DOESN'T WORK ?!?
+    // First launch
+    QSettings mySettings;
+    //mySettings.remove(NB_LAUNCHES_SETTING_KEY);
+    if(!mySettings.contains(NB_LAUNCHES_SETTING_KEY)) {
+        mySettings.setValue(NB_LAUNCHES_SETTING_KEY, 1);
+        mySettings.setValue(RESSOURCES_FOLDER_SETTING_KEY, "ressources");
+    }
+    else {
+        mySettings.setValue(NB_LAUNCHES_SETTING_KEY, mySettings.value(NB_LAUNCHES_SETTING_KEY).toInt() + 1);
+    }
+    qDebug() << "#launch : " <<  mySettings.value(NB_LAUNCHES_SETTING_KEY).toInt();
+    qDebug() << "ressources folder : " <<  mySettings.value(RESSOURCES_FOLDER_SETTING_KEY).toString();
+
 
     return a->exec();
 }
