@@ -41,7 +41,7 @@ material GeneLab/Fixation
             texture_unit
             {
 				texture fixation.jpg
-				env_map spherical
+				#env_map spherical
             }
         }
     }
