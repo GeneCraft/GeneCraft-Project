@@ -376,6 +376,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
     cvim->setWorld(world);
     expCtrl->setExperiment(experiment);
+    workerCtrl->setExperiment(experiment);
 
 }
 

@@ -47,6 +47,9 @@ using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
 {
+    char newPath[500];
+    getcwd(newPath, 500);
+    qDebug() << "Current Path: " << newPath;
     qsrand(time(NULL));
     srand(time(NULL));
     bool gui = false;
@@ -70,6 +73,7 @@ int main(int argc, char *argv[])
     QVariant workerData;
     QVariant expdata;
 
+    bool online = false;
     // One argument, the experience (id or file)
     if(args.length() > 1) {
         expName = args.at(1);
@@ -84,6 +88,7 @@ int main(int argc, char *argv[])
 
         if(expdata == QVariant()) {
             qDebug() << expName << "not found in file system, looking online";
+            online = true;
             Ressource* experience_db = new DbRecord(database, expName);
             expdata = experience_db->load();
         }
@@ -102,6 +107,10 @@ int main(int argc, char *argv[])
         qDebug() << expName << "does not contains experiment data. It should by an experiment file name or online db id.";
         return -1;
     }
+
+
+    Experiment* exp           = new Experiment(expdata);
+    exp->setOnline(online);
 
     // Two argument, the experience and the worker data
     if(args.length() > 2) {
@@ -164,7 +173,6 @@ int main(int argc, char *argv[])
     //QVariant workerdata = worker_res->load();
 
 
-    Experiment* exp           = new Experiment(expdata);
     ExperimentManager* expMan = new ExperimentManager(factory, exp, workerData);
 
     /**/

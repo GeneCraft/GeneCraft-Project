@@ -27,9 +27,8 @@ namespace GeneLabCore {
         this->resultsManager    = new ResultsManager(experiment, 100, 100, "CreatureViewer");
 
         loaded = false;
-
-        this->ui->checkBox->setChecked(true);
-        this->autorefresh->start();
+        this->refresh();
+//        this->autorefresh->start();
     }
 
     void ExperimentCtrl::refresh() {
