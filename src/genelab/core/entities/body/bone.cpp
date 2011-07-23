@@ -32,7 +32,7 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
     : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL)
 {
 
-    motorModifierData = QVariant(0);
+    motorModifierData = QVariant();
     parentCt = 0;
     body         = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
     rigidBody    = body->getRigidBody();
@@ -96,9 +96,17 @@ void Bone::setup()
             motor->m_damping = 0.5;
         }
 
+
         // add motor modifier
-        if(motorModifierData != QVariant())
+        if(motorModifierData != QVariant()) {
+            QVariantMap motor = motorModifierData.toMap();
+            if(!motor.contains("typename")) {
+                motor.insert("typename", "Rotational Motor");
+                motor.insert("type", (int)rotationalMotorEffector);
+            }
+
             motorsEffector = new RotationalMotorsEffector(motorModifierData, this, parentCt);
+        }
         else
             motorsEffector = new RotationalMotorsEffector(this, parentCt);
 
