@@ -40,6 +40,7 @@ namespace GeneLabCore {
         void toggleRefresh();
         void refreshInProgress();
         void openExperimentPropertiesController();
+        void newExperiment();
 
     private:
         Ui::ExperimentCtrl *ui;

@@ -11,8 +11,8 @@ namespace GeneLabCore {
 
 enum NodeType {
     // Input
-    IN,
-    CONST,
+    INPUT,
+    CONSTANT,
 
     // 2 operands
     SUM,
@@ -73,7 +73,7 @@ protected:
 class BrainNodeIn : public BrainNode {
 
 public:
-    explicit BrainNodeIn(float x, float y) : BrainNode(IN) {
+    explicit BrainNodeIn(float x, float y) : BrainNode(INPUT) {
         this->x = x;
         this->y = y;
     }
@@ -85,7 +85,7 @@ public:
 class BrainNodeConst : public BrainNode {
 
 public:
-    explicit BrainNodeConst(float constant) : BrainNode(CONST) {
+    explicit BrainNodeConst(float constant) : BrainNode(CONSTANT) {
         this->value = constant;
     }
 

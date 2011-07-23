@@ -39,6 +39,9 @@ public:
     ~CreatureViewerWindow();
 
     btVector3 getCameraPosition();
+signals:
+
+    void sLoadExperiment(Experiment*);
 
 public slots:
 

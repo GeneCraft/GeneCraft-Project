@@ -25,6 +25,7 @@ namespace GeneLabCore {
         connect(ui->pbRefresh,SIGNAL(clicked()),this,SLOT(refresh()));
 
         connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
+        connect(ui->pbNewExperiment,SIGNAL(clicked()),this,SLOT(newExperiment()));
 
         setEnabled(false);
     }
@@ -136,5 +137,12 @@ namespace GeneLabCore {
             this->refresh();
             // this->autorefresh->start();
         }
+    }
+
+    void ExperimentCtrl::newExperiment() {
+
+        epc->setExperiment(new Experiment());
+        epc->show();
+        epc->setFocus(Qt::MouseFocusReason);
     }
 }

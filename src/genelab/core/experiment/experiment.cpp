@@ -11,9 +11,9 @@ namespace GeneLabCore {
 Experiment::Experiment() : ressource(NULL){
 
         // information
-        id = "NoId";
-        description = "";
-        author = "";
+        id = "aNewExp";
+        description = "No description";
+        author = "You certainly";
         comments = "";
         dateOfCreation = QDateTime::currentDateTime();
         online = false;

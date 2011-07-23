@@ -92,8 +92,8 @@ void CreatureViewerWindow::init() {
     // -- Essential instances --
     // -------------------------
     factory = new btoFactory(this->ui->centralwidget, (unsigned long) this->winId() );
-    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngines().find("BulletOgre").value());
-    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
     shapesFactory   = new btoShapesFactory(btoEngine);
     creatureFactory = new CreatureFactory();
     experiment      = new Experiment();
@@ -296,13 +296,18 @@ void CreatureViewerWindow::init() {
     connect(cvim,SIGNAL(sBoneSelected(Bone*)),this,SLOT(boneSelected(Bone*)));
     connect(cvim,SIGNAL(sFixationSelected(Fixation*)),this,SLOT(fixationSelected(Fixation*)));
     connect(cvim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
+    connect(this,SIGNAL(sLoadExperiment(Experiment*)),cvim,SLOT(loadExperiment(Experiment*)));
+    emit sLoadExperiment(experiment);
+
+
+    // --------------
+    // -- Starting --
+    // --------------
 
     qDebug() << "Start simulation";
     simulationManager->start();
-
     connect(sPhysicStep,SIGNAL(valueChanged(int)),this->simulationManager,SLOT(setPhysicsFreq(int)));
     connect(aTogglePhysics,SIGNAL(triggered()),this,SLOT(togglePhysics()));
-
     qDebug() << "[OK]\n";
 
     cvim->setWorld(world);

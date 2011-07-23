@@ -28,7 +28,6 @@
 #include "tools.h"
 #include "events/inspectorsinputmanager.h"
 
-
 namespace GeneLabCore {
 
 QList<QString> gravitiesName;
@@ -51,6 +50,7 @@ void ExperimentsPropertiesController::setupForm() {
     // -- connexions --
     // ----------------
     connect(ui->pbSave,SIGNAL(clicked()),this,SLOT(save()));
+    connect(ui->pbSaveAndReload,SIGNAL(clicked()),this,SLOT(saveAndReload()));
     connect(ui->pbClose,SIGNAL(clicked()),this,SLOT(close()));
     connect(ui->pbHelp,SIGNAL(clicked()),this,SLOT(enterInWhatsThisMode()));
 
@@ -75,6 +75,7 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbRefreshRessources,SIGNAL(clicked()),this,SLOT(refreshRessources()));
     connect(ui->pbAddFromGenome,SIGNAL(clicked()),this,SLOT(addFromGenome()));
 
+    connect(ui->pbTakeFromCamera,SIGNAL(clicked()),this,SLOT(takeFromCamera()));
 
     // -----------
     // -- world --
@@ -387,9 +388,9 @@ ExperimentsPropertiesController::~ExperimentsPropertiesController() {
 
 void ExperimentsPropertiesController::save() {
 
-    updateStructures();
-
     if(experiment->hasRessource()) {
+
+        updateStructures();
 
         // To exp ressource
         Ressource* to = experiment->getRessource();
@@ -402,7 +403,14 @@ void ExperimentsPropertiesController::save() {
 
             experiment->setRessource(NULL);
         }
+    } else {
+        saveExpToFile();
     }
+}
+
+void ExperimentsPropertiesController::saveAndReload() {
+
+    save();
 
     emit sLoadExperiment(experiment);
 }
@@ -620,6 +628,16 @@ void ExperimentsPropertiesController::gbFixedGenomes(bool checked) {
     ui->gbFamily->setChecked(!checked);
     connect(ui->gbFamily,SIGNAL(toggled(bool)),this,SLOT(gbFamilyToggled(bool)));
 
+}
+
+void ExperimentsPropertiesController::takeFromCamera() {
+
+    // TODO need factory...
+    // get camera position
+//    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+//    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
+//    Ogre::Vector3 position = camera->getPosition();
+//    Ogre::Vector3 target = camera->getPosition() + camera->getDirection() * 10;
 }
 
 }

@@ -80,14 +80,14 @@ float sigmoid(float x)
             case SIGM:
                 tree.append(new BrainNode(t));
                 break;
-            case IN:
+            case INPUT:
                 {
                     BrainNodeIn* in =  new BrainNodeIn(nodePart[1].toFloat(), nodePart[2].toFloat());
                     tree.append(in);
                     this->brainins.append(in); // display purpose
                 }
                 break;
-            case CONST:
+            case CONSTANT:
                 tree.append(new BrainNodeConst(nodePart[1].toFloat()));
                 break;
             case INTEGRATE:
@@ -256,11 +256,11 @@ float sigmoid(float x)
         case SIGM:
             return sigmoid(apply(it, end));
 
-        case IN: {
+        case INPUT: {
             float v = plugGrid->getValue(((BrainNodeIn*)n)->x, ((BrainNodeIn*)n)->y);
             return v;
             }
-        case CONST:
+        case CONSTANT:
             return ((BrainNodeConst*)n)->value;
 
         case INTEGRATE:

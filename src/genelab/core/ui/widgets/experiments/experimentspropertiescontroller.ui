@@ -31,7 +31,7 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="5">
+   <item row="2" column="6">
     <widget class="QPushButton" name="pbClose">
      <property name="minimumSize">
       <size>
@@ -70,7 +70,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Load from file</string>
+      <string>Load...</string>
      </property>
      <property name="icon">
       <iconset resource="../../../ressources/ressources.qrc">
@@ -78,8 +78,8 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="4">
-    <widget class="QPushButton" name="pbSave">
+   <item row="2" column="5">
+    <widget class="QPushButton" name="pbSaveAndReload">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -100,7 +100,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Save to file</string>
+      <string>Save as...</string>
      </property>
      <property name="icon">
       <iconset resource="../../../ressources/ressources.qrc">
@@ -108,10 +108,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="6">
+   <item row="0" column="0" colspan="7">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tab_6">
       <attribute name="icon">
@@ -206,7 +206,7 @@
        <string>Simulation</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0" colspan="2">
+       <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_6">
          <property name="title">
           <string>Before starting</string>
@@ -248,7 +248,7 @@
           <item row="1" column="0">
            <widget class="QCheckBox" name="cbOnlyIfEntityIsStable">
             <property name="text">
-             <string>Entity need to be stable. Max waiting steps to wait stability</string>
+             <string>Entity need to be stable. Max waiting steps to wait stability :</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -273,7 +273,7 @@
              </font>
             </property>
             <property name="text">
-             <string>JS function : bool isTerminated()</string>
+             <string>JS function : bool isTerminated(actualStep) [call each step]</string>
             </property>
            </widget>
           </item>
@@ -329,45 +329,7 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QGroupBox" name="groupBox_8">
-         <property name="title">
-          <string>Dying of entity</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_18">
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cbStopIfEntityIsNotInOnePiece">
-            <property name="text">
-             <string>Die if not in one piece (bone lost).</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QTextEdit" name="teDieFunction">
-            <property name="font">
-             <font>
-              <family>Courier New</family>
-             </font>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>JS function : bool entityIsDied(), If true, fitness = -1</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="1" rowspan="3">
+       <item row="0" column="1" rowspan="3">
         <widget class="QTreeWidget" name="twAvailableStatsInSim">
          <property name="maximumSize">
           <size>
@@ -442,6 +404,71 @@
          </item>
         </widget>
        </item>
+       <item row="2" column="0" rowspan="2">
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="title">
+          <string>Dying of entity</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_18">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cbStopIfEntityIsNotInOnePiece">
+            <property name="text">
+             <string>Die if not in one piece (bone lost).</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTextEdit" name="teDieFunction">
+            <property name="font">
+             <font>
+              <family>Courier New</family>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>JS function : bool entityIsDied(), If true, fitness = -1 [call each step]</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Attributes of stats&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.min&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.max&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.mean&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.sum&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;For example : entity.rootRelVelocity.sum equals distance between the entity and its initial position (when stable if needed) &lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;in meter&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -490,7 +517,7 @@
              </font>
             </property>
             <property name="text">
-             <string>JS function : bool entityIsValid()</string>
+             <string>JS function : bool entityIsValid() [call before starting a simulation]</string>
             </property>
            </widget>
           </item>
@@ -572,7 +599,7 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="1" column="0" rowspan="2">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -593,7 +620,7 @@
              </font>
             </property>
             <property name="text">
-             <string>JS function : float getEntityFitness()</string>
+             <string>JS function : float getEntityFitness() [call at the end of a simulation]</string>
             </property>
            </widget>
           </item>
@@ -607,6 +634,33 @@
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Attributes of stats&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.min&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.max&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.mean&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;.sum&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;For example : entity.rootRelVelocity.sum equals distance between the entity and its initial position (when stable if needed) in meter.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -656,8 +710,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>682</width>
-                <height>387</height>
+                <width>732</width>
+                <height>407</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -702,8 +756,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>36</height>
+                <width>1164</width>
+                <height>574</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout">
@@ -737,6 +791,28 @@
       <attribute name="title">
        <string>Crossovers</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Coming soon...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_8">
       <attribute name="icon">
@@ -841,6 +917,16 @@
           </item>
           <item row="2" column="2" rowspan="3">
            <layout class="QGridLayout" name="gridLayout_20">
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string>Lights</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="2">
              <widget class="QTextEdit" name="teLights">
               <property name="maximumSize">
@@ -860,16 +946,6 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Soon...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="label_23">
-              <property name="text">
-               <string>Lights</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
               </property>
              </widget>
             </item>
@@ -959,23 +1035,13 @@ p, li { white-space: pre-wrap; }
             </item>
            </widget>
           </item>
-          <item row="1" column="6">
-           <widget class="QPushButton" name="pushButton">
+          <item row="1" column="6" rowspan="2">
+           <widget class="QPushButton" name="pbTakeFromCamera">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>From Creature Viewer</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="6">
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>From Creature Viewer</string>
+             <string>Take from camera</string>
             </property>
            </widget>
           </item>
@@ -1358,6 +1424,23 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPushButton" name="pbSave">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../ressources/ressources.qrc">
+       <normaloff>:/img/icons/experiment_save</normaloff>:/img/icons/experiment_save</iconset>
+     </property>
     </widget>
    </item>
   </layout>

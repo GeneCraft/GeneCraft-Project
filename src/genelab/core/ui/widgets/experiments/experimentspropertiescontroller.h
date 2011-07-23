@@ -33,6 +33,7 @@ public slots:
     void setupForm();
 
     void save();
+    void saveAndReload();
     void saveExpToFile();
 
     void updateStructures();
@@ -55,6 +56,8 @@ public slots:
     void gbFixedGenomes(bool);
     void refreshRessources();
     void addFromGenome();
+
+    void takeFromCamera();
 
 
 private:

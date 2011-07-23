@@ -898,7 +898,7 @@ namespace GeneLabCore {
                 newConnexionInfo.append(node);
                 newConnexionInfo.append(",");
                 break;
-            case IN:
+            case INPUT:
                 // x et y
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
@@ -907,7 +907,7 @@ namespace GeneLabCore {
                             QString::number(brainInPos->mutate(nodePart[2].toFloat())));
                 newConnexionInfo.append(",");
                 break;
-            case CONST:
+            case CONSTANT:
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
                             QString::number(constValue->mutate(nodePart[1].toFloat())));
@@ -974,8 +974,8 @@ namespace GeneLabCore {
             case SIGM:
                 this->consumnSubTree(it);
                 break;
-            case IN:
-            case CONST:
+            case INPUT:
+            case CONSTANT:
                 break;
             case INTEGRATE:
             case INTERPOLATE:

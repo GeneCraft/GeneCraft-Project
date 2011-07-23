@@ -4,9 +4,9 @@ namespace GeneLabCore {
 QString fromType(NodeType type) {
     switch(type) {
         // Input
-        case IN :
+        case INPUT :
         return "IN";
-        case CONST:
+        case CONSTANT:
         return "CONST";
 
         // 2 operands
@@ -74,9 +74,9 @@ QString fromType(NodeType type) {
 NodeType fromString(QString string) {
     // Input
     if(string == "IN")
-        return IN;
+        return INPUT;
     if(string == "CONST")
-        return CONST;
+        return CONSTANT;
     if(string == "+")
         return SUM;
     if(string == "*")
