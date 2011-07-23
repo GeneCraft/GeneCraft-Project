@@ -155,6 +155,12 @@ void Entity::removeLinksToEffector(Effector *effector) {
 
 void Entity::addBrainOut(BrainOut *brainOut)
 {
+
+    if(brainOut->getConnexionInfo() == "") {
+        QString randomFunc = brain->createRandomFunc(2);
+        brainOut->setConnexionInfo(QVariant(randomFunc));
+    }
+
     brain->addOut(brainOut);
 }
 

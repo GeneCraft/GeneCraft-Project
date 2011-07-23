@@ -17,7 +17,6 @@ namespace GeneLabCore {
 RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofConstraint *constraint) :  Effector(TYPE_NAME, TYPE),
     constraint(constraint), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
 {
-    qDebug() << "new blank rotationmotor";
     this->bone = bone;
 
     // Stabilisation properties
@@ -48,7 +47,6 @@ RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofCon
 RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, btGeneric6DofConstraint* ct) : Effector(data),
     constraint(ct), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
 {
-    qDebug() << "new rotational motor from qvariant";
     this->bone = bone;
     QVariantMap motorsMap = data.toMap()["outs"].toMap();
 
