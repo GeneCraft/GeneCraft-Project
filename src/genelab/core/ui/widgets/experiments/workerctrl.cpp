@@ -48,7 +48,7 @@ namespace GeneLabCore {
         }
 
 
-        QString workerExe = "./genecraft_worker";
+        QString workerExe = "./genecraft_worker.exe";
         //QString workerExe = "/Users/cyprienhuissoud/Desktop/genelab/genelab/src/genelab_worker-build-desktop/genelab_worker";
         QFile workerFile(workerExe);
         if(!workerFile.exists()) {

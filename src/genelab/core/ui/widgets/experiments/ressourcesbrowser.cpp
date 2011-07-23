@@ -94,6 +94,7 @@ void RessourcesBrowser::loadLocalExperiment() {
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twLocalExperiments->currentItem();
         Experiment* e = new Experiment(expTWI->dataw.data);
         e->setOnline(false); // Local experimentation
+        e->setRessource(expTWI->dataw.r);
         emit setExperiment(e);
     }
 }
