@@ -436,13 +436,16 @@ namespace GeneLabCore {
 
         // Not stable at the moment
         bool stable = false;
+	e->updadeStatistics();
 	qDebug() << e->getStatisticByName("bodyWeight")->getSum();
 	qDebug() << e->getStatisticByName("bodyHeight")->getSum();
 	qDebug() << e->getStatisticByName("bodyLength")->getSum();
 
         for(int i = 0; i < exp->getTimeToWaitForStability() && exp->getOnlyIfEntityIsStable(); i++) {
+	e->updadeStatistics();
 		qDebug() << s->getValue();
 		qDebug() << e->getStatisticByName("rootYRelVelocity")->getValue();
+		qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
             if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
@@ -501,17 +504,17 @@ namespace GeneLabCore {
     }
 
     void ExperimentManager::engineStep() {
-        foreach(Engine* e, engines) {
-            e->beforeStep();
-        }
+//        foreach(Engine* e, engines) {
+//            e->beforeStep();
+//        }
 
-        foreach(Engine* e, engines) {
-            e->step();
-        }
-
-        foreach(Engine* e, engines) {
-            e->afterStep();
-        }
+//        foreach(Engine* e, engines) {
+//            e->step();
+//        }
+	engines.find("Bullet").value()->step();
+//        foreach(Engine* e, engines) {
+//            e->afterStep();
+//        }
     }
 
     /**
