@@ -140,6 +140,8 @@ int main(int argc, char *argv[])
         workerConfiguration->show();
         a.exec();
         workerData = workerConfiguration->getWorkerData();
+        Ressource* r = new JsonFile("worker.json");
+        r->save(workerData);
     }
 
     srand(time(NULL));
@@ -168,9 +170,10 @@ int main(int argc, char *argv[])
 
 
     //QVariant workerdata = worker_res->load();
+    QVariantMap worker = workerData.toMap();
+    worker["name"] = worker["name"].toString() + QString::number(time(NULL));
 
-
-    ExperimentManager* expMan = new ExperimentManager(factory, exp, workerData);
+    ExperimentManager* expMan = new ExperimentManager(factory, exp, worker);
 
     /**/
 

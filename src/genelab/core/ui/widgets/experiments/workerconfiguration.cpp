@@ -27,7 +27,7 @@ QVariant WorkerConfiguration::getWorkerData() {
 
     workerData["maxGen"] = ui->spbMaxGen->value();
     workerData["popSize"] = ui->spbPopSize->value();
-    workerData["name"] = ui->txtWorkerName->text() + QString::number(time(NULL));
+    workerData["name"] = ui->txtWorkerName->text();
     workerData["nbBestResults"] = ui->spbBestResults->value();
     workerData["nbRandomResults"] = ui->spbRandomResults->value();
     QVariantMap selectionData;

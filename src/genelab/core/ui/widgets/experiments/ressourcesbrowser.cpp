@@ -250,7 +250,7 @@ void RessourcesBrowser::shareExperiment()
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twLocalExperiments->currentItem();
 
         // Load Generic Entity
-        Ressource* to = new DbRecord(database, expTWI->dataw.data["id"].toString());
+        Ressource* to = new DbRecord(database, expTWI->dataw.data["_id"].toString());
         QVariant load = to->load();
         if(load.toMap().contains("error")) {
             to->save(expTWI->dataw.data);
