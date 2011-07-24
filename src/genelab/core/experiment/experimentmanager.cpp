@@ -442,7 +442,7 @@ namespace GeneLabCore {
 
         for(int i = 0; i < exp->getTimeToWaitForStability() && exp->getOnlyIfEntityIsStable(); i++) {
 		qDebug() << s->getValue();
-		qDebug() << e->getStatisticByName("rootYRelVelocity")->getSum();
+		qDebug() << e->getStatisticByName("rootYRelVelocity")->getValue();
             if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
