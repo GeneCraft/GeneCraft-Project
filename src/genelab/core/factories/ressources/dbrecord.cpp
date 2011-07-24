@@ -107,6 +107,11 @@ namespace GeneLabCore {
         return this->error;
     }
 
+    int DbRecord::remove() {
+        // TODO
+        return false;
+    }
+
     void DbRecord::deleteDoc(QString rev) {
         QString url = QString("%1:%2/%3/%4?rev=%5").arg(db.url, QString::number(db.port), db.dbName,
                                                          this->id, rev);

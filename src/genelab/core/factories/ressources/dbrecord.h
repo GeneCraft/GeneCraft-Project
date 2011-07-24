@@ -22,6 +22,7 @@ namespace GeneLabCore {
 
         virtual QVariant load();
         virtual int save(QVariant data);
+        virtual int remove();
 
         void deleteDoc(QString rev);
 

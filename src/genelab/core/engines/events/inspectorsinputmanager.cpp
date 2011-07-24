@@ -53,5 +53,11 @@ void InspectorsInputManager::entityUpdated(Entity *entity){
 void InspectorsInputManager::loadExperiment(Experiment *experiment){
     emit sLoadExperiment(experiment);
 }
+void InspectorsInputManager::loadWorld(QVariantMap worldData) {
+    emit sLoadWorld(worldData);
+}
+void InspectorsInputManager::loadEntity(QVariantMap genomeData, Ressource *ressource) {
+    emit sLoadEntity(genomeData, ressource);
+}
 
 }

@@ -39,25 +39,12 @@
       <iconset resource="../../../../core/ressources/ressources.qrc">
        <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
      </property>
-     <addaction name="actionFrom_file"/>
-     <addaction name="actionFrom_database"/>
-    </widget>
-    <widget class="QMenu" name="menuSave_selected_creature_to">
-     <property name="title">
-      <string>Save selected creature to</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../../core/ressources/ressources.qrc">
-       <normaloff>:/img/icons/entity_save</normaloff>:/img/icons/entity_save</iconset>
-     </property>
-     <addaction name="actionTo_file"/>
-     <addaction name="actionDatabase"/>
     </widget>
     <addaction name="actionNew_creature"/>
     <addaction name="separator"/>
     <addaction name="menuAdd_Creature"/>
     <addaction name="actionSave_selected_creature"/>
-    <addaction name="menuSave_selected_creature_to"/>
+    <addaction name="aSaveEntityAs"/>
     <addaction name="actionRemove_creature"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -343,6 +330,15 @@
    </property>
    <property name="text">
     <string>Enter in What's this mode</string>
+   </property>
+  </action>
+  <action name="aSaveEntityAs">
+   <property name="icon">
+    <iconset resource="../../../../core/ressources/ressources.qrc">
+     <normaloff>:/img/icons/entity_save</normaloff>:/img/icons/entity_save</iconset>
+   </property>
+   <property name="text">
+    <string>Save selected creature as...</string>
    </property>
   </action>
   <zorder>dwFixation</zorder>

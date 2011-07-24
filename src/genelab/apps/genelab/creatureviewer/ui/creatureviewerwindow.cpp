@@ -106,7 +106,6 @@ void CreatureViewerWindow::init() {
     // ----------
     connect(this->ui->actionFrom_file,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
     connect(this->ui->actionTo_file,SIGNAL(triggered()),this,SLOT(saveEntityToFile()));
-    connect(this->ui->actionFrom_database, SIGNAL(triggered()), this, SLOT(loadEntityFromDb()));
     connect(this->ui->actionDatabase, SIGNAL(triggered()), this, SLOT(saveEntityToDb()));
     connect(this->ui->actionNew_creature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(this->ui->actionRemove_creature,SIGNAL(triggered()),this,SLOT(removeEntity()));
@@ -270,21 +269,20 @@ void CreatureViewerWindow::init() {
     statsPropertiesController->connectToInspectorInputManager(cvim);
 
     // Ressources browser
-    ressourcesBrowser = new GeneLabCore::RessourcesBrowser();
+    ressourcesBrowser = new RessourcesBrowser();
     ui->dwRessourcesBrowser->setWidget(ressourcesBrowser);
     ressourcesBrowser->connectToInspectorInputManager(cvim);
 
-    connect(ressourcesBrowser, SIGNAL(addEntity(QVariantMap,GeneLabCore::Ressource*)), this, SLOT(addEntity(QVariantMap, GeneLabCore::Ressource*)));
-    //ressourcesBrowser->connectToInspectorInputManager(cvim)
-
+    // Worker controller
     workerCtrl = new WorkerCtrl();
     this->ui->dwWorker->setWidget(workerCtrl);
     workerCtrl->connectToInspectorInputManager(cvim);
 
-    expCtrl    = new ExperimentCtrl();
+    // Experiment controller
+    expCtrl = new ExperimentCtrl();
     this->ui->dwExperiment->setWidget(expCtrl);
     expCtrl->connectToInspectorInputManager(cvim);
-    connect(expCtrl, SIGNAL(addEntity(QVariantMap, GeneLabCore::Ressource*)), this, SLOT(addResult(QVariantMap,GeneLabCore::Ressource*)));
+    connect(expCtrl, SIGNAL(addEntity(QVariantMap, Ressource*)), this, SLOT(addResult(QVariantMap,Ressource*)));
 
     // ----------------------------------
     // -- Connections to input manager --
@@ -300,7 +298,8 @@ void CreatureViewerWindow::init() {
     connect(cvim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
     connect(this,SIGNAL(sLoadExperiment(Experiment*)),cvim,SLOT(loadExperiment(Experiment*)));
     emit sLoadExperiment(experiment);
-
+    connect(cvim,SIGNAL(sLoadWorld(QVariantMap)),this,SLOT(setWorld(QVariantMap)));
+    connect(cvim,SIGNAL(sLoadEntity(QVariantMap,Ressource*)),this,SLOT(addEntity(QVariantMap,Ressource*)));
 
     // --------------
     // -- Starting --
@@ -370,6 +369,13 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // receive by inspector manager
     //expCtrl->setExperiment(experiment);
     //workerCtrl->setExperiment(experiment);
+}
+
+void CreatureViewerWindow::setWorld(QVariantMap worldMap) {
+    if(experiment != NULL) {
+        experiment->setWorldData(worldMap);
+        setExperiment(experiment);
+    }
 }
 
 void CreatureViewerWindow::saveEntityToDb() {
@@ -558,11 +564,11 @@ Entity * CreatureViewerWindow::createNewEntity()
     return e;
 }
 
-void CreatureViewerWindow::addEntity(QVariantMap entityData, Ressource *ressource) {
+void CreatureViewerWindow::addEntity(QVariantMap entityData,Ressource *ressource) {
     createCreature(entityData, getCameraPosition(), ressource);
 }
 
-void CreatureViewerWindow::addResult(QVariantMap resultData, GeneLabCore::Ressource *ressource) {
+void CreatureViewerWindow::addResult(QVariantMap resultData, Ressource *ressource) {
     Entity* e = createCreature(resultData, world->getSpawnPosition(), ressource);
     e->addOutScript(0, fromNormal); // Normal position during stability time
     e->addOutScript(resultData["stable"].toInt(), fromBrain); // Next from brain

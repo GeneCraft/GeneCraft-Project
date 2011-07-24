@@ -26,7 +26,7 @@ namespace GeneLabCore {
         void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
 
     signals:
-        void addEntity(QVariantMap genome, GeneLabCore::Ressource* r);
+        void addEntity(QVariantMap genome, Ressource* r);
         void newDataAvailable();
 
     public slots:

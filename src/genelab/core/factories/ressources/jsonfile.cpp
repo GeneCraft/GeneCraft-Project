@@ -21,7 +21,6 @@ namespace GeneLabCore {
         QString beautifull = Ressource::beautifullJson(data);
         out << beautifull;
 
-
         f.close();
 
         return f.error();
@@ -39,5 +38,12 @@ namespace GeneLabCore {
 
         f.close();
         return QxtJSON::parse(content);
+    }
+
+    int JsonFile::remove() {
+        if(f.exists()) {
+            return f.remove();
+        }
+        return false;
     }
 }

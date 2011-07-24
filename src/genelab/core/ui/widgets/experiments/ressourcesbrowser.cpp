@@ -5,6 +5,7 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QFile>
 
 #include "ressourcesItems.h"
 #include "experiment/experiment.h"
@@ -34,8 +35,11 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbRefreshOnlineExp,SIGNAL(clicked()),this,SLOT(refreshOnlineRessources()));
     connect(ui->pbLoadLocalExp,SIGNAL(clicked()),this,SLOT(loadLocalExperiment()));
     connect(ui->pbLoadOnlineExp,SIGNAL(clicked()),this,SLOT(loadOnlineExperiment()));
+    connect(ui->twLocalExperiments,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(loadLocalExperiment()));
+    connect(ui->twOnlineExperiments,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(loadOnlineExperiment()));
     connect(ui->pbOpenExperimentsFolder,SIGNAL(clicked()),this,SLOT(openRessourcesFolder()));
     connect(ui->pbSaveExp,SIGNAL(clicked()),this,SLOT(saveExperiment()));
+    connect(ui->pbDeleteLocalExp,SIGNAL(clicked()),this,SLOT(deleteLocalExp()));
     connect(ui->pbShareExp,SIGNAL(clicked()),this,SLOT(shareExperiment()));
     connect(ui->pbInfoExp,SIGNAL(clicked()),this,SLOT(openInfoDatabase()));
 
@@ -44,9 +48,12 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbRefreshOnlineWorlds,SIGNAL(clicked()),this,SLOT(refreshOnlineRessources()));
     connect(ui->pbLoadLocalWorld,SIGNAL(clicked()),this,SLOT(loadLocalWorld()));
     connect(ui->pbLoadOnlineWorld,SIGNAL(clicked()),this,SLOT(loadOnlineWorld()));
+    connect(ui->twLocalWorlds,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(loadLocalWorld()));
+    connect(ui->twOnlineWorlds,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(loadOnlineWorld()));
     connect(ui->pbOpenWorldsFolder,SIGNAL(clicked()),this,SLOT(openRessourcesFolder())); // TODO
-    connect(ui->pbSaveExp,SIGNAL(clicked()),this,SLOT(saveWorld()));
+    connect(ui->pbSaveWorld,SIGNAL(clicked()),this,SLOT(saveWorld()));
     connect(ui->pbShareWorld,SIGNAL(clicked()),this,SLOT(shareWorld()));
+    connect(ui->pbDeleteLocalWorld,SIGNAL(clicked()),this,SLOT(deleteLocalWorld()));
     connect(ui->pbInfoWorlds,SIGNAL(clicked()),this,SLOT(openInfoDatabase()));
 
     // entities
@@ -54,9 +61,12 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbRefreshOnlineEntity,SIGNAL(clicked()),this,SLOT(refreshOnlineRessources()));
     connect(ui->pbLoadLocalEntity,SIGNAL(clicked()),this,SLOT(loadLocalEntity()));
     connect(ui->pbLoadOnlineEntity,SIGNAL(clicked()),this,SLOT(loadOnlineEntity()));
+    connect(ui->twLocalEntities,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(loadLocalEntity()));
+    connect(ui->twOnlineEntities,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(loadOnlineEntity()));
     connect(ui->pbOpenEntitiesFolder,SIGNAL(clicked()),this,SLOT(openRessourcesFolder())); // TODO
     connect(ui->pbSaveEntity,SIGNAL(clicked()),this,SLOT(saveEntity()));
     connect(ui->pbShareEntity,SIGNAL(clicked()),this,SLOT(shareEntity()));
+    connect(ui->pbDeleteLocalEntity,SIGNAL(clicked()),this,SLOT(deleteLocalEntity()));
     connect(ui->pbInfoEntities,SIGNAL(clicked()),this,SLOT(openInfoDatabase()));
 
     refreshLocalRessources();
@@ -69,12 +79,10 @@ RessourcesBrowser::~RessourcesBrowser()
 
 void RessourcesBrowser::connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim) {
 
-    connect(this,SIGNAL(loadExperiment(Experiment*)),iim,SLOT(loadExperiment(Experiment*)));
-    connect(this,SIGNAL(loadWorld(QVariant worldData)),iim,SLOT(loadWorld(Experiment*)));
-    connect(this,SIGNAL(loadEntity(Experiment*)),iim,SLOT(loadEntity(Experiment*)));
-
+    connect(this,SIGNAL(sLoadExperiment(Experiment*)),iim,SLOT(loadExperiment(Experiment*)));
+    connect(this,SIGNAL(sLoadWorld(QVariantMap)),iim,SLOT(loadWorld(QVariantMap)));
+    connect(this,SIGNAL(sLoadEntity(QVariantMap, Ressource*)),iim,SLOT(loadEntity(QVariantMap, Ressource*)));
 }
-
 
 // ----------------
 // -- RESSOURCES --
@@ -130,7 +138,7 @@ void RessourcesBrowser::loadLocalExperiment() {
         Experiment* e = new Experiment(expTWI->dataw.data);
         e->setOnline(false); // Local experimentation
         e->setRessource(expTWI->dataw.r);
-        emit loadExperiment(e);
+        emit sLoadExperiment(e);
     }
 }
 
@@ -140,7 +148,7 @@ void RessourcesBrowser::loadOnlineExperiment() {
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
         Experiment* e = new Experiment(expTWI->dataw.data);
         e->setOnline(true); // Online experimentation
-        emit loadExperiment(e);
+        emit sLoadExperiment(e);
     }
 }
 
@@ -148,7 +156,7 @@ void RessourcesBrowser::loadLocalWorld() {
 
     if(ui->twLocalWorlds->currentItem()) {
         WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twLocalWorlds->currentItem();
-        emit loadWorld(worldTWI->dataw.data);
+        emit sLoadWorld(worldTWI->dataw.data);
     }
 }
 
@@ -156,21 +164,21 @@ void RessourcesBrowser::loadOnlineWorld() {
 
     if(ui->twOnlineExperiments->currentItem()) {
         WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twOnlineWorlds->currentItem();
-        emit loadWorld(worldTWI->dataw.data);
+        emit sLoadWorld(worldTWI->dataw.data);
     }
 }
 
 void RessourcesBrowser::loadLocalEntity() {
     if(ui->twLocalEntities->currentItem()) {
         EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twLocalEntities->currentItem();
-        emit addEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
+        emit sLoadEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
     }
 }
 
 void RessourcesBrowser::loadOnlineEntity() {
     if(ui->twOnlineEntities->currentItem()) {
         EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
-        emit addEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
+        emit sLoadEntity(entityTWI->dataw.data, NULL /* entityTWI->dataw.r */);
     }
 }
 
@@ -187,15 +195,29 @@ void RessourcesBrowser::saveExperiment() {
 
         QString selectedFile = QString("ressources/") + QString(expTWI->dataw.data["_id"].toString()) + QString(".exp");
 
-//        QString selectedFile = QFileDialog::getSaveFileName(this, "Save the experiment", "ressources", "Experiment (*.exp)");
-//        if (!selectedFile.isEmpty()) {
+        // file already exists ?
+        QFile f(selectedFile);
+        if(f.exists()) {
+
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this,"File already exists",
+                                     selectedFile + " already exists. \n\nDo you want to replace it ?",
+                                     QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel);
+
+            if (ret == QMessageBox::No)
+                selectedFile = QFileDialog::getSaveFileName(this, "Save the experiment", selectedFile, "Experiment (*.exp)");
+            else if(ret == QMessageBox::Cancel)
+                return;
+        }
+
+        if (!selectedFile.isEmpty()) {
 
             // Load Generic Entity
             Ressource* to = new JsonFile(selectedFile);
             to->save(expTWI->dataw.data);
 
             refreshLocalRessources();
-//       }
+        }
     }
 }
 
@@ -207,15 +229,28 @@ void RessourcesBrowser::saveWorld() {
 
         QString selectedFile = QString("ressources/") + QString(worldTWI->dataw.data["name"].toString()) + QString(".world");
 
-//        QString selectedFile = QFileDialog::getSaveFileName(this, "Save the world, that's good :)", "worlds", "World (*.world)");
-//        if (!selectedFile.isEmpty()) {
+        // file already exists ?
+        QFile f(selectedFile);
+        if(f.exists()) {
 
-            // Load Generic Entity
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this,"File already exists",
+                                     selectedFile + " already exists. \n\nDo you want to replace it ?",
+                                     QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel);
+
+            if (ret == QMessageBox::No)
+                selectedFile = QFileDialog::getSaveFileName(this, "Save the world, that's good :)", "worlds", "World (*.world)");
+            else if(ret == QMessageBox::Cancel)
+                return;
+        }
+
+        if (!selectedFile.isEmpty()) {
+
             Ressource* to = new JsonFile(selectedFile);
             to->save(worldTWI->dataw.data);
 
             refreshLocalRessources();
-//       }
+        }
     }
 }
 
@@ -225,17 +260,31 @@ void RessourcesBrowser::saveEntity() {
 
         EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
 
-        QString selectedFile = QString("ressources/") + QString(entityTWI->dataw.data["name"].toString()) + QString(".genome");
+        QVariantMap origins = entityTWI->dataw.data["origins"].toMap();
+        QString selectedFile = QString("ressources/") + QString(origins["name"].toString()) + QString(".genome");
 
-//        QString selectedFile = QFileDialog::getSaveFileName(this, "Save the genome", "ressources", "Genome (*.genome)");
-//        if (!selectedFile.isEmpty()) {
+        // file already exists ?
+        QFile f(selectedFile);
+        if(f.exists()) {
 
-            // Load Generic Entity
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this, "File already exists",
+                                     selectedFile + " already exists. \n\nDo you want to replace it ?",
+                                     QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel);
+
+            if (ret == QMessageBox::No)
+                selectedFile = QFileDialog::getSaveFileName(this, "Save the genome", "ressources", "Genome (*.genome)");
+            else if(ret == QMessageBox::Cancel)
+                return;
+        }
+
+        if (!selectedFile.isEmpty()) {
+
             Ressource* to = new JsonFile(selectedFile);
             to->save(entityTWI->dataw.data);
 
             refreshLocalRessources();
-//       }
+        }
     }
 }
 
@@ -263,9 +312,7 @@ void RessourcesBrowser::shareExperiment()
                 to->save(expTWI->dataw.data);
                 refreshOnlineRessources();
             }
-
         }
-
     }
 }
 
@@ -275,21 +322,19 @@ void RessourcesBrowser::shareWorld()
 
         WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twLocalWorlds->currentItem();
 
-        // Load Generic Entity
-        Ressource* to = new DbRecord(database, worldTWI->dataw.data["id"].toString());
+        Ressource* to = new DbRecord(database, worldTWI->dataw.data["name"].toString());
         QVariant load = to->load();
         if(load.toMap().contains("error")) {
             to->save(worldTWI->dataw.data);
             refreshOnlineRessources();
         } else {
             int replace = QMessageBox::warning(this, "Share to online database", "A world of "
-                                               "this id already exist, would you like to replace it ?",
+                                               "this name already exist, would you like to replace it ?",
                                                 QMessageBox::Yes, QMessageBox::No);
             if(replace == QMessageBox::Yes) {
                 to->save(worldTWI->dataw.data);
                 refreshOnlineRessources();
             }
-
         }
     }
 }
@@ -309,10 +354,10 @@ void RessourcesBrowser::shareEntity()
         Ressource* to = new DbRecord(database, id);
         QVariantMap creatureData = expTWI->dataw.data;
         QVariantMap origins = creatureData["origins"].toMap();
-        qDebug() << creatureData["origins"].toMap();
+        //qDebug() << creatureData["origins"].toMap();
         origins.insert("name", id);
         creatureData.insert("origins", origins);
-        qDebug() << creatureData["origins"].toMap();
+        //qDebug() << creatureData["origins"].toMap();
 
         QVariant load = to->load();
         if(load.toMap().contains("error")) {
@@ -326,11 +371,67 @@ void RessourcesBrowser::shareEntity()
                 to->save(creatureData);
                 refreshOnlineRessources();
             }
-
         }
-
     }
 }
+
+// ------------
+// -- DELETE --
+// ------------
+
+void RessourcesBrowser::deleteLocalExp() {
+
+    if(ui->twLocalExperiments->currentItem()) {
+        ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twLocalExperiments->currentItem();
+
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::information(this, "Remove ressource ?",
+                                       "Are you sure do you want to remove this experiment ?",
+                                        QMessageBox::Ok | QMessageBox::Cancel);
+
+        if(ret == QMessageBox::Ok) {
+           expTWI->dataw.r->remove();
+           refreshLocalRessources();
+        }
+    }
+}
+
+void RessourcesBrowser::deleteLocalWorld() {
+
+    if(ui->twLocalWorlds->currentItem()) {
+        WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twLocalWorlds->currentItem();
+
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::information(this, "Remove ressource ?",
+                                       "Are you sure do you want to remove this world ?",
+                                        QMessageBox::Ok | QMessageBox::Cancel);
+
+        if(ret == QMessageBox::Ok) {
+           if(worldTWI->dataw.r != NULL) {
+                worldTWI->dataw.r ->remove();
+                refreshLocalRessources();
+           }
+        }
+    }
+}
+
+void RessourcesBrowser::deleteLocalEntity() {
+
+    if(ui->twLocalEntities->currentItem()) {
+        EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twLocalEntities->currentItem();
+
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::information(this, "Remove ressource ?",
+                                       "Are you sure do you want to remove this entity ?",
+                                        QMessageBox::Ok | QMessageBox::Cancel);
+
+        if(ret == QMessageBox::Ok) {
+           entityTWI->dataw.r->remove();
+           refreshLocalRessources();
+        }
+    }
+}
+
 
 // ----------
 // -- INFO --
@@ -341,7 +442,6 @@ void RessourcesBrowser::openInfoDatabase()
     QMessageBox::information(this, "Utilisation of genecraft database", "This database is not an online backup."
                              "But a community tool. Everythings that you put online could be modified or deleted by someone else. So keep some backup of your loved creatures.");
 }
-
 
 void RessourcesBrowser::openRessourcesFolder() {
 

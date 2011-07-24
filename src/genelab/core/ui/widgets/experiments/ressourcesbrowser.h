@@ -24,12 +24,12 @@ public:
 
 signals:
 
-    void loadExperiment(Experiment *);
-    void loadWorld(QVariant worldData);
-    void loadEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
+    void sLoadExperiment(Experiment *);
+    void sLoadWorld(QVariantMap worldData);
+    void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
 
     // TODO replace by loadEntity
-    void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
+    //void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
 
 public slots:
 
@@ -43,18 +43,21 @@ public slots:
     void openRessourcesFolder();
     void saveExperiment();
     void shareExperiment();
+    void deleteLocalExp();
 
     // worls
     void loadLocalWorld();
     void loadOnlineWorld();
     void saveWorld();
     void shareWorld();
+    void deleteLocalWorld();
 
     // entities
     void loadLocalEntity();
     void loadOnlineEntity();
     void saveEntity();
     void shareEntity();
+    void deleteLocalEntity();
 
 
 private:

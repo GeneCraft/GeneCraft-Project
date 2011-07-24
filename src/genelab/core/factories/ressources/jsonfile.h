@@ -13,6 +13,7 @@ public:
     explicit JsonFile(QString filename, QObject *parent = 0);
     virtual QVariant load();
     virtual int save(QVariant data);
+    virtual int remove();
 
 public:
     QFile f;

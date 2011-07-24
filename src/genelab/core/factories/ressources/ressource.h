@@ -30,6 +30,11 @@ namespace GeneLabCore {
         virtual int save(QVariant data) = 0;
 
         /**
+          * Remove ressource
+          */
+        virtual int remove() = 0;
+
+        /**
           * Create a ressource from a ressource metadata
           */
         static Ressource* unserialize(QVariant v);

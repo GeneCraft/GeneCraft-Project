@@ -38,7 +38,7 @@
        <item>
         <widget class="QTabWidget" name="tabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="icon">
@@ -52,6 +52,23 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
+              <widget class="QPushButton" name="pbRefreshLocalExp">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_3">
                <property name="font">
                 <font>
@@ -63,6 +80,19 @@
                 <string>Local : ./ressources/</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item>
               <widget class="QPushButton" name="pbOpenExperimentsFolder">
@@ -170,13 +200,22 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pbRefreshLocalExp">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QPushButton" name="pbDeleteLocalExp">
+               <property name="text">
+                <string/>
                </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/delete</normaloff>:/img/icons/delete</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QPushButton" name="pbRefreshOnlineExp">
                <property name="text">
                 <string/>
                </property>
@@ -186,10 +225,6 @@
                </property>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QLabel" name="label_4">
                <property name="font">
@@ -274,17 +309,6 @@
                </property>
               </spacer>
              </item>
-             <item>
-              <widget class="QPushButton" name="pbRefreshOnlineExp">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../ressources/ressources.qrc">
-                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>
@@ -301,6 +325,23 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_17">
              <item>
+              <widget class="QPushButton" name="pbRefreshLocalWorlds">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="label_9">
                <property name="font">
                 <font>
@@ -312,6 +353,19 @@
                 <string>Local : ./ressources/</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item>
               <widget class="QPushButton" name="pbOpenWorldsFolder">
@@ -336,17 +390,17 @@
             <widget class="QTreeWidget" name="twLocalWorlds">
              <column>
               <property name="text">
-               <string>Id</string>
+               <string>Name</string>
               </property>
              </column>
              <column>
               <property name="text">
-               <string>Authors</string>
+               <string>Gravity</string>
               </property>
              </column>
              <column>
               <property name="text">
-               <string>Date of creation</string>
+               <string>Flat</string>
               </property>
              </column>
             </widget>
@@ -356,14 +410,10 @@
              <item>
               <widget class="QPushButton" name="pbLoadLocalWorld">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Load</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../ressources/ressources.qrc">
-                 <normaloff>:/img/icons/experiment_load</normaloff>:/img/icons/experiment_load</iconset>
                </property>
               </widget>
              </item>
@@ -383,7 +433,7 @@
              <item>
               <widget class="QPushButton" name="pbShareWorld">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="toolTip">
                 <string>Upload</string>
@@ -425,13 +475,22 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pbRefreshLocalWorlds">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QPushButton" name="pbDeleteLocalWorld">
+               <property name="text">
+                <string/>
                </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/delete</normaloff>:/img/icons/delete</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_18">
+             <item>
+              <widget class="QPushButton" name="pbRefreshOnlineWorlds">
                <property name="text">
                 <string/>
                </property>
@@ -441,10 +500,6 @@
                </property>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_18">
              <item>
               <widget class="QLabel" name="label_10">
                <property name="font">
@@ -488,17 +543,17 @@
             <widget class="QTreeWidget" name="twOnlineWorlds">
              <column>
               <property name="text">
-               <string>Id</string>
+               <string>Name</string>
               </property>
              </column>
              <column>
               <property name="text">
-               <string>Authors</string>
+               <string>Gravity</string>
               </property>
              </column>
              <column>
               <property name="text">
-               <string>Date of creation</string>
+               <string>Flat</string>
               </property>
              </column>
             </widget>
@@ -508,14 +563,10 @@
              <item>
               <widget class="QPushButton" name="pbLoadOnlineWorld">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Load</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../ressources/ressources.qrc">
-                 <normaloff>:/img/icons/experiment_load</normaloff>:/img/icons/experiment_load</iconset>
                </property>
               </widget>
              </item>
@@ -531,17 +582,6 @@
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pbRefreshOnlineWorlds">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../ressources/ressources.qrc">
-                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-               </property>
-              </widget>
              </item>
             </layout>
            </item>
@@ -560,6 +600,17 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QPushButton" name="pbRefreshLocalEntity">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QLabel" name="label">
                <property name="sizePolicy">
@@ -692,7 +743,22 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pbRefreshLocalEntity">
+              <widget class="QPushButton" name="pbDeleteLocalEntity">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/delete</normaloff>:/img/icons/delete</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <item>
+              <widget class="QPushButton" name="pbRefreshOnlineEntity">
                <property name="text">
                 <string/>
                </property>
@@ -702,10 +768,6 @@
                </property>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_20">
              <item>
               <widget class="QLabel" name="label_11">
                <property name="font">
@@ -789,17 +851,6 @@
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pbRefreshOnlineEntity">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../../../ressources/ressources.qrc">
-                 <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-               </property>
-              </widget>
              </item>
             </layout>
            </item>

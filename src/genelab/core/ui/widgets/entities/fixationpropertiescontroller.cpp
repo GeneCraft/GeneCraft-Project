@@ -24,10 +24,8 @@
 // Effectors
 #include "effectors/grippereffector.h"
 #include "effectors/flyingeffector.h"
-
-#include "ui/widgets/entities/bodyitems.h"
-
 #include "tools.h"
+#include "bodyitems.h"
 
 FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
     QWidget(parent),

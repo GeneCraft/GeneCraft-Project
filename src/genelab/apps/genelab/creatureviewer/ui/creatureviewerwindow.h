@@ -14,7 +14,6 @@
 #include "widgets/experiments/experimentctrl.h"
 #include "widgets/experiments/workerctrl.h"
 
-
 // Listeners
 #include "creatureviewerinputmanager.h"
 
@@ -51,21 +50,22 @@ public slots:
     void showAbout();
 
     // new / load / save entity
-    void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
-    void addResult(QVariantMap resultData, GeneLabCore::Ressource *ressource);
+    void addEntity(QVariantMap entityData, Ressource *ressource);
+    void addResult(QVariantMap resultData, Ressource *ressource);
     Entity *createNewEntity();
     Entity *createCreature(QVariant genotype, btVector3 position, Ressource *ressource);
-
     void loadEntityFromFile();
     void saveEntityToFile();
     void saveEntityToDb();
     void removeEntity();
     void removeAllEntities();
     void removeAllEntitiesExceptSelected();
-    void enterInWhatsThisMode();
+    void addRandomEntity();
+    void createMutationSample();
 
-    void followSelectedEntity();
-    void unfollowEntity();
+    // experiment and world
+    void setExperiment(Experiment* experiment);
+    void setWorld(QVariantMap worldMap);
 
     // notifications
     void entitySelected(Entity *entity);
@@ -75,12 +75,11 @@ public slots:
     void boneSelected(Bone* bone);
     void fixationSelected(Fixation* fix);
 
-    void addRandomEntity();
-    void createMutationSample();
-
-    // physics
+    // utils
     void togglePhysics();
-    void setExperiment(Experiment* experiment);
+    void enterInWhatsThisMode();
+    void followSelectedEntity();
+    void unfollowEntity();
 
     // Modes
     void switchToWelcomeMode();
