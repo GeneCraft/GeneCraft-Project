@@ -54,8 +54,27 @@ void btBone::init(btScalar length,
     btVector3 localInertia(0,0,0);
     shape->calculateLocalInertia(mass,localInertia);
 
+    btTransform principal;
+    principal.setIdentity();
+    btVector3 inertia(0,0,0);
+
+    // Masse de l'os, masse de la fixation
+    float massBone = M_PI*radius*radius*length*density;
+    float massSphere =  4/3. * M_PI * radiusArticulation * radiusArticulation * radiusArticulation;
+    float childMasses[2] = {massSphere,massBone};
+    shape->calculatePrincipalAxisTransform(childMasses, principal, inertia);
+
     // motion state
-    motionState = new btDefaultMotionState(transform);
+    qDebug() << "lol";
+    qDebug() << principal.getOrigin().getX();
+    qDebug() << principal.getOrigin().getY();
+    qDebug() << principal.getOrigin().getZ();
+
+    qDebug() << principal.getRotation().getX();
+    qDebug() << principal.getRotation().getY();
+    qDebug() << principal.getRotation().getZ();
+
+    motionState = new btDefaultMotionState(transform, principal);
 
     this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);
     this->rigidBody->setFriction(friction);
