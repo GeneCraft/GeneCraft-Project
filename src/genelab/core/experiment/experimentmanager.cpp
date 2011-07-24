@@ -438,6 +438,7 @@ namespace GeneLabCore {
         bool stable = false;
 	qDebug() << e->getStatisticByName("bodyWeight")->getSum();
 	qDebug() << e->getStatisticByName("bodyHeight")->getSum();
+	qDebug() << e->getStatisticByName("bodyLength")->getSum();
 
         for(int i = 0; i < exp->getTimeToWaitForStability() && exp->getOnlyIfEntityIsStable(); i++) {
 		qDebug() << s->getValue();
