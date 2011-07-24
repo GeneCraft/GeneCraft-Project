@@ -32,6 +32,7 @@ namespace GeneLabCore {
         resultData.insert("date", date);
         resultData.insert("worker", worker);
         resultData.insert("statistics", statistics);
+        resultData.insert("stable", stableTime);
 
         return resultData;
     }
@@ -47,6 +48,7 @@ namespace GeneLabCore {
         this->worker = "";
         this->broadcasted = false;
         this->statistics = QVariant();
+        this->stableTime = 0;
     }
 
     Result::~Result() {
@@ -58,7 +60,7 @@ namespace GeneLabCore {
       * A result is a fitness for a genome, and the ressource where this result is stored
       * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
       */
-    Result::Result(QString expId, float fitness, QVariant genome,
+    Result::Result(QString expId, float fitness, int stableTime, QVariant genome,
            QString worker, QString date) {
         this->exp = expId;
         this->fitness = fitness;
@@ -68,6 +70,7 @@ namespace GeneLabCore {
         this->worker = worker;
         this->broadcasted = false;
         this->statistics = QVariant();
+        this->stableTime = stableTime;
     }
 
     /**
@@ -82,6 +85,7 @@ namespace GeneLabCore {
         this->worker = r.worker;
         this->broadcasted = r.broadcasted;
         this->statistics = r.statistics;
+        this->stableTime = r.stableTime;
     }
 
 
@@ -97,6 +101,7 @@ namespace GeneLabCore {
         this->worker = r.worker;
         this->broadcasted = r.broadcasted;
         this->statistics = r.statistics;
+        this->stableTime = r.stableTime;
     }
 
     Result* Result::loadResult(QVariant data, bool& ok) {
@@ -136,10 +141,15 @@ namespace GeneLabCore {
             statistics = dataMap["statistics"];
         }
 
+        int stableTime = 0;
+        if(dataMap.contains("stable")) {
+            stableTime = dataMap["stable"].toInt();
+        }
+
         QVariantMap genome = dataMap["genome"].toMap();
         QString exp        = dataMap["experiment"].toString();
         QString date       = dataMap["date"].toString();
-        Result* r = new Result(exp, fitness, genome, worker, date);
+        Result* r = new Result(exp, fitness, stableTime, genome, worker, date);
         r->setStatistics(statistics);
         return r;
     }

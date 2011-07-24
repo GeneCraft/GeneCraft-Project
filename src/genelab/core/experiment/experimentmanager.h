@@ -53,7 +53,7 @@ namespace GeneLabCore {
     protected:
         // To simulate a specific entity
         Entity* spawnEntity(QVariant genome);
-        bool stabilizeEntity(Entity* e);
+        bool stabilizeEntity(Entity* e, Result* r);
         bool simulateEntity(Entity* e);
         float evaluateEntity(Entity* e);
         void engineStep();

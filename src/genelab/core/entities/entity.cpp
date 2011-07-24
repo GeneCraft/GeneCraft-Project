@@ -210,4 +210,11 @@ bool Entity::isAlive() {
     return this->treeShape->getRoot()->isInOnePiece();
 }
 
+void Entity::setOutFromAge() {
+    if(this->outsFromScripts.contains(this->age)) {
+        qDebug() << "changement d'out par scripting d'entite." << outsFromScripts[this->age];
+        this->treeShape->getRoot()->setOutputsFrom(outsFromScripts[this->age]);
+    }
+}
+
 }

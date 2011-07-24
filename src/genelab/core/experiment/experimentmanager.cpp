@@ -168,7 +168,7 @@ namespace GeneLabCore {
 
         // Creating N new spider
         for(int i = 0; i < this->popSize; i++) {
-            newPop.append(new Result(exp->getId(), -1, this->randomNewEntity(), this->workerName));
+            newPop.append(new Result(exp->getId(), -1, 0, this->randomNewEntity(), this->workerName));
         }
 
         // Adding the population to the experience
@@ -278,7 +278,7 @@ namespace GeneLabCore {
             Result* r = results->getBestResults().at(i);
 
             // Mutation of best one
-            newActivePop.append(new Result(this->exp->getId(), -1,
+            newActivePop.append(new Result(this->exp->getId(), -1, 0,
                                            mutations->mutateEntity(r->getGenome()), this->workerName));
             qDebug() << "loading mutation of best results with fitness " << r->getFitness();
         }
@@ -296,7 +296,7 @@ namespace GeneLabCore {
             QVariant newGenome = mutations->mutateEntity(genome);
 
             // Adding to the active population
-            newActivePop.append(new Result(exp->getId(), -1, newGenome, workerName));
+            newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
             qDebug() << "loading mutation of random results with fitness " << r->getFitness();
         }
 
@@ -312,7 +312,7 @@ namespace GeneLabCore {
             Result* r = activePop.at(i);
 
             // Mutation of best one
-            newActivePop.append( new Result(this->exp->getId(), -1,
+            newActivePop.append( new Result(this->exp->getId(), -1, 0,
                                             mutations->mutateEntity(r->getGenome()), this->workerName));
             qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
         }
@@ -329,7 +329,7 @@ namespace GeneLabCore {
             QVariant newGenome = mutations->mutateEntity(genome);
 
             // Adding to the active population
-            newActivePop.append(new Result(exp->getId(), -1, newGenome, workerName));
+            newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
             qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
         }
 
@@ -337,7 +337,7 @@ namespace GeneLabCore {
         int needed = this->popSize - newActivePop.length();
         for(int i = 0; i < needed; i++) {
             QVariant newGenome = this->randomNewEntity();
-            newActivePop.append(new Result(exp->getId(), -1, newGenome, workerName));
+            newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
             qDebug() << "new random genome from seeds !";
         }
 
@@ -356,13 +356,13 @@ namespace GeneLabCore {
             }
 
             e->setAge(0);
-            e->getShape()->getRoot()->setOutputsFrom(1); // From brain
+            e->getShape()->getRoot()->setOutputsFrom(fromBrain); // From brain
 
             bool stable, simulated;
             float fitness;
 
             if(exp->getOnlyIfEntityIsStable())
-                stable = this->stabilizeEntity(e);
+                stable = this->stabilizeEntity(e, r);
             else
                 stable = true;
 
@@ -407,9 +407,9 @@ namespace GeneLabCore {
         return e;
     }
 
-    bool ExperimentManager::stabilizeEntity(Entity* e) {
+    bool ExperimentManager::stabilizeEntity(Entity* e, Result* r) {
         // Outputs from brain
-        e->getShape()->getRoot()->setOutputsFrom(1); // Brain
+        e->getShape()->getRoot()->setOutputsFrom(fromBrain); // Brain
         this->engineStep();
 
         QScriptValue valid = this->validityFunc.call();
@@ -426,19 +426,19 @@ namespace GeneLabCore {
         }
 
         // Outputs disables
-        e->getShape()->getRoot()->setOutputsFrom(3); // To normal position
+        e->getShape()->getRoot()->setOutputsFrom(fromNormal); // To normal position
 
         // Get the specific velocity value
         Statistic* s = e->getStatisticByName("rootAbsVelocity");
 
         int stableCpt = 0;
-        int maxStableTry = 300;
         int neededStableCpt = 60;
 
         // Not stable at the moment
         bool stable = false;
 
-        for(int i = 0; i < maxStableTry && exp->getOnlyIfEntityIsStable(); i++) {
+        for(int i = 0; i < exp->getTimeToWaitForStability() && exp->getOnlyIfEntityIsStable(); i++) {
+            qDebug() << s->getValue();
             if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
@@ -447,7 +447,7 @@ namespace GeneLabCore {
 
             if(stableCpt > neededStableCpt) {
                 stable = true;
-                qDebug() << "stable at " << i;
+                r->setStableAt(i);
                 break;
             }
 
@@ -462,7 +462,7 @@ namespace GeneLabCore {
         }
 
         e->setAge(0);
-        e->getShape()->getRoot()->setOutputsFrom(1); // From brain
+        e->getShape()->getRoot()->setOutputsFrom(fromBrain); // From brain
 
         return stable;
     }

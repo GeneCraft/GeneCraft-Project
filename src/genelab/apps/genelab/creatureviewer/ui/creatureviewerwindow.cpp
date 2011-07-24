@@ -76,6 +76,8 @@
 #include "engines/ogre/entities/ogrefreecamera.h"
 #include "world/btworld.h"
 
+#include "body/fixation.h"
+
 using namespace GeneLabCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
@@ -561,7 +563,10 @@ void CreatureViewerWindow::addEntity(QVariantMap entityData, Ressource *ressourc
 }
 
 void CreatureViewerWindow::addResult(QVariantMap resultData, GeneLabCore::Ressource *ressource) {
-    createCreature(resultData, world->getSpawnPosition(), ressource);
+    Entity* e = createCreature(resultData, world->getSpawnPosition(), ressource);
+    e->addOutScript(0, fromNormal); // Normal position during stability time
+    e->addOutScript(resultData["stable"].toInt(), fromBrain); // Next from brain
+    e->setAge(0);
 }
 
 void CreatureViewerWindow::loadEntityFromFile()

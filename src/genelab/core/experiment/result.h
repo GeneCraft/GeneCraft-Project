@@ -20,7 +20,7 @@ namespace GeneLabCore {
           * A result is a fitness for a genome, and the ressource where this result is stored
           * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
           */
-        Result(QString expId, float fitness, QVariant genome,
+        Result(QString expId, float fitness, int stableTime, QVariant genome,
                QString workerName = "Anonymous",
                QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
                );
@@ -110,6 +110,14 @@ namespace GeneLabCore {
             return this->statistics;
         }
 
+        void setStableAt(int cpt) {
+            this->stableTime = cpt;
+        }
+
+        int getStable() {
+            return this->stableTime;
+        }
+
     protected:
         // Score
         float fitness;
@@ -127,6 +135,8 @@ namespace GeneLabCore {
         bool broadcasted;
         // The entity statistics
         QVariant statistics;
+        // Stability reached at
+        int stableTime;
     };
 }
 

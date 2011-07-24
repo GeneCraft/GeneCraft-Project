@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include "genelabcoreclasses.h"
-#include "widgets/entities/entitypropertiescontroller.h"
+#include "statistics/statisticsstorage.h"
+#include "body/fixation.h"
 #include "brain/brainfunctional.h"
 
 namespace GeneLabCore {
@@ -99,11 +100,22 @@ public:
 
     void setAge(int age) {
         this->age = age;
+        this->setOutFromAge();
     }
 
     void incrAge() {
         this->age++;
+        this->setOutFromAge();
     }
+
+    void addOutScript(int age, MotorFrom from) {
+        if(this->outsFromScripts.contains(age)) {
+            this->outsFromScripts.remove(age);
+        }
+        this->outsFromScripts.insert(age, from);
+    }
+
+    void setOutFromAge();
 
     bool isAlive();
 
@@ -132,6 +144,9 @@ protected:
     Statistic*         brainActivityStat;
     Statistic*         brainPlugGridSizeStat;
     StatisticsStorage *statisticsStorage;
+
+    // Scripting
+    QMap<int, MotorFrom> outsFromScripts;
 
     // Qt Render
     //static EntityPropertiesController *inspectorWidget;

@@ -20,6 +20,7 @@
 #include "widgets/entities/fixationpropertiescontroller.h"
 
 #include "tools.h"
+#include "effectors/effector.h"
 
 
 namespace GeneLabCore {
@@ -361,7 +362,7 @@ namespace GeneLabCore {
     // -- TOOLS --
     // -----------
 
-    void Fixation::setOutputsFrom(int action) {
+    void Fixation::setOutputsFrom(MotorFrom action) {
         QList<Bone *> bones = this->getBones();
         for(int i=0;i<bones.size();++i)
         {
@@ -369,16 +370,16 @@ namespace GeneLabCore {
 
             switch(action)
             {
-                case 0:
+                case fromDisabled:
                     bone->disableMotors();
                 break;
-                case 1:
+                case fromBrain:
                     bone->setBrainMotors();
                 break;
-                case 2:
+                case fromRandom:
                     bone->setRandomMotors();
                 break;
-                case 3:
+                case fromNormal:
                     bone->setNormalPositionMotors();
                 break;
             }

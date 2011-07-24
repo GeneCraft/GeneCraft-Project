@@ -8,6 +8,8 @@
 
 namespace GeneLabCore {
 
+    enum MotorFrom {fromDisabled, fromBrain, fromNormal, fromRandom};
+
     class Fixation : public QObject
     {
 
@@ -89,7 +91,7 @@ namespace GeneLabCore {
         void fixeInTheAir();
         void unfixInTheAir();
         bool isFixedInTheAir(){ return airFixation != 0; }
-        void setOutputsFrom(int from);
+        void setOutputsFrom(MotorFrom from);
         bool isInOnePiece();
 
         // The percent of penetration of bone into fixation (percent of fixation radius)
