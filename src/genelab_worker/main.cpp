@@ -47,6 +47,9 @@ using namespace GeneLabCore;
 
 int main(int argc, char *argv[])
 {
+qDebug() << sizeof(float);
+qDebug() << sizeof(double);
+	qDebug() << sizeof(btScalar);
     qsrand(time(NULL));
     srand(time(NULL));
     bool gui = false;

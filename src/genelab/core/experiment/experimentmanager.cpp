@@ -438,6 +438,7 @@ namespace GeneLabCore {
         bool stable = false;
 
         for(int i = 0; i < exp->getTimeToWaitForStability() && exp->getOnlyIfEntityIsStable(); i++) {
+		qDebug() << s->getValue();
             if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
