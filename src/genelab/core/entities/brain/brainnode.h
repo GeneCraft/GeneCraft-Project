@@ -73,23 +73,23 @@ protected:
 class BrainNodeIn : public BrainNode {
 
 public:
-    explicit BrainNodeIn(float x, float y) : BrainNode(INPUT) {
+    explicit BrainNodeIn(btScalar x, btScalar y) : BrainNode(INPUT) {
         this->x = x;
         this->y = y;
     }
 
-    float x, y;
+    btScalar x, y;
 
 };
 
 class BrainNodeConst : public BrainNode {
 
 public:
-    explicit BrainNodeConst(float constant) : BrainNode(CONSTANT) {
+    explicit BrainNodeConst(btScalar constant) : BrainNode(CONSTANT) {
         this->value = constant;
     }
 
-    float value;
+    btScalar value;
 
 };
 
@@ -108,7 +108,7 @@ public:
         }
     }
 
-    void insert(float value) {
+    void insert(btScalar value) {
         mem.append(value);
         if(mem.size() > size)
             mem.removeFirst();
@@ -119,7 +119,7 @@ public:
 
     int size;
     int cpt;
-    QList<float> mem;
+    QList<btScalar> mem;
 
 };
 

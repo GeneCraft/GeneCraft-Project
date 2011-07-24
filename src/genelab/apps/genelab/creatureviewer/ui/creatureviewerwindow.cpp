@@ -453,8 +453,8 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     QVariant originGenome = originEntity->serialize();
 
     // circle
-    float r = 3 * nbCreatures;
-    float angle = 2 * M_PI / nbCreatures;
+    btScalar r = 3 * nbCreatures;
+    btScalar angle = 2 * SIMD_PI / nbCreatures;
 
     // mutations
     for(int i = 0; i < nbCreatures; i++) {

@@ -52,20 +52,20 @@ namespace GeneLabCore {
 
     void FloatMutation::mutate(QVariantMap &map, QString key){
 
-        float newValue = this->mutate((float)map.value(key).toDouble());
+        btScalar newValue = this->mutate((btScalar)map.value(key).toDouble());
         map.insert(key,(double)newValue);
 
     }
 
-    float FloatMutation::mutate(float value) {
+    btScalar FloatMutation::mutate(btScalar value) {
 
         // mutation ?
         if(!canMutate()) {
             return value;
         }
 
-        //float newValue = value + Tools::random(minFact, maxFact) * value;
-        float newValue = value + (maxValue - minValue) * Tools::random(minFact, maxFact);
+        //btScalar newValue = value + Tools::random(minFact, maxFact) * value;
+        btScalar newValue = value + (maxValue - minValue) * Tools::random(minFact, maxFact);
 
         if(newValue < minValue)
             newValue = minValue;

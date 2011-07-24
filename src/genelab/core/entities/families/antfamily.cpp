@@ -52,19 +52,19 @@ Entity* AntFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 
 
     btQuaternion local;
 
-    local.setEulerZYX(M_PI/2.0,0,0);
-    Bone * bone = rootFix->addBone(0, M_PI/2.0f, 0.5, 0.5, trunkRadius, lowerLimits, upperLimits);
+    local.setEulerZYX(SIMD_PI/2.0,0,0);
+    Bone * bone = rootFix->addBone(0, SIMD_PI/2.0f, 0.5, 0.5, trunkRadius, lowerLimits, upperLimits);
 
     for(int i=0;i<3;++i)
     {
-        legLocal.setEulerZYX(0,0, M_PI / 6.0f * i + M_PI / 3.0);
-        addLeg(bone->getEndFixation(),M_PI / 2.0f, M_PI / 6.0f * i + M_PI / 3.0,lowerLimits,upperLimits);
+        legLocal.setEulerZYX(0,0, SIMD_PI / 6.0f * i + SIMD_PI / 3.0);
+        addLeg(bone->getEndFixation(),SIMD_PI / 2.0f, SIMD_PI / 6.0f * i + SIMD_PI / 3.0,lowerLimits,upperLimits);
     }
 
     for(int i=0;i<3;++i)
     {
-        legLocal.setEulerZYX(0,0, - M_PI / 6.0f * i - M_PI / 3.0);
-        addLeg(bone->getEndFixation(),M_PI / 2.0, -M_PI / 6.0f * i - M_PI / 3.0,lowerLimits,upperLimits);
+        legLocal.setEulerZYX(0,0, - SIMD_PI / 6.0f * i - SIMD_PI / 3.0);
+        addLeg(bone->getEndFixation(),SIMD_PI / 2.0, -SIMD_PI / 6.0f * i - SIMD_PI / 3.0,lowerLimits,upperLimits);
     }
 
     local.setEulerZYX(0,0,0);
@@ -85,12 +85,12 @@ void AntFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const 
 
     for(int i=1;i<nbBonesInLeg;++i)
     {
-        btVector3 lowerLimits(0,0,-M_PI/4);
-        btVector3 upperLimits(M_PI / 12,0,M_PI/4);
+        btVector3 lowerLimits(0,0,-SIMD_PI/4);
+        btVector3 upperLimits(SIMD_PI / 12,0,SIMD_PI/4);
         btQuaternion local;
-        local.setEulerZYX(M_PI/6.0,0,0);
+        local.setEulerZYX(SIMD_PI/6.0,0,0);
 
-        rootBone = rootBone->getEndFixation()->addBone(-yAxis, M_PI / 6,
+        rootBone = rootBone->getEndFixation()->addBone(-yAxis, SIMD_PI / 6,
                                                        btScalar(legRadius - legRadius*(i/nbBonesInLeg)),
                                                        btScalar(legLenght - legLenght*(i/nbBonesInLeg)),
                                                        btScalar(kneeRadius),

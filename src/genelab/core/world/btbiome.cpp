@@ -10,7 +10,7 @@ namespace GeneLabCore {
     }
 
     void btBiome::setup() {
-        float gravity = data["gravity"].toFloat();
+        btScalar gravity = data["gravity"].toFloat();
         world->setGravity(btVector3(0,-gravity,0));
     }
 

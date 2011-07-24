@@ -9,13 +9,13 @@ namespace GeneLabCore {
     }
 
     int Tools::random(int min, int max) {
-        //return (int)((max - min) * qrand()/(float) RAND_MAX + min);
-        //return min+int((max-min)*(float)qrand()/(RAND_MAX));
+        //return (int)((max - min) * qrand()/(btScalar) RAND_MAX + min);
+        //return min+int((max-min)*(btScalar)qrand()/(RAND_MAX));
         return min + (qrand() % (int)(max - min + 1));
     }
 
-    float Tools::random(float min, float max) {
-        return ((max - min) * ((float) qrand()/RAND_MAX)) + min;
+    btScalar Tools::random(btScalar min, btScalar max) {
+        return ((max - min) * ((btScalar) qrand()/RAND_MAX)) + min;
     }
 
     double Tools::random(double min, double max) {

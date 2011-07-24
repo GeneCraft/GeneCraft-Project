@@ -60,7 +60,7 @@ namespace GeneLabCore {
       * A result is a fitness for a genome, and the ressource where this result is stored
       * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
       */
-    Result::Result(QString expId, float fitness, int stableTime, QVariant genome,
+    Result::Result(QString expId, btScalar fitness, int stableTime, QVariant genome,
            QString worker, QString date) {
         this->exp = expId;
         this->fitness = fitness;
@@ -109,7 +109,7 @@ namespace GeneLabCore {
 
         QVariantMap dataMap = data.toMap();
 
-        float fitness = dataMap["fitness"].toFloat(&ok);
+        btScalar fitness = dataMap["fitness"].toFloat(&ok);
         if(!ok)
             return new Result();
 

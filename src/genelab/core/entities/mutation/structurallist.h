@@ -3,19 +3,20 @@
 
 #include <QVariant>
 #include <QMap>
+#include "LinearMath/btScalar.h"
 
 namespace GeneLabCore {
 
 class MutationElement {
  public:
 
-    MutationElement(QString name, int type, float weight);
+    MutationElement(QString name, int type, btScalar weight);
     MutationElement(QVariant variant);
     QVariant serialize();
 
     QString name;
     int type;
-    float weight;
+    btScalar weight;
 };
 
 class StructuralList

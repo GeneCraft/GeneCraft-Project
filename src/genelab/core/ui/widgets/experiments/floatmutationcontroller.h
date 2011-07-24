@@ -18,14 +18,14 @@ public:
 
     void createForm(QString name);
 
-//    void setProbability(float probability);
-//    float getProbability();
+//    void setProbability(btScalar probability);
+//    btScalar getProbability();
 
-//    void setMinFactor(float minFactor);
-//    float getMinFactor();
+//    void setMinFactor(btScalar minFactor);
+//    btScalar getMinFactor();
 
-//    void setMaxFactor(float maxFactor);
-//    float getMaxFactor();
+//    void setMaxFactor(btScalar maxFactor);
+//    btScalar getMaxFactor();
 
     GeneLabCore::FloatMutation *mutation;
 

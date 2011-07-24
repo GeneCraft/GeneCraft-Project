@@ -274,20 +274,20 @@ QVariant Bone::generateEmpty() {
 
     // Yaw & Roll
     QVariantMap localRotation;
-    localRotation.insert("y",QVariant((double)Tools::random(-M_PI,M_PI)));
-    localRotation.insert("z",QVariant((double)Tools::random(-M_PI,M_PI)));
+    localRotation.insert("y",QVariant((double)Tools::random(-SIMD_PI,SIMD_PI)));
+    localRotation.insert("z",QVariant((double)Tools::random(-SIMD_PI,SIMD_PI)));
     bone.insert("localRotation",localRotation);
 
     // Limits
     QVariantMap lowerlimits, upperlimits;
 
-    float lowerLimit_x = Tools::random(-M_PI/6.,   0.);
-    float lowerLimit_y = Tools::random(-M_PI/6.,   0.);
-    float lowerLimit_z = Tools::random(-M_PI/6.,   0.);
+    btScalar lowerLimit_x = Tools::random(-SIMD_PI/6.,   0.);
+    btScalar lowerLimit_y = Tools::random(-SIMD_PI/6.,   0.);
+    btScalar lowerLimit_z = Tools::random(-SIMD_PI/6.,   0.);
 
-    float upperlimits_x = Tools::random(0.,    M_PI/6.);
-    float upperlimits_y = Tools::random(0.,    M_PI/6.);
-    float upperlimits_z = Tools::random(0.,    M_PI/6.);
+    btScalar upperlimits_x = Tools::random(0.,    SIMD_PI/6.);
+    btScalar upperlimits_y = Tools::random(0.,    SIMD_PI/6.);
+    btScalar upperlimits_z = Tools::random(0.,    SIMD_PI/6.);
 
     lowerlimits.insert("x",QVariant((double)lowerLimit_x));
     lowerlimits.insert("y",QVariant((double)lowerLimit_y));

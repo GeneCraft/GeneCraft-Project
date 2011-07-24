@@ -115,7 +115,7 @@ void CreatureViewerInputManager::pickBody()
     if(!this->world)
         return;
 
-    const float RAY_LENGTH = 1000.0;
+    const btScalar RAY_LENGTH = 1000.0;
 
     // front of the camera (fps)
     // Ogre::Vector3 ogreRayFrom = camera->getPosition();
@@ -125,8 +125,8 @@ void CreatureViewerInputManager::pickBody()
 
     // under mouse pointer
     OgreWidget *ogreWidget = btoEngine->getOgreEngine()->getOgreWidget("MainWidget"); // TODO pass this widget in constructor or not ?
-    float normalisedMouseX = mousePos.x() / (float) ogreWidget->width();
-    float normalisedMouseY = mousePos.y() / (float) ogreWidget->height();
+    btScalar normalisedMouseX = mousePos.x() / (btScalar) ogreWidget->width();
+    btScalar normalisedMouseY = mousePos.y() / (btScalar) ogreWidget->height();
     Ogre::Ray ogreRay = camera->getCameraToViewportRay(normalisedMouseX,normalisedMouseY);
     Ogre::Vector3 ogreRayFrom = ogreRay.getOrigin();
     Ogre::Vector3 ogreRayTo = ogreRay.getOrigin() +  ogreRay.getDirection() * RAY_LENGTH;

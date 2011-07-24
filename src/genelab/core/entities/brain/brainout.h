@@ -13,24 +13,24 @@ namespace GeneLabCore {
     {
         Q_OBJECT
     public:
-        explicit BrainOut(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
+        explicit BrainOut(btScalar min = 0.0f, btScalar max = 100.0f, QObject *parent = 0);
         BrainOut(QVariant data);
         QVariant serialize();
     signals:
-        void newValue(float value);
+        void newValue(btScalar value);
 
     public slots:
         /**
           * Get the value, will be "unormalized" with min and max
           */
-        float getValue() {
+        btScalar getValue() {
             return value;
         }
 
         /**
           * Set the normalized value [-1, 1]
           */
-        void  setValue(float value) {
+        void  setValue(btScalar value) {
             // Un noramlization
             this->value = (value + 1.0f) / 2.0f * (max - min) + min;
             if(this->value > max) {
@@ -50,13 +50,13 @@ namespace GeneLabCore {
             return this->connexionInfo;
         }
 
-        void setMin(float min) { this->min = min; }
-        void setMax(float max) { this->max = max; }
+        void setMin(btScalar min) { this->min = min; }
+        void setMax(btScalar max) { this->max = max; }
 
     private:
-        float min;
-        float max;
-        float value;
+        btScalar min;
+        btScalar max;
+        btScalar value;
         QVariant connexionInfo;
 
     };

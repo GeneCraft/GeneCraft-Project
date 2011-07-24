@@ -8,8 +8,6 @@
 #include "bullet/rigidbodyorigin.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
-#define PI 3.14159265
-
 namespace GeneLabCore {
 
 btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform, const btScalar density) : btShape(world), shape(NULL)
@@ -56,7 +54,7 @@ btScalar btSphere::getMass() const
 btScalar btSphere::computeMass() const
 {
     // volume * density
-    return 4/3.*M_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * density ;
+    return 4/3.*SIMD_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * density ;
 }
 
 void btSphere::setup()

@@ -25,7 +25,7 @@
 #include <QTimer>
 
 
-float roundPrecision(float n, int precision = 2)
+btScalar roundPrecision(btScalar n, int precision = 2)
 {
       int precision_pow10 = pow(10,precision);
       n*=precision_pow10;

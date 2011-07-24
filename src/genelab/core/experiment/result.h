@@ -4,6 +4,7 @@
 #include "factories/ressources/ressource.h"
 #include <QVariant>
 #include <QDateTime>
+#include "LinearMath/btScalar.h"
 
 namespace GeneLabCore {
 
@@ -20,7 +21,7 @@ namespace GeneLabCore {
           * A result is a fitness for a genome, and the ressource where this result is stored
           * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
           */
-        Result(QString expId, float fitness, int stableTime, QVariant genome,
+        Result(QString expId, btScalar fitness, int stableTime, QVariant genome,
                QString workerName = "Anonymous",
                QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
                );
@@ -50,7 +51,7 @@ namespace GeneLabCore {
 
         static Result* loadResult(QVariant data, bool& ok);
 
-        float getFitness() const {
+        btScalar getFitness() const {
             return fitness;
         }
 
@@ -70,7 +71,7 @@ namespace GeneLabCore {
             return date;
         }
 
-        void setFitness(float fitness) {
+        void setFitness(btScalar fitness) {
             this->fitness = fitness;
         }
 
@@ -120,7 +121,7 @@ namespace GeneLabCore {
 
     protected:
         // Score
-        float fitness;
+        btScalar fitness;
         // Entity
         QVariant genome;
         // Where to store it

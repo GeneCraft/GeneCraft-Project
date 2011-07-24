@@ -22,10 +22,10 @@ SpiderFamily::SpiderFamily() :
 {
     nbLegs      = 4;
     nbBoneInLeg = 3;
-    legRadius   = ((float)qrand())/RAND_MAX * 0.4 + 0.1;
-    legLenght   = ((float)qrand())/RAND_MAX * 2 + 0.5;
-    kneeRadius  = ((float)qrand())/RAND_MAX * 0.4 + 0.1;
-    headRadius  = ((float)qrand())/RAND_MAX * 1. + legRadius*nbLegs/1.5 + 0.2;
+    legRadius   = ((btScalar)qrand())/RAND_MAX * 0.4 + 0.1;
+    legLenght   = ((btScalar)qrand())/RAND_MAX * 2 + 0.5;
+    kneeRadius  = ((btScalar)qrand())/RAND_MAX * 0.4 + 0.1;
+    headRadius  = ((btScalar)qrand())/RAND_MAX * 1. + legRadius*nbLegs/1.5 + 0.2;
 }
 
 Entity* SpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
@@ -50,13 +50,13 @@ Entity* SpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVecto
 
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(rootFix,-i*((M_PI)/(nbLegs+1)), M_PI / 2.f,lowerLimits,upperLimits);
+        addLeg(rootFix,-i*((SIMD_PI)/(nbLegs+1)), SIMD_PI / 2.f,lowerLimits,upperLimits);
     }
 
 
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(rootFix,i*((M_PI)/(nbLegs+1)), M_PI / 2.f,lowerLimits,upperLimits);
+        addLeg(rootFix,i*((SIMD_PI)/(nbLegs+1)), SIMD_PI / 2.f,lowerLimits,upperLimits);
     }
 
     return ent;
@@ -76,9 +76,9 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
-        btVector3 lowerLimits(0,0,-M_PI/10.);
-        btVector3 upperLimits(0,0,M_PI/10.);
-        float ang =  M_PI / 12.f;
+        btVector3 lowerLimits(0,0,-SIMD_PI/10.);
+        btVector3 upperLimits(0,0,SIMD_PI/10.);
+        btScalar ang =  SIMD_PI / 12.f;
         rootBone = rootBone->getEndFixation()->addBone(0, ang,
                                                        btScalar(legRadius - legRadius*(i/nbBoneInLeg)),
                                                        btScalar(legLenght - legLenght*(i/nbBoneInLeg)),
@@ -94,10 +94,10 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));
     }
     {
-        btVector3 lowerLimits(0,0,-M_PI/4.);
+        btVector3 lowerLimits(0,0,-SIMD_PI/4.);
         btVector3 upperLimits(0,0,0);
         rootBone->getEndFixation()->addBone(0,
-                                            - M_PI / 4.,
+                                            - SIMD_PI / 4.,
                                             btScalar(legRadius),
                                             btScalar(legLenght/2.),
                                             btScalar(kneeRadius/3.),

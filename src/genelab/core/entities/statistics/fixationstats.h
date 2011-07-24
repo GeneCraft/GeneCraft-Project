@@ -35,7 +35,7 @@ protected:
 
     // specific data
     int nbSteps;
-    float distance;
+    btScalar distance;
     btVector3 previousOriginAbs;
     btVector3 previousOriginRel,previousOriginY,previousOriginX,previousOriginZ;
     btVector3 refOriginRel, refOriginX, refOriginY, refOriginZ;

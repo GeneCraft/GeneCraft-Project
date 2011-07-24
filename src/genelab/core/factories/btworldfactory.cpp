@@ -88,14 +88,14 @@ namespace GeneLabCore {
 //        for(int i=0;i<100;++i)
 //            createSphere(shapes,1,
 //                         btVector3(Tools::random(-100.0, 100.0),10,Tools::random(-100.0, 100.0)),
-//                         btVector3(Tools::random(-M_PI, M_PI),Tools::random(-M_PI, M_PI),Tools::random(-M_PI, M_PI)),
+//                         btVector3(Tools::random(-SIMD_PI, SIMD_PI),Tools::random(-SIMD_PI, SIMD_PI),Tools::random(-SIMD_PI, SIMD_PI)),
 //                         5.0);
 
 //        // Cylinders sample
 //        for(int i=0;i<100;++i)
 //            createCylinder(shapes,1,5,
 //                         btVector3(Tools::random(-100.0, 100.0),10,Tools::random(-100.0, 100.0)),
-//                         btVector3(Tools::random(-M_PI, M_PI),Tools::random(-M_PI, M_PI),Tools::random(-M_PI, M_PI)),
+//                         btVector3(Tools::random(-SIMD_PI, SIMD_PI),Tools::random(-SIMD_PI, SIMD_PI),Tools::random(-SIMD_PI, SIMD_PI)),
 //                         5.0);
 
         sceneData.insert("shapes", shapes);
@@ -217,9 +217,9 @@ namespace GeneLabCore {
                            size.y()/2.0,
                            Tools::random(-areaZ/2.0, areaZ/2.0));
 
-            btVector3 euler(Tools::random(-M_PI, M_PI),
-                            Tools::random(-M_PI, M_PI),
-                            Tools::random(-M_PI, M_PI));
+            btVector3 euler(Tools::random(-SIMD_PI, SIMD_PI),
+                            Tools::random(-SIMD_PI, SIMD_PI),
+                            Tools::random(-SIMD_PI, SIMD_PI));
 
             createBox(shapesList,size,pos + localPos, euler, density);
         }

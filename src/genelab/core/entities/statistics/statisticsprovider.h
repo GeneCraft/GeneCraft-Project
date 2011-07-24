@@ -2,7 +2,6 @@
 #define STATISTICSPROVIDER_H
 
 #include <QString>
-#include <float.h>
 #include <QDebug>
 #include "genelabcoreclasses.h"
 

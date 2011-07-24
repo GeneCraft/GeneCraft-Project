@@ -12,8 +12,8 @@ BoneLimitsMutation::BoneLimitsMutation()
     axisMutation->probability    = 0.1;
     axisMutation->minFact        = -0.1;
     axisMutation->maxFact        =  0.1;
-    axisMutation->minValue       = -M_PI;
-    axisMutation->maxValue       =  M_PI;
+    axisMutation->minValue       = -SIMD_PI;
+    axisMutation->maxValue       =  SIMD_PI;
 }
 
 void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimits)
@@ -23,19 +23,19 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
     for(int i=0;i<3;i++){
 
         QString axis = allAxis[i];
-        float loValue = lowerLimits[axis].toDouble();
-        float upValue = upperLimits[axis].toDouble();
+        btScalar loValue = lowerLimits[axis].toDouble();
+        btScalar upValue = upperLimits[axis].toDouble();
 
         loValue = axisMutation->mutate(loValue);
         upValue = axisMutation->mutate(upValue);
 
-        // Y axis limited between -M_PI/2..M_PI/2
+        // Y axis limited between -SIMD_PI/2..SIMD_PI/2
         if(axis == "y") {
-            if(loValue < -M_PI_2+0.1)
-                loValue = -M_PI_2+0.1;
+            if(loValue < -SIMD_HALF_PI+0.1)
+                loValue = -SIMD_HALF_PI+0.1;
 
-            if(upValue > M_PI_2-0.1)
-                upValue = M_PI_2-0.1;
+            if(upValue > SIMD_HALF_PI-0.1)
+                upValue = SIMD_HALF_PI-0.1;
         }
 
         // 0 must be included between lo and up

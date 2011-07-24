@@ -27,7 +27,7 @@ protected:
     btSphereShape* shape;
     btDefaultMotionState* motionState;
     RigidBodyOrigin* origin;
-    float density;
+    btScalar density;
 };
 
 }

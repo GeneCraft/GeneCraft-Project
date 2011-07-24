@@ -78,7 +78,7 @@ namespace GeneLabCore {
         this->probFromRandomNew    = selectionMap["randomNew"].toDouble();
 
         // Normalisation of probability
-        float sumProb = probFromBestsPop + probFromBestsResult + probFromRandomNew
+        btScalar sumProb = probFromBestsPop + probFromBestsResult + probFromRandomNew
                         + probFromRandomPop + probFromRandomResult;
 
         this->probFromBestsPop     /= sumProb;
@@ -359,7 +359,7 @@ namespace GeneLabCore {
             e->getShape()->getRoot()->setOutputsFrom(fromBrain); // From brain
 
             bool stable, simulated;
-            float fitness;
+            btScalar fitness;
 
             if(exp->getOnlyIfEntityIsStable())
                 stable = this->stabilizeEntity(e, r);
@@ -489,7 +489,7 @@ namespace GeneLabCore {
         return true;
     }
 
-    float ExperimentManager::evaluateEntity(Entity*) {
+    btScalar ExperimentManager::evaluateEntity(Entity*) {
         // Call to the fitness function
         QScriptValue fitness = fitnessFunc.call();
         return fitness.toNumber();

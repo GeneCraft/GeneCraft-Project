@@ -13,11 +13,11 @@ namespace GeneLabCore {
         QVariant serialize();
 
         void mutate(QVariantMap &map, QString key);
-        float mutate(float value);
-        float minFact;
-        float maxFact;
-        float minValue;
-        float maxValue;
+        btScalar mutate(btScalar value);
+        btScalar minFact;
+        btScalar maxFact;
+        btScalar minValue;
+        btScalar maxValue;
     };
 
 }

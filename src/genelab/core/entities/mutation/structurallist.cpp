@@ -5,7 +5,7 @@
 
 namespace GeneLabCore {
 
-MutationElement::MutationElement(QString name, int type, float weight) {
+MutationElement::MutationElement(QString name, int type, btScalar weight) {
     this->name = name;
     this->type = type;
 
@@ -48,15 +48,15 @@ StructuralList::StructuralList(QVariant variant) {
 
 MutationElement *StructuralList::pickOne() {
     // Compute the sum of weights
-    float totalWeight = 0.f;
+    btScalar totalWeight = 0.f;
     foreach(MutationElement *element, elements)
         totalWeight += element->weight;
 
     // get a random value in range
-    float rand = Tools::random(0.f,totalWeight);
+    btScalar rand = Tools::random(0.f,totalWeight);
 
     // find the element
-    float sum = 0.f;
+    btScalar sum = 0.f;
     for(int i=0;i< elements.count();++i){
 
         if(sum > rand) // not possible at the first iteration

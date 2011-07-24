@@ -2,6 +2,7 @@
 #define MUTATION_H
 
 #include <QVariant>
+#include "LinearMath/btScalar.h"
 
 namespace GeneLabCore {
 
@@ -9,7 +10,7 @@ namespace GeneLabCore {
 
     class Mutation {
     public:
-        float probability;
+        btScalar probability;
         virtual void mutate(QVariantMap &map, QString key);
         bool canMutate();
         bool enable;

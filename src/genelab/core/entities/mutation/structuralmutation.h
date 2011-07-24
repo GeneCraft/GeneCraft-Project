@@ -2,6 +2,7 @@
 #define STRUCTURALMUTATION_H
 
 #include <QVariant>
+#include "LinearMath/btScalar.h"
 
 namespace GeneLabCore {
 
@@ -16,9 +17,9 @@ public:
     bool checkDelete();
     bool checkReplace();
 
-    float addProbability;
-    float deleteProbability;
-    float replaceProbability;
+    btScalar addProbability;
+    btScalar deleteProbability;
+    btScalar replaceProbability;
 
     bool enable;
 };

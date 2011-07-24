@@ -23,8 +23,8 @@ class BrainOutMotor
 public:
 
     BrainOutMotor(btRotationalLimitMotor * motor,
-                  float min_Contraction = MIN_CONTRACTION, float max_Contraction = MAX_CONTRACTION,
-                  float min_Expansion = MIN_EXPANSION, float max_Expansion = MAX_EXPANSION) : motor(motor)
+                  btScalar min_Contraction = MIN_CONTRACTION, btScalar max_Contraction = MAX_CONTRACTION,
+                  btScalar min_Expansion = MIN_EXPANSION, btScalar max_Expansion = MAX_EXPANSION) : motor(motor)
     {
         boMaxMotorForce = new BrainOut(min_Contraction,max_Contraction);
         boTargetVelocity = new BrainOut(min_Expansion,max_Expansion);

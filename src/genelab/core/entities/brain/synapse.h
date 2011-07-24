@@ -9,7 +9,7 @@
 namespace GeneLabCore {
 
     typedef struct NeuralConnexion {
-        NeuralConnexion(float x, float y, float distance, float weight) {
+        NeuralConnexion(btScalar x, btScalar y, btScalar distance, btScalar weight) {
             this->x = x;
             this->y = y;
             this->weight = weight;
@@ -23,9 +23,9 @@ namespace GeneLabCore {
             return this->x == b.x && this->y == b.y;
         }
 
-        float x, y;     // Connexion point. grid's pourcent position [0.0-1.0]
-        float weight;   // Weight of the connexion
-        float distance; // distance of propagation
+        btScalar x, y;     // Connexion point. grid's pourcent position [0.0-1.0]
+        btScalar weight;   // Weight of the connexion
+        btScalar distance; // distance of propagation
 
     } NeuralConnexion;
 
@@ -48,7 +48,7 @@ namespace GeneLabCore {
                                                     Tools::random(-1.0,1.0))); // Poid
         }
 
-        void connectTo(float x, float y, float dist, float weight = 1.0f) {
+        void connectTo(btScalar x, btScalar y, btScalar dist, btScalar weight = 1.0f) {
             this->connexions.append(NeuralConnexion(x, y, dist, weight));
         }
 

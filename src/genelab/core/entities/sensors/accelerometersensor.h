@@ -40,7 +40,7 @@ public:
 private:
 
 
-    float tmpMinAcc, tmpMaxAcc;
+    btScalar tmpMinAcc, tmpMaxAcc;
     BrainIn * inputX, * inputY, * inputZ;
     btVector3 oldPosition, oldSpeed;
 

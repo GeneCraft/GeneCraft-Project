@@ -6,8 +6,6 @@
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>
 
-#define PI 3.14159265
-
 namespace GeneLabCore {
 
 btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density) :
@@ -35,7 +33,7 @@ void btCylinder::init(btScalar radius, btScalar height, btScalar density, const 
     shape = new btCylinderShape(btVector3(radius,height/2.0,radius));
 
     // body
-    float vol = PI*radius*radius*height;
+    btScalar vol = SIMD_PI*radius*radius*height;
     btScalar mass = vol*density;
     btVector3 localInertia(0,0,0);
     shape->calculateLocalInertia(mass,localInertia);

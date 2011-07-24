@@ -60,9 +60,9 @@ namespace GeneLabCore {
         entity->setShape(shape);
 
         // liberty angle
-        float xAngle = M_PI * 0.06;
-        float yAngle = 0;
-        float zAngle = M_PI * 0.5;
+        btScalar xAngle = SIMD_PI * 0.06;
+        btScalar yAngle = 0;
+        btScalar zAngle = SIMD_PI * 0.5;
 
         Bone* b;
 
@@ -72,7 +72,7 @@ namespace GeneLabCore {
             if(i == 0){
 
                 // neck
-                b = root->addBone(0., M_PI/2.,
+                b = root->addBone(0., SIMD_PI/2.,
                                   pieceRadius,
                                   pieceLength / 3.f,
                                   fixRadius,
@@ -97,12 +97,12 @@ namespace GeneLabCore {
 
             // add legs
             for(int i=-1;i<2;i+=2) {
-                b = root->addBone(M_PI / 6 * i, M_PI / 2,
+                b = root->addBone(SIMD_PI / 6 * i, SIMD_PI / 2,
                               legRadius,
                               legLength,
                               legRadius,
-                              btVector3(-M_PI / 10,0,-M_PI / 10),
-                              btVector3(M_PI / 10,0,M_PI / 10));
+                              btVector3(-SIMD_PI / 10,0,-SIMD_PI / 10),
+                              btVector3(SIMD_PI / 10,0,SIMD_PI / 10));
 
                 //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
                 //b->getEndFixation()->addSensor(new PositionSensor(shape->getRoot(),b->getEndFixation()));
@@ -115,17 +115,17 @@ namespace GeneLabCore {
             root = reelRoot;
             for(int j=0; j< antennaPieces; j++) {
 
-                float yAxis, zAxis;
+                btScalar yAxis, zAxis;
 
                 // first piece of antenna
                 if(j == 0){
-                    yAxis = M_PI / 2. + M_PI / 8 * i;
-                    zAxis = M_PI * 0.7;
+                    yAxis = SIMD_PI / 2. + SIMD_PI / 8 * i;
+                    zAxis = SIMD_PI * 0.7;
                 }
                 // others
                 else{
-                    yAxis = M_PI / 8 * i;
-                    zAxis = -M_PI * Tools::random(0.1f,0.4f);
+                    yAxis = SIMD_PI / 8 * i;
+                    zAxis = -SIMD_PI * Tools::random(0.1f,0.4f);
                 }
 
                 // add new piece

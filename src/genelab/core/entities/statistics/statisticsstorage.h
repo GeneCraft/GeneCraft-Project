@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include <QString>
-#include <float.h>
+#include"LinearMath/btScalar.h"
 
 namespace GeneLabCore{
 
@@ -18,11 +18,11 @@ class Statistic : public QObject
                [DESIGNABLE bool]
                [SCRIPTABLE bool]
                [STORED bool])*/
-    Q_PROPERTY(float value READ getValue WRITE setValue)
-    Q_PROPERTY(float min READ getMinValue)
-    Q_PROPERTY(float max READ getMaxValue)
-    Q_PROPERTY(float mean READ getMean)
-    Q_PROPERTY(float sum READ getSum)
+    Q_PROPERTY(btScalar value READ getValue WRITE setValue)
+    Q_PROPERTY(btScalar min READ getMinValue)
+    Q_PROPERTY(btScalar max READ getMaxValue)
+    Q_PROPERTY(btScalar mean READ getMean)
+    Q_PROPERTY(btScalar sum READ getSum)
 
     public :
 
@@ -31,7 +31,7 @@ class Statistic : public QObject
     }
 
     // To get unit
-    void setValue(float value)
+    void setValue(btScalar value)
     {
         this->value = value;
 
@@ -49,7 +49,7 @@ class Statistic : public QObject
     }
 
     // To get unit
-    float getValue() {
+    btScalar getValue() {
         return value;
     }
 
@@ -64,17 +64,17 @@ class Statistic : public QObject
     }
 
     // To get minimal value
-    float getMinValue() {
+    btScalar getMinValue() {
         return min;
     }
 
     // To get maximal value
-    float getMaxValue() {
+    btScalar getMaxValue() {
         return max;
     }
 
     // To get average value
-    float getMean() {
+    btScalar getMean() {
         if(nbValues > 0)
             return sum / nbValues;
         else
@@ -82,7 +82,7 @@ class Statistic : public QObject
     }
 
     // To get sum of values
-    float getSum() {
+    btScalar getSum() {
         return sum;
     }
 
@@ -101,7 +101,7 @@ private:
     QString name, unit;
 
     // The statistic values
-    float value, min, max, sum;
+    btScalar value, min, max, sum;
 
     // To compute average
     int nbValues;
@@ -132,13 +132,13 @@ public:
     void registerStat(QString name, Statistic *stat);
 
     // To create or set a statistics value
-    void setValue(QString name, float value);
+    void setValue(QString name, btScalar value);
 
     // To get all statistics values
     QMap<QString, Statistic *> getStatistics();
 
     // To get a statistics
-    float getValue(QString name);
+    btScalar getValue(QString name);
 
     // To know if a stats exist
     bool exists(QString name);

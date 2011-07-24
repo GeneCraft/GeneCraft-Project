@@ -27,7 +27,7 @@ void StatisticsStorage::registerStat(QString name, Statistic *stat) {
 }
 
 // To create or set a statistics value
-void StatisticsStorage::setValue(QString name, float value){
+void StatisticsStorage::setValue(QString name, btScalar value){
     stats.value(name)->setValue(value);
 }
 
@@ -37,7 +37,7 @@ QMap<QString, Statistic *> StatisticsStorage::getStatistics() {
 }
 
 // To get a statistics
-float StatisticsStorage::getValue(QString name){
+btScalar StatisticsStorage::getValue(QString name){
     if(!stats.contains(name))
         return 0.0;
 

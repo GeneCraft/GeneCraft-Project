@@ -13,10 +13,10 @@ namespace GeneLabCore {
         QVariantList l = data.toList();
 
         foreach(QVariant v, l) {
-            float x = v.toMap()["x"].toDouble();
-            float y = v.toMap()["y"].toDouble();
-            float w = v.toMap()["w"].toDouble();
-            float distance = 0.0f;
+            btScalar x = v.toMap()["x"].toDouble();
+            btScalar y = v.toMap()["y"].toDouble();
+            btScalar w = v.toMap()["w"].toDouble();
+            btScalar distance = 0.0f;
             if(v.toMap().contains("d"))
                 distance = v.toMap()["d"].toDouble();
             else

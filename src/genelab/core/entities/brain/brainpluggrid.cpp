@@ -8,10 +8,10 @@
 #include <cstdlib>
 #include <math.h>
 
-float sigmoid(float x)
+btScalar sigmoid(btScalar x)
 {
-     float exp_value;
-     float return_value;
+     btScalar exp_value;
+     btScalar return_value;
 
      /*** Exponential calculation ***/
      exp_value = exp((double) -3*x);
@@ -29,21 +29,21 @@ namespace GeneLabCore {
         QObject(parent)
     {
         //this->size = size;
-        //this->neurons = new float[size*size];
+        //this->neurons = new btScalar[size*size];
         //for(int i = 0; i < size*size; i++) {
         //    neurons[i] = 0.0f;
         //}
 
-        // On crée quelques inputs
+        // On cre quelques inputs
         /*for(int i = 0; i < 3; i++) {
             NeuralIn* in = new NeuralIn(0, 100);
             for(int j = 0; j < 10; j++) {
-                in->connectTo(qrand()%this->size, qrand()%this->size, (float)qrand()/RAND_MAX * 2 - 1);
+                in->connectTo(qrand()%this->size, qrand()%this->size, (btScalar)qrand()/RAND_MAX * 2 - 1);
             }
             this->inputs.append(in);
         }*/
 
-        // On crée quelques outputs
+        // On cre quelques outputs
 
         // FIXME Pour les tests :P
         //this->propagation = qRound(size/10.0);
@@ -53,12 +53,12 @@ namespace GeneLabCore {
         //delete[] this->neurons;
     }
 
-    float BrainPlugGrid::getValue(float x, float y) {
+    btScalar BrainPlugGrid::getValue(btScalar x, btScalar y) {
         // BRAIN MODIF TRY
-        float value = 0;
+        btScalar value = 0;
         foreach(BrainIn* in, this->inputs) {
             foreach(NeuralConnexion c, in->getConnexions()) {
-                float dist = sqrt((x - c.x)*(x - c.x) + (y - c.y)*(y - c.y));
+                btScalar dist = sqrt((x - c.x)*(x - c.x) + (y - c.y)*(y - c.y));
                 if( dist < c.distance) {
                     value += in->getValue()*c.weight*((c.distance-dist)/c.distance);
                 }
@@ -72,7 +72,7 @@ namespace GeneLabCore {
     {
         this->size = size;
         delete[] neurons;
-        this->neurons = new float[size*size];
+        this->neurons = new btScalar[size*size];
         for(int i = 0; i < size*size; i++)
             neurons[i] = 0.0f;
 
@@ -93,7 +93,7 @@ namespace GeneLabCore {
         /*foreach(BrainIn* in, this->inputs) {
             // For each connexion of this synapse
             // If it fit in the network size
-            float value = in->getValue();
+            btScalar value = in->getValue();
 
             foreach(NeuralConnexion connexion, in->getConnexions()) {
 
@@ -109,8 +109,8 @@ namespace GeneLabCore {
                         for(int j = qMax(0, posY-propagation); j <= qMin(size-1, posY+propagation); j++) {
                                 this->neurons[i + j*size]
                                     += connexion.weight * value
-                                    * (1 - 1 * ((float)qAbs(i - posX) / (propagation+1)))
-                                    * (1 - 1 * ((float)qAbs(j - posY) / (propagation+1)));
+                                    * (1 - 1 * ((btScalar)qAbs(i - posX) / (propagation+1)))
+                                    * (1 - 1 * ((btScalar)qAbs(j - posY) / (propagation+1)));
 
                         }
                     }
@@ -122,7 +122,7 @@ namespace GeneLabCore {
     void BrainPlugGrid::afterStep() {
     }
 
-    float BrainPlugGrid::activation(float value) {
+    btScalar BrainPlugGrid::activation(btScalar value) {
         return sigmoid(value)*2.0f - 1.0f;
     }
 }

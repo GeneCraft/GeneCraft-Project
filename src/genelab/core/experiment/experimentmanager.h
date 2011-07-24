@@ -55,7 +55,7 @@ namespace GeneLabCore {
         Entity* spawnEntity(QVariant genome);
         bool stabilizeEntity(Entity* e, Result* r);
         bool simulateEntity(Entity* e);
-        float evaluateEntity(Entity* e);
+        btScalar evaluateEntity(Entity* e);
         void engineStep();
         QVariant randomNewEntity();
 
@@ -92,11 +92,11 @@ namespace GeneLabCore {
         int maxGen;
         int popSize;
 
-        float probFromBestsResult;
-        float probFromBestsPop;
-        float probFromRandomResult;
-        float probFromRandomPop;
-        float probFromRandomNew;
+        btScalar probFromBestsResult;
+        btScalar probFromBestsPop;
+        btScalar probFromRandomResult;
+        btScalar probFromRandomPop;
+        btScalar probFromRandomNew;
 
         QString workerName;
 

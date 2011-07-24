@@ -69,8 +69,8 @@ namespace GeneLabCore {
         boneAngularOrigin->probability   = 0.05;
         boneAngularOrigin->minFact       = -0.01;
         boneAngularOrigin->maxFact       =  0.01;
-        boneAngularOrigin->minValue      = -M_PI;
-        boneAngularOrigin->maxValue      =  M_PI;
+        boneAngularOrigin->minValue      = -SIMD_PI;
+        boneAngularOrigin->maxValue      =  SIMD_PI;
 
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
@@ -93,8 +93,8 @@ namespace GeneLabCore {
         distanceSensorYZ->probability   = 0.05;
         distanceSensorYZ->minFact       = -0.01;
         distanceSensorYZ->maxFact       =  0.01;
-        distanceSensorYZ->minValue      = -M_PI;
-        distanceSensorYZ->maxValue      =  M_PI;
+        distanceSensorYZ->minValue      = -SIMD_PI;
+        distanceSensorYZ->maxValue      =  SIMD_PI;
 
         // effectors
         effectorsStructural = new StructuralMutation();
@@ -221,8 +221,8 @@ namespace GeneLabCore {
         distanceSensorYZ->probability   = 0.05;
         distanceSensorYZ->minFact       = -0.01;
         distanceSensorYZ->maxFact       =  0.01;
-        distanceSensorYZ->minValue      = -M_PI;
-        distanceSensorYZ->maxValue      =  M_PI;
+        distanceSensorYZ->minValue      = -SIMD_PI;
+        distanceSensorYZ->maxValue      =  SIMD_PI;
 
         // bones
         bonesStructural = new StructuralMutation(map["bonesStructural"]);

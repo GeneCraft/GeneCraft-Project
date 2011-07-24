@@ -12,20 +12,20 @@ namespace GeneLabCore {
     {
 
     public:
-        explicit BrainIn(float min = 0.0f, float max = 100.0f, QObject *parent = 0);
+        explicit BrainIn(btScalar min = 0.0f, btScalar max = 100.0f, QObject *parent = 0);
         BrainIn(QVariant data);
 
-        static QVariant generateEmpty(float min, float max);
+        static QVariant generateEmpty(btScalar min, btScalar max);
         QVariant serialize();
 
-        void setMin(float min) { this->min = min; }
-        void setMax(float max) { this->max = max; }
-        void setMinMax(float min, float max) { this->min = min; this->max = max; }
+        void setMin(btScalar min) { this->min = min; }
+        void setMax(btScalar max) { this->max = max; }
+        void setMinMax(btScalar min, btScalar max) { this->min = min; this->max = max; }
 
         /**
           * Set the normalized value, will be normalized between min and max.
           */
-        virtual void setValue(float value) {
+        virtual void setValue(btScalar value) {
             // Normalization (projection in range -1..1)
             this->value = (value - min) / (max - min) * 2.0f - 1.0f;
         }
@@ -33,15 +33,15 @@ namespace GeneLabCore {
         /**
           * Get the normalized value [-1, 1]
           */
-        virtual float getValue() {
+        virtual btScalar getValue() {
             return this->value;
         }
 
     private:
 
-        float value;
-        float min;
-        float max;
+        btScalar value;
+        btScalar min;
+        btScalar max;
 
     };
 }

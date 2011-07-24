@@ -25,6 +25,8 @@
 #include "effectors/grippereffector.h"
 #include "effectors/flyingeffector.h"
 
+#include "ui/widgets/entities/bodyitems.h"
+
 #include "tools.h"
 
 FixationPropertiesController::FixationPropertiesController(QWidget *parent) :
@@ -205,7 +207,7 @@ void FixationPropertiesController::addSensor()
     case 5 : // Distance sensor
 
         if(fixation->getEntity())
-            sensor = new DistanceSensor(fixation, Tools::random(-M_PI,M_PI), Tools::random(-M_PI,M_PI));
+            sensor = new DistanceSensor(fixation, Tools::random(-SIMD_PI,SIMD_PI), Tools::random(-SIMD_PI,SIMD_PI));
         break;
     }
 

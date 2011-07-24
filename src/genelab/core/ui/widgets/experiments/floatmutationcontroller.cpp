@@ -52,16 +52,16 @@ void FloatMutationController::save() {
     }
 }
 
-//void FloatMutationController::setMinFactor(float minFactor){
+//void FloatMutationController::setMinFactor(btScalar minFactor){
 //    ui->sMinFactor->setValue(minFactor * FACTOR_PRECISION);
 //}
-//float FloatMutationController::getMinFactor(){
+//btScalar FloatMutationController::getMinFactor(){
 //    return ui->sMinFactor->value() / FACTOR_PRECISION;
 //}
-//void FloatMutationController::setMaxFactor(float maxFactor){
+//void FloatMutationController::setMaxFactor(btScalar maxFactor){
 //    ui->sMaxFactor->setValue(maxFactor * FACTOR_PRECISION);
 //}
-//float FloatMutationController::getMaxFactor(){
+//btScalar FloatMutationController::getMaxFactor(){
 //    return ui->sMaxFactor->value() / FACTOR_PRECISION;
 //}
 

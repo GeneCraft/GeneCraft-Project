@@ -28,10 +28,10 @@ namespace GeneLabCore {
         }
 
         // Return the value from pourcentage x/y [0.0 - 1.0]
-        float getValue(float x, float y);
+        btScalar getValue(btScalar x, btScalar y);
 
         // Return the entire grid
-        //float* getNeurons() {
+        //btScalar* getNeurons() {
         //    return this->neurons;
         //}
 
@@ -55,7 +55,7 @@ namespace GeneLabCore {
         void afterStep();
 
         // Activation function
-        float activation(float value);
+        btScalar activation(btScalar value);
 
     private:
         QList<BrainIn*> inputs;
@@ -63,7 +63,7 @@ namespace GeneLabCore {
         //int size;
 
         // size-squared neurons matrice
-        //float* neurons;
+        //btScalar* neurons;
         int propagation;
 
     };

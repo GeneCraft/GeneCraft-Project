@@ -39,20 +39,20 @@ namespace GeneLabCore {
         btTransform initTransform;
         initTransform.setIdentity();
         initTransform.setOrigin(position);
-        //initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), M_PI/2.));
+        //initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), SIMD_PI/2.));
 
         Fixation* root = new Fixation(factory,fixRadius,initTransform);
         snakeShape->setRoot(root);
         snake->setShape(snakeShape);
 
-        float angle = M_PI - M_PI / 3;
+        btScalar angle = SIMD_PI - SIMD_PI / 3;
 
         // Build body
-        Bone* b = root->addBone(0, M_PI/2., pieceRadius,
+        Bone* b = root->addBone(0, SIMD_PI/2., pieceRadius,
                                 pieceLength,
                                 fixRadius,
-                                btVector3(-angle,-M_PI/4,-angle),
-                                btVector3(angle,M_PI/4,angle));
+                                btVector3(-angle,-SIMD_PI/4,-angle),
+                                btVector3(angle,SIMD_PI/4,angle));
 
         root = b->getEndFixation();
 
@@ -63,8 +63,8 @@ namespace GeneLabCore {
                                     pieceRadius/(1+1.6180339887 * (i) / 10),
                                     pieceLength/(1+1.6180339887 * (i) / 10),
                                     fixRadius/(1+1.6180339887 * (i) / 10),
-                                    btVector3(-angle,-M_PI/4,-angle),
-                                    btVector3(angle,M_PI/4,angle));
+                                    btVector3(-angle,-SIMD_PI/4,-angle),
+                                    btVector3(angle,SIMD_PI/4,angle));
 
             //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
             //b->getEndFixation()->addSensor(new PositionSensor(snakeShape->getRoot(),b->getEndFixation()));

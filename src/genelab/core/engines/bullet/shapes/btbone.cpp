@@ -49,7 +49,7 @@ void btBone::init(btScalar length,
     shape->addChildShape(cylinderTransform, cylinderShape);
 
     // body
-    float vol = M_PI*radius*radius*length + 4/3. * M_PI * radiusArticulation * radiusArticulation * radiusArticulation;
+    btScalar vol = SIMD_PI*radius*radius*length + 4/3. * SIMD_PI * radiusArticulation * radiusArticulation * radiusArticulation;
     btScalar mass = vol*density;
     btVector3 localInertia(0,0,0);
     shape->calculateLocalInertia(mass,localInertia);
@@ -59,9 +59,9 @@ void btBone::init(btScalar length,
     btVector3 inertia(0,0,0);
 
     // Masse de l'os, masse de la fixation
-    float massBone = M_PI*radius*radius*length*density;
-    float massSphere =  4/3. * M_PI * radiusArticulation * radiusArticulation * radiusArticulation * density;
-    float childMasses[2] = {massSphere,massBone};
+    btScalar massBone = SIMD_PI*radius*radius*length*density;
+    btScalar massSphere =  4/3. * SIMD_PI * radiusArticulation * radiusArticulation * radiusArticulation * density;
+    btScalar childMasses[2] = {massSphere,massBone};
     // TODO Use this information to shift object inside the compound
     // Set the shift in the rigid objets
     // And set the shift in all childs fixations
@@ -104,8 +104,8 @@ void btBone::setSize(btScalar radius, btScalar length)
         shape->addChildShape(localBone,cylinderShape);
 
         // set body mass
-        btScalar volBone    = M_PI*getRadius()*getRadius()*getLength();
-        btScalar volFix     = 4/3. * M_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
+        btScalar volBone    = SIMD_PI*getRadius()*getRadius()*getLength();
+        btScalar volFix     = 4/3. * SIMD_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
         btScalar mass = volBone*DENSITY + volFix*DENSITY; // TODO different density between fix and bone
         btVector3 localInertia;
         shape->calculateLocalInertia(mass,localInertia);
@@ -135,8 +135,8 @@ void btBone::setEndFixationRadius(btScalar fixationRadius)
         shape->addChildShape(localBone,cylinderShape);
 
         // set body mass
-        btScalar volBone    = M_PI*getRadius()*getRadius()*getLength();
-        btScalar volFix     = 4/3. * M_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
+        btScalar volBone    = SIMD_PI*getRadius()*getRadius()*getLength();
+        btScalar volFix     = 4/3. * SIMD_PI * cylinderShape->getRadius() * cylinderShape->getRadius() * cylinderShape->getRadius();
         btScalar mass = volBone*DENSITY + volFix*DENSITY; // TODO different density between fix and bone
         btVector3 localInertia;
         shape->calculateLocalInertia(mass,localInertia);

@@ -1,6 +1,8 @@
 #ifndef GENLAB_CLASSES_H
 #define GENLAB_CLASSES_H
 
+#include "LinearMath/btScalar.h"
+
 // Our namespace
 namespace GeneLabCore {
 

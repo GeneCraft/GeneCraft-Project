@@ -32,16 +32,16 @@ protected:
     void recursiveUpdate(Bone *b);
 
     // vertical height
-    float minHeightY, maxHeightY;
+    btScalar minHeightY, maxHeightY;
 
     // length
-    float length;
+    btScalar length;
 
     // bones number
     int nbBones;
 
     // weight
-    float weight;
+    btScalar weight;
 
     // compute
     bool computeBonesNb;

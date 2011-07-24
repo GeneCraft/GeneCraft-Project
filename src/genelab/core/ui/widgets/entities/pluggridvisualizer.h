@@ -27,7 +27,7 @@ namespace GeneLabCore {
     private:
         Brain* brain;
         QGraphicsView* view;
-        float* neurons;
+        btScalar* neurons;
         bool init;
     };
 

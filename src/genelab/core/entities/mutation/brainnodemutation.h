@@ -8,10 +8,10 @@ namespace GeneLabCore {
     class BrainNodeMutation : public Mutation {
     public:
         void mutate(QVariantMap &map, QString key);
-        float minFact;
-        float maxFact;
-        float minValue;
-        float maxValue;
+        btScalar minFact;
+        btScalar maxFact;
+        btScalar minValue;
+        btScalar maxValue;
     };
 
 }

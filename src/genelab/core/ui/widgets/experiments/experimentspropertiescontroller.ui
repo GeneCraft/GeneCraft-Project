@@ -620,7 +620,7 @@ p, li { white-space: pre-wrap; }
              </font>
             </property>
             <property name="text">
-             <string>JS function : float getEntityFitness() [call at the end of a simulation]</string>
+             <string>JS function : btScalar getEntityFitness() [call at the end of a simulation]</string>
             </property>
            </widget>
           </item>

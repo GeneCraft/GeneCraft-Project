@@ -15,10 +15,10 @@
 
 namespace GeneLabCore {
 
-float sigmoid(float x)
+btScalar sigmoid(btScalar x)
 {
-     float exp_value;
-     float return_value;
+     btScalar exp_value;
+     btScalar return_value;
 
      /*** Exponential calculation ***/
      exp_value = exp((double) -3*x);
@@ -138,7 +138,7 @@ float sigmoid(float x)
 
     void BrainFunctional::doNode(QList<BrainNode*> tree, BrainOut* out) {
         QList<BrainNode*>::iterator it = tree.begin();
-        float value = apply(it, tree.end());
+        btScalar value = apply(it, tree.end());
         if(value != value) {
             qDebug() << "NAN ! " << value << out->getConnexionInfo().toString();
         } else {
@@ -146,14 +146,14 @@ float sigmoid(float x)
         }
     }
 
-    float BrainFunctional::apply(QList<BrainNode*>::iterator& it, QList<BrainNode*>::const_iterator end) {
+    btScalar BrainFunctional::apply(QList<BrainNode*>::iterator& it, QList<BrainNode*>::const_iterator end) {
         if(it == end) {
             return 0;
         }
 
         BrainNode* n = *it;
         BrainMemory* m;
-        float min, max, a, b, first, second, c;
+        btScalar min, max, a, b, first, second, c;
         it++;
         switch(n->type) {
         // 2 operands
@@ -257,7 +257,7 @@ float sigmoid(float x)
             return sigmoid(apply(it, end));
 
         case INPUT: {
-            float v = plugGrid->getValue(((BrainNodeIn*)n)->x, ((BrainNodeIn*)n)->y);
+            btScalar v = plugGrid->getValue(((BrainNodeIn*)n)->x, ((BrainNodeIn*)n)->y);
             return v;
             }
         case CONSTANT:
@@ -343,7 +343,7 @@ float sigmoid(float x)
             m->insert(max);
             //max *= a;
             max += c;
-            return sin(max * M_PI / 180.);
+            return sin(max * SIMD_PI / 180.);
             break;
         case MEMORY_SPACE:
             return 0;
@@ -472,13 +472,13 @@ float sigmoid(float x)
             }
         } else if(rand < 30) {
             func += "CONST ";
-            float x = ((float)qrand())/RAND_MAX*2. -  1. ; //  0.0 to 1.0
+            btScalar x = ((btScalar)qrand())/RAND_MAX*2. -  1. ; //  0.0 to 1.0
             func += QString::number(x) + ",";
         }
         else {
             func += "IN ";
-            float x = ((float)qrand())/RAND_MAX; //  0.0 to 1.0
-            float y = ((float)qrand())/RAND_MAX; //  0.0 to 1.0
+            btScalar x = ((btScalar)qrand())/RAND_MAX; //  0.0 to 1.0
+            btScalar y = ((btScalar)qrand())/RAND_MAX; //  0.0 to 1.0
             func += QString::number(x) + " " + QString::number(y) + ",";
         }
 

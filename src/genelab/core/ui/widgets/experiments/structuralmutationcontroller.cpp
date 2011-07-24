@@ -36,7 +36,7 @@ StructuralMutationController::StructuralMutationController(StructuralMutation *m
         }
     }
 
-    float tmp;
+    btScalar tmp;
 
     tmp = mutation->addProbability * PROBABILITY_PRECISION;
     ui->sAddProbability->setValue(tmp);

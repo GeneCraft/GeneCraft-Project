@@ -61,9 +61,9 @@ namespace GeneLabCore {
            QVariantMap lightMap = lightData.toMap();
 
            // TODO diffuse and specular !!! dr, dg, db, sr, sg, sb
-           float r = lightMap["r"].toFloat();
-           float g = lightMap["g"].toFloat();
-           float b = lightMap["b"].toFloat();
+           btScalar r = lightMap["r"].toFloat();
+           btScalar g = lightMap["g"].toFloat();
+           btScalar b = lightMap["b"].toFloat();
 
            QString type = lightMap["type"].toString();
            if(type.compare("ambient") == 0) {
@@ -74,9 +74,9 @@ namespace GeneLabCore {
 
                nbPointLights++;
 
-               float x = lightMap["posX"].toFloat();
-               float y = lightMap["posY"].toFloat();
-               float z = lightMap["posZ"].toFloat();
+               btScalar x = lightMap["posX"].toFloat();
+               btScalar y = lightMap["posY"].toFloat();
+               btScalar z = lightMap["posZ"].toFloat();
 
                Ogre::Light* pointLight = sceneManager->createLight();
                pointLight->setType(Ogre::Light::LT_POINT);
@@ -88,9 +88,9 @@ namespace GeneLabCore {
 
                nbDirectionalLights++;
 
-               float dirX = lightMap["dirX"].toFloat();
-               float dirY = lightMap["dirY"].toFloat();
-               float dirZ = lightMap["dirZ"].toFloat();
+               btScalar dirX = lightMap["dirX"].toFloat();
+               btScalar dirY = lightMap["dirY"].toFloat();
+               btScalar dirZ = lightMap["dirZ"].toFloat();
 
                Ogre::Light* directionalLight = sceneManager->createLight();
                directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
@@ -103,17 +103,17 @@ namespace GeneLabCore {
 
                nbSpotLights++;
 
-               float dirX = lightMap["dirX"].toFloat();
-               float dirY = lightMap["dirY"].toFloat();
-               float dirZ = lightMap["dirZ"].toFloat();
+               btScalar dirX = lightMap["dirX"].toFloat();
+               btScalar dirY = lightMap["dirY"].toFloat();
+               btScalar dirZ = lightMap["dirZ"].toFloat();
 
-               float posX = lightMap["posX"].toFloat();
-               float posY = lightMap["posY"].toFloat();
-               float posZ = lightMap["posZ"].toFloat();
+               btScalar posX = lightMap["posX"].toFloat();
+               btScalar posY = lightMap["posY"].toFloat();
+               btScalar posZ = lightMap["posZ"].toFloat();
 
-               float innerAngle = lightMap["innerAngle"].toFloat();
-               float outerAngle = lightMap["outerAngle"].toFloat();
-               //float falloff = lightMap["falloff"].toFloat();
+               btScalar innerAngle = lightMap["innerAngle"].toFloat();
+               btScalar outerAngle = lightMap["outerAngle"].toFloat();
+               //btScalar falloff = lightMap["falloff"].toFloat();
 
                Ogre::Light* spotLight = sceneManager->createLight();
                spotLight->setType(Ogre::Light::LT_SPOTLIGHT);

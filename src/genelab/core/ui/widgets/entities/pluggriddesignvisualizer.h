@@ -30,7 +30,7 @@ namespace GeneLabCore {
         QList<Sensor*> selectedSensors;
         Brain* brain;
         QGraphicsView* view;
-        float* neurons;
+        btScalar* neurons;
         bool init;
         QList<QGraphicsRectItem*> neurones;
         QMap<int, QMap<int, QGraphicsEllipseItem* > > ellipses;

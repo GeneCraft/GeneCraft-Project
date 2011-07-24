@@ -44,7 +44,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
     this->view->fitInView(0, 0, 1, 1, Qt::KeepAspectRatio);
 
 
-    // On récupère le bon réseau de neurone
+    // On rcupre le bon rseau de neurone
     BrainPlugGrid* n = brain->getPlugGrid();
     //int size = n->getSize();
 
@@ -77,8 +77,8 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
     // On dessine les neurones
     /*for(int i = 0; i < size; i++) {
         for(int j = 0; j < size; j++) {
-            int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
-            int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(float)size,j/(float)size))) * 255.));
+            int bleu  = qMin(255., qMax(0., (-n->activation(n->getValue(i/(btScalar)size,j/(btScalar)size))) * 255.));
+            int rouge = qMin(255., qMax(0., (n->activation(n->getValue(i/(btScalar)size,j/(btScalar)size))) * 255.));
             int vert  = 0;//qMin(128., qMax(0., (255 - qAbs(n->activation(n->getValue(i,j))) * 255.)));
             b.setColor(QColor(rouge, vert, bleu));//  (n->activation(n->getValue(i,j)) + 1) * 255/2.0f));
             this->view->scene()->addRect(width * i,
@@ -89,7 +89,7 @@ void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {
 
     /*for(int i = 0; i < n->getInputs().size(); i++) {
 
-        // On dessine les entrées
+        // On dessine les entres
         QPointF startingPoint(SCENE_SIZE/n->getInputs().size() * i + SCENE_SIZE/n->getInputs().size() * 0.5 - 10,
                               SCENE_SIZE + 100);
 

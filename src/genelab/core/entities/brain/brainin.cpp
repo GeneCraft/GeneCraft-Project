@@ -4,7 +4,7 @@
 
 namespace GeneLabCore {
 
-    BrainIn::BrainIn(float min, float max, QObject *parent) :
+    BrainIn::BrainIn(btScalar min, btScalar max, QObject *parent) :
         Synapse(parent), value(0), min(min), max(max)
     {
     }
@@ -24,7 +24,7 @@ namespace GeneLabCore {
         return data;
     }
 
-    QVariant BrainIn::generateEmpty(float min, float max)
+    QVariant BrainIn::generateEmpty(btScalar min, btScalar max)
     {
         QVariantMap data;
 

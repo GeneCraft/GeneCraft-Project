@@ -13,9 +13,9 @@ GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
     type = gyroscopicSensor;
 
     // value beetween -PI..PI
-    inputYaw = new BrainIn(-M_PI, M_PI);
-    inputPitch = new BrainIn(-M_PI,M_PI);
-    inputRoll = new BrainIn(-M_PI,M_PI);
+    inputYaw = new BrainIn(-SIMD_PI, SIMD_PI);
+    inputPitch = new BrainIn(-SIMD_PI,SIMD_PI);
+    inputRoll = new BrainIn(-SIMD_PI,SIMD_PI);
 
     brainInputs.append(inputYaw);
     brainInputs.append(inputPitch);
@@ -46,9 +46,9 @@ QVariant GyroscopicSensor::generateEmpty()
 {
     QVariantMap data = Sensor::generateEmpty("Gyroscopic sensor", gyroscopicSensor).toMap();
 
-    BrainIn inputYaw(-M_PI, M_PI);
-    BrainIn inputPitch(-M_PI, M_PI);
-    BrainIn inputRoll(-M_PI, M_PI);
+    BrainIn inputYaw(-SIMD_PI, SIMD_PI);
+    BrainIn inputPitch(-SIMD_PI, SIMD_PI);
+    BrainIn inputRoll(-SIMD_PI, SIMD_PI);
 
     inputYaw.connectRandomly();
     inputPitch.connectRandomly();
