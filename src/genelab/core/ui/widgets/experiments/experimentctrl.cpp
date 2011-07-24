@@ -107,7 +107,7 @@ namespace GeneLabCore {
     {
         if(this->ui->treeWidget->currentIndex().row() > -1) {
             Result* r = this->results[this->ui->treeWidget->currentIndex().row()];
-            emit addEntity(r->getGenome().toMap(), NULL);
+            emit addEntity(r->serialize().toMap(), NULL);
         }
     }
 

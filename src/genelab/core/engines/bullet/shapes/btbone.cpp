@@ -60,21 +60,18 @@ void btBone::init(btScalar length,
 
     // Masse de l'os, masse de la fixation
     float massBone = M_PI*radius*radius*length*density;
-    float massSphere =  4/3. * M_PI * radiusArticulation * radiusArticulation * radiusArticulation;
+    float massSphere =  4/3. * M_PI * radiusArticulation * radiusArticulation * radiusArticulation * density;
     float childMasses[2] = {massSphere,massBone};
+    // TODO Use this information to shift object inside the compound
+    // Set the shift in the rigid objets
+    // And set the shift in all childs fixations
+    // And parent constraint of bone
+    // ARG, lot of todo to get the center of gravity work properly
     shape->calculatePrincipalAxisTransform(childMasses, principal, inertia);
 
     // motion state
-    qDebug() << "lol";
-    qDebug() << principal.getOrigin().getX();
-    qDebug() << principal.getOrigin().getY();
-    qDebug() << principal.getOrigin().getZ();
 
-    qDebug() << principal.getRotation().getX();
-    qDebug() << principal.getRotation().getY();
-    qDebug() << principal.getRotation().getZ();
-
-    motionState = new btDefaultMotionState(transform, principal);
+    motionState = new btDefaultMotionState(transform);
 
     this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);
     this->rigidBody->setFriction(friction);

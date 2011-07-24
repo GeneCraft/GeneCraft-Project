@@ -109,6 +109,7 @@ public:
     }
 
     void addOutScript(int age, MotorFrom from) {
+        qDebug() << age << from;
         if(this->outsFromScripts.contains(age)) {
             this->outsFromScripts.remove(age);
         }
