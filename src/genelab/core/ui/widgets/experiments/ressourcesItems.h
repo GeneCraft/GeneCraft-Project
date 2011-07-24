@@ -28,6 +28,22 @@ public:
     DataWrapper dataw;
 };
 
+class WorldTreeWidgetItem : public QTreeWidgetItem
+{
+public:
+
+    WorldTreeWidgetItem(DataWrapper dataw)
+    {
+        this->dataw = dataw;
+
+        setText(0,dataw.data["name"].toString());
+        setText(1,QString::number(dataw.data["gravity"].toFloat()));
+        setText(2,dataw.data["dateOfCreation"].toString());
+    }
+
+     DataWrapper dataw;
+};
+
 
 class ResultTreeWidgetItem : public QTreeWidgetItem
 {

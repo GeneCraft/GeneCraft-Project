@@ -25,36 +25,47 @@ public:
 signals:
 
     void loadExperiment(Experiment *);
+    void loadWorld(QVariant worldData);
+    void loadEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
+
+    // TODO replace by loadEntity
     void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
 
 public slots:
 
     void refreshLocalRessources();
     void refreshOnlineRessources();
+    void openInfoDatabase();
 
+    // exp
     void loadLocalExperiment();
     void loadOnlineExperiment();
+    void openRessourcesFolder();
+    void saveExperiment();
+    void shareExperiment();
 
+    // worls
+    void loadLocalWorld();
+    void loadOnlineWorld();
+    void saveWorld();
+    void shareWorld();
+
+    // entities
     void loadLocalEntity();
     void loadOnlineEntity();
-
-    void openExperimentFolder();
-
-    void saveExperiment();
     void saveEntity();
+    void shareEntity();
 
 
 private:
+
     Ui::RessourcesBrowser *ui;
 
     GeneLabCore::RessourcesManager *localRessourceManager;
     GeneLabCore::RessourcesManager *onlineRessourceManager;
     GeneLabCore::DataBase database;
 
-private slots:
-    void on_pbShareEntity_clicked();
-    void on_pbShareExp_clicked();
-    void on_pushButton_clicked();
+
 };
 
 }

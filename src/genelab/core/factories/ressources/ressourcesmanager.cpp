@@ -107,6 +107,11 @@ namespace GeneLabCore {
             if(dataMap.contains("world")) {
                 QVariantMap worldMap = dataMap["world"].toMap();
                 DataWrapper dataWorld = {worldMap, NULL};
+
+                foreach(DataWrapper dw, worlds)
+                    if(dataWorld.data == dw.data)
+                        return;
+
                 worlds.append(dataWorld);
             }
 
