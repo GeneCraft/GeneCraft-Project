@@ -125,8 +125,7 @@ namespace GeneLabCore {
         mutations       = exp->getMutationsManager();
 
         // The world to experiment inside
-        world = worldFactory->createWorld(factory, shapesFactory, worldFactory->createSimpleWorld());
-        world->setup();
+        world = worldFactory->createWorld(factory, shapesFactory, exp->getWorldDataMap());
 
         // Nb gen to compute
         int nbGen = this->maxGen;
@@ -251,10 +250,7 @@ namespace GeneLabCore {
                     genomes.append(Ressource::load(genome));
                 }
             }
-            qDebug() << genomes.size();
             int randomGen = qrand()%genomes.size();
-            qDebug() << randomGen;
-            qDebug() << genomes.at(randomGen);
             return mutations->mutateEntity(genomes.at(randomGen));
         }
         return QVariant();
@@ -354,6 +350,14 @@ namespace GeneLabCore {
     void ExperimentManager::evalPop() {
         foreach(Result* r, this->activePop) {
             Entity *e = this->spawnEntity(r->getGenome());
+
+            foreach(Statistic* stat, e->getStatisticsStorage()->getStatistics()) {
+                stat->resetAll();
+            }
+
+            e->setAge(0);
+            e->getShape()->getRoot()->setOutputsFrom(1); // From brain
+
             bool stable, simulated;
             float fitness;
 
@@ -388,6 +392,7 @@ namespace GeneLabCore {
     // To simulate a specific entity
     Entity* ExperimentManager::spawnEntity(QVariant genome) {
         btVector3 position = world->getSpawnPosition();
+        qDebug() << position.y();
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         if(e == NULL) {
             qDebug() << "Entity genome corrupted !";
@@ -414,7 +419,7 @@ namespace GeneLabCore {
         }
 
         // 100 engines step
-        for(int i = 0; i < 200; i++) {
+        for(int i = 0; i < 0 && this->exp->getOnlyIfEntityIsStable(); i++) {
             this->engineStep();
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
                 return false;
@@ -433,8 +438,7 @@ namespace GeneLabCore {
         // Not stable at the moment
         bool stable = false;
 
-        for(int i = 0; i < maxStableTry; i++) {
-
+        for(int i = 0; i < maxStableTry && exp->getOnlyIfEntityIsStable(); i++) {
             if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
@@ -494,17 +498,14 @@ namespace GeneLabCore {
 
     void ExperimentManager::engineStep() {
         foreach(Engine* e, engines) {
-
             e->beforeStep();
         }
 
         foreach(Engine* e, engines) {
-
             e->step();
         }
 
         foreach(Engine* e, engines) {
-
             e->afterStep();
         }
     }

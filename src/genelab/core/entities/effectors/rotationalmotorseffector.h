@@ -83,7 +83,7 @@ public:
         motor->m_maxMotorForce
                 = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*20000;
         motor->m_targetVelocity
-                = (boTargetVelocity->getValue() - boMaxMotorForce->getValue())*5;
+                = (boTargetVelocity->getValue() - boMaxMotorForce->getValue())*20;
     }
 
     btRotationalLimitMotor * motor;

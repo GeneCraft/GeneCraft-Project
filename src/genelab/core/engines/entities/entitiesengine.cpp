@@ -19,6 +19,9 @@ void EntitiesEngine::beforeStep()
 {
     foreach(Entity* e, entities) {
 
+        // step statistics
+        e->updadeStatistics();
+
         if(e->getAge() % e->getBrain()->getFrequency())
             continue;
 
@@ -30,8 +33,6 @@ void EntitiesEngine::beforeStep()
 
         }
 
-        // step statistics
-        e->updadeStatistics();
     }
 }
 

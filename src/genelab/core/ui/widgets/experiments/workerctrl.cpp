@@ -99,6 +99,8 @@ namespace GeneLabCore {
             this->ui->txtOut->clear();
         }
         // Ajout du text Ã  la sortie de la console
+        if(!process)
+            return;
         QString data = process->readAllStandardError();
         this->ui->txtOut->append(data.left(data.size()-1));
     }

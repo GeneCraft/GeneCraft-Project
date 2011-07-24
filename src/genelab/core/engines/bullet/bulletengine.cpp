@@ -1,5 +1,7 @@
 #include "bulletengine.h"
 
+#include <QDebug>
+
 namespace GeneLabCore {
     using namespace Ogre;
 
@@ -11,8 +13,9 @@ namespace GeneLabCore {
 
     void BulletEngine::step() {
         if(physicsEnable) {
-            foreach(btDynamicsWorld* world, worldList)
+            foreach(btDynamicsWorld* world, worldList) {
                 world->stepSimulation(1.0/60., 10, 1./60.);
+            }
         }
     }
 }
