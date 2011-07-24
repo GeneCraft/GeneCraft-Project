@@ -18,11 +18,11 @@ class Statistic : public QObject
                [DESIGNABLE bool]
                [SCRIPTABLE bool]
                [STORED bool])*/
-    Q_PROPERTY(btScalar value READ getValue WRITE setValue)
-    Q_PROPERTY(btScalar min READ getMinValue)
-    Q_PROPERTY(btScalar max READ getMaxValue)
-    Q_PROPERTY(btScalar mean READ getMean)
-    Q_PROPERTY(btScalar sum READ getSum)
+    Q_PROPERTY(float value READ getValue WRITE setValue)
+    Q_PROPERTY(float min READ getMinValue)
+    Q_PROPERTY(float max READ getMaxValue)
+    Q_PROPERTY(float mean READ getMean)
+    Q_PROPERTY(float sum READ getSum)
 
     public :
 
