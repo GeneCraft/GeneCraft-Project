@@ -6,7 +6,7 @@ material GeneLab/Bone
         {
             ambient 0.6 0.6 0.6
             diffuse 0.6 0.6 0.6
-			specular 1.0 1.0 1.0
+			specular 0 0 0 0
             
             texture_unit
             {
@@ -36,7 +36,7 @@ material GeneLab/Fixation
         {
 			ambient 0.6 0.6 0.6
             diffuse 0.6 0.6 0.6
-			specular 1.0 1.0 1.0
+			specular 0 0 0 0
 		
             texture_unit
             {
@@ -66,13 +66,16 @@ material GeneLab/Fixation/Root : GeneLab/Fixation
     {
         pass
         {
-			ambient 0.8 0.8 0.8
-            diffuse 0.8 0.8 0.8
+			texture_unit
+            {
+				texture fixation_root.jpg
+				//env_map spherical
+            }
         }
     }
 }
 
-material GeneLab/Fixation_Selected/Root : GeneLab/Fixation    
+material GeneLab/Fixation_Selected/Root : GeneLab/Fixation/Root   
 {
     technique
     {
@@ -84,8 +87,22 @@ material GeneLab/Fixation_Selected/Root : GeneLab/Fixation
     }
 }
 
-
-
+material GeneLab/Block 
+{
+    technique
+    {
+		pass
+        {
+			ambient 0.8 0.8 0.8
+            diffuse 0.8 0.8 0.8
+			
+			texture_unit
+            {
+				texture block.jpg
+            }
+        }
+    }
+}
 
 material GeneLab/Spawn
 {
