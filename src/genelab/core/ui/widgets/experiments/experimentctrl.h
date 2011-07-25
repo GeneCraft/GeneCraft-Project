@@ -26,7 +26,7 @@ namespace GeneLabCore {
         void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
 
     signals:
-        //void addEntity(QVariantMap genome, Ressource* r);
+        void sAddEntity(QVariantMap genome, Ressource* r);
         void sLoadResult(Result*);
         void newDataAvailable();
 
@@ -55,7 +55,9 @@ namespace GeneLabCore {
 
         ExperimentsPropertiesController *epc;
 
-private slots:
+    private slots:
+    void on_btnHelp_clicked();
+    void on_btnAdd_clicked();
     void on_btnLoad_clicked();
 };
 

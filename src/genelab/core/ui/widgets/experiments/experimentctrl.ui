@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
+   <item row="0" column="0" colspan="4">
     <widget class="QTabWidget" name="tabWidget">
      <property name="enabled">
       <bool>true</bool>
@@ -136,7 +136,7 @@
        <string>Results</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
+       <item row="2" column="0" colspan="5">
         <widget class="QTreeWidget" name="twResults">
          <column>
           <property name="text">
@@ -155,16 +155,80 @@
          </column>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="1" column="0" colspan="5">
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pbRefresh">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../ressources/ressources.qrc">
+             <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="text">
+            <string>auto-refresh</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../ressources/ressources.qrc">
+             <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="4" column="0" colspan="5">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QPushButton" name="btnLoad">
            <property name="text">
-            <string>Load result</string>
+            <string>As result</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../ressources/ressources.qrc">
+             <normaloff>:/img/icons/dna_32</normaloff>:/img/icons/dna_32</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnAdd">
+           <property name="text">
+            <string>As creature</string>
            </property>
            <property name="icon">
             <iconset resource="../../../ressources/ressources.qrc">
              <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnHelp">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../ressources/ressources.qrc">
+             <normaloff>:/img/icons/information</normaloff>:/img/icons/information</iconset>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -180,24 +244,6 @@
             </size>
            </property>
           </spacer>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox">
-           <property name="text">
-            <string>auto-refresh</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pbRefresh">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../ressources/ressources.qrc">
-             <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
-           </property>
-          </widget>
          </item>
         </layout>
        </item>
@@ -223,34 +269,51 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="pbEditExperiment">
-     <property name="text">
-      <string>Edit</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../ressources/ressources.qrc">
-       <normaloff>:/img/icons/edition</normaloff>:/img/icons/edition</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="pbNewExperiment">
-     <property name="text">
-      <string>New</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../ressources/ressources.qrc">
-       <normaloff>:/img/icons/add</normaloff>:/img/icons/add</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lblDb">
-     <property name="text">
-      <string>trtgrt</string>
-     </property>
-    </widget>
+   <item row="1" column="0" colspan="4">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="pbEditExperiment">
+       <property name="text">
+        <string>Edit</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../ressources/ressources.qrc">
+         <normaloff>:/img/icons/edition</normaloff>:/img/icons/edition</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbNewExperiment">
+       <property name="text">
+        <string>New</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../ressources/ressources.qrc">
+         <normaloff>:/img/icons/add</normaloff>:/img/icons/add</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblDb">
+       <property name="text">
+        <string>trtgrt</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

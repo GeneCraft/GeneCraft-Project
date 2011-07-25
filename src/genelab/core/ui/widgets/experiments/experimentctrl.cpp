@@ -5,6 +5,8 @@
 #include "ressourcesItems.h"
 #include "events/inspectorsinputmanager.h"
 
+#include <QMessageBox>
+
 namespace GeneLabCore {
 
     ExperimentCtrl::ExperimentCtrl(QWidget *parent) :
@@ -34,8 +36,9 @@ namespace GeneLabCore {
     void ExperimentCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
 
         epc->connectToInspectorInputManager(iim);
-        connect(iim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
-        connect(this,SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
+        connect(iim, SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
+        connect(this, SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
+        connect(this, SIGNAL(sAddEntity(QVariantMap,Ressource*)), iim, SLOT(loadEntity(QVariantMap, Ressource*)));
     }
 
     void ExperimentCtrl::refresh() {
@@ -147,4 +150,22 @@ namespace GeneLabCore {
         epc->show();
         epc->setFocus(Qt::MouseFocusReason);
     }
+}
+
+void GeneLabCore::ExperimentCtrl::on_btnAdd_clicked()
+{
+    if(this->ui->twResults->currentItem()) {
+        Result* r = this->results[this->ui->twResults->currentIndex().row()];
+        emit sAddEntity(r->serialize().toMap(), NULL);
+    }
+}
+
+void GeneLabCore::ExperimentCtrl::on_btnHelp_clicked()
+{
+    QMessageBox::information(this, "Loading results to the scene", "There's two way of adding a result to the scene."
+                             " As a result, which mean deleting everything in the simulation to get the exact same result"
+                             " that the worker did, with the initial stabilisation process and everything. Or as a creature, which mean add this creature where stand the camera."
+                             " Obviously because of the physical engine state and the initials conditions that are differents the result will not be the same"
+                             " that the worker compute.");
+
 }
