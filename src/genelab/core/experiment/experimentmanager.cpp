@@ -475,13 +475,14 @@ namespace GeneLabCore {
             stat->resetAll();
         }
 
-        e->setAge(0);
-        e->getShape()->getRoot()->setOutputsFrom(fromBrain); // From brain
-
         return stable;
     }
 
     bool ExperimentManager::simulateEntity(Entity* e) {
+
+        e->setAge(0);
+        e->getShape()->getRoot()->setOutputsFrom(fromBrain); // From brain
+
         for(int i = 0; i < exp->getDuration() || exp->getDuration() == -1; i++) {
             this->engineStep();
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece()) {
