@@ -122,6 +122,7 @@ void CreatureViewerWindow::init() {
     // -------------------
 
     QToolBar *tb = new QToolBar(this);
+    tb->setWindowTitle("Mode Toolbar");
     addToolBar(Qt::LeftToolBarArea, tb);
     tb->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     tb->setIconSize(QSize(32,32));
@@ -141,6 +142,7 @@ void CreatureViewerWindow::init() {
     // -------------------
 
     // create actions & add to bar
+    ui->toolBar->setWindowTitle("Main Toolbar");
     QAction *aNewCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_new"),QString(tr("New creature")));
     QAction *aAddCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_add"),QString(tr("Add creature")));
     QAction *aSaveCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_save"),QString(tr("Save creature")));
@@ -197,12 +199,10 @@ void CreatureViewerWindow::init() {
 
     // get the QTabBar
     QList<QTabBar *> tabList = findChildren<QTabBar *>();
-    if(!tabList.isEmpty()){
-        QTabBar *tabBar = tabList.at(0);
-        tabBar->setCurrentIndex(0);
+    foreach(QTabBar * bar,tabList) {
+        bar->setCurrentIndex(0);
     }
 
-    //tabifyDockWidget(ui->dwExperiment,ui->dwWorker);
     setTabPosition(Qt::RightDockWidgetArea,QTabWidget::North);
 
 
@@ -282,7 +282,7 @@ void CreatureViewerWindow::init() {
     expCtrl = new ExperimentCtrl();
     this->ui->dwExperiment->setWidget(expCtrl);
     expCtrl->connectToInspectorInputManager(cvim);
-    connect(expCtrl, SIGNAL(addEntity(QVariantMap, Ressource*)), this, SLOT(addResult(QVariantMap,Ressource*)));
+    //connect(expCtrl, SIGNAL(addEntity(QVariantMap, Ressource*)), this, SLOT(addResult(QVariantMap,Ressource*)));
 
     // ----------------------------------
     // -- Connections to input manager --
@@ -300,6 +300,7 @@ void CreatureViewerWindow::init() {
     emit sLoadExperiment(experiment);
     connect(cvim,SIGNAL(sLoadWorld(QVariantMap)),this,SLOT(setWorld(QVariantMap)));
     connect(cvim,SIGNAL(sLoadEntity(QVariantMap,Ressource*)),this,SLOT(addEntity(QVariantMap,Ressource*)));
+    connect(cvim,SIGNAL(sLoadResult(Result*)),this,SLOT(loadResult(Result*)));
 
     // --------------
     // -- Starting --
@@ -376,6 +377,17 @@ void CreatureViewerWindow::setWorld(QVariantMap worldMap) {
         experiment->setWorldData(worldMap);
         setExperiment(experiment);
     }
+}
+
+void CreatureViewerWindow::loadResult(Result *result) {
+    setExperiment(experiment);
+
+    QVariantMap genome = result->getGenome().toMap();
+
+    Entity* e = createCreature(genome, world->getSpawnPosition(), result->getRessource());
+    e->addOutScript(0, fromNormal); // Normal position during stability time
+    e->addOutScript(result->getStable(), fromBrain); // Next from brain
+    e->setAge(0);
 }
 
 void CreatureViewerWindow::saveEntityToDb() {
@@ -568,12 +580,12 @@ void CreatureViewerWindow::addEntity(QVariantMap entityData,Ressource *ressource
     createCreature(entityData, getCameraPosition(), ressource);
 }
 
-void CreatureViewerWindow::addResult(QVariantMap resultData, Ressource *ressource) {
-    Entity* e = createCreature(resultData, world->getSpawnPosition(), ressource);
-    e->addOutScript(0, fromNormal); // Normal position during stability time
-    e->addOutScript(resultData["stable"].toInt(), fromBrain); // Next from brain
-    e->setAge(0);
-}
+//void CreatureViewerWindow::addResult(QVariantMap resultData, Ressource *ressource) {
+//    Entity* e = createCreature(resultData, world->getSpawnPosition(), ressource);
+//    e->addOutScript(0, fromNormal); // Normal position during stability time
+//    e->addOutScript(resultData["stable"].toInt(), fromBrain); // Next from brain
+//    e->setAge(0);
+//}
 
 void CreatureViewerWindow::loadEntityFromFile()
 {
@@ -856,7 +868,7 @@ void CreatureViewerWindow::switchToTheaterMode() {
     ui->dwCreature->setVisible(false);
     ui->dwExperiment->setVisible(false);
     ui->dwWorker->setVisible(false);
-    ui->dwRessourcesBrowser->setVisible(true);
+    ui->dwRessourcesBrowser->setVisible(false);
     ui->dwStats->setVisible(false);
 }
 

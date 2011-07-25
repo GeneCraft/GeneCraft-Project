@@ -51,7 +51,6 @@ public slots:
 
     // new / load / save entity
     void addEntity(QVariantMap entityData, Ressource *ressource);
-    void addResult(QVariantMap resultData, Ressource *ressource);
     Entity *createNewEntity();
     Entity *createCreature(QVariant genotype, btVector3 position, Ressource *ressource);
     void loadEntityFromFile();
@@ -66,6 +65,8 @@ public slots:
     // experiment and world
     void setExperiment(Experiment* experiment);
     void setWorld(QVariantMap worldMap);
+    void loadResult(Result*);
+    //void addResult(QVariantMap resultData, Ressource *ressource);
 
     // notifications
     void entitySelected(Entity *entity);

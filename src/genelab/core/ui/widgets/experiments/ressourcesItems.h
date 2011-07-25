@@ -36,9 +36,12 @@ public:
     {
         this->dataw = dataw;
 
+        QVariantMap biome = dataw.data["biome"].toMap();
+        QVariantMap scene = dataw.data["scene"].toMap();
+
         setText(0,dataw.data["name"].toString());
-        setText(1,QString::number(dataw.data["gravity"].toFloat()));
-        setText(2,dataw.data["dateOfCreation"].toString());
+        setText(1,QString::number(biome["gravity"].toDouble()));
+        setText(2,scene["type"].toString());
     }
 
      DataWrapper dataw;

@@ -42,10 +42,10 @@ namespace GeneLabCore {
         }
 
         void connectRandomly() {
-            this->connexions.append(NeuralConnexion(Tools::random(0.0,1.0), // X
-                                                    Tools::random(0.0,1.0), // Y
-                                                    Tools::random(0.0,0.2), // dist
-                                                    Tools::random(-1.0,1.0))); // Poid
+            this->connexions.append(NeuralConnexion(Tools::random(btScalar(0.0),btScalar(1.0)), // X
+                                                    Tools::random(btScalar(0.0),btScalar(1.0)), // Y
+                                                    Tools::random(btScalar(0.0),btScalar(0.2)), // dist
+                                                    Tools::random(btScalar(-1.0),btScalar(1.0)))); // Poid
         }
 
         void connectTo(btScalar x, btScalar y, btScalar dist, btScalar weight = 1.0f) {

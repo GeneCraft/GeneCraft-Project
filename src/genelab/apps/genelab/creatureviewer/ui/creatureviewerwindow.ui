@@ -31,22 +31,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuAdd_Creature">
-     <property name="title">
-      <string>Add creature</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../../core/ressources/ressources.qrc">
-       <normaloff>:/img/icons/entity_add</normaloff>:/img/icons/entity_add</iconset>
-     </property>
-    </widget>
-    <addaction name="actionNew_creature"/>
-    <addaction name="separator"/>
-    <addaction name="menuAdd_Creature"/>
-    <addaction name="actionSave_selected_creature"/>
-    <addaction name="aSaveEntityAs"/>
-    <addaction name="actionRemove_creature"/>
-    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuAbout">

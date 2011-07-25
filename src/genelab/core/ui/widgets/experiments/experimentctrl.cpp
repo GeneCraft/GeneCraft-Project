@@ -23,6 +23,7 @@ namespace GeneLabCore {
         connect(autorefresh, SIGNAL(timeout()), this, SLOT(refresh()));
         connect(this->ui->checkBox, SIGNAL(stateChanged(int)), this, SLOT(toggleRefresh()));
         connect(ui->pbRefresh,SIGNAL(clicked()),this,SLOT(refresh()));
+        connect(ui->twResults,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_btnLoad_clicked()));
 
         connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
         connect(ui->pbNewExperiment,SIGNAL(clicked()),this,SLOT(newExperiment()));
@@ -34,6 +35,7 @@ namespace GeneLabCore {
 
         epc->connectToInspectorInputManager(iim);
         connect(iim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
+        connect(this,SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
     }
 
     void ExperimentCtrl::refresh() {
@@ -61,25 +63,25 @@ namespace GeneLabCore {
 
         // save the selected result
         Result *selectedResult = NULL;
-        if(ui->treeWidget->currentItem())
-            selectedResult = ((ResultTreeWidgetItem *) ui->treeWidget->currentItem())->r;
+        if(ui->twResults->currentItem())
+            selectedResult = ((ResultTreeWidgetItem *) ui->twResults->currentItem())->r;
 
         // clear
-        Tools::clearTreeWidget(this->ui->treeWidget);
+        Tools::clearTreeWidget(this->ui->twResults);
 
         // fill
         foreach(Result* r, results) {
             ResultTreeWidgetItem * item = new ResultTreeWidgetItem(r);
-            this->ui->treeWidget->addTopLevelItem(item);
+            this->ui->twResults->addTopLevelItem(item);
         }
 
         // select previous selected item
         if(selectedResult) {
-            int nbItems = ui->treeWidget->topLevelItemCount();
+            int nbItems = ui->twResults->topLevelItemCount();
             for(int i=0;i<nbItems; ++i) {
-               ResultTreeWidgetItem *item = (ResultTreeWidgetItem *) ui->treeWidget->topLevelItem(i);
+               ResultTreeWidgetItem *item = (ResultTreeWidgetItem *) ui->twResults->topLevelItem(i);
                if(selectedResult == item->r) {
-                    ui->treeWidget->setCurrentItem(item,0);
+                    ui->twResults->setCurrentItem(item,0);
                     return;
                }
             }
@@ -102,12 +104,12 @@ namespace GeneLabCore {
         delete ui;
     }
 
-
-    void GeneLabCore::ExperimentCtrl::on_btnLoad_clicked()
+    void ExperimentCtrl::on_btnLoad_clicked()
     {
-        if(this->ui->treeWidget->currentIndex().row() > -1) {
-            Result* r = this->results[this->ui->treeWidget->currentIndex().row()];
-            emit addEntity(r->serialize().toMap(), NULL);
+        if(this->ui->twResults->currentItem()) {
+            Result* r = this->results[this->ui->twResults->currentIndex().row()];
+            emit sLoadResult(r);
+            //emit addEntity(r->serialize().toMap(), NULL);
         }
     }
 

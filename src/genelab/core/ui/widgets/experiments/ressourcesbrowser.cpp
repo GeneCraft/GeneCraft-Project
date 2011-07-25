@@ -162,7 +162,7 @@ void RessourcesBrowser::loadLocalWorld() {
 
 void RessourcesBrowser::loadOnlineWorld() {
 
-    if(ui->twOnlineExperiments->currentItem()) {
+    if(ui->twOnlineWorlds->currentItem()) {
         WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twOnlineWorlds->currentItem();
         emit sLoadWorld(worldTWI->dataw.data);
     }
@@ -410,6 +410,11 @@ void RessourcesBrowser::deleteLocalWorld() {
            if(worldTWI->dataw.r != NULL) {
                 worldTWI->dataw.r ->remove();
                 refreshLocalRessources();
+           }
+           else {
+               QMessageBox::warning(this, "Deletion impossible",
+                                              "You can't delete this world because it comes from an experiment (not a .world file).",
+                                               QMessageBox::Ok);
            }
         }
     }

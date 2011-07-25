@@ -19,6 +19,9 @@
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
      <widget class="QWidget" name="tabInfo">
       <attribute name="icon">
        <iconset resource="../../../ressources/ressources.qrc">
@@ -134,7 +137,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QTreeWidget" name="treeWidget">
+        <widget class="QTreeWidget" name="twResults">
          <column>
           <property name="text">
            <string>Fitness</string>

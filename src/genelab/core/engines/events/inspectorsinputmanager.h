@@ -7,7 +7,7 @@
 
 namespace GeneLabCore {
 
-class InspectorsInputManager : public InputListener
+class   InspectorsInputManager : public InputListener
 {
     Q_OBJECT
 
@@ -40,6 +40,7 @@ signals:
     void sLoadExperiment(Experiment *experiment);
     void sLoadWorld(QVariantMap worldData);
     void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
+    void sLoadResult(Result*);
 
 public slots:
 
@@ -64,6 +65,7 @@ public slots:
     void loadExperiment(Experiment *experiment);
     void loadWorld(QVariantMap worldData);
     void loadEntity(QVariantMap genomeData, Ressource *ressource);
+    void loadResult(Result *result);
 
 };
 

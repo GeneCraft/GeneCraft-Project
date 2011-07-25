@@ -59,5 +59,7 @@ void InspectorsInputManager::loadWorld(QVariantMap worldData) {
 void InspectorsInputManager::loadEntity(QVariantMap genomeData, Ressource *ressource) {
     emit sLoadEntity(genomeData, ressource);
 }
-
+void InspectorsInputManager::loadResult(Result *result) {
+    emit sLoadResult(result);
+}
 }

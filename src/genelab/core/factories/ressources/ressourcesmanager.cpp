@@ -100,6 +100,7 @@ namespace GeneLabCore {
 
     void RessourcesManager::examine(DataWrapper dataw) {
         QVariantMap dataMap = dataw.data;
+
         // Experience ?
         if(dataMap.contains("author") && dataMap.contains("duration")) {
             this->experiments.append(dataw);
@@ -108,6 +109,7 @@ namespace GeneLabCore {
                 QVariantMap worldMap = dataMap["world"].toMap();
                 DataWrapper dataWorld = {worldMap, NULL};
 
+                // no add two times the same world
                 foreach(DataWrapper dw, worlds)
                     if(dataWorld.data == dw.data)
                         return;
@@ -118,7 +120,20 @@ namespace GeneLabCore {
             return;
         }
 
-        // if it's a result
+        // World ?
+        if(dataMap.contains("biome") && dataMap.contains("scene")) {
+
+            // no add two times the same world
+            foreach(DataWrapper dw, worlds)
+                if(dataw.data == dw.data)
+                    return;
+
+            worlds.append(dataw);
+            return;
+        }
+
+
+        // if it's a result, convert to genome...
         if(dataMap.contains("type") && dataMap["type"].toString() == "result") {
             dataMap = dataMap["genome"].toMap();
         }
@@ -126,12 +141,6 @@ namespace GeneLabCore {
         // Creature ?
         if(dataMap.contains("body") && dataMap.contains("brain") && dataMap.contains("origins")) {
             creatures.append(dataw);
-            return;
-        }
-
-        // World ?
-        if(dataMap.contains("type") && dataMap["type"].toString() == "world") {
-            worlds.append(dataw);
             return;
         }
     }
