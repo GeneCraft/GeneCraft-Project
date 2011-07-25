@@ -58,7 +58,7 @@ public:
 
         setText(0, QString::number(r->getFitness(), 10, 2));
         setText(1, r->getWorker());
-        setText(2, r->getDate());
+        setText(2, QString::number(r->getGenome().toMap()["origins"].toMap()["generation"].toInt()));
     }
 
     Result * r;

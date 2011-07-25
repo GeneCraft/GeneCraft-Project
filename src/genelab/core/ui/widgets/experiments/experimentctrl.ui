@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>379</width>
+    <width>386</width>
     <height>366</height>
    </rect>
   </property>
@@ -150,7 +150,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Date</string>
+           <string>Generation</string>
           </property>
          </column>
         </widget>
