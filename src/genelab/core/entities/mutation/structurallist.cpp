@@ -40,6 +40,11 @@ QVariant MutationElement::serialize() {
 
 StructuralList::StructuralList(){}
 
+StructuralList::~StructuralList() {
+    qDeleteAll(this->elements);
+    elements.clear();
+}
+
 StructuralList::StructuralList(QVariant variant) {
     QVariantList list = variant.toList();
     foreach(QVariant variant, list)

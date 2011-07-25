@@ -24,6 +24,7 @@ class StructuralList
 public:
     StructuralList();
     StructuralList(QVariant variant);
+    ~StructuralList();
     QVariant serialize();
 
     MutationElement * pickOne();
