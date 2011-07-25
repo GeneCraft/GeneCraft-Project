@@ -37,7 +37,20 @@
 		Notice that you can also show or hide each inspector by right-clicking on the tools bars.
 		</p>
 		
+		<h2>Quick help</h2>
+		<p>The center of this windows is the rendering widget, it contains the world and all creatures you simulate.<br />
+			You can navigate inside with your keyboard and your mouse. Use AWSD (or arrows) to straf and move the camera. Use drag and drop to rotate the camera.</p>
+			<h3>What to do</h3>
+			<p>If you don't know what to do first, we invite you to go to the experiment tab and refresh online data from the ressource manager. That will retrieve experiments and creatures stored in the online database. Then you just have to double click on whatever you want to load it.<br />
+				Loading an experiment will refresh results computed from workers accross the world, you can see those in the "Experiment" widget. Again double click on one element will load it as it was simulated in the experiment.</p>
+				<h3>Your own experiment</h3>
+		<p>If you want to design you own experiment, simply create a new one and then go through the tabs of the experiment properties editor and verify informations about mutations, fitness function, etc.. When you are happy with thoses settings and you have saved your experiment you can launch a worker on it. That will create a "popup" windows where you can enter informations about number of generation, population size, etc.. When you launch it, it'll start computing results and saving the bests one. You can see the bests found results in the "Experiment" widget.</p>
+			<h3>Warning about cross-platforms</h3>
+			<p>For this project determinism in the physical engine is very important. It is garanteed in a local environment. But it's very difficult to get across multiples platforms and compilators. So some results computed on other configurations than yours could perform in a very different way in your environment. Please take that in mind when playing with online results or experiments.</p>
+			<p>A good way to outpass this problem for a given experiment, is to take the bests results and use them as a seed for a local experiment.
+				Within some generation your worker should be able to change the creature to perform in the same scale on your own computer.</p>
 		<p>
+			<p>And don't forget to have fun !</p>
 		For more information about the project, please visit the <a href="http://www.genecraft-project.org">official website</a>.
 		</p>
 		

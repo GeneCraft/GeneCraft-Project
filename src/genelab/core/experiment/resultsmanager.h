@@ -64,6 +64,13 @@ public:
         return randomResults;
     }
 
+    /**
+      * The db object
+      */
+    DataBase getDb() {
+        return this->db;
+    }
+
 protected:
     Experiment* experiment;
     bool online;

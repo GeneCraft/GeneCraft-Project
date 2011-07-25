@@ -71,7 +71,7 @@ namespace GeneLabCore {
 
         this->results = new ResultsManager(exp,bestResultsStored, randomResultsStored,workerName);
         if(exp->isOnline()) {
-            this->ressources = new RessourcesManager();
+            this->ressources = new RessourcesManager(this->results->getDb(), QDir());
         }
 
         QVariantMap selectionMap   = workerMap["selection"].toMap();

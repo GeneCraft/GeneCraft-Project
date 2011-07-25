@@ -102,8 +102,6 @@ namespace GeneLabCore {
 
         QList<Result*> activePop;
 
-        DataBase db;
-
         ResultsManager* results;
         RessourcesManager* ressources;
     };
