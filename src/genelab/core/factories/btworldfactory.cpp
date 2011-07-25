@@ -115,7 +115,7 @@ namespace GeneLabCore {
         // Floor
         QVariantMap floor;
         floor.insert("type", "flatland");
-        floor.insert("material", "Examples/GrassFloor");
+        floor.insert("material", "GeneCraft/GrassFloor");
         sceneData.insert("floor",floor);
 
         worldData.insert("scene", sceneData);
