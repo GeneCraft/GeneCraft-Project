@@ -155,6 +155,11 @@ namespace GeneLabCore {
             qDebug() << "generated" << this->popSize << "mutated entities from active population";
         }
 
+        delete world;
+        delete worldFactory;
+        delete shapesFactory;
+        delete creatureFactory;
+        delete exp;
     }
 
 

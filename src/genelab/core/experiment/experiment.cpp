@@ -44,6 +44,9 @@ Experiment::Experiment() : ressource(NULL){
 
 
     }
+Experiment::~Experiment() {
+    delete mutationsManager;
+}
 
     Experiment::Experiment(QVariant data) : ressource(NULL) {
 

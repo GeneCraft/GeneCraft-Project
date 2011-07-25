@@ -16,6 +16,7 @@ namespace GeneLabCore {
     public:
 
         Experiment();
+        ~Experiment();
         Experiment(QVariant data);
         QVariant serialize();
 
