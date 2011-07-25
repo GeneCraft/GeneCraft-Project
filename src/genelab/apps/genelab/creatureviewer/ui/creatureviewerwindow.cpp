@@ -346,16 +346,8 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // entities
     removeAllEntities();
 
-
-    // bullet engine
-    BulletEngine *btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));
-    btEngine->removeWorld(world->getBulletWorld());
-
     // bullet
-    world->cleanBulletWorld();
-
-    // TODO Delete world and scene and everything
-
+    delete world;
 
     // bullet ogre engine
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
