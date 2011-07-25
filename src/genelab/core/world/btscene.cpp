@@ -28,6 +28,11 @@ namespace GeneLabCore {
         }
     }
 
+    btScene::~btScene() {
+        qDeleteAll(spawns);
+        spawns.clear();
+    }
+
     void btScene::setup() {
 
         QVariantMap floor = data["floor"].toMap();

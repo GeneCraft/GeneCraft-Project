@@ -4,9 +4,9 @@
 #include <QObject>
 
 #include "genelabcoreclasses.h"
-#include "BulletCollision/CollisionShapes/btCollisionShape.h"
-#include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
-#include "LinearMath/btTransform.h"
+
+
+#include <btBulletDynamicsCommon.h>
 
 #include <deque>
 #include <QVariant>
@@ -27,9 +27,7 @@ namespace GeneLabCore {
 
         // To create a world from serialization data
         btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
-
-        // To clean the bullet world
-        void cleanBulletWorld();
+        ~btWorld();
 
         // To create a new creature
         virtual btVector3 getSpawnPosition();
@@ -52,6 +50,10 @@ namespace GeneLabCore {
         virtual void setup();
 
     protected:
+
+        // To clean the bullet world
+        void cleanBulletWorld();
+
         // Static object (ground, etc..)
         btScene*  scene;
 
@@ -70,6 +72,11 @@ namespace GeneLabCore {
 
         // Bullet world
         btDiscreteDynamicsWorld* world;
+        btOverlappingPairCache* ovPairCache;
+        btBroadphaseInterface* broadphase;
+        btDefaultCollisionConfiguration* collisionConfiguration;
+        btCollisionDispatcher* dispatcher;
+        btSequentialImpulseConstraintSolver* solver;
 
         // Data
         QVariantMap data;

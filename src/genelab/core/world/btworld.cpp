@@ -14,6 +14,7 @@
 #include "BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 #include "BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+#include "BulletCollision/BroadphaseCollision/btOverlappingPairCache.h"
 
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
 #include <btBulletDynamicsCommon.h>
@@ -45,10 +46,19 @@ namespace GeneLabCore {
 
     }
 
-    void btWorld::cleanBulletWorld() {
+    btWorld::~btWorld() {
 
-//        scene->clean();
-//        biome->clean();
+        this->shapesFactory->setWorld(NULL);
+        btEngine->removeWorld(world);
+
+        delete this->scene;
+        delete this->biome;
+
+
+        this->cleanBulletWorld();
+    }
+
+    void btWorld::cleanBulletWorld() {
 
         // from : http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=9&t=638&view=next
         //cleanup in the reverse order of creation/initialization
@@ -62,32 +72,12 @@ namespace GeneLabCore {
             delete obj;
         }
 
-        // TODO...
-
-//        //delete collision shapes
-//        for (unsigned int j=0;j<m_collisionShapes.size();j++)
-//        {
-//                btCollisionShape* shape = m_collisionShapes[j];
-//                delete shape;
-//        }
-
-//        //delete dynamics world
-//        delete m_dynamicsWorld;
-
-//        //delete collision algorithms creation functions
-//        delete m_sphereSphereCF;
-
-//        delete m_sphereBoxCF;
-//        delete m_boxSphereCF;
-
-//        //delete solver
-//        delete m_solver;
-
-//        //delete broadphase
-//        delete m_overlappingPairCache;
-
-//        //delete dispatcher
-//        delete m_dispatcher;
+        delete world;
+        delete solver;
+        delete dispatcher;
+        delete collisionConfiguration;
+        delete broadphase;
+        delete ovPairCache;
 
     }
 
@@ -105,12 +95,12 @@ namespace GeneLabCore {
     void btWorld::setup() {
 
         // create new bullet world
-        btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-        btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-        btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-        btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
-        world = new btDiscreteDynamicsWorld(dispatcher, broadphase,solver,collisionConfiguration);
+        ovPairCache             = new btSortedOverlappingPairCache;
+        broadphase              = new btDbvtBroadphase(ovPairCache);
+        collisionConfiguration  = new btDefaultCollisionConfiguration();
+        dispatcher              = new btCollisionDispatcher(collisionConfiguration);
+        solver                  = new btSequentialImpulseConstraintSolver();
+        world                   = new btDiscreteDynamicsWorld(dispatcher, broadphase,solver,collisionConfiguration);
 
         btContactSolverInfo& info = world->getSolverInfo();
         info.m_numIterations = 20; // 20

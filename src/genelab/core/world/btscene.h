@@ -17,6 +17,7 @@ class btScene : public QObject
 
 public:
     explicit btScene(btWorld* world, QVariant sceneData, QObject *parent = 0);
+    ~btScene();
 
     virtual void setup();
 

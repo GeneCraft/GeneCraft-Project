@@ -165,7 +165,6 @@ namespace GeneLabCore {
         // The new random population
         QList<Result*> newPop;
 
-
         // Creating N new spider
         for(int i = 0; i < this->popSize; i++) {
             newPop.append(new Result(exp->getId(), -1, 0, this->randomNewEntity(), this->workerName));
@@ -279,7 +278,7 @@ namespace GeneLabCore {
 
             // Mutation of best one
             newActivePop.append(new Result(this->exp->getId(), -1, 0,
-                                           mutations->mutateEntity(r->getGenome()), this->workerName));
+                                          r->getGenome(), this->workerName)); //  mutations->mutateEntity(r->getGenome())
             qDebug() << "loading mutation of best results with fitness " << r->getFitness();
         }
 
@@ -391,6 +390,8 @@ namespace GeneLabCore {
 
     // To simulate a specific entity
     Entity* ExperimentManager::spawnEntity(QVariant genome) {
+        delete world;
+        world = worldFactory->createWorld(factory, shapesFactory, exp->getWorldDataMap());
         btVector3 position = world->getSpawnPosition();
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         if(e == NULL) {

@@ -13,6 +13,7 @@ class btBiome : public QObject
 {
 public:
     explicit btBiome(btWorld* world, QVariant biomeData, QObject *parent = 0);
+    ~btBiome();
 
     virtual void setup();
 

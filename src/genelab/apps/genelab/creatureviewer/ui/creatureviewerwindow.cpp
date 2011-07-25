@@ -346,13 +346,6 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // entities
     removeAllEntities();
 
-    // bullet ogre engine
-    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
-    btoEngine->clearAll();
-
-    // ogre engine
-    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
-    ogreEngine->getOgreSceneManager()->clearScene();
 
     // bullet engine
     BulletEngine *btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));
@@ -360,6 +353,17 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
 
     // bullet
     world->cleanBulletWorld();
+
+    // TODO Delete world and scene and everything
+
+
+    // bullet ogre engine
+    BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
+    btoEngine->clearAll();
+
+    // ogre engine
+    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
+    ogreEngine->getOgreSceneManager()->clearScene();
 
     // --------------------------
     // -- Create the new world --
