@@ -39,7 +39,7 @@ Experiment::Experiment() : ressource(NULL){
                                     QString("})");
 
         validityFunction = "(function() {return entity.bodySensors.max < 3; })";
-        endFunction     = "(function(actualStep) { return entity.brainActivity.sum > 200; })";
+        endFunction     = "(function(actualStep) { return false; })";
         dieFunction     = "(function() { return entity.rootYRelVelocity.sum < 0; })";
 
 

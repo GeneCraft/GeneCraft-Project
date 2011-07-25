@@ -13,7 +13,7 @@ public:
 
     static int random(int min, int max);
     static btScalar random(btScalar min, btScalar max);
-//    static double random(double min, double max);
+    static double random(double min, double max);
 
     static void clearTreeWidgetItem(QTreeWidgetItem * item);
 

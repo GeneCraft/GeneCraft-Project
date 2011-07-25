@@ -19,7 +19,7 @@ BrainPropertiesController::BrainPropertiesController(QWidget *parent) :
     ui->setupUi(this);
 
     // Brain
-    connect(this->ui->sBrainPluggridSize,SIGNAL(valueChanged(int)),this,SLOT(setBrainSize()));
+    connect(this->ui->sBrainFrequency,SIGNAL(valueChanged(int)),this,SLOT(setBrainFrequency()));
     QLayout* layoutBrain = new QBoxLayout(QBoxLayout::TopToBottom);
     this->ui->tabBrain->setLayout(layoutBrain);
     QLayout* layoutBrainD = new QBoxLayout(QBoxLayout::TopToBottom);
@@ -117,8 +117,8 @@ void BrainPropertiesController::setEntity(Entity *entity)
         this->ui->lNbrEffectors->setText(QString::number(entity->getEffectors().size()));
 
         // Brain
-        //ui->sBrainPluggridSize->setValue(entity->getBrain()->getPlugGrid()->getSize());
-        //ui->lBrainPluggridSize->setText(QString::number(entity->getBrain()->getPlugGrid()->getSize()));
+        ui->sBrainFrequency->setValue(entity->getBrain()->getFrequency());
+        ui->lBrainFrequency->setText(QString::number(entity->getBrain()->getFrequency()));
         this->brainViz->setBrain(entity->getBrain());
         this->brainDezViz->setBrain(entity->getBrain());
 
@@ -158,9 +158,13 @@ void BrainPropertiesController::selectSensorFixation()
     }
 }
 
-void BrainPropertiesController::setBrainSize()
+void BrainPropertiesController::setBrainFrequency()
 {
     if(entity){
+
+        entity->getBrain()->setFrequency(ui->sBrainFrequency->value());
+        ui->lBrainFrequency->setText(QString::number(entity->getBrain()->getFrequency()));
+
         //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
         //int size = ui->sBrainPluggridSize->value();
         //ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));

@@ -18,9 +18,9 @@ namespace GeneLabCore {
         return ((max - min) * ((btScalar) qrand()/RAND_MAX)) + min;
     }
 
-//    double Tools::random(double min, double max) {
-//        return ((max - min) * ((double) qrand()/RAND_MAX)) + min;
-//    }
+    double Tools::random(double min, double max) {
+        return ((max - min) * ((double) qrand()/RAND_MAX)) + min;
+    }
 
     // Used to clear a QTreeWidget
     void Tools::clearTreeWidget(QTreeWidget * tree)

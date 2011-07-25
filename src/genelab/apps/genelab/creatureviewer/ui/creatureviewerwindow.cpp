@@ -335,7 +335,9 @@ void CreatureViewerWindow::init() {
 
 void CreatureViewerWindow::setExperiment(Experiment* experiment)
 {
-    // TODO delete this->experiment;
+    // delete the current experiment if it exists and it be different that the new
+    if(this->experiment != NULL && this->experiment != experiment)
+        delete this->experiment;
 
     this->experiment = experiment;
 
@@ -348,6 +350,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
 
     // bullet
     delete world;
+    world = NULL;
 
     // bullet ogre engine
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
@@ -360,7 +363,9 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // --------------------------
     // -- Create the new world --
     // --------------------------
-    world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
+    if(experiment != NULL)
+        world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
+
     cvim->setWorld(world);
 
     // receive by inspector manager

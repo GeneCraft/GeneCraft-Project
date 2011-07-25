@@ -25,7 +25,7 @@ public:
 public slots:
 
     void selectSensorFixation();
-    void setBrainSize();
+    void setBrainFrequency();
     void clearSensors();
     void clearEffectors();
     void computeMinimalOuts();

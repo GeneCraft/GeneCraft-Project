@@ -25,9 +25,11 @@ public:
     virtual QVariant serialize();
 
     virtual void step() = 0;
-    int getFrequency() {
-        return frequency;
-    }
+
+    // Frequency
+    int getFrequency() { return frequency; }
+    void setFrequency(int frequency) { this->frequency = frequency; }
+
 
 protected:
     BrainPlugGrid* plugGrid;
