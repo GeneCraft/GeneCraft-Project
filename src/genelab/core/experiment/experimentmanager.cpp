@@ -376,15 +376,19 @@ namespace GeneLabCore {
             if(stable)
                 simulated = this->simulateEntity(e);
 
-            if(stable && simulated) {
-                fitness = this->evaluateEntity(e);
-                r->setFitness(fitness);
-                QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
-                r->setStatistics(QxtJSON::parse(stats));
-                results->addResult(r);
-                qDebug() << "entity evaluated, fitness =" << fitness;
+            if(stable) {
+                if(simulated) {
+                    fitness = this->evaluateEntity(e);
+                    r->setFitness(fitness);
+                    QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
+                    r->setStatistics(QxtJSON::parse(stats));
+                    results->addResult(r);
+                    qDebug() << "entity evaluated, fitness =" << fitness;
+                } else {
+                    qDebug() << "the entity die during simulation";
+                }
             } else {
-                qDebug() << "corrupted entity";
+                qDebug() << "the entity wasn't able to stabilize in the given time, or exploded";
                 r->setFitness(-1);
             }
 
@@ -426,7 +430,8 @@ namespace GeneLabCore {
             return false;
         }
 
-        // 100 engines step
+        // 0 step from brain
+        // TODO add the this value in the experiment data
         for(int i = 0; i < 0 && this->exp->getOnlyIfEntityIsStable(); i++) {
             this->engineStep();
             if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
@@ -467,8 +472,10 @@ namespace GeneLabCore {
 
             this->engineStep();
 
-            if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
+            if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece()) {
+                qDebug() << "the entity exploded during stability time";
                 return false;
+            }
         }
 
         foreach(Statistic* stat, e->getStatisticsStorage()->getStatistics()) {

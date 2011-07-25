@@ -50,7 +50,6 @@ unix {
 #    LIBS += -L/usr/local/Qxt/lib
 #    LIBS += -lQxtCore
 }
-
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
