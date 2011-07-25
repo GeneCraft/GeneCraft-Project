@@ -26,7 +26,7 @@ btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, con
             SceneManager::PT_CUBE);
 
     // Material
-    entity->setMaterialName("Examples/Rockwall");
+    entity->setMaterialName("GeneCraft/RockWall");
     entity->setCastShadows(true);
 
     // Attach

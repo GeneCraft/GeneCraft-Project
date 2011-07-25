@@ -82,6 +82,8 @@ void RessourcesBrowser::connectToInspectorInputManager(GeneLabCore::InspectorsIn
     connect(this,SIGNAL(sLoadExperiment(Experiment*)),iim,SLOT(loadExperiment(Experiment*)));
     connect(this,SIGNAL(sLoadWorld(QVariantMap)),iim,SLOT(loadWorld(QVariantMap)));
     connect(this,SIGNAL(sLoadEntity(QVariantMap, Ressource*)),iim,SLOT(loadEntity(QVariantMap, Ressource*)));
+
+    connect(iim,SIGNAL(sExperimentUpdated(Experiment*)),this,SLOT(experimentUpdated(Experiment*)));
 }
 
 // ----------------
@@ -434,6 +436,21 @@ void RessourcesBrowser::deleteLocalEntity() {
            entityTWI->dataw.r->remove();
            refreshLocalRessources();
         }
+    }
+}
+
+// -------------------
+// -- NOTIFICATIONS --
+// -------------------
+void RessourcesBrowser::experimentUpdated(Experiment* experiment) {
+    qDebug() << Q_FUNC_INFO;
+
+    if(experiment->hasRessource()){
+
+        if(experiment->isOnline())
+            refreshOnlineRessources();
+        else
+             refreshLocalRessources();
     }
 }
 

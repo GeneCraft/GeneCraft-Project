@@ -44,6 +44,7 @@ public slots:
     void saveExperiment();
     void shareExperiment();
     void deleteLocalExp();
+    void experimentUpdated(Experiment *experiment);
 
     // worls
     void loadLocalWorld();

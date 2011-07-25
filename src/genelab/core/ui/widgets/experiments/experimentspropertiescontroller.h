@@ -28,6 +28,7 @@ public:
 
 signals:
     void sLoadExperiment(Experiment *experiment);
+    void sExperimentUpdated(Experiment*);
 
 public slots:
     void setupForm();

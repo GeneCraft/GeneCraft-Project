@@ -48,6 +48,9 @@ void InspectorsInputManager::fixationUpdated(Fixation *fix){
 void InspectorsInputManager::entityUpdated(Entity *entity){
     emit sEntityUpdated(entity);
 }
+void InspectorsInputManager::experimentUpdated(Experiment *experiment){
+    emit sExperimentUpdated(experiment);
+}
 
 // experiment
 void InspectorsInputManager::loadExperiment(Experiment *experiment){

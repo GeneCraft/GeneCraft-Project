@@ -27,7 +27,7 @@ btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar 
             "Barrel.mesh");
 
     // Material
-    entity->setMaterialName("Examples/Rockwall");
+    entity->setMaterialName("GeneCraft/RockWall");
     entity->setCastShadows(true);
 
     // Attach

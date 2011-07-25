@@ -35,12 +35,14 @@ signals:
     void sBoneUpdated(Bone * bone);
     void sFixationUpdated(Fixation *fix);
     void sEntityUpdated(Entity * entity);
+    void sExperimentUpdated(Experiment *experiment);
 
     // loading
     void sLoadExperiment(Experiment *experiment);
     void sLoadWorld(QVariantMap worldData);
     void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
     void sLoadResult(Result*);
+
 
 public slots:
 
@@ -60,6 +62,7 @@ public slots:
     void boneUpdated(Bone * bone);
     void fixationUpdated(Fixation *fix);
     void entityUpdated(Entity * entity);
+    void experimentUpdated(Experiment * experiment);
 
     // loading
     void loadExperiment(Experiment *experiment);

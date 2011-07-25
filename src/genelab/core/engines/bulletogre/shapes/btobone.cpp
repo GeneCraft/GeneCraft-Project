@@ -17,11 +17,11 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();
 
-    boneMaterial = "GeneLab/Bone";
-    fixationMaterial = "GeneLab/Fixation";
+    boneMaterial = "GeneCraft/Bone";
+    fixationMaterial = "GeneCraft/Fixation";
 
-    boneSelectedMaterial = "GeneLab/Bone_Selected";
-    fixationSelectedMaterial = "GeneLab/Fixation_Selected";
+    boneSelectedMaterial = "GeneCraft/Bone_Selected";
+    fixationSelectedMaterial = "GeneCraft/Fixation_Selected";
 
     // New entity
     btoBone::mNumEntitiesInstanced++;

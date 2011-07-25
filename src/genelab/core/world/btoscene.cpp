@@ -77,7 +77,7 @@ namespace GeneLabCore {
                 Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
 
                 // Material
-                entity->setMaterialName("GeneLab/Spawn");
+                entity->setMaterialName("GeneCraft/Spawn");
 
                 // Attach
                 Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
@@ -100,7 +100,7 @@ namespace GeneLabCore {
                 Ogre::Entity* entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity("cube.mesh");
 
                 // Material
-                entity->setMaterialName("GeneLab/Spawn");
+                entity->setMaterialName("GeneCraft/Spawn");
 
                 // Attach
                 Ogre::SceneNode* node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();

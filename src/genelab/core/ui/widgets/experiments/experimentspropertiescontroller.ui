@@ -111,7 +111,7 @@
    <item row="0" column="0" colspan="7">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_6">
       <attribute name="icon">
@@ -756,8 +756,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1164</width>
-                <height>574</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout">
@@ -1046,18 +1046,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="0" column="4">
-           <widget class="QComboBox" name="cbFloorMaterial">
-            <item>
-             <property name="text">
-              <string>Examples/GrassFloor</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Examples/Rockwall</string>
-             </property>
-            </item>
-           </widget>
+           <widget class="QComboBox" name="cbFloorMaterial"/>
           </item>
           <item row="3" column="2" colspan="5">
            <layout class="QHBoxLayout" name="horizontalLayout_2">

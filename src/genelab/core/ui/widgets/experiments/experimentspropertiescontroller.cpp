@@ -33,6 +33,7 @@ namespace GeneLabCore {
 QList<QString> gravitiesName;
 QList<double> gravities;
 QList<QString> skyMaterials;
+QList<QString> floorsMaterials;
 
 ExperimentsPropertiesController::ExperimentsPropertiesController(QWidget *parent) :
     QWidget(parent), ui(new Ui::ExperimentsPropertiesController)
@@ -101,6 +102,15 @@ void ExperimentsPropertiesController::setupForm() {
     for(int i=0; i<skyMaterials.count();++i)
         ui->cbSkyMaterial->addItem(skyMaterials.at(i));
 
+    floorsMaterials << "GeneCraft/GrassFloor"
+                   << "GeneCraft/DesertFloor"
+                   << "GeneCraft/DesertFloor_2"
+                   << "GeneCraft/StoneRoadFloor"
+                   << "GeneCraft/MoonFloor"
+                   << "GeneCraft/WoodFloor";
+
+    for(int i=0; i<floorsMaterials.count();++i)
+        ui->cbFloorMaterial->addItem(floorsMaterials.at(i));
 
     // ----------------
     // -- ressources --
@@ -118,7 +128,7 @@ void ExperimentsPropertiesController::setupForm() {
 void ExperimentsPropertiesController::connectToInspectorInputManager(InspectorsInputManager * iim) {
 
     connect(this,SIGNAL(sLoadExperiment(Experiment *)),iim,SLOT(loadExperiment(Experiment*)));
-
+    connect(this,SIGNAL(sExperimentUpdated(Experiment*)),iim,SLOT(experimentUpdated(Experiment*)));
 }
 
 void ExperimentsPropertiesController::removeEntityFromSeed() {
@@ -362,9 +372,19 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
     // floor
     QVariantMap floorMap = sceneMap["floor"].toMap();
     QString type = floorMap["type"].toString();
-    for(int i=0;i<ui->cbFloor->count();++i)
-        if(type == ui->cbFloor->itemText(i))
-            ui->cbFloor->setCurrentIndex(i);
+
+    if(type == "flatland") {
+
+        ui->cbFloor->setCurrentIndex(1);
+
+        QString material = floorMap["material"].toString();
+
+        for(int i=0; i<floorsMaterials.count();++i)
+            if(material == floorsMaterials.at(i))
+                ui->cbFloorMaterial->setCurrentIndex(i);
+    }
+    else
+        ui->cbFloor->setCurrentIndex(0);
 
     // camera
     QVariantMap camMap = sceneMap["camera"].toMap();
@@ -402,10 +422,13 @@ void ExperimentsPropertiesController::save() {
             QString("Impossible to save experiment : error code : ") + QString::number(code));
 
             experiment->setRessource(NULL);
+            return;
         }
-    } else {
-        saveExpToFile();
+
+        emit sExperimentUpdated(experiment);
     }
+    else
+        saveExpToFile();
 }
 
 void ExperimentsPropertiesController::saveAndReload() {
@@ -431,8 +454,10 @@ void ExperimentsPropertiesController::saveExpToFile() {
         Ressource* to = new JsonFile(selectedFile);
         int code = to->save(experiment->serialize());
 
-        if(code == 0)
+        if(code == 0) {
             experiment->setRessource(to);
+            emit sExperimentUpdated(experiment);
+        }
         else {
             QMessageBox::warning(this, "Impossible to save experiment",
                                  QString("Impossible to save experiment : error code : ") + QString::number(code));

@@ -22,12 +22,12 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
     if(paramsMap.contains("Material"))
         fixationMaterial = params.toMap()["Material"].toString();
     else
-        fixationMaterial = "GeneLab/Fixation/Root";
+        fixationMaterial = "GeneCraft/Fixation/Root";
 
     if(paramsMap.contains("MaterialOnSelection"))
         fixationSelectedMaterial = params.toMap()["MaterialOnSelection"].toString();
     else
-        fixationSelectedMaterial = "GeneLab/Fixation_Selected/Root";
+        fixationSelectedMaterial = "GeneCraft/Fixation_Selected/Root";
 
     // -------------------
     // -- create sphere --
