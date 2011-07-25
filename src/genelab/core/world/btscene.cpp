@@ -26,11 +26,24 @@ namespace GeneLabCore {
         if(this->spawns.size() == 0) { // Prevent no spawn bug !
             this->spawns.append(new Spawn("position", btVector3(0, 10, 0)));
         }
+        groundMotionState = NULL;
+        rigidBody = NULL;
+        collisionShape = NULL;
     }
 
     btScene::~btScene() {
         qDeleteAll(spawns);
         spawns.clear();
+        // The flood
+        if(groundMotionState) {
+            world->getBulletWorld()->removeRigidBody(rigidBody);
+            delete rigidBody;
+            delete collisionShape;
+            delete groundMotionState;
+            groundMotionState = NULL;
+            rigidBody = NULL;
+            collisionShape = NULL;
+        }
     }
 
     void btScene::setup() {
@@ -38,13 +51,13 @@ namespace GeneLabCore {
         QVariantMap floor = data["floor"].toMap();
 
         if(floor["type"].toString() == "flatland") {
-            btStaticPlaneShape *collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
+            collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
             btTransform worldTransform;
             worldTransform.setIdentity();
-            btDefaultMotionState* groundMotionState = new btDefaultMotionState(worldTransform);
+            groundMotionState = new btDefaultMotionState(worldTransform);
             btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,collisionShape,btVector3(0,0,0));
 
-            btRigidBody *rigidBody = new btRigidBody(groundRigidBodyCI);
+            rigidBody = new btRigidBody(groundRigidBodyCI);
             rigidBody->setFriction(0.7);
 
             //rigidBody->setActivationState(DISABLE_DEACTIVATION);

@@ -49,6 +49,7 @@ namespace GeneLabCore {
     void IntegerMutation::mutate(QVariantMap &map, QString key){
         int newValue = this->mutate(map.value(key).toInt());
         map.insert(key,QVariant((int)newValue));
+        map.remove(key);
     }
 
     int IntegerMutation::mutate(int value) {

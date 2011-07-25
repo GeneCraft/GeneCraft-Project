@@ -45,6 +45,8 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
         if(upValue < 0)
             upValue = 0;
 
+        lowerLimits.remove(axis);
+        upperLimits.remove(axis);
         lowerLimits.insert(axis,QVariant((double)loValue));
         upperLimits.insert(axis,QVariant((double)upValue));
     }

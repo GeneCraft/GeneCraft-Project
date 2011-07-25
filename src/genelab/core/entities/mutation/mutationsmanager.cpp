@@ -241,6 +241,39 @@ namespace GeneLabCore {
         brainNodeList = new StructuralList(map["brainNodes"]);
         brainStructural = new StructuralMutation(map["brainStruct"]);
     }
+    MutationsManager::~MutationsManager(){
+        delete boneLength;
+        delete boneRadius;
+        delete fixRadius;
+        delete boneAngularOrigin;
+        delete boneAngularLimits;
+
+        // sensors
+        delete sensorsStructural;
+        delete sensorsStructuralList;
+        delete effectorsStructural;
+        delete effectorsStructuralList;
+
+        delete distanceSensorYZ;
+        // bones
+        delete bonesStructural;
+
+        // ---------------------
+        // -- BRAIN MUTATIONS --
+        // ---------------------
+
+        // Plug grid size
+        delete brainInPos;
+        delete brainWeight;
+        delete brainDistance;
+        delete brainMemorySize;
+        delete brainFrequency;
+        delete constValue;
+        delete brainNodeList;
+        delete brainStructural;
+
+
+    }
 
     QVariant MutationsManager::serialize(){
 
@@ -283,15 +316,18 @@ namespace GeneLabCore {
 
         // treeshape mutation
         QVariant newTreeShapeMap = this->mutateTreeShape(treeShapeMap);
+        bodyMap.remove("shape");
         bodyMap.insert("shape",   newTreeShapeMap);
         entityMap.insert("body",  bodyMap);
 
         // brain mutation
         QVariant newBrainMap     = this->mutateBrain(brainMap);
+        entityMap.remove("brain");
         entityMap.insert("brain", newBrainMap);
 
         // next generation
         originsMap.insert("generation", originsMap["generation"].toInt()+1);
+        entityMap.remove("origins");
         entityMap.insert("origins", originsMap);
 
         return entityMap;
@@ -317,7 +353,9 @@ namespace GeneLabCore {
         if(bonesStructural->checkAdd())
             addBone(newBonesList);
 
+        rootFixMap.remove("bones");
         rootFixMap.insert("bones",newBonesList);
+        treeShapeMap.remove("rootFix");
         treeShapeMap.insert("rootFix",rootFixMap);
         return treeShapeMap;
     }
@@ -342,7 +380,9 @@ namespace GeneLabCore {
         if(bonesStructural->checkAdd())
              addBone(newBonesList);
 
+        endFixMap.remove("bones");
         endFixMap.insert("bones",newBonesList);
+        boneVariantMap.remove("endFix");
         boneVariantMap.insert("endFix",endFixMap);
 
         return boneVariantMap;
@@ -367,6 +407,7 @@ namespace GeneLabCore {
         QVariantMap localRotation = boneMap["localRotation"].toMap();
         boneAngularOrigin->mutate(localRotation,"y");
         boneAngularOrigin->mutate(localRotation,"z");
+        boneMap.remove("localRotation");
         boneMap.insert("localRotation",localRotation);
 
         // --------------------
@@ -378,6 +419,8 @@ namespace GeneLabCore {
 
         boneAngularLimits->mutate(lowerLimits,upperLimits);
 
+        boneMap.remove("lowerLimits");
+        boneMap.remove("upperLimits");
         boneMap.insert("lowerLimits",lowerLimits);
         boneMap.insert("upperLimits",upperLimits);
 
@@ -407,8 +450,13 @@ namespace GeneLabCore {
 
                 // new version
                 if(motorMap.contains("contractionOutput")) {
-                    motorMap.insert("contractionOutput", mutateBrainOut(motorMap["contractionOutput"]));
-                    motorMap.insert("expansionOutput", mutateBrainOut(motorMap["expansionOutput"]));
+                    QVariant newContraction = mutateBrainOut(motorMap["contractionOutput"]);
+                    QVariant newExpansion   = mutateBrainOut(motorMap["expansionOutput"]);
+                    motorMap.remove("contractionOutput");
+                    motorMap.remove("expansionOutput");
+                    motorMap.insert("contractionOutput", newContraction);
+                    motorMap.insert("expansionOutput",   newExpansion);
+                    newMotors.remove(motor);
                     newMotors.insert(motor,motorMap);
                 }
                 // old version (convert in new version)
@@ -417,10 +465,13 @@ namespace GeneLabCore {
                     // mutate all brainouts
                     QVariantList brainOuts = motorMap["brainOuts"].toList();
 
-                    motorMap.insert("contractionOutput", mutateBrainOut(brainOuts[0]));
-                    motorMap.insert("expansionOutput", mutateBrainOut(brainOuts[1]));
+                    QVariant newContraction = mutateBrainOut(brainOuts[0]);
+                    QVariant newExpansion   = mutateBrainOut(brainOuts[1]);
+                    motorMap.insert("contractionOutput", newContraction);
+                    motorMap.insert("expansionOutput",   newExpansion);
                     motorMap.remove("brainOuts");
 
+                    newMotors.remove(motor);
                     newMotors.insert(motor,motorMap);
                 }
 
@@ -433,7 +484,9 @@ namespace GeneLabCore {
             }
         }
 
+        newMuscle.remove("outs");
         newMuscle.insert("outs",newMotors);
+        boneMap.remove("muscle");
         boneMap.insert("muscle",newMuscle);
 
         return boneMap;
@@ -512,6 +565,7 @@ namespace GeneLabCore {
         if(sensorsStructural->checkAdd())
             addSensor(newSensorList);
 
+        fixMap.remove("sensors");
         fixMap.insert("sensors", newSensorList);
 
 
@@ -563,6 +617,7 @@ namespace GeneLabCore {
         if(effectorsStructural->checkAdd())
             addEffector(newEffectorsList);
 
+        fixMap.remove("effectors");
         fixMap.insert("effectors", newEffectorsList);
 
 
@@ -598,7 +653,9 @@ namespace GeneLabCore {
                // The son
                QVariantList newBones;
                newBones.append(oldBone);
+               newEndFixation.remove("bones");
                newEndFixation.insert("bones", newBones);
+               newBoneMap.remove("endFix");
                newBoneMap.insert("endFix", newEndFixation);
 
                // Adding the child to the parent
@@ -619,6 +676,7 @@ namespace GeneLabCore {
         // see : recursiveMutateTreeShape(...)
         // --
 
+        fixMap.remove("bones");
         fixMap.insert("bones", bonesList);
 
         return fixMap;
@@ -627,8 +685,10 @@ namespace GeneLabCore {
     void MutationsManager::addBone(QVariantList &bonesList, int i, QVariant endFix) {
         QVariantMap newBone = Bone::generateEmpty().toMap();
 
-        if(endFix != QVariant())
+        if(endFix != QVariant()) {
+            newBone.remove("endFix");
             newBone.insert("endFix", endFix);
+        }
 
         // insert in a specific position
         if(i > -1 && i < bonesList.count())
@@ -728,6 +788,7 @@ namespace GeneLabCore {
             newConnexions.append(connexionMap);
         }
 
+        inMap.remove("connexions");
         inMap.insert("connexions", newConnexions);
 
         return inMap;
@@ -936,6 +997,7 @@ namespace GeneLabCore {
             }
         }
 
+        outMap.remove("connexionInfo");
         outMap.insert("connexionInfo", newConnexionInfo);
 
         return outMap;

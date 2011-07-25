@@ -7,7 +7,8 @@
 #include "spawn.h"
 #include "genelabcoreclasses.h"
 
-#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
 #include "LinearMath/btVector3.h"
 
 namespace GeneLabCore {
@@ -32,6 +33,9 @@ protected:
     btDynamicsWorld* bulletWorld;
     btWorld* world;
     QList<Spawn*> spawns;
+    btDefaultMotionState* groundMotionState;
+    btStaticPlaneShape *collisionShape;
+    btRigidBody *rigidBody;
 
 };
 

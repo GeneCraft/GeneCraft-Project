@@ -16,8 +16,9 @@ class MutationsManager
 public:
 
     // To create the mutation manager
-    MutationsManager();
+    MutationsManager();    
     MutationsManager(QVariant mutationsParams);
+    ~MutationsManager();
     QVariant serialize();
 
     // To mutate an entire entity

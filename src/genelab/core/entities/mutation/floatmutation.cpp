@@ -53,6 +53,7 @@ namespace GeneLabCore {
     void FloatMutation::mutate(QVariantMap &map, QString key){
 
         btScalar newValue = this->mutate((btScalar)map.value(key).toDouble());
+        map.remove(key);
         map.insert(key,(double)newValue);
 
     }

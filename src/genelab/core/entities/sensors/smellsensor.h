@@ -20,6 +20,7 @@ public:
 
     // To create from serialization data
     SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation);
+    ~SmellSensor();
 
     // To serialize
     QVariant serialize();
@@ -39,6 +40,10 @@ protected:
     RigidBodyOrigin::RigidBodyType smellType;
     btRigidBody * smellSphere;
 
+    ContactSensorCallback *callback;
+    btMotionState *motion;
+    btCollisionShape *shape;
+
     btScalar radiusOfSmell;
     const btRigidBody *nearestBodySmelled;
     btScalar distanceOfNearestBodySmelled;
@@ -49,7 +54,6 @@ private:
 
     void createRigidBody(btScalar radiusOfSmell);
 
-    ContactSensorCallback *callback;
 };
 
 struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {

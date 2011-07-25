@@ -46,10 +46,17 @@ SmellSensor::SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType
 
     createRigidBody(radiusOfSmell);
 }
+SmellSensor::~SmellSensor() {
+    fixation->getShapesFactory()->getWorld()->getBulletWorld()->removeRigidBody(smellSphere);
+    delete callback;
+    delete smellSphere;
+    delete shape;
+    delete motion;
+}
 
 void SmellSensor::createRigidBody(btScalar radiusOfSmell) {
     // create the rigid to do contact test...
-    btMotionState *motion = new btDefaultMotionState();
+    motion = new btDefaultMotionState();
     btCollisionShape *shape = new btSphereShape(radiusOfSmell);
     smellSphere = new btRigidBody(0,motion,shape);
 
