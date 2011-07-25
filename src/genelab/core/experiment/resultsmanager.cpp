@@ -33,6 +33,12 @@ namespace GeneLabCore {
         lastModifiedResultLoaded = QDateTime();
     }
 
+    ResultsManager::~ResultsManager() {
+        qDeleteAll(bestResults);
+        qDeleteAll(randomResults);
+        bestResults.clear();
+        randomResults.clear();
+    }
 
     /**
       * To load all old results

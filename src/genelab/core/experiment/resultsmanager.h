@@ -14,7 +14,7 @@ class ResultsManager : public QObject
     Q_OBJECT
 public:
     explicit ResultsManager(Experiment* exp, int nbBestStored, int nbRandomStored, QString workerName, QObject *parent = 0);
-
+    ~ResultsManager();
     /**
       * To load all old results
       */

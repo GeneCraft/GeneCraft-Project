@@ -160,6 +160,7 @@ namespace GeneLabCore {
         delete shapesFactory;
         delete creatureFactory;
         delete exp;
+        delete results;
     }
 
 
