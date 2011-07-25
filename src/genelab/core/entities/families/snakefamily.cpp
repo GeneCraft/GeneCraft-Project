@@ -49,22 +49,35 @@ namespace GeneLabCore {
         entity->setShape(shape);
 
         // liberty angle
-        btScalar xAngle = 0;
-        btScalar yAngle = SIMD_PI * 0.5;
-        btScalar zAngle = SIMD_PI * 0.5;
+        btScalar xAngle = SIMD_PI * 0.5;
+        btScalar yAngle = 0;
+        btScalar zAngle = SIMD_PI * 0.06;
 
         Bone* b;
 
         // build body
         for(int i = 0; i < length; i++) {
 
-            // body piece
-            b = root->addBone(0., 0.,
-                              pieceRadius/(1+1.6180339887 * i / 10.0),
-                              pieceLength/(1+1.6180339887 * i / 10.0),
-                              fixRadius/(1+1.6180339887 * i / 10.0),
-                              btVector3(-xAngle,-yAngle,-zAngle),
-                              btVector3(xAngle,yAngle,zAngle));
+            if(i == 0){
+
+                // neck
+                b = root->addBone(0, SIMD_PI*0.5,
+                                  pieceRadius,
+                                  pieceLength / 3.f,
+                                  fixRadius,
+                                  btVector3(0,0,0),
+                                  btVector3(0,0,0));
+            } else {
+
+                // body piece
+                b = root->addBone(0., 0.,
+                                  pieceRadius/(1+1.6180339887 * (i) / 10),
+                                  pieceLength/(1+1.6180339887 * (i) / 10),
+                                  fixRadius/(1+1.6180339887 * (i) / 10),
+                                  btVector3(-xAngle,-yAngle,-zAngle),
+                                  btVector3(xAngle,yAngle,zAngle));
+
+            }
 
             root = b->getEndFixation();
         }
