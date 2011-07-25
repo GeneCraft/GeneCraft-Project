@@ -31,9 +31,7 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
             "BoneCylinderEntity_" + StringConverter::toString(btoBone::mNumEntitiesInstanced),
             "Barrel.mesh");
 
-    // Material
-    entityC->setMaterialName(boneMaterial.toStdString());
-    entityC->setCastShadows(true);
+
 
     // Attach
     parentNode = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
@@ -45,14 +43,16 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     Vector3 scale = ogreSize  / originalCylinderBB.getSize();
     nodeC->scale(scale);
 
+    // Material
+    entityC->setMaterialName(boneMaterial.toStdString());
+    entityC->setCastShadows(true);
+
      // Create Ogre Entity
     entityS = ogreEngine->getOgreSceneManager()->createEntity(
             "BoneSphereEntity_" + StringConverter::toString(btoBone::mNumEntitiesInstanced),
             SceneManager::PT_SPHERE);
 
-    // Material
-    entityS->setMaterialName(fixationMaterial.toStdString());
-    entityS->setCastShadows(true);
+
 
     nodeS = parentNode->createChildSceneNode(Vector3(0, length*0.5 + radiusArticulation, 0));
 
@@ -61,6 +61,10 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     originalSphereBB = entityS->getBoundingBox();
     scale = size / originalSphereBB.getSize();
     nodeS->scale(scale);
+
+    // Material
+    entityS->setMaterialName(fixationMaterial.toStdString());
+    entityS->setCastShadows(true);
 
     debugNode = getDebugAxes();
     debugNode->setVisible(false);
@@ -226,7 +230,7 @@ Ogre::SceneNode* btoBone::getDebugAxes() {
 
    // Material
    debugEntity->setMaterial(mMat);
-   debugEntity->setCastShadows(false);
+   //debugEntity->setCastShadows(false);
 
    Ogre::SceneNode* nodeS = parentNode->createChildSceneNode(Vector3(0, 0, 0));
    nodeS->attachObject(debugEntity);
