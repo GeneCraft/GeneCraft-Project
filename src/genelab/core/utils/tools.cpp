@@ -17,10 +17,11 @@ namespace GeneLabCore {
     btScalar Tools::random(btScalar min, btScalar max) {
         return ((max - min) * ((btScalar) qrand()/RAND_MAX)) + min;
     }
-
+#ifndef BT_USE_DOUBLE_PRECISION
     double Tools::random(double min, double max) {
         return ((max - min) * ((double) qrand()/RAND_MAX)) + min;
     }
+#endif
 
     // Used to clear a QTreeWidget
     void Tools::clearTreeWidget(QTreeWidget * tree)

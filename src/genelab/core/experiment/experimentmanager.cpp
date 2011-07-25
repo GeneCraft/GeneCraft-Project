@@ -284,7 +284,7 @@ namespace GeneLabCore {
 
             // Mutation of best one
             newActivePop.append(new Result(this->exp->getId(), -1, 0,
-                                          r->getGenome(), this->workerName)); //  mutations->mutateEntity(r->getGenome())
+                                          mutations->mutateEntity(r->getGenome()), this->workerName));
             qDebug() << "loading mutation of best results with fitness " << r->getFitness();
         }
 
@@ -300,6 +300,7 @@ namespace GeneLabCore {
             // Mutation
             QVariant newGenome = mutations->mutateEntity(genome);
 
+            qDebug() << (newGenome == genome);
             // Adding to the active population
             newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
             qDebug() << "loading mutation of random results with fitness " << r->getFitness();
@@ -333,6 +334,7 @@ namespace GeneLabCore {
             // Mutation
             QVariant newGenome = mutations->mutateEntity(genome);
 
+            qDebug() << (newGenome == genome);
             // Adding to the active population
             newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
             qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
@@ -361,7 +363,7 @@ namespace GeneLabCore {
             }
 
             e->setAge(0);
-            e->getShape()->getRoot()->setOutputsFrom(fromBrain); // From brain
+            e->getShape()->getRoot()->setOutputsFrom(fromNormal); // From brain
 
             bool stable, simulated;
             btScalar fitness;
