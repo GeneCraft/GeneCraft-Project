@@ -12,13 +12,19 @@ class WorkerConfiguration : public QWidget
     Q_OBJECT
 
 public:
-    explicit WorkerConfiguration(QWidget *parent = 0);
+    explicit WorkerConfiguration(QVariant worker, QWidget *parent = 0);
     ~WorkerConfiguration();
 
     QVariant getWorkerData();
+    bool isValidated();
+
+public slots:
+    void valid();
+
 
 private:
     Ui::WorkerConfiguration *ui;
+    bool validated;
 };
 
 #endif // WORKERCONFIGURATION_H

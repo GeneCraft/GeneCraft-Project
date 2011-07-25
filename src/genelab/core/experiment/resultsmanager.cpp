@@ -21,7 +21,7 @@ namespace GeneLabCore {
         this->randomResultsStored = nbRandomStored;
 
         if(!online) {
-            this->resultsDirectory = QDir(exp->getId()+"/"+RESULTS_DIR);
+            this->resultsDirectory = QDir(RESULTS_DIR+QString("/")+exp->getId()+"/");
             if(!this->resultsDirectory.exists()) {
                 this->resultsDirectory.mkpath(".");
             }

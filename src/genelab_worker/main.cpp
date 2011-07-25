@@ -138,10 +138,33 @@ qDebug() << sizeof(double);
        !workerData.toMap().contains("selection")) {
 
         qDebug() << "Didn't find any worker configuration, or incomplete one. Starting the gui-config";
-	WorkerConfiguration* workerConfiguration = new WorkerConfiguration();
+        QVariantMap worker;
+
+        worker.insert("name", "Anonymous");
+        worker.insert("maxGen", 100);
+        worker.insert("popSize", 20);
+        worker.insert("nbBestResults", 20);
+        worker.insert("nbRandomResults", 200);
+        QVariantMap selection;
+        selection.insert("bestPop", 20);
+        selection.insert("bestResult", 10);
+        selection.insert("randomNew", 10);
+        selection.insert("randomPop", 10);
+        selection.insert("randomResult", 20);
+        worker.insert("selection", selection);
+
+        if(QFile("worker.json").exists()) {
+            JsonFile* jf = new JsonFile("worker.json");
+            worker = jf->load().toMap();
+        }
+        WorkerConfiguration* workerConfiguration = new WorkerConfiguration(worker);
 
         workerConfiguration->show();
         a.exec();
+        if(!workerConfiguration->isValidated()) {
+            qDebug() << "aborted, quitting";
+            return 0;
+        }
         workerData = workerConfiguration->getWorkerData();
         Ressource* r = new JsonFile("worker.json");
         r->save(workerData);

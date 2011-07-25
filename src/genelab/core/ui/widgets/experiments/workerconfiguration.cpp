@@ -3,23 +3,28 @@
 
 #include <ctime>
 
-WorkerConfiguration::WorkerConfiguration(QWidget *parent) :
+WorkerConfiguration::WorkerConfiguration(QVariant workerData, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::WorkerConfiguration)
 {
-    ui->setupUi(this);
-    ui->sldBestResults->setValue(10);
-    ui->sldRandomResults->setValue(20);
-    ui->sldBestPop->setValue(20);
-    ui->sldRandomPop->setValue(10);
-    ui->sldRandomSeed->setValue(10);
-    ui->spbMaxGen->setValue(100);
-    ui->spbPopSize->setValue(20);
-    ui->spbBestResults->setValue(20);
-    ui->spbRandomResults->setValue(200);
-    ui->txtWorkerName->setText("Anonymous");
+    QVariantMap worker = workerData.toMap();
+    QVariantMap selection = worker["selection"].toMap();
 
-    connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
+    ui->setupUi(this);
+    ui->sldBestResults->setValue(selection["bestResult"].toInt());
+    ui->sldRandomResults->setValue(selection["randomResult"].toInt());
+    ui->sldBestPop->setValue(selection["bestPop"].toInt());
+    ui->sldRandomPop->setValue(selection["randomPop"].toInt());
+    ui->sldRandomSeed->setValue(selection["randomNew"].toInt());
+    ui->spbMaxGen->setValue(worker["maxGen"].toInt());
+    ui->spbPopSize->setValue(worker["popSize"].toInt());
+    ui->spbBestResults->setValue(worker["nbBestResults"].toInt());
+    ui->spbRandomResults->setValue(worker["nbRandomResults"].toInt());
+    ui->txtWorkerName->setText(worker["name"].toString());
+
+    this->validated = false;
+
+    connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(valid()));
 }
 
 QVariant WorkerConfiguration::getWorkerData() {
@@ -39,6 +44,15 @@ QVariant WorkerConfiguration::getWorkerData() {
     workerData["selection"] = selectionData;
 
     return workerData;
+}
+
+bool WorkerConfiguration::isValidated() {
+    return validated;
+}
+
+void WorkerConfiguration::valid() {
+    this->validated = true;
+    this->close();
 }
 
 WorkerConfiguration::~WorkerConfiguration()
