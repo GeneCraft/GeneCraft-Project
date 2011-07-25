@@ -66,6 +66,7 @@
         <file alias="ruler_pencil_32">img/icons/ruler_pencil_32.png</file>
         <file alias="theater_32">img/icons/theater_32.png</file>
         <file alias="delete">img/icons/delete.png</file>
+        <file alias="enable_shadows">img/icons/bug_shadow.png</file>
     </qresource>
     <qresource prefix="/js">
         <file alias="js-beautifull">js/js-beautifull.js</file>

@@ -31,48 +31,86 @@ namespace GeneLabCore {
 
     Entity* SnakeFamily::createEntity(btShapesFactory* factory, const btVector3 &position) {
 
-        Entity* snake = new Entity("Snaky"+QString::number(length), "Snake","generic", 1);
-        snake->setBrain(new BrainFunctional());
+        // create entity
+        Entity* entity = new Entity("Snake", "SnakeFamily", "generic", 1);
 
-        TreeShape* snakeShape = new TreeShape(factory);
+        // create brain
+        entity->setBrain(new BrainFunctional());
 
+        // create root fixation
         btTransform initTransform;
         initTransform.setIdentity();
         initTransform.setOrigin(position);
-        //initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), SIMD_PI/2.));
-
         Fixation* root = new Fixation(factory,fixRadius,initTransform);
-        snakeShape->setRoot(root);
-        snake->setShape(snakeShape);
 
-        btScalar angle = SIMD_PI - SIMD_PI / 3;
+        // shape
+        TreeShape* shape = new TreeShape(factory);
+        shape->setRoot(root);
+        entity->setShape(shape);
 
-        // Build body
-        Bone* b = root->addBone(0, SIMD_PI/2., pieceRadius,
-                                pieceLength,
-                                fixRadius,
-                                btVector3(-angle,-SIMD_PI/4,-angle),
-                                btVector3(angle,SIMD_PI/4,angle));
+        // liberty angle
+        btScalar xAngle = 0;
+        btScalar yAngle = SIMD_PI * 0.5;
+        btScalar zAngle = SIMD_PI * 0.5;
 
-        root = b->getEndFixation();
+        Bone* b;
 
-        //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
-
+        // build body
         for(int i = 0; i < length; i++) {
-            Bone* b = root->addBone(0., 0.,
-                                    pieceRadius/(1+1.6180339887 * (i) / 10),
-                                    pieceLength/(1+1.6180339887 * (i) / 10),
-                                    fixRadius/(1+1.6180339887 * (i) / 10),
-                                    btVector3(-angle,-SIMD_PI/4,-angle),
-                                    btVector3(angle,SIMD_PI/4,angle));
 
-            //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
-            //b->getEndFixation()->addSensor(new PositionSensor(snakeShape->getRoot(),b->getEndFixation()));
+            // body piece
+            b = root->addBone(0., 0.,
+                              pieceRadius/(1+1.6180339887 * i / 10.0),
+                              pieceLength/(1+1.6180339887 * i / 10.0),
+                              fixRadius/(1+1.6180339887 * i / 10.0),
+                              btVector3(-xAngle,-yAngle,-zAngle),
+                              btVector3(xAngle,yAngle,zAngle));
 
             root = b->getEndFixation();
         }
 
-        return snake;
+//        Entity* snake = new Entity("Snaky"+QString::number(length), "Snake","generic", 1);
+//        snake->setBrain(new BrainFunctional());
+
+//        TreeShape* snakeShape = new TreeShape(factory);
+
+//        btTransform initTransform;
+//        initTransform.setIdentity();
+//        initTransform.setOrigin(position);
+//        //initTransform.setRotation(btQuaternion(btVector3(1, 0, 0), SIMD_PI/2.));
+
+//        Fixation* root = new Fixation(factory,fixRadius,initTransform);
+//        snakeShape->setRoot(root);
+//        snake->setShape(snakeShape);
+
+//        btScalar angle = SIMD_PI - SIMD_PI / 3;
+
+//        // Build body
+//        Bone* b = root->addBone(0, SIMD_PI/2., pieceRadius,
+//                                pieceLength,
+//                                fixRadius,
+//                                btVector3(-angle,-SIMD_PI/4,-angle),
+//                                btVector3(angle,SIMD_PI/4,angle));
+
+//        root = b->getEndFixation();
+
+//        //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+
+//        for(int i = 0; i < length; i++) {
+//            Bone* b = root->addBone(0., 0.,
+//                                    pieceRadius/(1+1.6180339887 * (i) / 10),
+//                                    pieceLength/(1+1.6180339887 * (i) / 10),
+//                                    fixRadius/(1+1.6180339887 * (i) / 10),
+//                                    btVector3(-angle,-SIMD_PI/4,-angle),
+//                                    btVector3(angle,SIMD_PI/4,angle));
+
+//            //b->getEndFixation()->addSensor(new GyroscopicSensor(b->getEndFixation()));
+//            //b->getEndFixation()->addSensor(new PositionSensor(snakeShape->getRoot(),b->getEndFixation()));
+
+//            root = b->getEndFixation();
+//        }
+
+        return entity;
     }
 
     QVariant SnakeFamily::serialize() {

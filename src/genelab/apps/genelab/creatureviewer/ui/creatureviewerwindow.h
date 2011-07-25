@@ -81,6 +81,7 @@ public slots:
     void enterInWhatsThisMode();
     void followSelectedEntity();
     void unfollowEntity();
+    void toggleShadows();
 
     // Modes
     void switchToWelcomeMode();

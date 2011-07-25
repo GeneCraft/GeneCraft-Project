@@ -48,7 +48,7 @@ namespace GeneLabCore {
         // -------------
         // -- Shadows --
         // -------------
-        //sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+        sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
         // ------------
         // -- Lights --

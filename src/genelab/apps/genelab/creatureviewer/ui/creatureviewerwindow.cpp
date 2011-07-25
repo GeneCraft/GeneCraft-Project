@@ -158,6 +158,7 @@ void CreatureViewerWindow::init() {
 
     ui->toolBar->addSeparator();
     QAction *aFollowCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_follow"),QString(tr("Follow selected creature")));
+    QAction *aShowShadows = ui->toolBar->addAction(QIcon(":img/icons/enable_shadows"),QString(tr("Enable shadows")));
 
     // step manager
     //ui->toolBar->addWidget(new QLabel(tr("Step manager :"));
@@ -186,6 +187,8 @@ void CreatureViewerWindow::init() {
     connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
 
     connect(aFollowCreature,SIGNAL(triggered()),this,SLOT(followSelectedEntity()));
+    connect(aShowShadows,SIGNAL(triggered()),this,SLOT(toggleShadows()));
+
 
     // -----------
     // -- Docks --
@@ -873,4 +876,13 @@ void CreatureViewerWindow::switchToTheaterMode() {
     ui->dwStats->setVisible(false);
 }
 
+void CreatureViewerWindow::toggleShadows() {
 
+    // TODO save widget !!!
+    OgreEngine * ogre = (OgreEngine *) factory->getEngineByName("Ogre");
+
+    if(ogre->getOgreSceneManager()->getShadowTechnique() == Ogre::SHADOWTYPE_NONE)
+        ogre->getOgreSceneManager()->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+    else
+        ogre->getOgreSceneManager()->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+}

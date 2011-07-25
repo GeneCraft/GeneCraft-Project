@@ -25,23 +25,35 @@ namespace GeneLabCore {
         // ambiant
         QVariantMap ambiantLightMap;
         ambiantLightMap.insert("type","ambient");
-        ambiantLightMap.insert("r",(double)1.0);
-        ambiantLightMap.insert("g",(double)1.0);
-        ambiantLightMap.insert("b",(double)1.0);
+        ambiantLightMap.insert("r",(double)0.8);
+        ambiantLightMap.insert("g",(double)0.8);
+        ambiantLightMap.insert("b",(double)0.8);
         lights.append(ambiantLightMap);
 
         // point
-        QVariantMap pointLightMap;
-        pointLightMap.insert("type","point");
-        pointLightMap.insert("r",(double)0.9);
-        pointLightMap.insert("g",(double)0.5);
-        pointLightMap.insert("b",(double)0.5);
-        pointLightMap.insert("posX",(double)0);
-        pointLightMap.insert("posY",(double)1);
-        pointLightMap.insert("posZ",(double)0);
-        lights.append(pointLightMap);
-        biomeData.insert("lights",lights);
+//        QVariantMap pointLightMap;
+//        pointLightMap.insert("type","point");
+//        pointLightMap.insert("r",(double)0.9);
+//        pointLightMap.insert("g",(double)0.5);
+//        pointLightMap.insert("b",(double)0.5);
+//        pointLightMap.insert("posX",(double)0);
+//        pointLightMap.insert("posY",(double)1);
+//        pointLightMap.insert("posZ",(double)0);
+//        lights.append(pointLightMap);
+//        biomeData.insert("lights",lights);
 
+        // directional
+        QVariantMap directionalLightMap;
+        directionalLightMap.insert("type","directional");
+        directionalLightMap.insert("r",(double)1.0);
+        directionalLightMap.insert("g",(double)1.0);
+        directionalLightMap.insert("b",(double)1.0);
+        directionalLightMap.insert("dirX",(double)1);
+        directionalLightMap.insert("dirY",(double)-1);
+        directionalLightMap.insert("dirZ",(double)1);
+        lights.append(directionalLightMap);
+
+        biomeData.insert("lights",lights);
         worldData.insert("biome", biomeData);
 
 
