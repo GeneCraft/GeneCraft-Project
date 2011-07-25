@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabInfo">
       <attribute name="icon">
@@ -46,6 +46,9 @@
          <property name="text">
           <string>Id</string>
          </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -62,6 +65,9 @@
         <widget class="QLabel" name="lblAuthor">
          <property name="text">
           <string>Author</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -80,6 +86,9 @@
          <property name="text">
           <string>Description</string>
          </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="3" column="0">
@@ -96,6 +105,9 @@
         <widget class="QLabel" name="lblDate">
          <property name="text">
           <string>Date</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
