@@ -49,11 +49,9 @@ namespace GeneLabCore {
     btWorld::~btWorld() {
 
         this->shapesFactory->setWorld(NULL);
-        btEngine->removeWorld(world);
 
         delete this->scene;
         delete this->biome;
-
 
         this->cleanBulletWorld();
     }
@@ -71,6 +69,8 @@ namespace GeneLabCore {
             world->removeCollisionObject( obj );
             delete obj;
         }
+
+        btEngine->removeWorld(world);
 
         delete world;
         delete solver;

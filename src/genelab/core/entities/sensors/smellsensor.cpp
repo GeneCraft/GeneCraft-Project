@@ -57,7 +57,7 @@ SmellSensor::~SmellSensor() {
 void SmellSensor::createRigidBody(btScalar radiusOfSmell) {
     // create the rigid to do contact test...
     motion = new btDefaultMotionState();
-    btCollisionShape *shape = new btSphereShape(radiusOfSmell);
+    shape = new btSphereShape(radiusOfSmell);
     smellSphere = new btRigidBody(0,motion,shape);
 
     callback = new ContactSensorCallback(smellSphere, this);
