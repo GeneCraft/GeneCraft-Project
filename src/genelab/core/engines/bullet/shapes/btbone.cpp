@@ -59,15 +59,15 @@ void btBone::init(btScalar length,
     btVector3 inertia(0,0,0);
 
     // Masse de l'os, masse de la fixation
-    btScalar massBone = SIMD_PI*radius*radius*length*density;
-    btScalar massSphere =  4/3. * SIMD_PI * radiusArticulation * radiusArticulation * radiusArticulation * density;
-    btScalar childMasses[2] = {massSphere,massBone};
+    //tScalar massBone = SIMD_PI*radius*radius*length*density;
+    //btScalar massSphere =  4/3. * SIMD_PI * radiusArticulation * radiusArticulation * radiusArticulation * density;
+    //btScalar childMasses[2] = {massSphere,massBone};
     // TODO Use this information to shift object inside the compound
     // Set the shift in the rigid objets
     // And set the shift in all childs fixations
     // And parent constraint of bone
     // ARG, lot of todo to get the center of gravity work properly
-    shape->calculatePrincipalAxisTransform(childMasses, principal, inertia);
+    //shape->calculatePrincipalAxisTransform(childMasses, principal, inertia);
 
     // motion state
 
