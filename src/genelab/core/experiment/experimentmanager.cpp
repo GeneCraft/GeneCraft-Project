@@ -31,6 +31,7 @@
 #include "statistics/treeshapestats.h"
 
 #include "ressources/dbrecord.h"
+#include "ressources/ressourcesmanager.h"
 
 #include "tools.h"
 
@@ -69,6 +70,9 @@ namespace GeneLabCore {
         int randomResultsStored = workerMap["nbRandomResults"].toInt();
 
         this->results = new ResultsManager(exp,bestResultsStored, randomResultsStored,workerName);
+        if(exp->isOnline()) {
+            this->ressources = new RessourcesManager();
+        }
 
         QVariantMap selectionMap   = workerMap["selection"].toMap();
         this->probFromBestsPop     = selectionMap["bestPop"].toDouble();
@@ -153,6 +157,11 @@ namespace GeneLabCore {
             qDebug() << "Generation of a new population";
             genNewPop();
             qDebug() << "generated" << this->popSize << "mutated entities from active population";
+
+            qDebug() << "reloading ressources on the server, to avoid to much out of sync";
+            if(exp->isOnline()) {
+                this->ressources->reloadDb();
+            }
         }
 
         delete world;

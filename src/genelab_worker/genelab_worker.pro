@@ -140,7 +140,8 @@ SOURCES += \
     ../genelab/core/experiment/resultsmanager.cpp \
     ../genelab/core/utils/tools.cpp \
     main.cpp \
-    ../genelab/core/ui/widgets/experiments/workerconfiguration.cpp
+    ../genelab/core/ui/widgets/experiments/workerconfiguration.cpp \
+    ../genelab/core/factories/ressources/ressourcesmanager.cpp
 
 HEADERS += \
     ../genelab/core/engines/engine.h \
@@ -217,7 +218,8 @@ HEADERS += \
     ../genelab/core/experiment/resultsmanager.h \
     ../genelab/core/utils/tools.h \
     ../genelab/core/genelabcoreclasses.h \
-    ../genelab/core/ui/widgets/experiments/workerconfiguration.h
+    ../genelab/core/ui/widgets/experiments/workerconfiguration.h \
+    ../genelab/core/factories/ressources/ressourcesmanager.h
 
 
 RESOURCES += \

@@ -105,6 +105,7 @@ namespace GeneLabCore {
         DataBase db;
 
         ResultsManager* results;
+        RessourcesManager* ressources;
     };
 }
 
