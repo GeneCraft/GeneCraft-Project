@@ -85,7 +85,7 @@ namespace GeneLabCore {
         sensorsStructuralList->elements.append(new MutationElement("Gyroscopic sensor",gyroscopicSensor,1.0));
         sensorsStructuralList->elements.append(new MutationElement("Egocentric sensor",positionSensor,1.0));
         sensorsStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
-        sensorsStructuralList->elements.append(new MutationElement("Box smell sensor",boxSmellSensor,1.0));
+        sensorsStructuralList->elements.append(new MutationElement("Box smell sensor",boxSmellSensor,0));
         sensorsStructuralList->elements.append(new MutationElement("Distance sensor",distanceSensor,1.0));
 
         // TODO serialize and add to ui
