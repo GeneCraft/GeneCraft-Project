@@ -5,6 +5,8 @@
 #include "OgreSceneManager.h"
 #include "bulletogre/bulletogreengine.h"
 
+#include <QDebug>
+
 using namespace Ogre;
 
 namespace GeneLabCore {
@@ -31,8 +33,6 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
             "BoneCylinderEntity_" + StringConverter::toString(btoBone::mNumEntitiesInstanced),
             "Barrel.mesh");
 
-
-
     // Attach
     parentNode = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
     nodeC = parentNode->createChildSceneNode();
@@ -41,7 +41,8 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     originalCylinderBB = entityC->getBoundingBox();
     Vector3 ogreSize(radius*2,length,radius*2);
     Vector3 scale = ogreSize  / originalCylinderBB.getSize();
-    nodeC->scale(scale);
+    qDebug() << scale.x << scale.y << scale.z;
+    nodeC->setScale(scale);
 
     // Material
     entityC->setMaterialName(boneMaterial.toStdString());
@@ -108,6 +109,7 @@ void btoBone::setSize(btScalar radius, btScalar length)
     // Size of debug node (to show axis)
     debugNode->setScale(nodeC->getScale()*8);
 }
+
 
 
 void btoBone::setEndFixationRadius(btScalar radius)
