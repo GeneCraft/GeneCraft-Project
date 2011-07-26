@@ -60,12 +60,15 @@ namespace GeneLabCore {
             return;
         }
 
-
         QString workerExe = "./genecraft_worker.exe";
         //QString workerExe = "/Users/cyprienhuissoud/Desktop/genelab/genelab/src/genelab_worker-build-desktop/genelab_worker";
         QFile workerFile(workerExe);
         if(!workerFile.exists()) {
             QString workerExe  = QFileDialog::getOpenFileName(this, "Select the worker binary","genelab_worker");
+
+            if(workerExe.isEmpty())
+                return;
+
             workerFile.setFileName(workerExe);
         }
 
@@ -75,7 +78,11 @@ namespace GeneLabCore {
         } else if(exp->hasRessource()) {
             expFile = QFileInfo(((JsonFile*)exp->getRessource())->filename).absoluteFilePath();
         } else {
-            expFile = QFileDialog::getOpenFileName(this, "Select the experience file","Experience (*.exp)");
+
+            expFile = QFileDialog::getSaveFileName(this, "Save your experiment before launch worker", "./ressources/" + exp->getId() + ".exp", "Experiment (*.exp)");
+
+            if(expFile.isEmpty())
+                return;
         }
 
         process = new QProcess();

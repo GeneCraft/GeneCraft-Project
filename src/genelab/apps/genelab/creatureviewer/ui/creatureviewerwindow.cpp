@@ -657,22 +657,21 @@ void CreatureViewerWindow::saveEntityToFile()
             simulationManager->start();
             return;
         }
-        const QString DEFAULT_DIR_KEY("default_dir");
-        QSettings mySettings;
-        QString selectedFile = QFileDialog::getSaveFileName(this, "Save your genome", mySettings.value(DEFAULT_DIR_KEY).toString(),"Genome (*.genome)");
 
-        if (!selectedFile.isEmpty()) {
-            QDir CurrentDir;
-            mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+        QString selectedFile = QFileDialog::getSaveFileName(this, "Save your genome", "./ressources/" + selectedEntity->getName() + ".genome" ,"Genome (*.genome)");
 
-            // Load Generic Entity
-            Ressource* to = new JsonFile(selectedFile);
-            to->save(selectedEntity->serialize());
-            selectedEntity->setRessource(to);
-        }
+        if (selectedFile.isEmpty())
+            return;
+
+        // Load Generic Entity
+        Ressource* to = new JsonFile(selectedFile);
+        to->save(selectedEntity->serialize());
+        selectedEntity->setRessource(to);
+
     }
     else
         QMessageBox::warning(this, "No entity selected.", "No entity selected.");
+
     simulationManager->start();
 }
 

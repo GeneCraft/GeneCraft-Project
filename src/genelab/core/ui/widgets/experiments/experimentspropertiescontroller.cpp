@@ -443,27 +443,23 @@ void ExperimentsPropertiesController::saveExpToFile() {
     updateStructures();
 
     // To new file
-    const QString DEFAULT_DIR_KEY("RESSOURCES_FOLDER");
-    QSettings mySettings;
-    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", mySettings.value(DEFAULT_DIR_KEY).toString(),"Experiment (*.exp)");
+    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your experiment", "./ressources/" + experiment->getId() + ".exp","Experiment (*.exp)");
 
-    if (!selectedFile.isEmpty()) {
-        QDir CurrentDir;
-        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+    if(selectedFile.isEmpty())
+        return;
 
-        Ressource* to = new JsonFile(selectedFile);
-        int code = to->save(experiment->serialize());
+    Ressource* to = new JsonFile(selectedFile);
+    int code = to->save(experiment->serialize());
 
-        if(code == 0) {
-            experiment->setRessource(to);
-            emit sExperimentUpdated(experiment);
-        }
-        else {
-            QMessageBox::warning(this, "Impossible to save experiment",
-                                 QString("Impossible to save experiment : error code : ") + QString::number(code));
+    if(code == 0) {
+        experiment->setRessource(to);
+        emit sExperimentUpdated(experiment);
+    }
+    else {
+        QMessageBox::warning(this, "Impossible to save experiment",
+                             QString("Impossible to save experiment : error code : ") + QString::number(code));
 
-            experiment->setRessource(NULL);
-        }
+        experiment->setRessource(NULL);
     }
 }
 
@@ -616,22 +612,20 @@ void ExperimentsPropertiesController::loadWorldFromFile() {
 
 void ExperimentsPropertiesController::saveWorldToFile() {
 
+    QVariantMap worldMap = getWorldMap();
+
     // To new file
-    const QString DEFAULT_DIR_KEY("RESSOURCES_FOLDER");
-    QSettings mySettings;
-    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", mySettings.value(DEFAULT_DIR_KEY).toString(),"World (*.world)");
+    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", "./ressources/" + worldMap["name"].toString() + ".exp", "World (*.world)");
 
-    if (!selectedFile.isEmpty()) {
-        QDir CurrentDir;
-        mySettings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(selectedFile));
+    if (selectedFile.isEmpty())
+        return;
 
-        Ressource* to = new JsonFile(selectedFile);
-        int code = to->save(getWorldMap());
+    Ressource* to = new JsonFile(selectedFile);
+    int code = to->save(worldMap);
 
-        if(code != 0) {
-            QMessageBox::warning(this, "Impossible to save world",
-                                 QString("Impossible to save world : error code : ") + QString::number(code));
-        }
+    if(code != 0) {
+        QMessageBox::warning(this, "Impossible to save world",
+                             QString("Impossible to save world : error code : ") + QString::number(code));
     }
 }
 

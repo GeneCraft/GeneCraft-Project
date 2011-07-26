@@ -195,7 +195,7 @@ void RessourcesBrowser::saveExperiment() {
 
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
 
-        QString selectedFile = QString("ressources/") + QString(expTWI->dataw.data["_id"].toString()) + QString(".exp");
+        QString selectedFile = QString("./ressources/") + QString(expTWI->dataw.data["_id"].toString()) + QString(".exp");
 
         // file already exists ?
         QFile f(selectedFile);
@@ -229,7 +229,7 @@ void RessourcesBrowser::saveWorld() {
 
         WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twOnlineWorlds->currentItem();
 
-        QString selectedFile = QString("ressources/") + QString(worldTWI->dataw.data["name"].toString()) + QString(".world");
+        QString selectedFile = QString("./ressources/") + QString(worldTWI->dataw.data["name"].toString()) + QString(".world");
 
         // file already exists ?
         QFile f(selectedFile);
@@ -241,7 +241,7 @@ void RessourcesBrowser::saveWorld() {
                                      QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel);
 
             if (ret == QMessageBox::No)
-                selectedFile = QFileDialog::getSaveFileName(this, "Save the world, that's good :)", "worlds", "World (*.world)");
+                selectedFile = QFileDialog::getSaveFileName(this, "Save the world, that's good :)", selectedFile, "World (*.world)");
             else if(ret == QMessageBox::Cancel)
                 return;
         }
@@ -263,7 +263,7 @@ void RessourcesBrowser::saveEntity() {
         EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
 
         QVariantMap origins = entityTWI->dataw.data["origins"].toMap();
-        QString selectedFile = QString("ressources/") + QString(origins["name"].toString()) + QString(".genome");
+        QString selectedFile = QString("./ressources/") + QString(origins["name"].toString()) + QString(".genome");
 
         // file already exists ?
         QFile f(selectedFile);
@@ -275,7 +275,7 @@ void RessourcesBrowser::saveEntity() {
                                      QMessageBox::Ok | QMessageBox::No | QMessageBox::Cancel);
 
             if (ret == QMessageBox::No)
-                selectedFile = QFileDialog::getSaveFileName(this, "Save the genome", "ressources", "Genome (*.genome)");
+                selectedFile = QFileDialog::getSaveFileName(this, "Save the genome", selectedFile, "Genome (*.genome)");
             else if(ret == QMessageBox::Cancel)
                 return;
         }
