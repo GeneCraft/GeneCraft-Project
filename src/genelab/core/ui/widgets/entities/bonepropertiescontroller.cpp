@@ -301,10 +301,10 @@ void BonePropertiesController::setBone(Bone * bone)
             this->ui->txtExpandY->setText(muscle->boTargetVelocity->getConnexionInfo().toString());
             this->ui->lblExpandY->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
         } else {
-            this->ui->txtContractX->setText("No muscle");
-            this->ui->txtExpandX->setText("No muscle");
-            this->ui->lblContractX->setText(QString::number(0));
-            this->ui->lblExpandX->setText(QString::number(0));
+            this->ui->txtContractY->setText("No muscle");
+            this->ui->txtExpandY->setText("No muscle");
+            this->ui->lblContractY->setText(QString::number(0));
+            this->ui->lblExpandY->setText(QString::number(0));
         }
         // Z
         muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(2);
@@ -314,10 +314,10 @@ void BonePropertiesController::setBone(Bone * bone)
             this->ui->txtExpandZ->setText(muscle->boTargetVelocity->getConnexionInfo().toString());
             this->ui->lblExpandZ->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
         } else {
-            this->ui->txtContractX->setText("No muscle");
-            this->ui->txtExpandX->setText("No muscle");
-            this->ui->lblContractX->setText(QString::number(0));
-            this->ui->lblExpandX->setText(QString::number(0));
+            this->ui->txtContractZ->setText("No muscle");
+            this->ui->txtExpandZ->setText("No muscle");
+            this->ui->lblContractZ->setText(QString::number(0));
+            this->ui->lblExpandZ->setText(QString::number(0));
         }
 
         // ANGULAR PARAMETERS
