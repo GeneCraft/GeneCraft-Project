@@ -620,7 +620,7 @@ void ExperimentsPropertiesController::saveWorldToFile() {
     QVariantMap worldMap = getWorldMap();
 
     // To new file
-    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", "./ressources/" + worldMap["name"].toString() + ".exp", "World (*.world)");
+    QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", "./ressources/" + worldMap["name"].toString() + ".world", "World (*.world)");
 
     if (selectedFile.isEmpty())
         return;

@@ -97,6 +97,7 @@ namespace GeneLabCore {
 
 //        createRuins(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(1.0,1.0,1.0), btVector3(10.0,10.0,10.0), 100, 0);
 //        createBoxesFloor(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(2.0,1.0,2.0), btVector3(15.0,2.0,15.0));
+//        createBoxesFloor(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(2.0,0.5,2.0), btVector3(15.0,1.0,15.0));
 
 //        // Spheres sample
 //        for(int i=0;i<100;++i)
@@ -201,6 +202,9 @@ namespace GeneLabCore {
         // Boxes Floor
         double sizeX = Tools::random((double)boxMin.x(), (double)boxMax.x());
         double sizeZ = Tools::random((double)boxMin.z(), (double)boxMax.z());
+
+        btVector3 recal(sizeX,0,sizeZ);
+        pos = pos + recal;
 
         int nbBoxesX = areaX / sizeX;
         int nbBoxesZ = areaZ / sizeZ;
