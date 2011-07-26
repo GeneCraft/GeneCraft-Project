@@ -371,9 +371,6 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
 
     cvim->setWorld(world);
 
-    // receive by inspector manager
-    //expCtrl->setExperiment(experiment);
-    //workerCtrl->setExperiment(experiment);
 }
 
 void CreatureViewerWindow::setWorld(QVariantMap worldMap) {
@@ -384,6 +381,7 @@ void CreatureViewerWindow::setWorld(QVariantMap worldMap) {
 }
 
 void CreatureViewerWindow::loadResult(Result *result) {
+    this->simulationManager->stop();
     setExperiment(experiment);
 
     QVariantMap genome = result->getGenome().toMap();
@@ -392,6 +390,7 @@ void CreatureViewerWindow::loadResult(Result *result) {
     e->addOutScript(0, fromNormal); // Normal position during stability time
     e->addOutScript(result->getStable(), fromBrain); // Next from brain
     e->setAge(0);
+    this->simulationManager->start();
 }
 
 void CreatureViewerWindow::saveEntityToDb() {

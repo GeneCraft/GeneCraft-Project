@@ -391,7 +391,13 @@ namespace GeneLabCore {
                     r->setFitness(fitness);
                     QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
                     r->setStatistics(QxtJSON::parse(stats));
+
+                    // env pressure on genes
+                    r->setGenome(e->serialize());
+
+                    // and finaly add the result to results
                     results->addResult(r);
+
                     qDebug() << "entity evaluated, fitness =" << fitness;
                 } else {
                     qDebug() << "the entity die during simulation";

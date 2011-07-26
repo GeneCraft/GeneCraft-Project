@@ -19,14 +19,6 @@
 #include "statistics/treeshapestats.h"
 #include "statistics/fixationstats.h"
 
-//#include "statistics/fixdistancestat.h"
-//#include "statistics/entityweightstat.h"
-//#include "statistics/entityheightstat.h"
-//#include "statistics/fixaveragevelocitystat.h"
-//#include "statistics/entitytotalbonesstat.h"
-//#include "statistics/fixdistancefromoriginstat.h"
-//#include "statistics/entitytotalboneslengthstat.h"
-
 namespace GeneLabCore {
 
     const QString Entity::genomeVersion = "0.1";
@@ -40,6 +32,7 @@ Entity::Entity(QString name, QString family, QString type, int generation, QObje
     this->generation    = generation;
     this->type          = type;
     this->statisticsStorage = new StatisticsStorage();
+
 }
 
 void Entity::setup() {

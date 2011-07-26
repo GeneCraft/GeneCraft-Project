@@ -8,10 +8,7 @@ QT       += core testlib network gui script
 
 TARGET = genecraft_worker
 CONFIG   += console
-CONFIG   += qxt
-QXT	 += core
 CONFIG   -= app_bundle
-
 TEMPLATE = app
 
 # genelab core
