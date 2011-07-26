@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QProcess>
+#include <QMessageBox>
 
 #include "ressources/jsonfile.h"
 #include "events/inspectorsinputmanager.h"
@@ -79,10 +80,26 @@ namespace GeneLabCore {
             expFile = QFileInfo(((JsonFile*)exp->getRessource())->filename).absoluteFilePath();
         } else {
 
+            // save experiment
             expFile = QFileDialog::getSaveFileName(this, "Save your experiment before launch worker", "./ressources/" + exp->getId() + ".exp", "Experiment (*.exp)");
 
             if(expFile.isEmpty())
                 return;
+
+            // To exp ressource
+            Ressource* to = new JsonFile(expFile);
+            int code = to->save(exp->serialize());
+
+            // Error
+            if(code != 0) {
+                QMessageBox::warning(this, "Impossible to save experiment",
+                QString("Impossible to save experiment : error code : ") + QString::number(code));
+
+                exp->setRessource(NULL);
+                return;
+            }
+
+            exp->setRessource(to);
         }
 
         process = new QProcess();
