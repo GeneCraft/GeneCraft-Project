@@ -41,7 +41,6 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     originalCylinderBB = entityC->getBoundingBox();
     Vector3 ogreSize(radius*2,length,radius*2);
     Vector3 scale = ogreSize  / originalCylinderBB.getSize();
-    qDebug() << scale.x << scale.y << scale.z;
     nodeC->setScale(scale);
 
     // Material

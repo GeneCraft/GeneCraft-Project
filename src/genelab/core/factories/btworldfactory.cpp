@@ -25,9 +25,9 @@ namespace GeneLabCore {
         // ambiant
         QVariantMap ambiantLightMap;
         ambiantLightMap.insert("type","ambient");
-        ambiantLightMap.insert("r",(double)0.5);
-        ambiantLightMap.insert("g",(double)0.5);
-        ambiantLightMap.insert("b",(double)0.5);
+        ambiantLightMap.insert("r",(double)0.8);
+        ambiantLightMap.insert("g",(double)0.8);
+        ambiantLightMap.insert("b",(double)0.8);
         lights.append(ambiantLightMap);
 
         // point
