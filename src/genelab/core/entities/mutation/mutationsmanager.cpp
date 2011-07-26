@@ -78,7 +78,7 @@ namespace GeneLabCore {
         // sensors
         sensorsStructural = new StructuralMutation();
         sensorsStructural->addProbability = 0.01f;
-        sensorsStructural->deleteProbability = 0.02f;
+        sensorsStructural->deleteProbability = 0.012f;
         sensorsStructural->replaceProbability = 0.01f;
         sensorsStructuralList = new StructuralList();
         sensorsStructuralList->elements.append(new MutationElement("Accelerometer sensor",accelerometerSensor,1.0));
@@ -98,9 +98,10 @@ namespace GeneLabCore {
 
         // effectors
         effectorsStructural = new StructuralMutation();
-        effectorsStructural->addProbability = 0.0f;
-        effectorsStructural->deleteProbability = 0.0f;
-        effectorsStructural->replaceProbability = 0.0f;
+        effectorsStructural->enable = false;
+        effectorsStructural->addProbability = 0.01f;
+        effectorsStructural->deleteProbability = 0.012f;
+        effectorsStructural->replaceProbability = 0.01f;
         effectorsStructuralList = new StructuralList();
         effectorsStructuralList->elements.append(new MutationElement("Gripper effector",gripperEffector,1.0));
         effectorsStructuralList->elements.append(new MutationElement("Flying effector",flyingEffector,1.0));

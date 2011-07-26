@@ -20,7 +20,7 @@ SimpleProbabilityController::SimpleProbabilityController(SimpleProbabilityMutati
     connect(ui->cbName,SIGNAL(toggled(bool)),this,SLOT(nameToggled(bool)));
     connect(ui->sProbability,SIGNAL(valueChanged(int)),this,SLOT(probabilityChanged(int)));
 
-    ui->sProbability->setValue(mutation->probability * PROBABILITY_PRECISION);
+    ui->sProbability->setValue(qRound(mutation->probability * PROBABILITY_PRECISION));
     ui->cbName->setChecked(mutation->enable);
     nameToggled(mutation->enable);
 }

@@ -251,6 +251,11 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
             ui->vlBrainMutations->removeWidget(w);
             delete w;
         }
+        while(ui->vlSensorsAndEffectorsMutations->count() != 0) {
+            QWidget *w = ui->vlSensorsAndEffectorsMutations->itemAt(0)->widget();
+            ui->vlSensorsAndEffectorsMutations->removeWidget(w);
+            delete w;
+        }
 
 
         // -- Create mutations widgets --
@@ -288,8 +293,8 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
 
         ui->vlBodyMutations->addWidget(fixationRadiusMutation);
 
-        ui->vlBodyMutations->addWidget(sensorsStructuralMutation);
-        ui->vlBodyMutations->addWidget(effectorsStructuralMutation);
+        ui->vlSensorsAndEffectorsMutations->addWidget(sensorsStructuralMutation);
+        ui->vlSensorsAndEffectorsMutations->addWidget(effectorsStructuralMutation);
 
         ui->vlBrainMutations->addWidget(brainDistance);
         ui->vlBrainMutations->addWidget(brainInPos);

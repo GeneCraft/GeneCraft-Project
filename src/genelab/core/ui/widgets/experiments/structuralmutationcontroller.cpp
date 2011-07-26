@@ -38,13 +38,16 @@ StructuralMutationController::StructuralMutationController(StructuralMutation *m
 
     btScalar tmp;
 
-    tmp = mutation->addProbability * PROBABILITY_PRECISION;
+    // WTF without qRound, value is false !
+    tmp = qRound(mutation->addProbability * PROBABILITY_PRECISION);
     ui->sAddProbability->setValue(tmp);
 
-    tmp = mutation->deleteProbability * PROBABILITY_PRECISION;
+    // WTF without qRound, value is false !
+    tmp = qRound(mutation->deleteProbability * PROBABILITY_PRECISION);
     ui->sRemoveProbability->setValue(tmp);
 
-    tmp = mutation->replaceProbability * PROBABILITY_PRECISION;
+    // WTF without qRound, value is false !
+    tmp = qRound(mutation->replaceProbability * PROBABILITY_PRECISION);
     ui->sReplaceProbability->setValue(tmp);
 
     ui->cbName->setChecked(mutation->enable);

@@ -17,6 +17,7 @@ FloatMutationController::FloatMutationController(FloatMutation *mutation, QStrin
 
     createForm(name);
 
+    // WTF without qRound, values are false !
     ui->sProbability->setValue(qRound(mutation->probability * PROBABILITY_PRECISION));
     ui->sMinFactor->setValue(qRound(mutation->minFact * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
     ui->sMaxFactor->setValue(qRound(mutation->maxFact * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?

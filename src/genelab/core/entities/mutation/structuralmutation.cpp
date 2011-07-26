@@ -19,9 +19,9 @@ StructuralMutation::StructuralMutation(QVariant variant)
     QVariantMap map = variant.toMap();
 
     enable              = map["enable"].toBool();
-    addProbability      = map["addProbability"].toFloat();
-    deleteProbability   = map["deleteProbability"].toFloat();
-    replaceProbability  = map["replaceProbability"].toFloat();
+    addProbability      = map["addProbability"].toDouble();
+    deleteProbability   = map["deleteProbability"].toDouble();
+    replaceProbability  = map["replaceProbability"].toDouble();
 }
 
 bool StructuralMutation::checkAdd()
