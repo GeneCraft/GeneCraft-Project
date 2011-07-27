@@ -2,32 +2,30 @@
 #include "brainpluggrid.h"
 #include "tools.h"
 #include "qmath.h"
+#include <QDebug>
 
 namespace GeneLabCore {
     Brain::Brain(QObject *parent) :
         QObject(parent)
     {
         // BRAIN MODIF TRY
-        this->plugGrid = new BrainPlugGrid(/*plugGridSize*/);
-        this->frequency = qrand()%10 + 1;
+        this->plugGrid = new BrainPlugGrid();
+        this->frequency = qrand()%60 + 1;
     }
 
     Brain::Brain(QVariant data) {
-        //int size = data.toMap()["plugGridSize"].toInt();
         this->plugGrid = new BrainPlugGrid();
-        bool ok = false;
-        this->frequency = data.toMap()["frequency"].toInt(&ok);
+        this->frequency = data.toMap()["frequency"].toInt();
         if(frequency <= 0) {
             frequency = 1;
         }
-        if(!ok) {
-            frequency = 6; // 10 per sec
+        if(frequency > 60) {
+            frequency = 60; // 10 per sec
         }
     }
 
     QVariant Brain::serialize() {
         QVariantMap data;
-        //data.insert("plugGridSize", this->plugGrid->getSize());
         data.insert("frequency", this->frequency);
         return data;
     }
