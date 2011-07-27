@@ -4,7 +4,7 @@
 
 #define RADIUS_OF_SMELL 20.0
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 BoxSmellSensor::BoxSmellSensor(Fixation *fixation) :
     SmellSensor(fixation, QString("Box smell sensor"), boxSmellSensor, RigidBodyOrigin::BASIC_SHAPE, RADIUS_OF_SMELL)

@@ -23,7 +23,7 @@ btScalar sigmoid(btScalar x)
 }
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     BrainPlugGrid::BrainPlugGrid(QObject *parent) :
         QObject(parent)

@@ -2,14 +2,14 @@
 #define ENTITIESENGINE_H
 
 #include <QList>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "engine.h"
 #include "entities/entity.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
- * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
+ * (c) GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
  *
  * Engine to manage entities.
  *

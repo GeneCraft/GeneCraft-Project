@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QMap>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "engine.h"
 
-namespace GeneLabCore {
-    class OgreEngine : public GeneLabCore::Engine
+namespace GeneCraftCore {
+    class OgreEngine : public GeneCraftCore::Engine
     {
 
     public:

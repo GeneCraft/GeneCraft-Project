@@ -5,9 +5,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPaintEvent>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class PlugGridVisualizer : public QWidget
     {

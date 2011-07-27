@@ -6,7 +6,7 @@
 #include <QVariant>
 #include "tools.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
     typeName = "Gyroscopic sensor";

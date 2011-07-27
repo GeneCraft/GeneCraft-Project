@@ -14,7 +14,7 @@
 
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     btoBiome::btoBiome(btoWorld* world, QVariant biomeData, QObject *parent) :
         btBiome(world, biomeData, parent), world(world)

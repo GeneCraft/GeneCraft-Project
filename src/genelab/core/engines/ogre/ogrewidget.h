@@ -5,12 +5,12 @@
 #include <QX11Info>
 #include <QMutex>
 #include <QMouseEvent>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "ogre/entities/ogrefreecamera.h"
 #include <Ogre.h>
 #include "entity.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     class OgreWidget : public QWidget
     {
         Q_OBJECT

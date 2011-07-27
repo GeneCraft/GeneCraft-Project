@@ -1,12 +1,12 @@
 #ifndef FLYINGEFFECTOR_H
 #define FLYINGEFFECTOR_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "effector.h"
 #include "brain/brainout.h"
 #include "LinearMath/btScalar.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class FlyingEffector : public Effector
 {

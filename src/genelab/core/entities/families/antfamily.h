@@ -1,11 +1,11 @@
 #ifndef ANTFAMILY_H
 #define ANTFAMILY_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "LinearMath/btTransform.h"
 #include "entityfamily.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

@@ -23,7 +23,7 @@
 #include "effectors/effector.h"
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     const btScalar Fixation::PERCENT_BONE_INSIDE_FIX = 0.15f;
 

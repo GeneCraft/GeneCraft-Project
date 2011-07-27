@@ -2,12 +2,12 @@
 #define FIXATIONSTATS_H
 
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "statisticsprovider.h"
 #include "statisticsstorage.h"
 #include "LinearMath/btVector3.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 class FixationStats : public StatisticsProvider
 {

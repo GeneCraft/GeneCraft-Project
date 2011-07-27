@@ -1,14 +1,14 @@
 #ifndef CREATUREVIEWERINPUTMANAGER_H
 #define CREATUREVIEWERINPUTMANAGER_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "events/inspectorsinputmanager.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 /**
- * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
+ * (c) GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
  *
  * Manage inputs into the creature viewer.
  * Emit rigidBodySelected when user click on a rigidBody into the scene.

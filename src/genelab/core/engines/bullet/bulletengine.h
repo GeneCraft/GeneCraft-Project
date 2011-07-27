@@ -3,11 +3,11 @@
 
 #include <QObject>
 #include <deque>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "engine.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     class BulletEngine : public Engine
     {
     public:

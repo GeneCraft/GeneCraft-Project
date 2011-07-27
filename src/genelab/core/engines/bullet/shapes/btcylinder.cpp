@@ -6,7 +6,7 @@
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density) :
         btShape(world), shape(NULL)

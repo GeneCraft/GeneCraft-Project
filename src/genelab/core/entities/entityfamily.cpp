@@ -1,6 +1,6 @@
 #include "entityfamily.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     EntityFamily::EntityFamily(QObject *parent) :
         QObject(parent)
     {

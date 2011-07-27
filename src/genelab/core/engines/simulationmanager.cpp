@@ -6,7 +6,7 @@
 #include <ctime>
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     SimulationManager::SimulationManager(QMap<QString, Engine*> engines, QObject *)
     {

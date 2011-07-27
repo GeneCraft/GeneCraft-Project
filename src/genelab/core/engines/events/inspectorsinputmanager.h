@@ -1,11 +1,11 @@
 #ifndef INSPECTORSINPUTMANAGER_H
 #define INSPECTORSINPUTMANAGER_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "inputlistener.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class   InspectorsInputManager : public InputListener
 {

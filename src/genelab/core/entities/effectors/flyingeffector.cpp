@@ -7,7 +7,7 @@
 #define TYPE_NAME "Flying Effector"
 #define TYPE flyingEffector
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 FlyingEffector::FlyingEffector(Fixation *fixation) : Effector(QString(TYPE_NAME), TYPE), fixation(fixation)
 {

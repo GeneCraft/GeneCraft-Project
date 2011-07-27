@@ -2,13 +2,13 @@
 #define SPAWN_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 #include "LinearMath/btVector3.h"
 
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 
     class Spawn : public QObject

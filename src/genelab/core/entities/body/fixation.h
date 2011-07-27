@@ -3,10 +3,10 @@
 
 #include <QObject>
 #include <QList>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     enum MotorFrom {fromDisabled, fromBrain, fromNormal, fromRandom};
 

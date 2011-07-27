@@ -5,7 +5,7 @@
 
 #define PROBABILITY_PRECISION 1000.0
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 SimpleProbabilityController::SimpleProbabilityController(SimpleProbabilityMutation * mutation, QString name, QWidget *parent) :
     QWidget(parent),

@@ -8,7 +8,7 @@
 #include "tools.h"
 #include "brain/sinusin.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 #define TYPE_NAME "Rotational Motor"
 #define TYPE rotationalMotorEffector

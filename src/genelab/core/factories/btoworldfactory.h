@@ -2,9 +2,9 @@
 #define BTOWORLDFACTORY_H
 
 #include <QVariant>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class btoWorldFactory
     {

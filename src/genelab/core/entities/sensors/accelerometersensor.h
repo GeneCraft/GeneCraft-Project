@@ -1,11 +1,11 @@
 #ifndef ACCELEROMETERSENSOR_H
 #define ACCELEROMETERSENSOR_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensor.h"
 #include "LinearMath/btVector3.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

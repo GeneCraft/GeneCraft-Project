@@ -78,7 +78,7 @@
 
 #include "body/fixation.h"
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
     QMainWindow(parent),

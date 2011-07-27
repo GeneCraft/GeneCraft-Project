@@ -9,7 +9,7 @@
 #include "world/btworld.h"
 #include "factories/btshapesfactory.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     btScene::btScene(btWorld* world, QVariant sceneData, QObject *parent) :
         QObject(parent)

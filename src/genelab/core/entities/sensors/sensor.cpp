@@ -1,7 +1,7 @@
 #include "sensor.h"
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     Sensor::Sensor(Fixation * fixation, QObject *parent) :
         QObject(parent)
     {

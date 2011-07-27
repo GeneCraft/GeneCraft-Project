@@ -4,7 +4,7 @@
 #include <QTreeWidgetItem>
 #include "LinearMath/btScalar.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class Tools
 {

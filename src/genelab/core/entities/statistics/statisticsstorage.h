@@ -6,7 +6,7 @@
 #include <QString>
 #include"LinearMath/btScalar.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 class Statistic : public QObject
 {

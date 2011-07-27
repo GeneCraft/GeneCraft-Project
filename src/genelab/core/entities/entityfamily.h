@@ -2,10 +2,10 @@
 #define ENTITYFAMILY_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "LinearMath/btVector3.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

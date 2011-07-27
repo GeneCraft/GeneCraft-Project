@@ -5,7 +5,7 @@
 #include "bullet/shapes/btcylinder.h"
 #include "bullet/shapes/btbone.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btShapesFactory::btShapesFactory()
 {

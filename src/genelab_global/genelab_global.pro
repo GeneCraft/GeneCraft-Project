@@ -313,12 +313,12 @@ HEADERS += \
     ../genelab/core/ui/widgets/entities/bonepropertiescontroller.h \
     ../genelab/core/ui/widgets/entities/generic6dofconstraintcontroller.h \
     ../genelab/core/ui/widgets/ogrebulletwindows.h \
-    ../genelab/core/genelabcoreclasses.h \
     ../genelab/core/utils/tools.h \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.h \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.h \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
-    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.h
+    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.h \
+    ../genelab/core/genecraftcoreclasses.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

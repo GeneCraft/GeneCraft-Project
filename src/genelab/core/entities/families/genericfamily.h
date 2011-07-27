@@ -2,11 +2,11 @@
 #define GENERICFAMILY_H
 
 #include <QVariant>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "LinearMath/btVector3.h"
 #include "LinearMath/btTransform.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

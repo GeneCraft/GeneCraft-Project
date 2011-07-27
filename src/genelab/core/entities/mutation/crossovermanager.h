@@ -3,7 +3,7 @@
 
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class CrossoverManager
     {

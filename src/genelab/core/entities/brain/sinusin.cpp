@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     SinusIn::SinusIn(QObject *parent) :
         BrainIn(-1, 1, parent), deg(0)
     {

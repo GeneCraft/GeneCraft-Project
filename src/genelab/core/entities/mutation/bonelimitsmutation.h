@@ -4,7 +4,7 @@
 #include "mutation.h"
 #include "floatmutation.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class BoneLimitsMutation : public Mutation
 {

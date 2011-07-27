@@ -1,14 +1,14 @@
 #ifndef SimulationManager_H
 #define SimulationManager_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include <QObject>
 #include <QMap>
 
 #include <QTimer>
 #include <QTime>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class SimulationManager : public QObject
     {

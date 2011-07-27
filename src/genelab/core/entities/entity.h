@@ -2,12 +2,12 @@
 #define ENTITY_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "statistics/statisticsstorage.h"
 #include "body/fixation.h"
 #include "brain/brainfunctional.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 
 /**

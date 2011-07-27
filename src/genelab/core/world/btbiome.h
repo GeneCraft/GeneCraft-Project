@@ -7,7 +7,7 @@
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "btfactory.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btBiome : public QObject
 {

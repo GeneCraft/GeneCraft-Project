@@ -10,7 +10,7 @@ namespace Ui {
     class WorkerCtrl;
 }
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class WorkerCtrl : public QWidget
 {

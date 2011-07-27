@@ -26,7 +26,7 @@
 #include "world/btworld.h"
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform)
     : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL)

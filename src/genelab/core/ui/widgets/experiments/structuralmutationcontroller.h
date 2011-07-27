@@ -2,7 +2,7 @@
 #define STRUCTURALMUTATIONCONTROLLER_H
 
 #include <QWidget>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 #include "mutationelementcontroller.h"
 
@@ -15,8 +15,8 @@ class StructuralMutationController : public QWidget
     Q_OBJECT
 
 public:
-    explicit StructuralMutationController(GeneLabCore::StructuralMutation *mutation,QString name,
-                                          GeneLabCore::StructuralList *list = NULL, QWidget *parent = 0);
+    explicit StructuralMutationController(GeneCraftCore::StructuralMutation *mutation,QString name,
+                                          GeneCraftCore::StructuralList *list = NULL, QWidget *parent = 0);
     ~StructuralMutationController();
 
 public slots:
@@ -30,8 +30,8 @@ public slots:
 private:
     Ui::StructuralMutationController *ui;
 
-    GeneLabCore::StructuralMutation *mutation;
-    GeneLabCore::StructuralList *list;
+    GeneCraftCore::StructuralMutation *mutation;
+    GeneCraftCore::StructuralList *list;
     QList<MutationElementController *> mecs;
 };
 

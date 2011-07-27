@@ -3,9 +3,9 @@
 
 #include <QString>
 #include <QVariant>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 enum EffectorType { rotationalMotorEffector = 0, gripperEffector, flyingEffector };
 

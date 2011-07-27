@@ -5,7 +5,7 @@
 #include <QDir>
 #include "dbrecord.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     struct DataWrapper {
 

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 
 #include <btBulletDynamicsCommon.h>
@@ -15,7 +15,7 @@
 #include "world/btbiome.h"
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class btWorld : public QObject
     {

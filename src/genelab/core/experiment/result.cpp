@@ -5,7 +5,7 @@
 
 #include <QVariantMap>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     // To sort result, descending
     bool myLessThan( const Result *a, const Result *b )

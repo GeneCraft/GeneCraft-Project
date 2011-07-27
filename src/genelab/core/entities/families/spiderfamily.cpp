@@ -15,7 +15,7 @@
 
 #include <ctime>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 SpiderFamily::SpiderFamily() :
     EntityFamily()

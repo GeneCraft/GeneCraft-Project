@@ -5,7 +5,7 @@
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 using namespace Ogre;
 

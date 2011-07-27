@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GeneLab : About Creature Viewer</string>
+   <string>GeneCraft : About Creature Viewer</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../../core/ressources/ressources.qrc">

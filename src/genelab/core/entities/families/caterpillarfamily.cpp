@@ -12,7 +12,7 @@
 #include "sensors/contactsensor.h"
 #include "factories/btshapesfactory.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     CaterpillarFamily::CaterpillarFamily(QObject *parent) :
         EntityFamily(parent)

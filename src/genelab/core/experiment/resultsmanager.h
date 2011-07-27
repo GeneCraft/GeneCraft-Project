@@ -7,7 +7,7 @@
 #include "experiment.h"
 #include "ressources/dbrecord.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class ResultsManager : public QObject
 {

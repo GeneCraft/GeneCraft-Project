@@ -2,11 +2,11 @@
 #define SYNAPSE_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include <QDebug>
 #include "tools.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     typedef struct NeuralConnexion {
         NeuralConnexion(btScalar x, btScalar y, btScalar distance, btScalar weight) {

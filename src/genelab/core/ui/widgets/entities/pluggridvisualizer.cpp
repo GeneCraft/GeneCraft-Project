@@ -10,7 +10,7 @@
 #include <QBoxLayout>
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     PlugGridVisualizer::PlugGridVisualizer(QWidget *parent) :
         QWidget(parent)
     {

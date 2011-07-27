@@ -1,6 +1,6 @@
 #include "brainout.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     BrainOut::BrainOut(btScalar min, btScalar max, QObject *) :
         min(min), max(max), value((min + max) / 2.0)

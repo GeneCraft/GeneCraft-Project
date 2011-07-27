@@ -2,7 +2,7 @@
 #define RESSOURCESBROWSER_H
 
 #include <QWidget>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "factories/ressources/ressourcesmanager.h"
 #include "ressources/dbrecord.h"
 
@@ -10,7 +10,7 @@ namespace Ui {
     class RessourcesBrowser;
 }
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class RessourcesBrowser : public QWidget
 {
@@ -20,7 +20,7 @@ public:
     explicit RessourcesBrowser(QWidget *parent = 0);
     ~RessourcesBrowser();
 
-    void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
+    void connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim);
 
 signals:
 
@@ -29,7 +29,7 @@ signals:
     void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
 
     // TODO replace by loadEntity
-    //void addEntity(QVariantMap entityData, GeneLabCore::Ressource *ressource);
+    //void addEntity(QVariantMap entityData, GeneCraftCore::Ressource *ressource);
 
 public slots:
 
@@ -65,9 +65,9 @@ private:
 
     Ui::RessourcesBrowser *ui;
 
-    GeneLabCore::RessourcesManager *localRessourceManager;
-    GeneLabCore::RessourcesManager *onlineRessourceManager;
-    GeneLabCore::DataBase database;
+    GeneCraftCore::RessourcesManager *localRessourceManager;
+    GeneCraftCore::RessourcesManager *onlineRessourceManager;
+    GeneCraftCore::DataBase database;
 
 
 };

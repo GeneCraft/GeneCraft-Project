@@ -14,7 +14,7 @@
 #include "ressources/jsonfile.h"
 #include "events/inspectorsinputmanager.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     QWidget(parent),
@@ -77,7 +77,7 @@ RessourcesBrowser::~RessourcesBrowser()
     delete ui;
 }
 
-void RessourcesBrowser::connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim) {
+void RessourcesBrowser::connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim) {
 
     connect(this,SIGNAL(sLoadExperiment(Experiment*)),iim,SLOT(loadExperiment(Experiment*)));
     connect(this,SIGNAL(sLoadWorld(QVariantMap)),iim,SLOT(loadWorld(QVariantMap)));

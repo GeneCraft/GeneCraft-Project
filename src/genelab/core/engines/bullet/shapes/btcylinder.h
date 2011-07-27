@@ -1,12 +1,12 @@
 #ifndef BTCYLINDER_H
 #define BTCYLINDER_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btshape.h"
 #include "BulletCollision/CollisionShapes/btCylinderShape.h"
 #include "LinearMath/btDefaultMotionState.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btCylinder : public btShape
 {

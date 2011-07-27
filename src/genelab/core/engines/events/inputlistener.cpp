@@ -1,6 +1,6 @@
 #include "inputlistener.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     InputListener::InputListener(QObject *parent) :
         QObject(parent)
     {}

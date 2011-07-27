@@ -1,7 +1,7 @@
 #ifndef SMELLSENSOR_H
 #define SMELLSENSOR_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensor.h"
 
 #include "BulletDynamics/Dynamics/btRigidBody.h"
@@ -9,7 +9,7 @@
 
 #include "btBulletCollisionCommon.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class ContactSensorCallback;
 

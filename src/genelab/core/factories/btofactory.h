@@ -1,10 +1,10 @@
 #ifndef BTOFACTORY_H
 #define BTOFACTORY_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btfactory.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoFactory : public btFactory
 {

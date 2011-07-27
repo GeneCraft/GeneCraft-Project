@@ -14,7 +14,7 @@
 #include <QVariant>
 #include <QVariantMap>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 
     btoWorld::btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QObject *parent) :

@@ -32,7 +32,7 @@
 
 #include "qxtjson.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     MutationsManager::MutationsManager()
     {

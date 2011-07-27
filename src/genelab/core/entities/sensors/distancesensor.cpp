@@ -8,7 +8,7 @@
 
 #define MAX_DISTANCE 4.0f
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 DistanceSensor::DistanceSensor(Fixation *fixation, btScalar yAxis, btScalar zAxis) : Sensor(fixation) {
 

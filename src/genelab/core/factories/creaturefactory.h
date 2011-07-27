@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "LinearMath/btVector3.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class CreatureFactory
     {

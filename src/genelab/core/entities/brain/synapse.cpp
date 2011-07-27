@@ -1,7 +1,7 @@
 #include "synapse.h"
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     Synapse::Synapse(QObject *parent) :
         QObject(parent)

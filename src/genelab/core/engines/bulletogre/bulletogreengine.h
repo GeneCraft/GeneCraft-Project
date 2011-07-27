@@ -1,13 +1,13 @@
 #ifndef BULLETOGREENGINE_H
 #define BULLETOGREENGINE_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "engine.h"
 #include "Ogre.h"
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * Class used to links ogre objects to bullet objects

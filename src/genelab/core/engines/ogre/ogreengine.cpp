@@ -8,10 +8,10 @@
 #include "Ogre.h"
 #include "OgreTextAreaOverlayElement.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     // We use genelab core for code productivity
-    using namespace GeneLabCore;
+    using namespace GeneCraftCore;
 
     OgreEngine::OgreEngine(unsigned long winId) :
         Engine()

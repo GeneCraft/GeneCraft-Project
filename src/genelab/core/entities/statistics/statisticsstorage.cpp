@@ -1,6 +1,6 @@
 #include "statisticsstorage.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 // To create the storage
 StatisticsStorage::StatisticsStorage() {}

@@ -14,7 +14,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsEllipseItem>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
     QWidget(parent)
 {

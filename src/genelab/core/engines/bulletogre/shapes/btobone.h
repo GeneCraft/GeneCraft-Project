@@ -1,12 +1,12 @@
 #ifndef BTOBONE_H
 #define BTOBONE_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "bullet/shapes/btbone.h"
 #include "Ogre.h"
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoBone : public btBone
 {

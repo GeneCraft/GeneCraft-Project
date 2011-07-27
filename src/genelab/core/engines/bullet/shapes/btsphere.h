@@ -1,12 +1,12 @@
 #ifndef BTSPHERE_H
 #define BTSPHERE_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btshape.h"
 #include "BulletCollision/CollisionShapes/btSphereShape.h"
 #include "LinearMath/btDefaultMotionState.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btSphere : public btShape
 {

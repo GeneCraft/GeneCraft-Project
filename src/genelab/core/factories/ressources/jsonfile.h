@@ -5,7 +5,7 @@
 #include <QVariant>
 #include <QFile>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 class JsonFile : public Ressource
 {
 

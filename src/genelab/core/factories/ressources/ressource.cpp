@@ -6,7 +6,7 @@
 #include <QtScript>
 #include <qxtjson.h>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     int cptRessource = 0;
     Ressource::Ressource(QObject *parent) :
         QObject(parent)

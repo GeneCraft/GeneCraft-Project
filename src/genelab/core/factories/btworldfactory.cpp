@@ -4,7 +4,7 @@
 
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     QVariant btWorldFactory::createSimpleWorld() {
 

@@ -12,7 +12,7 @@
 #include "bulletogre/shapes/btobox.h"
 #include "btoworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     btoScene::btoScene(btoWorld* world, QVariant sceneData, QObject *parent) :
         btScene(world, sceneData, parent)

@@ -1,11 +1,11 @@
 #ifndef SNAKEBUILDER_H
 #define SNAKEBUILDER_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "entityfamily.h"
 #include "entity.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

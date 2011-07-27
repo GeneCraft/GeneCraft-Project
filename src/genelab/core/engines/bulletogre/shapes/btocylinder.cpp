@@ -7,7 +7,7 @@
 
 #include "Ogre.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 using namespace Ogre;
 

@@ -20,7 +20,7 @@
 #include <btBulletDynamicsCommon.h>
 
 #include <QDebug>
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 
     btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QObject *parent) :

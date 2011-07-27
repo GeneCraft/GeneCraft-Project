@@ -4,11 +4,11 @@
 #include <QWidget>
 #include <QListWidgetItem>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensors/sensor.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 namespace Ui {
     class FixationPropertiesController;

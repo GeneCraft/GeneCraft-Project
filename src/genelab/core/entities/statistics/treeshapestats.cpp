@@ -11,7 +11,7 @@
 #include "effectors/effector.h"
 #include "effectors/rotationalmotorseffector.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * treeshape) :
     StatisticsProvider(statsStorage), treeshape(treeshape)

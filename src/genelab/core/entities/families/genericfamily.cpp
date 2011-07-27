@@ -21,7 +21,7 @@
 #include "effectors/grippereffector.h"
 #include "effectors/rotationalmotorseffector.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 GenericFamily::GenericFamily()
 {
 }

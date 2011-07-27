@@ -1,7 +1,7 @@
 #include <QtGui/QApplication>
 #include "genelabmainwindow.h"
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 #include "widgets/ogrebulletwindows.h"
 #include "creatureviewer/ui/creatureviewerwindow.h"

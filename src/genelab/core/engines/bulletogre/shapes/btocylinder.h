@@ -1,11 +1,11 @@
 #ifndef BTOCYLINDER_H
 #define BTOCYLINDER_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "bullet/shapes/btcylinder.h"
 #include "Ogre.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoCylinder : public btCylinder
 {

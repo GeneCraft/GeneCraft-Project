@@ -1,11 +1,11 @@
 #ifndef TREESHAPESTATS_H
 #define TREESHAPESTATS_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "statisticsprovider.h"
 #include "statisticsstorage.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 class TreeShapeStats : public StatisticsProvider
 {

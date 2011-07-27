@@ -3,14 +3,14 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 //compilation optimisation
 namespace Ui {
     class OgreBulletWindows;
 }
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 class OgreBulletWindows : public QMainWindow
 {
     Q_OBJECT

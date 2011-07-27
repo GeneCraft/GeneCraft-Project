@@ -5,13 +5,13 @@
 #include <QVariant>
 
 #include "spawn.h"
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
 #include "LinearMath/btVector3.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btScene : public QObject
 {

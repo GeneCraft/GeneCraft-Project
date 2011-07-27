@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class RigidBodyOrigin : public QObject
 {

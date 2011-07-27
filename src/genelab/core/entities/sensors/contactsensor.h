@@ -1,13 +1,13 @@
 #ifndef CONTACTSENSOR_H
 #define CONTACTSENSOR_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensor.h"
 #include "LinearMath/btVector3.h"
 #include <QVariant>
 #include "btBulletCollisionCommon.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

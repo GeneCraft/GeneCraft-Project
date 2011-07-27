@@ -4,7 +4,7 @@
 
 #define RESULTS_DIR "results"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     ResultsManager::ResultsManager(Experiment* exp, int nbBestStored, int nbRandomStored, QString workerName, QObject *parent) :
         QObject(parent)

@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     using namespace Ogre;
 
     BulletEngine::BulletEngine(QObject *parent) :

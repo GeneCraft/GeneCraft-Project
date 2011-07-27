@@ -6,7 +6,7 @@
 #include "world/btoscene.h"
 #include "world/btobiome.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     btoWorld* btoWorldFactory::createWorld(btoFactory *factory,
                                  btoShapesFactory *shapesFactory,

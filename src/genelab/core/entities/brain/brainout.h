@@ -4,10 +4,10 @@
 #include <QObject>
 #include <QDebug>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class BrainOut : QObject
     {

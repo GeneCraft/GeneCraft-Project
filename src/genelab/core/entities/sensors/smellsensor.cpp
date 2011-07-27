@@ -13,7 +13,7 @@
 #include "factories/btfactory.h"
 #include "world/btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 SmellSensor::SmellSensor(Fixation *fixation, QString typeName, SensorType type,
                          RigidBodyOrigin::RigidBodyType smellType, btScalar smellRadius) :

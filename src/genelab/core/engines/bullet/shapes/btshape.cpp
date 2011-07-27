@@ -1,6 +1,6 @@
 #include "btshape.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btShape::btShape(btWorld* world) :
     world(world), rigidBody(NULL)//, collisionShape(NULL)

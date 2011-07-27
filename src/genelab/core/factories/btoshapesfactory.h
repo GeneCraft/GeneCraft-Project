@@ -1,11 +1,11 @@
 #ifndef BTOSHAPESFACTORY_H
 #define BTOSHAPESFACTORY_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btshapesfactory.h"
 #include "world/btoworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoShapesFactory : public btShapesFactory
 {

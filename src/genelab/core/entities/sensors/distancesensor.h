@@ -1,11 +1,11 @@
 #ifndef DISTANCESENSOR_H
 #define DISTANCESENSOR_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensor.h"
 #include "LinearMath/btQuaternion.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class DistanceSensor : public Sensor
 {

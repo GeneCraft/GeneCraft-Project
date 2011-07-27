@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QMap>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btFactory : public QObject
 {

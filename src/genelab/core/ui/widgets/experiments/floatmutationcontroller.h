@@ -2,7 +2,7 @@
 #define FLOATMUTATIONCONTROLLER_H
 
 #include <QWidget>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 namespace Ui {
     class FloatMutationController;
@@ -13,7 +13,7 @@ class FloatMutationController : public QWidget
     Q_OBJECT
 
 public:
-    FloatMutationController(GeneLabCore::FloatMutation *mutation, QString name, QWidget *parent = 0);
+    FloatMutationController(GeneCraftCore::FloatMutation *mutation, QString name, QWidget *parent = 0);
     ~FloatMutationController();
 
     void createForm(QString name);
@@ -27,7 +27,7 @@ public:
 //    void setMaxFactor(btScalar maxFactor);
 //    btScalar getMaxFactor();
 
-    GeneLabCore::FloatMutation *mutation;
+    GeneCraftCore::FloatMutation *mutation;
 
 public slots:
 

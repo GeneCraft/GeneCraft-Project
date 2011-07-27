@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "bodyitems.h"
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include <QTimer>
 
@@ -11,7 +11,7 @@ namespace Ui {
     class EntityPropertiesController;
 }
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 class EntityPropertiesController : public QWidget
 {

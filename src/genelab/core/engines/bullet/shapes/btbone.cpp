@@ -4,7 +4,7 @@
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 const btScalar btBone::DENSITY = 1010.0; // Average body density
 

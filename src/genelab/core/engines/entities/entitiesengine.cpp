@@ -9,7 +9,7 @@
 #include "widgets/entities/pluggriddesignvisualizer.h"
 #include "widgets/entities/pluggridvisualizer.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 EntitiesEngine::EntitiesEngine()
 {
     cptBrain = 0;

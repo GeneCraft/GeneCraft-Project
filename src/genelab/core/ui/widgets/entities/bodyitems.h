@@ -5,13 +5,13 @@
 #include <QListWidgetItem>
 #include <QTableWidgetItem>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensors/sensor.h"
 #include "effectors/effector.h"
 #include "statistics/statisticsprovider.h"
 #include "statistics/statisticsstorage.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 // TREE
 

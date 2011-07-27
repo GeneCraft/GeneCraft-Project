@@ -1,12 +1,12 @@
 #ifndef SINUSIN_H
 #define SINUSIN_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include <math.h>
 
 #include "brainin.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class SinusIn : public BrainIn
     {

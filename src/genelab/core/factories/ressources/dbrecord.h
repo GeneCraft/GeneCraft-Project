@@ -4,7 +4,7 @@
 #include "ressource.h"
 #include <QNetworkReply>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     struct DataBase {
         QString url;

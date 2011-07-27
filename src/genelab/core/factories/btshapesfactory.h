@@ -1,11 +1,11 @@
 #ifndef BTSHAPESFACTORY_H
 #define BTSHAPESFACTORY_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "LinearMath/btTransform.h"
 #include "QVariant"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btShapesFactory
 {

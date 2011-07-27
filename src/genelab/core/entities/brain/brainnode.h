@@ -2,12 +2,12 @@
 #define BRAINNODE_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 #include <QDebug>
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 enum NodeType {
     // Input

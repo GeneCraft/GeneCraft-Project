@@ -1,10 +1,10 @@
 #ifndef BTOWORLD_H
 #define BTOWORLD_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoWorld : public btWorld
 {

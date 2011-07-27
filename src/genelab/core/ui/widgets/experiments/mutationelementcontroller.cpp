@@ -5,7 +5,7 @@
 
 #define WEIGHT_PRECISION 10.0f
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 MutationElementController::MutationElementController(MutationElement *me, QWidget *parent) :
     QWidget(parent),

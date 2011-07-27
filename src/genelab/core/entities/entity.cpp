@@ -19,7 +19,7 @@
 #include "statistics/treeshapestats.h"
 #include "statistics/fixationstats.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     const QString Entity::genomeVersion = "0.1";
 //EntityPropertiesController* Entity::inspectorWidget = NULL;

@@ -1,6 +1,6 @@
 #include "effector.h"
 #include <QVariant>
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 Effector::Effector(QString typeName, EffectorType type) : typeName(typeName), type(type)
 {

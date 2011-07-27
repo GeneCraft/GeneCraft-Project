@@ -1,6 +1,6 @@
 #include "brainnode.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 QString fromType(NodeType type) {
     switch(type) {
         // Input

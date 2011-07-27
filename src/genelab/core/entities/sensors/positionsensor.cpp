@@ -11,7 +11,7 @@
 #define minDistanceBetweenRootFixAndThisFix -5.0
 #define maxDistanceBetweenRootFixAndThisFix 5.0
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(fixation) {
     this->rootFix = rootFix;
 

@@ -16,7 +16,7 @@
 #include "entities/entitiesengine.h"
 #include "btoshapesfactory.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 btoFactory::btoFactory(QWidget* sceneWidget, unsigned long winId, QObject *parent) :
     btFactory(parent)
 {

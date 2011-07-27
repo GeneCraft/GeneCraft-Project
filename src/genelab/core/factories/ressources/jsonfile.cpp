@@ -6,7 +6,7 @@
 #include "qxtjson.h"
 #include <QtScript>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     JsonFile::JsonFile(QString filename, QObject *parent) :
         Ressource(parent), f(filename), filename(filename)
     {

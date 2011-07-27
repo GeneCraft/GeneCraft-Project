@@ -6,7 +6,7 @@
 
 #define EXP_FORMAT_VERSION 0.1
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 Experiment::Experiment() : ressource(NULL){
 

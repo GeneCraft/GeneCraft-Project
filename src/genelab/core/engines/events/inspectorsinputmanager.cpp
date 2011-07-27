@@ -4,7 +4,7 @@
 #include "body/bone.h"
 #include "body/fixation.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 InspectorsInputManager::InspectorsInputManager()
 {

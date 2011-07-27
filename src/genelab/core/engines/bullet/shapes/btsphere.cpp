@@ -8,7 +8,7 @@
 #include "bullet/rigidbodyorigin.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform, const btScalar density) : btShape(world), shape(NULL)
 {

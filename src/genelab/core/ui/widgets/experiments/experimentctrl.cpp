@@ -7,7 +7,7 @@
 
 #include <QMessageBox>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     ExperimentCtrl::ExperimentCtrl(QWidget *parent) :
         QWidget(parent),
@@ -152,7 +152,7 @@ namespace GeneLabCore {
     }
 }
 
-void GeneLabCore::ExperimentCtrl::on_btnAdd_clicked()
+void GeneCraftCore::ExperimentCtrl::on_btnAdd_clicked()
 {
     if(this->ui->twResults->currentItem()) {
         Result* r = this->results[this->ui->twResults->currentIndex().row()];
@@ -160,7 +160,7 @@ void GeneLabCore::ExperimentCtrl::on_btnAdd_clicked()
     }
 }
 
-void GeneLabCore::ExperimentCtrl::on_btnHelp_clicked()
+void GeneCraftCore::ExperimentCtrl::on_btnHelp_clicked()
 {
     QMessageBox::information(this, "Loading results to the scene", "There's two way of adding a result to the scene."
                              " As a result, which mean deleting everything in the simulation to get the exact same result"

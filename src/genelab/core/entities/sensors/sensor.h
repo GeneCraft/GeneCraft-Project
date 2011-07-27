@@ -4,10 +4,10 @@
 #include <QObject>
 #include <QList>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "brain/brainin.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 enum SensorType { gyroscopicSensor, accelerometerSensor, positionSensor, contactSensor, boxSmellSensor, distanceSensor };
 

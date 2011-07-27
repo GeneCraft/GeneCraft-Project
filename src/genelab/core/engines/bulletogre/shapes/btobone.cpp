@@ -9,7 +9,7 @@
 
 using namespace Ogre;
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 int btoBone::mNumEntitiesInstanced = 0;
 
 btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,

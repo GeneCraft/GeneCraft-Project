@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QVariant>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 #include "bullet/shapes/btbone.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class Bone : public QObject
 {

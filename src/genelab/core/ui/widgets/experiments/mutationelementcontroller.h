@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 namespace Ui {
     class MutationElementController;
@@ -14,7 +14,7 @@ class MutationElementController : public QWidget
     Q_OBJECT
 
 public:
-    explicit MutationElementController(GeneLabCore::MutationElement *me, QWidget *parent = 0);
+    explicit MutationElementController(GeneCraftCore::MutationElement *me, QWidget *parent = 0);
     ~MutationElementController();
 
 public slots:
@@ -24,7 +24,7 @@ public slots:
 private:
     Ui::MutationElementController *ui;
 
-    GeneLabCore::MutationElement *me;
+    GeneCraftCore::MutationElement *me;
 };
 
 #endif // MUTATIONELEMENTCONTROLLER_H

@@ -1,7 +1,7 @@
 #include "btbiome.h"
 #include "btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     btBiome::btBiome(btWorld* world, QVariant biomeData, QObject *parent) :
         QObject(parent)
     {

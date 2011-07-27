@@ -7,7 +7,7 @@
 #define FACTOR_PRECISION 100.0f
 #define PROBABILITY_PRECISION 1000.0f
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 FloatMutationController::FloatMutationController(FloatMutation *mutation, QString name, QWidget *parent) :
     QWidget(parent),

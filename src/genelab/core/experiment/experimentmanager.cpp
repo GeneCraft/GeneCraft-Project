@@ -38,7 +38,7 @@
 #include <QtScript>
 #include <qxtjson.h>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     /**
       * Creating an experiment manager for a given experiment

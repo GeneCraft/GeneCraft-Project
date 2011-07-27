@@ -20,7 +20,7 @@
 #include "effectors/grippereffector.h"
 #include "effectors/flyingeffector.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     TreeShape::TreeShape(btShapesFactory* shapesFactory, QObject *parent) :
         QObject(parent)
     {

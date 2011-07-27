@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QVariantMap>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 SimpleProbabilityMutation::SimpleProbabilityMutation(){
     probability = 1.0;

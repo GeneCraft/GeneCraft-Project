@@ -1,6 +1,6 @@
 #include "crossovermanager.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     CrossoverManager::CrossoverManager()
     {

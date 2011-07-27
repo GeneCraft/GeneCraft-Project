@@ -2,7 +2,7 @@
 #include "families/genericfamily.h"
 #include "entity.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     Entity* CreatureFactory::createEntity(QVariant data,
                                           btShapesFactory* shapesFactory,

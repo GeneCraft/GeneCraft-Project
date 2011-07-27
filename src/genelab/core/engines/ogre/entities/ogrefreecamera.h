@@ -7,13 +7,13 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <Ogre.h>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "events/inputlistener.h"
 #include <QTime>
 
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class OgreFreeCamera : public InputListener
 {

@@ -2,11 +2,11 @@
 #define BRAIN_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 class Brain : public QObject
 {
 

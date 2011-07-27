@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     BrainIn::BrainIn(btScalar min, btScalar max, QObject *parent) :
         Synapse(parent), value(0), min(min), max(max)

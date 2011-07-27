@@ -4,7 +4,7 @@
 #include "qmath.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     Brain::Brain(QObject *parent) :
         QObject(parent)
     {

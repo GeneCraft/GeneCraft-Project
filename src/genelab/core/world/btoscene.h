@@ -1,12 +1,12 @@
 #ifndef BTOSCENE_H
 #define BTOSCENE_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btscene.h"
 
 #include "btofactory.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoScene : public btScene
 {

@@ -4,7 +4,7 @@
 #include <QVariant>
 #include "LinearMath/btScalar.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     enum MutationType { IntegerMutationType, FloatMutationType, SimpleProbabilityType };
 

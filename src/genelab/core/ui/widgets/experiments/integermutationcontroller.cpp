@@ -5,7 +5,7 @@
 
 #define PROBABILITY_PRECISION 1000.0f
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 IntegerMutationController::IntegerMutationController(QString name, QWidget *parent) :
     QWidget(parent),

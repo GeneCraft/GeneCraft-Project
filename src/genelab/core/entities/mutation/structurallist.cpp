@@ -3,7 +3,7 @@
 #include "tools.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 MutationElement::MutationElement(QString name, int type, btScalar weight) {
     this->name = name;

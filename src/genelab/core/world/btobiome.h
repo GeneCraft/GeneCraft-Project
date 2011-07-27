@@ -1,10 +1,10 @@
 #ifndef BTOBIOME_H
 #define BTOBIOME_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btbiome.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoBiome : public btBiome
 {

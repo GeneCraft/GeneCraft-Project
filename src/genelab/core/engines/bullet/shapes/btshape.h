@@ -2,10 +2,10 @@
 #define BTSHAPE_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btShape : public QObject
 {

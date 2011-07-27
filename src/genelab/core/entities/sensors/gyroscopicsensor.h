@@ -1,10 +1,10 @@
 #ifndef GYROSCOPICSENSOR_H
 #define GYROSCOPICSENSOR_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "sensor.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

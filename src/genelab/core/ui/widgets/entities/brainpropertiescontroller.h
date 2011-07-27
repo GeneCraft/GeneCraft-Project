@@ -4,9 +4,9 @@
 #include <QWidget>
 
 #include "bodyitems.h"
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 namespace Ui {
     class BrainPropertiesController;

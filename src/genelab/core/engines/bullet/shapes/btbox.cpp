@@ -5,7 +5,7 @@
 #include "bullet/rigidbodyorigin.h"
 #include "world/btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform, const btScalar density) : btShape(world)
 {

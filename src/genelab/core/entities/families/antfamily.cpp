@@ -12,7 +12,7 @@
 #include "sensors/positionsensor.h"
 #include "tools.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 AntFamily::AntFamily() : EntityFamily()
 {

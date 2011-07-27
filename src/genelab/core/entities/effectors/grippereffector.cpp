@@ -4,7 +4,7 @@
 #include "factories/btshapesfactory.h"
 #include "world/btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 #define TYPE_NAME "Gripper Effector"
 #define TYPE gripperEffector

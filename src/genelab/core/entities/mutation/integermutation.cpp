@@ -2,7 +2,7 @@
 #include "tools.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 
     IntegerMutation::IntegerMutation(QVariant variant)

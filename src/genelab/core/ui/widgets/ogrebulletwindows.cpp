@@ -15,7 +15,7 @@
 // Core
 #include "entity.h"
 
-// GeneLab
+// GeneCraft
 #include "ogre/ogreengine.h"
 #include "ogre/ogrewidget.h"
 #include "bullet/bulletengine.h"
@@ -34,7 +34,7 @@
 #include "creatureviewerinputmanager.h"
 #include "widgets/entities/generic6dofconstraintcontroller.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
     QMainWindow(parent),
@@ -94,7 +94,7 @@ OgreBulletWindows::OgreBulletWindows(QWidget *parent) :
 
     // Console
     QDockWidget *dwConsole = new QDockWidget("Console");
-    dwConsole->setWidget(new QTextEdit(">> GeneLab Launched!"));
+    dwConsole->setWidget(new QTextEdit(">> GeneCraft Launched!"));
     addDockWidget(Qt::BottomDockWidgetArea,dwConsole);
 
     // Genome

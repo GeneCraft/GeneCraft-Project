@@ -3,9 +3,9 @@
 
 #include <QWidget>
 #include <QTimer>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 namespace Ui {
     class StatisticsPropertiesController;

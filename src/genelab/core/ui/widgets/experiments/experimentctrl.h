@@ -13,7 +13,7 @@ namespace Ui {
     class ExperimentCtrl;
 }
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class ExperimentCtrl : public QWidget
     {
@@ -23,7 +23,7 @@ namespace GeneLabCore {
         explicit ExperimentCtrl(QWidget *parent = 0);
         ~ExperimentCtrl();
 
-        void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
+        void connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim);
 
     signals:
         void sAddEntity(QVariantMap genome, Ressource* r);

@@ -6,7 +6,7 @@
 #include <QDateTime>
 #include "LinearMath/btScalar.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class Result;
     bool myLessThan( const Result *a, const Result *b );

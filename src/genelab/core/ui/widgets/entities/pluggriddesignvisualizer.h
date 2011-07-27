@@ -3,10 +3,10 @@
 
 #include <QWidget>
 #include <QGraphicsView>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     class PlugGridDesignVisualizer : public QWidget
     {
 

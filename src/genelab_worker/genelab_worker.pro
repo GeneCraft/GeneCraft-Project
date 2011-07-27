@@ -214,7 +214,7 @@ HEADERS += \
     ../genelab/core/experiment/result.h \
     ../genelab/core/experiment/resultsmanager.h \
     ../genelab/core/utils/tools.h \
-    ../genelab/core/genelabcoreclasses.h \
+    ../genelab/core/genecraftcoreclasses.h \
     ../genelab/core/ui/widgets/experiments/workerconfiguration.h \
     ../genelab/core/factories/ressources/ressourcesmanager.h
 

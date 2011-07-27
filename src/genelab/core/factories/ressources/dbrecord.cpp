@@ -10,7 +10,7 @@
 #include <QDebug>
 #include <QVariantMap>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     DbRecord::DbRecord(DataBase db, QString id, QVariant postData, QObject *parent) :
         Ressource(parent), db(db), id(id), rev(""), postData(postData)
     {

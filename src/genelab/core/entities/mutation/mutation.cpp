@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     void Mutation::mutate(QVariantMap &, QString){}
 

@@ -13,7 +13,7 @@
 #include <QDebug>
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btScalar sigmoid(btScalar x)
 {

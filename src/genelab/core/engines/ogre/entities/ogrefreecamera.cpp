@@ -1,6 +1,6 @@
 #include "ogrefreecamera.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 const QPoint     OgreFreeCamera::invalidMousePoint(-1,-1);
 const Ogre::Real OgreFreeCamera::turboModifier(10);

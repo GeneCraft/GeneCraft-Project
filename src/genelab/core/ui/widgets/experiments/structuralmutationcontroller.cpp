@@ -9,7 +9,7 @@
 
 #define PROBABILITY_PRECISION 1000.0f
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 StructuralMutationController::StructuralMutationController(StructuralMutation *mutation,QString name,
                                                            StructuralList *list, QWidget *parent) :

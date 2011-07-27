@@ -6,11 +6,11 @@
 #include <QKeyEvent>
 #include <QEvent>
 #include <QQueue>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "engine.h"
 #include "inputlistener.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     /**
       * EventManager is an Engine.

@@ -7,9 +7,9 @@
 #include "body/bone.h"
 #include "mutation.h"
 #include "bonelimitsmutation.h"
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class MutationsManager
 {

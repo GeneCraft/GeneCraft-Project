@@ -43,7 +43,7 @@
 
 #include "widgets/experiments/workerconfiguration.h"
 
-using namespace GeneLabCore;
+using namespace GeneCraftCore;
 
 int main(int argc, char *argv[])
 {

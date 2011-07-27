@@ -10,7 +10,7 @@
 #define MAX_ACCELERATION 1.0
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
 {

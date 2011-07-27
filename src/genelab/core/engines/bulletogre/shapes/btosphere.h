@@ -1,12 +1,12 @@
 #ifndef BTOSPHERE_H
 #define BTOSPHERE_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "bullet/shapes/btsphere.h"
 #include "Ogre.h"
 #include <QVariant>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoSphere : public btSphere
 {

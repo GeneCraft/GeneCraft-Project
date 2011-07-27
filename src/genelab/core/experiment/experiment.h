@@ -6,10 +6,10 @@
 #include <QDebug>
 #include <QVariantMap>
 #include <QDir>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "world/btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class Experiment
     {

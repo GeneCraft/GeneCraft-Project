@@ -5,7 +5,7 @@
 #include <QVariantMap>
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     FloatMutation::FloatMutation(QVariant variant)
     {

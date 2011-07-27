@@ -1,14 +1,14 @@
 #ifndef BTBONE_H
 #define BTBONE_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btshape.h"
 #include "BulletCollision/CollisionShapes/btSphereShape.h"
 #include "BulletCollision/CollisionShapes/btCylinderShape.h"
 #include "BulletCollision/CollisionShapes/btCompoundShape.h"
 #include "LinearMath/btDefaultMotionState.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 class btBone : public btShape
 {
 public:

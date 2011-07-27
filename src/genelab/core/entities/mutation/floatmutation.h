@@ -3,7 +3,7 @@
 
 #include "mutation.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class FloatMutation : public Mutation {
     public:

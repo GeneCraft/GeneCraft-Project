@@ -2,7 +2,7 @@
 #define CREATUREVIEWER_H
 
 #include <QMainWindow>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btBulletDynamicsCommon.h"
 #include "ressources/dbrecord.h"
 
@@ -22,7 +22,7 @@ namespace Ui {
 }
 
 /**
- * (c) GeneLab 2011, Aurelien Da Campo & Cyprien Huissoud
+ * (c) GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud
  *
  * Main window of the creature viewer sub-app.
  *

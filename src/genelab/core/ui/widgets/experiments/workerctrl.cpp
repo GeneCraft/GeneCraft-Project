@@ -11,7 +11,7 @@
 #include "ressources/jsonfile.h"
 #include "events/inspectorsinputmanager.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     WorkerCtrl::WorkerCtrl(QWidget *parent) :
         QWidget(parent),
@@ -65,7 +65,7 @@ namespace GeneLabCore {
         //QString workerExe = "/Users/cyprienhuissoud/Desktop/genelab/genelab/src/genelab_worker-build-desktop/genelab_worker";
         QFile workerFile(workerExe);
         if(!workerFile.exists()) {
-            QString workerExe  = QFileDialog::getOpenFileName(this, "Select the worker binary","genelab_worker");
+            QString workerExe  = QFileDialog::getOpenFileName(this, "Select the worker binary","genecraft_worker.exe");
 
             if(workerExe.isEmpty())
                 return;

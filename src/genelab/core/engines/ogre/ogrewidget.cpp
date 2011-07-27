@@ -6,7 +6,7 @@
 
 using namespace Ogre;
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     /**
      * @brief init the object

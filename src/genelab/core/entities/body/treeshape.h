@@ -1,11 +1,11 @@
 #ifndef TREESHAPE_H
 #define TREESHAPE_H
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include <QObject>
 #include "LinearMath/btTransform.h"
 
 // TODO: INHERIT : Shape, -> CREATE CLASS SHAPE with method setup AND print
-namespace GeneLabCore {
+namespace GeneCraftCore {
     class TreeShape : QObject
     {
 

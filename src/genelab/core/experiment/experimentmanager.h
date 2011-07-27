@@ -10,7 +10,7 @@
 
 class SelectionManager;
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
     class ExperimentManager
     {
     public:

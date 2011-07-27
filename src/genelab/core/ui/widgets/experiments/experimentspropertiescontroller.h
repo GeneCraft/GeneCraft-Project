@@ -3,14 +3,14 @@
 
 #include <QWidget>
 #include <QVariantMap>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 namespace Ui {
     class ExperimentsPropertiesController;
 }
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class ExperimentsPropertiesController : public QWidget
 {
@@ -21,7 +21,7 @@ public:
     ExperimentsPropertiesController(QWidget *parent = 0);
     ~ExperimentsPropertiesController();
 
-    void connectToInspectorInputManager(GeneLabCore::InspectorsInputManager * iim);
+    void connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim);
 
     QVariantMap getWorldMap();
     QVariantMap getSeedMap();
@@ -46,7 +46,7 @@ public slots:
     void saveWorldToFile();
 
     void setWorld(QVariantMap worldData);
-    void setExperiment(GeneLabCore::Experiment *exp);
+    void setExperiment(GeneCraftCore::Experiment *exp);
 
     void removeEntityFromSeed();
     void addEntityToSeed();
@@ -65,7 +65,7 @@ private:
 
     Ui::ExperimentsPropertiesController *ui;
 
-    GeneLabCore::Experiment *experiment;
+    GeneCraftCore::Experiment *experiment;
 
     // bone
     FloatMutationController *boneLengthMutation;
@@ -90,7 +90,7 @@ private:
     FloatMutationController *constValue;
     StructuralMutationController *brainStructuralMutation;
 
-    GeneLabCore::RessourcesManager *localRessourceManager;
+    GeneCraftCore::RessourcesManager *localRessourceManager;
 };
 
 }

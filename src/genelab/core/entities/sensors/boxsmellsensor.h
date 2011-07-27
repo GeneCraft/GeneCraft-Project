@@ -3,7 +3,7 @@
 
 #include "smellsensor.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class BoxSmellSensor : public SmellSensor
 {

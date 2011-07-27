@@ -1,11 +1,11 @@
 #ifndef BTOBOX_H
 #define BTOBOX_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "bullet/shapes/btbox.h"
 #include "Ogre.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btoBox : public btBox
 {

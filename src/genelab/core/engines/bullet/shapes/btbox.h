@@ -1,12 +1,12 @@
 #ifndef BTBOX_H
 #define BTBOX_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "btshape.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
 #include "LinearMath/btDefaultMotionState.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class btBox : public btShape
 {

@@ -8,7 +8,7 @@
 #include "ressources/ressource.h"
 
 #include "entities/entitiesengine.h"
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 btFactory::btFactory(QObject *parent) :
     QObject(parent)

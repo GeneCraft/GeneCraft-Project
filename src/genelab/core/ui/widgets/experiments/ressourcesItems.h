@@ -8,7 +8,7 @@
 #include <ressources/ressourcesmanager.h>
 #include "result.h"
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 // TREE
 

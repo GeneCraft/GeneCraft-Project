@@ -2,9 +2,9 @@
 #define NEURALNETWORK_H
 
 #include <QObject>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 
     class BrainPlugGrid : public QObject

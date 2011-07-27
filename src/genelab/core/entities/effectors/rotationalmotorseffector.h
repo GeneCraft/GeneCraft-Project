@@ -2,7 +2,7 @@
 #define ROTATIONALMOTORS_H
 
 #include <QString>
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "effector.h"
 #include "brain/brainout.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
@@ -13,7 +13,7 @@
 #define MAX_EXPANSION 1.0f
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 /**
   * Internal class to box motor brain outputs

@@ -6,7 +6,7 @@
 #include "Ogre.h"
 
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     BulletOgreEngine::BulletOgreEngine(BulletEngine *btEngine, OgreEngine *ogreEngine)
     {

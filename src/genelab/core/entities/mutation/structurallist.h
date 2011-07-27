@@ -5,7 +5,7 @@
 #include <QMap>
 #include "LinearMath/btScalar.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 class MutationElement {
  public:

@@ -9,7 +9,7 @@
 #include "sensors/positionsensor.h"
 #include "sensors/gyroscopicsensor.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     SnakeFamily::SnakeFamily(QObject *parent) :
         EntityFamily(parent)

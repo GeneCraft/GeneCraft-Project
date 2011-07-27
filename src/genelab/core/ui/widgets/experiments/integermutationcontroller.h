@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 namespace Ui {
     class IntegerMutationController;
@@ -15,7 +15,7 @@ class IntegerMutationController : public QWidget
 
 public:
     explicit IntegerMutationController(QString name, QWidget *parent = 0);
-    IntegerMutationController(GeneLabCore::IntegerMutation *mutation, QString name, QWidget *parent = 0);
+    IntegerMutationController(GeneCraftCore::IntegerMutation *mutation, QString name, QWidget *parent = 0);
     ~IntegerMutationController();
 public slots:
 
@@ -32,7 +32,7 @@ private:
 
     void createForm(QString name);
 
-    GeneLabCore::IntegerMutation *mutation;
+    GeneCraftCore::IntegerMutation *mutation;
 };
 
 #endif // INTEGERMUTATIONCONTROLLER_H

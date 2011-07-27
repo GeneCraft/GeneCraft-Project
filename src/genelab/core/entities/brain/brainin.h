@@ -3,10 +3,10 @@
 
 #include <QObject>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "synapse.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class BrainIn : public Synapse
     {

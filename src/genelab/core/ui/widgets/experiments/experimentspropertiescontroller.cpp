@@ -28,7 +28,7 @@
 #include "tools.h"
 #include "events/inspectorsinputmanager.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 QList<QString> gravitiesName;
 QList<double> gravities;

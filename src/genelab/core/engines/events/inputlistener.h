@@ -5,7 +5,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     /**
       * InputListener is an interface. It force you to define several events methods.

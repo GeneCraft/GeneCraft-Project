@@ -5,7 +5,7 @@
 #include "factories/btshapesfactory.h"
 #include "tools.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 // To create
 ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)

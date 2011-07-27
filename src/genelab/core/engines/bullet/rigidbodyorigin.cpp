@@ -1,6 +1,6 @@
 #include "rigidbodyorigin.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 RigidBodyOrigin::RigidBodyOrigin(RigidBodyType typeOrigin, QObject * object)
 {

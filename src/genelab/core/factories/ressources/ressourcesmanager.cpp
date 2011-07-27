@@ -3,7 +3,7 @@
 #include "dbrecord.h"
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     RessourcesManager::RessourcesManager(DataBase db, QDir ressourceDir, QObject *parent) :
         QObject(parent)

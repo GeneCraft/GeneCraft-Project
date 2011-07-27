@@ -2,7 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     Tools::Tools() {
         qsrand((unsigned int)time(NULL));

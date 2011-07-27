@@ -2,9 +2,9 @@
 
 using namespace Ogre;
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
-    EventsManager::EventsManager(QObject *parent) : GeneLabCore::Engine(parent)
+    EventsManager::EventsManager(QObject *parent) : GeneCraftCore::Engine(parent)
     {
     }
 

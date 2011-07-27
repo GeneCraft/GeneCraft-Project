@@ -3,7 +3,7 @@
 
 #include "world/btworld.h"
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
     class btWorldFactory
     {

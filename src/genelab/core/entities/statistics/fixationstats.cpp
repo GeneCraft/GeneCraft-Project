@@ -9,7 +9,7 @@
 
 #define EPSILON 0.01
 
-namespace GeneLabCore{
+namespace GeneCraftCore{
 
 FixationStats::FixationStats(StatisticsStorage * statsStorage, Fixation * fixation, QString fixName) :
     StatisticsProvider(statsStorage), fixation(fixation), nbSteps(0)

@@ -1,7 +1,7 @@
 #ifndef BRAINFUNCTIONAL_H
 #define BRAINFUNCTIONAL_H
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 #include "brain.h"
 #include "brainnode.h"
 
@@ -9,7 +9,7 @@
 #include <QVariant>
 #include <QList>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 class BrainFunctional : public Brain
 {
 

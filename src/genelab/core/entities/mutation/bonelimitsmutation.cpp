@@ -4,7 +4,7 @@
 #include <cmath>
 #include <QDebug>
 
-namespace GeneLabCore {
+namespace GeneCraftCore {
 
 BoneLimitsMutation::BoneLimitsMutation()
 {

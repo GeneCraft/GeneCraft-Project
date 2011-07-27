@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "genelabcoreclasses.h"
+#include "genecraftcoreclasses.h"
 
 namespace Ui {
     class SimpleProbabilityController;
@@ -14,7 +14,7 @@ class SimpleProbabilityController : public QWidget
     Q_OBJECT
 
 public:
-    explicit SimpleProbabilityController(GeneLabCore::SimpleProbabilityMutation *mutation,QString name, QWidget *parent = 0);
+    explicit SimpleProbabilityController(GeneCraftCore::SimpleProbabilityMutation *mutation,QString name, QWidget *parent = 0);
     ~SimpleProbabilityController();
 
 public slots:
@@ -25,7 +25,7 @@ public slots:
 private:
     Ui::SimpleProbabilityController *ui;
 
-    GeneLabCore::SimpleProbabilityMutation *mutation;
+    GeneCraftCore::SimpleProbabilityMutation *mutation;
 };
 
 #endif // SIMPLEPROBABILITYCONTROLLER_H
