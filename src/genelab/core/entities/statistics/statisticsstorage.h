@@ -24,6 +24,7 @@ class Statistic : public QObject
     Q_PROPERTY(float mean READ getMean)
     Q_PROPERTY(float sum READ getSum)
 
+
     public :
 
     Statistic(QString name, QString unit) :

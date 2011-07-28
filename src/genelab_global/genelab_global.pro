@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui opengl testlib network script webkit
-TARGET = genelab_global
+TARGET = CreatureViewer
 TEMPLATE = app
 
 # genelab core

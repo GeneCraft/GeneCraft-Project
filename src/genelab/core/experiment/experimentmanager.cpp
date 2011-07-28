@@ -93,16 +93,21 @@ namespace GeneCraftCore {
     }
 
     void ExperimentManager::bindEntity(Entity* e) {
+        // Create a new empty script object
         entityObj      = scriptEngine.newObject();
 
-        // Get the statistics
+        // For each statistics of the entity
         QMap<QString, Statistic*> stats = e->getStatisticsStorage()->getStatistics();
         foreach(QString statName, stats.keys()) {
             Statistic* stat = stats[statName];
+            // Insert a new properties of our top level object
+            // With the name of the statistic
             QScriptValue statObject = scriptEngine.newQObject(stat);
             entityObj.setProperty(statName, statObject);
         }
 
+        // And set the new object created as the "entity" object
+        // in the global scope
         scriptEngine.globalObject().setProperty("entity", entityObj);
     }
 
@@ -364,38 +369,48 @@ namespace GeneCraftCore {
       * To evaluate the actual population, generating results
       */
     void ExperimentManager::evalPop() {
+        // for each individual in the population
         foreach(Result* r, this->activePop) {
+            // Spawn the entity from his genome
             Entity *e = this->spawnEntity(r->getGenome());
 
+            // Reset all stats
             foreach(Statistic* stat, e->getStatisticsStorage()->getStatistics()) {
                 stat->resetAll();
             }
 
+            // Set age
             e->setAge(0);
             e->getShape()->getRoot()->setOutputsFrom(fromNormal); // From brain
+
 
             bool stable, simulated;
             btScalar fitness;
 
+            // Make it stable if needed
             if(exp->getOnlyIfEntityIsStable())
                 stable = this->stabilizeEntity(e, r);
             else
                 stable = true;
 
+            // Stabilisation reached simulate it
             if(stable)
                 simulated = this->simulateEntity(e);
 
+            // If stable and simulated, evaluate it
             if(stable) {
                 if(simulated) {
                     fitness = this->evaluateEntity(e);
                     r->setFitness(fitness);
+
+                    // Store the statistics inside the result
                     QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
                     r->setStatistics(QxtJSON::parse(stats));
 
                     // env pressure on genes
                     r->setGenome(e->serialize());
 
-                    // and finaly add the result to results
+                    // and finaly add the result to resultsManager
                     results->addResult(r);
 
                     qDebug() << "entity evaluated, fitness =" << fitness;
