@@ -214,7 +214,6 @@ void CreatureViewerWindow::init() {
     // ----------------------
 
     cvim = new CreatureViewerInputManager(btoEngine,ogreEngine->getOgreSceneManager()->getCamera("firstCamera"));
-    EntitiesEngine* ee = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     // add listener in events manager
     EventsManager *eventsManager =  static_cast<EventsManager*>(factory->getEngines().find("Events").value());
     eventsManager->addListener(cvim);
@@ -249,8 +248,6 @@ void CreatureViewerWindow::init() {
     brainPropertiesController = new BrainPropertiesController();
     PlugGridVisualizer* bViz = new PlugGridVisualizer();
     PlugGridDesignVisualizer* bDezViz = new PlugGridDesignVisualizer();
-    ee->addPlugGridDezVisualizer(bDezViz);
-    ee->addPlugGridVisualizer(bViz);
     brainPropertiesController->setBrainViz(bViz);
     brainPropertiesController->setBrainDesignViz(bDezViz);
     ui->dwBrain->setWidget(brainPropertiesController);

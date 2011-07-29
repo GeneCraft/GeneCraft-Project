@@ -37,30 +37,12 @@ QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
 QMAKE_CXXFLAGS  += -isystem../lib/bullet/Extra/ConvexDecomposition
 QMAKE_CXXFLAGS  += -isystem../lib/qxt/src/core
 
-#win32 {
-    LIBS += -L../lib/bullet/lib
-    LIBS += -L../lib/qxt/lib
-    LIBS += -lQxtCore
-#}
-
-unix {
-#    LIBS += -L/usr/local/Qxt/lib
-#    LIBS += -lQxtCore
-}
+LIBS += -L../lib/bullet/lib
+LIBS += -L../lib/qxt/lib
+LIBS += -lQxtCore
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
-#LIBS += -lConvexDecomposition
-#LIBS += -lBulletWorldImporter -lBulletFileLoader
-#LIBS += -lBulletMultiThreaded
-#LIBS += -lBulletSoftBody
-#LIBS += -lGIMPACTUtils
-#LIBS += -lgle
-#LIBS += -lglsmap
-#LIBS += -lglut32
-#LIBS += -lGLUI
-#LIBS += -lmui
-#LIBS += -lOpenGLSupport
 
 SOURCES += \
     ../genelab/core/engines/engine.cpp \
@@ -125,8 +107,6 @@ SOURCES += \
     ../genelab/core/factories/ressources/jsonfile.cpp \
     ../genelab/core/factories/ressources/dbrecord.cpp \
     ../genelab/core/factories/creaturefactory.cpp \
-    ../genelab/core/ui/widgets/entities/pluggridvisualizer.cpp \
-    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.cpp \
     ../genelab/core/world/btworld.cpp \
     ../genelab/core/world/btscene.cpp \
     ../genelab/core/world/btbiome.cpp \
@@ -203,8 +183,6 @@ HEADERS += \
     ../genelab/core/factories/ressources/dbrecord.h \
     ../genelab/core/factories/btshapesfactory.h \
     ../genelab/core/factories/creaturefactory.h \
-    ../genelab/core/ui/widgets/entities/pluggridvisualizer.h \
-    ../genelab/core/ui/widgets/entities/pluggriddesignvisualizer.h \
     ../genelab/core/world/btworld.h \
     ../genelab/core/world/btscene.h \
     ../genelab/core/world/btbiome.h \

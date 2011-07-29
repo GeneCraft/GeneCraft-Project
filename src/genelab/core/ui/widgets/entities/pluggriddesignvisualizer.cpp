@@ -13,6 +13,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsEllipseItem>
+#include <QTimer>
 
 namespace GeneCraftCore {
 PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
@@ -25,13 +26,14 @@ PlugGridDesignVisualizer::PlugGridDesignVisualizer(QWidget *parent) :
     this->view->setScene(new QGraphicsScene(0, 0, 1, 1, this));
 
     this->layout()->addWidget(this->view);
+    QTimer* timer = new QTimer();
+    timer->setInterval(100);
+    timer->start();
+    connect(timer, SIGNAL(timeout()), this, SLOT(step()));
 }
 
-int cptD = 0;
 void PlugGridDesignVisualizer::step() {
-    cptD++;
-    if(cptD%10 == 0)
-        this->update();
+    this->update();
 }
 
 void PlugGridDesignVisualizer::paintEvent(QPaintEvent *) {

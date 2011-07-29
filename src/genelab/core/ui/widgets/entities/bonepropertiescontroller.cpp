@@ -126,8 +126,8 @@ void BonePropertiesController::update() {
             this->ui->lblContractY->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
             this->ui->lblExpandY->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
         } else {
-            this->ui->lblContractX->setText(QString::number(0));
-            this->ui->lblExpandX->setText(QString::number(0));
+            this->ui->lblContractY->setText(QString::number(0));
+            this->ui->lblExpandY->setText(QString::number(0));
         }
         // Z
         muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(2);
@@ -135,8 +135,8 @@ void BonePropertiesController::update() {
             this->ui->lblContractZ->setText(QString::number(muscle->boMaxMotorForce->getValue(), 10, 2));
             this->ui->lblExpandZ->setText(QString::number(muscle->boTargetVelocity->getValue(), 10, 2));
         } else {
-            this->ui->lblContractX->setText(QString::number(0));
-            this->ui->lblExpandX->setText(QString::number(0));
+            this->ui->lblContractZ->setText(QString::number(0));
+            this->ui->lblExpandZ->setText(QString::number(0));
         }
     }
 }

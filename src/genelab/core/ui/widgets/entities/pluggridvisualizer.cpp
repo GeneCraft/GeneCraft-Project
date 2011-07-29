@@ -9,6 +9,7 @@
 #include <QLayout>
 #include <QBoxLayout>
 #include <QDebug>
+#include <QTimer>
 
 namespace GeneCraftCore {
     PlugGridVisualizer::PlugGridVisualizer(QWidget *parent) :
@@ -23,13 +24,15 @@ namespace GeneCraftCore {
         //this->view->setFixedSize(WIDGET_SIZE, WIDGET_SIZE);
         this->view->setScene(new QGraphicsScene(0, 0, 1, 1, this));
         this->layout()->addWidget(this->view);
+        QTimer* timer = new QTimer();
+        timer->setInterval(100);
+        timer->start();
+
+        connect(timer, SIGNAL(timeout()), this, SLOT(step()));
     }
 
-    int cptP;
     void PlugGridVisualizer::step() {
-        cptP++;
-        if(cptP%10 == 0)
-            this->update();
+        this->update();
     }
 
     void PlugGridVisualizer::paintEvent(QPaintEvent *) {

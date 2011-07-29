@@ -39,22 +39,12 @@ public:
         return QList<Entity*>(entities);
     }
 
-    void addPlugGridVisualizer(PlugGridVisualizer* viz) {
-        this->gridVisualizers.append(viz);
-    }
-
-    void addPlugGridDezVisualizer(PlugGridDesignVisualizer* viz) {
-        this->gridDezVisualizers.append(viz);
-    }
-
     void beforeStep();
     void step();
     void afterStep();
 
 private:
     QList<Entity *> entities;
-    QList<PlugGridVisualizer*> gridVisualizers;
-    QList<PlugGridDesignVisualizer*> gridDezVisualizers;
     int cptBrain;
 };
 }
