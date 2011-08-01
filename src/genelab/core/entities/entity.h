@@ -98,23 +98,11 @@ public:
         return age;
     }
 
-    void setAge(int age) {
-        this->age = age;
-        this->setOutFromAge();
-    }
+    void setAge(int age);
 
-    void incrAge() {
-        this->age++;
-        this->setOutFromAge();
-    }
+    void incrAge();
 
-    void addOutScript(int age, MotorFrom from) {
-        qDebug() << age << from;
-        if(this->outsFromScripts.contains(age)) {
-            this->outsFromScripts.remove(age);
-        }
-        this->outsFromScripts.insert(age, from);
-    }
+    void addOutScript(int age, MotorFrom from);
 
     void setOutFromAge();
 
@@ -143,7 +131,8 @@ protected:
     // Statistics
     QMap<QString, StatisticsProvider *> stats;
     Statistic*         brainActivityStat;
-    Statistic*         brainPlugGridSizeStat;
+    Statistic*         ageStat;
+
     StatisticsStorage *statisticsStorage;
 
     // Scripting

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>562</height>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,7 +111,7 @@
    <item row="0" column="0" colspan="7">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_6">
       <attribute name="icon">
@@ -344,6 +344,11 @@
          </column>
          <item>
           <property name="text">
+           <string>entity.age.sum</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>entity.bodyBones</string>
           </property>
          </item>
@@ -400,6 +405,26 @@
          <item>
           <property name="text">
            <string>entity.rootZRelVelocity</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootDistance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootXPosition</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootYPosition</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootZPosition</string>
           </property>
          </item>
         </widget>
@@ -540,6 +565,11 @@ p, li { white-space: pre-wrap; }
          </column>
          <item>
           <property name="text">
+           <string>entity.age.sum</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>entity.bodyBones</string>
           </property>
          </item>
@@ -596,6 +626,26 @@ p, li { white-space: pre-wrap; }
          <item>
           <property name="text">
            <string>entity.rootZRelVelocity</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootDistance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootXPosition</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootYPosition</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>entity.rootZPosition</string>
           </property>
          </item>
         </widget>
@@ -712,8 +762,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>732</width>
-                <height>407</height>
+                <width>98</width>
+                <height>36</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -758,8 +808,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>63</width>
-                <height>26</height>
+                <width>98</width>
+                <height>36</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout">
@@ -804,8 +854,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>63</width>
-                <height>26</height>
+                <width>98</width>
+                <height>36</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_6">

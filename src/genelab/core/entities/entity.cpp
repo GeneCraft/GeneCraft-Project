@@ -43,6 +43,8 @@ void Entity::setup() {
         this->stats.insert("TreeShapeStats", new TreeShapeStats(statisticsStorage,treeShape));
         this->stats.insert("FixationStats", new FixationStats(statisticsStorage,treeShape->getRoot(),"root"));
         this->brainActivityStat = statisticsStorage->registerStat("brainActivity", "a / step");
+        this->ageStat = statisticsStorage->registerStat("age", "step");
+
         // BRAIN MODIF TRY
         //this->brainPlugGridSizeStat = statisticsStorage->registerStat("brainPlugGridSize", "edge size");
         //this->brainPlugGridSizeStat->setValue(brain->getPlugGrid()->getSize());
@@ -208,6 +210,27 @@ void Entity::setOutFromAge() {
         qDebug() << "changement d'out par scripting d'entite." << outsFromScripts[this->age];
         this->treeShape->getRoot()->setOutputsFrom(outsFromScripts[this->age]);
     }
+}
+
+void Entity::setAge(int age) {
+    this->age = age;
+    this->setOutFromAge();
+    this->ageStat->resetAll();
+    this->ageStat->setValue(age);
+}
+
+void Entity::incrAge() {
+    this->age++;
+    this->setOutFromAge();
+    this->ageStat->setValue(1);
+}
+
+void Entity::addOutScript(int age, MotorFrom from) {
+    qDebug() << age << from;
+    if(this->outsFromScripts.contains(age)) {
+        this->outsFromScripts.remove(age);
+    }
+    this->outsFromScripts.insert(age, from);
 }
 
 }
