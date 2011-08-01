@@ -99,6 +99,8 @@ namespace GeneCraftCore {
 //        createBoxesFloor(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(2.0,1.0,2.0), btVector3(15.0,2.0,15.0));
 //        createBoxesFloor(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(2.0,0.5,2.0), btVector3(15.0,1.0,15.0));
 
+//        createPoolOfBalls(shapes, 50.0, 50.0,btVector3(0,0,0), 100);
+
 //        // Spheres sample
 //        for(int i=0;i<100;++i)
 //            createSphere(shapes,1,
@@ -261,5 +263,39 @@ namespace GeneCraftCore {
         world->setup();
 
         return world;
+    }
+
+    void btWorldFactory::createPoolOfBalls(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, int nbBalls) {
+
+        // walls
+        btScalar wallsHeight = 10.0;
+        btScalar wallsWidth = 4.0;
+        createBox(shapesList, btVector3(areaX,wallsHeight,wallsWidth), pos + btVector3(0,wallsHeight*.5,areaZ*0.5-wallsWidth*0.5), btVector3(0,0,0), 0);
+        createBox(shapesList, btVector3(areaX,wallsHeight,wallsWidth), pos + btVector3(0,wallsHeight*.5,-(areaZ*0.5-wallsWidth*0.5)), btVector3(0,0,0), 0);
+
+
+        btScalar cubeSize = 20;
+        btScalar cubeZRot = M_PI * 0.08 ;
+
+        createBox(shapesList, btVector3(cubeSize,cubeSize,areaZ), pos + btVector3(areaX*0.5,-7,0), btVector3(0,0,cubeZRot), 0);
+        createBox(shapesList, btVector3(cubeSize,cubeSize,areaZ), pos + btVector3(-areaX*0.5,-7,0), btVector3(0,0,-cubeZRot), 0);
+
+
+        // balls
+//        btScalar ballRadius = 1.0;
+
+//        int nbx = 8;
+//        int nby = 4;
+//        int nbz = 14;
+
+//        for(int x=0;x<nbx;x++) {
+//            for(int y=0;y<nby;y++) {
+//                for(int z=0;z<nbz;z++) {
+//                    createSphere(shapesList,
+//                                 ballRadius,pos - btVector3(nbx*ballRadius,0,nbz*ballRadius) + btVector3(x* ballRadius*2,y* ballRadius*2+ ballRadius,z* ballRadius*2),
+//                                 btVector3(0,0,0),20.0);
+//                }
+//            }
+//        }
     }
 }

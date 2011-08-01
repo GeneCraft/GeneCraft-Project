@@ -30,6 +30,8 @@ namespace GeneCraftCore {
         connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
         connect(ui->pbNewExperiment,SIGNAL(clicked()),this,SLOT(newExperiment()));
 
+        connect(ui->pbDeleteSelectedResults,SIGNAL(clicked()),this,SLOT(deleteSelectedResults()));
+
         setEnabled(false);
     }
 
@@ -168,4 +170,35 @@ void GeneCraftCore::ExperimentCtrl::on_btnHelp_clicked()
                              " Obviously because of the physical engine state and the initials conditions that are differents the result will not be the same"
                              " that the worker compute.");
 
+}
+
+void GeneCraftCore::ExperimentCtrl::deleteSelectedResults() {
+
+    if(this->ui->twResults->currentItem()) {
+
+        foreach(QTreeWidgetItem* item, ui->twResults->selectedItems()) {
+
+            int index = ui->twResults->indexOfTopLevelItem(item);
+
+
+
+
+            qDebug() << Q_FUNC_INFO << 1;
+
+            Result* r = this->results[index];
+
+            qDebug() << Q_FUNC_INFO << 2;
+            if(r->getRessource() != NULL) {
+
+
+                r->getRessource()->remove();
+
+                qDebug() << Q_FUNC_INFO << 3;
+                results.removeAt(index);
+
+                qDebug() << Q_FUNC_INFO << 4;
+                ui->twResults->removeItemWidget(item,0);
+            }
+        }
+    }
 }

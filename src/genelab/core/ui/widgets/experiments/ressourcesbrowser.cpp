@@ -40,6 +40,7 @@ RessourcesBrowser::RessourcesBrowser(QWidget *parent) :
     connect(ui->pbOpenExperimentsFolder,SIGNAL(clicked()),this,SLOT(openRessourcesFolder()));
     connect(ui->pbSaveExp,SIGNAL(clicked()),this,SLOT(saveExperiment()));
     connect(ui->pbDeleteLocalExp,SIGNAL(clicked()),this,SLOT(deleteLocalExp()));
+    connect(ui->pbDeleteOnlineExp,SIGNAL(clicked()),this,SLOT(deleteOnlineExp()));
     connect(ui->pbShareExp,SIGNAL(clicked()),this,SLOT(shareExperiment()));
     connect(ui->pbInfoExp,SIGNAL(clicked()),this,SLOT(openInfoDatabase()));
 
@@ -386,14 +387,37 @@ void RessourcesBrowser::deleteLocalExp() {
     if(ui->twLocalExperiments->currentItem()) {
         ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twLocalExperiments->currentItem();
 
-        QMessageBox::StandardButton ret;
-        ret = QMessageBox::information(this, "Remove ressource ?",
-                                       "Are you sure do you want to remove this experiment ?",
-                                        QMessageBox::Ok | QMessageBox::Cancel);
+        if(expTWI->dataw.r != NULL) {
 
-        if(ret == QMessageBox::Ok) {
-           expTWI->dataw.r->remove();
-           refreshLocalRessources();
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this, "Remove ressource ?",
+                                           "Are you sure do you want to remove this experiment ?",
+                                            QMessageBox::Ok | QMessageBox::Cancel);
+
+            if(ret == QMessageBox::Ok) {
+               expTWI->dataw.r->remove();
+               refreshLocalRessources();
+            }
+        }
+    }
+}
+
+void RessourcesBrowser::deleteOnlineExp() {
+
+    if(ui->twOnlineExperiments->currentItem()) {
+        ExperimentTreeWidgetItem *expTWI = (ExperimentTreeWidgetItem *) ui->twOnlineExperiments->currentItem();
+
+        if(expTWI->dataw.r != NULL) {
+
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this, "Remove ressource ?",
+                                           "Are you sure do you want to remove this experiment ?",
+                                            QMessageBox::Ok | QMessageBox::Cancel);
+
+            if(ret == QMessageBox::Ok) {
+               expTWI->dataw.r->remove();
+               refreshOnlineRessources();
+            }
         }
     }
 }
@@ -422,22 +446,50 @@ void RessourcesBrowser::deleteLocalWorld() {
     }
 }
 
+
+void RessourcesBrowser::deleteOnlineWorld() {
+}
+
 void RessourcesBrowser::deleteLocalEntity() {
 
     if(ui->twLocalEntities->currentItem()) {
         EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twLocalEntities->currentItem();
 
-        QMessageBox::StandardButton ret;
-        ret = QMessageBox::information(this, "Remove ressource ?",
-                                       "Are you sure do you want to remove this entity ?",
-                                        QMessageBox::Ok | QMessageBox::Cancel);
+        if(entityTWI->dataw.r != NULL) {
 
-        if(ret == QMessageBox::Ok) {
-           entityTWI->dataw.r->remove();
-           refreshLocalRessources();
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this, "Remove ressource ?",
+                                           "Are you sure do you want to remove this entity ?",
+                                            QMessageBox::Ok | QMessageBox::Cancel);
+
+            if(ret == QMessageBox::Ok) {
+               entityTWI->dataw.r->remove();
+               refreshLocalRessources();
+            }
         }
     }
 }
+
+void RessourcesBrowser::deleteOnlineEntity() {
+
+    if(ui->twOnlineEntities->currentItem()) {
+        EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
+
+        if(entityTWI->dataw.r != NULL) {
+
+            QMessageBox::StandardButton ret;
+            ret = QMessageBox::information(this, "Remove ressource ?",
+                                           "Are you sure do you want to remove this entity ?",
+                                            QMessageBox::Ok | QMessageBox::Cancel);
+
+            if(ret == QMessageBox::Ok) {
+               entityTWI->dataw.r->remove();
+               refreshOnlineRessources();
+            }
+        }
+    }
+}
+
 
 // -------------------
 // -- NOTIFICATIONS --

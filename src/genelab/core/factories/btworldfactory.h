@@ -28,6 +28,8 @@ namespace GeneCraftCore {
         static void createRuins(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax, int nbBoxes, double density = 0);
         static void createBoxesFloor(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax);
 
+        // sphere pool
+        static void createPoolOfBalls(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, int nbBalls);
     };
 
 }

@@ -44,6 +44,7 @@ public slots:
     void saveExperiment();
     void shareExperiment();
     void deleteLocalExp();
+    void deleteOnlineExp();
     void experimentUpdated(Experiment *experiment);
 
     // worls
@@ -52,6 +53,7 @@ public slots:
     void saveWorld();
     void shareWorld();
     void deleteLocalWorld();
+    void deleteOnlineWorld();
 
     // entities
     void loadLocalEntity();
@@ -59,7 +61,7 @@ public slots:
     void saveEntity();
     void shareEntity();
     void deleteLocalEntity();
-
+    void deleteOnlineEntity();
 
 private:
 

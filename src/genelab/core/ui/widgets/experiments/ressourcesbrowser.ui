@@ -309,6 +309,17 @@
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QPushButton" name="pbDeleteOnlineExp">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/delete</normaloff>:/img/icons/delete</iconset>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>

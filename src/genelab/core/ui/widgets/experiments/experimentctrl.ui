@@ -150,6 +150,18 @@
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="2" column="0" colspan="5">
         <widget class="QTreeWidget" name="twResults">
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="animated">
+          <bool>true</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="headerHidden">
+          <bool>false</bool>
+         </property>
          <column>
           <property name="text">
            <string>Fitness</string>
@@ -203,6 +215,17 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbDeleteSelectedResults">
+           <property name="text">
+            <string>Delete all</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../ressources/ressources.qrc">
+             <normaloff>:/img/icons/delete</normaloff>:/img/icons/delete</iconset>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

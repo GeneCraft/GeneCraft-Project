@@ -42,6 +42,7 @@ namespace GeneCraftCore {
         void refreshInProgress();
         void openExperimentPropertiesController();
         void newExperiment();
+        void deleteSelectedResults();
 
     private:
         Ui::ExperimentCtrl *ui;

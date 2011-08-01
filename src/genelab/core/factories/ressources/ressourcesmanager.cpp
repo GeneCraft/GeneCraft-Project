@@ -12,7 +12,6 @@ namespace GeneCraftCore {
         this->directory = ressourceDir;
     }
 
-
     void RessourcesManager::reloadDb() {
         // clear list
         experiments.clear();
@@ -24,7 +23,6 @@ namespace GeneCraftCore {
         getAllCreatures();
         getAllExperiments();
     }
-
 
     void RessourcesManager::getAllWorld() {
         DbRecord * listDb = new DbRecord(db, "_design/worlds/_view/all");
@@ -104,18 +102,19 @@ namespace GeneCraftCore {
         // Experience ?
         if(dataMap.contains("author") && dataMap.contains("duration")) {
             this->experiments.append(dataw);
+
             // Take the inside world
-            if(dataMap.contains("world")) {
-                QVariantMap worldMap = dataMap["world"].toMap();
-                DataWrapper dataWorld = {worldMap, NULL};
+//            if(dataMap.contains("world")) {
+//                QVariantMap worldMap = dataMap["world"].toMap();
+//                DataWrapper dataWorld = {worldMap, NULL};
 
-                // no add two times the same world
-                foreach(DataWrapper dw, worlds)
-                    if(dataWorld.data == dw.data)
-                        return;
+//                // no add two times the same world
+//                foreach(DataWrapper dw, worlds)
+//                    if(dataWorld.data == dw.data)
+//                        return;
 
-                worlds.append(dataWorld);
-            }
+//                worlds.append(dataWorld);
+//            }
 
             return;
         }
@@ -131,7 +130,6 @@ namespace GeneCraftCore {
             worlds.append(dataw);
             return;
         }
-
 
         // if it's a result, convert to genome...
         if(dataMap.contains("type") && dataMap["type"].toString() == "result") {
