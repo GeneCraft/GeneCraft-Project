@@ -71,6 +71,11 @@ public:
         return this->db;
     }
 
+    /**
+      * Delete all results from this experiment
+      */
+    void deleteAll() {}
+
 protected:
     Experiment* experiment;
     bool online;

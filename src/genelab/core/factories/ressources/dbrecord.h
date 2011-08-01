@@ -24,7 +24,7 @@ namespace GeneCraftCore {
         virtual int save(QVariant data);
         virtual int remove();
 
-        void deleteDoc(QString rev);
+        int deleteDoc(QString rev);
 
         bool error;
         QString errorString;

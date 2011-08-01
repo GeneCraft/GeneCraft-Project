@@ -108,21 +108,19 @@ namespace GeneCraftCore {
     }
 
     int DbRecord::remove() {
-        // TODO
-        return false;
+        return this->deleteDoc(this->rev);
     }
 
-    void DbRecord::deleteDoc(QString rev) {
+    int DbRecord::deleteDoc(QString rev) {
         QString url = QString("%1:%2/%3/%4?rev=%5").arg(db.url, QString::number(db.port), db.dbName,
                                                          this->id, rev);
-
 
         RequestType type = RDELETE;
 
         r = NULL;
         this->request(url, type);
         if(!r)
-            return;
+            return -1;
 
         qDebug() << r->error();
         if(r->error() == 0) {
@@ -136,6 +134,8 @@ namespace GeneCraftCore {
         }
 
         r->deleteLater();
+
+        return this->error;
     }
 
     void DbRecord::request(QString url, RequestType verb, QString data) {

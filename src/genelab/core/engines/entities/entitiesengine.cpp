@@ -30,9 +30,7 @@ namespace GeneCraftCore {
 
             // step sensors
             foreach(Sensor *s, e->getSensors()) {
-
                 s->step();
-
             }
 
         }

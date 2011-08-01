@@ -47,6 +47,8 @@ using namespace GeneCraftCore;
 
 int main(int argc, char *argv[])
 {
+
+
     qsrand(time(NULL));
     srand(time(NULL));
     bool gui = false;
@@ -58,14 +60,39 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv, gui);
     QStringList args = a.arguments();
-    QString expName = "";
-    QString workerName = "";
 
     DataBase database;
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
 
+
+
+    // Delete all fucking doc from database
+    /*DbRecord* r = new DbRecord(database, "_all_docs?descending=true");
+    QVariant data = r->load();
+    QVariantMap docsMap = data.toMap();
+    QVariantList docsList = docsMap["rows"].toList();
+    int cpt = 0;
+    foreach(QVariant doc, docsList) {
+        cpt++;
+        if(cpt > 30) {
+            return 1;
+        }
+        QVariantMap docMap = doc.toMap();
+        QString id = docMap["id"].toString();
+        if(id.size() == 32 && id.left(1) != "_" && id.left(1) != "S" && id > "04a82cae4acfecf9c64c4bf790a58d4b") {
+            qDebug() << id << "should be deleted";
+            DbRecord * r = new DbRecord(database, id);
+            r->deleteDoc(docMap["value"].toMap()["rev"].toString());
+            delete r;
+        }
+    }
+
+    return 0;*/
+
+    QString expName = "";
+    QString workerName = "";
     // Loading the worker data
     QVariant workerData;
     QVariant expdata;
@@ -171,25 +198,6 @@ int main(int argc, char *argv[])
     qsrand(time(NULL));
 
     btFactory* factory = new btFactory();
-
-
-    // Delete all fucking doc from database
-    /*DbRecord* r = new DbRecord(database, "_all_docs");
-    QVariant data = r->load();
-    QVariantMap docsMap = data.toMap();
-    QVariantList docsList = docsMap["rows"].toList();
-    foreach(QVariant doc, docsList) {
-        QVariantMap docMap = doc.toMap();
-        QString id = docMap["id"].toString();
-        if(id.size() == 32 && id.left(1) != "_" && id.left(1) != "S" && id > "04a82cae4acfecf9c64c4bf790a58d4b") {
-            qDebug() << id << "should be deleted";
-            DbRecord * r = new DbRecord(database, id);
-            r->deleteDoc(docMap["value"].toMap()["rev"].toString());
-            delete r;
-        }
-    }
-
-    return 0;*/
 
 
     //QVariant workerdata = worker_res->load();
