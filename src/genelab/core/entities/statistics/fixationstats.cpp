@@ -23,11 +23,22 @@ FixationStats::FixationStats(StatisticsStorage * statsStorage, Fixation * fixati
     fixationAbsoluteZPosition = statsStorage->registerStat(fixName + QString("ZRelVelocity"), "m / step");
 
 
+    fixationDistance = statsStorage->registerStat(fixName + QString("Distance"),"m / step");
+
+    fixationYPosition = statsStorage->registerStat(fixName + QString("YPosition"), "m / step");
+    fixationXPosition = statsStorage->registerStat(fixName + QString("XPosition"), "m / step");
+    fixationZPosition = statsStorage->registerStat(fixName + QString("ZPosition"), "m / step");
+
+
     connect(fixationAbsoluteVelocity,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
     connect(fixationRelativeVelocity,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
     connect(fixationAbsoluteYPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
     connect(fixationAbsoluteXPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
     connect(fixationAbsoluteZPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationDistance,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationYPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationXPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
+    connect(fixationZPosition,SIGNAL(reseted()), this, SLOT(resetOrigin()), Qt::DirectConnection);
 
 
     resetOrigin();
@@ -79,6 +90,10 @@ void FixationStats::step()
     else
         fixationAbsoluteZPosition->setValue(0.0);
 
+    fixationDistance->setValue(origin.distance(refDistance));
+    fixationXPosition->setValue(origin.x() - refPosX.x());
+    fixationYPosition->setValue(origin.y() - refPosY.y());
+    fixationZPosition->setValue(origin.z() - refPosZ.z());
 }
 
 void FixationStats::resetOrigin(){
@@ -101,6 +116,22 @@ void FixationStats::resetOrigin(){
 
     if(fixationAbsoluteZPosition->getSum() == 0) {
         refOriginZ = previousOriginZ = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
+    }
+
+    if(fixationDistance->getSum() == 0) {
+        refDistance = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
+    }
+
+    if(fixationXPosition->getSum() == 0) {
+        refPosX = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
+    }
+
+    if(fixationYPosition->getSum() == 0) {
+        refPosY = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
+    }
+
+    if(fixationZPosition->getSum() == 0) {
+        refPosZ = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
     }
 }
 

@@ -33,12 +33,18 @@ protected:
     Statistic *fixationAbsoluteXPosition;
     Statistic *fixationAbsoluteZPosition;
 
+    Statistic *fixationDistance;
+    Statistic *fixationXPosition;
+    Statistic *fixationYPosition;
+    Statistic *fixationZPosition;
+
     // specific data
     int nbSteps;
     btScalar distance;
     btVector3 previousOriginAbs;
     btVector3 previousOriginRel,previousOriginY,previousOriginX,previousOriginZ;
     btVector3 refOriginRel, refOriginX, refOriginY, refOriginZ;
+    btVector3 refDistance, refPosX, refPosY, refPosZ;
 };
 
 }
