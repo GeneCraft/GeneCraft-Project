@@ -5,6 +5,7 @@
 #include <QProcess>
 
 #include "experiment/experiment.h"
+#include "conversionctrl.h"
 
 namespace Ui {
     class WorkerCtrl;
@@ -29,6 +30,8 @@ private:
     Ui::WorkerCtrl *ui;
     QProcess* process;
     Experiment* exp;
+    ConversionCtrl* conversionCtrl;
+
 
 private slots:
     void on_btnStart_clicked();

@@ -177,6 +177,63 @@ namespace GeneCraftCore {
         delete results;
     }
 
+    void ExperimentManager::convert(Experiment *from, int nb) {
+        qDebug() << "Converting" << nb << "results from" << from->getId() << "to" << exp->getId();
+        // The entity engine
+        engines = factory->getEngines();
+        ee = (EntitiesEngine*)engines.find("Entities").value();
+
+        // All those cool factory !
+        worldFactory    = new btWorldFactory();
+        shapesFactory   = new btShapesFactory();
+        creatureFactory = new CreatureFactory();
+
+        // The world to experiment inside
+        world = worldFactory->createWorld(factory, shapesFactory, exp->getWorldDataMap());
+
+        // The old results
+        ResultsManager* oldresults = new ResultsManager(from, nb, nb, "");
+        qDebug() << from->isOnline();
+        int nbLoaded = oldresults->load();
+        qDebug() << "loaded" << nbLoaded << "results from db/file";
+
+        // Evaluation of population
+        this->activePop = oldresults->getBestResults();
+        foreach(Result* r, activePop) {
+            r->setBroadcasted(false);
+            r->setRessource(NULL);
+
+            // date
+            r->setDate(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+
+            // exp
+            r->setExperienceId(exp->getId());
+
+            // conversion
+            r->setWorker("ex:" + from->getId());
+        }
+
+        results->clear();
+        evalPop();
+
+        // Broadcast result to community
+        results->save();
+        results->reload();
+
+        qDebug() << "reloading ressources on the server, to avoid to much out of sync";
+        if(exp->isOnline()) {
+            this->ressources->reloadDb();
+        }
+
+        delete world;
+        delete worldFactory;
+        delete shapesFactory;
+        delete creatureFactory;
+        delete exp;
+        delete from;
+        delete results;
+    }
+
 
     /**
       * To create a boodstrap pop

@@ -202,7 +202,8 @@ SOURCES += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.cpp \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
     main.cpp \
-    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.cpp
+    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.cpp \
+    ../genelab/core/ui/widgets/experiments/conversionctrl.cpp
 
 
 HEADERS += \
@@ -318,7 +319,8 @@ HEADERS += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.h \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
     ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.h \
-    ../genelab/core/genecraftcoreclasses.h
+    ../genelab/core/genecraftcoreclasses.h \
+    ../genelab/core/ui/widgets/experiments/conversionctrl.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -339,7 +341,8 @@ FORMS += \
     ../genelab/core/ui/widgets/experiments/experimentctrl.ui \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui \
-    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.ui
+    ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.ui \
+    ../genelab/core/ui/widgets/experiments/conversionctrl.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

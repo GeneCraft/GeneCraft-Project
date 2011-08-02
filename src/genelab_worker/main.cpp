@@ -47,8 +47,6 @@ using namespace GeneCraftCore;
 
 int main(int argc, char *argv[])
 {
-
-
     qsrand(time(NULL));
     srand(time(NULL));
     bool gui = false;
@@ -65,8 +63,6 @@ int main(int argc, char *argv[])
     database.dbName = "/db/genecraft/";
     database.url = "http://www.genecraft-project.org";
     database.port = 80;
-
-
 
     // Delete all fucking doc from database
     /*DbRecord* r = new DbRecord(database, "_all_docs?descending=true");
@@ -96,6 +92,80 @@ int main(int argc, char *argv[])
     // Loading the worker data
     QVariant workerData;
     QVariant expdata;
+    if(args.length() > 1) {
+        QString convert = args.at(1);
+        if(convert == "convert") {
+            if(gui) {
+                qDebug() << "convert don't accept --gui option";
+                return -1;
+            }
+            if(args.length() < 5) {
+                qDebug() << "not enough parameters, convert take tree parameters, exp1, exp2 and nb of results";
+                return -1;
+            }
+            bool online1, online2;
+            online1 = online2 = false;
+            QString exp1 = args.at(2);
+            QVariant exp1Data, exp2Data;
+            QFile expf(exp1);
+            if(expf.exists()) {
+                JsonFile* f = new JsonFile(exp1);
+                exp1Data = f->load();
+            } else {
+                DbRecord* d = new DbRecord(database, exp1);
+                exp1Data = d->load();
+                online1 = true;
+                if(d->error) {
+                    qDebug() << exp1Data;
+                    qDebug() << exp1 << "don't exist !";
+                    return -1;
+                }
+            }
+            QString exp2 = args.at(3);
+            QFile exp2f(exp2);
+            qDebug() << exp2 << exp2f.exists();
+            if(exp2f.exists()) {
+                JsonFile* f = new JsonFile(exp2);
+                exp2Data = f->load();
+            } else {
+                DbRecord* d = new DbRecord(database, exp2);
+                exp2Data = d->load();
+                online2 = true;
+                if(d->error) {
+                    qDebug() << exp2Data;
+                    qDebug() << exp2 << "don't exist !";
+                    return -1;
+                }
+            }
+
+            int nb = args.at(4).toInt();
+            QVariantMap worker;
+
+            worker.insert("name", "conversion");
+            worker.insert("maxGen", nb);
+            worker.insert("popSize", nb);
+            worker.insert("nbBestResults", nb);
+            worker.insert("nbRandomResults", nb);
+            QVariantMap selection;
+            selection.insert("bestPop", 0);
+            selection.insert("bestResult", 1);
+            selection.insert("randomNew", 0);
+            selection.insert("randomPop", 0);
+            selection.insert("randomResult", 0);
+            worker.insert("selection", selection);
+            qDebug() << nb;
+            Experiment* experiment1,* experiment2;
+            experiment1 = new Experiment(exp1Data);
+            experiment1->setOnline(online1);
+            experiment2 = new Experiment(exp2Data);
+            experiment2->setOnline(online2);
+            btFactory* factory = new btFactory();
+            ExperimentManager* expManager = new ExperimentManager(factory, experiment2, worker);
+            expManager->convert(experiment1, nb);
+            qDebug() << "done";
+            return -1;
+        }
+    }
 
     bool online = false;
     // One argument, the experience (id or file)

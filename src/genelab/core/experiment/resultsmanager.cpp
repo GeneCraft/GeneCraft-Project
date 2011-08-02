@@ -317,5 +317,12 @@ namespace GeneCraftCore {
         qSort(bestResults.begin(), bestResults.end(), myLessThan);
     }
 
+    void ResultsManager::clear() {
+        qDeleteAll(bestResults);
+        qDeleteAll(randomResults);
+        this->bestResults.clear();
+        this->randomResults.clear();
+    }
+
 
 }

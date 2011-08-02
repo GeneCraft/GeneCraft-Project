@@ -17,6 +17,7 @@ namespace GeneCraftCore {
     }
 
     QVariant DbRecord::load() {
+        error = true;
         if(postData == QVariant()) {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
             r = NULL;
@@ -26,6 +27,7 @@ namespace GeneCraftCore {
 
             r->deleteLater();
             if(r->error() == 0) {
+                error = false;
                 QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
                 if(v.contains("_id")) {
                     this->id = v.find("_id").value().toString();
@@ -43,12 +45,15 @@ namespace GeneCraftCore {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
             r = NULL;
             this->request(url, RPOST, QxtJSON::stringify(postData));
-            if(!r)
+            if(!r) {
+                error = true;
                 return QVariant();
+            }
 
             qDebug() << r->error();
             r->deleteLater();
             if(r->error() == 0) {
+                error = false;
                 QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
                 if(v.contains("_id")) {
                     this->id = v.find("_id").value().toString();

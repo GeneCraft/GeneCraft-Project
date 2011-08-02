@@ -27,7 +27,6 @@ namespace GeneCraftCore {
             if(e->getAge() % e->getBrain()->getFrequency())
                 continue;
 
-
             // step sensors
             foreach(Sensor *s, e->getSensors()) {
                 s->step();

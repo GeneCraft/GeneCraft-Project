@@ -76,6 +76,11 @@ public:
       */
     void deleteAll() {}
 
+    /**
+      * Clear results lists
+      */
+    void clear();
+
 protected:
     Experiment* experiment;
     bool online;

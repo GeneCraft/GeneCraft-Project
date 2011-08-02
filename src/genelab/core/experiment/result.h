@@ -119,6 +119,10 @@ namespace GeneCraftCore {
             return this->stableTime;
         }
 
+        void setWorker(QString worker) {
+            this->worker = worker;
+        }
+
     protected:
         // Score
         btScalar fitness;

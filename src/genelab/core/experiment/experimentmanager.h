@@ -30,6 +30,11 @@ namespace GeneCraftCore {
         void experiment();
 
         /**
+          * Convert nb results from another experiment
+          */
+        void convert(Experiment* from, int nb);
+
+        /**
           * To generate a new population from last population
           */
         void genNewPop();
