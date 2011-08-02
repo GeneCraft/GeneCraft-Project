@@ -25,6 +25,7 @@ SimpleProbabilityController::SimpleProbabilityController(SimpleProbabilityMutati
     nameToggled(mutation->enable);
 }
 
+
 SimpleProbabilityController::~SimpleProbabilityController()
 {
     delete ui;

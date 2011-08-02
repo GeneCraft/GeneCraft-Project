@@ -385,7 +385,7 @@ void CreatureViewerWindow::loadResult(Result *result) {
 
     Entity* e = createCreature(genome, world->getSpawnPosition(), result->getRessource());
     e->addOutScript(0, fromNormal); // Normal position during stability time
-    e->addOutScript(result->getStable(), fromBrain); // Next from brain
+    e->addOutScript(result->getStable()+1, fromBrain); // Next from brain
     e->setAge(0);
     this->simulationManager->start();
 }

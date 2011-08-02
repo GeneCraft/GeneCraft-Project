@@ -12,6 +12,7 @@ namespace GeneCraftCore {
         QVariantMap worldData;
         worldData.insert("name", "Somewhere on Earth");
 
+
         // ------------
         // -- Biome --
         // ------------

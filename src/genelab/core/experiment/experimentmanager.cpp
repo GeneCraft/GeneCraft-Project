@@ -508,7 +508,7 @@ namespace GeneCraftCore {
 
     bool ExperimentManager::stabilizeEntity(Entity* e, Result* r) {
         // Outputs from brain
-        e->getShape()->getRoot()->setOutputsFrom(fromBrain); // Brain
+        e->getShape()->getRoot()->setOutputsFrom(fromNormal); // Brain
         this->engineStep();
 
         QScriptValue valid = this->validityFunc.call();
@@ -516,17 +516,6 @@ namespace GeneCraftCore {
             qDebug() << "user validity check fail";
             return false;
         }
-
-        // 0 step from brain
-        // TODO add the this value in the experiment data
-        for(int i = 0; i < 0 && this->exp->getOnlyIfEntityIsStable(); i++) {
-            this->engineStep();
-            if(!e->isAlive() && exp->getStopIfEntityIsNotInOnePiece())
-                return false;
-        }
-
-        // Outputs disables
-        e->getShape()->getRoot()->setOutputsFrom(fromNormal); // To normal position
 
         // Get the specific velocity value
         Statistic* s = e->getStatisticByName("rootAbsVelocity");
@@ -536,15 +525,9 @@ namespace GeneCraftCore {
 
         // Not stable at the moment
         bool stable = false;
-        //e->updadeStatistics();
-        //qDebug() << e->getStatisticByName("bodyWeight")->getSum();
-        //qDebug() << e->getStatisticByName("bodyHeight")->getSum();
-        //qDebug() << e->getStatisticByName("bodyLength")->getSum();
 
         for(int i = 0; i < exp->getTimeToWaitForStability() && exp->getOnlyIfEntityIsStable(); i++) {
-                //qDebug() << s->getValue();
-                //qDebug() << e->getStatisticByName("rootYRelVelocity")->getValue();
-                //qDebug() << e->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
+
             if(s->getValue() == 0.) {
                 stableCpt++;
             } else {
@@ -553,7 +536,7 @@ namespace GeneCraftCore {
 
             if(stableCpt > neededStableCpt) {
                 stable = true;
-                r->setStableAt(i);
+                r->setStableAt(e->getAge());
                 break;
             }
 

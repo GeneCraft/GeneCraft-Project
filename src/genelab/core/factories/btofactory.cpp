@@ -20,6 +20,7 @@ namespace GeneCraftCore {
 btoFactory::btoFactory(QWidget* sceneWidget, unsigned long winId, QObject *parent) :
     btFactory(parent)
 {
+
     // ---------------------
     // -- Graphics : Ogre --
     // ---------------------
