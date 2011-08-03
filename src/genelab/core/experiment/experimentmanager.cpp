@@ -210,7 +210,7 @@ namespace GeneCraftCore {
             r->setExperienceId(exp->getId());
 
             // conversion
-            r->setWorker("ex:" + from->getId());
+            r->setWorker("exp_" + from->getId());
         }
 
         results->clear();
@@ -428,6 +428,16 @@ namespace GeneCraftCore {
     void ExperimentManager::evalPop() {
         // for each individual in the population
         foreach(Result* r, this->activePop) {
+
+            // To avoid saving rounding problematic
+            // Could still append if the entity modified himself during or
+            // At the beginning of the simulation
+            r->setGenome(QxtJSON::parse(QxtJSON::stringify(r->getGenome())));
+
+            if(r->getFitness() != -1) {
+                qDebug() << "evaluation of old fitness : " << r->getFitness();
+            }
+
             // Spawn the entity from his genome
             Entity *e = this->spawnEntity(r->getGenome());
 

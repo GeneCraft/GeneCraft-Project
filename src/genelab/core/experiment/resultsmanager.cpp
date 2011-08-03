@@ -288,9 +288,21 @@ namespace GeneCraftCore {
            || (this->bestResultsStored > 0 && result->getFitness() > this->bestResults.last()->getFitness())) {
             bool already = false;
             foreach(Result * r, bestResults) {
-                if(r->getFitness() == result->getFitness()) {
+                if(r->getFitness() + 0.0001 > result->getFitness() &&
+                   r->getFitness() - 0.0001 < result->getFitness()) {
+                    QVariantMap g1 = r->getGenome().toMap();
+                    g1.insert("origins", QVariant());
+                    QVariantMap g2 = result->getGenome().toMap();
+                    g2.insert("origins", QVariant());
                     // Check if genome is the same
-                    already = true;
+                    if(g1 == g2) {
+                        qDebug() << "same genome ! discarding result" << r->getFitness();
+                        already = true;
+                        break;
+                    } else {
+                        qDebug() << "same fitness, but different genomes" << r->getFitness();
+                    }
+                } else if(r->getFitness() + 0.0001 < result->getFitness()) {
                     break;
                 }
             }
