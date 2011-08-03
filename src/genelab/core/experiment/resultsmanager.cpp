@@ -296,11 +296,8 @@ namespace GeneCraftCore {
                     g2.insert("origins", QVariant());
                     // Check if genome is the same
                     if(g1 == g2) {
-                        qDebug() << "same genome ! discarding result" << r->getFitness();
                         already = true;
                         break;
-                    } else {
-                        qDebug() << "same fitness, but different genomes" << r->getFitness();
                     }
                 } else if(r->getFitness() + 0.0001 < result->getFitness()) {
                     break;
