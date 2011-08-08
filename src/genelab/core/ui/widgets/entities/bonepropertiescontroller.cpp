@@ -44,7 +44,8 @@ BonePropertiesController::BonePropertiesController(QWidget *parent) :
     // -----------------
 
     // Delete
-    //connect(this->ui->pbDelete,SIGNAL(pressed()),this,SLOT(deleteBone()));
+    connect(this->ui->pbDeleteBone,SIGNAL(pressed()),this,SLOT(deleteBone()));
+    connect(this->ui->pbDeleteOnlyThisBone,SIGNAL(pressed()),this,SLOT(deleteBoneAndAttachChildrenToParent()));
 
     // Rotation
     connect(this->ui->dInitRot_Yaw,SIGNAL(valueChanged(int)),this,SLOT(saveChanges()));
@@ -179,10 +180,24 @@ void BonePropertiesController::changeRadiusFromSlider(int value)
 
 void BonePropertiesController::deleteBone()
 {
+    if(bone->getParentFixation() != NULL)
+        bone->getParentFixation()->removeBone(bone);
+
+    Bone *old = bone;
     bone->remove();
-    emit sBoneDeleted(bone);
-    delete bone;
-    bone = NULL;
+    emit sBoneDeleted(bone); // will set bone to NULL
+    delete old;
+}
+
+void BonePropertiesController::deleteBoneAndAttachChildrenToParent()
+{
+    if(bone->getParentFixation() != NULL)
+        bone->getParentFixation()->removeBone(bone);
+
+    Bone *old = bone;
+    bone->removeOnly();
+    emit sBoneDeleted(bone); // will set bone to NULL
+    delete old;
 }
 
 void BonePropertiesController::changeSize()

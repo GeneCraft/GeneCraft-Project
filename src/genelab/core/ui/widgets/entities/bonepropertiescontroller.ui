@@ -38,7 +38,7 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_8">
-       <item row="0" column="1">
+       <item row="0" column="0">
         <widget class="QTabWidget" name="tabWidget">
          <property name="enabled">
           <bool>true</bool>
@@ -55,7 +55,7 @@
            <string>Edition</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="label">
              <property name="font">
               <font>
@@ -71,14 +71,14 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="label_8">
              <property name="text">
               <string>Length</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
+           <item row="2" column="1">
             <widget class="QSlider" name="sLength">
              <property name="minimum">
               <number>1</number>
@@ -97,7 +97,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
+           <item row="2" column="2">
             <widget class="QLineEdit" name="leLength">
              <property name="maximumSize">
               <size>
@@ -107,14 +107,14 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="label_9">
              <property name="text">
               <string>Radius</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="3" column="1">
             <widget class="QSlider" name="sRadius">
              <property name="minimum">
               <number>1</number>
@@ -133,7 +133,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
+           <item row="3" column="2">
             <widget class="QLineEdit" name="leRadius">
              <property name="maximumSize">
               <size>
@@ -143,7 +143,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0" colspan="4">
+           <item row="5" column="0" colspan="4">
             <widget class="QWidget" name="widget" native="true">
              <layout class="QGridLayout" name="gridLayout">
               <property name="margin">
@@ -887,24 +887,31 @@ p, li { white-space: pre-wrap; }
                 </property>
                </widget>
               </item>
+              <item row="12" column="1" colspan="5">
+               <widget class="Line" name="line_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
-           <item row="3" column="0" colspan="4">
+           <item row="4" column="0" colspan="4">
             <widget class="Line" name="line">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
-           <item row="0" column="2" colspan="2">
+           <item row="1" column="2" colspan="2">
             <widget class="QPushButton" name="pbApplySize">
              <property name="text">
               <string>resize</string>
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
+           <item row="9" column="0">
             <spacer name="verticalSpacer">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -917,28 +924,39 @@ p, li { white-space: pre-wrap; }
              </property>
             </spacer>
            </item>
-           <item row="7" column="0" colspan="4">
+           <item row="6" column="0" colspan="4">
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+              <widget class="QPushButton" name="pbDeleteOnlyThisBone">
+               <property name="toolTip">
+                <string>Delete this bone and attach all children to the parent fixation</string>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
+               <property name="text">
+                <string>Delete only this</string>
                </property>
-              </spacer>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/bone_delete</normaloff>:/img/icons/bone_delete</iconset>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="pbDeleteBone">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
+               </property>
+               <property name="toolTip">
+                <string>Delete this bone and all these children</string>
                </property>
                <property name="text">
-                <string>Delete (Not yet available)</string>
+                <string>Delete recursively</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../ressources/ressources.qrc">
+                 <normaloff>:/img/icons/bone_delete</normaloff>:/img/icons/bone_delete</iconset>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
                </property>
               </widget>
              </item>

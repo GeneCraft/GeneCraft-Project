@@ -29,7 +29,7 @@
 namespace GeneCraftCore {
 
 Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform)
-    : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL)
+    : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL), parentFix(NULL)
 {
 
     motorModifierData = QVariant();
@@ -45,7 +45,6 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform, this);
 
     this->shapesFactory = shapesFactory;
-
 }
 
 Bone::~Bone()
@@ -59,11 +58,29 @@ Bone::~Bone()
 }
 
 void Bone::remove() {
-    this->endFix->remove();
-    this->entity->removeLinksToEffector(this->motorsEffector);
-    this->disconnectMotor(0);
-    this->disconnectMotor(1);
-    this->disconnectMotor(2);
+
+//    do it out of here, else bones are remove from fix and can't be deleted because we lose the pointer...
+//    if(parentFix != NULL) {
+//        parentFix->removeBone(this);
+//        parentFix = NULL;
+//    }
+
+    endFix->remove();
+    entity->removeLinksToEffector(this->motorsEffector);
+    disconnectMotor(0);
+    disconnectMotor(1);
+    disconnectMotor(2);
+}
+
+void Bone::removeOnly()
+{
+    if(parentFix != NULL) {
+        endFix->removeAndAttachChildrenTo(parentFix);
+        entity->removeLinksToEffector(this->motorsEffector);
+        disconnectMotor(0);
+        disconnectMotor(1);
+        disconnectMotor(2);
+    }
 }
 
 void Bone::setup()

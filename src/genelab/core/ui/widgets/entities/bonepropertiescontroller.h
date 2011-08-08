@@ -43,6 +43,7 @@ private slots:
 
     void saveChanges();
     void deleteBone();
+    void deleteBoneAndAttachChildrenToParent();
     void randomValues();
     void resetMotors();
     void setOutFrom();

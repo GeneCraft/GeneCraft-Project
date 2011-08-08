@@ -127,10 +127,15 @@ void CreatureViewerWindow::init() {
     tb->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     tb->setIconSize(QSize(32,32));
 
-    QAction *aWelcomeMode = tb->addAction(QIcon(":img/logos/GeneCraft_logo"),"Welcome");
-    QAction *aDesignerMode = tb->addAction(QIcon(":img/icons/ruler_pencil_32"),"Designer");
-    QAction *aExperimentMode = tb->addAction(QIcon(":img/icons/dna_32"),"Experiment");
-    QAction *aTheaterMode = tb->addAction(QIcon(":img/icons/theater_32"),"Theater");
+    aWelcomeMode = tb->addAction(QIcon(":img/logos/GeneCraft_logo"),"Welcome");
+    aDesignerMode = tb->addAction(QIcon(":img/icons/ruler_pencil_32"),"Designer");
+    aExperimentMode = tb->addAction(QIcon(":img/icons/dna_32"),"Experiment");
+    aTheaterMode = tb->addAction(QIcon(":img/icons/theater_32"),"Theater");
+
+    aWelcomeMode->setCheckable(true);
+    aDesignerMode->setCheckable(true);
+    aExperimentMode->setCheckable(true);
+    aTheaterMode->setCheckable(true);
 
     connect(aWelcomeMode,SIGNAL(triggered()),this,SLOT(switchToWelcomeMode()));
     connect(aDesignerMode,SIGNAL(triggered()),this,SLOT(switchToDesignerMode()));
@@ -194,9 +199,9 @@ void CreatureViewerWindow::init() {
     // -- Docks --
     // -----------
 
+    addDockWidget(Qt::RightDockWidgetArea,ui->dwFixation);
     tabifyDockWidget(ui->dwFixation,ui->dwBone);
-
-    tabifyDockWidget(ui->dwCreature,ui->dwBrain);
+    //tabifyDockWidget(ui->dwCreature,ui->dwBrain);
     setTabPosition(Qt::LeftDockWidgetArea,QTabWidget::North);
     //setTabShape(QTabWidget::Triangular);
 
@@ -818,10 +823,8 @@ void CreatureViewerWindow::unfollowEntity() {
 
 }
 
-
-void CreatureViewerWindow::switchToWelcomeMode() {
-    ui->dwWelcome->setVisible(true);
-
+void CreatureViewerWindow::hideAllDocks(){
+    ui->dwWelcome->setVisible(false);
     ui->dwBone->setVisible(false);
     ui->dwBrain->setVisible(false);
     ui->dwFixation->setVisible(false);
@@ -830,45 +833,50 @@ void CreatureViewerWindow::switchToWelcomeMode() {
     ui->dwWorker->setVisible(false);
     ui->dwRessourcesBrowser->setVisible(false);
     ui->dwStats->setVisible(false);
+
+    aWelcomeMode->setChecked(false);
+    aDesignerMode->setChecked(false);
+    aExperimentMode->setChecked(false);
+    aTheaterMode->setChecked(false);
+}
+
+void CreatureViewerWindow::switchToWelcomeMode() {
+
+    hideAllDocks();
+
+    aWelcomeMode->setChecked(true);
+
+    ui->dwWelcome->setVisible(true);
 }
 
 void CreatureViewerWindow::switchToDesignerMode() {
+
+    hideAllDocks();
+
+    aDesignerMode->setChecked(true);
+
     ui->dwBone->setVisible(true);
     ui->dwBrain->setVisible(true);
     ui->dwFixation->setVisible(true);
     ui->dwCreature->setVisible(true);
-
-    ui->dwWelcome->setVisible(false);
-    ui->dwExperiment->setVisible(false);
-    ui->dwWorker->setVisible(false);
-    ui->dwRessourcesBrowser->setVisible(false);
-    ui->dwStats->setVisible(false);
 }
 
 void CreatureViewerWindow::switchToExperimentMode() {
 
-    ui->dwWelcome->setVisible(false);
-    ui->dwBone->setVisible(false);
-    ui->dwBrain->setVisible(false);
-    ui->dwFixation->setVisible(false);
-    ui->dwCreature->setVisible(false);
+    hideAllDocks();
+
+    aExperimentMode->setChecked(true);
 
     ui->dwExperiment->setVisible(true);
     ui->dwWorker->setVisible(true);
     ui->dwRessourcesBrowser->setVisible(true);
-    ui->dwStats->setVisible(false);
 }
 
 void CreatureViewerWindow::switchToTheaterMode() {
-    ui->dwWelcome->setVisible(false);
-    ui->dwBone->setVisible(false);
-    ui->dwBrain->setVisible(false);
-    ui->dwFixation->setVisible(false);
-    ui->dwCreature->setVisible(false);
-    ui->dwExperiment->setVisible(false);
-    ui->dwWorker->setVisible(false);
-    ui->dwRessourcesBrowser->setVisible(false);
-    ui->dwStats->setVisible(false);
+
+    hideAllDocks();
+
+    aTheaterMode->setChecked(true);
 }
 
 void CreatureViewerWindow::toggleShadows() {

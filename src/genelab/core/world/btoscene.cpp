@@ -1,15 +1,21 @@
 #include "btoscene.h"
 
-#include "bulletogre/bulletogreengine.h"
-#include "ogre/ogreengine.h"
-
-#include "btofactory.h"
-
-#include "Ogre.h"
+// Qt
 #include <QVariantMap>
 #include <QVariantList>
 
+// ogre
+#include "Ogre.h"
+#include "Terrain/OgreTerrain.h"
+
+#include "bulletogre/bulletogreengine.h"
+#include "ogre/ogreengine.h"
+
+// factory
+#include "btofactory.h"
 #include "bulletogre/shapes/btobox.h"
+
+// world
 #include "btoworld.h"
 
 namespace GeneCraftCore {
@@ -43,6 +49,8 @@ namespace GeneCraftCore {
 
         QVariantMap floor = data["floor"].toMap();
 
+
+        // flatland
         if(floor["type"].toString() == "flatland") {
 
             Ogre::Entity *ent;
@@ -61,6 +69,51 @@ namespace GeneCraftCore {
 
            sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
         }
+        // else {
+        // terrain
+
+
+//        Ogre::Terrain *mTerrain;
+//        Ogre::TerrainGlobalOptions *mGlobals;
+
+//        mGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
+//        mGlobals->setMaxPixelError(8);
+
+//        //mGlobals->setLightMapDirection(mLight->getDerivedDirection());
+//        mGlobals->setCompositeMapDistance(3000);
+//        mGlobals->setCompositeMapAmbient(sceneManager->getAmbientLight());
+//        //mGlobals->setCompositeMapDiffuse(mLight->getDiffuseColour());
+
+//        mTerrain = OGRE_NEW Ogre::Terrain(sceneManager);
+
+//        Ogre::Image img;
+//        img.load("heightmap.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+//        //Ogre::Terrain::ImportData imp;
+//        Ogre::Terrain::ImportData& imp = mTerrainGroup->getDefaultImportSettings();
+//        //imp.inputImage = &img;
+//        imp.terrainSize = 513;
+//        imp.worldSize = 8000;
+//        imp.inputScale = 600;
+//        imp.minBatchSize = 33;
+//        imp.maxBatchSize = 65;
+
+////        imp.layerList.resize(1);
+////        imp.layerList[0].worldSize = 100;
+////        imp.layerList[0].textureNames.push_back("grass_green-01_diffusespecular.dds");
+////        imp.layerList[0].textureNames.push_back("grass_green-01_normalheight.dds");
+
+//        Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
+//        Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(8);
+
+//        mTerrain->prepare(imp);
+//        mTerrain->load();
+
+//        mTerrain->freeTemporaryResources();
+
+        // }
+
+
 
         // ------------
         // -- Spawns --

@@ -88,6 +88,7 @@ public slots:
     void switchToDesignerMode();
     void switchToExperimentMode();
     void switchToTheaterMode();
+    void hideAllDocks();
 
 signals:
 
@@ -130,6 +131,12 @@ private:
     Experiment *experiment;
 
     CreatureViewerInputManager *cvim;
+
+    // Toolbar mode
+    QAction *aWelcomeMode;
+    QAction *aDesignerMode;
+    QAction *aExperimentMode;
+    QAction *aTheaterMode;
 
 private slots:
 

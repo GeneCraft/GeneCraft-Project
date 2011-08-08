@@ -70,20 +70,6 @@ namespace GeneCraftCore {
         delegatedSetup      = false;
     }
 
-    void Fixation::remove() {
-        foreach(Bone* b, bones) {
-            b->remove();
-        }
-
-        while(sensors.size() > 0) {
-            this->removeSensor(sensors.first());
-        }
-
-        while(effectors.size() > 0) {
-            this->removeEffector(effectors.first());
-        }
-    }
-
     // -----------
     // -- SETUP --
     // -----------
@@ -143,9 +129,86 @@ namespace GeneCraftCore {
             delete sphere;
     }
 
+    void Fixation::remove() {
+
+        foreach(Bone* b, bones) {
+            b->remove();
+        }
+
+        while(sensors.size() > 0) {
+            this->removeSensor(sensors.first());
+        }
+
+        while(effectors.size() > 0) {
+            this->removeEffector(effectors.first());
+        }
+    }
+
+
+    void Fixation::removeAndAttachChildrenTo(Fixation *parent) {
+
+        foreach(Bone* b, bones) {
+
+            btVector3 lo , up;
+            b->getParentConstraint()->getAngularLowerLimit(lo);
+            b->getParentConstraint()->getAngularUpperLimit(up);
+
+            parent->addBone(b,b->getYAxis(),b->getZAxis(),lo,up);
+        }
+        bones.clear();
+
+        while(sensors.size() > 0) {
+            this->removeSensor(sensors.first());
+        }
+
+        while(effectors.size() > 0) {
+            this->removeEffector(effectors.first());
+        }
+    }
+
     // ----------
     // -- BONE --
     // ----------
+
+    void Fixation::addBone(Bone *bone, btScalar yAxis, btScalar zAxis, btVector3 &lowerLimits, btVector3 &upperLimits) {
+
+        btQuaternion local1;
+        local1.setRotation(btVector3(0, 1, 0), yAxis);
+        btQuaternion local2;
+        local2.setRotation(btVector3(0, 0, 1), zAxis);
+        local1 *= local2;
+
+        btQuaternion localOrientation = local1;
+
+        btTransform localBone;
+        localBone.setIdentity();
+        localBone.setOrigin(btVector3(btScalar(0.), btScalar(-bone->getLength()*0.5 - radius), btScalar(0.)));
+
+        btTransform localFix;
+        localFix.setIdentity();
+        localFix.setRotation(localOrientation);
+        localFix.setOrigin(localFixation.getOrigin());
+
+        btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
+                                                               localFix, localBone, false);
+
+        ct->setBreakingImpulseThreshold(1./this->rigidBody->getInvMass() * 100);
+        ct->setAngularLowerLimit(lowerLimits);
+        ct->setAngularUpperLimit(upperLimits);
+
+        // delete old parent constraint and set new
+        if(bone->getParentConstraint() != NULL) {
+            shapesFactory->getWorld()->getBulletWorld()->removeConstraint(bone->getParentConstraint());
+            delete bone->getParentConstraint();
+        }
+        bone->setParentConstraint(ct);
+        shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct, true);
+
+        bone->setParentFixation(this);
+        bone->setEntity(entity);
+        bones.append(bone);
+    }
+
 
     Bone *Fixation::addBone(btScalar yAxis, btScalar zAxis,
                             btScalar boneRadius,
@@ -195,6 +258,7 @@ namespace GeneCraftCore {
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);
+        bone->setParentFixation(this);
         bone->setEntity(entity);
         bones.append(bone);
 

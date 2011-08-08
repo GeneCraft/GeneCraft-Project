@@ -40,21 +40,20 @@ namespace GeneCraftCore {
         pointLightMap.insert("posX",(double)2000);
         pointLightMap.insert("posY",(double)2000);
         pointLightMap.insert("posZ",(double)1);
-        //lights.append(pointLightMap);
-        //biomeData.insert("lights",lights);
+        lights.append(pointLightMap);
 
         // directional
-        QVariantMap directionalLightMap;
-        directionalLightMap.insert("type","directional");
-        directionalLightMap.insert("r",(double)1.0);
-        directionalLightMap.insert("g",(double)1.0);
-        directionalLightMap.insert("b",(double)1.0);
-        directionalLightMap.insert("dirX",(double)-1);
-        directionalLightMap.insert("dirY",(double)-1);
-        directionalLightMap.insert("dirZ",(double)0);
-        directionalLightMap.insert("innerAngle", (double)-M_PI);
-        directionalLightMap.insert("outerAngle", (double)M_PI);
-        lights.append(directionalLightMap);
+//        QVariantMap directionalLightMap;
+//        directionalLightMap.insert("type","directional");
+//        directionalLightMap.insert("r",(double)1.0);
+//        directionalLightMap.insert("g",(double)1.0);
+//        directionalLightMap.insert("b",(double)1.0);
+//        directionalLightMap.insert("dirX",(double)-1);
+//        directionalLightMap.insert("dirY",(double)-1);
+//        directionalLightMap.insert("dirZ",(double)0);
+//        directionalLightMap.insert("innerAngle", (double)-M_PI);
+//        directionalLightMap.insert("outerAngle", (double)M_PI);
+//        lights.append(directionalLightMap);
 
         biomeData.insert("lights",lights);
         worldData.insert("biome", biomeData);

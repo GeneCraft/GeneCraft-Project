@@ -26,6 +26,8 @@ public:
    void setup();
    /** To remove it without destructing entity */
    void remove();
+   /** To remove only this bone (not recurcively) */
+   void removeOnly();
 
    // -------------------
    // -- serialization --
@@ -40,6 +42,8 @@ public:
    // parents
    void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
    btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
+   void setParentFixation(Fixation *parentFix)             { this->parentFix = parentFix;  }
+   Fixation *getParentFixation()                           { return parentFix;             }
    Fixation *getEndFixation()                              { return endFix;                }
    Entity *getEntity()                                     { return entity;                }
    void setEntity(Entity *entity);
@@ -83,6 +87,7 @@ protected:
    btBone *body;             // Owner
    btRigidBody *rigidBody;
    RigidBodyOrigin *origin;  // Owner
+   Fixation *parentFix;
    Fixation *endFix;         // Owner
 
    // Modifier

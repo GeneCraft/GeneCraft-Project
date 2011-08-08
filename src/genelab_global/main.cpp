@@ -72,18 +72,16 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":img/logos/splash");
     QSplashScreen splash(pixmap);
     splash.show();
+    splash.showMessage("Loading...");
 
     // loading...
     CreatureViewerWindow cw;
-    splash.showMessage("Loading...");
     a->processEvents(); // This is used to accept a click on the screen so that user can cancel the screen
     loadStyleSheet("styleSheet");
 
     // shows
     cw.showMaximized();
     splash.finish(&cw);
-
-
 
     // DOESN'T WORK ?!?
     // First launch

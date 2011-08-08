@@ -36,6 +36,9 @@ namespace GeneCraftCore {
         // To remove it without destructing entity
         void remove();
 
+        // TO remove and attach children to a specific fixation
+        void removeAndAttachChildrenTo(Fixation *parent);
+
         // To get the parent bone (return NULL it's a root fixation)
         Bone *getParentBone() { return parentBone; }
 
@@ -46,6 +49,9 @@ namespace GeneCraftCore {
 
         // To create and attach a bone to the fixation
         Bone *addBone(btScalar yAxis, btScalar zAxis, btScalar boneRadius, btScalar boneLength, btScalar endFixRadius, const btVector3& lo, const btVector3 &up);
+
+        // To attach a bone to the fixation
+        void addBone(Bone *b, btScalar yAxis, btScalar zAxis, btVector3& lo, btVector3 &up);
 
         // To delete manualy a bone
         void removeBone(Bone* bone);
