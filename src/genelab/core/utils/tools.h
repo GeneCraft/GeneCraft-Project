@@ -18,10 +18,11 @@ public:
     static double random(double min, double max);
 #endif
 
-    static void clearTreeWidgetItem(QTreeWidgetItem * item);
-
     // Used to clear a QTreeWidget
     static void clearTreeWidget(QTreeWidget * tree);
+
+    // Used to remove not empty directory (recursively delete)
+    static bool removeDir(QString dirPath);
 };
 
 }

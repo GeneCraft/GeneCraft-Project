@@ -19,6 +19,13 @@ namespace GeneCraftCore {
 
         epc = new ExperimentsPropertiesController();
 
+        // Conversion controleur
+        DataBase db;
+        db.dbName = "/db/genecraft/";
+        db.url = "http://www.genecraft-project.org";
+        db.port = 80;
+        conversionCtrl = new ConversionCtrl(QDir("./ressources/"), db);
+
         // refresh events
         autorefresh = new QTimer();
         autorefresh->setInterval(1000);
@@ -30,7 +37,9 @@ namespace GeneCraftCore {
         connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
         connect(ui->pbNewExperiment,SIGNAL(clicked()),this,SLOT(newExperiment()));
 
-        connect(ui->pbDeleteSelectedResults,SIGNAL(clicked()),this,SLOT(deleteSelectedResults()));
+        connect(ui->pbDeleteAllResults,SIGNAL(clicked()),this,SLOT(deleteAllResults()));
+
+        connect(ui->pbConvertResults,SIGNAL(clicked()),this,SLOT(openConvertWidget()));
 
         setEnabled(false);
     }
@@ -38,6 +47,9 @@ namespace GeneCraftCore {
     void ExperimentCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
 
         epc->connectToInspectorInputManager(iim);
+        conversionCtrl->connectToInspectorInputManager(iim);
+
+
         connect(iim, SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
         connect(this, SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
         connect(this, SIGNAL(sAddEntity(QVariantMap,Ressource*)), iim, SLOT(loadEntity(QVariantMap, Ressource*)));
@@ -152,53 +164,63 @@ namespace GeneCraftCore {
         epc->show();
         epc->setFocus(Qt::MouseFocusReason);
     }
-}
 
-void GeneCraftCore::ExperimentCtrl::on_btnAdd_clicked()
-{
-    if(this->ui->twResults->currentItem()) {
-        Result* r = this->results[this->ui->twResults->currentIndex().row()];
-        emit sAddEntity(r->serialize().toMap(), NULL);
-    }
-}
-
-void GeneCraftCore::ExperimentCtrl::on_btnHelp_clicked()
-{
-    QMessageBox::information(this, "Loading results to the scene", "There's two way of adding a result to the scene."
-                             " As a result, which mean deleting everything in the simulation to get the exact same result"
-                             " that the worker did, with the initial stabilisation process and everything. Or as a creature, which mean add this creature where stand the camera."
-                             " Obviously because of the physical engine state and the initials conditions that are differents the result will not be the same"
-                             " that the worker compute.");
-
-}
-
-void GeneCraftCore::ExperimentCtrl::deleteSelectedResults() {
-
-    if(this->ui->twResults->currentItem()) {
-
-        foreach(QTreeWidgetItem* item, ui->twResults->selectedItems()) {
-
-            int index = ui->twResults->indexOfTopLevelItem(item);
-
-
-
-
-            qDebug() << Q_FUNC_INFO << 1;
-
-            Result* r = this->results[index];
-
-            qDebug() << Q_FUNC_INFO << 2;
-            if(r->getRessource() != NULL) {
-
-
-                r->getRessource()->remove();
-
-                qDebug() << Q_FUNC_INFO << 3;
-                results.removeAt(index);
-
-                qDebug() << Q_FUNC_INFO << 4;
-                ui->twResults->removeItemWidget(item,0);
-            }
+    void ExperimentCtrl::on_btnAdd_clicked()
+    {
+        if(this->ui->twResults->currentItem()) {
+            Result* r = this->results[this->ui->twResults->currentIndex().row()];
+            emit sAddEntity(r->serialize().toMap(), NULL);
         }
     }
+
+    void ExperimentCtrl::on_btnHelp_clicked()
+    {
+        QMessageBox::information(this, "Loading results to the scene", "There's two way of adding a result to the scene."
+                                 " As a result, which mean deleting everything in the simulation to get the exact same result"
+                                 " that the worker did, with the initial stabilisation process and everything. Or as a creature, which mean add this creature where stand the camera."
+                                 " Obviously because of the physical engine state and the initials conditions that are differents the result will not be the same"
+                                 " that the worker compute.");
+
+    }
+
+    void ExperimentCtrl::deleteAllResults() {
+
+        if(experiment->isOnline()) {
+            QMessageBox::information(this, "You can delete online results",
+                                     "Deletion of online results in not yet available.");
+        }
+        else {
+            int buttonPressed = QMessageBox::question(this, "Are you sure ?",
+                                 "Are you sure do you want to \ndefinitively delete all results of this experiment ?", QMessageBox::Ok | QMessageBox::Cancel);
+
+            if(buttonPressed == QMessageBox::Ok) {
+                resultsManager->deleteAll();
+                refresh();
+            }
+        }
+
+    //    // DELETE SELECTED RESULTS...
+    //    if(this->ui->twResults->currentItem()) {
+    //        foreach(QTreeWidgetItem* item, ui->twResults->selectedItems()) {
+    //            int index = ui->twResults->indexOfTopLevelItem(item);
+    //            qDebug() << Q_FUNC_INFO << 1;
+    //            Result* r = this->results[index];
+    //            qDebug() << Q_FUNC_INFO << 2;
+    //            if(r->getRessource() != NULL) {
+    //                r->getRessource()->remove();
+    //                qDebug() << Q_FUNC_INFO << 3;
+    //                results.removeAt(index);
+    //                qDebug() << Q_FUNC_INFO << 4;
+    //                ui->twResults->removeItemWidget(item,0);
+    //            }
+    //        }
+    //    }
+    }
+
+    void ExperimentCtrl::openConvertWidget() {
+        conversionCtrl->show();
+    }
+
 }
+
+

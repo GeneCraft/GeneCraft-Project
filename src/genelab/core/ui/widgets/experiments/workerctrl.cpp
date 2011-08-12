@@ -22,14 +22,6 @@ namespace GeneCraftCore {
         exp = NULL;
 
         setEnabled(false);
-        DataBase db;
-        db.dbName = "/db/genecraft/";
-        db.url = "http://www.genecraft-project.org";
-        db.port = 80;
-        conversionCtrl = new ConversionCtrl(QDir("./ressources/"), db);
-
-        this->ui->tbConversion->layout()->addWidget(conversionCtrl);
-
     }
 
     WorkerCtrl::~WorkerCtrl()
@@ -44,7 +36,6 @@ namespace GeneCraftCore {
     void WorkerCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
 
         connect(iim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
-        conversionCtrl->connectToInspectorInputManager(iim);
     }
 
     void WorkerCtrl::setExperiment(Experiment *exp) {

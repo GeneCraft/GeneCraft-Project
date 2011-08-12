@@ -8,31 +8,32 @@
 
 namespace GeneCraftCore {
 
-    BulletOgreEngine::BulletOgreEngine(BulletEngine *btEngine, OgreEngine *ogreEngine)
-    {
-        this->btEngine = btEngine;
-        this->ogreEngine = ogreEngine;
-    }
+BulletOgreEngine::BulletOgreEngine(BulletEngine *btEngine, OgreEngine *ogreEngine)
+{
+    this->btEngine = btEngine;
+    this->ogreEngine = ogreEngine;
+    nbSteps = 0;
+}
 
-    void BulletOgreEngine::addBody(btRigidBody * rigidBody,Ogre::Entity *entity, Ogre::SceneNode *node)
-    {
-        bodies.append(OgreBody(rigidBody,entity,node));
-    }
+void BulletOgreEngine::addBody(btRigidBody * rigidBody,Ogre::Entity *entity, Ogre::SceneNode *node)
+{
+    bodies.append(OgreBody(rigidBody,entity,node));
+}
 
-    void BulletOgreEngine::removeBody(btRigidBody *rigidBody, Ogre::Entity *entity, Ogre::SceneNode *node) {
-        bodies.removeAll(OgreBody(rigidBody, entity, node));
-    }
-int nbStep;
+void BulletOgreEngine::removeBody(btRigidBody *rigidBody, Ogre::Entity *entity, Ogre::SceneNode *node) {
+    bodies.removeAll(OgreBody(rigidBody, entity, node));
+}
+
 void BulletOgreEngine::step()
 {
-    nbStep++;
-    int sec = (nbStep/60)%60;
-    int min = (nbStep/(60 * 60))%60;
-    int hour = (nbStep/(3600*60));
+    nbSteps++;
+    int sec = (nbSteps/60)%60;
+    int min = (nbSteps/(60 * 60))%60;
+    int hour = (nbSteps/(3600*60));
     QString time = (hour?QString::number(hour) + "h ":"")
                   +(min?QString::number(min) + "m ":"")
                   +(sec?QString::number(sec) + "s -- ":" -- ")
-                  +(QString::number(nbStep) + " steps");
+                  +(QString::number(nbSteps) + " steps");
 
     Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 
@@ -58,6 +59,7 @@ void BulletOgreEngine::step()
 
 void BulletOgreEngine::clearAll(){
     bodies.clear();
+    nbSteps = 0; // TODO not really clean to do this here...
 }
 
 }

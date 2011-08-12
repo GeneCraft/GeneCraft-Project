@@ -1,6 +1,8 @@
 #include "tools.h"
 #include <ctime>
 #include <cstdlib>
+#include <QDir>
+#include <QDebug>
 
 namespace GeneCraftCore {
 
@@ -31,6 +33,41 @@ namespace GeneCraftCore {
         }
 
         tree->clear();
+    }
+
+    bool Tools::removeDir(QString dirPath)
+    {
+        QDir folder(dirPath);
+        folder.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
+        foreach(QFileInfo fileInfo, folder.entryInfoList())
+        {
+
+            if(fileInfo.isDir())
+            {
+                qDebug() << "- subdir" << fileInfo.filePath();
+
+                if(!removeDir(fileInfo.filePath()))
+                    return false;
+            }
+            else if(fileInfo.isFile())
+            {
+                qDebug() << "- subfile" << fileInfo.filePath();
+
+                if(!QFile::remove(fileInfo.filePath()))
+                {
+                    qDebug() << "Unable to remove file : " << fileInfo.filePath();
+                    return false;
+                }
+            }
+        }
+
+        if(!folder.rmdir(dirPath))
+        {
+            qDebug() << "Unable to remove folder : " << dirPath << ". Maybe this folder is not empty";
+            return false;
+        }
+
+        return true;
     }
 
 }

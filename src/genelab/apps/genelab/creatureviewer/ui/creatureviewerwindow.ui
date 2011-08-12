@@ -149,7 +149,7 @@
   </widget>
   <widget class="QDockWidget" name="dwWorker">
    <property name="windowTitle">
-    <string>Worker</string>
+    <string>Worker : Evolution Process</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -173,7 +173,7 @@
   </widget>
   <widget class="QDockWidget" name="dwExperiment">
    <property name="windowTitle">
-    <string>Experiment</string>
+    <string>Experiment &amp; Results</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>

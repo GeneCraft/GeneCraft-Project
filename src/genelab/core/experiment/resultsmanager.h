@@ -6,6 +6,7 @@
 #include "result.h"
 #include "experiment.h"
 #include "ressources/dbrecord.h"
+#include "tools.h"
 
 namespace GeneCraftCore {
 
@@ -74,7 +75,16 @@ public:
     /**
       * Delete all results from this experiment
       */
-    void deleteAll() {}
+    void deleteAll()
+    {
+        if(!online) {
+            Tools::removeDir(resultsDirectory.absolutePath());
+            clear();
+        }
+        else {
+            // TODO DELETE ONLINE RESULTS
+        }
+    }
 
     /**
       * Clear results lists

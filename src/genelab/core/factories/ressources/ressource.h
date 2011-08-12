@@ -35,6 +35,11 @@ namespace GeneCraftCore {
         virtual int remove() = 0;
 
         /**
+          * To get the location
+          */
+        virtual QString getLocation() = 0;
+
+        /**
           * Create a ressource from a ressource metadata
           */
         static Ressource* unserialize(QVariant v);

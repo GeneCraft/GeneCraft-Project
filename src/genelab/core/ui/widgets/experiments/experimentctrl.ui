@@ -195,11 +195,7 @@
          <item>
           <widget class="QCheckBox" name="checkBox">
            <property name="text">
-            <string>auto-refresh</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../ressources/ressources.qrc">
-             <normaloff>:/img/icons/refresh</normaloff>:/img/icons/refresh</iconset>
+            <string>auto</string>
            </property>
           </widget>
          </item>
@@ -217,7 +213,21 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pbDeleteSelectedResults">
+          <widget class="QPushButton" name="pbConvertResults">
+           <property name="text">
+            <string>Import</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../ressources/ressources.qrc">
+             <normaloff>:/img/icons/entities_go</normaloff>:/img/icons/entities_go</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbDeleteAllResults">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>Delete all</string>
            </property>

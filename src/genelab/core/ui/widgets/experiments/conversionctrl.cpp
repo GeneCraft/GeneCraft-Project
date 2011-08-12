@@ -29,6 +29,8 @@ namespace GeneCraftCore {
         // Refresh exp
         this->on_btnRefresh_clicked();
         this->ui->stackedWidget->setCurrentIndex(1);
+
+        connect(ui->pbInformation,SIGNAL(clicked()),this,SLOT(showInformation()));
     }
 
     ConversionCtrl::~ConversionCtrl()
@@ -131,10 +133,10 @@ namespace GeneCraftCore {
         Tools::clearTreeWidget(ui->twExperiments);
 
         foreach(DataWrapper exp, onlineRes->getExperiments())
-            ui->twExperiments->insertTopLevelItem(0,new ExperimentTreeWidgetItem(exp));
+            ui->twExperiments->insertTopLevelItem(0,new ExperimentTreeWidgetItem(exp,true));
 
         foreach(DataWrapper exp, localRes->getExperiments())
-            ui->twExperiments->insertTopLevelItem(0,new ExperimentTreeWidgetItem(exp));
+            ui->twExperiments->insertTopLevelItem(0,new ExperimentTreeWidgetItem(exp,true));
 
     }
 
@@ -168,5 +170,11 @@ namespace GeneCraftCore {
         }
     }
 
+    void ConversionCtrl::showInformation() {
 
+        QMessageBox::information(this, "Import results", "This form allows you to import results from a specific experiment. "
+                                 "Results will be reassess to fit to the fitness function of the experiment.\n\nJust select "
+                                 "experiment which contains the results you would like import and press on the 'Import' button. "
+                                 "Then, the convertion process will start. Notice that you can choose how many results you want to import.");
+    }
 }

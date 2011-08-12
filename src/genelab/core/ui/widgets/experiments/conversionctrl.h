@@ -28,6 +28,7 @@ namespace GeneCraftCore {
 
     public slots:
         void setExperiment(Experiment* exp);
+        void showInformation();
 
     private:
         Ui::ConversionCtrl *ui;

@@ -181,5 +181,8 @@ namespace GeneCraftCore {
         this->r = r;
     }
 
+    QString DbRecord::getLocation() {
+        return "online";
+    }
 
 }

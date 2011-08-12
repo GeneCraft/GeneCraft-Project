@@ -132,6 +132,9 @@ private:
 
     CreatureViewerInputManager *cvim;
 
+    QAction *aFollowCreature;
+    QAction *aShowShadows;
+
     // Toolbar mode
     QAction *aWelcomeMode;
     QAction *aDesignerMode;

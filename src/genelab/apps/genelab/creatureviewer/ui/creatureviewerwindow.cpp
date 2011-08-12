@@ -162,8 +162,10 @@ void CreatureViewerWindow::init() {
     QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
 
     ui->toolBar->addSeparator();
-    QAction *aFollowCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_follow"),QString(tr("Follow selected creature")));
-    QAction *aShowShadows = ui->toolBar->addAction(QIcon(":img/icons/enable_shadows"),QString(tr("Enable shadows")));
+    aFollowCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_follow"),QString(tr("Follow selected creature")));
+    //aFollowCreature->setCheckable(true);
+    aShowShadows = ui->toolBar->addAction(QIcon(":img/icons/enable_shadows"),QString(tr("Enable shadows")));
+    aShowShadows->setCheckable(true);
 
     // step manager
     //ui->toolBar->addWidget(new QLabel(tr("Step manager :"));
@@ -810,6 +812,7 @@ void CreatureViewerWindow::followSelectedEntity() {
 
         cam->followBody(selectedEntity->getShape()->getRoot()->getRigidBody());
         ogreWidget->setFocus(Qt::MouseFocusReason);
+        aFollowCreature->setChecked(true);
     }
 }
 
@@ -820,6 +823,7 @@ void CreatureViewerWindow::unfollowEntity() {
     OgreWidget *ogreWidget = ogre->getOgreWidget("MainWidget");
     OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
     cam->unfollowBody();
+    aFollowCreature->setChecked(false);
 
 }
 
@@ -884,8 +888,12 @@ void CreatureViewerWindow::toggleShadows() {
     // TODO save widget !!!
     OgreEngine * ogre = (OgreEngine *) factory->getEngineByName("Ogre");
 
-    if(ogre->getOgreSceneManager()->getShadowTechnique() == Ogre::SHADOWTYPE_NONE)
+    if(ogre->getOgreSceneManager()->getShadowTechnique() == Ogre::SHADOWTYPE_NONE) {
         ogre->getOgreSceneManager()->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-    else
+        aShowShadows->setChecked(true);
+    }
+    else {
         ogre->getOgreSceneManager()->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
+        aShowShadows->setChecked(false);
+    }
 }

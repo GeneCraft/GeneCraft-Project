@@ -7,6 +7,7 @@
 #include <QVariantMap>
 #include <ressources/ressourcesmanager.h>
 #include "result.h"
+#include <QDebug>
 
 namespace GeneCraftCore{
 
@@ -16,13 +17,37 @@ class ExperimentTreeWidgetItem : public QTreeWidgetItem
 {
 public:
 
-    ExperimentTreeWidgetItem(DataWrapper dataw)
+    ExperimentTreeWidgetItem(DataWrapper dataw, bool showRessourceLocation = false)
     {
         this->dataw = dataw;
+        int i=0;
 
-        setText(0,dataw.data["_id"].toString());
-        setText(1,dataw.data["author"].toString());
-        setText(2,dataw.data["dateOfCreation"].toString());
+        // new experiment
+        QDateTime date = QDateTime::fromString(dataw.data["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
+        if(date.daysTo(QDateTime::currentDateTime()) < 7)
+            setIcon(0,QIcon(":img/icons/new"));
+
+        // id
+        setText(i++,dataw.data["_id"].toString());
+
+        // local / online
+        if(showRessourceLocation) {
+
+            if(dataw.r) {
+                if(dataw.r->getLocation() == "online")
+                    setText(i++,"yes");
+                else
+                    setText(i++,"no");
+            }
+            else
+                setText(i++,"yes"); // ONLINE -> NO RESSOURCE... FIXME (WE CAN DO IT CLEANER)
+        }
+
+        // author
+        setText(i++,dataw.data["author"].toString());
+
+        // date of creation
+        setText(i++,dataw.data["dateOfCreation"].toString());
     }
 
     DataWrapper dataw;

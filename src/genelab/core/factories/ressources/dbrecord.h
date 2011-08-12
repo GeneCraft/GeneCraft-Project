@@ -23,6 +23,7 @@ namespace GeneCraftCore {
         virtual QVariant load();
         virtual int save(QVariant data);
         virtual int remove();
+        virtual QString getLocation();
 
         int deleteDoc(QString rev);
 

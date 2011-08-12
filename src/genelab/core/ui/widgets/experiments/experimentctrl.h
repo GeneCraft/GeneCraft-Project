@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QMutex>
 #include "experimentspropertiescontroller.h"
+#include "conversionctrl.h"
 
 namespace Ui {
     class ExperimentCtrl;
@@ -42,7 +43,8 @@ namespace GeneCraftCore {
         void refreshInProgress();
         void openExperimentPropertiesController();
         void newExperiment();
-        void deleteSelectedResults();
+        void deleteAllResults();
+        void openConvertWidget();
 
     private:
         Ui::ExperimentCtrl *ui;
@@ -53,6 +55,8 @@ namespace GeneCraftCore {
         QTimer* autorefresh;
         bool loaded;
         QMutex lock;
+
+        ConversionCtrl *conversionCtrl;
 
         ExperimentsPropertiesController *epc;
 

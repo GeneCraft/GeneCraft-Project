@@ -14,6 +14,7 @@ public:
     virtual QVariant load();
     virtual int save(QVariant data);
     virtual int remove();
+    virtual QString getLocation();
 
 public:
     QFile f;

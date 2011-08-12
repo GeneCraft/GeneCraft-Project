@@ -46,4 +46,8 @@ namespace GeneCraftCore {
         }
         return false;
     }
+
+    QString JsonFile::getLocation() {
+        return "local";
+    }
 }

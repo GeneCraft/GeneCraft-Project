@@ -20,7 +20,7 @@ namespace GeneCraftCore {
         this->engines.remove("EventsManager");
 
         this->stepBySec = 60;
-        this->nbStep = 0;
+        this->nbSteps = 0;
     }
 
     void SimulationManager::setup() {
@@ -62,9 +62,13 @@ namespace GeneCraftCore {
         return stepTimer->isActive();
     }
 
+    void SimulationManager::resetNbSteps() {
+        nbSteps = 0;
+    }
+
     void SimulationManager::update()
     {
-        nbStep++;
+        nbSteps++;
 
         // beforeStep
         foreach(Engine* e, engines)

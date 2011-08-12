@@ -29,7 +29,7 @@
 namespace GeneCraftCore {
 
 Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar length, btScalar endFixRadius, const btTransform &initTransform)
-    : QObject(), yAxis(yAxis), zAxis(zAxis), motorsEffector(NULL), parentFix(NULL)
+    : QObject(), yAxis(yAxis), zAxis(zAxis), parentFix(NULL), motorsEffector(NULL)
 {
 
     motorModifierData = QVariant();

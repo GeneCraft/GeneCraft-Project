@@ -66,6 +66,8 @@ private:
     BulletEngine *btEngine;
     OgreEngine *ogreEngine;
     QList<OgreBody> bodies;
+
+    int nbSteps;
 };
 }
 #endif // BULLETOGREENGINE_H

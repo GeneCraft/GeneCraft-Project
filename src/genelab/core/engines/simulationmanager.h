@@ -42,6 +42,8 @@ namespace GeneCraftCore {
         void update();
         void renderUpdate();
 
+        void resetNbSteps();
+
     private:
         QMap<QString, Engine*> engines;
         Engine* renderEngine;
@@ -49,7 +51,7 @@ namespace GeneCraftCore {
         Engine* eventsManager;
 
         // Execution timer
-        int nbStep;
+        int nbSteps;
         int stepBySec;
         QTimer *stepTimer;
         QTimer *renderTimer;

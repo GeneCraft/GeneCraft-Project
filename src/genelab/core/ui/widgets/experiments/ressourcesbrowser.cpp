@@ -513,8 +513,9 @@ void RessourcesBrowser::experimentUpdated(Experiment* experiment) {
 
 void RessourcesBrowser::openInfoDatabase()
 {
-    QMessageBox::information(this, "Utilisation of genecraft database", "This database is not an online backup."
-                             "But a community tool. Everythings that you put online could be modified or deleted by someone else. So keep some backup of your loved creatures.");
+    QMessageBox::information(this, "Utilisation of genecraft database", "This database is not an online backup "
+                             "but rather a community tool. Everythings that you put online could be modified or "
+                             "deleted by someone else. So keep some local backup of your loved creatures.");
 }
 
 void RessourcesBrowser::openRessourcesFolder() {
