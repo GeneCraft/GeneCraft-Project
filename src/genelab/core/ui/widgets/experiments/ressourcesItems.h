@@ -24,7 +24,9 @@ public:
 
         // new experiment
         QDateTime date = QDateTime::fromString(dataw.data["dateOfCreation"].toString(),"yyyy-MM-dd hh:mm:ss");
-        if(date.daysTo(QDateTime::currentDateTime()) < 7)
+
+        int daysToNow = date.daysTo(QDateTime::currentDateTime());
+        if(daysToNow < 7)
             setIcon(0,QIcon(":img/icons/new"));
 
         // id
@@ -46,8 +48,16 @@ public:
         // author
         setText(i++,dataw.data["author"].toString());
 
+        QString days;
+        if(daysToNow < 1)
+            days = "Today";
+        else if(daysToNow > 2)
+            days = QString::number(daysToNow) + " days ago";
+        else
+            days = QString::number(daysToNow) + " day ago";
+
         // date of creation
-        setText(i++,dataw.data["dateOfCreation"].toString());
+        setText(i++,days);
     }
 
     DataWrapper dataw;

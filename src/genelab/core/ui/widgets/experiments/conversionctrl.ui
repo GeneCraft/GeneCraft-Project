@@ -178,7 +178,7 @@
              </column>
              <column>
               <property name="text">
-               <string>Date of creation</string>
+               <string>Created</string>
               </property>
              </column>
             </widget>
