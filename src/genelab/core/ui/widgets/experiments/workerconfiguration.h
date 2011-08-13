@@ -1,6 +1,7 @@
 #ifndef WORKERCONFIGURATION_H
 #define WORKERCONFIGURATION_H
 
+#include <QVariantMap>
 #include <QWidget>
 
 namespace Ui {
@@ -20,9 +21,11 @@ public:
 
 public slots:
     void valid();
-
+    void reset();
 
 private:
+
+    void init(QVariantMap worker);
     Ui::WorkerConfiguration *ui;
     bool validated;
 };

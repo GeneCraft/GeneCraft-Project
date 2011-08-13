@@ -273,6 +273,13 @@
         </property>
        </widget>
       </item>
+      <item row="10" column="0">
+       <widget class="QPushButton" name="pbReset">
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
