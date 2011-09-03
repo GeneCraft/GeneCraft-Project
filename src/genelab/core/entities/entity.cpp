@@ -207,8 +207,18 @@ bool Entity::isAlive() {
 
 void Entity::setOutFromAge() {
     if(this->outsFromScripts.contains(this->age)) {
+
+        foreach(Statistic* s, this->statisticsStorage->getStatistics()) {
+            s->resetAll();
+        }
+
         qDebug() << "changement d'out par scripting d'entite." << outsFromScripts[this->age];
         this->treeShape->getRoot()->setOutputsFrom(outsFromScripts[this->age]);
+        this->outsFromScripts.remove(this->age);
+
+
+        this->setAge(0);
+
     }
 }
 

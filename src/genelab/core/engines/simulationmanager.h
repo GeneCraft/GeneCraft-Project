@@ -2,6 +2,7 @@
 #define SimulationManager_H
 
 #include "genecraftcoreclasses.h"
+#include "widgets/plot/fitnessplot.h"
 #include <QObject>
 #include <QMap>
 
@@ -37,6 +38,8 @@ namespace GeneCraftCore {
         // the world manager the time
         void start();
         void stop();
+        bool status();
+        void setStatus(bool status);
         bool toggle();
         void setPhysicsFreq(int stepBySec);
         void update();
@@ -55,6 +58,8 @@ namespace GeneCraftCore {
         int stepBySec;
         QTimer *stepTimer;
         QTimer *renderTimer;
+    public:
+        FitnessPlot* fitness;
     };
 
 }

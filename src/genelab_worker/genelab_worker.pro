@@ -7,9 +7,9 @@
 QT       += core testlib network gui script
 
 TARGET = genecraft_worker
-CONFIG   += console
+CONFIG   += console silent
 CONFIG   -= app_bundle
-TEMPLATE = app
+#TEMPLATE = app
 
 # genelab core
 INCLUDEPATH += \
@@ -46,7 +46,6 @@ LIBS += -lLinearMath
 
 SOURCES += \
     ../genelab/core/engines/engine.cpp \
-    ../genelab/core/engines/simulationmanager.cpp \
     ../genelab/core/engines/events/inputlistener.cpp \
     ../genelab/core/engines/events/eventsmanager.cpp \
     ../genelab/core/engines/bullet/bulletengine.cpp \
@@ -122,7 +121,6 @@ SOURCES += \
 
 HEADERS += \
     ../genelab/core/engines/engine.h \
-    ../genelab/core/engines/simulationmanager.h \
     ../genelab/core/engines/events/eventsmanager.h \
     ../genelab/core/engines/events/inputlistener.h \
     ../genelab/core/engines/bullet/bulletengine.h \

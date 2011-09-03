@@ -303,7 +303,7 @@ void CreatureViewerWindow::init() {
     connect(cvim,SIGNAL(sBoneSelected(Bone*)),this,SLOT(boneSelected(Bone*)));
     connect(cvim,SIGNAL(sFixationSelected(Fixation*)),this,SLOT(fixationSelected(Fixation*)));
     connect(cvim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
-    connect(this,SIGNAL(sLoadExperiment(Experiment*)),cvim,SLOT(loadExperiment(Experiment*)));
+    connect(this,SIGNAL(sLoadExperiment(Experiment*)),cvim,SLOT(loadExperiment(Experiment*)),Qt::DirectConnection);
     emit sLoadExperiment(experiment);
     connect(cvim,SIGNAL(sLoadWorld(QVariantMap)),this,SLOT(setWorld(QVariantMap)));
     connect(cvim,SIGNAL(sLoadEntity(QVariantMap,Ressource*)),this,SLOT(addEntity(QVariantMap,Ressource*)));
@@ -314,6 +314,7 @@ void CreatureViewerWindow::init() {
     // --------------
 
     qDebug() << "Start simulation";
+    simulationManager->fitness = statsPropertiesController->fitness;
     simulationManager->start();
     connect(sPhysicStep,SIGNAL(valueChanged(int)),this->simulationManager,SLOT(setPhysicsFreq(int)));
     connect(aTogglePhysics,SIGNAL(triggered()),this,SLOT(togglePhysics()));
@@ -342,6 +343,9 @@ void CreatureViewerWindow::init() {
 
 void CreatureViewerWindow::setExperiment(Experiment* experiment)
 {
+    bool status = simulationManager->status();
+    simulationManager->stop();
+
     // delete the current experiment if it exists and it be different that the new
     if(this->experiment != NULL && this->experiment != experiment)
         delete this->experiment;
@@ -375,26 +379,33 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
 
     cvim->setWorld(world);
 
+    simulationManager->setStatus(status);
 }
 
 void CreatureViewerWindow::setWorld(QVariantMap worldMap) {
+    bool status = simulationManager->status();
+    this->simulationManager->stop();
     if(experiment != NULL) {
         experiment->setWorldData(worldMap);
         setExperiment(experiment);
     }
+    simulationManager->setStatus(status);
 }
 
 void CreatureViewerWindow::loadResult(Result *result) {
+    bool status = simulationManager->status();
     this->simulationManager->stop();
     setExperiment(experiment);
 
     QVariantMap genome = result->getGenome().toMap();
 
     Entity* e = createCreature(genome, world->getSpawnPosition(), result->getRessource());
-    e->addOutScript(0, fromNormal); // Normal position during stability time
+    if(this->experiment->getOnlyIfEntityIsStable())
+        e->addOutScript(0, fromNormal); // Normal position during stability time
     e->addOutScript(result->getStable(), fromBrain); // Next from brain
     e->setAge(0);
-    this->simulationManager->start();
+
+    this->simulationManager->setStatus(status);
 }
 
 void CreatureViewerWindow::saveEntityToDb() {
@@ -543,6 +554,7 @@ void CreatureViewerWindow::spawnRandomEntities(int nbEntities){
         if(e){
             e->setup();
             entitiesEngine->addEntity(e);
+            cvim->entitySelected(e);
             ents.append(e);
         }
     }
@@ -579,7 +591,8 @@ Entity * CreatureViewerWindow::createNewEntity()
     //entitySelected(e);
     //setEntity(e,e->getShape()->getRoot()->getRigidBody());
     QMessageBox::information(this, "Root fixation fixed in the air", "Default, the root fixation is fixed in the air.\n\nTo unfix it, select it and go to \"Tools\" tab of the fixation controller.");
-
+    cvim->entitySelected(e);
+    cvim->fixationSelected(e->getShape()->getRoot());
     return e;
 }
 
@@ -634,7 +647,7 @@ Entity * CreatureViewerWindow::createCreature(QVariant genotype, btVector3 posit
     e->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     entitiesEngine->addEntity(e);
-
+    cvim->entitySelected(e);
     return e;
 }
 

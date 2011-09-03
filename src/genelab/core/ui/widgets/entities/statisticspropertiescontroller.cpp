@@ -6,6 +6,8 @@
 #include "tools.h"
 #include "events/inspectorsinputmanager.h"
 
+#include "widgets/plot/fitnessplot.h"
+
 StatisticsPropertiesController::StatisticsPropertiesController(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatisticsPropertiesController)
@@ -22,23 +24,32 @@ StatisticsPropertiesController::StatisticsPropertiesController(QWidget *parent) 
 
     // Statistics refresh timer
     statsTimer = new QTimer();
-    statsTimer->setInterval(1000/5); // by ms
+    statsTimer->setInterval(1000/10); // by ms
     connect(statsTimer, SIGNAL(timeout()), this, SLOT(updateStats()));
     statsTimer->start();
 
     setEnabled(false);
+
+    fitness = new FitnessPlot(this);
+    ui->tab_2->layout()->addWidget(fitness);
 }
+
 
 StatisticsPropertiesController::~StatisticsPropertiesController()
 {
     delete ui;
 }
 
+
 void StatisticsPropertiesController::connectToInspectorInputManager(InspectorsInputManager *iim)
 {
     // notifications
-    connect(iim,SIGNAL(sEntitySelected(Entity *)),this,SLOT(setEntity(Entity*)));
+    connect(iim,SIGNAL(sEntitySelected(Entity *)),this,SLOT(setEntity(Entity*)), Qt::DirectConnection);
+    connect(iim, SIGNAL(sEntitySelected(Entity*)), fitness, SLOT(setEntity(Entity*)), Qt::DirectConnection);
+    connect(iim, SIGNAL(sExperimentUpdated(Experiment*)), fitness, SLOT(setExperiment(Experiment*)),Qt::DirectConnection);
+    connect(iim, SIGNAL(sLoadExperiment(Experiment*)), fitness, SLOT(setExperiment(Experiment*)),Qt::DirectConnection);
     connect(iim,SIGNAL(sEntityDeleted(Entity *)),this,SLOT(entityDeleted(Entity *)),Qt::DirectConnection);
+    connect(iim, SIGNAL(sEntityDeleted(Entity*)), fitness, SLOT(entityDeleted(Entity*)), Qt::DirectConnection);
 }
 
 void StatisticsPropertiesController::entityDeleted(Entity * entity){
@@ -83,13 +94,33 @@ void StatisticsPropertiesController::resetAllStats(){
         for(int i=0; i<ui->twStats->topLevelItemCount(); ++i) {
             ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->stat->resetAll();
         }
+        entity->setAge(0);
+        fitness->reset();
     }
+
 }
 
 void StatisticsPropertiesController::resetSelectedStat(){
     if(entity){
+
         if(ui->twStats->currentItem()){
+            if(((StatisticTreeWidgetItem *) ui->twStats->currentItem())->stat->getName() == "age") {
+                fitness->reset();
+                entity->setAge(0);
+            }
+
             ((StatisticTreeWidgetItem *) ui->twStats->currentItem())->stat->resetAll();
         }
+    }
+}
+
+void StatisticsPropertiesController::on_pushButton_clicked()
+{
+    if(entity){
+        for(int i=0; i<ui->twStats->topLevelItemCount(); ++i) {
+            ((StatisticTreeWidgetItem *) ui->twStats->topLevelItem(i))->stat->resetAll();
+        }
+        entity->setAge(0);
+        fitness->reset();
     }
 }

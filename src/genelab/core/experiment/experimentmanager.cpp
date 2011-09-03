@@ -211,6 +211,10 @@ namespace GeneCraftCore {
 
             // conversion
             r->setWorker("exp_" + from->getId());
+
+            // reset fitness
+            r->setFitness(0);
+            r->setNbRun(0);
         }
 
         results->clear();
@@ -244,7 +248,7 @@ namespace GeneCraftCore {
 
         // Creating N new spider
         for(int i = 0; i < this->popSize; i++) {
-            newPop.append(new Result(exp->getId(), -1, 0, this->randomNewEntity(), this->workerName));
+            newPop.append(new Result(exp->getId(), 0, 0, 0, this->randomNewEntity(), this->workerName));
         }
 
         // Adding the population to the experience
@@ -354,7 +358,7 @@ namespace GeneCraftCore {
             Result* r = results->getBestResults().at(i);
 
             // Mutation of best one
-            newActivePop.append(new Result(this->exp->getId(), -1, 0,
+            newActivePop.append(new Result(this->exp->getId(), 0, 0, 0,
                                           mutations->mutateEntity(r->getGenome()), this->workerName));
             qDebug() << "loading mutation of best results with fitness " << r->getFitness();
         }
@@ -373,7 +377,7 @@ namespace GeneCraftCore {
 
             qDebug() << (newGenome == genome);
             // Adding to the active population
-            newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
+            newActivePop.append(new Result(exp->getId(), 0, 0, 0, newGenome, workerName));
             qDebug() << "loading mutation of random results with fitness " << r->getFitness();
         }
 
@@ -389,7 +393,7 @@ namespace GeneCraftCore {
             Result* r = activePop.at(i);
 
             // Mutation of best one
-            newActivePop.append( new Result(this->exp->getId(), -1, 0,
+            newActivePop.append( new Result(this->exp->getId(), 0, 0, 0,
                                             mutations->mutateEntity(r->getGenome()), this->workerName));
             qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
         }
@@ -407,7 +411,7 @@ namespace GeneCraftCore {
 
             qDebug() << (newGenome == genome);
             // Adding to the active population
-            newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
+            newActivePop.append(new Result(exp->getId(), 0, 0, 0, newGenome, workerName));
             qDebug() << "loading mutation of activePop with fitness " << r->getFitness();
         }
 
@@ -415,7 +419,7 @@ namespace GeneCraftCore {
         int needed = this->popSize - newActivePop.length();
         for(int i = 0; i < needed; i++) {
             QVariant newGenome = this->randomNewEntity();
-            newActivePop.append(new Result(exp->getId(), -1, 0, newGenome, workerName));
+            newActivePop.append(new Result(exp->getId(), 0, 0, 0, newGenome, workerName));
             qDebug() << "new random genome from seeds !";
         }
 
@@ -434,64 +438,65 @@ namespace GeneCraftCore {
             // At the beginning of the simulation
             r->setGenome(QxtJSON::parse(QxtJSON::stringify(r->getGenome())));
 
-            if(r->getFitness() != -1) {
-                qDebug() << "evaluation of old fitness : " << r->getFitness();
-            }
+            qDebug() << "Evaluation of a specimen" << exp->getNbRun() << "times.";
+            for(int run = 0; run < exp->getNbRun(); run++) {
 
-            // Spawn the entity from his genome
-            Entity *e = this->spawnEntity(r->getGenome());
+                // Spawn the entity from his genome
+                Entity *e = this->spawnEntity(r->getGenome());
 
-            // Reset all stats
-            foreach(Statistic* stat, e->getStatisticsStorage()->getStatistics()) {
-                stat->resetAll();
-            }
-
-            // Set age
-            e->setAge(0);
-            e->getShape()->getRoot()->setOutputsFrom(fromNormal); // From brain
-
-
-            bool stable, simulated;
-            btScalar fitness;
-
-            // Make it stable if needed
-            if(exp->getOnlyIfEntityIsStable())
-                stable = this->stabilizeEntity(e, r);
-            else
-                stable = true;
-
-            // Stabilisation reached simulate it
-            if(stable)
-                simulated = this->simulateEntity(e);
-
-            // If stable and simulated, evaluate it
-            if(stable) {
-                if(simulated) {
-                    fitness = this->evaluateEntity(e);
-                    r->setFitness(fitness);
-
-                    // Store the statistics inside the result
-                    QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
-                    r->setStatistics(QxtJSON::parse(stats));
-
-                    // env pressure on genes
-                    r->setGenome(e->serialize());
-
-                    // and finaly add the result to resultsManager
-                    results->addResult(r);
-
-                    qDebug() << "entity evaluated, fitness =" << fitness;
-                } else {
-                    qDebug() << "the entity die during simulation";
+                // Reset all stats
+                foreach(Statistic* stat, e->getStatisticsStorage()->getStatistics()) {
+                    stat->resetAll();
                 }
-            } else {
-                qDebug() << "the entity wasn't able to stabilize in the given time, or exploded";
-                r->setFitness(-1);
-            }
 
-            // Delete the entity !! Very important
-            ee->removeEntity(e);
-            delete e;
+                // Set age
+                e->setAge(0);
+                e->getShape()->getRoot()->setOutputsFrom(fromNormal); // From brain
+
+
+                bool stable, simulated;
+                btScalar fitness;
+
+                // Make it stable if needed
+                if(exp->getOnlyIfEntityIsStable())
+                    stable = this->stabilizeEntity(e, r);
+                else
+                    stable = true;
+
+                // Stabilisation reached simulate it
+                if(stable)
+                    simulated = this->simulateEntity(e);
+
+                // If stable and simulated, evaluate it
+                if(stable) {
+                    if(simulated) {
+                        fitness = this->evaluateEntity(e);
+                        r->setFitness(fitness);
+
+                        // Store the statistics inside the result
+                        QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
+                        r->setStatistics(QxtJSON::parse(stats));
+
+                        // env pressure on genes
+                        r->setGenome(e->serialize());
+
+                        // and finaly add the result to resultsManager
+                        results->addResult(r);
+
+                        qDebug() << "entity evaluated, fitness =" << fitness << "for a mean of" << r->getFitness() << "on" << r->getNbRun() << "run.";
+                    } else {
+                        r->setFitness(-1);
+                        qDebug() << "the entity die during simulation";
+                    }
+                } else {
+                    qDebug() << "the entity wasn't able to stabilize in the given time, or exploded";
+                    r->setFitness(-1);
+                }
+
+                // Delete the entity !! Very important
+                ee->removeEntity(e);
+                delete e;
+            }
         }
     }
 
@@ -502,6 +507,15 @@ namespace GeneCraftCore {
         delete world;
         world = worldFactory->createWorld(factory, shapesFactory, exp->getWorldDataMap());
         btVector3 position = world->getSpawnPosition();
+
+        // TODO: better Small noize
+        if(exp->getSpawnNoise()) {
+            position.setX(position.x() + Tools::random(-0.1, 0.1));
+            position.setY(position.y() + Tools::random(-0.1, 0.1));
+            position.setZ(position.z() + Tools::random(-0.1, 0.1));
+        }
+
+
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         if(e == NULL) {
             qDebug() << "Entity genome corrupted !";

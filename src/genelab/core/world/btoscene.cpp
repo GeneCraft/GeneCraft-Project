@@ -6,7 +6,6 @@
 
 // ogre
 #include "Ogre.h"
-#include "Terrain/OgreTerrain.h"
 
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"

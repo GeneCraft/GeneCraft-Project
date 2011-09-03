@@ -112,6 +112,12 @@ namespace GeneCraftCore {
         Ressource* getRessource() { return ressource; }
         void setRessource(Ressource* ressource) { this->ressource = ressource; }
 
+        int getNbRun() { return this->nbRun; }
+        void setNbRun(int n) {this->nbRun = n; }
+
+        bool getSpawnNoise() { return this->spawnNoise; }
+        void setSpawnNoise(bool spawnNoise) { this->spawnNoise = spawnNoise; }
+
     protected:
 
         // Information
@@ -146,6 +152,10 @@ namespace GeneCraftCore {
         QString validityFunction;
         QString endFunction;
         QString dieFunction;
+
+        // Simulations
+        int nbRun;
+        bool spawnNoise;
     };
 }
 

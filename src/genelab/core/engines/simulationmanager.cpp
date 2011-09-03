@@ -1,7 +1,6 @@
 #include "simulationmanager.h"
 
 #include "engine.h"
-
 #include <QTimer>
 #include <ctime>
 
@@ -21,6 +20,7 @@ namespace GeneCraftCore {
 
         this->stepBySec = 60;
         this->nbSteps = 0;
+        fitness = NULL;
     }
 
     void SimulationManager::setup() {
@@ -52,6 +52,17 @@ namespace GeneCraftCore {
         stepTimer->stop();
     }
 
+    bool SimulationManager::status() {
+        return stepTimer->isActive();
+    }
+
+    void SimulationManager::setStatus(bool st) {
+        if(st)
+            stepTimer->start();
+        else
+            stepTimer->stop();
+    }
+
     bool SimulationManager::toggle() {
         if(stepTimer->isActive()) {
             stepTimer->stop();
@@ -81,6 +92,9 @@ namespace GeneCraftCore {
         // after step
         foreach(Engine* e, engines)
             e->afterStep();
+
+        if(fitness)
+            fitness->step();
     }
 
     void SimulationManager::renderUpdate() {

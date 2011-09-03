@@ -236,6 +236,8 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         // ----------------
         ui->teValidateFunction->setText(Ressource::beautifullJson(experiment->getValidityFunction()));
         ui->teFitnessFunction->setText(Ressource::beautifullJson(experiment->getEvalFunction()));
+        ui->spbNbRun->setValue(experiment->getNbRun());
+        ui->chkRandomPos->setChecked(experiment->getSpawnNoise());
 
         // ---------------
         // -- mutations --
@@ -488,6 +490,8 @@ void ExperimentsPropertiesController::updateStructures() {
     // Evaluation
     experiment->setValidityFunction(Ressource::beautifullJson(ui->teValidateFunction->toPlainText()));
     experiment->setEvalFunction(Ressource::beautifullJson(ui->teFitnessFunction->toPlainText()));
+    experiment->setNbRun(ui->spbNbRun->value());
+    experiment->setSpawnNoise(ui->chkRandomPos->isChecked());
 
     // Mutations
     boneLengthMutation->save();

@@ -5,6 +5,7 @@
 #include "btoworldfactory.h"
 
 #define EXP_FORMAT_VERSION 0.1
+#define DEFAULT_NB_RUN 3
 
 namespace GeneCraftCore {
 
@@ -35,18 +36,26 @@ Experiment::Experiment() : ressource(NULL){
         seedInfo.insert("family", "spider");
 
         evalFunction  = QString("(function() {")+
-                                    QString("return entity.rootRelVelocity.sum; ")+
+                                    QString("return entity.rootDistance.value; ")+
                                     QString("})");
 
-        validityFunction = "(function() {return entity.bodySensors.max < 3; })";
+        validityFunction = "(function() {return true; })";
         endFunction     = "(function(actualStep) { return false; })";
-        dieFunction     = "(function() { return entity.rootYRelVelocity.sum < 0; })";
+        dieFunction     = "(function() { return false; })";
 
+
+        nbRun = DEFAULT_NB_RUN;
+        if(nbRun > 1) {
+            spawnNoise = true;
+        } else {
+            spawnNoise = false;
+        }
 
     }
-Experiment::~Experiment() {
-    delete mutationsManager;
-}
+
+    Experiment::~Experiment() {
+        delete mutationsManager;
+    }
 
     Experiment::Experiment(QVariant data) : ressource(NULL) {
 
@@ -122,6 +131,18 @@ Experiment::~Experiment() {
 
             dieFunction = "(function() {return false;})";
         }
+
+        // Number of evaluation for each individual
+        nbRun = DEFAULT_NB_RUN;
+        if(map.contains("nbRun")) {
+            nbRun = map["nbRun"].toInt();
+        }
+
+        if(map.contains("spawnNoise")) {
+            spawnNoise = map["spawnNoise"].toBool();
+        } else {
+            spawnNoise = false;
+        }
     }
 
     QVariant Experiment::serialize() {
@@ -155,6 +176,9 @@ Experiment::~Experiment() {
         map.insert("evalFunction", evalFunction);
         map.insert("validityFunction", validityFunction);
         map.insert("dieFunction", dieFunction);
+        map.insert("nbRun", this->nbRun);
+        map.insert("spawnNoise", this->spawnNoise);
+
         return map;
     }
 }

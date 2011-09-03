@@ -7,6 +7,7 @@
 QT       += core gui opengl testlib network script webkit
 TARGET = CreatureViewer
 TEMPLATE = app
+CONFIG += silent
 
 # genelab core
 INCLUDEPATH += \
@@ -30,7 +31,8 @@ INCLUDEPATH += \
 INCLUDEPATH  += \
     ../lib/bullet/src \
     ../lib/bullet/Extra/ConvexDecomposition \
-    ../lib/qxt/src/core
+    ../lib/qxt/src/core \
+    ../lib/qwt/include/
 
  win32 {
     INCLUDEPATH += ../lib/ogre/include/OGRE \
@@ -69,6 +71,7 @@ unix {
     LIBS += -L/Users/cyprienhuissoud/Downloads/Dependencies/bin/Release
     LIBS += -L../lib/qxt/lib
     LIBS += -L../lib/bullet/lib
+    LIBS += -L../lib/qwt/lib
     LIBS += -F/Users/cyprienhuissoud/Downloads/ogre_src_v1-7-3/build/lib/RelWithDebInfo
     LIBS += -framework Ogre
     LIBS += -lzzip
@@ -81,6 +84,7 @@ LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
 LIBS += -lQxtCore
+LIBS += -lqwt_debug
 #LIBS += -lConvexDecomposition
 #LIBS += -lBulletWorldImporter -lBulletFileLoader
 #LIBS += -lBulletMultiThreaded
@@ -206,7 +210,8 @@ SOURCES += \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.cpp \
     main.cpp \
     ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.cpp \
-    ../genelab/core/ui/widgets/experiments/conversionctrl.cpp
+    ../genelab/core/ui/widgets/experiments/conversionctrl.cpp \
+    ../genelab/core/ui/widgets/plot/fitnessplot.cpp
 
 
 HEADERS += \
@@ -323,7 +328,8 @@ HEADERS += \
     ../genelab/apps/genelab/creatureviewer/inputlisteners/creatureviewerinputmanager.h \
     ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.h \
     ../genelab/core/genecraftcoreclasses.h \
-    ../genelab/core/ui/widgets/experiments/conversionctrl.h
+    ../genelab/core/ui/widgets/experiments/conversionctrl.h \
+    ../genelab/core/ui/widgets/plot/fitnessplot.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \

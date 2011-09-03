@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QTimer>
 #include "genecraftcoreclasses.h"
+#include "widgets/plot/fitnessplot.h"
 
 using namespace GeneCraftCore;
-
 namespace Ui {
     class StatisticsPropertiesController;
 }
@@ -23,13 +23,15 @@ public:
     void connectToInspectorInputManager(InspectorsInputManager *iim);
 
 public slots:
-
     void setEntity(Entity *entity);
     void updateStats();
     void resetAllStats();
     void resetSelectedStat();
 
     void entityDeleted(Entity *entity);
+public:
+
+    FitnessPlot* fitness;
 
 private:
     Ui::StatisticsPropertiesController *ui;
@@ -37,6 +39,9 @@ private:
     Entity *entity;
 
     QTimer *statsTimer;
+
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // STATISTICSPROPERTIESCONTROLLER_H

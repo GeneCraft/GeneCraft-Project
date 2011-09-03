@@ -21,7 +21,7 @@ namespace GeneCraftCore {
           * A result is a fitness for a genome, and the ressource where this result is stored
           * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
           */
-        Result(QString expId, btScalar fitness, int stableTime, QVariant genome,
+        Result(QString expId, btScalar fitness, int nbRun, int stableTime, QVariant genome,
                QString workerName = "Anonymous",
                QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
                );
@@ -52,7 +52,10 @@ namespace GeneCraftCore {
         static Result* loadResult(QVariant data, bool& ok);
 
         btScalar getFitness() const {
-            return fitness;
+            if(nbRun > 0)
+                return fitness/nbRun;
+            else
+                return -1;
         }
 
         QVariant getGenome() const {
@@ -72,7 +75,8 @@ namespace GeneCraftCore {
         }
 
         void setFitness(btScalar fitness) {
-            this->fitness = fitness;
+            this->nbRun++;
+            this->fitness += fitness;
         }
 
         void setGenome(QVariant genome) {
@@ -123,6 +127,14 @@ namespace GeneCraftCore {
             this->worker = worker;
         }
 
+        int getNbRun() {
+            return this->nbRun;
+        }
+
+        void setNbRun(int nbRun) {
+            this->nbRun = nbRun;
+        }
+
     protected:
         // Score
         btScalar fitness;
@@ -142,6 +154,8 @@ namespace GeneCraftCore {
         QVariant statistics;
         // Stability reached at
         int stableTime;
+        // Nb Time tested
+        int nbRun;
     };
 }
 

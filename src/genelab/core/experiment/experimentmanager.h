@@ -79,7 +79,6 @@ namespace GeneCraftCore {
         btWorldFactory* worldFactory;
         btShapesFactory* shapesFactory;
         CreatureFactory* creatureFactory;
-
         btWorld* world;
 
         EntitiesEngine* ee;
