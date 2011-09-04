@@ -23,6 +23,7 @@ protected:
 
     btBoxShape* shape;
     btDefaultMotionState* motionState;
+    RigidBodyOrigin *origin;
 };
 
 }

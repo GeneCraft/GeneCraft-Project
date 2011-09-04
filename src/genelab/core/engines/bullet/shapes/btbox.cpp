@@ -39,7 +39,7 @@ void btBox::init(btVector3 size, const btTransform &transform, const btScalar de
     this->rigidBody = new btRigidBody(mass,this->motionState,this->shape,fallInertia);
     this->rigidBody->setFriction(friction);
 
-    RigidBodyOrigin *origin = new RigidBodyOrigin(RigidBodyOrigin::BASIC_SHAPE,(QObject *)this);
+    origin = new RigidBodyOrigin(RigidBodyOrigin::BASIC_SHAPE,(QObject *)this);
     rigidBody->setUserPointer(origin);
 }
 
