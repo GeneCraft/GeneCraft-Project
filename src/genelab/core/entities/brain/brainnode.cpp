@@ -44,6 +44,8 @@ QString fromType(NodeType type) {
         return "SIGM";
         case SINUS:
         return "SINUS";
+        case WAVE:
+        return "WAVE";
 
         // Memory
         case INTEGRATE:
@@ -124,6 +126,8 @@ NodeType fromString(QString string) {
         return MAX;
     if(string =="SINUS")
         return SINUS;
+    if(string =="WAVE")
+        return WAVE;
 
     return BAD_TYPE;
 }

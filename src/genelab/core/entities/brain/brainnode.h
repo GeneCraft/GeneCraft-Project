@@ -43,6 +43,7 @@ enum NodeType {
     MIN,
     MAX,
     SINUS,
+    WAVE,
 
     // MemorySpace used by all memory node
     MEMORY_SPACE,

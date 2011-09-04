@@ -91,7 +91,7 @@ public:
     {
         this->r = r;
 
-        setText(0, QString::number(r->getFitness(), 10, 2));
+        setText(0, QString::number(r->getFitness(), 10, 4));
         setText(1, r->getWorker());
         setText(2, QString::number(r->getGenome().toMap()["origins"].toMap()["generation"].toInt()));
     }

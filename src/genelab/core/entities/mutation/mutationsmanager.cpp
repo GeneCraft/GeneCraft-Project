@@ -241,6 +241,10 @@ namespace GeneCraftCore {
         constValue = new FloatMutation(map["constValue"]);
         brainNodeList = new StructuralList(map["brainNodes"]);
         brainStructural = new StructuralMutation(map["brainStruct"]);
+        if(brainNodeList->elements.size() < 22) {
+            qDebug() << "adding wave to the list of mutations !";
+            brainNodeList->elements.append(new MutationElement("wave : a", 22, 4));
+        }
     }
     MutationsManager::~MutationsManager(){
         delete boneLength;
@@ -991,6 +995,13 @@ namespace GeneCraftCore {
                 newConnexionInfo.append(node);
                 newConnexionInfo.append(",");
                 break;
+            case WAVE:
+                newConnexionInfo.append(nodePart[0]);
+                newConnexionInfo.append(" " +
+                            QString::number(constValue->mutate(nodePart[1].toFloat())));
+                newConnexionInfo.append(",");
+                break;
+
             case MEMORY_SPACE:
             case BAD_TYPE:
                 qDebug() << "SHOULD NOT BE IN STRING memoryspace or badtype !!";
@@ -1039,6 +1050,7 @@ namespace GeneCraftCore {
                 break;
             case INPUT:
             case CONSTANT:
+            case WAVE:
                 break;
             case INTEGRATE:
             case INTERPOLATE:

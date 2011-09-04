@@ -104,6 +104,11 @@ btScalar sigmoid(btScalar x)
                 tree.append(new BrainNode(SINUS));
                 tree.append(new BrainMemory(1));
                 break;
+            case WAVE:
+                tree.append(new BrainNode(WAVE));
+                tree.append(new BrainNodeConst(nodePart[1].toFloat()));
+                tree.append(new BrainMemory(1));
+                break;
             case MEMORY_SPACE:
             case BAD_TYPE:
                 qDebug() << "SHOULD NOT BE IN STRING memoryspace or badtype !!";
@@ -345,6 +350,27 @@ btScalar sigmoid(btScalar x)
             max += c;
             return sin(max * SIMD_PI / 180.);
             break;
+        case WAVE:
+            a = ((BrainNodeConst*)(*it))->value;
+            it++;
+            m = (BrainMemory*)(*it);
+            it++;
+            max = m->mem.last();
+            max+=a;
+
+            if(max != max) // do not store a nan !
+                max = 0.;
+
+            if(max > 360) {
+                max -= 360;
+            }
+            else if(max < -360) {
+                max += 360;
+            }
+
+            m->insert(max);
+            return sin(max * SIMD_PI / 180.);
+            break;
         case MEMORY_SPACE:
             return 0;
         case BAD_TYPE:
@@ -469,18 +495,24 @@ btScalar sigmoid(btScalar x)
                 func.append(" " + QString::number(maxmem) + ",");
                 func += createRandomFunc(depth -1);
                 break;
+            default:
+                qDebug() << "should not happend" << __LINE__ << __FILE__;
             }
         } else if(rand < 30) {
             func += "CONST ";
-            btScalar x = ((btScalar)qrand())/RAND_MAX*2. -  1. ; //  0.0 to 1.0
+            btScalar x = Tools::random(-10.0, 10.0) ; //  -10..
             func += QString::number(x) + ",";
         }
-        else {
+        else if(rand < 70) {
             func += "IN ";
             btScalar x = ((btScalar)qrand())/RAND_MAX; //  0.0 to 1.0
             btScalar y = ((btScalar)qrand())/RAND_MAX; //  0.0 to 1.0
             func += QString::number(x) + " " + QString::number(y) + ",";
+        } else {
+            func.append("WAVE");
+            func.append(" " + QString::number(Tools::random(-10.0, 10.0)) + ",");
         }
+
 
         return func;
     }
