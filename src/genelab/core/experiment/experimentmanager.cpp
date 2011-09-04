@@ -480,9 +480,6 @@ namespace GeneCraftCore {
                         // env pressure on genes
                         r->setGenome(e->serialize());
 
-                        // and finaly add the result to resultsManager
-                        results->addResult(r);
-
                         qDebug() << "entity evaluated, fitness =" << fitness << "for a mean of" << r->getFitness() << "on" << r->getNbRun() << "run.";
                     } else {
                         r->setFitness(-1);
@@ -497,6 +494,10 @@ namespace GeneCraftCore {
                 ee->removeEntity(e);
                 delete e;
             }
+
+
+            // and finaly add the result to resultsManager
+            results->addResult(r);
         }
     }
 
