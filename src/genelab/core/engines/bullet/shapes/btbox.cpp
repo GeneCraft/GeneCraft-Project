@@ -17,6 +17,7 @@ btBox::~btBox() {
     delete rigidBody;
     delete shape;
     delete motionState;
+    delete origin;
 }
 
 void btBox::init(btVector3 size, const btTransform &transform, const btScalar density)
