@@ -10,6 +10,7 @@
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
 #include "LinearMath/btVector3.h"
+#include "bullet/shapes/btshape.h"
 
 namespace GeneCraftCore {
 
@@ -36,6 +37,7 @@ protected:
     btDefaultMotionState* groundMotionState;
     btStaticPlaneShape *collisionShape;
     btRigidBody *rigidBody;
+    QList<btShape*> shapes;
 
 };
 

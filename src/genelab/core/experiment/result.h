@@ -135,6 +135,11 @@ namespace GeneCraftCore {
             this->nbRun = nbRun;
         }
 
+        void resetFitness() {
+            this->nbRun = 0;
+            this->fitness = 0;
+        }
+
     protected:
         // Score
         btScalar fitness;

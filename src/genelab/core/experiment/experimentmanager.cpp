@@ -213,8 +213,7 @@ namespace GeneCraftCore {
             r->setWorker("exp_" + from->getId());
 
             // reset fitness
-            r->setFitness(0);
-            r->setNbRun(0);
+            r->resetFitness();
         }
 
         results->clear();

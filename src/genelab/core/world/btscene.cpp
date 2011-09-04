@@ -34,7 +34,7 @@ namespace GeneCraftCore {
     btScene::~btScene() {
         qDeleteAll(spawns);
         spawns.clear();
-        // The flood
+        // The floor
         if(groundMotionState) {
             world->getBulletWorld()->removeRigidBody(rigidBody);
             delete rigidBody;
@@ -44,6 +44,10 @@ namespace GeneCraftCore {
             rigidBody = NULL;
             collisionShape = NULL;
         }
+
+        // and the shapes !!!
+        qDeleteAll(shapes);
+        shapes.clear();
     }
 
     void btScene::setup() {
@@ -87,6 +91,7 @@ namespace GeneCraftCore {
                     // create the box
                     btBox *box = world->getShapesFactory()->createBox(size, transform, shapeMap["density"].toFloat());
                     box->setup();
+                    shapes.append(box);
 
                 }
                 else if(type.compare("sphere") == 0) {
@@ -97,8 +102,9 @@ namespace GeneCraftCore {
                     transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
-                    btSphere *shere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
-                    shere->setup();
+                    btSphere *sphere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
+                    sphere->setup();
+                    shapes.append(sphere);
                 }
                 else if(type.compare("cylinder") == 0) {
 
@@ -110,6 +116,7 @@ namespace GeneCraftCore {
                     // create the box
                     btCylinder *cylinder = world->getShapesFactory()->createCylinder(shapeMap.value("radius").toFloat(), shapeMap.value("height").toFloat(), transform, shapeMap["density"].toFloat());
                     cylinder->setup();
+                    shapes.append(cylinder);
                 }
             }
         }
