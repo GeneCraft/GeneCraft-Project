@@ -13,8 +13,14 @@ namespace GeneCraftCore {
 
         if(map["type"].toInt() == FloatMutationType) {
             probability = map["probability"].toDouble();
-            minFact     = map["minFact"].toDouble();
-            maxFact     = map["maxFact"].toDouble();
+            if(map.contains("mean")) {
+                mean      = map["mean"].toDouble();
+                sigma     = map["sigma"].toDouble();
+            } else {
+                probability = 1.0;
+                mean = 0.0;
+                sigma = 0.02;
+            }
             minValue    = map["minValue"].toDouble();
             maxValue    = map["maxValue"].toDouble();
             enable      = map["enable"].toBool();
@@ -28,8 +34,8 @@ namespace GeneCraftCore {
     FloatMutation::FloatMutation()
     {
         probability = 1.0;
-        minFact     = -1.0;
-        maxFact     = 1.0;
+        mean      = 0.0;
+        sigma     = 0.5;
         minValue    = 0.0;
         maxValue    = 1.0;
         enable      = true;
@@ -41,8 +47,8 @@ namespace GeneCraftCore {
 
         map.insert("type",QVariant(FloatMutationType));
         map.insert("probability",QVariant((double)probability));
-        map.insert("minFact",QVariant((double)minFact));
-        map.insert("maxFact",QVariant((double)maxFact));
+        map.insert("mean",QVariant((double)mean));
+        map.insert("sigma",QVariant((double)sigma));
         map.insert("minValue",QVariant((double)minValue));
         map.insert("maxValue",QVariant((double)maxValue));
         map.insert("enable",QVariant(enable));
@@ -66,7 +72,8 @@ namespace GeneCraftCore {
         }
 
         //btScalar newValue = value + Tools::random(minFact, maxFact) * value;
-        btScalar newValue = value + (maxValue - minValue) * Tools::random(minFact, maxFact);
+        float v = Tools::normalRandom(mean, sigma);
+        btScalar newValue = value + (maxValue - minValue) * v;
 
         if(newValue < minValue)
             newValue = minValue;

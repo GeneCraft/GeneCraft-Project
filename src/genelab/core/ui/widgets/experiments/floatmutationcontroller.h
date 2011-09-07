@@ -34,8 +34,8 @@ public slots:
     void save();
     void nameToggled(bool checked);
     void probabilityChanged(int value);
-    void minFactorChanged(int value);
-    void maxFactorChanged(int value);
+    void sigmaChanged(int value);
+    void meanChanged(int value);
 //    void minValueChanged(int value);
 //    void maxValueChanged(int value);
 

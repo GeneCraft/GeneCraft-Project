@@ -17,11 +17,26 @@
 // world
 #include "btoworld.h"
 
+// Terrain
+#include "Terrain/OgreTerrain.h"
+#include "Terrain/OgreTerrainGroup.h"
+
+
+// Debug
+#include <QDebug>
 namespace GeneCraftCore {
 
+    float terrain[129*129];
     btoScene::btoScene(btoWorld* world, QVariant sceneData, QObject *parent) :
         btScene(world, sceneData, parent)
     {
+        mGlobals = NULL;
+        mTerrain = NULL;
+    }
+
+    btoScene::~btoScene() {
+        //delete mTerrainGroup;
+        //delete mGlobals;
     }
 
     void btoScene::setup() {
@@ -51,6 +66,102 @@ namespace GeneCraftCore {
 
         // flatland
         if(floor["type"].toString() == "flatland") {
+                    qDebug() << "first";
+                    /*mGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
+                    mGlobals->setMaxPixelError(0);
+
+                    Ogre::Vector3 lightdir(0.55, -0.3, 0.75);
+                    lightdir.normalise();
+
+                    Ogre::Light* light = btoEngine->getOgreEngine()->getOgreSceneManager()->createLight();
+                    light->setType(Ogre::Light::LT_DIRECTIONAL);
+                    light->setDirection(lightdir);
+                    light->setDiffuseColour(Ogre::ColourValue::White);
+                    light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
+
+                    btoEngine->getOgreEngine()->getOgreSceneManager()->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2));
+
+                    //mGlobals->setCompositeMapDistance(3000);
+
+                    mGlobals->setLightMapDirection(light->getDerivedDirection());
+                    mGlobals->setCompositeMapAmbient(Ogre::ColourValue(1,1,1));
+                    mGlobals->setCompositeMapDiffuse(Ogre::ColourValue(1,1,1));
+
+                    mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(btoEngine->getOgreEngine()->getOgreSceneManager(), Ogre::Terrain::ALIGN_X_Z, 129, 1000.0f);
+                    //mTerrainGroup->setFilenameConvention(Ogre::String("BasicTutorial3Terrain"), Ogre::String("dat"));
+                    mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
+
+                    for(int i = 0; i < 129; i++) {
+                        for (int j = 0; j < 129; j++) {
+                            terrain[j+i*129] = 20-sin(i/129.*M_PI)*20 + 20-sin(j/129.*M_PI)*20;
+                        }
+                    }
+
+
+
+                    Ogre::Terrain::ImportData* imp = new Ogre::Terrain::ImportData();
+                    imp->terrainSize = 129;
+                    imp->worldSize = 1000.0;
+                    imp->inputScale = 100.0;
+                    imp->inputFloat = terrain;
+                    imp->layerList.resize(3);
+
+                    imp->layerList[0].worldSize = 100;
+                    imp->layerList[0].textureNames.push_back("dirt_grayrocky_diffusespecular.dds");
+                    imp->layerList[0].textureNames.push_back("dirt_grayrocky_normalheight.dds");
+
+                    imp->layerList[1].worldSize = 30;
+                    imp->layerList[1].textureNames.push_back("grass_green-01_diffusespecular.dds");
+                    imp->layerList[1].textureNames.push_back("grass_green-01_normalheight.dds");
+
+                    imp->layerList[2].worldSize = 200;
+                    imp->layerList[2].textureNames.push_back("growth_weirdfungus-03_diffusespecular.dds");
+                    imp->layerList[2].textureNames.push_back("growth_weirdfungus-03_normalheight.dds");
+
+                    mTerrainGroup->defineTerrain(0, 0, imp);
+
+                    Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
+                    Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(8);
+                    mTerrainGroup->loadAllTerrains(true);
+
+                    if (true)
+                    {
+                        Ogre::TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
+                        while(ti.hasMoreElements())
+                        {
+                            Ogre::Terrain* t = ti.getNext()->instance;
+                            Ogre::TerrainLayerBlendMap* blendMap0 = t->getLayerBlendMap(1);
+                            Ogre::TerrainLayerBlendMap* blendMap1 = t->getLayerBlendMap(2);
+                            Ogre::Real minHeight0 = 70;
+                            Ogre::Real fadeDist0 = 40;
+                            Ogre::Real minHeight1 = 70;
+                            Ogre::Real fadeDist1 = 15;
+                            float* pBlend1 = blendMap1->getBlendPointer();
+                            for (Ogre::uint16 y = 0; y < t->getLayerBlendMapSize(); ++y)
+                            {
+                                for (Ogre::uint16 x = 0; x < t->getLayerBlendMapSize(); ++x)
+                                {
+                                    Ogre::Real tx, ty;
+
+                                    blendMap0->convertImageToTerrainSpace(x, y, &tx, &ty);
+                                    Ogre::Real height = t->getHeightAtTerrainPosition(tx, ty);
+                                    Ogre::Real val = (height - minHeight0) / fadeDist0;
+                                    val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
+
+                                    val = (height - minHeight1) / fadeDist1;
+                                    val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
+                                    *pBlend1++ = val;
+                                }
+                            }
+                            blendMap0->dirty();
+                            blendMap1->dirty();
+                            blendMap0->update();
+                            blendMap1->update();
+                        }
+                    }
+
+
+                    mTerrainGroup->freeTemporaryResources();*/
 
             Ogre::Entity *ent;
             Ogre::Plane p;

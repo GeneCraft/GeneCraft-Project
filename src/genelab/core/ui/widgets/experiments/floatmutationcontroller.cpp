@@ -19,8 +19,8 @@ FloatMutationController::FloatMutationController(FloatMutation *mutation, QStrin
 
     // WTF without qRound, values are false !
     ui->sProbability->setValue(qRound(mutation->probability * PROBABILITY_PRECISION));
-    ui->sMinFactor->setValue(qRound(mutation->minFact * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
-    ui->sMaxFactor->setValue(qRound(mutation->maxFact * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
+    ui->sMean->setValue(qRound(mutation->mean * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
+    ui->sSigma->setValue(qRound(mutation->sigma * FACTOR_PRECISION)); // WTF doesn't work for -1 without qRound ?!?
     ui->cbName->setChecked(mutation->enable);
     nameToggled(mutation->enable);
 }
@@ -32,8 +32,8 @@ void FloatMutationController::createForm(QString name){
 
     connect(ui->cbName,SIGNAL(toggled(bool)),this,SLOT(nameToggled(bool)));
     connect(ui->sProbability,SIGNAL(valueChanged(int)),this,SLOT(probabilityChanged(int)));
-    connect(ui->sMinFactor,SIGNAL(valueChanged(int)),this,SLOT(minFactorChanged(int)));
-    connect(ui->sMaxFactor,SIGNAL(valueChanged(int)),this,SLOT(maxFactorChanged(int)));
+    connect(ui->sMean,SIGNAL(valueChanged(int)),this,SLOT(meanChanged(int)));
+    connect(ui->sSigma,SIGNAL(valueChanged(int)),this,SLOT(sigmaChanged(int)));
 //    connect(ui->sMinValue,SIGNAL(valueChanged(int)),this,SLOT(minValueChanged(int)));
 //    connect(ui->sMaxValue,SIGNAL(valueChanged(int)),this,SLOT(maxValueChanged(int)));
 }
@@ -48,8 +48,8 @@ void FloatMutationController::save() {
     if(mutation != NULL) {
         mutation->enable = ui->cbName->isChecked();
         mutation->probability = ui->sProbability->value() / PROBABILITY_PRECISION;
-        mutation->minFact = ui->sMinFactor->value() / FACTOR_PRECISION;
-        mutation->maxFact = ui->sMaxFactor->value() / FACTOR_PRECISION;
+        mutation->mean = ui->sMean->value() / FACTOR_PRECISION;
+        mutation->sigma = ui->sSigma->value() / FACTOR_PRECISION;
     }
 }
 
@@ -79,11 +79,11 @@ void FloatMutationController::probabilityChanged(int value){
     ui->lProbabilty->setText(QString::number(value / PROBABILITY_PRECISION * 100.0).append("%"));
 }
 
-void FloatMutationController::minFactorChanged(int value){
-    ui->lMinFactor->setText(QString::number(value / FACTOR_PRECISION));
+void FloatMutationController::meanChanged(int value){
+    ui->lMean->setText(QString::number(value / FACTOR_PRECISION));
 }
-void FloatMutationController::maxFactorChanged(int value){
-    ui->lMaxFactor->setText(QString::number(value / FACTOR_PRECISION));
+void FloatMutationController::sigmaChanged(int value){
+    ui->lSigma->setText(QString::number(value / FACTOR_PRECISION));
 }
 //void FloatMutationController::minValueChanged(int value){
 //    ui->lMinValue->setText(QString::number(value));

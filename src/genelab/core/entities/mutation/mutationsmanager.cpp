@@ -42,33 +42,33 @@ namespace GeneCraftCore {
 
         // Bone Length
         boneLength = new FloatMutation();
-        boneLength->probability  = 0.05;
-        boneLength->minFact      = -0.05;
-        boneLength->maxFact      =  0.05;
+        boneLength->probability  = 1.0;
+        boneLength->mean         = 0.0;
+        boneLength->sigma        = 0.02;
         boneLength->minValue     = 0.1;
         boneLength->maxValue     = 5.0;
 
         // Bone radius mutation
         boneRadius = new FloatMutation();
-        boneRadius->probability  = 0.05;
-        boneRadius->minFact      = -0.05;
-        boneRadius->maxFact      =  0.05;
+        boneRadius->probability  = 1.0;
+        boneRadius->mean         = 0.0;
+        boneRadius->sigma        = 0.02;
         boneRadius->minValue     = 0.1;
         boneRadius->maxValue     = 2.0;
 
         // Fixation radius mutation
         fixRadius = new FloatMutation();
-        fixRadius->probability   = 0.05;
-        fixRadius->minFact       = -0.05;
-        fixRadius->maxFact       =  0.05;
+        fixRadius->probability   = 1.0;
+        fixRadius->mean          = 0.0;
+        fixRadius->sigma         = 0.02;
         fixRadius->minValue      = 0.1;
         fixRadius->maxValue      = 2.0;
 
         // Bone angular origin (Yaw and Roll)
         boneAngularOrigin = new FloatMutation();
-        boneAngularOrigin->probability   = 0.05;
-        boneAngularOrigin->minFact       = -0.01;
-        boneAngularOrigin->maxFact       =  0.01;
+        boneAngularOrigin->probability   = 0.70;
+        boneAngularOrigin->mean         = 0.0;
+        boneAngularOrigin->sigma        = 0.01;
         boneAngularOrigin->minValue      = -SIMD_PI;
         boneAngularOrigin->maxValue      =  SIMD_PI;
 
@@ -90,9 +90,9 @@ namespace GeneCraftCore {
 
         // TODO serialize and add to ui
         distanceSensorYZ = new FloatMutation();
-        distanceSensorYZ->probability   = 0.05;
-        distanceSensorYZ->minFact       = -0.01;
-        distanceSensorYZ->maxFact       =  0.01;
+        distanceSensorYZ->probability   = 1.0;
+        distanceSensorYZ->mean         = 0.0;
+        distanceSensorYZ->sigma        = 0.02;
         distanceSensorYZ->minValue      = -SIMD_PI;
         distanceSensorYZ->maxValue      =  SIMD_PI;
 
@@ -118,17 +118,17 @@ namespace GeneCraftCore {
 
         // Position X of Input
         brainInPos = new FloatMutation();
-        brainInPos->probability = 0.05;
-        brainInPos->minFact     = -0.1;
-        brainInPos->maxFact     =  0.1;
+        brainInPos->probability = 1.0;
+        brainInPos->mean         = 0.0;
+        brainInPos->sigma        = 0.02;
         brainInPos->minValue    = 0;
         brainInPos->maxValue    = 1;
 
         // BrainWeight
         brainWeight = new FloatMutation();
-        brainWeight->probability = 0.05;
-        brainWeight->minFact    = -0.1;
-        brainWeight->maxFact    =  0.1;
+        brainWeight->probability = 1.0;
+        brainWeight->mean         = 0.0;
+        brainWeight->sigma        = 0.02;
         brainWeight->minValue   = -1.0;
         brainWeight->maxValue   =  1.0;
 
@@ -180,16 +180,16 @@ namespace GeneCraftCore {
 
         // Brain constant value
         constValue = new FloatMutation();
-        constValue->probability = 0.05;
-        constValue->minFact = -0.1;
-        constValue->maxFact = 0.1;
+        constValue->probability  = 1.0;
+        constValue->mean         = 0.0;
+        constValue->sigma        = 0.03;
         constValue->minValue = -10;
         constValue->maxValue = 10;
 
         brainDistance = new FloatMutation();
-        brainDistance->probability = 0.1;
-        brainDistance->minFact = -0.3;
-        brainDistance->maxFact = 0.1;
+        brainDistance->probability = 1.0;
+        brainDistance->mean         = -0.01;
+        brainDistance->sigma        = 0.02;
         brainDistance->minValue = 0.0;
         brainDistance->maxValue = 1.0;
     }
@@ -220,8 +220,8 @@ namespace GeneCraftCore {
         // TODO serialize and add to ui
         distanceSensorYZ = new FloatMutation();
         distanceSensorYZ->probability   = 0.05;
-        distanceSensorYZ->minFact       = -0.01;
-        distanceSensorYZ->maxFact       =  0.01;
+        boneLength->mean         = 0.0;
+        boneLength->sigma        = 0.5;
         distanceSensorYZ->minValue      = -SIMD_PI;
         distanceSensorYZ->maxValue      =  SIMD_PI;
 

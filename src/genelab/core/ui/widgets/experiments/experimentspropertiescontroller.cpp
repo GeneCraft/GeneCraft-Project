@@ -389,6 +389,15 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
         for(int i=0; i<floorsMaterials.count();++i)
             if(material == floorsMaterials.at(i))
                 ui->cbFloorMaterial->setCurrentIndex(i);
+    } else if(type =="boxfloor") {
+
+        ui->cbFloor->setCurrentIndex(2);
+
+        QString material = floorMap["material"].toString();
+
+        for(int i=0; i<floorsMaterials.count();++i)
+            if(material == floorsMaterials.at(i))
+                ui->cbFloorMaterial->setCurrentIndex(i);
     }
     else
         ui->cbFloor->setCurrentIndex(0);
@@ -572,6 +581,8 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
     floorMap.insert("type",ui->cbFloor->currentText());
 
     if(ui->cbFloor->currentText() == "flatland")
+        floorMap.insert("material",ui->cbFloorMaterial->currentText());
+    if(ui->cbFloor->currentText() == "boxfloor")
         floorMap.insert("material",ui->cbFloorMaterial->currentText());
 
     sceneMap.insert("floor",floorMap);

@@ -4,8 +4,6 @@
 #include <QObject>
 
 #include "genecraftcoreclasses.h"
-
-
 #include <btBulletDynamicsCommon.h>
 
 #include <deque>

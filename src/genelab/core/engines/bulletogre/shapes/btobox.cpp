@@ -43,6 +43,13 @@ btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, con
     sizeBB *= scale;	// don't forget to scale down the Bullet-box too
 }
 
+btoBox::~btoBox() {
+    this->btoEngine->removeBody(rigidBody, entity, node);
+    this->node->removeAndDestroyAllChildren();
+    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroyEntity(entity);
+    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroySceneNode(node);
+}
+
 void btoBox::setup()
 {
     btBox::setup();

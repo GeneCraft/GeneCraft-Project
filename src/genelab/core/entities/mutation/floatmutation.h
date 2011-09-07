@@ -14,8 +14,8 @@ namespace GeneCraftCore {
 
         void mutate(QVariantMap &map, QString key);
         btScalar mutate(btScalar value);
-        btScalar minFact;
-        btScalar maxFact;
+        btScalar mean;
+        btScalar sigma;
         btScalar minValue;
         btScalar maxValue;
     };

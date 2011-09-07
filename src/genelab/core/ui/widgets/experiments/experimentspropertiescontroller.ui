@@ -111,7 +111,7 @@
    <item row="0" column="0" colspan="7">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_6">
       <attribute name="icon">
@@ -819,7 +819,7 @@ p, li { white-space: pre-wrap; }
                 <x>0</x>
                 <y>0</y>
                 <width>682</width>
-                <height>394</height>
+                <height>388</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -864,7 +864,7 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>44</width>
+                <width>98</width>
                 <height>36</height>
                </rect>
               </property>
@@ -910,7 +910,7 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>44</width>
+                <width>98</width>
                 <height>36</height>
                </rect>
               </property>
@@ -1231,6 +1231,11 @@ p, li { white-space: pre-wrap; }
               <item>
                <property name="text">
                 <string>flatland</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>boxfloor</string>
                </property>
               </item>
              </widget>

@@ -12,6 +12,7 @@ class btoBox : public btBox
 public:
 
     btoBox(btoWorld *world, BulletOgreEngine *btoEngine, btVector3 size, const btTransform &transform, const btScalar density);
+    ~btoBox();
     void setup();
 
 protected:

@@ -12,6 +12,8 @@
 #include "LinearMath/btVector3.h"
 #include "bullet/shapes/btshape.h"
 
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+
 namespace GeneCraftCore {
 
 class btScene : public QObject
@@ -35,9 +37,10 @@ protected:
     btWorld* world;
     QList<Spawn*> spawns;
     btDefaultMotionState* groundMotionState;
-    btStaticPlaneShape *collisionShape;
+    btCollisionShape *collisionShape;
     btRigidBody *rigidBody;
     QList<btShape*> shapes;
+    float terrain[65*65];
 
 };
 

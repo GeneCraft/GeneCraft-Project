@@ -10,8 +10,8 @@ BoneLimitsMutation::BoneLimitsMutation()
 {
     axisMutation = new FloatMutation();
     axisMutation->probability    = 0.1;
-    axisMutation->minFact        = -0.1;
-    axisMutation->maxFact        =  0.1;
+    axisMutation->mean         = 0.0;
+    axisMutation->sigma        = 0.5;
     axisMutation->minValue       = -SIMD_PI;
     axisMutation->maxValue       =  SIMD_PI;
 }

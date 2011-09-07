@@ -96,6 +96,19 @@ public:
         setText(2, QString::number(r->getGenome().toMap()["origins"].toMap()["generation"].toInt()));
     }
 
+    bool operator<(const QTreeWidgetItem &other)const {
+        int column = treeWidget()->sortColumn();
+        if(column == 0) {
+            // sorting by fitness
+            return text(0).toFloat() < other.text(0).toFloat();
+        }
+        else if(column == 2) {
+            return text(2).toInt() < other.text(2).toInt();
+        }
+        else
+            return text(column).toLower() < other.text(column).toLower();
+    }
+
     Result * r;
 };
 

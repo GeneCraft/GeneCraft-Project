@@ -2,14 +2,20 @@
 
 // Shapes
 #include "BulletCollision/CollisionShapes/btStaticPlaneShape.h"
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 #include "bullet/shapes/btsphere.h"
 #include "bullet/shapes/btbox.h"
 #include "bullet/shapes/btcylinder.h"
 #include "btfactory.h"
 #include "world/btworld.h"
 #include "factories/btshapesfactory.h"
+#include "tools.h"
+
+#include "factories/btworldfactory.h"
 
 namespace GeneCraftCore {
+
+    double test[129*129];
 
     btScene::btScene(btWorld* world, QVariant sceneData, QObject *parent) :
         QObject(parent)
@@ -54,10 +60,21 @@ namespace GeneCraftCore {
 
         QVariantMap floor = data["floor"].toMap();
 
+        QVariantList staticShapesList = data.value("shapes").toList();
+
         if(floor["type"].toString() == "flatland") {
+            /*Testing*/
+            for(int i = 0; i < 129; i++) {
+                for (int j = 0; j < 129; j++) {
+                    test[j+i*129] = 20-sin(i/129.*M_PI)*20 + 20-sin(j/129.*M_PI)*20;
+                }
+            }
+            //collisionShape = new btHeightfieldTerrainShape(129, 129, test, 1, -20, 20, 1, PHY_FLOAT, false);
+            //collisionShape->setLocalScaling(btVector3(100.0/129., 1, 100.0/129));
             collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
             btTransform worldTransform;
             worldTransform.setIdentity();
+            //worldTransform.setOrigin(btVector3(-50, 0, -50));
             groundMotionState = new btDefaultMotionState(worldTransform);
             btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,collisionShape,btVector3(0,0,0));
 
@@ -66,12 +83,27 @@ namespace GeneCraftCore {
 
             //rigidBody->setActivationState(DISABLE_DEACTIVATION);
             bulletWorld->addRigidBody(rigidBody);
+
+            /*for(int i = 0; i < 10; i++) {
+                for(int j = 0; j < 10 ; j++) {
+
+                    // position and rotation
+                    btTransform transform; transform.setIdentity();
+                    transform.setOrigin(btVector3(i*10 - 50, 40, j*10 - 50));
+
+                    // create the box
+                    btSphere *sphere = world->getShapesFactory()->createSphere(1.0, transform, 1.0);
+                    sphere->setup();
+                    shapes.append(sphere);
+                }
+            }*/
+        } else if(floor["type"].toString() == "boxfloor") {
+            btWorldFactory::createBoxesFloor(staticShapesList, 100, 100, btVector3(0, 0, 0), btVector3(10, 1, 10), btVector3(10, 2, 10));
         }
 
         // Shapes
         if(data.contains("shapes")){
 
-            QVariantList staticShapesList = data.value("shapes").toList();
 
             foreach(QVariant shapeData, staticShapesList)
             {
