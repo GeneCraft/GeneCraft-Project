@@ -194,7 +194,9 @@ SOURCES += \
     main.cpp \
     ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.cpp \
     ../genelab/core/ui/widgets/experiments/conversionctrl.cpp \
-    ../genelab/core/ui/widgets/plot/fitnessplot.cpp
+    ../genelab/core/ui/widgets/plot/fitnessplot.cpp \
+    ../genelab/core/ui/widgets/experiments/floordialog.cpp \
+    ../genelab/core/engines/terrain/terrain.cpp
 
 
 HEADERS += \
@@ -312,7 +314,9 @@ HEADERS += \
     ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.h \
     ../genelab/core/genecraftcoreclasses.h \
     ../genelab/core/ui/widgets/experiments/conversionctrl.h \
-    ../genelab/core/ui/widgets/plot/fitnessplot.h
+    ../genelab/core/ui/widgets/plot/fitnessplot.h \
+    ../genelab/core/ui/widgets/experiments/floordialog.h \
+    ../genelab/core/engines/terrain/terrain.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -334,7 +338,8 @@ FORMS += \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerwindow.ui \
     ../genelab/apps/genelab/creatureviewer/ui/creatureviewerabout.ui \
     ../genelab/apps/genelab/creatureviewer/ui/welcomewidget.ui \
-    ../genelab/core/ui/widgets/experiments/conversionctrl.ui
+    ../genelab/core/ui/widgets/experiments/conversionctrl.ui \
+    ../genelab/core/ui/widgets/experiments/floordialog.ui
 
 RESOURCES += \
     ../genelab/core/ressources/ressources.qrc

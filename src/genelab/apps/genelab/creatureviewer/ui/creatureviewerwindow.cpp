@@ -78,6 +78,8 @@
 
 #include "body/fixation.h"
 
+#include "terrain/terrain.h"
+
 using namespace GeneCraftCore;
 
 CreatureViewerWindow::CreatureViewerWindow(QWidget *parent) :
@@ -96,7 +98,9 @@ void CreatureViewerWindow::init() {
     factory = new btoFactory(this->ui->centralwidget, (unsigned long) this->winId() );
     BulletOgreEngine *btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
+    Terrain* terrainEngine = (Terrain*)factory->getEngineByName("Terrain");
     shapesFactory   = new btoShapesFactory(btoEngine);
+    terrainEngine->setShapesFactory(shapesFactory);
     creatureFactory = new CreatureFactory();
     experiment      = new Experiment();
     world           = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());

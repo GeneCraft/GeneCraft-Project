@@ -22,6 +22,7 @@ public:
     // To get all widgets
     QMap<QString, QWidget*> getWidgets();
 
+
 protected:
     QMap<QString, Engine*>         engines;
     QMap<QString, QWidget*>        widgets;

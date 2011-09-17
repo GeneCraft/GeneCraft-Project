@@ -8,6 +8,8 @@
 #include "bulletogre/shapes/btocylinder.h"
 #include "bulletogre/shapes/btobone.h"
 
+#include <QDebug>
+
 namespace GeneCraftCore {
 
 btoShapesFactory::btoShapesFactory(BulletOgreEngine *btoEngine) : btShapesFactory()

@@ -198,6 +198,43 @@ namespace GeneCraftCore {
         shapesList.append(cylinderMap);
     }
 
+    void btWorldFactory::createBoxesStairs(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, double stepWidth, double yMinStep, double yMaxStep) {
+
+        // Boxes Floor
+        double sizeX = stepWidth;
+        double sizeZ = stepWidth;
+
+        int nbBoxesX = areaX / sizeX;
+        int nbBoxesZ = areaZ / sizeZ;
+
+        double maxY = (nbBoxesX+nbBoxesZ)*Tools::random(yMinStep, yMaxStep);
+
+
+        for(int i=0;i<nbBoxesX;++i){
+            for(int j=0;j<nbBoxesZ;++j){
+
+                //double sizeY = 2*maxY - sin((double)i/nbBoxesX*M_PI)*maxY - sin((double)j/nbBoxesX*M_PI)*maxY;
+                double sizeY = qAbs(nbBoxesX/2. - i)/nbBoxesX*maxY + qAbs(nbBoxesZ/2. - j)/nbBoxesZ*maxY;
+
+                createBox(shapesList,
+                          btVector3(sizeX,sizeY,sizeZ),
+                          btVector3(i*sizeX - areaX*0.5 + pos.x(),sizeY/2.0 + pos.y(),j*sizeZ - areaZ*0.5 +  pos.z()),
+                          btVector3(0,0,0),0);
+            }
+        }
+    }
+
+    void btWorldFactory::createSlope(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 axis, double minAngle, double maxAngle) {
+
+
+
+        createBox(shapesList,
+                  btVector3(areaX,1.0,areaZ),
+                  pos,
+                  axis*Tools::random(minAngle, maxAngle),0);
+
+    }
+
     void btWorldFactory::createBoxesFloor(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax) {
 
         // Boxes Floor

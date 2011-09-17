@@ -11,7 +11,7 @@ namespace GeneCraftCore {
     public:
 
         static QVariant createSimpleWorld();
-        static btWorld* createWorld(btFactory* factory,
+        static btWorld* createWorld( btFactory* factory,
                                      btShapesFactory* shapesFactory,
                                      QVariant worldData);
 
@@ -27,7 +27,8 @@ namespace GeneCraftCore {
         // floors
         static void createRuins(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax, int nbBoxes, double density = 0);
         static void createBoxesFloor(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax);
-
+        static void createBoxesStairs(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, double stepWidth, double yMinStep, double yMaxStep);
+        static void createSlope(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 axis, double minAngle, double maxAngle);
         // sphere pool
         static void createPoolOfBalls(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, int nbBalls);
     };

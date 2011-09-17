@@ -32,12 +32,16 @@ namespace GeneCraftCore {
         if(this->spawns.size() == 0) { // Prevent no spawn bug !
             this->spawns.append(new Spawn("position", btVector3(0, 10, 0)));
         }
+
+        terrainEngine = (Terrain*)world->getFactory()->getEngineByName("Terrain");
+
         groundMotionState = NULL;
         rigidBody = NULL;
         collisionShape = NULL;
     }
 
     btScene::~btScene() {
+        terrainEngine->removeTerrain(terrainData);
         qDeleteAll(spawns);
         spawns.clear();
         // The floor
@@ -62,13 +66,13 @@ namespace GeneCraftCore {
 
         QVariantList staticShapesList = data.value("shapes").toList();
 
+        floor["type"] = "stairsUp";
+        // Add the entry to the terrain engine
+        terrainEngine->setShapesFactory(world->getShapesFactory());
+        terrainData = terrainEngine->addTerrain(floor);
+        terrainEngine->beforeStep();
         if(floor["type"].toString() == "flatland") {
             /*Testing*/
-            for(int i = 0; i < 129; i++) {
-                for (int j = 0; j < 129; j++) {
-                    test[j+i*129] = 20-sin(i/129.*M_PI)*20 + 20-sin(j/129.*M_PI)*20;
-                }
-            }
             //collisionShape = new btHeightfieldTerrainShape(129, 129, test, 1, -20, 20, 1, PHY_FLOAT, false);
             //collisionShape->setLocalScaling(btVector3(100.0/129., 1, 100.0/129));
             collisionShape = new btStaticPlaneShape(btVector3(0,1,0),0);
@@ -84,21 +88,11 @@ namespace GeneCraftCore {
             //rigidBody->setActivationState(DISABLE_DEACTIVATION);
             bulletWorld->addRigidBody(rigidBody);
 
-            /*for(int i = 0; i < 10; i++) {
-                for(int j = 0; j < 10 ; j++) {
-
-                    // position and rotation
-                    btTransform transform; transform.setIdentity();
-                    transform.setOrigin(btVector3(i*10 - 50, 40, j*10 - 50));
-
-                    // create the box
-                    btSphere *sphere = world->getShapesFactory()->createSphere(1.0, transform, 1.0);
-                    sphere->setup();
-                    shapes.append(sphere);
-                }
-            }*/
         } else if(floor["type"].toString() == "boxfloor") {
-            btWorldFactory::createBoxesFloor(staticShapesList, 100, 100, btVector3(0, 0, 0), btVector3(10, 1, 10), btVector3(10, 2, 10));
+
+
+            // STAIRS
+           //btWorldFactory::createBoxesStairs(staticShapesList, 300, 300, btVector3(0, 0, 0), 10, 0.3, 0.5);
         }
 
         // Shapes

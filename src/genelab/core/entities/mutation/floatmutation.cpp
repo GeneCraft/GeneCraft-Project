@@ -35,7 +35,7 @@ namespace GeneCraftCore {
     {
         probability = 1.0;
         mean      = 0.0;
-        sigma     = 0.5;
+        sigma     = 0.02;
         minValue    = 0.0;
         maxValue    = 1.0;
         enable      = true;

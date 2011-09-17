@@ -14,6 +14,8 @@
 
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
+#include "terrain/terrain.h"
+
 namespace GeneCraftCore {
 
 class btScene : public QObject
@@ -42,6 +44,8 @@ protected:
     QList<btShape*> shapes;
     float terrain[65*65];
 
+    Terrain* terrainEngine;
+    TerrainData* terrainData;
 };
 
 }

@@ -219,9 +219,9 @@ namespace GeneCraftCore {
 
         // TODO serialize and add to ui
         distanceSensorYZ = new FloatMutation();
-        distanceSensorYZ->probability   = 0.05;
-        boneLength->mean         = 0.0;
-        boneLength->sigma        = 0.5;
+        distanceSensorYZ->probability   = 0.9;
+        distanceSensorYZ->mean         = 0.0;
+        distanceSensorYZ->sigma        = 0.02;
         distanceSensorYZ->minValue      = -SIMD_PI;
         distanceSensorYZ->maxValue      =  SIMD_PI;
 

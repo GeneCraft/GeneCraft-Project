@@ -163,8 +163,9 @@ namespace GeneCraftCore {
 
                     mTerrainGroup->freeTemporaryResources();*/
 
-            Ogre::Entity *ent;
+            /*Ogre::Entity *ent;
             Ogre::Plane p;
+
             p.normal = Ogre::Vector3(0,1,0); p.d = 0;
             Ogre::MeshManager::getSingleton().createPlane("FloorPlane",
                                            Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
@@ -177,7 +178,9 @@ namespace GeneCraftCore {
                 ent->setMaterialName(floor["material"].toString().toStdString());
            }
 
-           sceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+           Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+           node->attachObject(ent);*/
+           //node->rotate(Ogre::Vector3(1, 0, 0), Ogre::Radian(M_PI/10.));
         }
         // else {
         // terrain

@@ -28,6 +28,9 @@
 #include "tools.h"
 #include "events/inspectorsinputmanager.h"
 
+// floor dialog
+#include "floordialog.h"
+
 namespace GeneCraftCore {
 
 QList<QString> gravitiesName;
@@ -380,7 +383,8 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
     QVariantMap floorMap = sceneMap["floor"].toMap();
     QString type = floorMap["type"].toString();
 
-    if(type == "flatland") {
+    this->ui->lblFloorType->setText(type);
+    /*if(type == "flatland") {
 
         ui->cbFloor->setCurrentIndex(1);
 
@@ -400,7 +404,7 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
                 ui->cbFloorMaterial->setCurrentIndex(i);
     }
     else
-        ui->cbFloor->setCurrentIndex(0);
+        ui->cbFloor->setCurrentIndex(0);*/
 
     // camera
     QVariantMap camMap = sceneMap["camera"].toMap();
@@ -556,7 +560,7 @@ QVariantMap ExperimentsPropertiesController::getSeedMap() {
 QVariantMap ExperimentsPropertiesController::getWorldMap() {
 
     // World
-    QVariantMap worldMap;
+    QVariantMap worldMap = experiment->getWorldDataMap();
     worldMap.insert("name",ui->leWorldName->text());
 
     // -- Biome --
@@ -577,15 +581,16 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
     camMap.insert("targetZ",ui->leCamTargetZ->text().toDouble());
     sceneMap.insert("camera",camMap);
 
-    QVariantMap floorMap;
-    floorMap.insert("type",ui->cbFloor->currentText());
+    //QVariantMap floorMap;
+    //floorMap.insert("type",ui->cbFloor->currentText());
 
-    if(ui->cbFloor->currentText() == "flatland")
+    /*if(ui->cbFloor->currentText() == "flatland")
         floorMap.insert("material",ui->cbFloorMaterial->currentText());
     if(ui->cbFloor->currentText() == "boxfloor")
         floorMap.insert("material",ui->cbFloorMaterial->currentText());
+    */
 
-    sceneMap.insert("floor",floorMap);
+    //sceneMap.insert("floor",floorMap);
     sceneMap.insert("shapes",QxtJSON::parse(ui->teStaticShapes->toPlainText()));
     sceneMap.insert("spawns",QxtJSON::parse(ui->teSpawns->toPlainText()));
     worldMap.insert("scene",sceneMap);
@@ -677,6 +682,21 @@ void ExperimentsPropertiesController::takeFromCamera() {
 //    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
 //    Ogre::Vector3 position = camera->getPosition();
 //    Ogre::Vector3 target = camera->getPosition() + camera->getDirection() * 10;
+}
+
+void GeneCraftCore::ExperimentsPropertiesController::on_btnFloor_clicked()
+{
+    QVariantMap map = experiment->getWorldDataMap();
+    QVariant floorMap = map["floor"];
+    FloorDialog fd(floorMap);
+    fd.exec();
+    floorMap = fd.serialize();
+
+    map.remove("floor");
+    map.insert("floor", floorMap);
+    experiment->setWorldData(map);
+
+    this->ui->lblFloorType->setText(floorMap.toMap()["type"].toString());
 }
 
 }

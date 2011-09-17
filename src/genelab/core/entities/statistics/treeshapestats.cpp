@@ -73,7 +73,6 @@ void TreeShapeStats::recursiveUpdate(Bone *b)
     // Compute global origin (just Y) of the end fixation
     btScalar y = realPos.y();
 
-    qDebug() << y;
     if(y < minHeightY)
        minHeightY = y;
 
@@ -116,7 +115,6 @@ void TreeShapeStats::step()
     // Algo : find the heighter and the lower fixation in y axis, height = max - min
     minHeightY = maxHeightY = treeshape->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
 
-    qDebug() << minHeightY;
     foreach (Bone *b, treeshape->getRoot()->getBones())
         recursiveUpdate(b);
 

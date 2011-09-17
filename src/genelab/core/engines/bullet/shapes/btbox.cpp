@@ -28,6 +28,10 @@ void btBox::init(btVector3 size, const btTransform &transform, const btScalar de
 
     btScalar friction = 0.9;
 
+    qDebug() << transform.getOrigin().x();
+    qDebug() << transform.getOrigin().y();
+    qDebug() << transform.getOrigin().z();
+
     // shape
     this->shape = new btBoxShape(btVector3(size.x()/2.0,size.y()/2.0,size.z()/2.0));
     this->motionState = new btDefaultMotionState(transform);

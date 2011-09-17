@@ -8,6 +8,8 @@
 #include "ressources/ressource.h"
 
 #include "entities/entitiesengine.h"
+
+#include "terrain/terrain.h"
 namespace GeneCraftCore {
 
 btFactory::btFactory(QObject *parent) :
@@ -28,6 +30,12 @@ btFactory::btFactory(QObject *parent) :
     EntitiesEngine* entitiesEngine = new EntitiesEngine();
     this->engines.insert("Entities", entitiesEngine);
     qDebug() << "[OK]\n";
+
+    // Terrain engine
+    qDebug() << "Init Terrain Engine";
+    Terrain* terrain = new Terrain(entitiesEngine);
+    this->engines.insert("Terrain", terrain);
+    qDebug() << "[OK]";
 }
 
 

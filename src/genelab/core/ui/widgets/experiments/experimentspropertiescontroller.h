@@ -91,6 +91,10 @@ private:
     StructuralMutationController *brainStructuralMutation;
 
     GeneCraftCore::RessourcesManager *localRessourceManager;
+
+
+private slots:
+    void on_btnFloor_clicked();
 };
 
 }
