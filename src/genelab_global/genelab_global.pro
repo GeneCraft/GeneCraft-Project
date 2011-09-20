@@ -35,7 +35,8 @@ INCLUDEPATH  += \
 
 INCLUDEPATH += ../lib/ogre/include/OGRE \
                ../lib/ogre/include \
-               ../lib/ogre/boost_1_46_1/ # boost_1_44 for win32
+               ../lib/ogre/boost_1_44 # for win32
+               #../lib/ogre/boost_1_46_1/ # for macos
 
 #suppress warning for thoses systems
 QMAKE_CXXFLAGS  += -isystem../lib/ogre/boost_1_46_1/  # boost_1_44 for win32
@@ -65,7 +66,7 @@ LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
 LIBS += -lQxtCore
-LIBS += -lqwt_debug
+LIBS += -lqwt
 LIBS += -lOgreTerrain
 #LIBS += -lOgreMain
 #LIBS += -lConvexDecomposition

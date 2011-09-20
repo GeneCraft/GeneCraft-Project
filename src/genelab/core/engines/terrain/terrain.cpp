@@ -1,14 +1,14 @@
 #include "terrain.h"
 #include "entities/body/treeshape.h"
 #include "entities/body/fixation.h"
-#include "bullet/btBulletDynamicsCommon.h"
+#include "btBulletDynamicsCommon.h"
 #include "btshapesfactory.h"
 #include "bullet/shapes/btbox.h"
 
 #include "tools.h"
 
 #include <QStringList>
-#define TERRAIN_WIDTH 10
+#define TERRAIN_WIDTH 5
 namespace GeneCraftCore {
     Terrain::Terrain(EntitiesEngine* ee, QObject* parent) : Engine(parent)
     {
@@ -151,8 +151,8 @@ namespace GeneCraftCore {
             terrain->randomHeight = 0;
         }
 
-        terrain->width = 2;
-        terrain->height = 0.5;
+        terrain->width = 10;
+        terrain->height = 1;
         terrain->randomHeight = 1;
 
         this->terrains.append(terrain);

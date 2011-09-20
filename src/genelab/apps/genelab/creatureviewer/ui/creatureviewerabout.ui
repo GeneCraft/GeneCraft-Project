@@ -71,7 +71,7 @@
    <item row="2" column="2">
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>0.2, July 2011, based on GeneCraft Core v0.2</string>
+      <string>0.3, August 2011, based on GeneCraft Core v0.3</string>
      </property>
     </widget>
    </item>
