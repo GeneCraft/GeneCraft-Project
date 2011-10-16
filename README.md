@@ -2,8 +2,9 @@ Welcome to the public repository of GeneCraft-Project
 =====================================================
 
 This project is initially a Bachelor Thesis done at HEIG-VD by  
-*	Aur&eacute;lien Da Campo  
-*	Cyprien Huissoud  
+
+*    Aur&eacute;lien Da Campo
+*    Cyprien Huissoud
 
 
 For more informations on the project go to http://www.genecraft-project.com  
@@ -13,19 +14,21 @@ The SVN repo is here for historical purpose, don't use it anymore to commit to t
 Installation
 ------------
 
-This software has been tested on   
-*	Windows XP, Vista and Seven  
-*	MacOSX 10.6  
-*	Should work on Linux with some small changes  
+This software has been tested on
+   
+*    Windows XP, Vista and Seven
+*    MacOSX 10.6
+*    Should work on Linux with some small changes
 
 There's no proper build system, you have to find your way through the
 compilation process.  
 First download the required dependencies :  
-*	bulletphysics   
-*	Ogre3D   
-*	Qt   
-*	Qxt (only the 'core' part is needed)  
-*	Qwt  
+
+*    bulletphysics
+*    Ogre3D
+*    Qt
+*    Qxt (only the 'core' part is needed)
+*    Qwt
 
 
 Then modify the .pro to reflet your configuration
