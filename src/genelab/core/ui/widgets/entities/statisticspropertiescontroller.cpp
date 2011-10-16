@@ -30,7 +30,7 @@ StatisticsPropertiesController::StatisticsPropertiesController(QWidget *parent) 
 
     setEnabled(false);
 
-    fitness = new FitnessPlot(this);
+    fitness = new FitnessPlot(parent);
     ui->tab_2->layout()->addWidget(fitness);
 }
 

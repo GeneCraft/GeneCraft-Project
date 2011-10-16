@@ -75,6 +75,7 @@ void btBone::init(btScalar length,
 
     this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);
     this->rigidBody->setFriction(friction);
+    this->rigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
 void btBone::setup()

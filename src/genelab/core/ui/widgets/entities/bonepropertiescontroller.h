@@ -6,6 +6,7 @@
 #include "genecraftcoreclasses.h"
 #include "sensors/sensor.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "widgets/graphicalwidget.h"
 
 using namespace GeneCraftCore;
 
@@ -13,7 +14,7 @@ namespace Ui {
     class BonePropertiesController;
 }
 
-class BonePropertiesController : public QWidget
+class BonePropertiesController : public GraphicalWidget
 {
     Q_OBJECT
 
@@ -21,6 +22,7 @@ public:
     explicit BonePropertiesController(QWidget *parent = 0);
     ~BonePropertiesController();
     void connectToInspectorInputManager(InspectorsInputManager * iim);
+    virtual void step();
 
 signals:
 
@@ -32,7 +34,6 @@ public slots:
     void setBone(Bone * bone);
     void boneDeleted(Bone *bone);
     void entityDeleted(Entity *entity);
-    void update();
 
 private:
     Ui::BonePropertiesController *ui;

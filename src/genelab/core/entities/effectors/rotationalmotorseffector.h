@@ -2,19 +2,19 @@
 #define ROTATIONALMOTORS_H
 
 #include <QString>
+#include "tools.h"
 #include "genecraftcoreclasses.h"
 #include "effector.h"
 #include "brain/brainout.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
-#define MIN_CONTRACTION 0.0f
+#define MIN_CONTRACTION -1.0f
 #define MAX_CONTRACTION 1.0f
 #define MIN_EXPANSION 0.0f
 #define MAX_EXPANSION 1.0f
 
 
 namespace GeneCraftCore {
-
 /**
   * Internal class to box motor brain outputs
   */
@@ -80,10 +80,42 @@ public:
 
     void update()
     {
-        motor->m_maxMotorForce
-                = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*20000;
+        float bend = boMaxMotorForce->getValue();
+        float expand = boTargetVelocity->getValue();
+
+        /*
+        1st try
         motor->m_targetVelocity
-                = (boTargetVelocity->getValue() - boMaxMotorForce->getValue())*20;
+                = (expand - bend)*20;
+
+        bend -= 0.5;
+        expand -= 0.5;
+        if(bend < 0) // The real 0
+            bend = 0;
+        if(expand < 0) // The real 0
+            expand = 0;
+        motor->m_maxMotorForce
+                = exp(4*(bend + expand))*1000;
+        */
+
+        /*
+          Angular position try
+
+          */
+
+        float amplitude = motor->m_hiLimit - motor->m_loLimit;
+        float angular = amplitude/2. * boMaxMotorForce->getValue();
+        // Stabilisation properties
+        float normalPositionMaxError = 0.001;
+        float normalPositionFactor   = 20.0;
+
+        if(motor->m_currentPosition < angular - normalPositionMaxError
+           || motor->m_currentPosition > angular + normalPositionMaxError)
+            motor->m_targetVelocity =  Tools::sign(angular - motor->m_currentPosition)*exp(angular - motor->m_currentPosition);
+
+        //qDebug() << "a" << angular << "\tamp" << amplitude << "\tpos" << motor->m_currentPosition << "\tvel" << motor->m_targetVelocity;
+        motor->m_maxMotorForce = 20000;
+
     }
 
     btRotationalLimitMotor * motor;

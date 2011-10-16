@@ -23,19 +23,11 @@ public:
 
     GenericFamily();
 
-    // To create an entity with its genome
-    static Entity *createEntity(QVariant genotype,
-                                btShapesFactory *shapesFactory,
-                                const btVector3 &initialPosition);
 
     // To create a virgin entity
     static Entity *createVirginEntity(btShapesFactory *shapesFactory,
                                      btScalar rootFixRadius,
                                      const btVector3 &initialPosition);
-
-
-    static Fixation* createRootFromGenotype(btShapesFactory *shapesFactory, QVariant genotype, btTransform initTransform);
-    static void buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QVariant fixGenotype);
 
 
 };

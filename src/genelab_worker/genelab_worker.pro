@@ -56,6 +56,7 @@ SOURCES += \
     ../genelab/core/engines/bullet/shapes/btcylinder.cpp \
     ../genelab/core/engines/bullet/shapes/btbone.cpp \
     ../genelab/core/engines/entities/entitiesengine.cpp \
+    ../genelab/core/engines/terrain/terrain.cpp \
     ../genelab/core/entities/entity.cpp \
     ../genelab/core/entities/entityfamily.cpp \
     ../genelab/core/entities/body/treeshape.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     ../genelab/core/engines/bullet/shapes/btcylinder.h \
     ../genelab/core/engines/bullet/shapes/btbone.h \
     ../genelab/core/engines/entities/entitiesengine.h \
+    ../genelab/core/engines/terrain/terrain.h \
     ../genelab/core/entities/entityfamily.h \
     ../genelab/core/entities/entity.h \
     ../genelab/core/entities/body/treeshape.h \

@@ -32,6 +32,7 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
     : QObject(), yAxis(yAxis), zAxis(zAxis), parentFix(NULL), motorsEffector(NULL)
 {
 
+
     motorModifierData = QVariant();
     parentCt = 0;
     body         = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
@@ -45,6 +46,9 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
     endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform, this);
 
     this->shapesFactory = shapesFactory;
+    this->ref = NULL;
+    this->sym = NULL;
+    this->rec = NULL;
 }
 
 Bone::~Bone()
@@ -58,13 +62,6 @@ Bone::~Bone()
 }
 
 void Bone::remove() {
-
-//    do it out of here, else bones are remove from fix and can't be deleted because we lose the pointer...
-//    if(parentFix != NULL) {
-//        parentFix->removeBone(this);
-//        parentFix = NULL;
-//    }
-
     endFix->remove();
     entity->removeLinksToEffector(this->motorsEffector);
     disconnectMotor(0);
@@ -215,7 +212,28 @@ void Bone::connectMotor(int i)
 // ----------------------
 
 void Bone::setyAxis(btScalar yAxis) {
+
+    // Apply this to all referees
+    foreach(Bone* b, this->referees) {
+        b->setyAxis(yAxis);
+    }
+
+    // Do the local modification
+    QVariantMap localOrientation;
+    localOrientation["y"] = yAxis;
+    localOrientation["z"] = zAxis;
+
+    QVariantMap boneMap;
+    boneMap["endFix"] = QVariantMap(); // don't care
+    boneMap["localRotation"] = localOrientation;
+
+    foreach(GenomeModifier* modifier, this->usedModifiers) {
+        boneMap = modifier->modify(boneMap).toMap();
+    }
+
+    yAxis = boneMap["localRotation"].toMap()["y"].toFloat();
     this->yAxis = yAxis;
+
     btQuaternion local1;
     local1.setRotation(btVector3(0, 1, 0), yAxis);
     btQuaternion local2;
@@ -226,6 +244,30 @@ void Bone::setyAxis(btScalar yAxis) {
 }
 
 void Bone::setZAxis(btScalar zAxis) {
+    // Apply this to all referees
+    foreach(Bone* b, this->referees) {
+        b->setZAxis(zAxis);
+    }
+
+    // Do the local modification
+    QVariantMap localOrientation;
+    localOrientation["y"] = yAxis;
+    localOrientation["z"] = zAxis;
+
+    QVariantMap boneMap;
+    QVariantMap endMap;
+    endMap["radius"] = 0; // don't care
+    boneMap["endFix"] = endMap;
+    boneMap["localRotation"] = localOrientation;
+
+    foreach(GenomeModifier* modifier, this->usedModifiers) {
+        boneMap = modifier->modify(boneMap).toMap();
+    }
+
+    zAxis = boneMap["localRotation"].toMap()["z"].toFloat();
+    this->zAxis = zAxis;
+
+
     this->zAxis = zAxis;
     btQuaternion local1;
     local1.setRotation(btVector3(0, 1, 0), yAxis);
@@ -372,6 +414,25 @@ void Bone::setSelected(bool selected)
 
 void Bone::setSize(btScalar radius, btScalar length)
 {
+    foreach(Bone* referee, referees) {
+        referee->setSize(radius, length);
+    }
+
+    // Calculate the new size
+    QVariantMap boneMap;
+    boneMap["length"] = length;
+    boneMap["radius"] = radius;
+    QVariantMap endFixMap;
+    endFixMap["radius"] = 0; // Don't care
+    boneMap["endFix"] = endFixMap;
+
+    foreach(GenomeModifier* modifier, this->usedModifiers) {
+        boneMap = modifier->modify(boneMap).toMap();
+    }
+
+    length = boneMap["length"].toFloat();
+    radius = boneMap["radius"].toFloat();
+
     btScalar oldLength  = this->getLength();
     body->setSize(radius,length);
 
@@ -387,6 +448,21 @@ void Bone::setSize(btScalar radius, btScalar length)
 
 void Bone::setEndFixationRadius(btScalar radius)
 {
+
+    // Calculate the new size
+    QVariantMap boneMap;
+    boneMap["length"] = 0; // Don't care
+    boneMap["radius"] = 0; // Don't care
+    QVariantMap endFixMap;
+    endFixMap["radius"] = radius;
+    boneMap["endFix"] = endFixMap;
+
+    foreach(GenomeModifier* modifier, this->usedModifiers) {
+        boneMap = modifier->modify(boneMap).toMap();
+    }
+
+    radius = boneMap["endFix"].toMap()["radius"].toFloat();
+
     body->setEndFixationRadius(radius);
 
     // adapt children connections

@@ -246,7 +246,7 @@ void CreatureViewerWindow::init() {
     // ------------------
 
     // Welcome
-    WelcomeWidget *welcomeWidget = new WelcomeWidget();
+    WelcomeWidget *welcomeWidget = new WelcomeWidget(this);
     welcomeWidget->setMaximumSize(400, 166725);
     ui->dwWelcome->setWidget(welcomeWidget);
 
@@ -273,9 +273,10 @@ void CreatureViewerWindow::init() {
     bonePropertiesController = new BonePropertiesController();
     bonePropertiesController->connectToInspectorInputManager(cvim);
     ui->dwBone->setWidget(bonePropertiesController);
+    simulationManager->addGraphicalWidget(bonePropertiesController);
 
     // Stats
-    statsPropertiesController = new StatisticsPropertiesController();
+    statsPropertiesController = new StatisticsPropertiesController(this);
     ui->dwStats->setWidget(statsPropertiesController);
     statsPropertiesController->connectToInspectorInputManager(cvim);
 
@@ -340,7 +341,6 @@ void CreatureViewerWindow::init() {
     entitySpawner->setInterval(5000);
     //entitySpawner->start();
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
-
 
     switchToWelcomeMode();
 }

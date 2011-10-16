@@ -637,10 +637,8 @@ namespace GeneCraftCore {
                 QVariantMap boneMap = bonesList.takeAt(i).toMap();
                 QVariantMap fixMap = boneMap["endFix"].toMap();
                 QVariantList bones = fixMap["bones"].toList();
-                int nbBones;
                 bonesList.append(bones);
                 i--;
-                nbBones = bonesList.count();
            }
            // Insert
            else if(bonesStructural->checkAdd()) {

@@ -463,11 +463,4 @@ namespace GeneCraftCore {
 
         return true;
     }
-
-    // -----------
-    // -- UTILS --
-    // -----------
-//    btWorld *Fixation::getWorld() {
-//         return sphere->getWorld();
-//    }
 }

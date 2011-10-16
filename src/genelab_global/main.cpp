@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
     cw.showMaximized();
     splash.finish(&cw);
 
+
     // DOESN'T WORK ?!?
     // First launch
     QSettings mySettings;

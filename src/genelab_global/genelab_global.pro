@@ -67,7 +67,7 @@ LIBS += -lBulletCollision
 LIBS += -lLinearMath
 LIBS += -lQxtCore
 LIBS += -lqwt
-LIBS += -lOgreTerrain
+#LIBS += -lOgreTerrain
 #LIBS += -lOgreMain
 #LIBS += -lConvexDecomposition
 #LIBS += -lBulletWorldImporter -lBulletFileLoader
@@ -197,7 +197,12 @@ SOURCES += \
     ../genelab/core/ui/widgets/experiments/conversionctrl.cpp \
     ../genelab/core/ui/widgets/plot/fitnessplot.cpp \
     ../genelab/core/ui/widgets/experiments/floordialog.cpp \
-    ../genelab/core/engines/terrain/terrain.cpp
+    ../genelab/core/engines/terrain/terrain.cpp \
+    ../genelab/core/factories/genome/genomebuilder.cpp \
+    ../genelab/core/factories/genome/genomemodifier.cpp \
+    ../genelab/core/entities/body/symmetry.cpp \
+    ../genelab/core/entities/body/recursion.cpp \
+    ../genelab/core/ui/widgets/graphicalwidget.cpp
 
 
 HEADERS += \
@@ -317,7 +322,12 @@ HEADERS += \
     ../genelab/core/ui/widgets/experiments/conversionctrl.h \
     ../genelab/core/ui/widgets/plot/fitnessplot.h \
     ../genelab/core/ui/widgets/experiments/floordialog.h \
-    ../genelab/core/engines/terrain/terrain.h
+    ../genelab/core/engines/terrain/terrain.h \
+    ../genelab/core/factories/genome/genomebuilder.h \
+    ../genelab/core/factories/genome/genomemodifier.h \
+    ../genelab/core/entities/body/symmetry.h \
+    ../genelab/core/entities/body/recursion.h \
+    ../genelab/core/ui/widgets/graphicalwidget.h
 
 FORMS += \
     ../genelab/core/ui/widgets/ogrebulletwindows.ui \
@@ -346,3 +356,17 @@ RESOURCES += \
     ../genelab/core/ressources/ressources.qrc
 
 TRANSLATIONS = genelab_global_fr.ts
+
+
+
+
+
+
+
+
+
+
+
+
+
+

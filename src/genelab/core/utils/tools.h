@@ -26,6 +26,10 @@ public:
 
     // Used to remove not empty directory (recursively delete)
     static bool removeDir(QString dirPath);
+
+    static int sign(int v) {
+        return v > 0 ? 1 : (v < 0 ? -1 : 0);
+    }
 };
 
 }
