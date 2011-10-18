@@ -10,7 +10,6 @@
 #include "btshapesfactory.h"
 
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
-#include "BulletDynamics/Dynamics/btContinuousDynamicsWorld.h"
 #include "BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
 #include "BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 #include "BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
