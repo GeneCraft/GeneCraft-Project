@@ -118,7 +118,12 @@ SOURCES += \
     main.cpp \
     ../genecraft/core/ui/widgets/experiments/workerconfiguration.cpp \
     ../genecraft/core/factories/ressources/ressourcesmanager.cpp \
-    ../genecraft/core/engines/terrain/terrain.cpp
+    ../genecraft/core/engines/terrain/terrain.cpp \
+    ../genecraft/core/factories/genome/genomemodifier.cpp \
+    ../genecraft/core/factories/genome/genomebuilder.cpp \
+    ../genecraft/core/entities/body/symmetry.cpp \
+    ../genecraft/core/entities/body/recursion.cpp \
+    ../genecraft/core/entities/effectors/brainoutmotor.cpp
 
 HEADERS += \
     ../genecraft/core/engines/engine.h \
@@ -194,7 +199,12 @@ HEADERS += \
     ../genecraft/core/genecraftcoreclasses.h \
     ../genecraft/core/ui/widgets/experiments/workerconfiguration.h \
     ../genecraft/core/factories/ressources/ressourcesmanager.h \
-    ../genecraft/core/engines/terrain/terrain.h
+    ../genecraft/core/engines/terrain/terrain.h \
+    ../genecraft/core/factories/genome/genomemodifier.h \
+    ../genecraft/core/factories/genome/genomebuilder.h \
+    ../genecraft/core/entities/body/symmetry.h \
+    ../genecraft/core/entities/body/recursion.h \
+    ../genecraft/core/entities/effectors/brainoutmotor.h
 
 
 RESOURCES += \
@@ -202,3 +212,9 @@ RESOURCES += \
 
 FORMS += \
     ../genecraft/core/ui/widgets/experiments/workerconfiguration.ui
+
+
+
+
+
+
