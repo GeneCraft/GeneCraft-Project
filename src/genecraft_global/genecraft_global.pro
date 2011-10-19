@@ -198,7 +198,12 @@ SOURCES += \
     ../genecraft/core/ui/widgets/plot/fitnessplot.cpp \
     ../genecraft/core/ui/widgets/experiments/floordialog.cpp \
     ../genecraft/core/engines/terrain/terrain.cpp \
-    ../genecraft/core/entities/effectors/brainoutmotor.cpp
+    ../genecraft/core/entities/effectors/brainoutmotor.cpp \
+    ../genecraft/core/factories/genome/genomemodifier.cpp \
+    ../genecraft/core/factories/genome/genomebuilder.cpp \
+    ../genecraft/core/ui/widgets/graphicalwidget.cpp \
+    ../genecraft/core/entities/body/symmetry.cpp \
+    ../genecraft/core/entities/body/recursion.cpp
 
 
 HEADERS += \
@@ -319,7 +324,12 @@ HEADERS += \
     ../genecraft/core/ui/widgets/plot/fitnessplot.h \
     ../genecraft/core/ui/widgets/experiments/floordialog.h \
     ../genecraft/core/engines/terrain/terrain.h \
-    ../genecraft/core/entities/effectors/brainoutmotor.h
+    ../genecraft/core/entities/effectors/brainoutmotor.h \
+    ../genecraft/core/factories/genome/genomemodifier.h \
+    ../genecraft/core/factories/genome/genomebuilder.h \
+    ../genecraft/core/ui/widgets/graphicalwidget.h \
+    ../genecraft/core/entities/body/symmetry.h \
+    ../genecraft/core/entities/body/recursion.h
 
 FORMS += \
     ../genecraft/core/ui/widgets/ogrebulletwindows.ui \
@@ -346,5 +356,11 @@ FORMS += \
 
 RESOURCES += \
     ../genecraft/core/ressources/ressources.qrc
+
+
+
+
+
+
 
 
