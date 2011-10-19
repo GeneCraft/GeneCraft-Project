@@ -17,10 +17,10 @@
 #include "bullet/shapes/btsphere.h"
 
 #include "entity.h"
-#include "widgets/entities/fixationpropertiescontroller.h"
 
 #include "tools.h"
 #include "effectors/effector.h"
+#include "sensors/sensor.h"
 
 
 namespace GeneCraftCore {

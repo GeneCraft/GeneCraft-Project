@@ -1,7 +1,7 @@
 #include "experimentctrl.h"
 #include "ui_experimentctrl.h"
 #include "experiment/result.h"
-#include "tools.h"
+#include "uitools.h"
 #include "ressourcesItems.h"
 #include "events/inspectorsinputmanager.h"
 
@@ -84,7 +84,7 @@ namespace GeneCraftCore {
             selectedResult = ((ResultTreeWidgetItem *) ui->twResults->currentItem())->r;
 
         // clear
-        Tools::clearTreeWidget(this->ui->twResults);
+        UITools::clearTreeWidget(this->ui->twResults);
 
         // fill
         foreach(Result* r, results) {

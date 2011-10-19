@@ -3,7 +3,7 @@
 
 #include "bodyitems.h"
 #include "entity.h"
-#include "tools.h"
+#include "uitools.h"
 #include "events/inspectorsinputmanager.h"
 
 #include "widgets/plot/fitnessplot.h"
@@ -65,7 +65,7 @@ void StatisticsPropertiesController::setEntity(Entity *entity)
     if(entity)
     {
         // Statistics
-        Tools::clearTreeWidget(ui->twStats);
+        UITools::clearTreeWidget(ui->twStats);
 
         QMapIterator<QString, Statistic *> iStats(entity->getStatisticsStorage()->getStatistics());
         iStats.toBack();

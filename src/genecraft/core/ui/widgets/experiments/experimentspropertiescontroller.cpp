@@ -25,7 +25,7 @@
 #include "ressources/ressourcesmanager.h"
 
 // others
-#include "tools.h"
+#include "uitools.h"
 #include "events/inspectorsinputmanager.h"
 
 // floor dialog
@@ -199,7 +199,7 @@ void ExperimentsPropertiesController::addFromGenome() {
 void ExperimentsPropertiesController::refreshRessources() {
 
     // clear lists
-    Tools::clearTreeWidget(this->ui->twEntitiesAvailable);
+    UITools::clearTreeWidget(this->ui->twEntitiesAvailable);
 
     // available genomes
     localRessourceManager->reloadDir();
@@ -319,8 +319,8 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         // -----------
 
         // clear lists
-        Tools::clearTreeWidget(this->ui->twEntitiesAvailable);
-        Tools::clearTreeWidget(this->ui->twEntitiesSelected);
+        UITools::clearTreeWidget(this->ui->twEntitiesAvailable);
+        UITools::clearTreeWidget(this->ui->twEntitiesSelected);
 
         // available genomes
         localRessourceManager->reloadDir();

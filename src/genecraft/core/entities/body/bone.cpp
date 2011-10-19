@@ -2,7 +2,6 @@
 
 // Qt
 #include <QTest>
-#include "widgets/entities/bonepropertiescontroller.h"
 
 // Entity
 #include "entity.h"

@@ -71,9 +71,6 @@
         <file alias="entities_go">img/icons/bugs_go.png</file>
         <file alias="new">img/icons/new.png</file>
     </qresource>
-    <qresource prefix="/js">
-        <file alias="js-beautifull">js/js-beautifull.js</file>
-    </qresource>
     <qresource prefix="/img/logos">
         <file alias="GeneCraft_logo">img/logos/GeneCraft.png</file>
         <file alias="splash">img/logos/splash.png</file>
