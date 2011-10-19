@@ -42,4 +42,24 @@ namespace GeneCraftCore {
 
         return l;
     }
+
+
+    QList<NeuralConnexion> Synapse::getConnexions() {
+        return this->connexions;
+    }
+
+    void Synapse::connectRandomly() {
+        this->connexions.append(NeuralConnexion(Tools::random(btScalar(0.0),btScalar(1.0)), // X
+                                                Tools::random(btScalar(0.0),btScalar(1.0)), // Y
+                                                Tools::random(btScalar(0.0),btScalar(0.2)), // dist
+                                                Tools::random(btScalar(-1.0),btScalar(1.0)))); // Poid
+    }
+
+    void Synapse::connectTo(btScalar x, btScalar y, btScalar dist, btScalar weight) {
+        this->connexions.append(NeuralConnexion(x, y, dist, weight));
+    }
+
+    void Synapse::disconnectTotally() {
+        this->connexions.clear();
+    }
 }

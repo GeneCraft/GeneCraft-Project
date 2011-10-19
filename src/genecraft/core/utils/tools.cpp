@@ -16,10 +16,10 @@ namespace GeneCraftCore {
         return min + (qrand() % (int)(max - min + 1));
     }
 
-    btScalar Tools::random(btScalar min, btScalar max) {
-        return ((max - min) * ((btScalar) qrand()/RAND_MAX)) + min;
-    }
-#ifndef BT_USE_DOUBLE_PRECISION
+    //btScalar Tools::random(btScalar min, btScalar max) {
+    //    return ((max - min) * ((btScalar) qrand()/RAND_MAX)) + min;
+    //}
+//#ifndef BT_USE_DOUBLE_PRECISION
     double Tools::random(double min, double max) {
         return ((max - min) * ((double) qrand()/RAND_MAX)) + min;
     }
@@ -56,9 +56,9 @@ namespace GeneCraftCore {
                     return storedDeviate*sigma + mu;
             }
     }
-#endif
+//#endif
 
-    btScalar Tools::normalRandom(btScalar mu, btScalar sigma) {
+    /*btScalar Tools::normalRandom(btScalar mu, btScalar sigma) {
             static bool deviateAvailable=false;	//	flag
             static btScalar storedDeviate;       //	deviate from previous calculation
             btScalar dist, angle;
@@ -87,7 +87,7 @@ namespace GeneCraftCore {
                     deviateAvailable=false;
                     return storedDeviate*sigma + mu;
             }
-    }
+    }*/
 
     // Used to clear a QTreeWidget
     void Tools::clearTreeWidget(QTreeWidget * tree)

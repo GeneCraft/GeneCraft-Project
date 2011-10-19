@@ -8,6 +8,24 @@ using namespace Ogre;
 
 namespace GeneCraftCore {
 
+    OgreWidget::OgreWidget(Ogre::Root* ogreRoot,
+               Ogre::SceneManager* scnManager,
+               Ogre::Camera* camera,
+               QWidget *parent):
+    QWidget( parent ),
+        resized(true),
+        mOgreRoot(ogreRoot),
+        mOgreWindow(NULL),
+        mCamera(NULL),
+        mViewport(NULL),
+        mSceneMgr(scnManager),
+        mIsInit(false),
+        ogreFreeCamera(NULL) {}
+
+    OgreWidget::~OgreWidget() {
+        destroy();
+    }
+
     /**
      * @brief init the object
      * @author kito berg-taylor

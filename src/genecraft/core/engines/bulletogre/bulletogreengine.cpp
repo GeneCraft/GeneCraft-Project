@@ -8,6 +8,33 @@
 
 namespace GeneCraftCore {
 
+    OgreBody::OgreBody() {
+        this->rigidBody = NULL;
+        this->entity = NULL;
+        this->node = NULL;
+    }
+
+    OgreBody::OgreBody(btRigidBody * rigidBody,Ogre::Entity *entity, Ogre::SceneNode *node)
+    {
+        this->rigidBody = rigidBody;
+        this->entity    = entity;
+        this->node      = node;
+    }
+
+    OgreBody::OgreBody(const OgreBody &b) {
+        this->rigidBody = b.rigidBody;
+        this->entity    = b.entity;
+        this->node      = b.node;
+    }
+
+    bool OgreBody::operator ==(OgreBody b) {
+        return this->rigidBody == b.rigidBody
+            && this->entity == b.entity
+            && this->node == b.node;
+    }
+
+
+
 BulletOgreEngine::BulletOgreEngine(BulletEngine *btEngine, OgreEngine *ogreEngine)
 {
     this->btEngine = btEngine;
@@ -61,5 +88,7 @@ void BulletOgreEngine::clearAll(){
     bodies.clear();
     nbSteps = 0; // TODO not really clean to do this here...
 }
+OgreEngine *BulletOgreEngine::getOgreEngine()     { return this->ogreEngine;  }
+BulletEngine *BulletOgreEngine::getBulletEngine() { return this->btEngine;    }
 
 }

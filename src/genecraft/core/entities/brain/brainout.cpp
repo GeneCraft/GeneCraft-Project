@@ -25,4 +25,33 @@ namespace GeneCraftCore {
         return data;
     }
 
+    /**
+      * Get the value, will be "unormalized" with min and max
+      */
+    btScalar BrainOut::getValue() {
+        return value;
+    }
+
+    /**
+      * Set the normalized value [-1, 1]
+      */
+    void  BrainOut::setValue(btScalar value) {
+        // Un noramlization
+        this->value = (value + 1.0f) / 2.0f * (max - min) + min;
+        if(this->value > max) {
+            this->value = max;
+        }
+        if(this->value < min) {
+            this->value = min;
+        }
+        emit newValue(this->value);
+    }
+
+    void BrainOut::setConnexionInfo(QVariant info) {
+        this->connexionInfo = info;
+    }
+
+    QVariant BrainOut::getConnexionInfo() {
+        return this->connexionInfo;
+    }
 }

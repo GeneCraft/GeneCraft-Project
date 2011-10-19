@@ -37,25 +37,13 @@ namespace GeneCraftCore {
         Synapse(QVariant data);
         QVariant serialize();
 
-        QList<NeuralConnexion> getConnexions() {
-            return this->connexions;
-        }
+        QList<NeuralConnexion> getConnexions();
 
-        void connectRandomly() {
-            this->connexions.append(NeuralConnexion(Tools::random(btScalar(0.0),btScalar(1.0)), // X
-                                                    Tools::random(btScalar(0.0),btScalar(1.0)), // Y
-                                                    Tools::random(btScalar(0.0),btScalar(0.2)), // dist
-                                                    Tools::random(btScalar(-1.0),btScalar(1.0)))); // Poid
-        }
+        void connectRandomly();
 
-        void connectTo(btScalar x, btScalar y, btScalar dist, btScalar weight = 1.0f) {
-            this->connexions.append(NeuralConnexion(x, y, dist, weight));
-        }
+        void connectTo(btScalar x, btScalar y, btScalar dist, btScalar weight = 1.0f);
 
-        void disconnectTotally() {
-            this->connexions.clear();
-        }
-
+        void disconnectTotally();
     private:
         QList<NeuralConnexion> connexions;
 

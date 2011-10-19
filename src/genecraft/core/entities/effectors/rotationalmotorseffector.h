@@ -4,92 +4,10 @@
 #include <QString>
 #include "genecraftcoreclasses.h"
 #include "effector.h"
-#include "brain/brainout.h"
-#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
-
-#define MIN_CONTRACTION 0.0f
-#define MAX_CONTRACTION 1.0f
-#define MIN_EXPANSION 0.0f
-#define MAX_EXPANSION 1.0f
-
+#include "brainoutmotor.h"
 
 namespace GeneCraftCore {
 
-/**
-  * Internal class to box motor brain outputs
-  */
-class BrainOutMotor
-{
-public:
-
-    BrainOutMotor(btRotationalLimitMotor * motor,
-                  btScalar min_Contraction = MIN_CONTRACTION, btScalar max_Contraction = MAX_CONTRACTION,
-                  btScalar min_Expansion = MIN_EXPANSION, btScalar max_Expansion = MAX_EXPANSION) : motor(motor)
-    {
-        boMaxMotorForce = new BrainOut(min_Contraction,max_Contraction);
-        boTargetVelocity = new BrainOut(min_Expansion,max_Expansion);
-    }
-    ~BrainOutMotor() {
-        delete this->boMaxMotorForce;
-        delete this->boTargetVelocity;
-    }
-
-    BrainOutMotor(QVariant data, btRotationalLimitMotor* motor) : motor(motor){
-        QVariantMap outMap = data.toMap();
-
-        // new version
-        if(outMap.contains("contractionOutput")) {
-            boMaxMotorForce = new BrainOut(outMap["contractionOutput"]);
-            boTargetVelocity = new BrainOut(outMap["expansionOutput"]);
-        }
-        // old version
-        else {
-            QVariantList dataL = outMap["brainOuts"].toList();
-            boMaxMotorForce = new BrainOut(dataL[0]);
-            boTargetVelocity = new BrainOut(dataL[1]);
-        }
-    }
-
-    QVariant serialize()  {
-
-        QVariantMap data;
-
-        // old version
-        // QVariantList outs;
-        // outs.append(boMaxMotorForce->serialize());
-        // outs.append(boTargetVelocity->serialize());
-        // data.insert("brainOuts", (QVariantList)outs);
-
-        // new version
-        data.insert("contractionOutput",boMaxMotorForce->serialize());
-        data.insert("expansionOutput",boTargetVelocity->serialize());
-
-        return data;
-    }
-
-    // To generate an empty version
-    static QVariant generateEmpty(){
-
-        QVariantMap data;
-        BrainOut boContraction(MIN_CONTRACTION,MAX_CONTRACTION);
-        BrainOut boExpansion(MIN_EXPANSION,MAX_EXPANSION);
-        data.insert("contractionOutput",boContraction.serialize());
-        data.insert("expansionOutput",boExpansion.serialize());
-        return data;
-    }
-
-    void update()
-    {
-        motor->m_maxMotorForce
-                = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*20000;
-        motor->m_targetVelocity
-                = (boTargetVelocity->getValue() - boMaxMotorForce->getValue())*20;
-    }
-
-    btRotationalLimitMotor * motor;
-    BrainOut * boMaxMotorForce;
-    BrainOut * boTargetVelocity;
-};
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

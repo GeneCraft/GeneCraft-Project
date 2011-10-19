@@ -10,4 +10,10 @@ namespace GeneCraftCore {
         inc = 1.0f + (btScalar)qrand()/RAND_MAX * 4;
         offset = (btScalar)qrand()/RAND_MAX*360;
     }
+
+    btScalar SinusIn::getValue() {
+        deg+=inc;
+        return sin((deg+offset) * SIMD_PI / 180.0f  );
+    }
+
 }

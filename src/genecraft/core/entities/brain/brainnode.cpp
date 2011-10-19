@@ -132,4 +132,21 @@ NodeType fromString(QString string) {
     return BAD_TYPE;
 }
 
+BrainMemory::BrainMemory(int size) : BrainNode(MEMORY_SPACE){
+    if(size <= 0) {
+        qDebug() << "size of 0 or less ! bad" << size;
+        size = 1;
+    }
+    this->size = size;
+    for(int i = 0; i < size; i++) {
+        this->insert(0);
+    }
+}
+
+void BrainMemory::insert(btScalar value) {
+    mem.append(value);
+    if(mem.size() > size)
+        mem.removeFirst();
+}
+
 }

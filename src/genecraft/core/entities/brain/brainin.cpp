@@ -24,6 +24,21 @@ namespace GeneCraftCore {
         return data;
     }
 
+    /**
+      * Set the normalized value, will be normalized between min and max.
+      */
+    void BrainIn::setValue(btScalar value) {
+        // Normalization (projection in range -1..1)
+        this->value = (value - min) / (max - min) * 2.0f - 1.0f;
+    }
+
+    /**
+      * Get the normalized value [-1, 1]
+      */
+    btScalar BrainIn::getValue() {
+        return this->value;
+    }
+
     QVariant BrainIn::generateEmpty(btScalar min, btScalar max)
     {
         QVariantMap data;

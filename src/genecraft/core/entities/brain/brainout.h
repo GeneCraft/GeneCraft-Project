@@ -23,32 +23,16 @@ namespace GeneCraftCore {
         /**
           * Get the value, will be "unormalized" with min and max
           */
-        btScalar getValue() {
-            return value;
-        }
+        btScalar getValue();
 
         /**
           * Set the normalized value [-1, 1]
           */
-        void  setValue(btScalar value) {
-            // Un noramlization
-            this->value = (value + 1.0f) / 2.0f * (max - min) + min;
-            if(this->value > max) {
-                this->value = max;
-            }
-            if(this->value < min) {
-                this->value = min;
-            }
-            emit newValue(this->value);
-        }
+        void  setValue(btScalar value);
 
-        void setConnexionInfo(QVariant info) {
-            this->connexionInfo = info;
-        }
+        void setConnexionInfo(QVariant info);
 
-        QVariant getConnexionInfo() {
-            return this->connexionInfo;
-        }
+        QVariant getConnexionInfo();
 
         void setMin(btScalar min) { this->min = min; }
         void setMax(btScalar max) { this->max = max; }

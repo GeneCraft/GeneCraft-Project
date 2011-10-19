@@ -11,6 +11,9 @@
 #include "body/fixation.h"
 #include "body/treeshape.h"
 
+// Brain
+#include "brain/brainout.h"
+
 // Sensors
 #include "sensors/sensor.h"
 #include "sensors/positionsensor.h"

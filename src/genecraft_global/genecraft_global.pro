@@ -197,7 +197,8 @@ SOURCES += \
     ../genecraft/core/ui/widgets/experiments/conversionctrl.cpp \
     ../genecraft/core/ui/widgets/plot/fitnessplot.cpp \
     ../genecraft/core/ui/widgets/experiments/floordialog.cpp \
-    ../genecraft/core/engines/terrain/terrain.cpp
+    ../genecraft/core/engines/terrain/terrain.cpp \
+    ../genecraft/core/entities/effectors/brainoutmotor.cpp
 
 
 HEADERS += \
@@ -317,7 +318,8 @@ HEADERS += \
     ../genecraft/core/ui/widgets/experiments/conversionctrl.h \
     ../genecraft/core/ui/widgets/plot/fitnessplot.h \
     ../genecraft/core/ui/widgets/experiments/floordialog.h \
-    ../genecraft/core/engines/terrain/terrain.h
+    ../genecraft/core/engines/terrain/terrain.h \
+    ../genecraft/core/entities/effectors/brainoutmotor.h
 
 FORMS += \
     ../genecraft/core/ui/widgets/ogrebulletwindows.ui \
@@ -344,3 +346,5 @@ FORMS += \
 
 RESOURCES += \
     ../genecraft/core/ressources/ressources.qrc
+
+

@@ -28,9 +28,6 @@ signals:
     void sLoadWorld(QVariantMap worldData);
     void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
 
-    // TODO replace by loadEntity
-    //void addEntity(QVariantMap entityData, GeneCraftCore::Ressource *ressource);
-
 public slots:
 
     void refreshLocalRessources();

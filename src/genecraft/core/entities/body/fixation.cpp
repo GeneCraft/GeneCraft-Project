@@ -414,7 +414,7 @@ namespace GeneCraftCore {
         QVariantMap fixation;
 
         // TODO right values ???
-        fixation.insert("radius",(double) Tools::random(0.1,.5));
+        fixation.insert("radius",(double) Tools::random(0.1,0.5));
         fixation.insert("bones", QVariantList());
         fixation.insert("sensors", QVariantList());
         fixation.insert("effectors", QVariantList());
