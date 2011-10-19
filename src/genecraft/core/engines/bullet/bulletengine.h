@@ -8,39 +8,69 @@
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 namespace GeneCraftCore {
+    /**
+     * @brief The engine that take care to manage the bullet worlds
+     *
+     */
     class BulletEngine : public Engine
     {
     public:
 
-        // To create the engine
+        /**
+         * @brief Create the engine, will be empty and ready to manage bullet worlds
+         *
+         * @param parent
+         */
         explicit BulletEngine(QObject *parent = 0);
 
-        // To add a world
+        /**
+         * @brief Add a world in the engine, the world will be stepped each
+         time the engine is.
+         *
+         * @param world the world to add to the simulation
+         */
         void addWorld(btDynamicsWorld* world) {
             this->worldList.append(world);
         }
 
-        // To remove a world
+        /**
+         * @brief Remove a world from the simulation, it will not be stepped anymore
+         *
+         * @param world the world to remove from the simulation
+         */
         void removeWorld(btDynamicsWorld* world) {
             this->worldList.removeAll(world);
         }
 
-        // To activate or disable physics of all worlds
+        /**
+         * @brief disable or activate the step of the worlds, should use the
+         SimulationManager toggle if available
+         *
+         * @param physicsEnable
+         */
         inline void setPhysicsEnable(bool physicsEnable){
             this->physicsEnable = physicsEnable;
         }
 
-        // To know if physics is activated
+        /**
+         * @brief is the physical step enabled?
+         *
+         * @return bool
+         */
         inline bool getPhysicsEnable(){
             return physicsEnable;
         }
 
+        /**
+         * @brief step all worlds
+         *
+         */
         void step();
 
     protected:
 
-        QList<btDynamicsWorld*> worldList;
-        bool physicsEnable;
+        QList<btDynamicsWorld*> worldList; /**< the list of active worlds */
+        bool physicsEnable; /**< are the world stepped? */
     };
 }
 #endif // OGREBULLETMANAGER_H
