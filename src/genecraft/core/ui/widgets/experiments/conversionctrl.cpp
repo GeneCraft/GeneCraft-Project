@@ -4,7 +4,7 @@
 #include "events/inspectorsinputmanager.h"
 #include "experiment.h"
 #include "ressources/ressourcesmanager.h"
-#include "tools.h"
+#include "uitools.h"
 #include "ressourcesItems.h"
 #include "ressources/jsonfile.h"
 #include <QFileDialog>
@@ -130,7 +130,7 @@ namespace GeneCraftCore {
         onlineRes->reloadDb();
         localRes->reloadDir();
 
-        Tools::clearTreeWidget(ui->twExperiments);
+        UITools::clearTreeWidget(ui->twExperiments);
 
         foreach(DataWrapper exp, onlineRes->getExperiments())
             ui->twExperiments->insertTopLevelItem(0,new ExperimentTreeWidgetItem(exp,true));

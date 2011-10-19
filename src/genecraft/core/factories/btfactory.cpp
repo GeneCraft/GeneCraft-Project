@@ -2,7 +2,6 @@
 
 // Qt
 #include <QDebug>
-#include <QVBoxLayout>
 
 #include "bullet/bulletengine.h"
 #include "ressources/ressource.h"

@@ -1,8 +1,8 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 
-#include <QTreeWidgetItem>
 #include "LinearMath/btScalar.h"
+#include <QString>
 
 namespace GeneCraftCore {
 
@@ -20,9 +20,6 @@ public:
     static double random(double min, double max);
     static double normalRandom(double mu=0.0, double sigma=0.0);
 //#endif
-
-    // Used to clear a QTreeWidget
-    static void clearTreeWidget(QTreeWidget * tree);
 
     // Used to remove not empty directory (recursively delete)
     static bool removeDir(QString dirPath);

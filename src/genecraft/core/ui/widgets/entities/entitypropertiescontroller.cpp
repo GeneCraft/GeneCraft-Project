@@ -15,7 +15,7 @@
 #include "brain/brainpluggrid.h"
 #include "effectors/rotationalmotorseffector.h"
 #include "statistics/statisticsstorage.h"
-#include "tools.h"
+#include "uitools.h"
 #include "events/inspectorsinputmanager.h"
 #include "ressources/ressource.h"
 
@@ -190,7 +190,7 @@ void EntityPropertiesController::setEntity(Entity *entity, Bone *bone)
         ui->pteGenotype->clear();
 
         // Bones
-        Tools::clearTreeWidget(this->ui->twBodyTree);
+        UITools::clearTreeWidget(this->ui->twBodyTree);
         if(entity->getShape() != 0 && entity->getShape()->getRoot() != 0)
             setupBodyTree(entity->getShape()->getRoot(),bone);
 

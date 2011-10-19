@@ -89,15 +89,6 @@ namespace GeneCraftCore {
             }
     }*/
 
-    // Used to clear a QTreeWidget
-    void Tools::clearTreeWidget(QTreeWidget * tree)
-    {
-        for(int i = 0; i < tree->topLevelItemCount(); i++) {
-            delete tree->topLevelItem(i);
-        }
-
-        tree->clear();
-    }
 
     bool Tools::removeDir(QString dirPath)
     {

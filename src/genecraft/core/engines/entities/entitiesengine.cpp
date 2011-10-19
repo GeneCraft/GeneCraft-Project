@@ -6,9 +6,6 @@
 #include "sensors/sensor.h"
 #include "effectors/effector.h"
 
-#include "widgets/entities/pluggriddesignvisualizer.h"
-#include "widgets/entities/pluggridvisualizer.h"
-
 namespace GeneCraftCore {
 
     EntitiesEngine::EntitiesEngine()

@@ -9,7 +9,7 @@
 
 #include "ressourcesItems.h"
 #include "experiment/experiment.h"
-#include "tools.h"
+#include "uitools.h"
 #include "creaturefactory.h"
 #include "ressources/jsonfile.h"
 #include "events/inspectorsinputmanager.h"
@@ -95,9 +95,9 @@ void RessourcesBrowser::refreshLocalRessources() {
     localRessourceManager->reloadDir();
 
     // clear lists
-    Tools::clearTreeWidget(this->ui->twLocalExperiments);
-    Tools::clearTreeWidget(this->ui->twLocalWorlds);
-    Tools::clearTreeWidget(this->ui->twLocalEntities);
+    UITools::clearTreeWidget(this->ui->twLocalExperiments);
+    UITools::clearTreeWidget(this->ui->twLocalWorlds);
+    UITools::clearTreeWidget(this->ui->twLocalEntities);
 
     // fill lists
     foreach(DataWrapper exp, localRessourceManager->getExperiments())
@@ -116,9 +116,9 @@ void RessourcesBrowser::refreshOnlineRessources() {
     this->ui->lblDb->setText("Ressources loaded from database...");
 
     // clear lists
-    Tools::clearTreeWidget(this->ui->twOnlineExperiments);
-    Tools::clearTreeWidget(this->ui->twOnlineWorlds);
-    Tools::clearTreeWidget(this->ui->twOnlineEntities);
+    UITools::clearTreeWidget(this->ui->twOnlineExperiments);
+    UITools::clearTreeWidget(this->ui->twOnlineWorlds);
+    UITools::clearTreeWidget(this->ui->twOnlineEntities);
 
     // fill lists
     foreach(DataWrapper exp, onlineRessourceManager->getExperiments())
