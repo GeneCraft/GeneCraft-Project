@@ -26,12 +26,6 @@ namespace GeneCraftCore {
                                              Ogre::Camera* cam,
                                              QWidget* parent);
 
-        //QWidget*            getRender(QWidget* parent);
-
-        bool isRenderable() {
-            return true;
-        }
-
         OgreWidget*         getOgreWidget(QString widgetName);
 
         void init();
@@ -48,7 +42,6 @@ namespace GeneCraftCore {
 
 
         QMap<QString, OgreWidget*> ogreWidgets;
-        //QList<OgreWidget*> ogreWidgets;
         int winId;
 
     };

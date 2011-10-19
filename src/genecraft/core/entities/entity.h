@@ -138,8 +138,6 @@ protected:
     // Scripting
     QMap<int, MotorFrom> outsFromScripts;
 
-    // Qt Render
-    //static EntityPropertiesController *inspectorWidget;
 
 private:
 

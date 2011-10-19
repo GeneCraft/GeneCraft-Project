@@ -1,5 +1,7 @@
 #include "rotationalmotorseffector.h"
 
+#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+
 #include <QDebug>
 #include <QVariant>
 #include <QList>
@@ -7,6 +9,7 @@
 #include <QVariantMap>
 #include "tools.h"
 #include "brain/sinusin.h"
+#include "brain/brainout.h"
 
 namespace GeneCraftCore {
 

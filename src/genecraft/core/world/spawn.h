@@ -15,10 +15,6 @@ namespace GeneCraftCore {
     {
 
     public:
-//        enum SpawnType {
-//            Zone,
-//            Position,
-//        };
 
         Spawn(QVariant data);
         Spawn(QString type, btVector3 position);

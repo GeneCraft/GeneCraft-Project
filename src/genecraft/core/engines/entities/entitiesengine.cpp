@@ -16,6 +16,21 @@ namespace GeneCraftCore {
         cptBrain = 0;
     }
 
+    void EntitiesEngine::addEntity(Entity * entity) {
+        entity->setAge(0);
+        entities.append(entity);
+    }
+
+    void EntitiesEngine::removeEntity(Entity* entity) {
+        entities.removeAll(entity);
+    }
+
+    QList<Entity*> EntitiesEngine::getAllEntities() {
+        return QList<Entity*>(entities);
+    }
+
+
+
     void EntitiesEngine::beforeStep()
     {
         foreach(Entity* e, entities) {

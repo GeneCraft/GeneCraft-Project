@@ -14,10 +14,7 @@ namespace GeneCraftCore {
     public:
         explicit SinusIn(QObject *parent = 0);
 
-        virtual btScalar getValue() {
-            deg+=inc;
-            return sin((deg+offset) * SIMD_PI / 180.0f  );
-        }
+        virtual btScalar getValue();
 
     private:
         btScalar deg;

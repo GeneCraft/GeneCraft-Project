@@ -25,17 +25,12 @@ namespace GeneCraftCore {
         /**
           * Set the normalized value, will be normalized between min and max.
           */
-        virtual void setValue(btScalar value) {
-            // Normalization (projection in range -1..1)
-            this->value = (value - min) / (max - min) * 2.0f - 1.0f;
-        }
+        virtual void setValue(btScalar value);
 
         /**
           * Get the normalized value [-1, 1]
           */
-        virtual btScalar getValue() {
-            return this->value;
-        }
+        virtual btScalar getValue();
 
     private:
 

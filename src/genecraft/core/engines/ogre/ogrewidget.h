@@ -19,22 +19,9 @@ namespace GeneCraftCore {
         OgreWidget(Ogre::Root* ogreRoot,
                    Ogre::SceneManager* scnManager,
                    Ogre::Camera* camera,
-                   QWidget *parent):
-        QWidget( parent ),
-        mOgreWindow(NULL)
-        {
+                   QWidget *parent);
 
-            mOgreRoot = ogreRoot;
-            mSceneMgr = scnManager;
-            mCamera = camera;
-            mIsInit = false;
-            resized = true;
-        }
-
-        virtual ~OgreWidget()
-        {
-            destroy();
-        }
+        ~OgreWidget();
 
         void step();
 
@@ -52,9 +39,7 @@ namespace GeneCraftCore {
             return 0;
         }
 
-        void paintEvent(QPaintEvent*)
-        {
-        }
+        void paintEvent(QPaintEvent*) {}
 
     signals:
         // Events

@@ -18,7 +18,7 @@ public:
 
     virtual void setup();
 
-    BulletOgreEngine* getBulletOgreEngine() {
+    inline BulletOgreEngine* getBulletOgreEngine() {
         return btoEngine;
     }
 

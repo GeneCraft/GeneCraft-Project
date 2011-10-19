@@ -1,5 +1,4 @@
 #include <QtGui/QApplication>
-#include "genelabmainwindow.h"
 
 #include "genecraftcoreclasses.h"
 

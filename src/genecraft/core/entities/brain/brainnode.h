@@ -98,23 +98,8 @@ public:
 class BrainMemory : public BrainNode {
 
 public:
-    explicit BrainMemory(int size) : BrainNode(MEMORY_SPACE){
-        if(size <= 0) {
-            qDebug() << "size of 0 or less ! bad" << size;
-            size = 1;
-        }
-        this->size = size;
-        for(int i = 0; i < size; i++) {
-            this->insert(0);
-        }
-    }
-
-    void insert(btScalar value) {
-        mem.append(value);
-        if(mem.size() > size)
-            mem.removeFirst();
-    }
-
+    explicit BrainMemory(int size);
+    void insert(btScalar value);
     ~BrainMemory() {
     }
 

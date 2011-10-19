@@ -24,21 +24,10 @@ class EntitiesEngine : public Engine
 {
 public:
     EntitiesEngine();
-    void addEntity(Entity * entity) {
-        entity->setAge(0);
-        entities.append(entity);
-    }
-
-    void removeEntity(Entity* entity) {
-        entities.removeAll(entity);
-    }
-
+    void addEntity(Entity * entity);
+    void removeEntity(Entity* entity);
     void removeAndDeleteAllEntities();
-
-    QList<Entity*> getAllEntities() {
-        return QList<Entity*>(entities);
-    }
-
+    QList<Entity*> getAllEntities();
     void beforeStep();
     void step();
     void afterStep();

@@ -24,8 +24,6 @@ public slots:
     void probabilityChanged(int value);
     void minFactorChanged(int value);
     void maxFactorChanged(int value);
-//    void minValueChanged(int value);
-//    void maxValueChanged(int value);
 
 private:
     Ui::IntegerMutationController *ui;
