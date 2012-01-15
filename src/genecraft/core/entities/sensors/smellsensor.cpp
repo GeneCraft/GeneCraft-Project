@@ -9,9 +9,9 @@
 #include "btBulletDynamicsCommon.h"
 
 #include "engines/bullet/bulletengine.h"
-#include "factories/btshapesfactory.h"
-#include "factories/btfactory.h"
-#include "world/btworld.h"
+#include "btshapesfactory.h"
+#include "btfactory.h"
+#include "bullet/btworld.h"
 
 namespace GeneCraftCore {
 

@@ -10,7 +10,7 @@
 #include "sensors/positionsensor.h"
 #include "sensors/gyroscopicsensor.h"
 #include "sensors/contactsensor.h"
-#include "factories/btshapesfactory.h"
+#include "btshapesfactory.h"
 
 namespace GeneCraftCore {
 

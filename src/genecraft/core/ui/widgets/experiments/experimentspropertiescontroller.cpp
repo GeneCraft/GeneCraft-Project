@@ -16,7 +16,7 @@
 #include "mutation/mutationsmanager.h"
 
 // world
-#include "world/btobiome.h"
+#include "bulletogre/btobiome.h"
 
 // ressources
 #include "ressources/jsonfile.h"

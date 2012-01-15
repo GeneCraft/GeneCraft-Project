@@ -7,7 +7,7 @@
 #include <QVariantMap>
 #include <QDir>
 #include "genecraftcoreclasses.h"
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 
 namespace GeneCraftCore {
 

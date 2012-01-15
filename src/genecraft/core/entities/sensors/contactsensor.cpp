@@ -1,8 +1,8 @@
 #include "contactsensor.h"
 
 #include "body/fixation.h"
-#include "world/btworld.h"
-#include "factories/btshapesfactory.h"
+#include "bullet/btworld.h"
+#include "btshapesfactory.h"
 #include "tools.h"
 
 namespace GeneCraftCore {

@@ -1,8 +1,7 @@
 #include "experiment.h"
 
 #include "mutation/mutationsmanager.h"
-#include "factories/btworldfactory.h"
-#include "btoworldfactory.h"
+#include "btworldfactory.h"
 
 #define EXP_FORMAT_VERSION 0.1
 #define DEFAULT_NB_RUN 3

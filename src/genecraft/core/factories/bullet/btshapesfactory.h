@@ -1,27 +1,34 @@
-#ifndef BTOSHAPESFACTORY_H
-#define BTOSHAPESFACTORY_H
+#ifndef BTSHAPESFACTORY_H
+#define BTSHAPESFACTORY_H
 
 #include "genecraftcoreclasses.h"
-#include "btshapesfactory.h"
-#include "world/btoworld.h"
+#include "LinearMath/btTransform.h"
+#include "QVariant"
 
 namespace GeneCraftCore {
 
-class btoShapesFactory : public btShapesFactory
+class btShapesFactory
 {
 public:
-    btoShapesFactory(BulletOgreEngine *btoEngine);
 
-    virtual void setWorld(btoWorld* world) { this->world = world; }
+    btShapesFactory();
+
+    virtual btWorld* getWorld() {
+        return world;
+    }
+
+
+    virtual void setWorld(btWorld* world) { this->world = world; }
 
     virtual btBox *createBox(btVector3 size, const btTransform &transform, const btScalar density, QVariant params = QVariant());
     virtual btSphere *createSphere(btScalar radius, const btTransform &transform, const btScalar density, QVariant params = QVariant());
     virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform, const btScalar density, QVariant params = QVariant());
-    virtual btBone *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant params = QVariant());
+    virtual btBone  *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant params = QVariant());
+
 protected:
-    BulletOgreEngine *btoEngine;
+    btWorld* world;
 };
 
 }
 
-#endif // BTOSHAPESFACTORY_H
+#endif // BTSHAPESFACTORY_H

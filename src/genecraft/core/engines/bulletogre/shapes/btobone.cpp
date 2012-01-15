@@ -1,5 +1,5 @@
 #include "btobone.h"
-#include "world/btoworld.h"
+#include "bulletogre/btoworld.h"
 
 #include "ogre/ogreengine.h"
 #include "OgreSceneManager.h"

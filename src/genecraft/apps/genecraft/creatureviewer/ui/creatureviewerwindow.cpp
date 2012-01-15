@@ -1,7 +1,7 @@
 #include "creatureviewerwindow.h"
 #include "ui_creatureviewerwindow.h"
 
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 
 // Qt
 #include <QDebug>
@@ -54,9 +54,9 @@
 #include "families/caterpillarfamily.h"
 
 #include "tools.h"
-#include "world/btoworld.h"
-#include "world/btobiome.h"
-#include "world/btoscene.h"
+#include "bulletogre/btoworld.h"
+#include "bulletogre/btobiome.h"
+#include "bulletogre/btoscene.h"
 
 #include "btoshapesfactory.h"
 #include "creaturefactory.h"
@@ -74,7 +74,7 @@
 #include "engines/ogre/ogreengine.h"
 #include "engines/ogre/ogrewidget.h"
 #include "engines/ogre/entities/ogrefreecamera.h"
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 
 #include "body/fixation.h"
 

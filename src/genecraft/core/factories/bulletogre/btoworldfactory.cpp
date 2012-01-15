@@ -1,10 +1,10 @@
 #include "btoworldfactory.h"
 
-#include "factories/btofactory.h"
-#include "factories/btoshapesfactory.h"
-#include "world/btoworld.h"
-#include "world/btoscene.h"
-#include "world/btobiome.h"
+#include "btofactory.h"
+#include "btoshapesfactory.h"
+#include "bulletogre/btoworld.h"
+#include "bulletogre/btoscene.h"
+#include "bulletogre/btobiome.h"
 
 namespace GeneCraftCore {
 

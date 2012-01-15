@@ -22,7 +22,7 @@
 #include "tools.h"
 
 // World
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 
 
 namespace GeneCraftCore {

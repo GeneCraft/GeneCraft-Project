@@ -16,45 +16,50 @@ class Bone : public QObject
 
 public:
 
-   // ---------------------------
-   // -- constructor and setup --
-   // ---------------------------
+
+  /**
+   * @brief A bone, the physical preponderant part of a squelette of an entity. It's finished by a fixation
+   where other bones can attach.
+   *
+   * @param shapesFactory the shape factory that allow the bone to create the needed physical/or graphical part
+   * @param yAxis the yAxis position on the parent fixation
+   * @param zAxis the xAxis position on the parent fixation
+   * @param radius the radius of the bone (cylinder part)
+   * @param lenght the length of the bone
+   * @param endFixRadius the radis of the end fixation of the bone
+   * @param initTransform the initial position of the muscle
+   */
    Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar lenght, btScalar endFixRadius, const btTransform &initTransform);
    /**
-    * @brief
+    * @brief destruct and free used ressources
     *
     */
    ~Bone();
 
-   /** add bone and its end fixation in the world */
    /**
-    * @brief
+    * @brief add bone and its end fixation in the world
     *
     */
    void setup();
-   /** To remove it without destructing entity */
+
    /**
-    * @brief
+    * @brief remove the bone without destructing entity
     *
     */
    void remove();
-   /** To remove only this bone (not recurcively) */
    /**
-    * @brief
+    * @brief remove only this bone (not recurcively) will not destroy child bones
     *
     */
    void removeOnly();
 
-   // -------------------
-   // -- serialization --
-   // -------------------
    /**
-    * @brief
+    * @brief create the basic genetic code for this bone
     *
     */
    QVariant serialize();
    /**
-    * @brief
+    * @brief create an empty piece of genetics for a bone
     *
     */
    static QVariant generateEmpty();
@@ -65,59 +70,61 @@ public:
 
    // parents
    /**
-    * @brief
+    * @brief set the parent constraint, the constraint between this bone and the parent fixation
     *
-    * @param ct
+    * @param ct the constraint (bullet) between the bone and the parent fixation
     */
    void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
+
    /**
-    * @brief
+    * @brief get the parent constraint, the constraint between this bone and the parent fixation
     *
-    * @return btGeneric6DofConstraint *
+    * @return btGeneric6DofConstraint * a pt to the constraint between the bone and the parent fixation
     */
    btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
+
    /**
-    * @brief
+    * @brief set the pt to the parent fixation
     *
-    * @param parentFix
+    * @param parentFix a pt to the parent Fixation*
     */
    void setParentFixation(Fixation *parentFix)             { this->parentFix = parentFix;  }
    /**
-    * @brief
+    * @brief get the pt to the parent fixation
     *
-    * @return Fixation *
+    * @return Fixation * a pt to the parent Fixation
     */
    Fixation *getParentFixation()                           { return parentFix;             }
    /**
-    * @brief
+    * @brief get the pt to the end fixation (the fixation at the end of the bone)
     *
-    * @return Fixation *
+    * @return Fixation * a pt to the Fixation at the end of the bone
     */
    Fixation *getEndFixation()                              { return endFix;                }
    /**
-    * @brief
+    * @brief get the entity where this bone belong
     *
-    * @return Entity *
+    * @return Entity * a pt to the "parent" entity
     */
    Entity *getEntity()                                     { return entity;                }
    /**
-    * @brief
+    * @brief set the entity that contains this bone
     *
-    * @param entity
+    * @param entity a pt to the "parent" entity
     */
    void setEntity(Entity *entity);
 
    // motors
    /**
-    * @brief
+    * @brief get the RotationalMotorsEffector between this bone and the parent fixation
     *
-    * @return RotationalMotorsEffector *
+    * @return RotationalMotorsEffector * a pt to the RotationalMotorsEffector between this bone and the parent fixation
     */
    inline RotationalMotorsEffector *getRotationalMotorsEffector() { return motorsEffector; }
    /**
-    * @brief
+    * @brief the motor modification data, e.g. the genetic code for the brainoutput
     *
-    * @param data
+    * @param data genetic code for the brain needed data
     */
    inline void setMotorModifierData(QVariant data)         { this->motorModifierData = data; }
 

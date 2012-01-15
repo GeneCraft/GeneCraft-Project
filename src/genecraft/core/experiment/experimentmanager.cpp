@@ -18,7 +18,7 @@
 #include "creaturefactory.h"
 #include "btshapesfactory.h"
 
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 #include "entities/entitiesengine.h"
 #include "LinearMath/btVector3.h"
 

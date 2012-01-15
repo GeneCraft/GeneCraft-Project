@@ -1,6 +1,6 @@
 #include "btosphere.h"
 
-#include "world/btoworld.h"
+#include "bulletogre/btoworld.h"
 #include "ogre/ogreengine.h"
 #include "OgreSceneManager.h"
 #include "bulletogre/bulletogreengine.h"

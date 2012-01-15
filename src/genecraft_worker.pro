@@ -12,7 +12,10 @@ CONFIG   -= app_bundle
 
 DESTDIR     = ../bin
 OBJECTS_DIR = ../obj
-include(./genecraftcore.pri)
+
+
+include(./genecraft_bullet.pri)
+include(./genecraft_core.pri)
 
 INCLUDEPATH += genecraft/core/ui
 

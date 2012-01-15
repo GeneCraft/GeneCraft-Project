@@ -12,8 +12,11 @@ CONFIG += silent
 DESTDIR     = ../bin
 OBJECTS_DIR = ../obj
 
-include(./genecraftcore.pri)
-include(./genecraftui.pri)
+include(./genecraft_core.pri)
+include(./genecraft_bullet.pri)
+include(./genecraft_ui.pri)
+include(./genecraft_ogre.pri)
+
 
 # genecraft apps
 INCLUDEPATH += \
@@ -40,5 +43,4 @@ FORMS += \
     genecraft/apps/genecraft/creatureviewer/ui/welcomewidget.ui
 
 RESOURCES +=
-
 

@@ -1,6 +1,6 @@
 #include "btobox.h"
 
-#include "world/btoworld.h"
+#include "bulletogre/btoworld.h"
 
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
