@@ -39,14 +39,11 @@ public:
    * @param initTransform the initial position of the muscle
    */
    Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar lenght, btScalar endFixRadius, const btTransform &initTransform);
-<<<<<<< HEAD
 
-=======
    /**
     * @brief destruct and free used ressources
     *
     */
->>>>>>> master
    ~Bone();
 
    /**
