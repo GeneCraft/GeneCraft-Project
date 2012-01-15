@@ -4,7 +4,9 @@ INCLUDEPATH += \
     genecraft/core/engines \
     genecraft/core/entities \
     genecraft/core/experiment \
+    genecraft/core/factories/base \
     genecraft/core/factories \
+    genecraft/core/world/base \
     genecraft/core/world \
     genecraft/core/utils
 
@@ -33,13 +35,6 @@ LIBS += -lqwt
 
 SOURCES += \
     genecraft/core/engines/engine.cpp \
-    genecraft/core/engines/bullet/bulletengine.cpp \
-    genecraft/core/engines/bullet/rigidbodyorigin.cpp \
-    genecraft/core/engines/bullet/shapes/btshape.cpp \
-    genecraft/core/engines/bullet/shapes/btbox.cpp \
-    genecraft/core/engines/bullet/shapes/btsphere.cpp \
-    genecraft/core/engines/bullet/shapes/btcylinder.cpp \
-    genecraft/core/engines/bullet/shapes/btbone.cpp \
     genecraft/core/engines/entities/entitiesengine.cpp \
     genecraft/core/entities/entity.cpp \
     genecraft/core/entities/body/treeshape.cpp \
@@ -85,18 +80,12 @@ SOURCES += \
     genecraft/core/entities/statistics/treeshapestats.cpp \
     genecraft/core/entities/statistics/statisticsprovider.cpp \
     genecraft/core/entities/statistics/fixationstats.cpp \
-    genecraft/core/world/btworld.cpp \
-    genecraft/core/world/btscene.cpp \
-    genecraft/core/world/btbiome.cpp \
     genecraft/core/world/spawn.cpp \
     genecraft/core/factories/ressources/jsonfile.cpp \
     genecraft/core/factories/ressources/dbrecord.cpp \
     genecraft/core/factories/ressources/ressourcesmanager.cpp \
     genecraft/core/factories/ressources/ressource.cpp \
-    genecraft/core/factories/btfactory.cpp \
-    genecraft/core/factories/creaturefactory.cpp \
-    genecraft/core/factories/btworldfactory.cpp \
-    genecraft/core/factories/btshapesfactory.cpp \
+    genecraft/core/factories/base/creaturefactory.cpp \
     genecraft/core/experiment/result.cpp \
     genecraft/core/experiment/experimentmanager.cpp \
     genecraft/core/experiment/experiment.cpp \
@@ -111,13 +100,6 @@ SOURCES += \
 
 HEADERS += \
     genecraft/core/engines/engine.h \
-    genecraft/core/engines/bullet/bulletengine.h \
-    genecraft/core/engines/bullet/rigidbodyorigin.h \
-    genecraft/core/engines/bullet/shapes/btshape.h \
-    genecraft/core/engines/bullet/shapes/btbox.h \
-    genecraft/core/engines/bullet/shapes/btsphere.h \
-    genecraft/core/engines/bullet/shapes/btcylinder.h \
-    genecraft/core/engines/bullet/shapes/btbone.h \
     genecraft/core/engines/entities/entitiesengine.h \
     genecraft/core/entities/entity.h \
     genecraft/core/entities/body/treeshape.h \
@@ -164,16 +146,10 @@ HEADERS += \
     genecraft/core/entities/mutation/crossovermanager.h \
     genecraft/core/entities/mutation/bonelimitsmutation.h \
     genecraft/core/factories/ressources/ressource.h \
-    genecraft/core/factories/btshapesfactory.h \
     genecraft/core/factories/ressources/jsonfile.h \
     genecraft/core/factories/ressources/dbrecord.h \
-    genecraft/core/factories/btfactory.h \
-    genecraft/core/factories/creaturefactory.h \
-    genecraft/core/factories/btworldfactory.h \
+    genecraft/core/factories/base/creaturefactory.h \
     genecraft/core/factories/ressources/ressourcesmanager.h \
-    genecraft/core/world/btworld.h \
-    genecraft/core/world/btscene.h \
-    genecraft/core/world/btbiome.h \
     genecraft/core/world/spawn.h \
     genecraft/core/experiment/result.h \
     genecraft/core/experiment/experimentmanager.h \

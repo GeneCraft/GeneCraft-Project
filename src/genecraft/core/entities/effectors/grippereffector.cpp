@@ -1,8 +1,8 @@
 #include "grippereffector.h"
 
 #include "body/fixation.h"
-#include "factories/btshapesfactory.h"
-#include "world/btworld.h"
+#include "btshapesfactory.h"
+#include "bullet/btworld.h"
 
 namespace GeneCraftCore {
 

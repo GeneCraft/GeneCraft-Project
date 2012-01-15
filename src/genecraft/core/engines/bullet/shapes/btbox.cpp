@@ -3,7 +3,7 @@
 #include <QDebug>
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 
 namespace GeneCraftCore {
 

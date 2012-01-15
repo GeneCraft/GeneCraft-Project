@@ -8,10 +8,10 @@
 #include "bullet/shapes/btcylinder.h"
 #include "btfactory.h"
 #include "world/btworld.h"
-#include "factories/btshapesfactory.h"
+#include "btshapesfactory.h"
 #include "tools.h"
 
-#include "factories/btworldfactory.h"
+#include "btworldfactory.h"
 
 namespace GeneCraftCore {
 

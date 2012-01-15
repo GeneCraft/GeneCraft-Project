@@ -1,5 +1,5 @@
 #include "btbone.h"
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>

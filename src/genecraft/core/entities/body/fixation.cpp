@@ -9,7 +9,7 @@
 #include "bullet/rigidbodyorigin.h"
 
 // World
-#include "world/btworld.h"
+#include "bullet/btworld.h"
 
 // Shape
 #include "body/bone.h"

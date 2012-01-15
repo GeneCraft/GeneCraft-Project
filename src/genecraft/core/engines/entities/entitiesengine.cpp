@@ -10,7 +10,6 @@ namespace GeneCraftCore {
 
     EntitiesEngine::EntitiesEngine()
     {
-        cptBrain = 0;
     }
 
     void EntitiesEngine::addEntity(Entity * entity) {

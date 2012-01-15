@@ -9,7 +9,7 @@
 #include "body/treeshape.h"
 #include "body/fixation.h"
 #include "bullet/rigidbodyorigin.h"
-#include "world/btoworld.h"
+#include "bulletogre/btoworld.h"
 
 // Ogre
 #include "ogre/ogreengine.h"

@@ -2,8 +2,8 @@
 
 #include <QVariantMap>
 #include "body/fixation.h"
-#include "factories/btshapesfactory.h"
-#include "world/btworld.h"
+#include "btshapesfactory.h"
+#include "bullet/btworld.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 #define MAX_DISTANCE 4.0f
