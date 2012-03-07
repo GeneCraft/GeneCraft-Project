@@ -23,7 +23,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QString>
 #include "genecraftcoreclasses.h"
 #include "effector.h"
-#include "brainoutmotor.h"
+
+#include <QVariant>
 
 namespace GeneCraftCore {
 
@@ -40,6 +41,7 @@ namespace GeneCraftCore {
  * @author Aurelien Da Campo
  * @author Cyprien Huissoud
  */
+
 class RotationalMotorsEffector : public Effector
 {
 public:

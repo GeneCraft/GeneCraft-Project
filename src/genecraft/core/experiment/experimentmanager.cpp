@@ -33,6 +33,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "entity.h"
 #include "entityfamily.h"
 
+#include "btfactory.h"
+
 #include "btworldfactory.h"
 #include "creaturefactory.h"
 #include "btshapesfactory.h"

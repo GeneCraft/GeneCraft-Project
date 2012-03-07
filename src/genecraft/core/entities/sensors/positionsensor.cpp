@@ -25,6 +25,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QVariant>
 #include "tools.h"
 
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 // FIXME : max size of an entity is 10 in this case !
 // The best would be to pass the entity for computing its biggest member (root to end fix)
 #define minDistanceBetweenRootFixAndThisFix -5.0
@@ -87,11 +89,14 @@ QVariant PositionSensor::generateEmpty()
 }
 
 void PositionSensor::step() {
+    // TODO FIX, use physObject
+    /*
     btTransform inverseRootTransform = rootFix->getRigidBody()->getWorldTransform().inverse();
     btVector3 distance = inverseRootTransform(fixation->getRigidBody()->getWorldTransform().getOrigin());
 
     inputX->setValue(distance.x());
     inputY->setValue(distance.y());
     inputZ->setValue(distance.z());
+    */
 }
 }

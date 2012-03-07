@@ -20,6 +20,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btbiome.h"
 #include "btworld.h"
 
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "btfactory.h"
+
 namespace GeneCraftCore {
     btBiome::btBiome(btWorld* world, QVariant biomeData, QObject *parent) :
         QObject(parent)

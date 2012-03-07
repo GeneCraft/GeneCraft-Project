@@ -26,7 +26,11 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tools.h"
 
+#include "entity.h"
+
+#include <QList>
 #include <QStringList>
+#include <QSet>
 #define TERRAIN_WIDTH 5
 namespace GeneCraftCore {
     Terrain::Terrain(EntitiesEngine* ee, QObject* parent) : Engine(parent)
@@ -60,7 +64,8 @@ namespace GeneCraftCore {
                     // Get entity bounding box
                     TreeShape* s = e->getShape();
                     Fixation* f  = s->getRoot();
-                    btTransform t = f->getRigidBody()->getWorldTransform();
+                    // TODO: fix use physobject
+                    btTransform t;// = f->getRigidBody()->getWorldTransform();
                     float x, y;
                     x = floor(t.getOrigin().getX()/terrain->width);
                     y = floor(t.getOrigin().getZ()/terrain->width);
@@ -119,7 +124,7 @@ namespace GeneCraftCore {
                     position.setIdentity();
                     position.setOrigin(pos);
 
-                    terrain->blocs.insert(needed, factory->createBox(size,
+                    terrain->blocs.insert(needed, (btBox*)factory->createBox(size,
                                                                     position,
                                                                     0,
                                                                     terrain->floorData));

@@ -20,9 +20,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BTSHAPE_H
 #define BTSHAPE_H
 
-#include <QObject>
 #include "genecraftcoreclasses.h"
-#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "base/node.h"
+
+class btRigidBody;
 
 namespace GeneCraftCore {
 
@@ -31,7 +32,7 @@ namespace GeneCraftCore {
  various shape type.
  *
  */
-class btShape : public QObject
+class btShape : public Node
 {
 public:
     /**
@@ -40,30 +41,19 @@ public:
      * @param world
      */
     explicit btShape(btWorld* world);
+
     /**
      * @brief destruct and remove the shape from the world
      *
      */
     ~btShape();
+
     /**
      * @brief return the bulletphysic rigid body relatif to the shape
      *
      * @return btRigidBody *
      */
     btRigidBody * getRigidBody() { return rigidBody; }
-
-    /**
-     * @brief select the shape
-     *
-     * @param bool
-     */
-    virtual void setSelected(bool){}
-
-    /**
-     * @brief setup the physical shape into the world
-     *
-     */
-    virtual void setup(){}
 
 protected:
 

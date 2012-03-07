@@ -21,22 +21,22 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTOBOX_H
 
 #include "genecraftcoreclasses.h"
-#include "bullet/shapes/btbox.h"
+#include "base/shapes/box.h"
 #include "Ogre.h"
 
 namespace GeneCraftCore {
 
-class btoBox : public btBox
+class oBox : public Box
 {
 public:
 
-    btoBox(btoWorld *world, BulletOgreEngine *btoEngine, btVector3 size, const btTransform &transform, const btScalar density);
-    ~btoBox();
+    oBox(btoWorld *world, btVector3 size, const btTransform &transform, const btScalar density);
+    ~oBox();
     void setup();
 
 protected:
+    OgreEngine *ogreEngine;
 
-    BulletOgreEngine *btoEngine;
     Ogre::Entity *entity;
     Ogre::SceneNode *node;
 

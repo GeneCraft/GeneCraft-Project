@@ -17,22 +17,21 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BTBONE_H
-#define BTBONE_H
+#ifndef btPhysBone_H
+#define btPhysBone_H
 
 #include "genecraftcoreclasses.h"
-#include "btshape.h"
-#include "BulletCollision/CollisionShapes/btSphereShape.h"
-#include "BulletCollision/CollisionShapes/btCylinderShape.h"
-#include "BulletCollision/CollisionShapes/btCompoundShape.h"
-#include "LinearMath/btDefaultMotionState.h"
+#include "base/shapes/physbone.h"
+
+class btCompoundShape; class btDefaultMotionState;
+class btCylinderShape; class btSphereShape;
 
 namespace GeneCraftCore {
 /**
  * @brief The physical bone representing a bone in bullet physics
  *
  */
-class btBone : public btShape
+class btPhysBone : public PhysBone
 {
 public:
     /**
@@ -45,12 +44,12 @@ public:
      * @param radiusArticulation the radius of the sphere at the end of the bone
      * @param transform the way the bone is attached to the parent
      */
-    explicit btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
+    explicit btPhysBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform);
     /**
      * @brief simple bone destructor
      *
      */
-    ~btBone();
+    ~btPhysBone();
     /**
      * @brief setup the bone into the world, attach the bone to the parent and
      if necessary create the motor effector for it's joint.
@@ -63,19 +62,19 @@ public:
      *
      * @return btScalar the length of the bone
      */
-    btScalar getLength() { return cylinderShape->getHalfExtentsWithMargin().y()*btScalar(2.0); }
+    btScalar getLength();
     /**
      * @brief return the radius of the bone
      *
      * @return btScalar the radius of the bone
      */
-    btScalar getRadius() { return cylinderShape->getRadius(); }
+    btScalar getRadius();
     /**
      * @brief return the radius of the sphere at the end of the bone
      *
      * @return btScalar the radius of the fixation
      */
-    btScalar getArticulationRadius() { return sphereShape->getRadius(); }
+    btScalar getArticulationRadius();
 
     /**
      * @brief change the bone size (both length and radius)
@@ -91,6 +90,14 @@ public:
      * @param radius the new radius of the fixation
      */
     virtual void setEndFixationRadius(btScalar radius);
+
+    /**
+     * @brief return the mass of the sphere
+     *
+     */
+    btScalar getMass() const;
+
+    Position getPosition();
 
     //!TODO: Improve
     static const btScalar DENSITY; /**< the density of all bone */
@@ -108,6 +115,7 @@ protected:
      */
     void init(btScalar length, btScalar radius, btScalar radiusArticulation, btScalar density, const btTransform &transform);
 
+    btRigidBody* rigidBody;
     BulletEngine* btEngine; /**< bulletphysics engine */
     btCompoundShape* shape; /**< the global shape (stick + sphere) */
     btDefaultMotionState* motionState; /**< motion state (bullet) */
@@ -118,4 +126,4 @@ protected:
 
 
 
-#endif // BTBONE_H
+#endif // btPhysBone_H

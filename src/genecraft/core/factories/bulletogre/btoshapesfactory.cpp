@@ -22,10 +22,21 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bulletogre/btoworld.h"
 
 #include "bulletogre/bulletogreengine.h"
-#include "bulletogre/shapes/btobox.h"
-#include "bulletogre/shapes/btosphere.h"
-#include "bulletogre/shapes/btocylinder.h"
-#include "bulletogre/shapes/btobone.h"
+
+#include "ogre/shapes/obox.h"
+#include "ogre/shapes/osphere.h"
+#include "ogre/shapes/ocylinder.h"
+#include "ogre/shapes/oPhysBone.h"
+
+#include "base/shapes/physbone.h"
+#include "base/shapes/box.h"
+#include "base/shapes/sphere.h"
+#include "base/shapes/cylinder.h"
+
+#include "bullet/shapes/btphysbone.h"
+#include "bullet/shapes/btcylinder.h"
+#include "bullet/shapes/btsphere.h"
+#include "bullet/shapes/btbox.h"
 
 #include <QDebug>
 
@@ -36,23 +47,41 @@ btoShapesFactory::btoShapesFactory(BulletOgreEngine *btoEngine) : btShapesFactor
     this->btoEngine = btoEngine;
 }
 
-btBox *btoShapesFactory::createBox(btVector3 size, const btTransform &transform, const btScalar density, QVariant)
+Node<Box*> *btoShapesFactory::createBox(btVector3 size, const btTransform &transform, const btScalar density, QVariant)
 {
-    return new btoBox((btoWorld*)world, btoEngine, size, transform, density);
+    return new oBox((btoWorld*)world, size, transform, density);
 }
 
-btSphere *btoShapesFactory::createSphere(btScalar radius, const btTransform &transform, const btScalar density, QVariant params)
-{
-    return new btoSphere((btoWorld*)world, btoEngine, radius, transform, density, params);
+Node<Sphere*> *btoShapesFactory::createSphere(btScalar radius, const btTransform &transform, const btScalar density, QVariant params) {
+    btSphere* btImpl   = new btSphere(world, radius, transform, density);
+    oSphere* oImpl     = new oSphere((btoWorld*)world, radius, transform, density, params);
+    Sphere* compoundImpl = new Sphere(world, radius, transform, density);
+    compoundImpl->addComposite(btImpl);
+    compoundImpl->addComposite(oImpl);
+    compoundImpl->setDelegate(btImpl);
+    return compoundImpl;
 }
 
-btCylinder *btoShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform, const btScalar density, QVariant)
+Node<Cylinder*> *btoShapesFactory::createCylinder(btScalar radius, btScalar height, const btTransform &transform, const btScalar density, QVariant)
 {
-    return new btoCylinder((btoWorld*)world, btoEngine, radius, height, transform, density);
+    btCylinder* btImpl       = new btCylinder(world, radius, height, transform, density);
+    oCylinder*  oImpl        = new oCylinder((btoWorld*)world, radius, height, transform, density);
+    Cylinder*   compoundImpl = new Cylinder(world, radius, height, transform, density);
+    compoundImpl->addComposite(btImpl);
+    compoundImpl->addComposite(oImpl);
+    compoundImpl->setDelegate(btImpl);
+    return compoundImpl;
 }
 
-btBone* btoShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant) {
-    return new btoBone((btoWorld*)world, btoEngine, length, radius, radiusArticulation, transform);
+Node<PhysBone*> *btoShapesFactory::createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant p) {
+    btPhysBone* btImpl       = new btPhysBone(world, length, radius, radiusArticulation, transform);
+    oPhysBone*  oImpl        = new oPhysBone((btoWorld*)world, length, radius, radiusArticulation, transform);
+    PhysBone*   compoundImpl = new PhysBone(world, length, radius, radiusArticulation, transform);
+
+    compoundImpl->addComposite(btImpl);
+    compoundImpl->addComposite(oImpl);
+    compoundImpl->setDelegate(btImpl);
+    return compoundImpl;
 }
 
 }

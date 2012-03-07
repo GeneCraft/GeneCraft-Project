@@ -24,9 +24,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QVariant>
 
 #include "genecraftcoreclasses.h"
-#include "BulletDynamics/Dynamics/btRigidBody.h"
-#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
-#include "bullet/shapes/btbone.h"
+
+class btGeneric6DofConstraint;
+class btRigidBody;
 
 namespace GeneCraftCore {
 
@@ -93,39 +93,39 @@ public:
     *
     * @param ct the constraint (bullet) between the bone and the parent fixation
     */
-   void setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
+   void setParentConstraint(btGeneric6DofConstraint *ct);
 
    /**
     * @brief get the parent constraint, the constraint between this bone and the parent fixation
     *
     * @return btGeneric6DofConstraint * a pt to the constraint between the bone and the parent fixation
     */
-   btGeneric6DofConstraint * getParentConstraint()         { return parentCt;              }
+   btGeneric6DofConstraint * getParentConstraint();
 
    /**
     * @brief set the pt to the parent fixation
     *
     * @param parentFix a pt to the parent Fixation*
     */
-   void setParentFixation(Fixation *parentFix)             { this->parentFix = parentFix;  }
+   void setParentFixation(Fixation *parentFix);
    /**
     * @brief get the pt to the parent fixation
     *
     * @return Fixation * a pt to the parent Fixation
     */
-   Fixation *getParentFixation()                           { return parentFix;             }
+   Fixation *getParentFixation();
    /**
     * @brief get the pt to the end fixation (the fixation at the end of the bone)
     *
     * @return Fixation * a pt to the Fixation at the end of the bone
     */
-   Fixation *getEndFixation()                              { return endFix;                }
+   Fixation *getEndFixation();
    /**
     * @brief get the entity where this bone belong
     *
     * @return Entity * a pt to the "parent" entity
     */
-   Entity *getEntity()                                     { return entity;                }
+   Entity *getEntity();
    /**
     * @brief set the entity that contains this bone
     *
@@ -139,13 +139,13 @@ public:
     *
     * @return RotationalMotorsEffector * a pt to the RotationalMotorsEffector between this bone and the parent fixation
     */
-   inline RotationalMotorsEffector *getRotationalMotorsEffector() { return motorsEffector; }
+   RotationalMotorsEffector *getRotationalMotorsEffector();
    /**
     * @brief the motor modification data, e.g. the genetic code for the brainoutput
     *
     * @param data genetic code for the brain needed data
     */
-   inline void setMotorModifierData(QVariant data)         { this->motorModifierData = data; }
+   void setMotorModifierData(QVariant data);
 
    // body & size
    /**
@@ -153,19 +153,19 @@ public:
     *
     * @return btRigidBody *
     */
-   btRigidBody* getRigidBody()                             { return rigidBody;             }
+   //btRigidBody* getRigidBody();
    /**
     * @brief
     *
     * @return btScalar
     */
-   btScalar getLength()                                    { return body->getLength();     }
+   btScalar getLength();
    /**
     * @brief
     *
     * @return btScalar
     */
-   btScalar getRadius()                                    { return body->getRadius();     }
+   btScalar getRadius();
    /**
     * @brief
     *
@@ -260,12 +260,14 @@ public:
     */
    void disconnectMotor(int i);
 
+   btScalar getMass();
+
 protected:
 
    // Shape
    btScalar yAxis, zAxis; /**< TODO */
-   btBone *body;             // Owner /**< TODO */
-   btRigidBody *rigidBody; /**< TODO */
+   PhysBone *body;             // Owner /**< TODO */
+   //btRigidBody *rigidBody; /**< TODO */
    RigidBodyOrigin *origin;  // Owner /**< TODO */
    Fixation *parentFix; /**< TODO */
    Fixation *endFix;         // Owner /**< TODO */

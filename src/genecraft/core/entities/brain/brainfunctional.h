@@ -22,7 +22,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "genecraftcoreclasses.h"
 #include "brain.h"
-#include "brainnode.h"
 
 #include <QMap>
 #include <QVariant>

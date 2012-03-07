@@ -17,39 +17,34 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BTOSPHERE_H
-#define BTOSPHERE_H
+#ifndef BTOCYLINDER_H
+#define BTOCYLINDER_H
 
 #include "genecraftcoreclasses.h"
-#include "bullet/shapes/btsphere.h"
+#include "base/shapes/cylinder.h"
 #include "Ogre.h"
-#include <QVariant>
 
 namespace GeneCraftCore {
 
-class btoSphere : public btSphere
+class oCylinder : public Cylinder
 {
 public:
-    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QVariant params = QVariant());
-    ~btoSphere();
+
+    oCylinder(btoWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density);
     void setup();
-    void setSelected(bool selected);
-    void setRadius(btScalar radius);
+    void setSize(btScalar radius, btScalar height);
 
 protected:
 
-    BulletOgreEngine *btoEngine;
+    OgreEngine* ogreEngine;
+
     Ogre::Entity *entity;
     Ogre::SceneNode *node;
 
-    QString fixationMaterial;
-    QString fixationSelectedMaterial;
-    Ogre::AxisAlignedBox originalSphereBB;
-
 private:
-    static int mNumSpheresInstanced;
+    static int mNumEntitiesInstanced;
 };
 
 }
 
-#endif // BTOSPHERE_H
+#endif // BTOCYLINDER_H

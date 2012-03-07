@@ -1,83 +1,105 @@
-#include "btsphere.h"
+/*
+Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud
+
+This file is part of Genecraft-Project.
+
+Genecraft-Project is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Genecraft-Project is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "sphere.h"
+
+#include "btworld.h"
+#include "btfactory.h"
+#include "base/linkengine.h"
 
 #include <QDebug>
 
-#include "world/btworld.h"
-
-#include "bullet/bulletengine.h"
-#include "bullet/rigidbodyorigin.h"
-#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
-
 namespace GeneCraftCore {
 
-btSphere::btSphere(btWorld *world, btScalar radius, const btTransform &transform, const btScalar density) : btShape(world), shape(NULL)
-{
-    init(radius, density, transform);
-}
 
-btSphere::~btSphere() {
-    world->getBulletWorld()->removeRigidBody(rigidBody);
-    delete rigidBody;
-    delete shape;
-    delete motionState;
-    delete origin;
-}
-
-void btSphere::init(btScalar radius, btScalar density, const btTransform &transform)
-{
-    this->density = density;
-//    this->size = size;
-//    this->initialPosition = position;
-//    this->initiaEulerlRotation = EulerRotation;
-
-    // shape
-    this->shape = new btSphereShape(radius);
-
-    // rotation with euler method :) (warning order Z-Y-X)
-    this->motionState = new btDefaultMotionState(transform);
-
-    // body
-    btScalar mass = computeMass();
-    btVector3 fallInertia(0,0,0);
-    this->shape->calculateLocalInertia(mass,fallInertia);
-    this->rigidBody = new btRigidBody(mass,this->motionState,this->shape,fallInertia);
-
-    origin = new RigidBodyOrigin(RigidBodyOrigin::BASIC_SHAPE,(QObject *)this);
-    rigidBody->setUserPointer(origin);
-}
-
-btScalar btSphere::getMass() const
-{
-    return btScalar(1.0)/rigidBody->getInvMass();
-}
-
-btScalar btSphere::computeMass() const
-{
-    // volume * density
-    return 4/3.*SIMD_PI*shape->getRadius()*shape->getRadius()*shape->getRadius() * density ;
-}
-
-void btSphere::setup()
-{
-    if(world != NULL && rigidBody != NULL)
-        world->getBulletWorld()->addRigidBody(rigidBody);
-    else
-        qDebug() << Q_FUNC_INFO << "btSphere::setup btEngine == NULL || rigidBody == NULL";
-}
-
-void btSphere::setRadius(btScalar radius)
-{
-    if(shape != NULL)
-    {
-        delete shape;
-        shape = new btSphereShape(radius);
-        rigidBody->setCollisionShape(shape);
-
-        btScalar mass = computeMass();
-        btVector3 intertia;
-        this->shape->calculateLocalInertia(mass,intertia);
-        this->rigidBody->setMassProps(mass,intertia);
+    /**
+     * @brief construct a sphere in a given world
+     *
+     * @param btWorld the world where the sphere will be
+     * @param radius the radius of the sphere
+     * @param transform the initial transformation of the sphere
+     * @param density the density of the sphere
+     */
+    Sphere::Sphere(btWorld *world, btScalar radius, const btTransform &transform, const btScalar density)
+        : Node(world) {
+        this->density = density;
+        this->radius = radius;
     }
-}
 
+    /**
+     * @brief destruct and remove the sphere from the world
+     *
+     */
+    Sphere::~Sphere() {
+        LinkEngine* lkEngine =
+            (LinkEngine*)world->getFactory()->getEngineByName("Link");
+        foreach(Sphere* composite, composites) {
+            if(delegate && delegate != composite) {
+                lkEngine->removeLink(delegate, composite);
+            }
+
+            delete composite;
+        }
+    }
+
+    /**
+     * @brief setup the sphere in the world
+     *
+     */
+    void Sphere::setup() {
+        LinkEngine* lkEngine =
+            (LinkEngine*)world->getFactory()->getEngineByName("Link");
+        foreach(Sphere* composite, composites) {
+            if(delegate && delegate != composite) {
+                lkEngine->addLink(delegate, composite);
+            }
+            composite->setup();
+        }
+    }
+
+    /**
+     * @brief change the size of the sphere
+     *
+     * @param radius the new radius of the sphere
+     */
+    void Sphere::setRadius(btScalar radius) {
+        this->radius = radius;
+        foreach(Sphere* composite, composites) {
+            composite->setRadius(radius);
+        }
+    }
+
+    /**
+     * @brief return the size of the sphere
+     *
+     * @return radius the radius of the sphere
+     */
+    btScalar Sphere::getRadius() {
+        return this->radius;
+    }
+
+
+    void Sphere::setFriction(btScalar friction) {
+        this->friction = friction;
+    }
+
+    btScalar Sphere::getFriction() {
+        return this->friction;
+    }
 }

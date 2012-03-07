@@ -31,6 +31,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "body/treeshape.h"
 
 // Brain
+#include "effectors/brainoutmotor.h"
 #include "brain/brainout.h"
 
 // Sensors
@@ -45,6 +46,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "events/inspectorsinputmanager.h"
 
 #include <QTimer>
+
+#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
 
 btScalar roundPrecision(btScalar n, int precision = 2)
@@ -318,6 +321,7 @@ void BonePropertiesController::setBone(Bone * bone)
 
         // Bone outputs
         // X
+        // TODO: fix
         BrainOutMotor* muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(0);
         if(muscle) {
             this->ui->txtContractX->setText(muscle->boMaxMotorForce->getConnexionInfo().toString());

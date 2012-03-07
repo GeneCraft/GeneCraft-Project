@@ -155,7 +155,8 @@ void FixationPropertiesController::addBone()
 
         bone->setup();
 
-        emit rigidBodySelected(bone->getRigidBody());
+        // TODO: fix use physobject
+        //emit rigidBodySelected(bone->getRigidBody());
     }
 
     setFixation(fixation);

@@ -22,8 +22,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QVariant>
 
-#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 #include "genecraftcoreclasses.h"
+
+class btRotationalLimitMotor;
 
 namespace GeneCraftCore {
 

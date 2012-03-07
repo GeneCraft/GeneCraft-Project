@@ -22,9 +22,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QObject>
 #include <QVariant>
-
-#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
-#include "btfactory.h"
+#include "genecraftcoreclasses.h"
 
 namespace GeneCraftCore {
 

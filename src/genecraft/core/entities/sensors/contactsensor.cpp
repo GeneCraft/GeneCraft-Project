@@ -24,6 +24,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btshapesfactory.h"
 #include "tools.h"
 
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+
 namespace GeneCraftCore {
 
 // To create
@@ -74,7 +76,9 @@ QVariant ContactSensor::generateEmpty()
 
 // To update brain inputs values
 void ContactSensor::step() {
+    // TODO: fix use physobject
 
+    /*
     // Method : contactTest
 //    btRigidBody* tgtBody = fixation->getRigidBody();
 //    ContactSensorCallback callback(tgtBody, this);
@@ -126,6 +130,8 @@ void ContactSensor::step() {
 //            }
     }
 
+    */
+    int collide = 0;
     collided->setValue((int)collide);
 }
 

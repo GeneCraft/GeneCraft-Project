@@ -21,6 +21,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btshapesfactory.h"
 #include "tools.h"
 
+#include "bullet/btworld.h"
+#include "btbiome.h"
+#include "btscene.h"
+
 #include <QDebug>
 
 namespace GeneCraftCore {

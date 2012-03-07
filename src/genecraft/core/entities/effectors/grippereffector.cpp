@@ -23,6 +23,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btshapesfactory.h"
 #include "bullet/btworld.h"
 
+#include "brain/brainout.h"
+#include "BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h"
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+
 namespace GeneCraftCore {
 
 #define TYPE_NAME "Gripper Effector"
@@ -33,10 +37,12 @@ GripperEffector::GripperEffector(Fixation *fixation) : Effector(TYPE_NAME, TYPE)
     fixation(fixation)
 {
     // create the air contraint
-    constraint = new btPoint2PointConstraint(*fixation->getRigidBody(),btVector3(0,0,0));
+    // TODO: fix use physobject
+
+    /*constraint = new btPoint2PointConstraint(*fixation->getRigidBody(),btVector3(0,0,0));
     constraint->setEnabled(false);
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->addConstraint(constraint);
-
+*/
     gripperOutput = new BrainOut(-1,1);
     brainOutputs.append(gripperOutput);
 }
@@ -46,18 +52,21 @@ GripperEffector::GripperEffector(QVariant data, Fixation * fixation) :
     Effector(data), fixation(fixation) {
 
     // create the air contraint
+    // TODO: fix use physobject
+    /*
     constraint = new btPoint2PointConstraint(*fixation->getRigidBody(),btVector3(0,0,0));
     constraint->setEnabled(false);
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->addConstraint(constraint);
-
+*/
     gripperOutput = new BrainOut(data.toMap()["gripperOutput"]);
     brainOutputs.append(gripperOutput);
 }
 
 // Destructor
 GripperEffector::~GripperEffector()
-{
-    fixation->getShapesFactory()->getWorld()->getBulletWorld()->removeConstraint(constraint);
+{    // TODO: fix use physobject
+
+//    fixation->getShapesFactory()->getWorld()->getBulletWorld()->removeConstraint(constraint);
     delete constraint;
 }
 
@@ -69,7 +78,9 @@ QVariant GripperEffector::serialize() {
 }
 
 void GripperEffector::step() {
+    // TODO: fix use physobject
 
+/*
     // disable <= 0 > activate
     if(gripperOutput->getValue() > 0)
     {
@@ -89,6 +100,7 @@ void GripperEffector::step() {
     else
         // disable the contraint
         constraint->setEnabled(false);
+*/
 }
 
 QVariant GripperEffector::generateEmpty()

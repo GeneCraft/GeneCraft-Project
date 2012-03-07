@@ -25,6 +25,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bullet/btworld.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
+
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 #define MAX_DISTANCE 4.0f
 
 namespace GeneCraftCore {
@@ -68,8 +71,10 @@ QVariant DistanceSensor::serialize() {
 
 void DistanceSensor::step() {
 
+    // TODO: fix use physobject
+
     // compute orientation of raycast
-    btVector3 rayFrom = fixation->getRigidBody()->getWorldTransform().getOrigin();
+    /*btVector3 rayFrom = fixation->getRigidBody()->getWorldTransform().getOrigin();
     btQuaternion local1;
     local1.setRotation(btVector3(0, 1, 0), yAxis);
     btQuaternion local2;
@@ -100,7 +105,7 @@ void DistanceSensor::step() {
             }
         }
     }
-
+*/
     distanceInput->setValue(0);
 }
 

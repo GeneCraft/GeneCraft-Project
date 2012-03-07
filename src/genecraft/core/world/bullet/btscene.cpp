@@ -30,6 +30,16 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btshapesfactory.h"
 #include "tools.h"
 
+
+#include "spawn.h"
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
+#include "LinearMath/btVector3.h"
+
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+
+#include "terrain/terrain.h"
+
 #include "btworldfactory.h"
 
 namespace GeneCraftCore {
@@ -134,7 +144,7 @@ namespace GeneCraftCore {
                     btVector3 size(shapeMap.value("sizeX").toDouble(),shapeMap.value("sizeY").toDouble(),shapeMap.value("sizeZ").toDouble());
 
                     // create the box
-                    btBox *box = world->getShapesFactory()->createBox(size, transform, shapeMap["density"].toFloat());
+                    Node<Linked*>* box = (Node<Linked*>*)world->getShapesFactory()->createBox(size, transform, shapeMap["density"].toFloat());
                     box->setup();
                     shapes.append(box);
 
@@ -147,7 +157,7 @@ namespace GeneCraftCore {
                     transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
-                    btSphere *sphere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
+                    Node<Linked*>* sphere = (Node<Linked*>*) world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
                     sphere->setup();
                     shapes.append(sphere);
                 }
@@ -159,7 +169,7 @@ namespace GeneCraftCore {
                     transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
-                    btCylinder *cylinder = world->getShapesFactory()->createCylinder(shapeMap.value("radius").toFloat(), shapeMap.value("height").toFloat(), transform, shapeMap["density"].toFloat());
+                    Node<Linked*>* cylinder = (Node<Linked*>*) world->getShapesFactory()->createCylinder(shapeMap.value("radius").toFloat(), shapeMap.value("height").toFloat(), transform, shapeMap["density"].toFloat());
                     cylinder->setup();
                     shapes.append(cylinder);
                 }

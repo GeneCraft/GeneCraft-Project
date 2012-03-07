@@ -39,6 +39,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "effectors/grippereffector.h"
 #include "effectors/flyingeffector.h"
 
+
+#include "LinearMath/btTransform.h"
+
 namespace GeneCraftCore {
     TreeShape::TreeShape(btShapesFactory* shapesFactory, QObject *parent) :
         QObject(parent)

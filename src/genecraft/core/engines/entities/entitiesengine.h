@@ -23,7 +23,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QList>
 #include "genecraftcoreclasses.h"
 #include "engine.h"
-#include "entities/entity.h"
 
 namespace GeneCraftCore {
 

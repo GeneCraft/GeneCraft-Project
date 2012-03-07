@@ -23,19 +23,16 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QObject>
 #include <QVariant>
 
-#include "spawn.h"
 #include "genecraftcoreclasses.h"
 
-#include <btBulletCollisionCommon.h>
-#include <btBulletDynamicsCommon.h>
-#include "LinearMath/btVector3.h"
-#include "bullet/shapes/btshape.h"
-
-#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
-
-#include "terrain/terrain.h"
+class btVector3;
+class btDynamicsWorld;
+class btRigidBody;
+class btCollisionShape;
+class btDefaultMotionState;
 
 namespace GeneCraftCore {
+
 
 class btScene : public QObject
 {
@@ -60,7 +57,7 @@ protected:
     btDefaultMotionState* groundMotionState;
     btCollisionShape *collisionShape;
     btRigidBody *rigidBody;
-    QList<btShape*> shapes;
+    QList<Node<Linked*>*> shapes;
     float terrain[65*65];
 
     Terrain* terrainEngine;

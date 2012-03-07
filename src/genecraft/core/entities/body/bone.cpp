@@ -34,14 +34,25 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "BulletCollision/CollisionShapes/btCylinderShape.h"
 #include "BulletCollision/CollisionShapes/btCompoundShape.h"
 #include "bullet/shapes/btcylinder.h"
-#include "bullet/shapes/btbone.h"
+#include "bullet/shapes/btPhysBone.h"
 #include "btshapesfactory.h"
+
+#include "base/shapes/sphere.h"
+
+#include "entities/effectors/brainoutmotor.h"
+
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "bullet/shapes/btPhysBone.h"
 
 // Others
 #include "tools.h"
 
 // World
 #include "bullet/btworld.h"
+
+#include <QVariantMap>
 
 
 namespace GeneCraftCore {
@@ -52,15 +63,18 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
 
     motorModifierData = QVariant();
     parentCt = 0;
-    body         = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
-    rigidBody    = body->getRigidBody();
+    body         = (PhysBone*)shapesFactory->createBone(length, radius, endFixRadius, initTransform);
+    // TODO: Fix
+    //rigidBody    = NULL;//body->getRigidBody();
 
     btVector3 position(btScalar(0), length*0.5 + endFixRadius, btScalar(0));
     btTransform endTransform;
     endTransform.setIdentity();
     endTransform.setOrigin(position);
 
-    endFix      = new Fixation(shapesFactory, rigidBody, endFixRadius, endTransform, this);
+    Sphere* physFix = new Sphere(shapesFactory->getWorld(), endFixRadius, endTransform, body->DENSITY);
+
+    endFix          = new Fixation(shapesFactory, physFix, endFixRadius, endTransform, this);
 
     this->shapesFactory = shapesFactory;
 }
@@ -68,10 +82,12 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
 Bone::~Bone()
 {
     delete motorsEffector;
-    shapesFactory->getWorld()->getBulletWorld()->removeConstraint(parentCt);
+    // TODO: fix use physobject
+    //shapesFactory->getWorld()->getBulletWorld()->removeConstraint(parentCt);
     delete parentCt;
     delete endFix;
-    delete origin;
+    // TODO: fix use physobject
+    //delete this->origin;
     delete body;
 }
 
@@ -84,6 +100,8 @@ void Bone::remove() {
 //    }
 
     endFix->remove();
+
+    if(motorsEffector)
     entity->removeLinksToEffector(this->motorsEffector);
     disconnectMotor(0);
     disconnectMotor(1);
@@ -107,14 +125,14 @@ void Bone::setup()
     body->setup();
 
     // origins
-    origin = new RigidBodyOrigin(RigidBodyOrigin::BONE,(QObject *)this);
-    rigidBody->setUserPointer(origin);
+    //origin = new RigidBodyOrigin(RigidBodyOrigin::BONE,(QObject *)this);
+    //rigidBody->setUserPointer(origin);
 
     // parent constraint
     if(parentCt)
     {
         // state
-        rigidBody->setActivationState(DISABLE_DEACTIVATION);
+        //rigidBody->setActivationState(DISABLE_DEACTIVATION);
         for(int i=0;i<3;i++)
         {
             btRotationalLimitMotor * motor = parentCt->getRotationalLimitMotor(i);
@@ -174,38 +192,44 @@ void Bone::disableMotors()
 
 void Bone::setBrainMotors()
 {
+    if(motorsEffector)
     motorsEffector->setOutputsFrom(1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/);
 }
 
 void Bone::setNormalPositionMotors()
 {
+    if(motorsEffector)
     motorsEffector->setOutputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/);
 }
 
 void Bone::setRandomMotors()
 {
+    if(motorsEffector)
     motorsEffector->setOutputsFrom(2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/);
 }
 
 void Bone::resetMotors()
 {
     // Angular Limit Motors
-    btRotationalLimitMotor *motor;
-    for(int i=0;i<3;i++)
-    {
-        motor = parentCt->getRotationalLimitMotor(i);
+    if(parentCt) {
+        btRotationalLimitMotor *motor;
+        for(int i=0;i<3;i++)
+        {
+            motor = parentCt->getRotationalLimitMotor(i);
 
-        motor->m_enableMotor    = true;
-        motor->m_targetVelocity = btScalar(0);
-        motor->m_maxMotorForce  = btScalar(1000);
-        motor->m_maxLimitForce  = btScalar(300);
-        motor->m_loLimit        = btScalar(0); // TODO initial value
-        motor->m_hiLimit        = btScalar(0); // TODO initial value
+            motor->m_enableMotor    = true;
+            motor->m_targetVelocity = btScalar(0);
+            motor->m_maxMotorForce  = btScalar(1000);
+            motor->m_maxLimitForce  = btScalar(300);
+            motor->m_loLimit        = btScalar(0); // TODO initial value
+            motor->m_hiLimit        = btScalar(0); // TODO initial value
+        }
     }
 }
 
 void Bone::disconnectMotor(int i)
 {
+    if(motorsEffector)
     if(entity && motorsEffector->getBrainOutputs(i))
     {
         entity->removeBrainOut(motorsEffector->getBrainOutputs(i)->boMaxMotorForce);
@@ -240,6 +264,7 @@ void Bone::setyAxis(btScalar yAxis) {
     local2.setRotation(btVector3(0, 0, 1), zAxis);
     local1 *= local2;
 
+    if(parentCt)
     parentCt->getFrameOffsetA().setRotation(local1);
 }
 
@@ -251,6 +276,7 @@ void Bone::setZAxis(btScalar zAxis) {
     local2.setRotation(btVector3(0, 0, 1), zAxis);
     local1 *= local2;
 
+    if(parentCt)
     parentCt->getFrameOffsetA().setRotation(local1);
 }
 
@@ -275,8 +301,10 @@ QVariant Bone::serialize()
     // Limits
     QVariantMap lowerlimits, upperlimits;
     btVector3 angularLowerLimits, angularUpperLimits;
-    parentCt->getAngularLowerLimit(angularLowerLimits);
-    parentCt->getAngularUpperLimit(angularUpperLimits);
+    if(parentCt) {
+        parentCt->getAngularLowerLimit(angularLowerLimits);
+        parentCt->getAngularUpperLimit(angularUpperLimits);
+    }
 
     lowerlimits.insert("x",QVariant((double)angularLowerLimits.x()));
     lowerlimits.insert("y",QVariant((double)angularLowerLimits.y()));
@@ -431,4 +459,82 @@ void Bone::setToMinimalOuts(){
     }
 }
 
+
+// parents
+/**
+ * @brief set the parent constraint, the constraint between this bone and the parent fixation
+ *
+ * @param ct the constraint (bullet) between the bone and the parent fixation
+ */
+void Bone::setParentConstraint(btGeneric6DofConstraint *ct)   { this->parentCt = ct;          }
+
+/**
+ * @brief get the parent constraint, the constraint between this bone and the parent fixation
+ *
+ * @return btGeneric6DofConstraint * a pt to the constraint between the bone and the parent fixation
+ */
+btGeneric6DofConstraint * Bone::getParentConstraint()         { return parentCt;              }
+
+/**
+ * @brief set the pt to the parent fixation
+ *
+ * @param parentFix a pt to the parent Fixation*
+ */
+void Bone::setParentFixation(Fixation *parentFix)             { this->parentFix = parentFix;  }
+/**
+ * @brief get the pt to the parent fixation
+ *
+ * @return Fixation * a pt to the parent Fixation
+ */
+Fixation *Bone::getParentFixation()                           { return parentFix;             }
+/**
+ * @brief get the pt to the end fixation (the fixation at the end of the bone)
+ *
+ * @return Fixation * a pt to the Fixation at the end of the bone
+ */
+Fixation *Bone::getEndFixation()                              { return endFix;                }
+/**
+ * @brief get the entity where this bone belong
+ *
+ * @return Entity * a pt to the "parent" entity
+ */
+Entity *Bone::getEntity()                                     { return entity;                }
+
+// motors
+/**
+ * @brief get the RotationalMotorsEffector between this bone and the parent fixation
+ *
+ * @return RotationalMotorsEffector * a pt to the RotationalMotorsEffector between this bone and the parent fixation
+ */
+RotationalMotorsEffector* Bone::getRotationalMotorsEffector() { return motorsEffector; }
+/**
+ * @brief the motor modification data, e.g. the genetic code for the brainoutput
+ *
+ * @param data genetic code for the brain needed data
+ */
+void Bone::setMotorModifierData(QVariant data)         { this->motorModifierData = data; }
+
+// body & size
+/**
+ * @brief
+ *
+ * @return btRigidBody *
+ */
+//btRigidBody* Bone::getRigidBody()                             { return rigidBody;             }
+/**
+ * @brief
+ *
+ * @return btScalar
+ */
+btScalar Bone::getLength()                                    { return body->getLength();     }
+/**
+ * @brief
+ *
+ * @return btScalar
+ */
+btScalar Bone::getRadius()                                    { return body->getRadius();     }
+
+btScalar Bone::getMass() {
+    return this->body->getMass();
+}
 }

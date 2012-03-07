@@ -32,6 +32,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 // Shape
 #include "body/bone.h"
+#include "bullet/shapes/btPhysBone.h"
 #include "btshapesfactory.h"
 #include "bullet/shapes/btsphere.h"
 
@@ -42,11 +43,16 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "sensors/sensor.h"
 
 
+#include "base/shapes/sphere.h"
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+
+
 namespace GeneCraftCore {
 
     const btScalar Fixation::PERCENT_BONE_INSIDE_FIX = 0.15f;
 
-    #define FIXATION_DENSITY btBone::DENSITY/10
+    #define FIXATION_DENSITY btPhysBone::DENSITY/10
     #define FIXATION_FRICTION 0.7f
 
     // --------------------------
@@ -54,12 +60,13 @@ namespace GeneCraftCore {
     // --------------------------
 
     Fixation::Fixation(btShapesFactory *shapesFactory,
-                       btRigidBody* body,
+                       Sphere* body,
                        btScalar radius,
                        btTransform localFixation,
                        Bone *parentBone) {
+        this->origin            = NULL;
         this->shapesFactory     = shapesFactory;
-        this->rigidBody         = body;
+        this->physObject        = body;
         this->localFixation.setIdentity();
         this->localFixation     = localFixation;
         this->radius            = radius;
@@ -68,7 +75,7 @@ namespace GeneCraftCore {
         this->entity            = NULL;
         this->delegatedSetup    = true;
 
-        this->rigidBody->setFriction(FIXATION_FRICTION);
+        this->physObject->setFriction(FIXATION_FRICTION);
     }
 
     // -------------------------------
@@ -80,13 +87,15 @@ namespace GeneCraftCore {
                        btTransform initTransform) : QObject(),
         radius(radius), entity(NULL), airFixation(NULL), parentBone(NULL)
     {
+        this->origin = NULL;
         this->shapesFactory = shapesFactory;
         this->localFixation.setIdentity();
 
-        sphere = shapesFactory->createSphere(radius, initTransform, FIXATION_DENSITY);
-        this->rigidBody     = sphere->getRigidBody();
-        this->rigidBody->setFriction(FIXATION_FRICTION);
+        sphere = (btSphere*)shapesFactory->createSphere(radius, initTransform, FIXATION_DENSITY);
+        sphere->setFriction(FIXATION_FRICTION);
         delegatedSetup      = false;
+
+        this->physObject = sphere;
     }
 
     // -----------
@@ -101,12 +110,12 @@ namespace GeneCraftCore {
             sphere->setup();
 
             // origins
-            origin = new RigidBodyOrigin(RigidBodyOrigin::FIXATION,(QObject *)this);
-            rigidBody->setUserPointer(origin);
+            //origin = new RigidBodyOrigin(RigidBodyOrigin::FIXATION,(QObject *)this);
+            //rigidBody->setUserPointer(origin);
 
             // state
             //rigidBody->setDeactivationTime(100.0);
-            rigidBody->setActivationState(DISABLE_DEACTIVATION);
+            //rigidBody->setActivationState(DISABLE_DEACTIVATION);
         }
 
         for(int i=0;i<bones.size();++i)
@@ -208,12 +217,15 @@ namespace GeneCraftCore {
         localFix.setRotation(localOrientation);
         localFix.setOrigin(localFixation.getOrigin());
 
+        // TODO Delegate and encapsulate
+        /*
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                localFix, localBone, false);
 
-        ct->setBreakingImpulseThreshold(1./this->rigidBody->getInvMass() * 100);
+        ct->setBreakingImpulseThreshold(physObject->getMass() * 100);
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
+
 
         // delete old parent constraint and set new
         if(bone->getParentConstraint() != NULL) {
@@ -221,8 +233,9 @@ namespace GeneCraftCore {
             delete bone->getParentConstraint();
         }
         bone->setParentConstraint(ct);
-        shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct, true);
 
+        shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct, true);
+        */
         bone->setParentFixation(this);
         bone->setEntity(entity);
         bones.append(bone);
@@ -245,7 +258,7 @@ namespace GeneCraftCore {
         btQuaternion localOrientation = local1;
 
         // Get the initial transform
-        btTransform initTransform = this->rigidBody->getWorldTransform();
+        btTransform initTransform = this->physObject->getPosition();
 
         initTransform *= localFixation;
         initTransform.setRotation(initTransform.getRotation()*localOrientation);
@@ -270,13 +283,16 @@ namespace GeneCraftCore {
         localFix.setRotation(localOrientation);
         localFix.setOrigin(localFixation.getOrigin());
 
+        // TODO: Delegate and encapsulate
+        /*
         btGeneric6DofConstraint * ct = new btGeneric6DofConstraint(*this->rigidBody,*bone->getRigidBody(),
                                                                localFix, localBone, false);
 
-        ct->setBreakingImpulseThreshold(1./this->rigidBody->getInvMass() * 100);
+        ct->setBreakingImpulseThreshold(this->physObject->geMass() * 100);
         ct->setAngularLowerLimit(lowerLimits);
         ct->setAngularUpperLimit(upperLimits);
         bone->setParentConstraint(ct);
+        */
         bone->setParentFixation(this);
         bone->setEntity(entity);
         bones.append(bone);
@@ -378,12 +394,15 @@ namespace GeneCraftCore {
     {
         // fixe root in the air
         btTransform local; local.setIdentity();
+        // TODO Delegate and encapsulate
+        /*
         btGeneric6DofConstraint *ct = new btGeneric6DofConstraint(*this->rigidBody,local,true);
         ct->setAngularLowerLimit(btVector3(0,0,0));
         ct->setAngularUpperLimit(btVector3(0,0,0));
         airFixation = ct;
 
         shapesFactory->getWorld()->getBulletWorld()->addConstraint(ct);
+        */
     }
 
     void Fixation::unfixInTheAir()
@@ -473,11 +492,13 @@ namespace GeneCraftCore {
 
     bool Fixation::isInOnePiece() {
         foreach(Bone* b, bones) {
-            if(!(b->getParentConstraint()->isEnabled()))
+            // TODO: fix use physobject
+            /*if(!(b->getParentConstraint()->isEnabled()))
                 return false;
 
             if(!b->getEndFixation()->isInOnePiece())
                 return false;
+                */
         }
 
         return true;

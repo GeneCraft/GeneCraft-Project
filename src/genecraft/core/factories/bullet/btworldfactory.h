@@ -20,8 +20,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef WORLDFACTORY_H
 #define WORLDFACTORY_H
 
-#include "bullet/btworld.h"
+#include <QVariant>
+#include "genecraftcoreclasses.h"
 
+class btVector3;
 namespace GeneCraftCore {
 
     class btWorldFactory

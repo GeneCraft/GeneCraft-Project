@@ -26,6 +26,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "body/fixation.h"
 #include "body/treeshape.h"
 
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 #define EPSILON 0.01
 
 namespace GeneCraftCore{
@@ -67,7 +69,8 @@ FixationStats::FixationStats(StatisticsStorage * statsStorage, Fixation * fixati
 void FixationStats::step()
 {
     // get new origin
-    btVector3 origin = fixation->getRigidBody()->getWorldTransform().getOrigin();
+    // TODO: fix use physobject
+    btVector3 origin = btVector3(0,0,0);//;fixation->getRigidBody()->getWorldTransform().getOrigin();
 
     // velocity
     if(qAbs(previousOriginAbs.distance(origin)) > EPSILON) {
@@ -117,7 +120,8 @@ void FixationStats::step()
 
 void FixationStats::resetOrigin(){
 
-    if(fixationAbsoluteVelocity->getSum() == 0) {
+    // TODO: fix use physobject
+    /*if(fixationAbsoluteVelocity->getSum() == 0) {
         previousOriginAbs = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
     }
 
@@ -151,7 +155,7 @@ void FixationStats::resetOrigin(){
 
     if(fixationZPosition->getSum() == 0) {
         refPosZ = this->fixation->getRigidBody()->getWorldTransform().getOrigin();
-    }
+    }*/
 }
 
 }

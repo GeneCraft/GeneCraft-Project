@@ -31,10 +31,11 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 // factory
 #include "btofactory.h"
-#include "bulletogre/shapes/btobox.h"
+#include "ogre/shapes/obox.h"
 
 // world
 #include "btoworld.h"
+#include "spawn.h"
 
 // Terrain
 #include "Terrain/OgreTerrain.h"

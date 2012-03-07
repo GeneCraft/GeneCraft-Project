@@ -43,11 +43,11 @@ LIBS += -lLinearMath
 SOURCES += \
     genecraft/core/engines/bullet/bulletengine.cpp \
     genecraft/core/engines/bullet/rigidbodyorigin.cpp \
-    genecraft/core/engines/bullet/shapes/btshape.cpp \
+    #genecraft/core/engines/bullet/shapes/btshape.cpp \
     genecraft/core/engines/bullet/shapes/btbox.cpp \
     genecraft/core/engines/bullet/shapes/btsphere.cpp \
     genecraft/core/engines/bullet/shapes/btcylinder.cpp \
-    genecraft/core/engines/bullet/shapes/btbone.cpp \
+    genecraft/core/engines/bullet/shapes/btphysbone.cpp \
     genecraft/core/world/bullet/btworld.cpp \
     genecraft/core/world/bullet/btscene.cpp \
     genecraft/core/world/bullet/btbiome.cpp \
@@ -58,15 +58,20 @@ SOURCES += \
 HEADERS += \
     genecraft/core/engines/bullet/bulletengine.h \
     genecraft/core/engines/bullet/rigidbodyorigin.h \
-    genecraft/core/engines/bullet/shapes/btshape.h \
+    #genecraft/core/engines/bullet/shapes/btshape.h \
     genecraft/core/engines/bullet/shapes/btbox.h \
     genecraft/core/engines/bullet/shapes/btsphere.h \
     genecraft/core/engines/bullet/shapes/btcylinder.h \
-    genecraft/core/engines/bullet/shapes/btbone.h \
+    genecraft/core/engines/bullet/shapes/btphysbone.h \
     genecraft/core/world/bullet/btworld.h \
     genecraft/core/world/bullet/btscene.h \
     genecraft/core/world/bullet/btbiome.h \
     genecraft/core/factories/bullet/btshapesfactory.h \
     genecraft/core/factories/bullet/btfactory.h \
     genecraft/core/factories/bullet/btworldfactory.h
+
+
+
+
+
 

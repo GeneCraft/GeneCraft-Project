@@ -109,7 +109,14 @@ SOURCES += \
     genecraft/core/experiment/resultsmanager.cpp \
     genecraft/core/utils/tools.cpp \
     genecraft/core/engines/terrain/terrain.cpp \
-    genecraft/core/entities/effectors/brainoutmotor.cpp
+    genecraft/core/entities/effectors/brainoutmotor.cpp \
+    genecraft/core/engines/base/node.cpp \
+    genecraft/core/engines/base/link.cpp \
+    genecraft/core/engines/base/linkengine.cpp \
+    genecraft/core/engines/base/shapes/sphere.cpp \
+    genecraft/core/engines/base/shapes/cylinder.cpp \
+    genecraft/core/engines/base/shapes/box.cpp \
+    genecraft/core/engines/base/shapes/physbone.cpp
 
 HEADERS += \
     genecraft/core/engines/engine.h \
@@ -170,9 +177,32 @@ HEADERS += \
     genecraft/core/experiment/resultsmanager.h \
     genecraft/core/utils/tools.h \
     genecraft/core/engines/terrain/terrain.h \
-    genecraft/core/entities/effectors/brainoutmotor.h
+    genecraft/core/entities/effectors/brainoutmotor.h \
+    genecraft/core/engines/base/node.h \
+    genecraft/core/engines/base/link.h \
+    genecraft/core/engines/base/linkengine.h \
+    genecraft/core/engines/base/shapes/sphere.h \
+    genecraft/core/engines/base/shapes/cylinder.h \
+    genecraft/core/engines/base/shapes/box.h \
+    genecraft/core/engines/base/shapes/physbone.h \
+    genecraft/core/genecraftcoreclasses.h
 
 RESOURCES += \
     genecraft/core/ressources/core.qrc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

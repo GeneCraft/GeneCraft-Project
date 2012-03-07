@@ -23,7 +23,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QObject>
 #include <QList>
 #include "genecraftcoreclasses.h"
-#include "BulletDynamics/Dynamics/btRigidBody.h"
+
+class btRigidBody;
+class btTransform;
+class btTypedConstraint;
 
 namespace GeneCraftCore {
 
@@ -38,7 +41,7 @@ namespace GeneCraftCore {
         Fixation(btShapesFactory *shapesFactory, btScalar radius, btTransform initTransform);
 
         // Surcharged constructor, called to create a fixation from a existant rigidbody
-        Fixation(btShapesFactory *shapesFactory, btRigidBody* body, btScalar radius, btTransform localFixation, Bone *parentBone);
+        Fixation(btShapesFactory *shapesFactory, Sphere* body, btScalar radius, btTransform localFixation, Bone *parentBone);
 
         // Destuctor
         ~Fixation();
@@ -105,7 +108,7 @@ namespace GeneCraftCore {
         btScalar getRadius()                    { return radius; }
         void setEntity(Entity *entity);
         Entity *getEntity()                     { return entity; }
-        btRigidBody *getRigidBody()             { return this->rigidBody; }
+        //btRigidBody *getRigidBody()             { return this->rigidBody; }
         void setSelected(bool isSelected);
         void setRadius(btScalar radius);
         btShapesFactory *getShapesFactory()     { return shapesFactory; }
@@ -128,7 +131,8 @@ namespace GeneCraftCore {
         BulletEngine *bulletEngine;
         btShapesFactory *shapesFactory;
         btTransform localFixation;
-        btRigidBody *rigidBody;
+        Sphere          *physObject;
+        //TODO: Change to Link
         RigidBodyOrigin *origin; // Owner
         btScalar radius;
         btSphere *sphere; // Owner

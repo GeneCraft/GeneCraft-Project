@@ -23,6 +23,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "genecraftcoreclasses.h"
 #include "btshapesfactory.h"
 #include "bulletogre/btoworld.h"
+#include "base/node.h"
 
 namespace GeneCraftCore {
 
@@ -33,10 +34,10 @@ public:
 
     virtual void setWorld(btoWorld* world) { this->world = world; }
 
-    virtual btBox *createBox(btVector3 size, const btTransform &transform, const btScalar density, QVariant params = QVariant());
-    virtual btSphere *createSphere(btScalar radius, const btTransform &transform, const btScalar density, QVariant params = QVariant());
-    virtual btCylinder *createCylinder(btScalar radius, btScalar height, const btTransform &transform, const btScalar density, QVariant params = QVariant());
-    virtual btBone *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant params = QVariant());
+    virtual Node<Box*> *createBox(btVector3 size, const btTransform &transform, const btScalar density, QVariant params = QVariant());
+    virtual Node<Sphere*> *createSphere(btScalar radius, const btTransform &transform, const btScalar density, QVariant params = QVariant());
+    virtual Node<Cylinder*> *createCylinder(btScalar radius, btScalar height, const btTransform &transform, const btScalar density, QVariant params = QVariant());
+    virtual Node<PhysBone*> *createBone(btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform, QVariant params = QVariant());
 protected:
     BulletOgreEngine *btoEngine;
 };

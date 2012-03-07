@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "btobone.h"
+#include "ophysbone.h"
 #include "bulletogre/btoworld.h"
 
 #include "ogre/ogreengine.h"
@@ -29,14 +29,12 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 using namespace Ogre;
 
 namespace GeneCraftCore {
-int btoBone::mNumEntitiesInstanced = 0;
+int oPhysBone::mNumEntitiesInstanced = 0;
 
-btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
-                 btScalar radiusArticulation, const btTransform &transform) :
-    btBone(world, length, radius, radiusArticulation, transform)
-{
-    this->btoEngine = btoEngine;
-    OgreEngine *ogreEngine = btoEngine->getOgreEngine();
+oPhysBone::oPhysBone(btoWorld* world, btScalar length, btScalar radius,
+                 btScalar radiusArticulation, const btTransform &transform)
+    : PhysBone(world, length, radius, radiusArticulation, transform) {
+    ogreEngine = world->getBulletOgreEngine()->getOgreEngine();
 
     boneMaterial = "GeneCraft/Bone";
     fixationMaterial = "GeneCraft/Fixation";
@@ -45,16 +43,17 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     fixationSelectedMaterial = "GeneCraft/Fixation_Selected";
 
     // New entity
-    btoBone::mNumEntitiesInstanced++;
+    oPhysBone::mNumEntitiesInstanced++;
 
     // Create Ogre Entity
     entityC = ogreEngine->getOgreSceneManager()->createEntity(
-            "BoneCylinderEntity_" + StringConverter::toString(btoBone::mNumEntitiesInstanced),
+            "BoneCylinderEntity_" + StringConverter::toString(oPhysBone::mNumEntitiesInstanced),
             "Barrel.mesh");
 
     // Attach
     parentNode = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
     nodeC = parentNode->createChildSceneNode();
+
 
     // Scale
     originalCylinderBB = entityC->getBoundingBox();
@@ -68,7 +67,7 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
 
      // Create Ogre Entity
     entityS = ogreEngine->getOgreSceneManager()->createEntity(
-            "BoneSphereEntity_" + StringConverter::toString(btoBone::mNumEntitiesInstanced),
+            "BoneSphereEntity_" + StringConverter::toString(oPhysBone::mNumEntitiesInstanced),
             SceneManager::PT_SPHERE);
 
 
@@ -89,10 +88,10 @@ btoBone::btoBone(btoWorld* world, BulletOgreEngine *btoEngine, btScalar length, 
     debugNode->setVisible(false);
 }
 
-btoBone::~btoBone() {
-    btoEngine->removeBody(rigidBody, entityC, parentNode);
+oPhysBone::~oPhysBone() {
+    qDebug() << "delete physbone!";
 
-    Ogre::SceneManager* scnMan = btoEngine->getOgreEngine()->getOgreSceneManager();
+    Ogre::SceneManager* scnMan = ogreEngine->getOgreSceneManager();
 
     parentNode->removeAndDestroyAllChildren();
 
@@ -104,21 +103,21 @@ btoBone::~btoBone() {
 
 }
 
-void btoBone::setup()
+void oPhysBone::setup()
 {
-    btBone::setup();
+    //btPhysBone::setup();
 
     nodeC->attachObject(entityC);
     nodeS->attachObject(entityS);
-    btoEngine->addBody(rigidBody,entityC,parentNode);
+    //btoEngine->addBody(rigidBody,entityC,parentNode);
 }
 
-void btoBone::setSize(btScalar radius, btScalar length)
+void oPhysBone::setSize(btScalar radius, btScalar length)
 {
     // set Bullet properties
-    btBone::setSize(radius,length);
+    //btPhysBone::setSize(radius,length);
 
-    nodeS->setPosition(Vector3(0, length*0.5 + getArticulationRadius(),0));
+    nodeS->setPosition(Vector3(0, length*0.5 /*+ getArticulationRadius()*/,0));
     Vector3 ogreSize(radius*2,length,radius*2);
     Vector3 scale = ogreSize / originalCylinderBB.getSize();
     nodeC->setScale(scale);
@@ -130,19 +129,19 @@ void btoBone::setSize(btScalar radius, btScalar length)
 
 
 
-void btoBone::setEndFixationRadius(btScalar radius)
+void oPhysBone::setEndFixationRadius(btScalar radius)
 {
-    btBone::setEndFixationRadius(radius);
+    //btPhysBone::setEndFixationRadius(radius);
 
     Ogre::Vector3 size(radius*2,radius*2,radius*2);
     nodeS->setScale(size / originalSphereBB.getSize());
-    nodeS->setPosition(Vector3(0, getLength()*0.5 + radius,0));
+    nodeS->setPosition(Vector3(0, /*getLength()*/1*0.5 + radius,0));
 }
 
 #include "OgreNode.h"
 #include "OgreSceneNode.h"
 
-void btoBone::setSelected(bool selected)
+void oPhysBone::setSelected(bool selected)
 {
     if(selected) {
 
@@ -157,7 +156,7 @@ void btoBone::setSelected(bool selected)
     }
 }
 
-Ogre::SceneNode* btoBone::getDebugAxes() {
+Ogre::SceneNode* oPhysBone::getDebugAxes() {
     String matName = "Ogre/Debug/AxesMat";
     Ogre::MaterialPtr mMat = MaterialManager::getSingleton().getByName(matName);
     if (mMat.isNull())
@@ -179,9 +178,9 @@ Ogre::SceneNode* btoBone::getDebugAxes() {
             ManualObject mo("tmp");
             mo.begin(mMat->getName());
             /* 3 axes, each made up of 2 of these (base plane = XY)
- *   .------------|\
+             *   .------------|\
              *   '------------|/
- */
+            */
             mo.estimateVertexCount(7 * 2 * 3);
             mo.estimateIndexCount(3 * 2 * 3);
             Quaternion quat[6];
@@ -246,7 +245,7 @@ Ogre::SceneNode* btoBone::getDebugAxes() {
 
     }
     // Create Ogre Entity
-    debugEntity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity(meshName);
+    debugEntity = ogreEngine->getOgreSceneManager()->createEntity(meshName);
 
    // Material
    debugEntity->setMaterial(mMat);
@@ -257,6 +256,18 @@ Ogre::SceneNode* btoBone::getDebugAxes() {
    nodeS->setScale(nodeC->getScale()*8);
 
     return nodeS;
+}
+
+void oPhysBone::setPosition(Position p) {
+    Position transform(p);
+    parentNode->setPosition(transform.getOrigin().x(),
+                            transform.getOrigin().y(),
+                            transform.getOrigin().z());
+
+    parentNode->setOrientation(transform.getRotation().w(),
+                               transform.getRotation().x(),
+                               transform.getRotation().y(),
+                               transform.getRotation().z());
 }
 
 }

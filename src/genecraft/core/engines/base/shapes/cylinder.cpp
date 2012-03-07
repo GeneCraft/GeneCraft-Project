@@ -1,64 +1,106 @@
-#include "btcylinder.h"
+/*
+Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud
 
-#include "world/btworld.h"
+This file is part of Genecraft-Project.
 
-#include "bullet/bulletengine.h"
-#include "bullet/rigidbodyorigin.h"
-#include <QDebug>
+Genecraft-Project is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Genecraft-Project is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "cylinder.h"
+#include "base/linkengine.h"
+#include "btfactory.h"
+#include "btworld.h"
 
 namespace GeneCraftCore {
+    /**
+     * @brief Construct a cylinder in a given world
+     *
+     * @param world the world where the cylinder will be
+     * @param radius the radius of the cylinder
+     * @param height the height of the cylinder
+     * @param transform the initial position of the cylinder (bullet physics)
+     * @param density the density of the cylinder
+     */
+    Cylinder::Cylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density)
+        : Node(world) {
+        this->radius = radius;
+        this->height = height;
+    }
 
-btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density) :
-        btShape(world), shape(NULL)
-{
-    init(radius,height,density,transform);
-}
+    /**
+     * @brief destruct and remove the cylinder from the world
+     *
+     */
+    Cylinder::~Cylinder() {
+        LinkEngine* lkEngine =
+            (LinkEngine*)world->getFactory()->getEngineByName("Link");
+        foreach(Cylinder* composite, composites) {
+            if(delegate && delegate != composite) {
+                lkEngine->removeLink(delegate, composite);
+            }
 
-btCylinder::~btCylinder() {
-    this->world->getBulletWorld()->removeRigidBody(rigidBody);
-    delete rigidBody;
-    delete shape;
-    delete motionState;
-}
+            delete composite;
+        }
+    }
 
-void btCylinder::init(btScalar radius, btScalar height, btScalar density, const btTransform &transform)
-{
-    this->radius = radius;
-    this->height = height;
+    /**
+     * @brief setup the cylinder in the world
+     *
+     */
+    void Cylinder::setup() {
+        LinkEngine* lkEngine =
+            (LinkEngine*)world->getFactory()->getEngineByName("Link");
+        foreach(Cylinder* composite, composites) {
+            if(delegate && delegate != composite) {
+                lkEngine->addLink(delegate, composite);
+            }
+            composite->setup();
+        }
+    }
 
-    //this->initialPosition = position;
-    //this->initialEulerlRotation = EulerRotation;
+    /**
+     * @brief change the size (both radius and height) of the cylinder
+     *
+     * @param radius the new radius of the cylinder
+     * @param height the new height of the cylinder
+     */
+    void Cylinder::setSize(btScalar radius, btScalar height) {
+        this->radius = radius;
+        this->height = height;
 
-    // shape
-    shape = new btCylinderShape(btVector3(radius,height/2.0,radius));
+        foreach(Cylinder* composite, composites) {
+            composite->setSize(radius, height);
+        }
+    }
 
-    // body
-    btScalar vol = SIMD_PI*radius*radius*height;
-    btScalar mass = vol*density;
-    btVector3 localInertia(0,0,0);
-    shape->calculateLocalInertia(mass,localInertia);
 
-    // motion state
-    motionState = new btDefaultMotionState(transform);
+    /**
+     * @brief return the radius of the cylinder
+     *
+     * @return the radius of the cylinder
+     */
+    btScalar Cylinder::getRadius() {
+        return this->radius;
+    }
 
-    this->rigidBody = new btRigidBody(mass,motionState,shape,localInertia);
-    this->rigidBody->setFriction(0.7);
-}
-
-void btCylinder::setup()
-{
-    if(world != NULL && rigidBody != NULL)
-        world->getBulletWorld()->addRigidBody(rigidBody);
-    else
-         qDebug() << Q_FUNC_INFO << ", btEngine == NULL || rigidBody == NULL";
-}
-
-void btCylinder::setSize(btScalar radius, btScalar height)
-{
-    if(shape != NULL)
-        shape->setLocalScaling(btVector3(radius,height/2.0,radius));
-    else
-        qDebug() << Q_FUNC_INFO << ", shape == NULL";
-}
+    /**
+     * @brief return the height of the cylinder
+     *
+     * @return height the height of the cylinder
+     */
+    btScalar Cylinder::getHeight() {
+        return this->height;
+    }
 
 }

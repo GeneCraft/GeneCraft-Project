@@ -18,6 +18,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "btshape.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 
 namespace GeneCraftCore {
 
@@ -27,6 +28,14 @@ btShape::btShape(btWorld* world) :
 }
 
 btShape::~btShape() {
+}
+
+void btShape::setPosition(Position p) {
+    // Do nothing for now
+}
+
+Position btShape::getPosition() {
+    return rigidBody->getWorldTransform();
 }
 
 }

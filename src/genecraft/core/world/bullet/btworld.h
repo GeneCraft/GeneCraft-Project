@@ -21,16 +21,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTWORLD_H
 
 #include <QObject>
-
-#include "genecraftcoreclasses.h"
-#include <btBulletDynamicsCommon.h>
-
-#include <deque>
 #include <QVariant>
 
-#include "bullet/btscene.h"
-#include "bullet/btbiome.h"
-
+#include "genecraftcoreclasses.h"
 
 namespace GeneCraftCore {
 
@@ -88,7 +81,7 @@ namespace GeneCraftCore {
         btShapesFactory* shapesFactory;
 
         // Bullet world
-        btDiscreteDynamicsWorld* world;
+        btDynamicsWorld* world;
         btOverlappingPairCache* ovPairCache;
         btBroadphaseInterface* broadphase;
         btDefaultCollisionConfiguration* collisionConfiguration;

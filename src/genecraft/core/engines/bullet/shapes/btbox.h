@@ -21,9 +21,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTBOX_H
 
 #include "genecraftcoreclasses.h"
-#include "btshape.h"
-#include "BulletCollision/CollisionShapes/btBoxShape.h"
-#include "LinearMath/btDefaultMotionState.h"
+#include "base/shapes/box.h"
+
+class btBoxShape;
+class btDefaultMotionState;
 
 namespace GeneCraftCore {
 
@@ -31,7 +32,7 @@ namespace GeneCraftCore {
  * @brief A simple physical box
  *
  */
-class btBox : public btShape
+class btBox : public Box
 {
 public:
 /**
@@ -66,7 +67,7 @@ private:
     void init(btVector3 size, const btTransform &transform, const btScalar density);
 
 protected:
-
+    btRigidBody* rigidBody;
     btBoxShape* shape; /**< the bullet physics box shape */
     btDefaultMotionState* motionState; /**< motion state (bullet) */
     RigidBodyOrigin *origin; /**< the link between this object and the bullet rigid origin */

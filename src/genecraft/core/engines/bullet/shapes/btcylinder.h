@@ -21,9 +21,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTCYLINDER_H
 
 #include "genecraftcoreclasses.h"
-#include "btshape.h"
-#include "BulletCollision/CollisionShapes/btCylinderShape.h"
-#include "LinearMath/btDefaultMotionState.h"
+#include "base/shapes/cylinder.h"
+
+class btCylinderShape;
+class btDefaultMotionState;
 
 namespace GeneCraftCore {
 
@@ -31,7 +32,7 @@ namespace GeneCraftCore {
  * @brief A basic physical cylinder
  *
  */
-class btCylinder : public btShape
+class btCylinder : public Cylinder
 {
 public:
 /**
@@ -76,8 +77,7 @@ private:
 
 protected:
 
-    btScalar radius; /**< TODO */
-    btScalar height; /**< TODO */
+    btRigidBody* rigidBody;
     btCylinderShape* shape; /**< TODO */
     btDefaultMotionState* motionState; /**< TODO */
 };

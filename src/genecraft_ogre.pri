@@ -51,32 +51,29 @@ SOURCES += \
     genecraft/core/engines/events/inspectorsinputmanager.cpp \
     genecraft/core/engines/events/inputlistener.cpp \
     genecraft/core/engines/events/eventsmanager.cpp \
-    genecraft/core/engines/bulletogre/shapes/btobox.cpp \
-    genecraft/core/engines/bulletogre/shapes/btosphere.cpp \
     genecraft/core/engines/bulletogre/bulletogreengine.cpp \
-    genecraft/core/engines/bulletogre/shapes/btocylinder.cpp \
-    genecraft/core/engines/bulletogre/shapes/btobone.cpp \
     genecraft/core/engines/ogre/ogrewidget.cpp \
     genecraft/core/engines/ogre/ogreengine.cpp \
     genecraft/core/engines/ogre/entities/ogrefreecamera.cpp \
     genecraft/core/world/bulletogre/btoworld.cpp \
     genecraft/core/world/bulletogre/btoscene.cpp \
-    genecraft/core/world/bulletogre/btobiome.cpp \
     genecraft/core/factories/bulletogre/btofactory.cpp \
     genecraft/core/factories/bulletogre/btoworldfactory.cpp \
     genecraft/core/factories/bulletogre/btoshapesfactory.cpp \
-    genecraft/core/ui/widgets/ogrebulletwindows.cpp
+    genecraft/core/ui/widgets/ogrebulletwindows.cpp \
+    genecraft/core/world/bulletogre/btobiome.cpp \
+    #genecraft/core/engines/ogre/shapes/oshape.cpp \
+    genecraft/core/engines/ogre/shapes/ophysbone.cpp \
+    genecraft/core/engines/ogre/shapes/ocylinder.cpp \
+    genecraft/core/engines/ogre/shapes/osphere.cpp \
+    genecraft/core/engines/ogre/shapes/obox.cpp
 
 HEADERS += \
     genecraft/core/engines/simulationmanager.h \
     genecraft/core/engines/events/eventsmanager.h \
     genecraft/core/engines/events/inspectorsinputmanager.h \
     genecraft/core/engines/events/inputlistener.h \
-    genecraft/core/engines/bulletogre/shapes/btobox.h \
-    genecraft/core/engines/bulletogre/shapes/btosphere.h \
     genecraft/core/engines/bulletogre/bulletogreengine.h \
-    genecraft/core/engines/bulletogre/shapes/btocylinder.h \
-    genecraft/core/engines/bulletogre/shapes/btobone.h \
     genecraft/core/engines/ogre/ogreengine.h \
     genecraft/core/engines/ogre/entities/ogrefreecamera.h \
     genecraft/core/engines/ogre/ogrewidget.h \
@@ -86,7 +83,38 @@ HEADERS += \
     genecraft/core/world/bulletogre/btoworld.h \
     genecraft/core/world/bulletogre/btoscene.h \
     genecraft/core/world/bulletogre/btobiome.h \
-    genecraft/core/ui/widgets/ogrebulletwindows.h
+    genecraft/core/ui/widgets/ogrebulletwindows.h \
+    #genecraft/core/engines/ogre/shapes/oshape.h \
+    genecraft/core/engines/ogre/shapes/osphere.h \
+    genecraft/core/engines/ogre/shapes/ocylinder.h \
+    genecraft/core/engines/ogre/shapes/obox.h \
+    genecraft/core/engines/ogre/shapes/ophysbone.h
 
 FORMS += \
     genecraft/core/ui/widgets/ogrebulletwindows.ui
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

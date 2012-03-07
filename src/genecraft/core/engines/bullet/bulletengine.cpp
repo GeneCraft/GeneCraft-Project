@@ -18,6 +18,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "bulletengine.h"
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 
 #include <QDebug>
 

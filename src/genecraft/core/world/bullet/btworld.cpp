@@ -37,6 +37,12 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "BulletCollision/CollisionShapes/btCollisionShape.h"
 #include <btBulletDynamicsCommon.h>
 
+#include <btBulletDynamicsCommon.h>
+
+#include "bullet/btscene.h"
+#include "bullet/btbiome.h"
+
+
 #include <QDebug>
 namespace GeneCraftCore {
 

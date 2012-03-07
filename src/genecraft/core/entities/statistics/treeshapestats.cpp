@@ -30,6 +30,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "effectors/effector.h"
 #include "effectors/rotationalmotorseffector.h"
 
+
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 namespace GeneCraftCore{
 
 TreeShapeStats::TreeShapeStats(StatisticsStorage * statsStorage, TreeShape * treeshape) :
@@ -67,7 +70,7 @@ void TreeShapeStats::recursiveUpdate(Bone *b)
     length = b->getLength();
 
     // TREESHAPE WEIGHT
-    weight = 1.0/b->getRigidBody()->getInvMass(); // (compound bone + fix)
+    weight = b->getMass();//1.0/b->getRigidBody()->getInvMass(); // (compound bone + fix)
 
     if(computeBonesWeight)
         treeshapeWeight->setValue(weight);
@@ -87,7 +90,9 @@ void TreeShapeStats::recursiveUpdate(Bone *b)
     // Bone.rigidBody == Bone.endFixation.rigidBody (CompoundShape)
     // compute local origin of the end fixation
     btVector3 fixLocalOrigin(0,b->getLength()*0.5 + b->getEndFixation()->getRadius(),0);
-    btVector3 realPos = b->getRigidBody()->getWorldTransform()(fixLocalOrigin);
+
+    // TODO: fix use physobject
+    btVector3 realPos = btVector3(0,0,0);//b->getRigidBody()->getWorldTransform()(fixLocalOrigin);
 
     // Compute global origin (just Y) of the end fixation
     btScalar y = realPos.y();
@@ -112,7 +117,9 @@ void TreeShapeStats::step()
     nbBones = 0;
 
     // TREESHAPE WEIGHT
-    weight = 1.0/treeshape->getRoot()->getRigidBody()->getInvMass();
+    // TODO: fix use physobject
+
+    weight = 1.0;//1.0/treeshape->getRoot()->getRigidBody()->getInvMass();
 
     if(computeBonesWeight) {
         treeshapeWeight->setValue(weight);
@@ -132,7 +139,8 @@ void TreeShapeStats::step()
 
     // TREESHAPE VERTICAL HEIGHT
     // Algo : find the heighter and the lower fixation in y axis, height = max - min
-    minHeightY = maxHeightY = treeshape->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
+    // TODO: fix use physobject
+    minHeightY = maxHeightY = 0;//treeshape->getRoot()->getRigidBody()->getWorldTransform().getOrigin().y();
 
     foreach (Bone *b, treeshape->getRoot()->getBones())
         recursiveUpdate(b);

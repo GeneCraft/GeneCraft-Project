@@ -25,6 +25,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QVariant>
 #include "tools.h"
 
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 namespace GeneCraftCore {
 
 GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
@@ -82,11 +84,13 @@ QVariant GyroscopicSensor::generateEmpty()
 
 void GyroscopicSensor::step(){
     btScalar yaw, pitch, roll;
-    fixation->getRigidBody()->getWorldTransform().getBasis().getEulerZYX(yaw, pitch, roll);
+    //TODO FIX; USE PHYSOBJECT
+    /*fixation->getRigidBody()->getWorldTransform().getBasis().getEulerZYX(yaw, pitch, roll);
 
     inputYaw->setValue(yaw);
     inputPitch->setValue(pitch);
     inputRoll->setValue(roll);
+    */
 }
 
 }

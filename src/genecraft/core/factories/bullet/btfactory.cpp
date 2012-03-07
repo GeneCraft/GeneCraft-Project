@@ -24,10 +24,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "bullet/bulletengine.h"
 #include "ressources/ressource.h"
-
 #include "entities/entitiesengine.h"
-
 #include "terrain/terrain.h"
+#include "base/linkengine.h"
+
 namespace GeneCraftCore {
 
 btFactory::btFactory(QObject *parent) :
@@ -54,6 +54,11 @@ btFactory::btFactory(QObject *parent) :
     Terrain* terrain = new Terrain(entitiesEngine);
     this->engines.insert("Terrain", terrain);
     qDebug() << "[OK]";
+
+    // Link engine
+    qDebug() << "Init Link Engine";
+    LinkEngine* link = new LinkEngine();
+    this->engines.insert("Link", link);
 }
 
 

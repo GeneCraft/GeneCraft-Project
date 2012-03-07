@@ -29,6 +29,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "tools.h"
 #include "brain/sinusin.h"
 #include "brain/brainout.h"
+#include "brainoutmotor.h"
 
 namespace GeneCraftCore {
 

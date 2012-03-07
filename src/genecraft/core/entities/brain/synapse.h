@@ -23,7 +23,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QObject>
 #include "genecraftcoreclasses.h"
 #include <QDebug>
-#include "tools.h"
 
 namespace GeneCraftCore {
 

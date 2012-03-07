@@ -17,23 +17,34 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "btbone.h"
+#include "btphysbone.h"
 #include "bullet/btworld.h"
 #include "bullet/bulletengine.h"
 #include "bullet/rigidbodyorigin.h"
+
+#include "BulletCollision/CollisionShapes/btSphereShape.h"
+#include "BulletCollision/CollisionShapes/btCylinderShape.h"
+#include "BulletCollision/CollisionShapes/btCompoundShape.h"
+#include "LinearMath/btDefaultMotionState.h"
+
+
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 #include <QDebug>
 
 namespace GeneCraftCore {
 
-const btScalar btBone::DENSITY = 1010.0; // Average body density
+const btScalar btPhysBone::DENSITY = 1010.0; // Average body density
 
-btBone::btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
-    btShape(world)
+btPhysBone::btPhysBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
+    PhysBone(world, length, radius, radiusArticulation, transform)
 {
-    this->init(length, radius, radiusArticulation, btBone::DENSITY, transform);
+    this->init(length, radius, radiusArticulation, btPhysBone::DENSITY, transform);
 }
 
-btBone::~btBone() {
+btPhysBone::~btPhysBone() {
+    qDebug() << "delete physbone bullet";
     this->world->getBulletWorld()->removeRigidBody(rigidBody);
     shape->removeChildShape(cylinderShape);
     shape->removeChildShape(sphereShape);
@@ -44,11 +55,11 @@ btBone::~btBone() {
     delete sphereShape;
 }
 
-void btBone::init(btScalar length,
-                  btScalar radius,
-                  btScalar radiusArticulation,
-                  btScalar density,
-                  const btTransform &transform) {
+void btPhysBone::init(btScalar length,
+                      btScalar radius,
+                      btScalar radiusArticulation,
+                      btScalar density,
+                      const btTransform &transform) {
 
     btScalar friction = 0.7;
 
@@ -96,13 +107,14 @@ void btBone::init(btScalar length,
     this->rigidBody->setFriction(friction);
 }
 
-void btBone::setup()
+void btPhysBone::setup()
 {
+    qDebug() << "setup bone" << world << rigidBody;
     if(world != NULL && rigidBody != NULL)
         world->getBulletWorld()->addRigidBody(rigidBody);
 }
 
-void btBone::setSize(btScalar radius, btScalar length)
+void btPhysBone::setSize(btScalar radius, btScalar length)
 {
     if(cylinderShape != NULL && sphereShape != NULL) {
 
@@ -134,7 +146,7 @@ void btBone::setSize(btScalar radius, btScalar length)
         qDebug() << Q_FUNC_INFO << ", cylinderShape == NULL or sphereShape == NULL";
 }
 
-void btBone::setEndFixationRadius(btScalar fixationRadius)
+void btPhysBone::setEndFixationRadius(btScalar fixationRadius)
 {
     if(cylinderShape != NULL && sphereShape != NULL) {
 
@@ -165,4 +177,40 @@ void btBone::setEndFixationRadius(btScalar fixationRadius)
         qDebug() << Q_FUNC_INFO << ", cylinderShape == NULL or sphereShape == NULL";
 }
 
+
+
+/**
+ * @brief return the length of the bone
+ *
+ * @return btScalar the length of the bone
+ */
+btScalar btPhysBone::getLength() {
+    return this->length; //cylinderShape->getHalfExtentsWithMargin().y()*btScalar(2.0);
+}
+
+/**
+ * @brief return the radius of the bone
+ *
+ * @return btScalar the radius of the bone
+ */
+btScalar btPhysBone::getRadius() { return cylinderShape->getRadius(); }
+/**
+ * @brief return the radius of the sphere at the end of the bone
+ *
+ * @return btScalar the radius of the fixation
+ */
+btScalar btPhysBone::getArticulationRadius() { return sphereShape->getRadius(); }
+
+/**
+ * @brief return the mass of the sphere
+ *
+ */
+btScalar btPhysBone::getMass() const {
+    return 1.0/this->rigidBody->getInvMass();
+
+}
+
+Position btPhysBone::getPosition() {
+    return this->rigidBody->getWorldTransform();
+}
 }

@@ -25,10 +25,16 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bullet/rigidbodyorigin.h"
 #include <QDebug>
 
+#include "BulletCollision/CollisionShapes/btCylinderShape.h"
+#include "LinearMath/btDefaultMotionState.h"
+
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+
 namespace GeneCraftCore {
 
 btCylinder::btCylinder(btWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density) :
-        btShape(world), shape(NULL)
+        Cylinder(world, radius, height, transform, density), shape(NULL)
 {
     init(radius,height,density,transform);
 }
@@ -42,9 +48,6 @@ btCylinder::~btCylinder() {
 
 void btCylinder::init(btScalar radius, btScalar height, btScalar density, const btTransform &transform)
 {
-    this->radius = radius;
-    this->height = height;
-
     //this->initialPosition = position;
     //this->initialEulerlRotation = EulerRotation;
 

@@ -22,6 +22,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "LinearMath/btVector3.h"
 #include "body/fixation.h"
 
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 #define MASS_FACTOR 0.3f
 #define TYPE_NAME "Flying Effector"
 #define TYPE flyingEffector
@@ -30,7 +32,8 @@ namespace GeneCraftCore {
 
 FlyingEffector::FlyingEffector(Fixation *fixation) : Effector(QString(TYPE_NAME), TYPE), fixation(fixation)
 {
-    btScalar mass = 1/fixation->getRigidBody()->getInvMass();
+    // TODO: fix use physobject
+    btScalar mass = 1;//1/fixation->getRigidBody()->getInvMass();
 
     impulseX = new BrainOut(-mass*MASS_FACTOR,mass*MASS_FACTOR);
     impulseY = new BrainOut(-mass*MASS_FACTOR*10.0,mass*MASS_FACTOR*10.0);
@@ -45,7 +48,7 @@ FlyingEffector::FlyingEffector(QVariant data, Fixation *fixation) : Effector(dat
 {
     QVariantMap outs = data.toMap()["outs"].toMap();
 
-    btScalar mass = 1/fixation->getRigidBody()->getInvMass();
+    btScalar mass = 1;//1/fixation->getRigidBody()->getInvMass();
 
     impulseX = new BrainOut(outs["impulseX"]);
     impulseX->setMin(-mass*MASS_FACTOR);
@@ -67,8 +70,9 @@ FlyingEffector::FlyingEffector(QVariant data, Fixation *fixation) : Effector(dat
 void FlyingEffector::step() {
 
     btVector3 impulse(impulseX->getValue(), impulseY->getValue(), impulseZ->getValue());
+    // TODO: fix use physobject
 
-    fixation->getRigidBody()->applyCentralImpulse(impulse);
+    //fixation->getRigidBody()->applyCentralImpulse(impulse);
 }
 
 QVariant FlyingEffector::serialize() {

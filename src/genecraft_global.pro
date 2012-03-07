@@ -60,4 +60,3 @@ FORMS += \
     genecraft/apps/genecraft/creatureviewer/ui/welcomewidget.ui
 
 RESOURCES +=
-

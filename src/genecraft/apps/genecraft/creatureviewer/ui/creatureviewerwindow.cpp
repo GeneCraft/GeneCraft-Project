@@ -503,7 +503,8 @@ void CreatureViewerWindow::spawnNew() {
 void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreatures){
 
     Entity *e = NULL;
-    btVector3 originPos = originEntity->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin();
+    // TODO: fix use physobject
+    btVector3 originPos = btVector3(0,0,0);//originEntity->getShape()->getRoot()->getRigidBody()->getWorldTransform().getOrigin();
 
     //originEntity->setup();
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
@@ -846,7 +847,8 @@ void CreatureViewerWindow::followSelectedEntity() {
         OgreWidget *ogreWidget = ogre->getOgreWidget("MainWidget");
         OgreFreeCamera * cam = ogreWidget->getOgreFreeCamera();
 
-        cam->followBody(selectedEntity->getShape()->getRoot()->getRigidBody());
+        // TODO: fix use physobject
+        //cam->followBody(selectedEntity->getShape()->getRoot()->getRigidBody());
         ogreWidget->setFocus(Qt::MouseFocusReason);
         aFollowCreature->setChecked(true);
     }

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "btobox.h"
+#include "obox.h"
 
 #include "bulletogre/btoworld.h"
 
@@ -28,20 +28,19 @@ namespace GeneCraftCore {
 
 using namespace Ogre;
 
-int btoBox::mNumEntitiesInstanced = 0;
+int oBox::mNumEntitiesInstanced = 0;
 
-btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, const btTransform &transform, const btScalar density)
-    : btBox(world, size, transform, density)
+oBox::oBox(btoWorld *world, btVector3 size, const btTransform &transform, const btScalar density)
+    : Box(world, size, transform, density)
 {
-    this->btoEngine = btoEngine;
-    OgreEngine *ogreEngine = btoEngine->getOgreEngine();
+    ogreEngine = world->getBulletOgreEngine()->getOgreEngine();
 
     // New entity
-    btoBox::mNumEntitiesInstanced++;
+    oBox::mNumEntitiesInstanced++;
 
     // Create Ogre Entity
     entity = ogreEngine->getOgreSceneManager()->createEntity(
-            "BoxEntity_" + StringConverter::toString(btoBox::mNumEntitiesInstanced),
+            "BoxEntity_" + StringConverter::toString(oBox::mNumEntitiesInstanced),
             SceneManager::PT_CUBE);
 
     // Material
@@ -62,19 +61,17 @@ btoBox::btoBox(btoWorld *world, BulletOgreEngine* btoEngine, btVector3 size, con
     sizeBB *= scale;	// don't forget to scale down the Bullet-box too
 }
 
-btoBox::~btoBox() {
-    this->btoEngine->removeBody(rigidBody, entity, node);
+oBox::~oBox() {
+    //this->btoEngine->removeBody(rigidBody, entity, node);
     this->node->removeAndDestroyAllChildren();
-    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroyEntity(entity);
-    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroySceneNode(node);
+    ogreEngine->getOgreSceneManager()->destroyEntity(entity);
+    ogreEngine->getOgreSceneManager()->destroySceneNode(node);
 }
 
-void btoBox::setup()
+void oBox::setup()
 {
-    btBox::setup();
-
     node->attachObject(entity);
-    btoEngine->addBody(rigidBody,entity,node);
+    //btoEngine->addBody(rigidBody,entity,node);
 }
 
 }

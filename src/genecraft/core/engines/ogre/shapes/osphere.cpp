@@ -17,25 +17,25 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "btosphere.h"
+#include "osphere.h"
 
 #include "bulletogre/btoworld.h"
 #include "ogre/ogreengine.h"
 #include "OgreSceneManager.h"
 #include "bulletogre/bulletogreengine.h"
+#include "base/linkengine.h"
 
 
 namespace GeneCraftCore {
 
 using namespace Ogre;
 
-int btoSphere::mNumSpheresInstanced = 0;
+int oSphere::mNumSpheresInstanced = 0;
 
-btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QVariant params)
-    :btSphere(world, radius, transform, density)
+oSphere::oSphere(btoWorld *world, btScalar radius, const btTransform &transform, const btScalar density, QVariant params)
+    :Sphere(world, radius, transform, density)
 {
-    this->btoEngine = btoEngine;
-    OgreEngine *ogreEngine = btoEngine->getOgreEngine();
+    ogreEngine = world->getBulletOgreEngine()->getOgreEngine();
 
     QVariantMap paramsMap = params.toMap();
     if(paramsMap.contains("Material"))
@@ -54,11 +54,11 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
     Ogre::Vector3 size(radius*2,radius*2,radius*2);
 
     // New entity
-    btoSphere::mNumSpheresInstanced++;
+    oSphere::mNumSpheresInstanced++;
 
     // Create Ogre Entity
     entity = ogreEngine->getOgreSceneManager()->createEntity(
-            "SphereEntity_" + StringConverter::toString(btoSphere::mNumSpheresInstanced),
+            "SphereEntity_" + StringConverter::toString(oSphere::mNumSpheresInstanced),
             SceneManager::PT_SPHERE);
 
     // Material
@@ -77,22 +77,22 @@ btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radi
     sizeBB *= scale;	// don't forget to scale down the Bullet-box too
 }
 
-btoSphere::~btoSphere() {
-    this->btoEngine->removeBody(rigidBody, entity, node);
+oSphere::~oSphere() {
+    qDebug() << "delete sphere!";
     this->node->removeAndDestroyAllChildren();
-    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroyEntity(entity);
-    this->btoEngine->getOgreEngine()->getOgreSceneManager()->destroySceneNode(node);
+    ogreEngine->getOgreSceneManager()->destroyEntity(entity);
+    ogreEngine->getOgreSceneManager()->destroySceneNode(node);
 }
 
-void btoSphere::setup()
+void oSphere::setup()
 {
-    btSphere::setup();
+    //btSphere::setup();
 
     node->attachObject(entity);
-    btoEngine->addBody(rigidBody,entity,node);
+    //btoEngine->addBody(rigidBody,entity,node);
 }
 
-void btoSphere::setSelected(bool selected)
+void oSphere::setSelected(bool selected)
 {
     if(selected)
         entity->setMaterialName(fixationSelectedMaterial.toStdString());
@@ -100,10 +100,10 @@ void btoSphere::setSelected(bool selected)
         entity->setMaterialName(fixationMaterial.toStdString());
 }
 
-void btoSphere::setRadius(btScalar radius)
+void oSphere::setRadius(btScalar radius)
 {
     // set Bullet properties
-    btSphere::setRadius(radius);
+    //btSphere::setRadius(radius);
 
     // Set relative positions
     Vector3 ogreSize(radius*2,radius*2,radius*2);

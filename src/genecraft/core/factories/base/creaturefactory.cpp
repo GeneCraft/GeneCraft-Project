@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#include <QDebug>
 #include "creaturefactory.h"
 #include "families/genericfamily.h"
 #include "entity.h"

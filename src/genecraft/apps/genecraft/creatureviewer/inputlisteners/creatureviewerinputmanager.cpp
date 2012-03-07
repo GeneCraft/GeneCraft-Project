@@ -39,7 +39,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bullet/bulletengine.h"
 
 // Bullet & Ogre
-#include "bulletogre/shapes/btobox.h"
+#include "ogre/shapes/obox.h"
 #include "bulletogre/bulletogreengine.h"
 
 CreatureViewerInputManager::CreatureViewerInputManager(BulletOgreEngine *btoEngine,Ogre::Camera *camera) :
@@ -119,15 +119,16 @@ void CreatureViewerInputManager::throwCube()
     e->setup();
 */
     if(this->world) {
-        btoBox *box = new btoBox((btoWorld*)world, btoEngine,btVector3(1,1,1),transform, 1200.0);
+        oBox *box = new oBox((btoWorld*)world,btVector3(1,1,1),transform, 1200.0);
         box->setup();
 
         // apply impulse from the center of the box in direction of the camera
         Ogre::Vector3 initialImpulse = camera->getDirection().normalisedCopy();
-        initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
-        box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
+        //initialImpulse *= 1/box->getRigidBody()->getInvMass() * 50;
+        //box->getRigidBody()->applyCentralImpulse(btVector3(initialImpulse.x,initialImpulse.y,initialImpulse.z));
     }
 }
+
 
 void CreatureViewerInputManager::pickBody()
 {

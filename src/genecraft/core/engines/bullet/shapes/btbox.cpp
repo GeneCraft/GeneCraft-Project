@@ -24,9 +24,17 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bullet/rigidbodyorigin.h"
 #include "bullet/btworld.h"
 
+#include "BulletCollision/CollisionShapes/btBoxShape.h"
+#include "LinearMath/btDefaultMotionState.h"
+
+#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
+
 namespace GeneCraftCore {
 
-btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform, const btScalar density) : btShape(world)
+btBox::btBox(btWorld *world, btVector3 size, const btTransform &transform, const btScalar density)
+    : Box(world, size, transform, density)
 {
     init(size, transform, density);
 }

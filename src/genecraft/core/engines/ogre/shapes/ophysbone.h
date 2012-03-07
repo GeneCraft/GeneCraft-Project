@@ -17,31 +17,33 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BTOBONE_H
-#define BTOBONE_H
+#ifndef BToPhysBone_H
+#define BToPhysBone_H
 
 #include "genecraftcoreclasses.h"
-#include "bullet/shapes/btbone.h"
+#include "base/shapes/physbone.h"
 #include "Ogre.h"
-
+#include <QString>
 
 namespace GeneCraftCore {
 
-class btoBone : public btBone
+class oPhysBone : public PhysBone
 {
 
 public:
-    explicit btoBone(btoWorld *world, BulletOgreEngine *btoEngine, btScalar length, btScalar radius,
+    explicit oPhysBone(btoWorld *world, btScalar length, btScalar radius,
                      btScalar radiusArticulation, const btTransform &transform);
-    ~btoBone();
+    ~oPhysBone();
     void setup();
     void setSize(btScalar radius, btScalar height);
     void setSelected(bool selected);
     void setEndFixationRadius(btScalar radius);
+    void setPosition(Position p);
 
     protected:
 
-        BulletOgreEngine *btoEngine;
+        OgreEngine* ogreEngine;
+
         Ogre::SceneNode *parentNode;
         Ogre::Entity *entityC;
         Ogre::SceneNode *nodeC;
@@ -68,4 +70,4 @@ public:
 };
 }
 
-#endif // BTOBONE_H
+#endif // BToPhysBone_H

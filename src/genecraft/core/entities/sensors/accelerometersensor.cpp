@@ -25,6 +25,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QVariant>
 #include "tools.h"
 
+
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+
 #define MIN_ACCELERATION -1.0
 #define MAX_ACCELERATION 1.0
 
@@ -45,7 +48,8 @@ AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
     brainInputs.append(inputZ);
 
     // initial position and speed
-    oldPosition = fixation->getRigidBody()->getWorldTransform().getOrigin();
+    // TODO: fix use physobject
+    oldPosition = btVector3(0,0,0); //fixation->getRigidBody()->getWorldTransform().getOrigin();
     oldSpeed    = btVector3(0,0,0);
 
     tmpMinAcc = tmpMaxAcc = 0;
@@ -62,7 +66,8 @@ AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : S
     brainInputs.append(inputZ);
 
     // initial position and speed
-    oldPosition = fixation->getRigidBody()->getWorldTransform().getOrigin();
+    // TODO FIX
+    //oldPosition = fixation->getRigidBody()->getWorldTransform().getOrigin();
     oldSpeed    = btVector3(0,0,0);
 
     tmpMinAcc = tmpMaxAcc = 0;
@@ -99,6 +104,8 @@ QVariant AccelerometerSensor::serialize() {
 
 void AccelerometerSensor::step()
 {
+    // TODO: fix use physobject
+/*
     btVector3 position = fixation->getRigidBody()->getWorldTransform().getOrigin();
     btVector3 speed = (position - oldPosition);// * stepTime;
     btVector3 acceleration = speed - oldSpeed;
@@ -106,11 +113,6 @@ void AccelerometerSensor::step()
     // btScalar factor  = 0.05;
     btScalar factor  = .1;
 
-    /*)
-    factor = 0.1
-    value = new_value*factor + old_value*(1 - factor)
-    old_value = value
-      */
     oldPosition.setX( oldPosition.getX()*(1-factor) + position.getX()*factor);
     oldPosition.setY( oldPosition.getY()*(1-factor) + position.getY()*factor);
     oldPosition.setZ( oldPosition.getZ()*(1-factor) + position.getZ()*factor);
@@ -122,5 +124,6 @@ void AccelerometerSensor::step()
     inputX->setValue(acceleration.x());
     inputY->setValue(acceleration.y());
     inputZ->setValue(acceleration.z());
+    */
 }
 }

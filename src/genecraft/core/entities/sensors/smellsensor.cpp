@@ -95,33 +95,20 @@ QVariant SmellSensor::serialize()
 void SmellSensor::step() {
 
     //qDebug() << "STEP START";
-
+    // TODO: fix use physobject
+/*
     nearestBodySmelled = NULL;
     distanceOfNearestBodySmelled = radiusOfSmell;
 
     btVector3 origin = fixation->getRigidBody()->getWorldTransform().getOrigin();
     smellSphere->getWorldTransform().setOrigin(origin);
 
-    /* ContactTest
-    Bullet 2.76 onwards let you perform an instant query on the world (btCollisionWorld or btDiscreteDynamicsWorld)
-    using the contactTest query. The contactTest query will peform a collision test against all overlapping objects in
-    the world, and produces the results using a callback. The query object doesn't need to be part of the world.
-    In order for an efficient query on large worlds, it is important that the broadphase aabbTest is accelerated,
-    for example using the btDbvtBroadphase or btAxisSweep3 broadphase.
-    http://www.bulletphysics.org/mediawiki-1.5.8/index.php?title=Collision_Callbacks_and_Triggers
-    */
 
     // USAGE:
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->contactTest(smellSphere,*callback); // will call contactCallBack...
 
 
     // IF WE KNOW SMELLED OBJECTS WE CAN ALSO USE CONTACT PAIR TEST
-    /*contactPairTest
-    Bullet 2.76 onwards provides the contactPairTest to perform collision detection between two specific collision objects only.
-    Contact results are passed on using the provided callback. They don't need to be inserted in the world.
-    See btCollisionWorld::contactPairTest in Bullet/src/BulletCollision/CollisionDispatch/btCollisionWorld.h for implementation details.
-    http://www.bulletphysics.org/mediawiki-1.5.8/index.php?title=Collision_Callbacks_and_Triggers
-    */
 
     //if(nearestBodySmelled) {
         intensityInput->setValue(radiusOfSmell - distanceOfNearestBodySmelled);
@@ -129,6 +116,7 @@ void SmellSensor::step() {
     //}
 
     //qDebug() << "STEP END";
+    */
 }
 
 void SmellSensor::contactCallBack(const btCollisionObject *body) {
@@ -145,7 +133,8 @@ void SmellSensor::contactCallBack(const btCollisionObject *body) {
 void SmellSensor::objectSmelled(const btRigidBody *body) {
 
     // distance between sensor and object smelled
-    btScalar distance = fixation->getRigidBody()->getWorldTransform().getOrigin().distance(body->getWorldTransform().getOrigin());
+    // TODO: fix use physobject
+    btScalar distance = 1;//fixation->getRigidBody()->getWorldTransform().getOrigin().distance(body->getWorldTransform().getOrigin());
     // qDebug() << "Object smelled at " << distance << " meters";
 
     // keep only the nearest object

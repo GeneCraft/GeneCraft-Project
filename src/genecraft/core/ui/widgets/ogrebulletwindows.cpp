@@ -43,8 +43,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "families/snakefamily.h"
 #include "body/treeshape.h"
 #include "body/fixation.h"
-#include "bulletogre/shapes/btosphere.h"
-#include "bulletogre/shapes/btobox.h"
+#include "ogre/shapes/osphere.h"
+#include "ogre/shapes/obox.h"
 
 // App
 #include "ogrebulletwindows.h"

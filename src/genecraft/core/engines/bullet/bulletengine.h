@@ -20,11 +20,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OGREBULLETMANAGER_H
 #define OGREBULLETMANAGER_H
 
-#include <QObject>
-#include <deque>
 #include "genecraftcoreclasses.h"
 #include "engine.h"
-#include "BulletDynamics/Dynamics/btDynamicsWorld.h"
+
+class btDynamicsWorld;
 
 namespace GeneCraftCore {
     /**

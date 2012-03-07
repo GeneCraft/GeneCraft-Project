@@ -19,6 +19,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "synapse.h"
 #include <QVariant>
+#include "tools.h"
 
 namespace GeneCraftCore {
 

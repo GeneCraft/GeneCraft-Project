@@ -1,7 +1,7 @@
 #ifndef GENECRAFTCORECLASSES_H
 #define GENECRAFTCORECLASSES_H
 
-#include "LinearMath/btScalar.h"
+#include "LinearMath/btTransform.h"
 
 // Our namespace
 namespace GeneCraftCore {
@@ -17,7 +17,7 @@ namespace GeneCraftCore {
     class btBox;
     class btSphere;
     class btCylinder;
-    class btBone;
+    class btPhysBone;
 
     // Ogre management
     class OgreEngine;
@@ -70,8 +70,11 @@ namespace GeneCraftCore {
     class BrainFunctional;
     // Function bloc of the functionalbrain
     class BrainNode;
+    class BrainNodeIn;
     // Testing purpose
     class SinusIn;
+
+    class BrainOutMotor;
 
     // Sensors
     class Sensor;
@@ -154,13 +157,60 @@ namespace GeneCraftCore {
 
     class Spawn;
 
+
+    class Terrain;
+    class TerrainData;
+
+    /*
+      Shape
+      */
+    class Box;
+    class Cylinder;
+    class Sphere;
+    class PhysBone;
+
+    class btBox;
+    class btCylinder;
+    class btPhysBone;
+    class btSphere;
+
+    class oBox;
+    class oCylinder;
+    class oPhysBone;
+    class oSphere;
+/*
+    class cmBox;
+    class cmCylinder;
+    class cmPhysBone;
+    class cmSphere;
+*/
+    class Link;
+    class Linked;
+    template <class T> class Node;
+    class LinkEngine;
+
     // -----------------------
     // -- DELETE OR NOT ??? --
     // -----------------------
 
     // Tools (random, ...)
     class Tools;
+
 }
+
+
+
+// Bullet
+class btVector3;
+class btDiscreteDynamicsWorld;
+class btOverlappingPairCache;
+class btBroadphaseInterface;
+class btDefaultCollisionConfiguration;
+class btCollisionDispatcher;
+class btSequentialImpulseConstraintSolver;
+class btDynamicsWorld;
+class btGeneric6DofConstraint;
+class btRigidBody;
 
 // Entities
 class BonePropertiesController;
@@ -182,16 +232,5 @@ namespace Ogre {
     class Viewport;
 }
 
-// OgreBullets most used classes
-namespace OgreBulletDynamics {
-    class DynamicsWorld;
-    class RigidBody;
-    class SixDofConstraint;
-}
-
-namespace OgreBulletCollisions {
-    class DebugDrawer;
-    class CollisionShape;
-}
 
 #endif

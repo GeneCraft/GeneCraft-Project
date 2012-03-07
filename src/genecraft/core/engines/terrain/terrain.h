@@ -21,7 +21,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define TERRAIN_H
 
 #include "genecraftcoreclasses.h"
-
 #include "engine.h"
 #include "entities/entitiesengine.h"
 #include <QObject>

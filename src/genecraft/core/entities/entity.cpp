@@ -72,6 +72,7 @@ void Entity::setup() {
 }
 
 Entity::~Entity() {
+    qDebug() << "ent delete" << this;
     delete this->statisticsStorage;
     foreach(StatisticsProvider* stat, stats) {
         delete stat;

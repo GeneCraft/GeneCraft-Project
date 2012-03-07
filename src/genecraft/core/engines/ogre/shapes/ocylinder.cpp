@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "btocylinder.h"
+#include "ocylinder.h"
 
 #include "bulletogre/btoworld.h"
 
@@ -30,19 +30,19 @@ namespace GeneCraftCore {
 
 using namespace Ogre;
 
-int btoCylinder::mNumEntitiesInstanced = 0;
+int oCylinder::mNumEntitiesInstanced = 0;
 
-btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, btScalar height, const btTransform &transform, const btScalar density)
-    : btCylinder(world, radius, height, transform, density)
-{
-    this->btoEngine = btoEngine;
+oCylinder::oCylinder(btoWorld *world, btScalar radius, btScalar height, const btTransform &transform, const btScalar density)
+    : Cylinder(world, radius, height, transform, density) {
+
+    ogreEngine = world->getBulletOgreEngine()->getOgreEngine();
 
     // New entity
-    btoCylinder::mNumEntitiesInstanced++;
+    oCylinder::mNumEntitiesInstanced++;
 
     // Create Ogre Entity
-    entity = btoEngine->getOgreEngine()->getOgreSceneManager()->createEntity(
-            "CylinderEntity_" + StringConverter::toString(btoCylinder::mNumEntitiesInstanced),
+    entity = ogreEngine->getOgreSceneManager()->createEntity(
+            "CylinderEntity_" + StringConverter::toString(oCylinder::mNumEntitiesInstanced),
             "Barrel.mesh");
 
     // Material
@@ -50,7 +50,7 @@ btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar 
     entity->setCastShadows(true);
 
     // Attach
-    node = btoEngine->getOgreEngine()->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
+    node = ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode();
 
     // Scale
     AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box
@@ -63,17 +63,17 @@ btoCylinder::btoCylinder(btoWorld *world, BulletOgreEngine *btoEngine, btScalar 
     sizeBB *= scale;	// don't forget to scale down the Bullet-box too
 }
 
-void btoCylinder::setup()
+void oCylinder::setup()
 {
-    btCylinder::setup();
+    //btCylinder::setup();
 
     node->attachObject(entity);
-    btoEngine->addBody(rigidBody,entity,node);
+    //btoEngine->addBody(rigidBody,entity,node);
 }
 
-void btoCylinder::setSize(btScalar radius, btScalar height)
+void oCylinder::setSize(btScalar radius, btScalar height)
 {
-    btoCylinder::setSize(radius,height);
+    //btCylinder::setSize(radius,height);
 
     // Scale
     AxisAlignedBox boundingB = entity->getBoundingBox(); // we need the bounding box of the box to be able to set the size of the Bullet-box

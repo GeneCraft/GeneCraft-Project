@@ -24,6 +24,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "brain/brainpluggrid.h"
 #include "sensors/sensor.h"
 #include "effectors/effector.h"
+#include "entities/entity.h"
 
 namespace GeneCraftCore {
 
