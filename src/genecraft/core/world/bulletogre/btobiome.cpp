@@ -69,6 +69,8 @@ namespace GeneCraftCore {
         // -------------
         sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
 
+        sceneManager->setAmbientLight(Ogre::ColourValue(0.3, 0.3, 0.3, 0.3));
+
         // ------------
         // -- Lights --
         // ------------
