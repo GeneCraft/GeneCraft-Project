@@ -77,9 +77,9 @@ namespace GeneCraftCore {
         externalWindowHandleParams += ":";
         externalWindowHandleParams += Ogre::StringConverter::toString((unsigned int)(info.screen()));
         externalWindowHandleParams += ":";
-        externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(winId()));
-        //externalWindowHandleParams += ":";
-        //externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(info.visual()));
+        externalWindowHandleParams += Ogre::StringConverter::toString((unsigned long)(this->parentWidget()->winId()));
+        //    winHandle += Ogre::StringConverter::toString((unsigned long)(this->window()->winId()));
+           //params["parentWindowHandle"] = winHandle;
 #endif
 
         //Add the external window handle parameters to the existing params set.
@@ -95,6 +95,8 @@ namespace GeneCraftCore {
         params["macAPI"] = "cocoa";
         params["macAPICocoaUseNSView"] = "true";
 #endif
+
+
          //Finally create our window.
         mOgreWindow = this->mOgreRoot->createRenderWindow(
                 "OgreWindow" + QString::number(ogrewidgetCpt++).toStdString()
@@ -104,8 +106,13 @@ namespace GeneCraftCore {
         WId ogreWinId = 0x0;
         mOgreWindow->getCustomAttribute( "WINDOW", &ogreWinId );
 
+
         //assert( ogreWinId );
-        //create( ogreWinId );
+
+#if defined(Q_WS_X11)
+        // TAG: Build on linux
+        create( ogreWinId );
+#endif
         // Create the free camera (FIXME no encapsulation)
         if(mCamera == NULL){
 
@@ -119,7 +126,7 @@ namespace GeneCraftCore {
 
 
         mViewport = mOgreWindow->addViewport( mCamera );
-        mViewport->setBackgroundColour( Ogre::ColourValue( 0.8,0.8,1 ) );
+        mViewport->setBackgroundColour( Ogre::ColourValue( 0.5,0.5,1 ) );
         mViewport->setOverlaysEnabled(true);
         mIsInit = true;
         resized = true;
@@ -146,13 +153,13 @@ namespace GeneCraftCore {
 
     void OgreWidget::resize() {
 
-        /*
-         QString dimensions = QString( "%1x%2" )
-                           .arg(width)
-                           .arg(height);
+
+/*         QString dimensions = QString( "%1x%2" )
+                           .arg(this->width())
+                 .arg(height());
          Ogre::RenderSystem *renderSystem = mOgreRoot->getRenderSystem();
          renderSystem->setConfigOption( "Video Mode", dimensions.toStdString() );
-       */
+*/
         this->resized = false;
         assert( mOgreWindow );
         mOgreWindow->windowMovedOrResized();

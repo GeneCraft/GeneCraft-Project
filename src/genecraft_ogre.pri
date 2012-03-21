@@ -24,15 +24,22 @@ INCLUDEPATH += \
     genecraft/core/world/bulletogre \
     genecraft/core/utils
 
-INCLUDEPATH += lib/ogre/include/OGRE \
-               lib/ogre/include \
-               lib/ogre/boost_1_44 # for win32
-               #../lib/ogre/boost_1_46_1/ # for macos
 
-#suppress warning from libs
-QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/boost_1_44/  # boost_1_44 for win32
-QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/include
-QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/include/OGRE
+win32 {
+    INCLUDEPATH += lib/ogre/include/OGRE \
+                   lib/ogre/include \
+                   lib/ogre/boost_1_44 \ # for win32
+                   lib/ogre/boost_1_46_1/ \ # for macos
+    QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/boost_1_44/  # boost_1_44 for win32
+    QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/include
+    QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/include/OGRE
+}
+
+unix {
+    INCLUDEPATH += /usr/local/include/OGRE
+    #suppress warning from libs
+    QMAKE_CXXFLAGS  += -isystem/usr/local/include/OGRE
+}
 
 win32 {
 
@@ -44,6 +51,11 @@ macx {
     LIBS += -L../src/lib/ogre/lib
     LIBS += -F../src/lib/ogre/lib/release/
     LIBS += -framework Ogre
+}
+
+unix {
+    LIBS += -L/usr/local/lib/
+    LIBS += -lOgreMain -lOgreTerrain
 }
 
 SOURCES += \

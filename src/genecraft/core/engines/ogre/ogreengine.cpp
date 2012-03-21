@@ -52,7 +52,14 @@ namespace GeneCraftCore {
 
     void OgreEngine::initOgreRoot() {
         ogreRoot = new Ogre::Root();
+
+#if defined(Q_WS_X11)
+        // TAG: Build on linux
+        // TODO FIXME load config if possible...
+        bool reload = false;
+#else
         bool reload = ogreRoot->restoreConfig();
+#endif
         if(!reload) {
             bool ok = ogreRoot->showConfigDialog();
             if(!ok)
@@ -61,7 +68,14 @@ namespace GeneCraftCore {
 
         ogreRoot->getRenderSystem()->setConfigOption( "Full Screen", "No" );
         ogreRoot->saveConfig();
-        ogreRoot->initialise(false); // don't create a window
+
+#if defined(Q_WS_X11)
+        // TAG: Build on linux
+        //TODO FIXME Does not work otherwise...
+        ogreRoot->initialise(true, "GeneCraft render"); // don't create a window
+#else
+        ogreRoot->initialise(false, "GeneCraft render"); // don't create a window
+#endif
     }
 
     void OgreEngine::initRenderingSystem(unsigned long) {

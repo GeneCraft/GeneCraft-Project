@@ -179,10 +179,19 @@ namespace GeneCraftCore {
         QVariantList rows = results["rows"].toList();
         QVariantList ids;
         foreach(QVariant row, rows) {
-            QString id = row.toMap()["value"].toList()[4].toString();
+            QString id;
+
+            if( row.toMap()["value"].toList().length() == 2) {
+                id = row.toMap()["value"].toList()[1].toList()[1].toString();
+
+            } else {
+                id = row.toMap()["value"].toList()[4].toString();
+            }
+
             if(id.left(14) > lastLoadedId.left(14)) {
                 lastLoadedId = id;
             }
+
             ids.append(id);
         }
         QVariantMap postData;
@@ -225,7 +234,14 @@ namespace GeneCraftCore {
         QString newLastLoadedId = lastLoadedId;
         QVariantList ids;
         foreach(QVariant row, rows) {
-            QString id = row.toMap()["value"].toList()[4].toString();
+
+
+            QString id;
+            if(row.toMap()["value"].toList().length() == 2) {
+                id = row.toMap()["value"].toList()[1].toList()[1].toString();
+            } else {
+                id = row.toMap()["value"].toList()[4].toString();
+            }
 
             if(id.left(14) <= lastLoadedId.left(14)) {
                 continue;

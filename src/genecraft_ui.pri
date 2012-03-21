@@ -21,6 +21,10 @@ INCLUDEPATH += \
     genecraft/core/ui \
     genecraft/core/utils
 
+unix {
+    INCLUDEPATH += /usr/include/qwt
+}
+
 SOURCES += \
     genecraft/core/ui/widgets/entities/brainpropertiescontroller.cpp \
     genecraft/core/ui/widgets/entities/statisticspropertiescontroller.cpp \
