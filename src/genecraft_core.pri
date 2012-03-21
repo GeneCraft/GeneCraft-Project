@@ -83,6 +83,7 @@ SOURCES += \
     genecraft/core/entities/families/antfamily.cpp \
     genecraft/core/entities/families/caterpillarfamily.cpp \
     genecraft/core/entities/families/snakefamily.cpp \
+    genecraft/core/entities/families/realspiderfamily.cpp \
     genecraft/core/entities/mutation/mutationsmanager.cpp \
     genecraft/core/entities/mutation/mutation.cpp \
     genecraft/core/entities/mutation/floatmutation.cpp \
@@ -144,6 +145,7 @@ HEADERS += \
     genecraft/core/entities/families/antfamily.h \
     genecraft/core/entities/families/caterpillarfamily.h \
     genecraft/core/entities/families/genericfamily.h \
+    genecraft/core/entities/families/realspiderfamily.h \
     genecraft/core/entities/statistics/statisticsstorage.h \
     genecraft/core/entities/statistics/treeshapestats.h \
     genecraft/core/entities/statistics/statisticsprovider.h \

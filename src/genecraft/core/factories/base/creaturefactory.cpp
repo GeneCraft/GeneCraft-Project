@@ -52,6 +52,8 @@ namespace GeneCraftCore {
         // Whatever
         else if(entityData["type"].toString() == "symetric")
             return GenericFamily::createEntity(entityData, shapesFactory, position);
+        /*else if(... == "superSpider")
+            return ...::createSuperSpider();*/
         // Whatever else
         return NULL;
     }

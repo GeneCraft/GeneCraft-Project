@@ -80,6 +80,9 @@ public slots:
     void removeAllEntitiesExceptSelected();
     void addRandomEntity();
     void createMutationSample();
+    /*** REAL SPIDER ***/
+    void addRealSpider();
+    /*** END ***/
 
     // experiment and world
     void setExperiment(Experiment* experiment);

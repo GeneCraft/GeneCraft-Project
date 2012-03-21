@@ -71,6 +71,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "families/snakefamily.h"
 #include "families/antfamily.h"
 #include "families/caterpillarfamily.h"
+/*** REAL SPIDER ***/
+#include "families/realspiderfamily.h"
+/*** END ***/
 
 #include "tools.h"
 #include "bulletogre/btoworld.h"
@@ -136,9 +139,9 @@ void CreatureViewerWindow::init() {
     connect(this->ui->aEnterInWhatsThisMode,SIGNAL(triggered()),this,SLOT(enterInWhatsThisMode()));
 
     // FIXME What's mode doesn't work on MacOS
-    #ifdef __APPLE__
-        this->ui->aEnterInWhatsThisMode->setEnabled(false);
-    #endif
+#ifdef __APPLE__
+    this->ui->aEnterInWhatsThisMode->setEnabled(false);
+#endif
 
     // -------------------
     // -- Mode Tool bar --
@@ -183,6 +186,7 @@ void CreatureViewerWindow::init() {
     ui->toolBar->addSeparator();
     QAction *aAddRandomCreature =  ui->toolBar->addAction(QIcon(":img/icons/entity_add_random"),QString(tr("Add random creature")));
     QAction *aCreateMutationSample =  ui->toolBar->addAction(QIcon(":img/icons/entity_mutation"),QString(tr("Create mutation sample")));
+    QAction *aAddRealSpider = ui->toolBar->addAction(QIcon(":img/icons/entity_add_random"), QString(tr("Add real spider")));
 
     ui->toolBar->addSeparator();
     aFollowCreature = ui->toolBar->addAction(QIcon(":img/icons/entity_follow"),QString(tr("Follow selected creature")));
@@ -215,6 +219,7 @@ void CreatureViewerWindow::init() {
 
     connect(aAddRandomCreature,SIGNAL(triggered()),this,SLOT(addRandomEntity()));
     connect(aCreateMutationSample,SIGNAL(triggered()),this,SLOT(createMutationSample()));
+    connect(aAddRealSpider, SIGNAL(triggered()), this, SLOT(addRealSpider()));
 
     connect(aFollowCreature,SIGNAL(triggered()),this,SLOT(followSelectedEntity()));
     connect(aShowShadows,SIGNAL(triggered()),this,SLOT(toggleShadows()));
@@ -474,6 +479,26 @@ void CreatureViewerWindow::createMutationSample(){
     }
 }
 
+void CreatureViewerWindow::addRealSpider(){
+
+    Entity *e = NULL;
+    EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
+
+    btVector3 pos = world->getSpawnPosition();
+
+
+    RealSpiderFamily *family = new RealSpiderFamily();
+    e = family->createEntity(shapesFactory, pos);
+
+    if(e){
+        e->setup();
+        entitiesEngine->addEntity(e);
+        cvim->entitySelected(e);
+        ents.append(e);
+    }
+
+}
+
 void CreatureViewerWindow::spawnNew() {
 
     //EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngineByName("Entities"));
@@ -491,13 +516,13 @@ void CreatureViewerWindow::spawnNew() {
     //spawnMutationSample(e, 8);
 
     // MUTATION
-//    //CaterpillarFamily *family = new CaterpillarFamily();
-//    //SnakeFamily *family = new SnakeFamily();
-//    SpiderFamily *family = new SpiderFamily();
-//    //AntFamily *family = new AntFamily();
-//    btVector3 pos(0,5,0);
-//    Entity *originEntity = family->createEntity(shapesFactory, pos);
-//    spawnMutationSample(originEntity, 8);
+    //    //CaterpillarFamily *family = new CaterpillarFamily();
+    //    //SnakeFamily *family = new SnakeFamily();
+    //    SpiderFamily *family = new SpiderFamily();
+    //    //AntFamily *family = new AntFamily();
+    //    btVector3 pos(0,5,0);
+    //    Entity *originEntity = family->createEntity(shapesFactory, pos);
+    //    spawnMutationSample(originEntity, 8);
 }
 
 void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreatures){
@@ -525,7 +550,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
         e = CreatureFactory::createEntity(newGenome, shapesFactory, pos + originPos);
         if(e == NULL) {
             QMessageBox::warning(this, "Impossible to load entity",
-    "Entity could not be created, maybe version of genotype don't match. Please update your client.");
+                                 "Entity could not be created, maybe version of genotype don't match. Please update your client.");
         }
 
         if(e){
@@ -660,7 +685,7 @@ Entity * CreatureViewerWindow::createCreature(QVariant genotype, btVector3 posit
 
     if(e == NULL) {
         QMessageBox::warning(this, "Impossible to create entity",
-"Entity could not be created, maybe version of genotype don't match. Please update your client.");
+                             "Entity could not be created, maybe version of genotype don't match. Please update your client.");
         return NULL;
     }
 
@@ -785,7 +810,7 @@ void CreatureViewerWindow::enterInWhatsThisMode(){
 
 void CreatureViewerWindow::entitySelected(Entity *entity)
 {
-      selectedEntity = entity;
+    selectedEntity = entity;
 }
 
 void CreatureViewerWindow::boneDeleted(Bone* bone){
@@ -797,8 +822,8 @@ void CreatureViewerWindow::boneDeleted(Bone* bone){
 
 void CreatureViewerWindow::entityDeleted(Entity* entity) {
 
-   if(selectedEntity == entity)
-       selectedEntity = NULL;
+    if(selectedEntity == entity)
+        selectedEntity = NULL;
 }
 
 void CreatureViewerWindow::fixationDeleted(Fixation* fix){
@@ -812,7 +837,7 @@ void CreatureViewerWindow::boneSelected(Bone* bone){
     if(selectedBone)
         selectedBone->setSelected(false);
     if(selectedFix)
-       selectedFix->setSelected(false);
+        selectedFix->setSelected(false);
 
     if(bone) {
         bone->setSelected(true);

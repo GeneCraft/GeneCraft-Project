@@ -25,7 +25,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GeneCraftCore {
 
-const btScalar btBone::DENSITY = 1010.0; // Average body density
+const btScalar btBone::DENSITY = 600.0;//1010.0; // Average body density
 
 btBone::btBone(btWorld *world, btScalar length, btScalar radius, btScalar radiusArticulation, const btTransform &transform) :
     btShape(world)

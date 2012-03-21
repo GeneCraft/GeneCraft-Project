@@ -23,9 +23,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "engine.h"
 
-#include "world/btworld.h"
-#include "world/btscene.h"
-#include "world/btbiome.h"
+#include "btworld.h"
+#include "btscene.h"
+#include "btbiome.h"
 
 #include "families/spiderfamily.h"
 #include "families/antfamily.h"
