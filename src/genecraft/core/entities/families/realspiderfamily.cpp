@@ -79,18 +79,18 @@ RealSpiderFamily::RealSpiderFamily()
 
     lowerLimits[1] = btVector3(0.0,0.0,-0.1f);
     upperLimits[1] = btVector3(0.0,0.0,SIMD_PI/12.f);
-    anglesY[0][1] = (btScalar)0.f;
-    anglesY[1][1] = (btScalar)0.f;
-    anglesY[2][1] = (btScalar)0.f;
-    anglesY[3][1] = (btScalar)0.f;
+    anglesY[0][1] = (btScalar)-(SIMD_PI/64.f);
+    anglesY[1][1] = (btScalar)-(SIMD_PI/48.f);
+    anglesY[2][1] = (btScalar)(SIMD_PI/48.f);
+    anglesY[3][1] = (btScalar)(SIMD_PI/64.f);
     anglesZ[1] = (btScalar)(-SIMD_PI*13.f/36.f);
 
     lowerLimits[2] = btVector3(0.0,0.0,-SIMD_PI/6.f);//SIMD_PI/12.f);
     upperLimits[2] = btVector3(0.0,0.0,0.01f);//0.0);
-    anglesY[0][2] = (btScalar)-(SIMD_PI/16.f);
-    anglesY[1][2] = (btScalar)-(SIMD_PI/12.f);
-    anglesY[2][2] = (btScalar)(SIMD_PI/12.f);
-    anglesY[3][2] = (btScalar)(SIMD_PI/16.f);
+    anglesY[0][2] = (btScalar)(SIMD_PI/8.f);
+    anglesY[1][2] = (btScalar)(SIMD_PI/8.f);
+    anglesY[2][2] = (btScalar)-(SIMD_PI/8.f);
+    anglesY[3][2] = (btScalar)-(SIMD_PI/8.f);
     anglesZ[2] = (btScalar)(SIMD_PI*23.f/36.f);
 
     /*** FRONT LEG ***/
@@ -178,7 +178,7 @@ RealSpiderFamily::~RealSpiderFamily()
 Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
     this->shapesFactory = shapesFactory;
     // root fixation
-    Entity* ent = new Entity("Real Spider !", "RealSpiderFamily","real", 1);
+    Entity* ent = new Entity("Real Spider !", "RealSpiderFamily","realSpider", 1);
     ent->setBrain(new BrainFunctional());
     btTransform initTransform;
     initTransform.setIdentity();
@@ -196,12 +196,12 @@ Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btV
     btQuaternion legLocal2;
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(1, i-1, rootFix,-i*((SIMD_PI)/(nbLegs+1)));
+        addLeg(-1, i-1, rootFix,-i*((SIMD_PI)/(nbLegs+1)));
     }
 
     for(int i=1;i<nbLegs+1;++i)
     {
-        addLeg(-1, i-1, rootFix,i*((SIMD_PI)/(nbLegs+1)));
+        addLeg(1, i-1, rootFix,i*((SIMD_PI)/(nbLegs+1)));
     }
 
     // add rear body part

@@ -122,7 +122,9 @@ void AntFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, const 
     }
 }
 
-QVariant AntFamily::serialize() {
-    return QVariant(); // TODO
+QVariant AntFamily::serialize()
+{
+    QVariant param;
 }
+
 }

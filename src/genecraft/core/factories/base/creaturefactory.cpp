@@ -19,6 +19,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "creaturefactory.h"
 #include "families/genericfamily.h"
+#include "families/realspiderfamily.h"
 #include "entity.h"
 
 namespace GeneCraftCore {
@@ -52,9 +53,14 @@ namespace GeneCraftCore {
         // Whatever
         else if(entityData["type"].toString() == "symetric")
             return GenericFamily::createEntity(entityData, shapesFactory, position);
-        /*else if(... == "superSpider")
-            return ...::createSuperSpider();*/
+        else if(entityData["type"].toString() == "realSpider")
+            //return ::createRealSpider();
         // Whatever else
         return NULL;
+    }
+
+    QVariant CreatureFactory::serialize(EntityFamily *family)
+    {
+        return family->serialize();
     }
 }

@@ -157,6 +157,8 @@ protected:
     // Scripting
     QMap<int, MotorFrom> outsFromScripts;
 
+    QVariantMap parameters;
+
 
 private:
 
