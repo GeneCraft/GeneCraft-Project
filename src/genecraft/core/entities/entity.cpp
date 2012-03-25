@@ -261,10 +261,14 @@ void Entity::addOutScript(int age, MotorFrom from) {
     this->outsFromScripts.insert(age, from);
 }
 
-void Entity::setParams(QVariantMap params)
+void Entity::setParams(QVariant params)
 {
-    parameters.clear();
     parameters = params;
+}
+
+QVariant Entity::getParams()
+{
+    return parameters;
 }
 
 }

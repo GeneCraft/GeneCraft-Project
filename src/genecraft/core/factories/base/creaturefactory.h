@@ -34,7 +34,7 @@ namespace GeneCraftCore {
                              btShapesFactory* shapesFactory,
                              btVector3 positionSensor);
 
-        static QVariant serialize(EntityFamily *family, Entity *ent);
+        static QVariant serialize(Entity *ent);
     };
 }
 

@@ -20,47 +20,70 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "creaturefactory.h"
 #include "families/genericfamily.h"
 #include "families/realspiderfamily.h"
+#include "families/antfamily.h"
+#include "families/caterpillarfamily.h"
+#include "families/snakefamily.h"
+#include "families/spiderfamily.h"
 #include "entity.h"
 
 namespace GeneCraftCore {
 
-    Entity* CreatureFactory::createEntity(QVariant data,
-                                          btShapesFactory* shapesFactory,
-                                          btVector3 position) {
-        QVariantMap entityData = data.toMap();
+Entity* CreatureFactory::createEntity(QVariant data,
+                                      btShapesFactory* shapesFactory,
+                                      btVector3 position) {
+    QVariantMap entityData = data.toMap();
 
-        // inside a result ?
-        if(entityData["type"].toString() == "result") {
-            // Decapsulate
-            qDebug() << "decapsulation from result !";
-            entityData = entityData["genome"].toMap();
-        }
+    // inside a result ?
+    if(entityData["type"].toString() == "result") {
+        // Decapsulate
+        qDebug() << "decapsulation from result !";
+        entityData = entityData["genome"].toMap();
+    }
 
-        // Version check
-        if(entityData["version"].toString() != Entity::genomeVersion) {
-            //error = "Version de genome anterieur au logiciel actuel";
-            //qDebug() << error;
+    // Version check
+    if(entityData["version"].toString() != Entity::genomeVersion) {
+        //error = "Version de genome anterieur au logiciel actuel";
+        //qDebug() << error;
 
-            // Maybe conversion if possible
+        // Maybe conversion if possible
 
-            // else
-            return NULL;
-        }
-
-        // Generic entity
-        if(entityData["type"].toString() == "generic")
-            return GenericFamily::createEntity(entityData, shapesFactory, position);
-        // Whatever
-        else if(entityData["type"].toString() == "symetric")
-            return GenericFamily::createEntity(entityData, shapesFactory, position);
-        else if(entityData["type"].toString() == "realSpider")
-            return GenericFamily::createEntity(entityData, shapesFactory, position);
-        // Whatever else
+        // else
         return NULL;
     }
 
-    QVariant CreatureFactory::serialize(EntityFamily *family, Entity* ent)
+    // Generic entity
+    if(entityData["type"].toString() == "generic")
+        return GenericFamily::createEntity(entityData, shapesFactory, position);
+    // Whatever
+    else if(entityData["type"].toString() == "symetric")
+        return GenericFamily::createEntity(entityData, shapesFactory, position);
+    else if(entityData["type"].toString() == "realSpider")
+        return GenericFamily::createEntity(entityData, shapesFactory, position);
+    // Whatever else
+    return NULL;
+}
+
+QVariant CreatureFactory::serialize(Entity* ent)
+{
+    EntityFamily* family;
+    if(ent->getType() == "realSpider")
     {
-        return family->serialize(ent);
+        family = new RealSpiderFamily();
     }
+    else if(ent->getType() == "spider") {
+        family = new SpiderFamily();
+    }
+    else if(ent->getType() == "ant") {
+        family = new AntFamily();
+    }
+    else if(ent->getType() == "snake") {
+        family = new SnakeFamily();
+    }
+    else if(ent->getType() == "caterpillar") {
+        family = new CaterpillarFamily();
+    }
+    else{
+    }
+    return family->serialize(ent);
+}
 }

@@ -176,10 +176,57 @@ RealSpiderFamily::~RealSpiderFamily()
 }
 
 Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
+    QVariantMap params;
+
     this->shapesFactory = shapesFactory;
     // root fixation
     Entity* ent = new Entity("Real Spider !", "RealSpiderFamily","realSpider", 1);
     ent->setBrain(new BrainFunctional());
+    btTransform initTransform;
+    initTransform.setIdentity();
+    initTransform.setOrigin(position);
+    initTransform.getOrigin().setY(initTransform.getOrigin().getY()-5);
+    TreeShape* shape = new TreeShape(shapesFactory);
+    Fixation* rootFix = new Fixation(shapesFactory,btScalar(headRadius),initTransform);
+    shape->setRoot(rootFix);
+    ent->setShape(shape);
+    //rootFix->addSensor(new GyroscopicSensor(rootFix));
+    //rootFix->addSensor(new AccelerometerSensor(rootFix));
+
+    // legs
+    btQuaternion legLocal;
+    btQuaternion legLocal2;
+    for(int i=1;i<nbLegs+1;++i)
+    {
+        addLeg(-1, i-1, rootFix,-i*((SIMD_PI)/(nbLegs+1)));
+    }
+
+    for(int i=1;i<nbLegs+1;++i)
+    {
+        addLeg(1, i-1, rootFix,i*((SIMD_PI)/(nbLegs+1)));
+    }
+
+    // add rear body part
+    rootFix->addBone(0, SIMD_PI*btScalar(0.5), 0.1 * sizeMultiplier, 0.05 * sizeMultiplier, btScalar(headRadius), btVector3(0,0,0), btVector3(0,0,0));
+
+    return ent;
+}
+
+Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shapesFactory, const btVector3 &position) {
+
+    QVariantMap entityMap = genotype.toMap();
+
+    // Entity & origins
+    QVariantMap origins = entityMap.value("origins").toMap();
+    Entity * ent = new Entity(origins.value("name").toString(),
+                                  origins.value("family").toString(),
+                                  "realSpider",
+                                  origins.value("generation").toInt());
+
+    this->shapesFactory = shapesFactory;
+
+    ent->setBrain(new BrainFunctional(entityMap.value("brain")));
+    ent->setParams(entityMap.value("params"));
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(position);
@@ -240,7 +287,7 @@ void RealSpiderFamily::addLeg(int rightSide, int legId,Fixation *fixBody, btScal
 QVariant RealSpiderFamily::serialize(Entity *entity)
 {
     QVariantMap genome;
-    genome.insert("brain", entity->getBrain()->serialize());
+    genome = entity->serialize().toMap();
     genome.insert("params", entity->getParams());
     return genome;
 }

@@ -60,7 +60,7 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     // Brain
     entity->setBrain(new BrainFunctional(entityMap.value("brain")));
 
-    entity->setParams(entityMap.value("params").toMap());
+    entity->setParams(entityMap.value("params"));
 
     // Body
     QVariantMap body = entityMap.value("body").toMap();

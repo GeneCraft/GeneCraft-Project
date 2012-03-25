@@ -35,6 +35,11 @@ public:
     // To create an entity of this family
     virtual Entity* createEntity(btShapesFactory *shapesFactory,
                                  const btVector3 &position);
+
+    virtual Entity* createEntity(QVariant genotype,
+                                 btShapesFactory *shapesFactory,
+                                 const btVector3 &position);
+
     // To serialize the family
     virtual QVariant serialize(Entity *entity);
 

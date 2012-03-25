@@ -127,11 +127,9 @@ public:
 
     bool isAlive();
 
-    QVariantMap getParams() {
-        return parameters;
-    }
+    QVariant getParams();
 
-    void setParams(QVariantMap params);
+    void setParams(QVariant params);
 
 protected:
 
@@ -163,7 +161,7 @@ protected:
     // Scripting
     QMap<int, MotorFrom> outsFromScripts;
 
-    QVariantMap parameters;
+    QVariant parameters;
 
 
 private:
