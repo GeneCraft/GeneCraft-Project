@@ -126,7 +126,7 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
     }
 }
 
-QVariant SpiderFamily::serialize() {
+QVariant SpiderFamily::serialize(Entity *entity) {
     return QVariant();
 }
 

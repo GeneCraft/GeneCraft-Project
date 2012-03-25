@@ -60,6 +60,8 @@ Entity *GenericFamily::createEntity(QVariant genotype,
     // Brain
     entity->setBrain(new BrainFunctional(entityMap.value("brain")));
 
+    entity->setParams(entityMap.value("params").toMap());
+
     // Body
     QVariantMap body = entityMap.value("body").toMap();
     if(body.value("shapeType").toString().compare(QString("TreeShape")) == 0)

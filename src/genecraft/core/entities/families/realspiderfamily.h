@@ -36,7 +36,7 @@ public:
     virtual Entity* createEntity(btShapesFactory *shapesFactory,
                                  const btVector3 &position);
     // To serialize the family
-    virtual QVariant serialize();
+    virtual QVariant serialize(Entity *entity);
 
 protected:
 

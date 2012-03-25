@@ -165,7 +165,7 @@ namespace GeneCraftCore {
         return entity;
     }
 
-    QVariant CaterpillarFamily::serialize() {
+    QVariant CaterpillarFamily::serialize(Entity *entity) {
         QVariantMap data;
         data["length"] = QVariant(length);
         data["piecelength"] = QVariant(pieceLength);

@@ -54,13 +54,13 @@ namespace GeneCraftCore {
         else if(entityData["type"].toString() == "symetric")
             return GenericFamily::createEntity(entityData, shapesFactory, position);
         else if(entityData["type"].toString() == "realSpider")
-            //return ::createRealSpider();
+            return GenericFamily::createEntity(entityData, shapesFactory, position);
         // Whatever else
         return NULL;
     }
 
-    QVariant CreatureFactory::serialize(EntityFamily *family)
+    QVariant CreatureFactory::serialize(EntityFamily *family, Entity* ent)
     {
-        return family->serialize();
+        return family->serialize(ent);
     }
 }

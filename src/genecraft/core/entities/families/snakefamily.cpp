@@ -145,7 +145,7 @@ namespace GeneCraftCore {
         return entity;
     }
 
-    QVariant SnakeFamily::serialize() {
+    QVariant SnakeFamily::serialize(Entity *entity) {
         QVariantMap data;
         data["length"] = QVariant(length);
         data["piecelength"] = QVariant(pieceLength);

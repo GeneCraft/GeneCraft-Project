@@ -51,7 +51,7 @@ public:
     Entity* createEntity(btShapesFactory* factory, const btVector3 &positionSensor);
 
     // To serialize family
-    QVariant serialize();
+    QVariant serialize(Entity *entity);
     void load(QVariant data);
 
 private:

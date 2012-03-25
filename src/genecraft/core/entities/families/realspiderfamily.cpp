@@ -237,8 +237,12 @@ void RealSpiderFamily::addLeg(int rightSide, int legId,Fixation *fixBody, btScal
     }
 }
 
-QVariant RealSpiderFamily::serialize() {
-    return QVariant();
+QVariant RealSpiderFamily::serialize(Entity *entity)
+{
+    QVariantMap genome;
+    genome.insert("brain", entity->getBrain()->serialize());
+    genome.insert("params", entity->getParams());
+    return genome;
 }
 
 }

@@ -127,6 +127,12 @@ public:
 
     bool isAlive();
 
+    QVariantMap getParams() {
+        return parameters;
+    }
+
+    void setParams(QVariantMap params);
+
 protected:
 
     // Origins

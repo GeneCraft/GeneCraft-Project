@@ -30,6 +30,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "families/genericfamily.h"
 #include "families/antfamily.h"
 #include "families/caterpillarfamily.h"
+#include "families/realspiderfamily.h"
 #include "entity.h"
 #include "entityfamily.h"
 
@@ -300,6 +301,8 @@ namespace GeneCraftCore {
             } else if(familyName == "snake") {
                 family = new SnakeFamily();
                 //qDebug() << "new random snake entity";
+            } else if(familyName == "realSpider") {
+                family = new RealSpiderFamily();
             } else if(familyName == "virgin"){
                 //qDebug() << "new random virgin entity";
                 Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
