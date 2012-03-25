@@ -6,6 +6,8 @@
 
 #include "genecraftcoreclasses.h"
 
+#include "LinearMath/btQuaternion.h"
+
 namespace GeneCraftCore {
 
 class Leg : public QObject

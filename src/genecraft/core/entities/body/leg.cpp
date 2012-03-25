@@ -7,7 +7,7 @@ namespace GeneCraftCore {
 
 Leg::Leg(int rightSide, int legId,Fixation *fixBody, btScalar yAxis)
 {
-    Bone *rootBone = fixBody->addBone(yAxis, anglesZ[0],
+    /*Bone *rootBone = fixBody->addBone(yAxis, anglesZ[0],
                                       btScalar(legSegmentRadius[nbLegs-legId-1][0]),
                                       btScalar(legSegmentLength[nbLegs-legId-1][0]),
                                       btScalar(kneeRadius),
@@ -29,7 +29,7 @@ Leg::Leg(int rightSide, int legId,Fixation *fixBody, btScalar yAxis)
 
         //rootBone->getParentConstraint()->setAngularLowerLimit(btVector3(0,0,0));
         //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));
-    }
+    }*/
 }
 
 }
