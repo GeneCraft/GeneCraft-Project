@@ -33,8 +33,7 @@ INCLUDEPATH  += \
     lib/bullet/src \
     lib/qxt/src/core \
     lib/qwt/include/ \
-    /usr/include/qxt/QxtCore/
-
+unix:/usr/include/qxt/QxtCore/
 
 #suppress warning for thoses systems
 QMAKE_CXXFLAGS  += -isystemlib/bullet/src
@@ -43,7 +42,7 @@ QMAKE_CXXFLAGS  += -isystemlib/qwt/include
 
 LIBS += -L../src/lib/bullet/lib
 LIBS += -L../src/lib/qxt/lib
-#LIBS += -L../src/lib/qwt/lib
+win32:LIBS += -L../src/lib/qwt/lib
 
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
@@ -111,7 +110,8 @@ SOURCES += \
     genecraft/core/experiment/resultsmanager.cpp \
     genecraft/core/utils/tools.cpp \
     genecraft/core/engines/terrain/terrain.cpp \
-    genecraft/core/entities/effectors/brainoutmotor.cpp
+    genecraft/core/entities/effectors/brainoutmotor.cpp \
+    genecraft/core/entities/body/leg.cpp
 
 HEADERS += \
     genecraft/core/engines/engine.h \
@@ -173,7 +173,8 @@ HEADERS += \
     genecraft/core/experiment/resultsmanager.h \
     genecraft/core/utils/tools.h \
     genecraft/core/engines/terrain/terrain.h \
-    genecraft/core/entities/effectors/brainoutmotor.h
+    genecraft/core/entities/effectors/brainoutmotor.h \
+    genecraft/core/entities/body/leg.h
 
 RESOURCES += \
     genecraft/core/ressources/core.qrc

@@ -51,7 +51,6 @@ Entity::Entity(QString name, QString family, QString type, int generation, QObje
     this->generation    = generation;
     this->type          = type;
     this->statisticsStorage = new StatisticsStorage();
-
 }
 
 void Entity::setup() {
@@ -260,6 +259,12 @@ void Entity::addOutScript(int age, MotorFrom from) {
         this->outsFromScripts.remove(age);
     }
     this->outsFromScripts.insert(age, from);
+}
+
+void Entity::setParams(QVariantMap params)
+{
+    parameters.clear();
+    parameters = params;
 }
 
 }
