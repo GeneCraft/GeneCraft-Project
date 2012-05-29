@@ -23,6 +23,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "genecraftcoreclasses.h"
 #include "LinearMath/btTransform.h"
 #include "entityfamily.h"
+#include <QList>
+#include <entities/body/leg.h>
 
 namespace GeneCraftCore {
 
@@ -65,9 +67,7 @@ protected:
     btVector3* upperLimits;
 
 private:
-
-    // use to create the spider
-    void addLeg(int rightSide, int legId, Fixation *fixBody, btScalar yAxis);
+    void initRealSpider();
 };
 
 }

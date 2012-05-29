@@ -299,9 +299,9 @@ void CreatureViewerWindow::init() {
     ui->dwBone->setWidget(bonePropertiesController);
 
     // Stats
-    statsPropertiesController = new StatisticsPropertiesController();
-    ui->dwStats->setWidget(statsPropertiesController);
-    statsPropertiesController->connectToInspectorInputManager(cvim);
+    //statsPropertiesController = new StatisticsPropertiesController();
+    //ui->dwStats->setWidget(statsPropertiesController);
+    //statsPropertiesController->connectToInspectorInputManager(cvim);
 
     // Ressources browser
     ressourcesBrowser = new RessourcesBrowser();
@@ -342,7 +342,7 @@ void CreatureViewerWindow::init() {
     // --------------
 
     qDebug() << "Start simulation";
-    simulationManager->fitness = statsPropertiesController->fitness;
+    //simulationManager->fitness = statsPropertiesController->fitness;
     simulationManager->start();
     connect(sPhysicStep,SIGNAL(valueChanged(int)),this->simulationManager,SLOT(setPhysicsFreq(int)));
     connect(aTogglePhysics,SIGNAL(triggered()),this,SLOT(togglePhysics()));

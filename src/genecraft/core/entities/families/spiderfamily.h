@@ -23,6 +23,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "genecraftcoreclasses.h"
 #include "LinearMath/btTransform.h"
 #include "entityfamily.h"
+#include "entities/body/leg.h"
 
 namespace GeneCraftCore {
 
@@ -61,6 +62,8 @@ protected:
     btScalar legLenght;
     btScalar kneeRadius;
     btScalar headRadius;
+
+
 
 private:
 

@@ -45,6 +45,8 @@ public:
     // To update brain inputs values
     void step();
 
+    btScalar getDistance();
+
 private:
 
     BrainIn *distanceInput;

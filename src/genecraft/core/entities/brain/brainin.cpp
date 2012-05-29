@@ -51,6 +51,11 @@ namespace GeneCraftCore {
         this->value = (value - min) / (max - min) * 2.0f - 1.0f;
     }
 
+    void BrainIn::setNonNormalizedValue(btScalar value)
+    {
+        this->value = (value<min)?min:(value>max)?max:value;
+    }
+
     /**
       * Get the normalized value [-1, 1]
       */

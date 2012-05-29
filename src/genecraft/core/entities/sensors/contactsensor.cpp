@@ -36,6 +36,7 @@ ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
     //world = fixation->getShapesFactory()->getWorld();
 
     brainInputs.append(collided);
+    cptCollision = 0;
 }
 
 // To create from serialization data
@@ -44,6 +45,7 @@ ContactSensor::ContactSensor(QVariant data, Fixation * fixation) : Sensor(data, 
     collided = new BrainIn(data.toMap()["collisionInput"]);
 
     brainInputs.append(collided);
+    cptCollision = 0;
 }
 
 // To serialize
@@ -65,6 +67,11 @@ QVariant ContactSensor::generateEmpty()
     data.insert("collisionInput", collided.serialize());
 
     return data;
+}
+
+bool ContactSensor::hasCollided()
+{
+    return collided->getValue();
 }
 
 //
@@ -107,7 +114,14 @@ void ContactSensor::step() {
                     continue;
 
                 if(object->isStaticObject()){
-                    collide = true;
+                    cptCollision += 1;
+                    cptCollision = (cptCollision>10)?10:cptCollision;
+                    break;
+                }
+                else
+                {
+                    cptCollision -= 1;
+                    cptCollision = (cptCollision<0)?0:cptCollision;
                     break;
                 }
             }
@@ -126,7 +140,12 @@ void ContactSensor::step() {
 //            }
     }
 
-    collided->setValue((int)collide);
+    // Actuellement passe de 0 à 1 super rapidement... a modifier en interpollant ou lissant la valeur légèrement pour éviter
+    // des tremblements involontaires
+    if(cptCollision==0)
+        collided->setValue(cptCollision);
+    else if(cptCollision==10)
+        collided->setValue(1);
 }
 
 }

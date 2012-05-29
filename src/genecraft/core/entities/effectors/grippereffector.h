@@ -47,6 +47,9 @@ public:
     // To update world.
     void step();
 
+    void fix();
+    void unfix();
+
 private:
 
     Fixation *fixation;

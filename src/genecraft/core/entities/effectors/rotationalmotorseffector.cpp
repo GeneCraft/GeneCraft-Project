@@ -215,7 +215,7 @@ void RotationalMotorsEffector::step()
         switch(outputsFrom)
         {
         case 1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/:  // brain
-
+            //qDebug() << "Le cerveau me dit de bouger : ";
             for(int i=0;i<3;i++)
                 if(brainMotorOutputs[i])
                     brainMotorOutputs[i]->update();

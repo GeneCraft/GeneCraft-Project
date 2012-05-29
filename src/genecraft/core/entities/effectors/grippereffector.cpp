@@ -101,4 +101,19 @@ QVariant GripperEffector::generateEmpty()
     return data;
 }
 
+void GripperEffector::fix()
+{
+    // set the new grip origin
+    constraint->setPivotB(fixation->getRigidBody()->getWorldTransform().getOrigin());
+
+    // activate the constraint
+    constraint->setEnabled(true);
+}
+
+void GripperEffector::unfix()
+{
+    // disable the contraint
+    constraint->setEnabled(false);
+}
+
 }

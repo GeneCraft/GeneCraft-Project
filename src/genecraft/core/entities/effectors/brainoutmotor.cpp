@@ -87,6 +87,8 @@ namespace GeneCraftCore {
                 = (boMaxMotorForce->getValue() + boTargetVelocity->getValue())*20000;
         motor->m_targetVelocity
                 = (boTargetVelocity->getValue() - boMaxMotorForce->getValue())*20;
+
+        //qDebug() << "Mouvement : " << boMaxMotorForce->getValue() << ", " << boTargetVelocity->getValue();
     }
 
 }

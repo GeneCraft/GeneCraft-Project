@@ -169,21 +169,25 @@ void Bone::setEntity(Entity *entity)
 
 void Bone::disableMotors()
 {
+    if(motorsEffector)
     motorsEffector->disable();
 }
 
 void Bone::setBrainMotors()
 {
+    if(motorsEffector)
     motorsEffector->setOutputsFrom(1 /*RotationalMotorsModifier::OUTPUTS_FROM_BRAIN*/);
 }
 
 void Bone::setNormalPositionMotors()
 {
+    if(motorsEffector)
     motorsEffector->setOutputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/);
 }
 
 void Bone::setRandomMotors()
 {
+    if(motorsEffector)
     motorsEffector->setOutputsFrom(2 /*RotationalMotorsModifier::OUTPUTS_FROM_RANDOM*/);
 }
 
@@ -206,6 +210,7 @@ void Bone::resetMotors()
 
 void Bone::disconnectMotor(int i)
 {
+    if(motorsEffector)
     if(entity && motorsEffector->getBrainOutputs(i))
     {
         entity->removeBrainOut(motorsEffector->getBrainOutputs(i)->boMaxMotorForce);

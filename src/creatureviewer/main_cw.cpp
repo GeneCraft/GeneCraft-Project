@@ -93,13 +93,13 @@ int main(int argc, char *argv[])
     splash.showMessage("Loading...");
 
     // loading...
-    CreatureViewerWindow cw;
+    CreatureViewerWindow* cw = new CreatureViewerWindow();
     a->processEvents(); // This is used to accept a click on the screen so that user can cancel the screen
     loadStyleSheet("styleSheet");
 
     // shows
-    cw.showMaximized();
-    splash.finish(&cw);
+    cw->showMaximized();
+    splash.finish(cw);
 
     // DOESN'T WORK ?!?
     // First launch

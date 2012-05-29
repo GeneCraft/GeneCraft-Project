@@ -26,7 +26,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GeneCraftCore {
 
-enum EffectorType { rotationalMotorEffector = 0, gripperEffector, flyingEffector };
+enum EffectorType { rotationalMotorEffector = 0, gripperEffector, flyingEffector, legEffector };
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

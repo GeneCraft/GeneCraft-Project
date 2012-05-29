@@ -66,8 +66,14 @@ QVariant DistanceSensor::serialize() {
     return data;
 }
 
+btScalar DistanceSensor::getDistance()
+{
+    return distanceInput->getValue();
+}
+
 void DistanceSensor::step() {
 
+    qDebug() << "STEP DISTANCE SENSOR";
     // compute orientation of raycast
     btVector3 rayFrom = fixation->getRigidBody()->getWorldTransform().getOrigin();
     btQuaternion local1;
@@ -94,14 +100,14 @@ void DistanceSensor::step() {
             {
 
                 btScalar distance = rayFrom.distance(body->getWorldTransform().getOrigin());
-
-                distanceInput->setValue(distance);
+                qDebug() << "NANI DISTANCE : " << distance;
+                distanceInput->setNonNormalizedValue(distance);
                 return;
             }
         }
     }
 
-    distanceInput->setValue(0);
+    distanceInput->setNonNormalizedValue(MAX_DISTANCE);
 }
 
 QVariant DistanceSensor::generateEmpty()

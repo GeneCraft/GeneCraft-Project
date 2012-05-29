@@ -61,12 +61,14 @@ public:
     // To update brain inputs values
     void step();
 
+    bool hasCollided();
+
 private:
 
     //btWorld *world;
     BrainIn * collided, * inputY, * inputZ;
     btVector3 oldPosition, oldSpeed;
-
+    int cptCollision;
 
 };
 

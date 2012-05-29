@@ -55,6 +55,7 @@ namespace GeneCraftCore {
       * Set the normalized value [-1, 1]
       */
     void  BrainOut::setValue(btScalar value) {
+        //qDebug() << "valeur setee a : " << value;
         // Un noramlization
         this->value = (value + 1.0f) / 2.0f * (max - min) + min;
         if(this->value > max) {

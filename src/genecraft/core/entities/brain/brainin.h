@@ -46,6 +46,8 @@ namespace GeneCraftCore {
           */
         virtual void setValue(btScalar value);
 
+        virtual void setNonNormalizedValue(btScalar value);
+
         /**
           * Get the normalized value [-1, 1]
           */
