@@ -29,6 +29,8 @@ namespace GeneCraftCore {
 
     class Result;
     bool myLessThan( const Result *a, const Result *b );
+    bool hasSmallerFitness( const Result *a, const Result *b );
+    bool isYoungerThan( const Result *a, const Result *b );
 
     class Result
     {
@@ -55,6 +57,11 @@ namespace GeneCraftCore {
           */
         bool operator<(const Result& r) const {
             return this->fitness < r.fitness;
+        }
+
+        bool youngerThan(const Result& r) const {
+            return QString::number(this->getGenome().toMap()["origins"].toMap()["generation"].toInt()) <
+                    QString::number(r.getGenome().toMap()["origins"].toMap()["generation"].toInt());
         }
 
         /**

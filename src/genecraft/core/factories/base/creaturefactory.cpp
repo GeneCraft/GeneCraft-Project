@@ -58,7 +58,12 @@ Entity* CreatureFactory::createEntity(QVariant data,
     else if(entityData["type"].toString() == "symetric")
         return GenericFamily::createEntity(entityData, shapesFactory, position);
     else if(entityData["type"].toString() == "realSpider")
-        return GenericFamily::createEntity(entityData, shapesFactory, position);
+    {
+        RealSpiderFamily* r = new RealSpiderFamily();
+        Entity* e = r->createEntity(entityData, shapesFactory, position);
+        delete r;
+        return e;
+    }
     // Whatever else
     return NULL;
 }

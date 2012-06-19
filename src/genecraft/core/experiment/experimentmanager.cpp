@@ -540,7 +540,7 @@ namespace GeneCraftCore {
 
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         if(e == NULL) {
-            qDebug() << "Entity genome corrupted !";
+            qDebug() << "Entity genome corrupted tralala !";
             return GenericFamily::createVirginEntity(shapesFactory, 1, position);
         }
         e->setup();

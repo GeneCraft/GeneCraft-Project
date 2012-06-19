@@ -39,26 +39,26 @@ QVariant LegEffector::serialize()
 
 void LegEffector::step()
 {
-    cpt ++;
+    /*cpt ++;
     qDebug() << "CPT : " << cpt;
-    if(cpt<10)
+    if(cpt<20)
         leg->legUp();
-    else if(cpt>=10 && cpt < 20)
+    else if(cpt>=20 && cpt < 40)
         leg->legDown();
     else
-        cpt=0;
+        cpt=0;*/
 
     // Check sensor & actual state, select state
 
 
 
-    /*// based on step, set effectors value
+    // based on step, set effectors value
     if(legOutput->getValue()>0)
         leg->legUp();
     else if(legOutput->getValue()<0)
         leg->legDown();
     else
-        ;//waiting*/
+        ;//waiting
 }
 
 }

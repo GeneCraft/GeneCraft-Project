@@ -32,6 +32,16 @@ namespace GeneCraftCore {
        return !((*a) < (*b));
     }
 
+    bool hasSmallerFitness(const Result *a, const Result *b)
+    {
+        return ((*a) < (*b));
+    }
+
+    bool isYoungerThan( const Result *a, const Result *b )
+    {
+       return (a->youngerThan((*b)));
+    }
+
     /**
       * Broadcast a result -> save it to the ressource
       */

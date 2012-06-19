@@ -99,7 +99,6 @@ namespace GeneCraftCore {
     void SimulationManager::update()
     {
         nbSteps++;
-
         // beforeStep
         foreach(Engine* e, engines)
             e->beforeStep();

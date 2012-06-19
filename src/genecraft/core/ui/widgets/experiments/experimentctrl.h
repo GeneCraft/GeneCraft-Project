@@ -53,6 +53,7 @@ namespace GeneCraftCore {
     public slots:
 
         void loadExperiment(Experiment*);
+        void eachResult();
 
     protected slots:
 
@@ -75,15 +76,23 @@ namespace GeneCraftCore {
         bool loaded;
         QMutex lock;
 
+        QList<Result*> progressResults;
+        QTimer* timerProgression;
+
         ConversionCtrl *conversionCtrl;
 
         ExperimentsPropertiesController *epc;
+
+        int numberOfResult;
+        int cptResult;
 
     private slots:
     void on_btnHelp_clicked();
     void on_btnAdd_clicked();
     void on_btnLoad_clicked();
-};
+    void on_btnProgression_clicked();
+    void on_btnProgressStop_clicked();
+    };
 
 }
 

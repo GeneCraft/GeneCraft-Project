@@ -65,7 +65,6 @@ namespace GeneCraftCore {
         void renderUpdate();
 
         void resetNbSteps();
-
     private:
         QMap<QString, Engine*> engines;
         Engine* renderEngine;

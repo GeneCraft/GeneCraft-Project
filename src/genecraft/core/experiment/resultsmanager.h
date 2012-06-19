@@ -107,6 +107,12 @@ public:
     }
 
     /**
+      * Sort the result by Generation
+      */
+    QList<Result*> sortByGeneration();
+    QList<Result*> sortByFitness();
+
+    /**
       * Clear results lists
       */
     void clear();

@@ -49,7 +49,6 @@ private:
 
     GripperEffector* gripper;
     ContactSensor* contact;
-    DistanceSensor* distance;
 
     Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar* legSegmentRadius, btScalar* legSegmentLength);
     

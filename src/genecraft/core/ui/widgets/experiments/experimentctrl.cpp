@@ -28,195 +28,239 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GeneCraftCore {
 
-    ExperimentCtrl::ExperimentCtrl(QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::ExperimentCtrl)
-    {
-        ui->setupUi(this);
-        this->experiment = NULL;
-        this->resultsManager = NULL;
+ExperimentCtrl::ExperimentCtrl(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::ExperimentCtrl)
+{
+    ui->setupUi(this);
+    this->experiment = NULL;
+    this->resultsManager = NULL;
 
-        epc = new ExperimentsPropertiesController();
+    epc = new ExperimentsPropertiesController();
 
-        // Conversion controleur
-        DataBase db;
-        db.dbName = "/db/genecraft/";
-        db.url = "http://www.genecraft-project.org";
-        db.port = 80;
-        conversionCtrl = new ConversionCtrl(QDir("./ressources/"), db);
+    // Conversion controleur
+    DataBase db;
+    db.dbName = "/db/genecraft/";
+    db.url = "http://www.genecraft-project.org";
+    db.port = 80;
+    conversionCtrl = new ConversionCtrl(QDir("./ressources/"), db);
 
-        // refresh events
-        autorefresh = new QTimer();
-        autorefresh->setInterval(1000);
-        connect(autorefresh, SIGNAL(timeout()), this, SLOT(refresh()));
-        connect(this->ui->checkBox, SIGNAL(stateChanged(int)), this, SLOT(toggleRefresh()));
-        connect(ui->pbRefresh,SIGNAL(clicked()),this,SLOT(refresh()));
-        connect(ui->twResults,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_btnLoad_clicked()));
+    // refresh events
+    autorefresh = new QTimer();
+    autorefresh->setInterval(1000);
+    connect(autorefresh, SIGNAL(timeout()), this, SLOT(refresh()));
+    connect(this->ui->checkBox, SIGNAL(stateChanged(int)), this, SLOT(toggleRefresh()));
+    connect(ui->pbRefresh,SIGNAL(clicked()),this,SLOT(refresh()));
+    connect(ui->twResults,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_btnLoad_clicked()));
 
-        connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
-        connect(ui->pbNewExperiment,SIGNAL(clicked()),this,SLOT(newExperiment()));
+    connect(ui->pbEditExperiment,SIGNAL(clicked()),this,SLOT(openExperimentPropertiesController()));
+    connect(ui->pbNewExperiment,SIGNAL(clicked()),this,SLOT(newExperiment()));
 
-        connect(ui->pbDeleteAllResults,SIGNAL(clicked()),this,SLOT(deleteAllResults()));
+    connect(ui->pbDeleteAllResults,SIGNAL(clicked()),this,SLOT(deleteAllResults()));
 
-        connect(ui->pbConvertResults,SIGNAL(clicked()),this,SLOT(openConvertWidget()));
+    connect(ui->pbConvertResults,SIGNAL(clicked()),this,SLOT(openConvertWidget()));
 
-        setEnabled(false);
+    setEnabled(false);
+}
+
+void ExperimentCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
+
+    epc->connectToInspectorInputManager(iim);
+    conversionCtrl->connectToInspectorInputManager(iim);
+
+
+    connect(iim, SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
+    connect(this, SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
+    connect(this, SIGNAL(sAddEntity(QVariantMap,Ressource*)), iim, SLOT(loadEntity(QVariantMap, Ressource*)));
+}
+
+void ExperimentCtrl::refresh() {
+    if(!resultsManager) {
+        return;
     }
 
-    void ExperimentCtrl::connectToInspectorInputManager(InspectorsInputManager * iim) {
-
-        epc->connectToInspectorInputManager(iim);
-        conversionCtrl->connectToInspectorInputManager(iim);
-
-
-        connect(iim, SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
-        connect(this, SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
-        connect(this, SIGNAL(sAddEntity(QVariantMap,Ressource*)), iim, SLOT(loadEntity(QVariantMap, Ressource*)));
-    }
-
-    void ExperimentCtrl::refresh() {
-        if(!resultsManager) {
-            return;
+    this->refreshInProgress();
+    if(loaded)
+        resultsManager->reload();
+    else {
+        if(oldResultsManager) {
+            oldResultsManager = NULL;
+            delete oldResultsManager;
         }
+        resultsManager->load();
+        loaded = true;
+    }
+    this->refreshUI();
+}
 
-        this->refreshInProgress();
-        if(loaded)
-            resultsManager->reload();
-        else {
-            if(oldResultsManager) {
-                oldResultsManager = NULL;
-                delete oldResultsManager;
-            }
-            resultsManager->load();
-            loaded = true;
-        }
-        this->refreshUI();
+void ExperimentCtrl::refreshUI() {
+    this->ui->lblDb->setText("");
+    results = resultsManager->getBestResults();
+
+    // save the selected result
+    Result *selectedResult = NULL;
+    if(ui->twResults->currentItem())
+        selectedResult = ((ResultTreeWidgetItem *) ui->twResults->currentItem())->r;
+
+    // clear
+    UITools::clearTreeWidget(this->ui->twResults);
+
+    // fill
+    foreach(Result* r, results) {
+        ResultTreeWidgetItem * item = new ResultTreeWidgetItem(r);
+        this->ui->twResults->addTopLevelItem(item);
     }
 
-    void ExperimentCtrl::refreshUI() {
-        this->ui->lblDb->setText("");
-        results = resultsManager->getBestResults();
-
-        // save the selected result
-        Result *selectedResult = NULL;
-        if(ui->twResults->currentItem())
-            selectedResult = ((ResultTreeWidgetItem *) ui->twResults->currentItem())->r;
-
-        // clear
-        UITools::clearTreeWidget(this->ui->twResults);
-
-        // fill
-        foreach(Result* r, results) {
-            ResultTreeWidgetItem * item = new ResultTreeWidgetItem(r);
-            this->ui->twResults->addTopLevelItem(item);
-        }
-
-        // select previous selected item
-        if(selectedResult) {
-            int nbItems = ui->twResults->topLevelItemCount();
-            for(int i=0;i<nbItems; ++i) {
-               ResultTreeWidgetItem *item = (ResultTreeWidgetItem *) ui->twResults->topLevelItem(i);
-               if(selectedResult == item->r) {
-                    ui->twResults->setCurrentItem(item,0);
-                    return;
-               }
-            }
-        }
-    }
-
-    void ExperimentCtrl::toggleRefresh() {
-        if(this->autorefresh->isActive())
-            this->autorefresh->stop();
-        else
-            this->autorefresh->start();
-    }
-
-    void ExperimentCtrl::refreshInProgress() {
-        this->ui->lblDb->setText("Loading data...");
-    }
-
-    ExperimentCtrl::~ExperimentCtrl()
-    {
-        delete ui;
-    }
-
-    void ExperimentCtrl::on_btnLoad_clicked()
-    {
-        if(this->ui->twResults->currentItem()) {
-            Result* r = this->results[this->ui->twResults->currentIndex().row()];
-            emit sLoadResult(r);
-            //emit addEntity(r->serialize().toMap(), NULL);
-        }
-    }
-
-    void ExperimentCtrl::openExperimentPropertiesController(){
-
-        epc->setExperiment(experiment);
-        epc->show();
-        epc->setFocus(Qt::MouseFocusReason);
-    }
-
-    void ExperimentCtrl::loadExperiment(Experiment *experiment) {
-
-        this->experiment = experiment;
-        setEnabled((bool)experiment);
-
-        if(experiment) {
-
-            this->ui->lblId->setText(experiment->getId());
-            this->ui->lblAuthor->setText(experiment->getAuthor());
-            this->ui->lblDate->setText(experiment->getDateOfCreation().toString());
-            this->ui->lblDescription->setText(experiment->getDescription());
-
-            this->oldResultsManager = resultsManager;
-            this->resultsManager    = new ResultsManager(experiment, 100, 100, "CreatureViewer");
-
-            loaded = false;
-            this->refresh();
-            // this->autorefresh->start();
-        }
-    }
-
-    void ExperimentCtrl::newExperiment() {
-
-        epc->setExperiment(new Experiment());
-        epc->show();
-        epc->setFocus(Qt::MouseFocusReason);
-    }
-
-    void ExperimentCtrl::on_btnAdd_clicked()
-    {
-        if(this->ui->twResults->currentItem()) {
-            Result* r = this->results[this->ui->twResults->currentIndex().row()];
-            emit sAddEntity(r->serialize().toMap(), NULL);
-        }
-    }
-
-    void ExperimentCtrl::on_btnHelp_clicked()
-    {
-        QMessageBox::information(this, "Loading results to the scene", "There's two way of adding a result to the scene."
-                                 " As a result, which mean deleting everything in the simulation to get the exact same result"
-                                 " that the worker did, with the initial stabilisation process and everything. Or as a creature, which mean add this creature where stand the camera."
-                                 " Obviously because of the physical engine state and the initials conditions that are differents the result will not be the same"
-                                 " that the worker compute.");
-
-    }
-
-    void ExperimentCtrl::deleteAllResults() {
-
-        if(experiment->isOnline()) {
-            QMessageBox::information(this, "You can delete online results",
-                                     "Deletion of online results in not yet available.");
-        }
-        else {
-            int buttonPressed = QMessageBox::question(this, "Are you sure ?",
-                                 "Are you sure do you want to \ndefinitively delete all results of this experiment ?", QMessageBox::Ok | QMessageBox::Cancel);
-
-            if(buttonPressed == QMessageBox::Ok) {
-                resultsManager->deleteAll();
-                refresh();
+    // select previous selected item
+    if(selectedResult) {
+        int nbItems = ui->twResults->topLevelItemCount();
+        for(int i=0;i<nbItems; ++i) {
+            ResultTreeWidgetItem *item = (ResultTreeWidgetItem *) ui->twResults->topLevelItem(i);
+            if(selectedResult == item->r) {
+                ui->twResults->setCurrentItem(item,0);
+                return;
             }
         }
+    }
+}
+
+void ExperimentCtrl::toggleRefresh() {
+    if(this->autorefresh->isActive())
+        this->autorefresh->stop();
+    else
+        this->autorefresh->start();
+}
+
+void ExperimentCtrl::refreshInProgress() {
+    this->ui->lblDb->setText("Loading data...");
+}
+
+ExperimentCtrl::~ExperimentCtrl()
+{
+    delete ui;
+}
+
+void ExperimentCtrl::on_btnLoad_clicked()
+{
+    if(this->ui->twResults->currentItem()) {
+        Result* r = this->results[this->ui->twResults->currentIndex().row()];
+        emit sLoadResult(r);
+        //emit addEntity(r->serialize().toMap(), NULL);
+    }
+}
+
+void ExperimentCtrl::on_btnProgression_clicked()
+{
+    progressResults.clear();
+    if(this->ui->rdbtnFitness->isChecked())
+        progressResults = resultsManager->sortByFitness();
+    else if(this->ui->rdbtnGeneration->isChecked())
+        progressResults = resultsManager->sortByGeneration();
+
+    numberOfResult = progressResults.size();
+    cptResult = 1;
+
+    timerProgression = new QTimer(this);
+    timerProgression->setInterval(this->ui->sbxDuration->value() * 1000);
+    timerProgression->start();
+    connect(this->timerProgression, SIGNAL(timeout()), this, SLOT(eachResult()));
+}
+
+void ExperimentCtrl::eachResult()
+{
+    if(progressResults.isEmpty())
+    {
+        timerProgression->stop();
+        disconnect(this->timerProgression, 0, this, 0);
+        delete timerProgression;
+        return;
+    }
+    Result* r = progressResults.takeFirst();
+
+    this->ui->lblResultNumber->setText(QString::number(cptResult++)+"/"+QString::number(numberOfResult));
+    this->ui->lblFitness->setText(QString::number(r->getFitness(), 10, 4));
+    this->ui->lblGeneration->setText(QString::number(r->getGenome().toMap()["origins"].toMap()["generation"].toInt()));
+    this->ui->lblWorker->setText(r->getWorker());
+    this->ui->lblProgressDate->setText(r->getDate());
+    this->ui->lblNumberRun->setText(QString::number(r->getNbRun()));
+    sLoadResult(r);
+}
+
+void GeneCraftCore::ExperimentCtrl::on_btnProgressStop_clicked()
+{
+    timerProgression->stop();
+    disconnect(this->timerProgression, 0, this, 0);
+    delete timerProgression;
+}
+
+void ExperimentCtrl::openExperimentPropertiesController(){
+
+    epc->setExperiment(experiment);
+    epc->show();
+    epc->setFocus(Qt::MouseFocusReason);
+}
+
+void ExperimentCtrl::loadExperiment(Experiment *experiment) {
+
+    this->experiment = experiment;
+    setEnabled((bool)experiment);
+
+    if(experiment) {
+
+        this->ui->lblId->setText(experiment->getId());
+        this->ui->lblAuthor->setText(experiment->getAuthor());
+        this->ui->lblDate->setText(experiment->getDateOfCreation().toString());
+        this->ui->lblDescription->setText(experiment->getDescription());
+
+        this->oldResultsManager = resultsManager;
+        this->resultsManager    = new ResultsManager(experiment, 100, 100, "CreatureViewer");
+
+        loaded = false;
+        this->refresh();
+        // this->autorefresh->start();
+    }
+}
+
+void ExperimentCtrl::newExperiment() {
+
+    epc->setExperiment(new Experiment());
+    epc->show();
+    epc->setFocus(Qt::MouseFocusReason);
+}
+
+void ExperimentCtrl::on_btnAdd_clicked()
+{
+    if(this->ui->twResults->currentItem()) {
+        Result* r = this->results[this->ui->twResults->currentIndex().row()];
+        emit sAddEntity(r->serialize().toMap(), NULL);
+    }
+}
+
+void ExperimentCtrl::on_btnHelp_clicked()
+{
+    QMessageBox::information(this, "Loading results to the scene", "There's two way of adding a result to the scene."
+                             " As a result, which mean deleting everything in the simulation to get the exact same result"
+                             " that the worker did, with the initial stabilisation process and everything. Or as a creature, which mean add this creature where stand the camera."
+                             " Obviously because of the physical engine state and the initials conditions that are differents the result will not be the same"
+                             " that the worker compute.");
+
+}
+
+void ExperimentCtrl::deleteAllResults() {
+
+    if(experiment->isOnline()) {
+        QMessageBox::information(this, "You can delete online results",
+                                 "Deletion of online results in not yet available.");
+    }
+    else {
+        int buttonPressed = QMessageBox::question(this, "Are you sure ?",
+                                                  "Are you sure do you want to \ndefinitively delete all results of this experiment ?", QMessageBox::Ok | QMessageBox::Cancel);
+
+        if(buttonPressed == QMessageBox::Ok) {
+            resultsManager->deleteAll();
+            refresh();
+        }
+    }
 
     //    // DELETE SELECTED RESULTS...
     //    if(this->ui->twResults->currentItem()) {
@@ -234,12 +278,10 @@ namespace GeneCraftCore {
     //            }
     //        }
     //    }
-    }
-
-    void ExperimentCtrl::openConvertWidget() {
-        conversionCtrl->show();
-    }
-
 }
 
+void ExperimentCtrl::openConvertWidget() {
+    conversionCtrl->show();
+}
 
+}

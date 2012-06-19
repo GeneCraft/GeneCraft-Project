@@ -314,6 +314,20 @@ namespace GeneCraftCore {
 
     }
 
+    QList<Result*> ResultsManager::sortByGeneration()
+    {
+        QList<Result*> myResult(this->bestResults);
+        qSort(myResult.begin(), myResult.end(), isYoungerThan);
+        return myResult;
+    }
+
+    QList<Result*> ResultsManager::sortByFitness()
+    {
+        QList<Result*> myResult(this->bestResults);
+        qSort(myResult.begin(), myResult.end(), hasSmallerFitness);
+        return myResult;
+    }
+
     /**
       * To add a new result to this experience
       */

@@ -336,6 +336,7 @@ void CreatureViewerWindow::init() {
     connect(cvim,SIGNAL(sLoadWorld(QVariantMap)),this,SLOT(setWorld(QVariantMap)));
     connect(cvim,SIGNAL(sLoadEntity(QVariantMap,Ressource*)),this,SLOT(addEntity(QVariantMap,Ressource*)));
     connect(cvim,SIGNAL(sLoadResult(Result*)),this,SLOT(loadResult(Result*)));
+    //connect(cvim,SIGNAL)
 
     // --------------
     // -- Starting --

@@ -140,8 +140,6 @@ void ContactSensor::step() {
 //            }
     }
 
-    // Actuellement passe de 0 à 1 super rapidement... a modifier en interpollant ou lissant la valeur légèrement pour éviter
-    // des tremblements involontaires
     if(cptCollision==0)
         collided->setValue(cptCollision);
     else if(cptCollision==10)

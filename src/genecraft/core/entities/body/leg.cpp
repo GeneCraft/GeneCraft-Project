@@ -58,12 +58,9 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
     // dernier os -> getEndFixation();
     contact =  new ContactSensor(rootBone->getEndFixation());
     rootBone->getEndFixation()->addSensor(contact);
-    distance = new DistanceSensor(rootBone->getEndFixation(), btScalar(-SIMD_PI/2.0), btScalar(0.0));
-    //rootBone->getEndFixation()->addSensor(distance);
+
     // dernier os -> getEndFixation();
     gripper = new GripperEffector(rootBone->getEndFixation());
-
-    rootBone->getEndFixation()->addSensor(contact);
     // on veut le faire nous meme, donc on l'ajoute pas rootBone->getEndFixation()->addEffector(gripper);
 }
 
@@ -85,8 +82,10 @@ void Leg::setup(Entity * e)
         {
             if(b->getRotationalMotorsEffector()->getBrainOutputs(i))
             {
-                e->removeBrainOut(b->getRotationalMotorsEffector()->getBrainOutputs(i)->boMaxMotorForce);
-                e->removeBrainOut(b->getRotationalMotorsEffector()->getBrainOutputs(i)->boTargetVelocity);
+                e->removeBrainOut(b->getRotationalMotorsEffector()->
+                                  getBrainOutputs(i)->boMaxMotorForce);
+                e->removeBrainOut(b->getRotationalMotorsEffector()->
+                                  getBrainOutputs(i)->boTargetVelocity);
             }
         }
     }
@@ -94,23 +93,32 @@ void Leg::setup(Entity * e)
 
 void Leg::legUp()
 {
-    // Gripper effector off
-    // if not position max, monter
-    //   gripper->
+    // Gripper se trouvant en bout de patte doit se détacher du sol
     gripper->unfix();
-    qDebug() << "UP";
-    //qDebug() << "Patte premier os : ";
-    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->getBrainOutputs(AXE_X)->boTargetVelocity->setValue(200);
-    //qDebug() << "Patte deuxieme os : ";
-    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
-    //qDebug() << "Patte troisieme os : ";
-    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
-    //qDebug() << "Patte quatrieme os : ";
-    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+
+    //Monter premier os
+    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(-1);
+    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_X)->boTargetVelocity->setValue(200);
+
+    //Monter deuxième os
+    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+
+    //Monter troisième os
+    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+
+    //Monter quatrieme os
+    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+            getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
 
     /*foreach(Bone* b, bones)
     {
@@ -138,13 +146,13 @@ void Leg::legUp()
 
 void Leg::legDown()
 {
-    distance->step();
     // Descendre
     qDebug() << "DOWN";
-    // check distance avec le sol
-    qDebug() << "DISTANCE ZARB : " << distance->getDistance();
-    if(distance->getDistance() < 0.5)
+    if(contact->hasCollided())
+    {
+        qDebug() << "on bloque";
         gripper->fix();
+    }
     //qDebug() << "Patte premier os : ";
     ((Bone*)bones.at(0))->getRotationalMotorsEffector()->getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(1);
     ((Bone*)bones.at(0))->getRotationalMotorsEffector()->getBrainOutputs(AXE_X)->boTargetVelocity->setValue(-200);
