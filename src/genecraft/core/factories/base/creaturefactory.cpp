@@ -51,6 +51,8 @@ Entity* CreatureFactory::createEntity(QVariant data,
         return NULL;
     }
 
+    qDebug() << "TYPE : " << entityData["type"].toString();
+
     // Generic entity
     if(entityData["type"].toString() == "generic")
         return GenericFamily::createEntity(entityData, shapesFactory, position);

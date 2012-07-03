@@ -28,7 +28,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GeneCraftCore {
 
-enum SensorType { gyroscopicSensor, accelerometerSensor, positionSensor, contactSensor, boxSmellSensor, distanceSensor };
+enum SensorType { gyroscopicSensor, accelerometerSensor, positionSensor, contactSensor, boxSmellSensor, distanceSensor, gravitySensor };
 
 /**
  * (c) COPYRIGHT GeneCraft 2011, Aurelien Da Campo & Cyprien Huissoud

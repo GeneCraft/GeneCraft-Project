@@ -96,11 +96,11 @@ void Leg::legUp()
     // Gripper se trouvant en bout de patte doit se détacher du sol
     gripper->unfix();
 
-    //Monter premier os
+    //Avancer premier os
     ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(-1);
+            getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*1);
     ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_X)->boTargetVelocity->setValue(200);
+            getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*(-200));
 
     //Monter deuxième os
     ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
@@ -120,79 +120,34 @@ void Leg::legUp()
     ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
             getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
 
-    /*foreach(Bone* b, bones)
-    {
-        b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
-        b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(2000);
-
-        //b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Y)->boMaxMotorForce->setValue(-1);
-        //b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Y)->boTargetVelocity->setValue(2000);
-    }*/
-
-    /*Bone* actualBone = firstBone;
-    if(actualBone)
-    {
-        for(int i=0;i<nbBoneInLeg;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                actualBone->getRotationalMotorsEffector()->getBrainOutputs(j)->boMaxMotorForce->setValue(0);
-                actualBone->getRotationalMotorsEffector()->getBrainOutputs(j)->boTargetVelocity->setValue(0);
-            }
-            actualBone = actualBone->getEndFixation()->getBones().first();
-        }
-    }*/
 }
 
 void Leg::legDown()
 {
     // Descendre
-    qDebug() << "DOWN";
+    //qDebug() << "DOWN";
     if(contact->hasCollided())
     {
-        qDebug() << "on bloque";
         gripper->fix();
+
+        //Reculer premier os
+        ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*(-1));
+        ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*200);
     }
-    //qDebug() << "Patte premier os : ";
-    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(1);
-    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->getBrainOutputs(AXE_X)->boTargetVelocity->setValue(-200);
-    //qDebug() << "Patte deuxieme os : ";
+
+    //Monter deuxième os
     ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
     ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
-    //qDebug() << "Patte troisieme os : ";
+
+    //Monter troisième os
     ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
     ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
-    //qDebug() << "Patte quatrieme os : ";
+
+    //Monter quatrieme os
     ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
     ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
-    // gripper on
-    // Stopper vitesse des muscles
-
-    // on -> a
-
-
-
-    /*foreach(Bone* b, bones)
-    {
-        b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-        b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(2000);
-
-        //b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Y)->boMaxMotorForce->setValue(-1);
-        //b->getRotationalMotorsEffector()->getBrainOutputs(AXE_Y)->boTargetVelocity->setValue(2000);
-    }*/
-    /*Bone* actualBone = firstBone;
-    if(actualBone)
-    {
-        for(int i=0;i<nbBoneInLeg;i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                actualBone->getRotationalMotorsEffector()->getBrainOutputs(j)->boMaxMotorForce->setValue(0);
-                actualBone->getRotationalMotorsEffector()->getBrainOutputs(j)->boTargetVelocity->setValue(0);
-            }
-            actualBone = actualBone->getEndFixation()->getBones().first();
-        }
-    }*/
 }
 
 }

@@ -34,7 +34,8 @@ namespace GeneCraftCore {
 
     void btBiome::setup() {
         btScalar gravity = data["gravity"].toFloat();
-        world->setGravity(btVector3(0,-gravity,0));
+        QVariantMap gravityMap = data["gravities"].toMap();
+        world->setGravity(btVector3(gravity*gravityMap["axeX"].toDouble(),gravity*gravityMap["axeY"].toDouble(),gravity*gravityMap["axeZ"].toDouble()));
     }
 
 }

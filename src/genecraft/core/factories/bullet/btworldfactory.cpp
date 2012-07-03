@@ -38,6 +38,13 @@ namespace GeneCraftCore {
         biomeData.insert("gravity", 9.81);
         biomeData.insert("skyMaterial", "Examples/CloudySky");
 
+        QVariantMap gravityData;
+        gravityData.insert("axeX", 0.0);
+        gravityData.insert("axeY", -1.0);
+        gravityData.insert("axeZ", 0.0);
+
+        biomeData.insert("gravities", gravityData);
+
         // -- lights --
         QVariantList lights;
 

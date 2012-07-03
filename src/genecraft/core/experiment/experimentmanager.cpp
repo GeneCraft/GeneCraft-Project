@@ -286,7 +286,6 @@ namespace GeneCraftCore {
             EntityFamily* family;
 
             btVector3 position = world->getSpawnPosition();
-
             // The spider ! Scary !
             if(familyName == "spider") {
                 // New entity
@@ -301,10 +300,10 @@ namespace GeneCraftCore {
             } else if(familyName == "snake") {
                 family = new SnakeFamily();
                 //qDebug() << "new random snake entity";
-            } else if(familyName == "realSpider") {
+            } else if(familyName == "realspider"){
                 family = new RealSpiderFamily();
             } else if(familyName == "virgin"){
-                //qDebug() << "new random virgin entity";
+                qDebug() << "new random virgin entity";
                 Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
                 e->setup();
                 e->setGeneration(0);

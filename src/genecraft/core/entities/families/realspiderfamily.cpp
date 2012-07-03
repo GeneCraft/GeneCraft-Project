@@ -33,22 +33,23 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "sensors/positionsensor.h"
 #include "sensors/contactsensor.h"
 
-#include <ctime>
+#include <QDateTime>
 
 namespace GeneCraftCore {
 
 RealSpiderFamily::RealSpiderFamily()
 {
+    qsrand(QDateTime::currentDateTime ().toTime_t ());
     sizeMultiplier = (btScalar)3.f;
     nbLegs      = 4;
     // Too much joints for the physics nbBoneInLeg = 7;
     nbBoneInLeg = 4;
-    legRadius   = sizeMultiplier * (((btScalar)qrand())/RAND_MAX * 0.4 + 0.1);
-    legLenght   = sizeMultiplier * (((btScalar)qrand())/RAND_MAX * 2 + 2.0);
+    legRadius   = sizeMultiplier * 0.09;//(((btScalar)qrand())/(btScalar)RAND_MAX * 0.02 + 0.08);
+    legLenght   = sizeMultiplier * 3;//(((btScalar)qrand())/(btScalar)RAND_MAX * 2 + 2.0);
     //kneeRadius  = ((btScalar)qrand())/RAND_MAX * 0.4 + 0.1;
     kneeRadius = sizeMultiplier*0.1;
     //headRadius  = ((btScalar)qrand())/RAND_MAX * 1. + legRadius*nbLegs/1.5 + 0.2;
-    headRadius = sizeMultiplier*0.3;
+    headRadius = sizeMultiplier*0.25;
 
     legSegmentLength = new btScalar*[nbLegs];
     legSegmentRadius = new btScalar*[nbLegs];
@@ -62,7 +63,7 @@ RealSpiderFamily::RealSpiderFamily()
         legSegmentRadius[i] = new btScalar[nbBoneInLeg];
         for(int j = 0 ; j < nbBoneInLeg ; j++)
         {
-            legSegmentRadius[i][j] = 0.1 * sizeMultiplier;
+            legSegmentRadius[i][j] = legRadius;
         }
     }
 
@@ -70,8 +71,8 @@ RealSpiderFamily::RealSpiderFamily()
     upperLimits = new btVector3[nbBoneInLeg];
     anglesZ = new btScalar[nbBoneInLeg];
 
-    lowerLimits[0] = btVector3(-0.1,0,0);
-    upperLimits[0] = btVector3(0.1,0,0);
+    lowerLimits[0] = btVector3(-0.15,0,0);
+    upperLimits[0] = btVector3(0.15,0,0);
     anglesY[0][0] = (btScalar)0.f;
     anglesY[1][0] = (btScalar)0.f;
     anglesY[2][0] = (btScalar)0.f;
@@ -228,6 +229,9 @@ Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btV
         anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
         ((realSpiderEntity*)ent)->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-i], legSegmentLength[nbLegs-i]));
     }
+
+    //anglesY[nbLegs-1][0] = 1*((SIMD_PI)/(nbLegs+1));
+    //((realSpiderEntity*)ent)->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-1], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-1], legSegmentLength[nbLegs-1]));
 
     // add rear body part
     rootFix->addBone(0, SIMD_PI*btScalar(0.5), 0.1 * sizeMultiplier, 0.05 * sizeMultiplier, btScalar(headRadius), btVector3(0,0,0), btVector3(0,0,0));

@@ -63,6 +63,8 @@ namespace GeneCraftCore {
         btFactory *getFactory() {return factory; }
         btShapesFactory *getShapesFactory() {return shapesFactory; }
 
+        void setGravity(QVariant data, double axeX, double axeY, double axeZ);
+
         // To setup the world
         virtual void setup();
 

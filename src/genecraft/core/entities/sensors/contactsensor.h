@@ -69,6 +69,7 @@ private:
     BrainIn * collided, * inputY, * inputZ;
     btVector3 oldPosition, oldSpeed;
     int cptCollision;
+    int smooth;
 
 };
 

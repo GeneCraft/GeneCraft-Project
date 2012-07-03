@@ -53,6 +53,8 @@ namespace GeneCraftCore {
           */
         virtual btScalar getValue();
 
+        btScalar getMax() {return max;}
+
     private:
 
         btScalar value;

@@ -37,6 +37,7 @@ ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
 
     brainInputs.append(collided);
     cptCollision = 0;
+    smooth = 3;
 }
 
 // To create from serialization data
@@ -46,6 +47,7 @@ ContactSensor::ContactSensor(QVariant data, Fixation * fixation) : Sensor(data, 
 
     brainInputs.append(collided);
     cptCollision = 0;
+    smooth = 3;
 }
 
 // To serialize
@@ -71,7 +73,7 @@ QVariant ContactSensor::generateEmpty()
 
 bool ContactSensor::hasCollided()
 {
-    return collided->getValue();
+    return collided->getValue()==collided->getMax();
 }
 
 //
@@ -83,66 +85,57 @@ bool ContactSensor::hasCollided()
 void ContactSensor::step() {
 
     // Method : contactTest
-//    btRigidBody* tgtBody = fixation->getRigidBody();
-//    ContactSensorCallback callback(tgtBody, this);
-//    world->getBulletWorld()->contactTest(tgtBody,callback);
+    //    btRigidBody* tgtBody = fixation->getRigidBody();
+    //    ContactSensorCallback callback(tgtBody, this);
+    //    world->getBulletWorld()->contactTest(tgtBody,callback);
 
-
-    // Method : Contact Information
-    bool collide = false;
+    int oldCptCollision = cptCollision;
 
     //Assume world->stepSimulation or world->performDiscreteCollisionDetection has been called
     int numManifolds = fixation->getShapesFactory()->getWorld()->getBulletWorld()->getDispatcher()->getNumManifolds();
 
     for (int i=0;i<numManifolds;i++)
     {
-            btPersistentManifold* contactManifold =  fixation->getShapesFactory()->getWorld()->getBulletWorld()->getDispatcher()->getManifoldByIndexInternal(i);
-            btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
-            btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+        btPersistentManifold* contactManifold =  fixation->getShapesFactory()->getWorld()->getBulletWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+        btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+        btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
 
-            // contact ?
-            if(contactManifold->getNumContacts() > 0)
-            {
-                btCollisionObject* object;
+        // contact ?
+        if(contactManifold->getNumContacts() > 0)
+        {
+            btCollisionObject* object;
 
-                // get object in contact
-                if(obA == (btCollisionObject *) fixation->getRigidBody())
-                    object = obB;
-                else if(obB == (btCollisionObject *) fixation->getRigidBody())
-                    object = obA;
-                else
-                    continue;
+            // get object in contact
+            if(obA == (btCollisionObject *) fixation->getRigidBody())
+                object = obB;
+            else if(obB == (btCollisionObject *) fixation->getRigidBody())
+                object = obA;
+            else
+                continue;
 
-                if(object->isStaticObject()){
-                    cptCollision += 1;
-                    cptCollision = (cptCollision>10)?10:cptCollision;
-                    break;
-                }
-                else
-                {
-                    cptCollision -= 1;
-                    cptCollision = (cptCollision<0)?0:cptCollision;
-                    break;
-                }
+            if(object->isStaticObject()){
+                cptCollision += 1;
+                cptCollision = (cptCollision>smooth)?smooth:cptCollision;
+                break;
             }
+            else
+            {
+                cptCollision -= 1;
+                cptCollision = (cptCollision<0)?0:cptCollision;
+                break;
+            }
+        }
+    }
 
-//            // more info
-//            int numContacts = contactManifold->getNumContacts();
-//            for (int j=0;j<numContacts;j++)
-//            {
-//                    btManifoldPoint& pt = contactManifold->getContactPoint(j);
-//                    if (pt.getDistance()<0.f)
-//                    {
-//                            const btVector3& ptA = pt.getPositionWorldOnA();
-//                            const btVector3& ptB = pt.getPositionWorldOnB();
-//                            const btVector3& normalOnB = pt.m_normalWorldOnB;
-//                    }
-//            }
+    if(cptCollision == oldCptCollision)
+    {
+        cptCollision -= 1;
+        cptCollision = (cptCollision<0)?0:cptCollision;
     }
 
     if(cptCollision==0)
         collided->setValue(cptCollision);
-    else if(cptCollision==10)
+    else if(cptCollision==smooth)
         collided->setValue(1);
 }
 

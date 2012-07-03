@@ -147,5 +147,11 @@ namespace GeneCraftCore {
         this->biome->setBulletWorld(world);
     }
 
-
+    // To set the gravity
+    void btWorld::setGravity(QVariant data, double axeX, double axeY, double axeZ)
+    {
+        QVariant dataBiome = data.toMap()["biome"];
+        btScalar gravity = dataBiome.toMap()["gravity"].toFloat();
+        world->setGravity(btVector3(gravity*axeX,gravity*axeY,gravity*axeZ));
+    }
 }

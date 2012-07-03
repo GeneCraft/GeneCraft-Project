@@ -33,6 +33,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/experiments/experimentctrl.h"
 #include "widgets/experiments/workerctrl.h"
 
+#include <QDoubleSpinBox>
+
 // Listeners
 #include "creatureviewerinputmanager.h"
 
@@ -104,6 +106,7 @@ public slots:
     void followSelectedEntity();
     void unfollowEntity();
     void toggleShadows();
+    void setGravity();
 
     // Modes
     void switchToWelcomeMode();
@@ -156,12 +159,17 @@ private:
 
     QAction *aFollowCreature;
     QAction *aShowShadows;
+    QAction *aSetGravity;
 
     // Toolbar mode
     QAction *aWelcomeMode;
     QAction *aDesignerMode;
     QAction *aExperimentMode;
     QAction *aTheaterMode;
+
+    QDoubleSpinBox *sbxAxeX;
+    QDoubleSpinBox *sbxAxeY;
+    QDoubleSpinBox *sbxAxeZ;
 
 private slots:
 

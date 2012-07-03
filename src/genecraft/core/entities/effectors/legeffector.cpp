@@ -40,11 +40,11 @@ QVariant LegEffector::serialize()
 void LegEffector::step()
 {
     /*cpt ++;
-    qDebug() << "CPT : " << cpt;
-    if(cpt<20)
-        leg->legUp();
-    else if(cpt>=20 && cpt < 40)
+    //qDebug() << "CPT : " << cpt;
+    if(cpt<10)
         leg->legDown();
+    else if(cpt>=10 && cpt < 20)
+        leg->legUp();
     else
         cpt=0;*/
 

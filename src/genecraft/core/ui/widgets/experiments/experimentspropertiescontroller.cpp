@@ -387,6 +387,11 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
         if(gravity == gravities.at(i))
             ui->cbGravity->setCurrentIndex(i);
 
+    QVariantMap gravityVector = biomeMap["gravities"].toMap();
+    ui->leAxeX->setText(QString::number(gravityVector["axeX"].toDouble(),10,2));
+    ui->leAxeY->setText(QString::number(gravityVector["axeY"].toDouble(),10,2));
+    ui->leAxeZ->setText(QString::number(gravityVector["axeZ"].toDouble(),10,2));
+
     QString skyMaterial = biomeMap["skyMaterial"].toString();
     for(int i=0; i<skyMaterials.count();++i)
         if(skyMaterial == skyMaterials.at(i))
@@ -587,6 +592,13 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
     biomeMap.insert("gravity",gravities[ui->cbGravity->currentIndex()]);
     biomeMap.insert("lights",QxtJSON::parse(ui->teLights->toPlainText()));
     biomeMap.insert("skyMaterial",skyMaterials[ui->cbSkyMaterial->currentIndex()]);
+
+    QVariantMap gravityMap;
+    gravityMap.insert("axeX", ui->leAxeX->text());
+    gravityMap.insert("axeY", ui->leAxeY->text());
+    gravityMap.insert("axeZ", ui->leAxeZ->text());
+    biomeMap.insert("gravities",gravityMap);
+
     worldMap.insert("biome",biomeMap);
 
     // -- Scene --

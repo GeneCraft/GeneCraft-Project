@@ -20,7 +20,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabInfo">
       <attribute name="icon">

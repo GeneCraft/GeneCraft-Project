@@ -208,6 +208,31 @@ void CreatureViewerWindow::init() {
     sPhysicStep->setTickPosition(QSlider::TicksBelow);
     ui->toolBar->addWidget(sPhysicStep);
 
+    ui->toolBar->addSeparator();
+    sbxAxeX = new QDoubleSpinBox();
+    sbxAxeX->setToolTip("X coordinate of the gravity vector");
+    sbxAxeX->setMinimum(-1.0);
+    sbxAxeX->setMaximum(1.0);
+    sbxAxeX->setValue(0.0);
+    sbxAxeX->setSingleStep(0.01);
+    ui->toolBar->addWidget(sbxAxeX);
+    sbxAxeY = new QDoubleSpinBox();
+    sbxAxeY->setToolTip("Y coordinate of the gravity vector");
+    sbxAxeY->setMinimum(-1.0);
+    sbxAxeY->setMaximum(1.0);
+    sbxAxeY->setValue(0.0);
+    sbxAxeY->setSingleStep(0.01);
+    ui->toolBar->addWidget(sbxAxeY);
+    sbxAxeZ = new QDoubleSpinBox();
+    sbxAxeZ->setToolTip("Z coordinate of the gravity vector");
+    sbxAxeZ->setMinimum(-1.0);
+    sbxAxeZ->setMaximum(1.0);
+    sbxAxeZ->setValue(0.0);
+    sbxAxeZ->setSingleStep(0.01);
+    ui->toolBar->addWidget(sbxAxeZ);
+
+    aSetGravity = ui->toolBar->addAction("Set gravity");
+
     // connections
     connect(aNewCreature,SIGNAL(triggered()),this,SLOT(createNewEntity()));
     connect(aAddCreature,SIGNAL(triggered()),this,SLOT(loadEntityFromFile()));
@@ -224,6 +249,7 @@ void CreatureViewerWindow::init() {
     connect(aFollowCreature,SIGNAL(triggered()),this,SLOT(followSelectedEntity()));
     connect(aShowShadows,SIGNAL(triggered()),this,SLOT(toggleShadows()));
 
+    connect(aSetGravity,SIGNAL(triggered()), this, SLOT(setGravity()));
 
     // -----------
     // -- Docks --
@@ -958,4 +984,9 @@ void CreatureViewerWindow::toggleShadows() {
         ogre->getOgreSceneManager()->setShadowTechnique(Ogre::SHADOWTYPE_NONE);
         aShowShadows->setChecked(false);
     }
+}
+
+void CreatureViewerWindow::setGravity()
+{
+    world->setGravity(experiment->getWorldDataMap(), sbxAxeX->value(), sbxAxeY->value(), sbxAxeZ->value());
 }
