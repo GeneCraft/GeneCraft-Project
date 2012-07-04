@@ -15,7 +15,7 @@
 
 namespace GeneCraftCore {
 
-Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar *legSegmentRadius, btScalar *legSegmentLength)
+Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
 {
     this->rightSide = rightSide;
     this->nbBoneInLeg = nbBone;
@@ -25,10 +25,10 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
     this->lowerLimits = lowerLimits;
     this->upperLimits = upperLimits;
     this->legSegmentLength = legSegmentLength;
-    this->legSegmentRadius = legSegmentRadius;
+    this->legRadius = legRadius;
 
     Bone *rootBone = fixBody->addBone(anglesY[0], anglesZ[0],
-                                      btScalar(legSegmentRadius[0]),
+                                      btScalar(legRadius),
                                       btScalar(legSegmentLength[0]),
                                       btScalar(kneeRadius),
                                       lowerLimits[0],
@@ -41,7 +41,7 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
     {
         bones.append(rootBone);
         rootBone = rootBone->getEndFixation()->addBone(rightSide*anglesY[i], anglesZ[i],
-                                                       btScalar(legSegmentRadius[i]),
+                                                       btScalar(legRadius),
                                                        btScalar(legSegmentLength[i]),
                                                        btScalar(kneeRadius),
                                                        lowerLimits[i],
@@ -64,14 +64,14 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
     // on veut le faire nous meme, donc on l'ajoute pas rootBone->getEndFixation()->addEffector(gripper);
 }
 
-Leg* Leg::createLeftLeg(int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar *legSegmentRadius, btScalar *legSegmentLength)
+Leg* Leg::createLeftLeg(int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
 {
-    return new Leg(-1, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legSegmentRadius, legSegmentLength);
+    return new Leg(-1, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
 }
 
-Leg* Leg::createRightLeg(int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar *legSegmentRadius, btScalar *legSegmentLength)
+Leg* Leg::createRightLeg(int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
 {
-    return new Leg(1, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legSegmentRadius, legSegmentLength);
+    return new Leg(1, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
 }
 
 void Leg::setup(Entity * e)
@@ -148,6 +148,11 @@ void Leg::legDown()
     //Monter quatrieme os
     ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
     ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+}
+
+QVariant Leg::serialize()
+{
+
 }
 
 }

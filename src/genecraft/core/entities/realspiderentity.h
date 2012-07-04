@@ -7,10 +7,10 @@
 
 namespace GeneCraftCore {
 
-class realSpiderEntity : public Entity
+class RealSpiderEntity : public Entity
 {
 public:
-    realSpiderEntity(QString name, QString family, QString type, int generation, QObject *parent = 0);
+    RealSpiderEntity(QString name, QString family, QString type, int generation, QObject *parent = 0);
     void setup();
     void addLeftLeg(Leg* leg);
     void addRightLeg(Leg* leg);
@@ -19,9 +19,13 @@ public:
     void removeAllRightLegs();
     void removeAllLeftLegs();
     void removeAllLegs();
+    QVariant serialize();
+    QVariant getParams();
+    void setParams(QVariant params);
 protected:
     QList<Leg*> leftLegs;
     QList<Leg*> rightLegs;
+    QVariant parameters;
 };
 }
 

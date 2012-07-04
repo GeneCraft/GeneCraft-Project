@@ -1,13 +1,13 @@
 #include "realspiderentity.h"
 namespace GeneCraftCore {
 
-realSpiderEntity::realSpiderEntity(QString name, QString family, QString type, int generation, QObject *parent):
+RealSpiderEntity::RealSpiderEntity(QString name, QString family, QString type, int generation, QObject *parent):
     Entity(name, family, type, generation, parent)
 {
 
 }
 
-void realSpiderEntity::setup()
+void RealSpiderEntity::setup()
 {
     Entity::setup();
     for(int i=0;i<leftLegs.size();i++)
@@ -20,40 +20,59 @@ void realSpiderEntity::setup()
     }
 }
 
-void realSpiderEntity::addLeftLeg(Leg *leg)
+void RealSpiderEntity::addLeftLeg(Leg *leg)
 {
     leftLegs.append(leg);
 }
 
-void realSpiderEntity::addRightLeg(Leg *leg)
+void RealSpiderEntity::addRightLeg(Leg *leg)
 {
     rightLegs.append(leg);
 }
 
-void realSpiderEntity::removeLeftLeg(int leg)
+void RealSpiderEntity::removeLeftLeg(int leg)
 {
     leftLegs.removeAt(leg);
 }
 
-void realSpiderEntity::removeRightLeg(int leg)
+void RealSpiderEntity::removeRightLeg(int leg)
 {
     rightLegs.removeAt(leg);
 }
 
-void realSpiderEntity::removeAllLeftLegs()
+void RealSpiderEntity::removeAllLeftLegs()
 {
     leftLegs.clear();
 }
 
-void realSpiderEntity::removeAllRightLegs()
+void RealSpiderEntity::removeAllRightLegs()
 {
     rightLegs.clear();
 }
 
-void realSpiderEntity::removeAllLegs()
+void RealSpiderEntity::removeAllLegs()
 {
     removeAllRightLegs();
     removeAllLeftLegs();
+}
+
+QVariant RealSpiderEntity::serialize()
+{
+    QVariantMap entityVariant = Entity::serialize().toMap();
+
+    entityVariant.insert("params", parameters.toMap());
+
+    return entityVariant;
+}
+
+void RealSpiderEntity::setParams(QVariant params)
+{
+    parameters = params;
+}
+
+QVariant RealSpiderEntity::getParams()
+{
+    return parameters;
 }
 
 }

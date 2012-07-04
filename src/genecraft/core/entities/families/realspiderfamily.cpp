@@ -52,7 +52,6 @@ RealSpiderFamily::RealSpiderFamily()
     headRadius = sizeMultiplier*0.25;
 
     legSegmentLength = new btScalar*[nbLegs];
-    legSegmentRadius = new btScalar*[nbLegs];
 
     anglesY = new btScalar*[nbLegs];
 
@@ -60,11 +59,6 @@ RealSpiderFamily::RealSpiderFamily()
     {
         anglesY[i] = new btScalar[nbBoneInLeg];
         legSegmentLength[i] = new btScalar[nbBoneInLeg];
-        legSegmentRadius[i] = new btScalar[nbBoneInLeg];
-        for(int j = 0 ; j < nbBoneInLeg ; j++)
-        {
-            legSegmentRadius[i][j] = legRadius;
-        }
     }
 
     lowerLimits = new btVector3[nbBoneInLeg];
@@ -104,11 +98,12 @@ RealSpiderFamily::RealSpiderFamily()
     anglesZ[3] = (btScalar)(SIMD_PI/4.f);
 
     /*** FRONT LEG ***/
-    btScalar frontLegLength = 12.85875;//12.22375;
+    initFrontLeg(legLenght);
+    /*btScalar frontLegLength = 12.85875;//12.22375;
     legSegmentLength[0][0] = 0.91125 * legLenght / frontLegLength;
     legSegmentLength[0][1] = 3.92125 * legLenght / frontLegLength;
     legSegmentLength[0][2] = 3.41317 * legLenght / frontLegLength;
-    legSegmentLength[0][3] = 3.41317 * legLenght / frontLegLength;
+    legSegmentLength[0][3] = 3.41317 * legLenght / frontLegLength;*/
     /*** TOO MUCH JOINT FOR PHYSICS ***//*
     btScalar frontLegLength = 12.85875;//12.22375;
     legSegmentLength[0][0] = 0.740833333 * legLenght / frontLegLength;
@@ -121,11 +116,12 @@ RealSpiderFamily::RealSpiderFamily()
     /*** END FRONT LEG ***/
 
     /*** MIDDLE FRONT LEG ***/
-    btScalar middleFrontLegLength = 10.63625;//10.00125;
+    initMiddleFrontLeg(legLenght);
+    /*btScalar middleFrontLegLength = 10.63625;//10.00125;
     legSegmentLength[1][0] = 1.01125 * legLenght / middleFrontLegLength;
     legSegmentLength[1][1] = 3.1275 * legLenght / middleFrontLegLength;
     legSegmentLength[1][2] = 2.6987 * legLenght / middleFrontLegLength;
-    legSegmentLength[1][3] = 2.6987 * legLenght / middleFrontLegLength;
+    legSegmentLength[1][3] = 2.6987 * legLenght / middleFrontLegLength;*/
     /*** TOO MUCH JOINT FOR PHYSICS ***//*
     btScalar middleFrontLegLength = 10.63625;//10.00125;
     legSegmentLength[1][0] = 0.740833333 * legLenght / middleFrontLegLength;
@@ -138,11 +134,12 @@ RealSpiderFamily::RealSpiderFamily()
     /*** END MIDDLE FRONT LEG ***/
 
     /*** MIDDLE REAR LEG ***/
-    btScalar middleRearLegLength = 9.2075;//8.41375;
+    initMiddleRearLeg(legLenght);
+    /*btScalar middleRearLegLength = 9.2075;//8.41375;
     legSegmentLength[2][0] = 1.01125 * legLenght / middleRearLegLength;
     legSegmentLength[2][1] = 1.8575 * legLenght / middleRearLegLength;
     legSegmentLength[2][2] = 2.6193 * legLenght / middleRearLegLength;
-    legSegmentLength[2][3] = 2.6193 * legLenght / middleRearLegLength;
+    legSegmentLength[2][3] = 2.6193 * legLenght / middleRearLegLength;*/
     /*** TOO MUCH JOINT FOR PHYSICS ***//*
     btScalar middleRearLegLength = 9.2075;//8.41375;
     legSegmentLength[2][0] = 0.740833333 * legLenght / middleRearLegLength;
@@ -155,11 +152,12 @@ RealSpiderFamily::RealSpiderFamily()
     /*** END MIDDLE REAR LEG ***/
 
     /*** REAR LEG ***/
-    btScalar rearLegLength = 11.1125;//10.16;
+    initRearLeg(legLenght);
+    /*btScalar rearLegLength = 11.1125;//10.16;
     legSegmentLength[3][0] = 1.01125 * legLenght / rearLegLength;
     legSegmentLength[3][1] = 2.81 * legLenght / rearLegLength;
     legSegmentLength[3][2] = 3.175 * legLenght / rearLegLength;
-    legSegmentLength[3][3] = 3.175 * legLenght / rearLegLength;
+    legSegmentLength[3][3] = 3.175 * legLenght / rearLegLength;*/
     /*** TOO MUCH JOINT FOR PHYSICS ***//*
     btScalar rearLegLength = 11.1125;//10.16;
     legSegmentLength[3][0] = 0.740833333 * legLenght / rearLegLength;
@@ -172,16 +170,50 @@ RealSpiderFamily::RealSpiderFamily()
     /*** END REAR LEG ***/
 }
 
+void RealSpiderFamily::initFrontLeg(btScalar length)
+{
+    btScalar frontLegLength = 12.85875;//12.22375;
+    legSegmentLength[0][0] = 0.91125 * length / frontLegLength;
+    legSegmentLength[0][1] = 3.92125 * length / frontLegLength;
+    legSegmentLength[0][2] = 3.41317 * length / frontLegLength;
+    legSegmentLength[0][3] = 3.41317 * length / frontLegLength;
+}
+
+void RealSpiderFamily::initMiddleFrontLeg(btScalar length)
+{
+    btScalar middleFrontLegLength = 10.63625;//10.00125;
+    legSegmentLength[1][0] = 1.01125 * length / middleFrontLegLength;
+    legSegmentLength[1][1] = 3.1275 * length / middleFrontLegLength;
+    legSegmentLength[1][2] = 2.6987 * length / middleFrontLegLength;
+    legSegmentLength[1][3] = 2.6987 * length / middleFrontLegLength;
+}
+
+void RealSpiderFamily::initMiddleRearLeg(btScalar length)
+{
+    btScalar middleRearLegLength = 9.2075;//8.41375;
+    legSegmentLength[2][0] = 1.01125 * length / middleRearLegLength;
+    legSegmentLength[2][1] = 1.8575 * length / middleRearLegLength;
+    legSegmentLength[2][2] = 2.6193 * length / middleRearLegLength;
+    legSegmentLength[2][3] = 2.6193 * length / middleRearLegLength;
+}
+
+void RealSpiderFamily::initRearLeg(btScalar length)
+{
+    btScalar rearLegLength = 11.1125;//10.16;
+    legSegmentLength[3][0] = 1.01125 * length / rearLegLength;
+    legSegmentLength[3][1] = 2.81 * length / rearLegLength;
+    legSegmentLength[3][2] = 3.175 * length / rearLegLength;
+    legSegmentLength[3][3] = 3.175 * length / rearLegLength;
+}
+
 RealSpiderFamily::~RealSpiderFamily()
 {
     for(int i=0;i<nbLegs;i++)
     {
         delete legSegmentLength[i];
-        delete legSegmentRadius[i];
         delete anglesY[i];
     }
     delete legSegmentLength;
-    delete legSegmentRadius;
     delete lowerLimits;
     delete upperLimits;
     delete anglesY;
@@ -195,12 +227,26 @@ void RealSpiderFamily::initRealSpider()
 }
 
 Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btVector3 &position) {
-    QVariantMap params;
 
     this->shapesFactory = shapesFactory;
     // root fixation
-    Entity* ent = new realSpiderEntity("Real Spider !", "RealSpiderFamily","realSpider", 1);
-    ent->setBrain(new BrainFunctional());
+    RealSpiderEntity* ent = new RealSpiderEntity("Real Spider !", "RealSpiderFamily","realSpider", 1);
+    ent->setBrain(new BrainFunctional());    
+
+    QVariantMap params;
+    params.insert("headRadius", headRadius);
+    params.insert("kneeRadius", kneeRadius);
+    params.insert("legRadius", legRadius);
+
+    QVariantMap lengths;
+    lengths.insert("front", legLenght);
+    lengths.insert("middleFront", legLenght);
+    lengths.insert("middleRear", legLenght);
+    lengths.insert("rear", legLenght);
+
+    params.insert("legLength", lengths);
+    ent->setParams(params);
+
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(position);
@@ -220,18 +266,15 @@ Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btV
     for(int i=1;i<nbLegs+1;++i)
     {
         anglesY[nbLegs-i][0] = -i*((SIMD_PI)/(nbLegs+1));
-        ((realSpiderEntity*)ent)->addLeftLeg(Leg::createLeftLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-i], legSegmentLength[nbLegs-i]));
+        ent->addLeftLeg(Leg::createLeftLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength[nbLegs-i]));
     }
 
     // Create and add right legs
     for(int i=1;i<nbLegs+1;++i)
     {
         anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
-        ((realSpiderEntity*)ent)->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-i], legSegmentLength[nbLegs-i]));
+        ent->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength[nbLegs-i]));
     }
-
-    //anglesY[nbLegs-1][0] = 1*((SIMD_PI)/(nbLegs+1));
-    //((realSpiderEntity*)ent)->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-1], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-1], legSegmentLength[nbLegs-1]));
 
     // add rear body part
     rootFix->addBone(0, SIMD_PI*btScalar(0.5), 0.1 * sizeMultiplier, 0.05 * sizeMultiplier, btScalar(headRadius), btVector3(0,0,0), btVector3(0,0,0));
@@ -245,7 +288,7 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
 
     // Entity & origins
     QVariantMap origins = entityMap.value("origins").toMap();
-    Entity * ent = new realSpiderEntity(origins.value("name").toString(),
+    RealSpiderEntity * ent = new RealSpiderEntity(origins.value("name").toString(),
                                   origins.value("family").toString(),
                                   "realSpider",
                                   origins.value("generation").toInt());
@@ -253,17 +296,25 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
     this->shapesFactory = shapesFactory;
 
     ent->setBrain(new BrainFunctional(entityMap.value("brain")));
-    ent->setParams(entityMap.value("params"));
+
+    QVariantMap parameters = entityMap.value("params").toMap();
+    ent->setParams(parameters);
     btTransform initTransform;
     initTransform.setIdentity();
     initTransform.setOrigin(position);
     initTransform.getOrigin().setY(initTransform.getOrigin().getY()-5);
     TreeShape* shape = new TreeShape(shapesFactory);
-    Fixation* rootFix = new Fixation(shapesFactory,btScalar(headRadius),initTransform);
+    Fixation* rootFix = new Fixation(shapesFactory,btScalar(parameters.value("headRadius").toFloat()),initTransform);
     shape->setRoot(rootFix);
     ent->setShape(shape);
     //rootFix->addSensor(new GyroscopicSensor(rootFix));
     //rootFix->addSensor(new AccelerometerSensor(rootFix));
+
+    QVariantMap lengths = parameters.value("legLength").toMap();
+    initFrontLeg(lengths.value("front").toFloat());
+    initMiddleFrontLeg(lengths.value("middleFront").toFloat());
+    initMiddleRearLeg(lengths.value("middleRear").toFloat());
+    initRearLeg(lengths.value("rear").toFloat());
 
     // legs
     btQuaternion legLocal;
@@ -273,18 +324,18 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
     for(int i=1;i<nbLegs+1;++i)
     {
         anglesY[nbLegs-i][0] = -i*((SIMD_PI)/(nbLegs+1));
-        ((realSpiderEntity*)ent)->addLeftLeg(Leg::createLeftLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-i], legSegmentLength[nbLegs-i]));
+        ent->addLeftLeg(Leg::createLeftLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
     }
 
     // Create and add right legs
     for(int i=1;i<nbLegs+1;++i)
     {
         anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
-        ((realSpiderEntity*)ent)->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legSegmentRadius[nbLegs-i], legSegmentLength[nbLegs-i]));
+        ent->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
     }
 
     // add rear body part
-    rootFix->addBone(0, SIMD_PI*btScalar(0.5), 0.1 * sizeMultiplier, 0.05 * sizeMultiplier, btScalar(headRadius), btVector3(0,0,0), btVector3(0,0,0));
+    rootFix->addBone(0, SIMD_PI*btScalar(0.5), 0.1 * sizeMultiplier, 0.05 * sizeMultiplier, btScalar(parameters.value("headRadius").toFloat()), btVector3(0,0,0), btVector3(0,0,0));
 
     return ent;
 }
@@ -293,7 +344,7 @@ QVariant RealSpiderFamily::serialize(Entity *entity)
 {
     QVariantMap genome;
     genome = entity->serialize().toMap();
-    genome.insert("params", entity->getParams());
+    genome.insert("params", ((RealSpiderEntity*) entity)->getParams());
     return genome;
 }
 

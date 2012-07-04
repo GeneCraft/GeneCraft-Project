@@ -50,8 +50,10 @@ Entity* CreatureFactory::createEntity(QVariant data,
         // else
         return NULL;
     }
-
+    QVariant haha = entityData["origins"];
     qDebug() << "TYPE : " << entityData["type"].toString();
+    qDebug() << entityData.keys();
+    qDebug() << haha.toMap().values();
 
     // Generic entity
     if(entityData["type"].toString() == "generic")

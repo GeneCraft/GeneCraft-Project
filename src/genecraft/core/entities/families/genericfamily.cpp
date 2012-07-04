@@ -34,6 +34,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "sensors/positionsensor.h"
 #include "sensors/sensor.h"
 #include "sensors/smellsensor.h"
+#include "sensors/gravitysensor.h"
 
 #include "effectors/effector.h"
 #include "effectors/flyingeffector.h"
@@ -59,8 +60,6 @@ Entity *GenericFamily::createEntity(QVariant genotype,
                                   origins.value("generation").toInt());
     // Brain
     entity->setBrain(new BrainFunctional(entityMap.value("brain")));
-
-    entity->setParams(entityMap.value("params"));
 
     // Body
     QVariantMap body = entityMap.value("body").toMap();
@@ -149,6 +148,11 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
        case distanceSensor:{
 
            fix->addSensor(new DistanceSensor(sensorData, fix));
+       }
+           break;
+       case gravitySensor:{
+
+           fix->addSensor(new GravitySensor(sensorData, fix));
        }
            break;
        }

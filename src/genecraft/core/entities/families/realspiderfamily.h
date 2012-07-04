@@ -55,7 +55,6 @@ protected:
     int nbBoneInLeg;
 
     btScalar** legSegmentLength;
-    btScalar** legSegmentRadius;
 
     btScalar legRadius;
     btScalar legLenght;
@@ -68,6 +67,10 @@ protected:
 
 private:
     void initRealSpider();
+    void initFrontLeg(btScalar);
+    void initMiddleFrontLeg(btScalar);
+    void initMiddleRearLeg(btScalar);
+    void initRearLeg(btScalar);
 };
 
 }

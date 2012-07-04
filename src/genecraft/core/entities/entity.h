@@ -127,10 +127,6 @@ public:
 
     bool isAlive();
 
-    QVariant getParams();
-
-    void setParams(QVariant params);
-
 protected:
 
     // Origins
@@ -160,9 +156,6 @@ protected:
 
     // Scripting
     QMap<int, MotorFrom> outsFromScripts;
-
-    QVariant parameters;
-
 
 private:
 

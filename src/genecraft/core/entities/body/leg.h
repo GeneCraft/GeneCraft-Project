@@ -17,11 +17,14 @@ class Leg : public QObject
 {
 
 public:
-    static Leg* createRightLeg(int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar* legSegmentRadius, btScalar* legSegmentLength);
-    static Leg* createLeftLeg(int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar* legSegmentRadius, btScalar* legSegmentLength);
+    static Leg* createRightLeg(int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+    static Leg* createLeftLeg(int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
     void setup(Entity *e);
     void legUp();
     void legDown();
+
+    // To serialize
+    QVariant serialize();
 
 signals:
     
@@ -37,7 +40,7 @@ private:
 
     Bone* firstBone;
 
-    btScalar* legSegmentRadius;
+    btScalar legRadius;
     btScalar* legSegmentLength;
     btScalar kneeRadius;
 
@@ -50,7 +53,7 @@ private:
     GripperEffector* gripper;
     ContactSensor* contact;
 
-    Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar* legSegmentRadius, btScalar* legSegmentLength);
+    Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
     
 };
 }
