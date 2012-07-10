@@ -15,9 +15,10 @@
 
 namespace GeneCraftCore {
 
-Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
+Leg::Leg(int rightSide, int number, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
 {
     this->rightSide = rightSide;
+    this->number = number;
     this->nbBoneInLeg = nbBone;
     this->anglesY = yAxis;
     this->anglesZ = zAxis;
@@ -27,6 +28,8 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
     this->legSegmentLength = legSegmentLength;
     this->legRadius = legRadius;
 
+    fixBody->addEffector(new LegEffector(this));
+
     Bone *rootBone = fixBody->addBone(anglesY[0], anglesZ[0],
                                       btScalar(legRadius),
                                       btScalar(legSegmentLength[0]),
@@ -35,7 +38,6 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
                                       upperLimits[0]);
 
     firstBone = rootBone;
-    rootBone->getEndFixation()->addEffector(new LegEffector(this));
 
     for(int i=1;i<nbBoneInLeg;++i)
     {
@@ -64,14 +66,76 @@ Leg::Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar
     // on veut le faire nous meme, donc on l'ajoute pas rootBone->getEndFixation()->addEffector(gripper);
 }
 
-Leg* Leg::createLeftLeg(int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
+Leg::Leg(QVariant legData, int rightSide, int number, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
 {
-    return new Leg(-1, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
+    QVariantMap legDataMap = legData.toMap().value("leg").toMap();
+    this->rightSide = rightSide;
+    this->number = number;
+    this->nbBoneInLeg = nbBone;
+    this->anglesY = yAxis;
+    this->anglesZ = zAxis;
+    this->kneeRadius = kneeRadius;
+    this->lowerLimits = lowerLimits;
+    this->upperLimits = upperLimits;
+    this->legSegmentLength = legSegmentLength;
+    this->legRadius = legRadius;
+
+    fixBody->addEffector(new LegEffector(this, legData));
+
+    Bone *rootBone = fixBody->addBone(anglesY[0], anglesZ[0],
+                                      btScalar(legRadius),
+                                      btScalar(legSegmentLength[0]),
+                                      btScalar(kneeRadius),
+                                      lowerLimits[0],
+                                      upperLimits[0]);
+
+    firstBone = rootBone;
+
+    for(int i=1;i<nbBoneInLeg;++i)
+    {
+        bones.append(rootBone);
+        rootBone = rootBone->getEndFixation()->addBone(rightSide*anglesY[i], anglesZ[i],
+                                                       btScalar(legRadius),
+                                                       btScalar(legSegmentLength[i]),
+                                                       btScalar(kneeRadius),
+                                                       lowerLimits[i],
+                                                       upperLimits[i]);
+
+        //rootBone->getEndFixation()->addSensor(new AccelerometerSensor(rootBone->getEndFixation()));
+
+        //rootBone->getEndFixation()->addSensor(new PositionSensor(fixBody, rootBone->getEndFixation()));
+
+        //rootBone->getParentConstraint()->setAngularLowerLimit(btVector3(0,0,0));
+        //rootBone->getParentConstraint()->setAngularUpperLimit(btVector3(0,0,0));
+    }
+    bones.append(rootBone);
+    // dernier os -> getEndFixation();
+    contact =  new ContactSensor(legDataMap.value("contact"),rootBone->getEndFixation());
+    rootBone->getEndFixation()->addSensor(contact);
+
+    // dernier os -> getEndFixation();
+    gripper = new GripperEffector(legDataMap.value("gripper"), rootBone->getEndFixation());
+    // on veut le faire nous meme, donc on l'ajoute pas rootBone->getEndFixation()->addEffector(gripper);
 }
 
-Leg* Leg::createRightLeg(int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
+Leg* Leg::createLeftLeg(int number, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
 {
-    return new Leg(1, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
+    return new Leg(-1, number, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
+}
+
+Leg* Leg::createRightLeg(int number, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
+{
+    return new Leg(1, number, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
+}
+
+Leg* Leg::createLeftLeg(QVariant legData, int number, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
+{
+    return new Leg(legData, -1, number, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
+}
+
+Leg* Leg::createRightLeg(QVariant legData, int number, int nbBone, Fixation *fixBody, btScalar *yAxis, btScalar *zAxis, btScalar kneeRadius, btVector3 *lowerLimits, btVector3 *upperLimits, btScalar legRadius, btScalar *legSegmentLength)
+{
+    return new Leg(legData, 1, number, nbBone, fixBody, yAxis, zAxis, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength);
 }
 
 void Leg::setup(Entity * e)
@@ -93,66 +157,161 @@ void Leg::setup(Entity * e)
 
 void Leg::legUp()
 {
-    // Gripper se trouvant en bout de patte doit se détacher du sol
-    gripper->unfix();
+    if(number==1)
+    {
+        // Gripper se trouvant en bout de patte doit se détacher du sol
+        gripper->unfix();
 
-    //Avancer premier os
-    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*1);
-    ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*(-200));
+        //Monter deuxième os
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
 
-    //Monter deuxième os
-    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+        //Monter troisième os
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
 
-    //Monter troisième os
-    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+        //Monter quatrieme os
+        ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+    }
+    else if(number==4)
+    {
+        // Gripper se trouvant en bout de patte doit se détacher du sol
+        if(contact->hasCollided())
+        {
+            gripper->fix();
 
-    //Monter quatrieme os
-    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
-    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-            getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+            //Monter deuxième os
+            ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+                    getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+            ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+                    getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
 
+            //Monter quatrieme os
+            ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+                    getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+            ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+                    getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+        }
+
+        //Monter troisième os
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+    }
+    else
+    {
+        // Gripper se trouvant en bout de patte doit se détacher du sol
+        gripper->unfix();
+
+        //Avancer premier os
+        ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*1);
+        ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*(-200));
+
+        //Monter deuxième os
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+
+        //Monter troisième os
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+
+        //Monter quatrieme os
+        ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+        ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
+                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+    }
 }
 
 void Leg::legDown()
 {
-    // Descendre
-    //qDebug() << "DOWN";
-    if(contact->hasCollided())
+    if(number == 1)
     {
-        gripper->fix();
+        if(contact->hasCollided())
+        {
+            gripper->fix();
 
-        //Reculer premier os
-        ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*(-1));
-        ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*200);
+            //Descendre troisième os
+            ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+            ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+
+            //Descendre quatrieme os
+            ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+            ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+        }
+
+        //Descendre deuxième os
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+    }
+    else if(number == 4)
+    {
+
+        gripper->unfix();
+
+        //Descendre troisième os
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+        ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+
+        //Descendre quatrieme os
+        ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+        ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+
+
+        //Descendre deuxième os
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+    }
+    else
+    {
+        if(contact->hasCollided())
+        {
+            gripper->fix();
+
+            //Reculer premier os
+            ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+                    getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*(-1));
+            ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
+                    getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*200);
+
+            //Descendre troisième os
+            ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+            ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+
+            //Descendre quatrieme os
+            ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+            ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
+        }
+
+        //Descendre deuxième os
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
+        ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
     }
 
-    //Monter deuxième os
-    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
-    ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
-
-    //Monter troisième os
-    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
-    ((Bone*)bones.at(2))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
-
-    //Monter quatrieme os
-    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
-    ((Bone*)bones.at(3))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
 }
 
 QVariant Leg::serialize()
 {
-
+    QVariantMap data;
+    data.insert("side", rightSide);
+    data.insert("number", number);
+    data.insert("contact", contact->serialize());
+    data.insert("gripper", gripper->serialize());
+    return data;
 }
 
 }

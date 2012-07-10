@@ -92,6 +92,10 @@ private:
     FloatMutationController *boneAngularOrigin;
     FloatMutationController *boneAngularLimitsMutation;
     StructuralMutationController *bonesStructuralMutation;
+    FloatMutationController* legLengthMutation;
+    FloatMutationController* legRadiusMutation;
+    FloatMutationController* bodyRadiusMutation;
+    FloatMutationController* kneeRadiusMutation;
 
     // fixation
     FloatMutationController *fixationRadiusMutation;
@@ -114,6 +118,7 @@ private:
 
 private slots:
     void on_btnFloor_clicked();
+    void on_cbFamily_currentIndexChanged(const QString &family);
 };
 
 }

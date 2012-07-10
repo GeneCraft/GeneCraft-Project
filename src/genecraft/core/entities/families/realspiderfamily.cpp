@@ -230,19 +230,19 @@ Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btV
 
     this->shapesFactory = shapesFactory;
     // root fixation
-    RealSpiderEntity* ent = new RealSpiderEntity("Real Spider !", "RealSpiderFamily","realSpider", 1);
-    ent->setBrain(new BrainFunctional());    
+    RealSpiderEntity* ent = new RealSpiderEntity("Real Spider !", "RealSpiderFamily","generic", 1);
+    ent->setBrain(new BrainFunctional());
 
     QVariantMap params;
-    params.insert("headRadius", headRadius);
-    params.insert("kneeRadius", kneeRadius);
-    params.insert("legRadius", legRadius);
+    params.insert("headRadius", QVariant((double)headRadius));
+    params.insert("kneeRadius", QVariant((double)kneeRadius));
+    params.insert("legRadius", QVariant((double)legRadius));
 
     QVariantMap lengths;
-    lengths.insert("front", legLenght);
-    lengths.insert("middleFront", legLenght);
-    lengths.insert("middleRear", legLenght);
-    lengths.insert("rear", legLenght);
+    lengths.insert("front", QVariant((double)legLenght));
+    lengths.insert("middleFront", QVariant((double)legLenght));
+    lengths.insert("middleRear", QVariant((double)legLenght));
+    lengths.insert("rear", QVariant((double)legLenght));
 
     params.insert("legLength", lengths);
     ent->setParams(params);
@@ -266,14 +266,14 @@ Entity* RealSpiderFamily::createEntity(btShapesFactory *shapesFactory, const btV
     for(int i=1;i<nbLegs+1;++i)
     {
         anglesY[nbLegs-i][0] = -i*((SIMD_PI)/(nbLegs+1));
-        ent->addLeftLeg(Leg::createLeftLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength[nbLegs-i]));
+        ent->addLeftLeg(Leg::createLeftLeg(i, nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength[nbLegs-i]));
     }
 
     // Create and add right legs
     for(int i=1;i<nbLegs+1;++i)
     {
         anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
-        ent->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength[nbLegs-i]));
+        ent->addRightLeg(Leg::createRightLeg(i, nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, kneeRadius, lowerLimits, upperLimits, legRadius, legSegmentLength[nbLegs-i]));
     }
 
     // add rear body part
@@ -289,9 +289,9 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
     // Entity & origins
     QVariantMap origins = entityMap.value("origins").toMap();
     RealSpiderEntity * ent = new RealSpiderEntity(origins.value("name").toString(),
-                                  origins.value("family").toString(),
-                                  "realSpider",
-                                  origins.value("generation").toInt());
+                                                  origins.value("family").toString(),
+                                                  "generic",
+                                                  origins.value("generation").toInt());
 
     this->shapesFactory = shapesFactory;
 
@@ -320,18 +320,25 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
     btQuaternion legLocal;
     btQuaternion legLocal2;
 
-    // Create and add left legs
-    for(int i=1;i<nbLegs+1;++i)
+    foreach(QVariant effect, entityMap.value("body").toMap().value("shape").toMap().value("rootFix").toMap()["effectors"].toList())
     {
-        anglesY[nbLegs-i][0] = -i*((SIMD_PI)/(nbLegs+1));
-        ent->addLeftLeg(Leg::createLeftLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
-    }
+        QVariantMap effectorMap = effect.toMap();
+        if((EffectorType)effectorMap["type"].toInt() == legEffector)
+        {
+            QVariantMap leg = effectorMap.value("leg").toMap();
 
-    // Create and add right legs
-    for(int i=1;i<nbLegs+1;++i)
-    {
-        anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
-        ent->addRightLeg(Leg::createRightLeg(nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
+            int i = leg.value("number").toInt();
+            if(leg.value("side").toInt()>0)
+            {
+                anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
+                ent->addRightLeg(Leg::createRightLeg(effectorMap, i, nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
+            }
+            else
+            {
+                anglesY[nbLegs-i][0] = -i*((SIMD_PI)/(nbLegs+1));
+                ent->addLeftLeg(Leg::createLeftLeg(effectorMap, i, nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
+            }
+        }
     }
 
     // add rear body part

@@ -277,5 +277,7 @@ void EntityPropertiesController::itemClicked(QTreeWidgetItem * item, int)
 void EntityPropertiesController::viewGenotype() {
 
     if(entity != NULL)
+    {
         ui->pteGenotype->setPlainText(Ressource::beautifullJson(entity->serialize()));
+    }
 }

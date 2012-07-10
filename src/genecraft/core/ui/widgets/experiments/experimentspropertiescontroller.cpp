@@ -78,9 +78,9 @@ void ExperimentsPropertiesController::setupForm() {
     connect(ui->pbHelp,SIGNAL(clicked()),this,SLOT(enterInWhatsThisMode()));
 
     // FIXME What's mode doesn't work on MacOS
-    #ifdef __APPLE__
-        this->ui->pbHelp->setEnabled(false);
-    #endif
+#ifdef __APPLE__
+    this->ui->pbHelp->setEnabled(false);
+#endif
 
     connect(ui->pbLoadExp,SIGNAL(clicked()),this,SLOT(loadExpFromFile()));
     connect(ui->pbSaveToFile,SIGNAL(clicked()),this,SLOT(saveExpToFile()));
@@ -125,11 +125,11 @@ void ExperimentsPropertiesController::setupForm() {
         ui->cbSkyMaterial->addItem(skyMaterials.at(i));
 
     floorsMaterials << "GeneCraft/GrassFloor"
-                   << "GeneCraft/DesertFloor"
-                   << "GeneCraft/DesertFloor_2"
-                   << "GeneCraft/StoneRoadFloor"
-                   << "GeneCraft/MoonFloor"
-                   << "GeneCraft/WoodFloor";
+                    << "GeneCraft/DesertFloor"
+                    << "GeneCraft/DesertFloor_2"
+                    << "GeneCraft/StoneRoadFloor"
+                    << "GeneCraft/MoonFloor"
+                    << "GeneCraft/WoodFloor";
 
     for(int i=0; i<floorsMaterials.count();++i)
         ui->cbFloorMaterial->addItem(floorsMaterials.at(i));
@@ -292,6 +292,12 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         boneAngularLimitsMutation = new FloatMutationController(mutationsManager->boneAngularLimits->axisMutation,"Bones angular limits");
         bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
 
+        // TODO SI UNE REAL SPIDER
+        bodyRadiusMutation = new FloatMutationController(mutationsManager->bodyRadius, "Body Radius");
+        legLengthMutation = new FloatMutationController(mutationsManager->legLength, "Legs Length");
+        legRadiusMutation = new FloatMutationController(mutationsManager->legRadius, "Legs Radius");
+        kneeRadiusMutation = new FloatMutationController(mutationsManager->kneeRadius, "Knee Radius");
+
         // fixation
         fixationRadiusMutation = new FloatMutationController(mutationsManager->fixRadius,"Fixations Radius");
 
@@ -314,6 +320,16 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         ui->vlBodyMutations->addWidget(boneAngularOrigin);
         ui->vlBodyMutations->addWidget(boneAngularLimitsMutation);
         ui->vlBodyMutations->addWidget(bonesStructuralMutation);
+
+        QString type = experiment->getSeedInfo()["family"].toString();
+
+        if(type.compare("realSpider", Qt::CaseInsensitive)==0)
+        {
+            ui->vlBodyMutations->addWidget(bodyRadiusMutation);
+            ui->vlBodyMutations->addWidget(legLengthMutation);
+            ui->vlBodyMutations->addWidget(legRadiusMutation);
+            ui->vlBodyMutations->addWidget(kneeRadiusMutation);
+        }
 
         ui->vlBodyMutations->addWidget(fixationRadiusMutation);
 
@@ -463,7 +479,7 @@ void ExperimentsPropertiesController::save() {
         // Error
         if(code != 0) {
             QMessageBox::warning(this, "Impossible to save experiment",
-            QString("Impossible to save experiment : error code : ") + QString::number(code));
+                                 QString("Impossible to save experiment : error code : ") + QString::number(code));
 
             experiment->setRessource(NULL);
             return;
@@ -532,10 +548,15 @@ void ExperimentsPropertiesController::updateStructures() {
 
     // Mutations
     boneLengthMutation->save();
-    boneRadiusMutation->save(); 
+    boneRadiusMutation->save();
     boneAngularOrigin->save();
     boneAngularLimitsMutation->save();
     bonesStructuralMutation->save();
+
+    bodyRadiusMutation->save();
+    legLengthMutation->save();
+    legRadiusMutation->save();
+    kneeRadiusMutation->save();
 
     fixationRadiusMutation->save();
 
@@ -571,8 +592,8 @@ QVariantMap ExperimentsPropertiesController::getSeedMap() {
         QVariantList genomes;
 
         for(int i=0; i < ui->twEntitiesSelected->topLevelItemCount(); ++i) {
-           EntityTreeWidgetItem *entityItem = (EntityTreeWidgetItem *) ui->twEntitiesSelected->topLevelItem(i);
-           genomes.append(entityItem->dataw.data);
+            EntityTreeWidgetItem *entityItem = (EntityTreeWidgetItem *) ui->twEntitiesSelected->topLevelItem(i);
+            genomes.append(entityItem->dataw.data);
         }
         seedMap.insert("genomes",genomes);
     }
@@ -709,13 +730,13 @@ void ExperimentsPropertiesController::takeFromCamera() {
 
     // TODO need factory...
     // get camera position
-//    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
-//    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
-//    Ogre::Vector3 position = camera->getPosition();
-//    Ogre::Vector3 target = camera->getPosition() + camera->getDirection() * 10;
+    //    OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngines().find("Ogre").value());
+    //    Ogre::Camera *camera = ogreEngine->getOgreSceneManager()->getCamera("firstCamera");
+    //    Ogre::Vector3 position = camera->getPosition();
+    //    Ogre::Vector3 target = camera->getPosition() + camera->getDirection() * 10;
 }
 
-void GeneCraftCore::ExperimentsPropertiesController::on_btnFloor_clicked()
+void ExperimentsPropertiesController::on_btnFloor_clicked()
 {
     QVariantMap map = experiment->getWorldDataMap();
     QVariant floorMap = map["floor"];
@@ -730,6 +751,22 @@ void GeneCraftCore::ExperimentsPropertiesController::on_btnFloor_clicked()
     this->ui->lblFloorType->setText(floorMap.toMap()["type"].toString());
 }
 
+void ExperimentsPropertiesController::on_cbFamily_currentIndexChanged(const QString &family)
+{
+    if(family.compare("realspider", Qt::CaseInsensitive)==0)
+    {
+        ui->vlBodyMutations->addWidget(bodyRadiusMutation);
+        ui->vlBodyMutations->addWidget(legLengthMutation);
+        ui->vlBodyMutations->addWidget(legRadiusMutation);
+        ui->vlBodyMutations->addWidget(kneeRadiusMutation);
+    }
+    else
+    {
+        ui->vlBodyMutations->removeWidget(bodyRadiusMutation);
+        ui->vlBodyMutations->removeWidget(legLengthMutation);
+        ui->vlBodyMutations->removeWidget(legRadiusMutation);
+        ui->vlBodyMutations->removeWidget(kneeRadiusMutation);
+    }
 }
 
-
+}

@@ -34,6 +34,7 @@ QVariant LegEffector::serialize()
 {
     QVariantMap data = Effector::serialize().toMap();
     data.insert("legOutput", legOutput->serialize());
+    data.insert("leg", leg->serialize());
     return data;
 }
 

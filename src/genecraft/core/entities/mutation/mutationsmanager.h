@@ -64,6 +64,9 @@ public:
     // Mutate the tree of a brainOutput
     QVariant mutateBrainOutTree(QVariant brainOut);
 
+    // Mutate the realSpider parameters
+    QVariant mutateParams(const QVariant &params);
+
     // ----------
     // -- body --
     // ----------
@@ -93,6 +96,22 @@ public:
     // Add / Remove / Replace effector
     StructuralMutation *effectorsStructural;
     StructuralList *effectorsStructuralList;
+
+    // ------------
+    // -- params --
+    // ------------
+
+    // Leg Length mutation
+    FloatMutation* legLength;
+
+    // Leg Radius mutation
+    FloatMutation* legRadius;
+
+    // Body Radius mutation
+    FloatMutation* bodyRadius;
+
+    // Knee Radius mutation
+    FloatMutation* kneeRadius;
 
     // -----------
     // -- brain --

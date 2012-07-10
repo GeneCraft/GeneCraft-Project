@@ -90,8 +90,8 @@ public:
     //static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
     // serialisation
-    QVariant serialize();
-    QVariant serializeOrigins();
+    virtual QVariant serialize();
+    virtual QVariant serializeOrigins();
 
     // Set ressource
     void setRessource(Ressource* r);

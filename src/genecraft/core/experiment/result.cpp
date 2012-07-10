@@ -197,8 +197,6 @@ namespace GeneCraftCore {
         Result* r = new Result(exp, fitness, nbRun, stableTime, genome, worker, date);
         r->setStatistics(statistics);
 
-
-
         return r;
     }
 }

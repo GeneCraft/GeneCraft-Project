@@ -300,7 +300,7 @@ namespace GeneCraftCore {
             } else if(familyName == "snake") {
                 family = new SnakeFamily();
                 //qDebug() << "new random snake entity";
-            } else if(familyName == "realspider"){
+            } else if(familyName.compare("realspider", Qt::CaseInsensitive)==0){
                 family = new RealSpiderFamily();
             } else if(familyName == "virgin"){
                 qDebug() << "new random virgin entity";
@@ -539,7 +539,7 @@ namespace GeneCraftCore {
 
         Entity* e = CreatureFactory::createEntity(genome, shapesFactory, position);
         if(e == NULL) {
-            qDebug() << "Entity genome corrupted tralala !";
+            qDebug() << "Entity genome corrupted !";
             return GenericFamily::createVirginEntity(shapesFactory, 1, position);
         }
         e->setup();

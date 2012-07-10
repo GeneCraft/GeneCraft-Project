@@ -17,8 +17,11 @@ class Leg : public QObject
 {
 
 public:
-    static Leg* createRightLeg(int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
-    static Leg* createLeftLeg(int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+    static Leg* createRightLeg(int number, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+    static Leg* createRightLeg(QVariant legData, int number, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+    static Leg* createLeftLeg(int number, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+    static Leg* createLeftLeg(QVariant legData, int number, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+
     void setup(Entity *e);
     void legUp();
     void legDown();
@@ -35,6 +38,7 @@ private:
     QList<Bone*> bones;
 
     int rightSide;
+    int number;
 
     int nbBoneInLeg;
 
@@ -53,8 +57,9 @@ private:
     GripperEffector* gripper;
     ContactSensor* contact;
 
-    Leg(int rightSide, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
-    
+    Leg(int rightSide, int number, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+    Leg(QVariant legData, int rightSide, int number, int nbBone, Fixation *fixBody, btScalar* yAxis, btScalar* zAxis, btScalar kneeRadius, btVector3* lowerLimits, btVector3* upperLimits, btScalar legRadius, btScalar* legSegmentLength);
+
 };
 }
 

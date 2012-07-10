@@ -103,6 +103,7 @@ namespace GeneCraftCore {
 
             JsonFile* file = new JsonFile(results.absoluteFilePath(f));
             QVariant result = file->load();
+
             bool valid = false;
             Result* r = Result::loadResult(result, valid);
             r->setRessource(file);

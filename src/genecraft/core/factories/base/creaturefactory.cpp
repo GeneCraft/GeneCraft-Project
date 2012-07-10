@@ -50,14 +50,21 @@ Entity* CreatureFactory::createEntity(QVariant data,
         // else
         return NULL;
     }
-    QVariant haha = entityData["origins"];
-    qDebug() << "TYPE : " << entityData["type"].toString();
-    qDebug() << entityData.keys();
-    qDebug() << haha.toMap().values();
 
     // Generic entity
     if(entityData["type"].toString() == "generic")
+    {
+        QString family = entityData["origins"].toMap()["family"].toString();
+        if(family.compare("RealSpiderFamily", Qt::CaseInsensitive)==0)
+        {
+            RealSpiderFamily* r = new RealSpiderFamily();
+            Entity* e = r->createEntity(entityData, shapesFactory, position);
+            delete r;
+            return e;
+        }
+
         return GenericFamily::createEntity(entityData, shapesFactory, position);
+    }
     // Whatever
     else if(entityData["type"].toString() == "symetric")
         return GenericFamily::createEntity(entityData, shapesFactory, position);

@@ -30,6 +30,7 @@ private:
     Leg* leg;
     BrainOut* legOutput;
     int cpt;
+    Fixation *fixation;
     
 };
 }

@@ -94,6 +94,38 @@ namespace GeneCraftCore {
         // Bone angular limits (x,y,z for lower and upper)
         boneAngularLimits = new BoneLimitsMutation();
 
+        // Leg Length mutation
+        legLength = new FloatMutation();
+        legLength->probability  = 1.0;
+        legLength->mean         = 0.0;
+        legLength->sigma        = 0.02;
+        legLength->minValue     = 0.1;
+        legLength->maxValue     = 5.0;
+
+        // Leg Radius mutation
+        legRadius = new FloatMutation();
+        legRadius->probability  = 1.0;
+        legRadius->mean         = 0.0;
+        legRadius->sigma        = 0.02;
+        legRadius->minValue     = 0.1;
+        legRadius->maxValue     = 2.0;
+
+        // Body Radius mutation
+        bodyRadius = new FloatMutation();
+        bodyRadius->probability   = 1.0;
+        bodyRadius->mean          = 0.0;
+        bodyRadius->sigma         = 0.02;
+        bodyRadius->minValue      = 0.1;
+        bodyRadius->maxValue      = 2.0;
+
+        // Knee Radius mutation
+        kneeRadius = new FloatMutation();
+        kneeRadius->probability   = 1.0;
+        kneeRadius->mean          = 0.0;
+        kneeRadius->sigma         = 0.02;
+        kneeRadius->minValue      = 0.1;
+        kneeRadius->maxValue      = 1.0;
+
         // sensors
         sensorsStructural = new StructuralMutation();
         sensorsStructural->addProbability = 0.01f;
@@ -228,6 +260,12 @@ namespace GeneCraftCore {
         delete boneAngularLimits->axisMutation;
         boneAngularLimits->axisMutation = new FloatMutation(map["boneAngularLimits"]);
 
+        // params
+        bodyRadius = new FloatMutation(map["bodyRadius"]);
+        legLength = new FloatMutation(map["legLength"]);
+        legRadius = new FloatMutation(map["legRadius"]);
+        kneeRadius = new FloatMutation(map["kneeRadius"]);
+
         // sensors
         sensorsStructural = new StructuralMutation(map["sensorsStructural"]);
         sensorsStructuralList = new StructuralList(map["sensorsStructuralList"]);
@@ -272,6 +310,12 @@ namespace GeneCraftCore {
         delete boneAngularOrigin;
         delete boneAngularLimits;
 
+        // params
+        delete bodyRadius;
+        delete legLength;
+        delete legRadius;
+        delete kneeRadius;
+
         // sensors
         delete sensorsStructural;
         delete sensorsStructuralList;
@@ -309,6 +353,11 @@ namespace GeneCraftCore {
         map.insert("boneAngularLimits",boneAngularLimits->axisMutation->serialize());
         map.insert("bonesStructural",bonesStructural->serialize());
 
+        map.insert("bodyRadius", bodyRadius->serialize());
+        map.insert("legLength", legLength->serialize());
+        map.insert("legRadius", legRadius->serialize());
+        map.insert("kneeRadius", kneeRadius->serialize());
+
         map.insert("fixRadius",fixRadius->serialize());
 
         map.insert("sensorsStructural",sensorsStructural->serialize());
@@ -335,6 +384,8 @@ namespace GeneCraftCore {
         QVariantMap bodyMap = entityMap["body"].toMap();
         QVariantMap treeShapeMap = bodyMap["shape"].toMap();
         QVariantMap brainMap = entityMap["brain"].toMap();
+        QVariantMap paramsMap = entityMap["params"].toMap();
+
         int generation = entityMap["generation"].toInt();
         entityMap.insert("generation", generation+1);
 
@@ -355,6 +406,27 @@ namespace GeneCraftCore {
         entityMap.insert("origins", originsMap);
 
         return entityMap;
+    }
+
+    QVariant MutationsManager::mutateParams(const QVariant &params)
+    {
+        QVariantMap paramsData = params.toMap();
+
+        // radius mutation
+        bodyRadius->mutate(paramsData, "headRadius");
+        kneeRadius->mutate(paramsData, "kneeRadius");
+        legRadius->mutate(paramsData, "legRadius");
+
+        QVariantMap legLengths = paramsData.value("legLength").toMap();
+        legLength->mutate(legLengths, "front");
+        legLength->mutate(legLengths, "middleFront");
+        legLength->mutate(legLengths, "middleRear");
+        legLength->mutate(legLengths, "rear");
+
+        paramsData.remove("legLength");
+        paramsData.insert("legLength", legLengths);
+
+        return paramsData;
     }
 
     QVariant MutationsManager::mutateTreeShape(const QVariant &treeShapeVariant)
