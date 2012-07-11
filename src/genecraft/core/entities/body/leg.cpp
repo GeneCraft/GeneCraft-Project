@@ -157,7 +157,9 @@ void Leg::setup(Entity * e)
 
 void Leg::legUp()
 {
-    if(number==1)
+    //QString haha = (rightSide>0)?"droit":"gauche";
+    //qDebug() << "Patte num" << number << " du cote " << haha << " se leve";
+    if(number==4)
     {
         // Gripper se trouvant en bout de patte doit se détacher du sol
         gripper->unfix();
@@ -180,7 +182,7 @@ void Leg::legUp()
         ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
                 getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
     }
-    else if(number==4)
+    else if(number==1)
     {
         // Gripper se trouvant en bout de patte doit se détacher du sol
         if(contact->hasCollided())
@@ -239,7 +241,9 @@ void Leg::legUp()
 
 void Leg::legDown()
 {
-    if(number == 1)
+    //QString haha = (rightSide>0)?"droit":"gauche";
+    //qDebug() << "Patte num" << number << " du cote " << haha << " se baisse";
+    if(number == 4)
     {
         if(contact->hasCollided())
         {
@@ -258,7 +262,7 @@ void Leg::legDown()
         ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(1);
         ((Bone*)bones.at(1))->getRotationalMotorsEffector()->getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(-200);
     }
-    else if(number == 4)
+    else if(number == 1)
     {
 
         gripper->unfix();
