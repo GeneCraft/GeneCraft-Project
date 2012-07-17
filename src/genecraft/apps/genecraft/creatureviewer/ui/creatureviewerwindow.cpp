@@ -51,6 +51,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "events/eventsmanager.h"
 #include "bulletogre/bulletogreengine.h"
 #include "entities/entitiesengine.h"
+#include "engines/world/worldengine.h"
 
 // Widgets
 #include "widgets/entities/pluggridvisualizer.h"
@@ -101,6 +102,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "body/fixation.h"
 
 #include "terrain/terrain.h"
+
+#define ANGLE_SUR_AXE_X Ogre::Vector3(0.0,1.0,1.0)
+#define ANGLE_SUR_AXE_Y Ogre::Vector3(1.0,0.0,1.0)
+#define ANGLE_SUR_AXE_Z Ogre::Vector3(1.0,1.0,0.0)
 
 using namespace GeneCraftCore;
 
@@ -220,7 +225,7 @@ void CreatureViewerWindow::init() {
     sbxAxeY->setToolTip("Y coordinate of the gravity vector");
     sbxAxeY->setMinimum(-1.0);
     sbxAxeY->setMaximum(1.0);
-    sbxAxeY->setValue(0.0);
+    sbxAxeY->setValue(-1.0);
     sbxAxeY->setSingleStep(0.01);
     ui->toolBar->addWidget(sbxAxeY);
     sbxAxeZ = new QDoubleSpinBox();
@@ -432,6 +437,10 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     if(experiment != NULL)
         world  = btoWorldFactory::createWorld(factory,shapesFactory,experiment->getWorldDataMap());
 
+    WorldEngine* worldEngine = static_cast<WorldEngine*>(factory->getEngineByName("World"));
+    worldEngine->setWorld(world);
+    worldEngine->setExperiment(experiment);
+
     cvim->setWorld(world);
 
     simulationManager->setStatus(status);
@@ -454,10 +463,16 @@ void CreatureViewerWindow::loadResult(Result *result) {
 
     QVariantMap genome = result->getGenome().toMap();
 
+    if(this->experiment->getWaitBeforeSetGravity())
+    {
+        world->setGravity(experiment->getWorldDataMap(), 0.0, -1.0, 0.0);
+    }
+
     Entity* e = createCreature(genome, world->getSpawnPosition(), result->getRessource());
     if(this->experiment->getOnlyIfEntityIsStable())
         e->addOutScript(0, fromNormal); // Normal position during stability time
     e->addOutScript(result->getStable(), fromBrain); // Next from brain
+
     e->setAge(0);
 
     this->simulationManager->setStatus(status);
@@ -988,5 +1003,47 @@ void CreatureViewerWindow::toggleShadows() {
 
 void CreatureViewerWindow::setGravity()
 {
+    Ogre::Vector3 actual(world->getGravity().getX(), world->getGravity().getY(), world->getGravity().getZ());
+    qDebug() << actual.x << ":" << actual.y << ":" << actual.z;
     world->setGravity(experiment->getWorldDataMap(), sbxAxeX->value(), sbxAxeY->value(), sbxAxeZ->value());
+    Ogre::Vector3 newGravity(world->getGravity().getX(), world->getGravity().getY(), world->getGravity().getZ());
+    qDebug() << newGravity.x << ":" << newGravity.y << ":" << newGravity.z;
+
+    Ogre::Radian angleSurX = angleSurAxe(actual, newGravity, ANGLE_SUR_AXE_X);
+    qDebug()<<angleSurX.valueDegrees();
+    Ogre::Radian angleSurY = angleSurAxe(actual, newGravity, ANGLE_SUR_AXE_Y);
+    qDebug()<<angleSurY.valueDegrees();
+    Ogre::Radian angleSurZ = angleSurAxe(actual, newGravity, ANGLE_SUR_AXE_Z);
+    qDebug()<<angleSurZ.valueDegrees();
+
+    BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
+    Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
+    Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
+
+    Ogre::Quaternion rotX(angleSurX, Ogre::Vector3::UNIT_X);
+    Ogre::Quaternion rotY(angleSurY, Ogre::Vector3::UNIT_Y);
+    Ogre::Quaternion rotZ(angleSurZ, Ogre::Vector3::UNIT_Z);
+
+    //cam->rotate(rotX);
+    //cam->rotate(rotY);
+    //cam->rotate(rotZ);
+
+    Ogre::Degree a;
+    Ogre::Vector3 b;
+    cam->getOrientation().ToAngleAxis(a, b);
+    qDebug() << a.valueDegrees();
+    qDebug() << b.x << " : " << b.y << " : " << b.z;
+
+    cam->yaw();
+}
+
+Ogre::Radian CreatureViewerWindow::angleSurAxe(Ogre::Vector3 vect1, Ogre::Vector3 vect2, Ogre::Vector3 axe)
+{
+    vect1.normalise();
+    vect2.normalise();
+
+    Ogre::Vector3 vectOne(vect1.x * axe.x, vect1.y * axe.y, vect1.z * axe.z);
+    Ogre::Vector3 vectTwo(vect2.x * axe.x, vect2.y * axe.y, vect2.z * axe.z);
+
+    return vectOne.angleBetween(vectTwo);
 }

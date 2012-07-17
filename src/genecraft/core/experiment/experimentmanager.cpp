@@ -461,6 +461,11 @@ namespace GeneCraftCore {
             qDebug() << "Evaluation of a specimen" << exp->getNbRun() << "times.";
             for(int run = 0; run < exp->getNbRun(); run++) {
 
+                if(exp->getWaitBeforeSetGravity())
+                {
+                    world->setGravity(exp->getWorldDataMap(), 0.0, -1.0, 0.0);
+                }
+
                 // Spawn the entity from his genome
                 Entity *e = this->spawnEntity(r->getGenome());
 
@@ -482,6 +487,10 @@ namespace GeneCraftCore {
                     stable = this->stabilizeEntity(e, r);
                 else
                     stable = true;
+
+                if(exp->getWaitBeforeSetGravity())
+                    waitAndSetGravity(e);
+
 
                 // Stabilisation reached simulate it
                 if(stable)
@@ -598,6 +607,20 @@ namespace GeneCraftCore {
         }
 
         return stable;
+    }
+
+    void ExperimentManager::waitAndSetGravity(Entity* e)
+    {
+        e->getShape()->getRoot()->setOutputsFrom(fromBrain);
+
+        for(int i = 0 ; i < exp->getStepsBeforeSetGravity() ; i++)
+        {
+            this->engineStep();
+        }
+
+        QVariant data = exp->getWorldDataMap()["biome"];
+        QVariantMap gravityMap = data.toMap()["gravities"].toMap();
+        world->setGravity(exp->getWorldDataMap(), gravityMap["axeX"].toDouble(),gravityMap["axeY"].toDouble(),gravityMap["axeZ"].toDouble());
     }
 
     bool ExperimentManager::simulateEntity(Entity* e) {

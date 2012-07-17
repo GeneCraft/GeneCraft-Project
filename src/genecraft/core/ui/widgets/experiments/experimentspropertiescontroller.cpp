@@ -252,6 +252,8 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         ui->cbStopIfEntityIsNotInOnePiece->setChecked(experiment->getStopIfEntityIsNotInOnePiece());
         ui->teDieFunction->setText(Ressource::beautifullJson(experiment->getDieFunction()));
         ui->teEndFunction->setText(Ressource::beautifullJson(experiment->getEndFunction()));
+        ui->cbWaitBeforeSetGravity->setChecked(experiment->getWaitBeforeSetGravity());
+        ui->leStepsBeforeGravity->setText(QString::number(experiment->getStepsBeforeSetGravity()));
 
         // ----------------
         // -- evaluation --
@@ -539,6 +541,8 @@ void ExperimentsPropertiesController::updateStructures() {
     experiment->setStopIfEntityIsNotInOnePiece(ui->cbStopIfEntityIsNotInOnePiece->isChecked());
     experiment->setDieFunction(Ressource::beautifullJson(ui->teDieFunction->toPlainText()));
     experiment->setEndFunction(Ressource::beautifullJson(ui->teEndFunction->toPlainText()));
+    experiment->setWaitBeforeSetGravity(ui->cbWaitBeforeSetGravity->isChecked());
+    experiment->setStepsBeforeSetGravity(ui->leStepsBeforeGravity->text().toInt());
 
     // Evaluation
     experiment->setValidityFunction(Ressource::beautifullJson(ui->teValidateFunction->toPlainText()));

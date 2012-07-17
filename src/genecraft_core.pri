@@ -114,7 +114,8 @@ SOURCES += \
     genecraft/core/entities/body/leg.cpp \
     genecraft/core/entities/effectors/legeffector.cpp \
     genecraft/core/entities/realspiderentity.cpp \
-    genecraft/core/entities/sensors/gravitysensor.cpp
+    genecraft/core/entities/sensors/gravitysensor.cpp \
+    genecraft/core/engines/world/worldengine.cpp
 
 HEADERS += \
     genecraft/core/engines/engine.h \
@@ -180,7 +181,8 @@ HEADERS += \
     genecraft/core/entities/body/leg.h \
     genecraft/core/entities/effectors/legeffector.h \
     genecraft/core/entities/realspiderentity.h \
-    genecraft/core/entities/sensors/gravitysensor.h
+    genecraft/core/entities/sensors/gravitysensor.h \
+    genecraft/core/engines/world/worldengine.h
 
 RESOURCES += \
     genecraft/core/ressources/core.qrc

@@ -89,6 +89,8 @@ namespace GeneCraftCore {
         void bindEntity(Entity* e);
         void loadFunctions();
 
+        void waitAndSetGravity(Entity *e);
+
     private:
         Experiment* exp;
         MutationsManager* mutations;

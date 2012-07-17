@@ -40,7 +40,9 @@ Experiment::Experiment() : ressource(NULL){
         // simulation
         onlyIfEntityIsStable = true;
         timeToWaitForStability = 300;
-        duration = 1200;
+        duration = 1200;        
+        waitBeforeSetGravity = true;
+        stepsBeforeSetGravity = 100;
         stopIfEntityIsNotInOnePiece = true;
 
         // mutations
@@ -100,6 +102,8 @@ Experiment::Experiment() : ressource(NULL){
         timeToWaitForStability = map["timeToWaitForStability"].toInt();
         onlyIfEntityIsStable = map["onlyIfEntityIsStable"].toBool();
         stopIfEntityIsNotInOnePiece = map["stopIfEntityIsNotInOnePiece"].toBool();
+        waitBeforeSetGravity = map["waitBeforeSetGravity"].toBool();
+        stepsBeforeSetGravity = map["stepsBeforeSetGravity"].toInt();
 
         // mutations
         mutationsManager = new MutationsManager(map["mutations"]);
@@ -181,6 +185,8 @@ Experiment::Experiment() : ressource(NULL){
         map.insert("timeToWaitForStability",timeToWaitForStability);
         map.insert("duration",duration);
         map.insert("stopIfEntityIsNotInOnePiece",stopIfEntityIsNotInOnePiece);
+        map.insert("stepsBeforeSetGravity", stepsBeforeSetGravity);
+        map.insert("waitBeforeSetGravity", waitBeforeSetGravity);
 
         // mutations
         map.insert("mutations",mutationsManager->serialize());

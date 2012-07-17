@@ -87,6 +87,12 @@ namespace GeneCraftCore {
         bool getStopIfEntityIsNotInOnePiece() { return this->stopIfEntityIsNotInOnePiece; }
         void setStopIfEntityIsNotInOnePiece(bool stopIfEntityIsNotInOnePiece) { this->stopIfEntityIsNotInOnePiece = stopIfEntityIsNotInOnePiece; }
 
+        bool getWaitBeforeSetGravity(){ return this->waitBeforeSetGravity; }
+        void setWaitBeforeSetGravity(bool waitBeforeSetGravity) { this->waitBeforeSetGravity = waitBeforeSetGravity; }
+
+        int getStepsBeforeSetGravity() { return this->stepsBeforeSetGravity; }
+        void setStepsBeforeSetGravity(int stepsBeforeSetGravity) { this->stepsBeforeSetGravity = stepsBeforeSetGravity; }
+
         QString getEndFunction() { return this->endFunction; }
         QString getDieFunction() { return this->dieFunction; }
 
@@ -155,8 +161,10 @@ namespace GeneCraftCore {
         // Simulation
         int duration;
         int timeToWaitForStability;
+        int stepsBeforeSetGravity;
         bool onlyIfEntityIsStable;
         bool stopIfEntityIsNotInOnePiece;
+        bool waitBeforeSetGravity;
 
         // Mutations
         MutationsManager *mutationsManager;

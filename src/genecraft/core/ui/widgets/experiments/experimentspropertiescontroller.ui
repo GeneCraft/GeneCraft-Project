@@ -452,7 +452,7 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
-          <item row="4" column="0" colspan="2">
+          <item row="5" column="0" colspan="2">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="label_7">
@@ -495,6 +495,30 @@ p, li { white-space: pre-wrap; }
              </spacer>
             </item>
            </layout>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="cbWaitBeforeSetGravity">
+            <property name="text">
+             <string>Wait x steps before set the gravity for the experiment :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="leStepsBeforeGravity">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="label_32">
+            <property name="text">
+             <string>steps</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -818,8 +842,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>96</width>
-                <height>26</height>
+                <width>734</width>
+                <height>418</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">

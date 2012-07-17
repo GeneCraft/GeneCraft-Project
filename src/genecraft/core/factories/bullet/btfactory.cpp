@@ -27,6 +27,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "entities/entitiesengine.h"
 
+#include "world/worldengine.h"
+
 #include "terrain/terrain.h"
 namespace GeneCraftCore {
 
@@ -47,6 +49,12 @@ btFactory::btFactory(QObject *parent) :
     qDebug() << "Init Entities Engine";
     EntitiesEngine* entitiesEngine = new EntitiesEngine();
     this->engines.insert("Entities", entitiesEngine);
+    qDebug() << "[OK]\n";
+
+    // World engine
+    qDebug() << "Init World Engine";
+    WorldEngine* worldEngine = new WorldEngine();
+    this->engines.insert("World", worldEngine);
     qDebug() << "[OK]\n";
 
     // Terrain engine

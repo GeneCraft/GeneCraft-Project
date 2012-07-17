@@ -154,4 +154,9 @@ namespace GeneCraftCore {
         btScalar gravity = dataBiome.toMap()["gravity"].toFloat();
         world->setGravity(btVector3(gravity*axeX,gravity*axeY,gravity*axeZ));
     }
+
+    btVector3 btWorld::getGravity()
+    {
+        return world->getGravity();
+    }
 }

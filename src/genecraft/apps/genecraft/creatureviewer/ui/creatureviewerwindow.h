@@ -33,6 +33,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/experiments/experimentctrl.h"
 #include "widgets/experiments/workerctrl.h"
 
+#include "Ogre.h"
+
 #include <QDoubleSpinBox>
 
 // Listeners
@@ -170,6 +172,8 @@ private:
     QDoubleSpinBox *sbxAxeX;
     QDoubleSpinBox *sbxAxeY;
     QDoubleSpinBox *sbxAxeZ;
+
+    Ogre::Radian angleSurAxe(Ogre::Vector3 vect1, Ogre::Vector3 vect2, Ogre::Vector3 axe);
 
 private slots:
 
