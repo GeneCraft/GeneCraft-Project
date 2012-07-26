@@ -19,6 +19,11 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "btbiome.h"
 #include "btworld.h"
+#include "Ogre.h"
+#include "bulletogre/bulletogreengine.h"
+#include "bullet/bulletengine.h"
+#include "ogre/ogreengine.h"
+#include "btofactory.h"
 
 namespace GeneCraftCore {
     btBiome::btBiome(btWorld* world, QVariant biomeData, QObject *parent) :
@@ -26,6 +31,7 @@ namespace GeneCraftCore {
     {
         world->setBiome(this);
         this->data = biomeData.toMap();
+        bulletWorld = world;
     }
 
     btBiome::~btBiome() {
@@ -33,9 +39,17 @@ namespace GeneCraftCore {
     }
 
     void btBiome::setup() {
+
+        BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(bulletWorld->getFactory()->getEngineByName("BulletOgre"));
+        Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
+        Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
+
         btScalar gravity = data["gravity"].toFloat();
         QVariantMap gravityMap = data["gravities"].toMap();
         world->setGravity(btVector3(gravity*gravityMap["axeX"].toDouble(),gravity*gravityMap["axeY"].toDouble(),gravity*gravityMap["axeZ"].toDouble()));
+
+        if(gravityMap["axeY"].toDouble() > 0)
+            cam->roll(Ogre::Degree(180));
     }
 
 }

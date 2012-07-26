@@ -157,9 +157,7 @@ void Leg::setup(Entity * e)
 
 void Leg::legUp()
 {
-    //QString haha = (rightSide>0)?"droit":"gauche";
-    //qDebug() << "Patte num" << number << " du cote " << haha << " se leve";
-    if(number==4)
+    if(number==4) // Si patte de devant
     {
         // Gripper se trouvant en bout de patte doit se détacher du sol
         gripper->unfix();
@@ -168,81 +166,97 @@ void Leg::legUp()
         ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
                 getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
 
         //Monter troisième os
         ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
                 getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
 
         //Monter quatrieme os
         ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
                 getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
     }
-    else if(number==1)
+    else if(number==1) // Autrement si patte de derrière
     {
-        // Gripper se trouvant en bout de patte doit se détacher du sol
+        // Si il y a contact avec le sol
         if(contact->hasCollided())
         {
+            // Gripper se trouvant en bout de patte doit se fixer au sol
             gripper->fix();
 
             //Monter deuxième os
             ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-                    getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+                    getBrainOutputs(AXE_Z)->
+                    boMaxMotorForce->setValue(-1);
             ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-                    getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                    getBrainOutputs(AXE_Z)->
+                    boTargetVelocity->setValue(200);
 
             //Monter quatrieme os
             ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-                    getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+                    getBrainOutputs(AXE_Z)->
+                    boMaxMotorForce->setValue(-1);
             ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-                    getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                    getBrainOutputs(AXE_Z)->
+                    boTargetVelocity->setValue(200);
         }
 
         //Monter troisième os
         ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+                getBrainOutputs(AXE_Z)->
+                boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
     }
-    else
+    else // Si patte du milieu
     {
         // Gripper se trouvant en bout de patte doit se détacher du sol
         gripper->unfix();
 
         //Avancer premier os
         ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_X)->boMaxMotorForce->setValue(rightSide*1);
+                getBrainOutputs(AXE_X)->
+                boMaxMotorForce->setValue(rightSide*1);
         ((Bone*)bones.at(0))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_X)->boTargetVelocity->setValue(rightSide*(-200));
+                getBrainOutputs(AXE_X)->
+                boTargetVelocity->setValue(rightSide*(-200));
 
         //Monter deuxième os
         ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+                getBrainOutputs(AXE_Z)->
+                boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(1))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
 
         //Monter troisième os
         ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+                getBrainOutputs(AXE_Z)->
+                boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(2))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
 
         //Monter quatrieme os
         ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boMaxMotorForce->setValue(-1);
+                getBrainOutputs(AXE_Z)->
+                boMaxMotorForce->setValue(-1);
         ((Bone*)bones.at(3))->getRotationalMotorsEffector()->
-                getBrainOutputs(AXE_Z)->boTargetVelocity->setValue(200);
+                getBrainOutputs(AXE_Z)->
+                boTargetVelocity->setValue(200);
     }
 }
 
 void Leg::legDown()
 {
-    //QString haha = (rightSide>0)?"droit":"gauche";
-    //qDebug() << "Patte num" << number << " du cote " << haha << " se baisse";
     if(number == 4)
     {
         if(contact->hasCollided())
@@ -311,10 +325,10 @@ void Leg::legDown()
 QVariant Leg::serialize()
 {
     QVariantMap data;
-    data.insert("side", rightSide);
-    data.insert("number", number);
-    data.insert("contact", contact->serialize());
-    data.insert("gripper", gripper->serialize());
+    data.insert("side", rightSide); // Côté de l'araignée
+    data.insert("number", number); // Numéro de la patte (emplacement)
+    data.insert("contact", contact->serialize()); // Capteur de contact
+    data.insert("gripper", gripper->serialize()); // Grippeur effecteur
     return data;
 }
 

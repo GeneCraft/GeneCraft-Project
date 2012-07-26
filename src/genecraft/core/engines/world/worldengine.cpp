@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud, Zéni David
+Copyright 2011, 2012 Zéni David
 
 This file is part of Genecraft-Project.
 
@@ -18,12 +18,18 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "worldengine.h"
+#include "Ogre.h"
+#include "bulletogre/bulletogreengine.h"
+#include "bullet/bulletengine.h"
+#include "ogre/ogreengine.h"
+#include "btofactory.h"
 
 namespace GeneCraftCore {
 
 WorldEngine::WorldEngine()
 {
     nbSteps = 0;
+    isNotWorker = false;
 }
 
 void WorldEngine::setWorld(btoWorld *w)
@@ -35,11 +41,25 @@ void WorldEngine::beforeStep()
 {
     if(exp->getWaitBeforeSetGravity())
     {
+        // If right number of steps has passed change gravity
         if(exp->getStepsBeforeSetGravity()==nbSteps)
         {
             QVariant data = exp->getWorldDataMap()["biome"];
             QVariantMap gravityMap = data.toMap()["gravities"].toMap();
             world->setGravity(exp->getWorldDataMap(), gravityMap["axeX"].toDouble(),gravityMap["axeY"].toDouble(),gravityMap["axeZ"].toDouble());
+
+            if(isNotWorker)
+            {
+                // Switch upside down if needed
+                if(gravityMap["axeY"].toDouble() > 0)
+                {
+                    BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
+                    Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
+                    Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
+                    cam->roll(Ogre::Degree(180));
+                }
+            }
+
         }
     }
     nbSteps++;
@@ -49,6 +69,11 @@ void WorldEngine::setExperiment(Experiment *exp)
 {
     this->exp = exp;
     nbSteps = 0;
+}
+
+void WorldEngine::setNotWorker(bool val)
+{
+    this->isNotWorker = val;
 }
 
 }

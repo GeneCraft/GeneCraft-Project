@@ -65,32 +65,44 @@ RealSpiderFamily::RealSpiderFamily()
     upperLimits = new btVector3[nbBoneInLeg];
     anglesZ = new btScalar[nbBoneInLeg];
 
+    // Limits of the first articulation
     lowerLimits[0] = btVector3(-0.15,0,0);
     upperLimits[0] = btVector3(0.15,0,0);
+
+    // Angles of the first segment
     anglesY[0][0] = (btScalar)0.f;
     anglesY[1][0] = (btScalar)0.f;
     anglesY[2][0] = (btScalar)0.f;
     anglesY[3][0] = (btScalar)0.f;
     anglesZ[0] = SIMD_PI / 2.f;
 
+    // Limits of the second articulation
     lowerLimits[1] = btVector3(0.0,0.0,-0.1f);
     upperLimits[1] = btVector3(0.0,0.0,SIMD_PI/12.f);
+
+    // Angles of the second segment
     anglesY[0][1] = (btScalar)-(SIMD_PI/64.f);
     anglesY[1][1] = (btScalar)-(SIMD_PI/48.f);
     anglesY[2][1] = (btScalar)(SIMD_PI/48.f);
     anglesY[3][1] = (btScalar)(SIMD_PI/64.f);
     anglesZ[1] = (btScalar)(-SIMD_PI*13.f/36.f);
 
+    // Limits of the third articulation
     lowerLimits[2] = btVector3(0.0,0.0,-SIMD_PI/6.f);//SIMD_PI/12.f);
     upperLimits[2] = btVector3(0.0,0.0,SIMD_PI/30.f);//0.0);
+
+    // Angles of the third segment
     anglesY[0][2] = (btScalar)(SIMD_PI/8.f);
     anglesY[1][2] = (btScalar)(SIMD_PI/8.f);
     anglesY[2][2] = (btScalar)-(SIMD_PI/8.f);
     anglesY[3][2] = (btScalar)-(SIMD_PI/8.f);
     anglesZ[2] = (btScalar)(SIMD_PI/2.f);//23/36
 
+    // Limits of the fourth articulation
     lowerLimits[3] = btVector3(0.0,0.0,-SIMD_PI/6.f);//SIMD_PI/12.f);
     upperLimits[3] = btVector3(0.0,0.0,SIMD_PI/6.f);//0.0);
+
+    // Angles of the fourth segment
     anglesY[0][3] = (btScalar)0.f;
     anglesY[1][3] = (btScalar)0.f;
     anglesY[2][3] = (btScalar)0.f;
@@ -174,8 +186,8 @@ void RealSpiderFamily::initFrontLeg(btScalar length)
 {
     btScalar frontLegLength = 12.85875;//12.22375;
     legSegmentLength[0][0] = 0.91125 * length / frontLegLength;
-    legSegmentLength[0][1] = 3.92125 * length / frontLegLength;
-    legSegmentLength[0][2] = 3.41317 * length / frontLegLength;
+    legSegmentLength[0][1] = 4.52125 * length / frontLegLength;
+    legSegmentLength[0][2] = 4.01308 * length / frontLegLength;
     legSegmentLength[0][3] = 3.41317 * length / frontLegLength;
 }
 
@@ -183,8 +195,8 @@ void RealSpiderFamily::initMiddleFrontLeg(btScalar length)
 {
     btScalar middleFrontLegLength = 10.63625;//10.00125;
     legSegmentLength[1][0] = 1.01125 * length / middleFrontLegLength;
-    legSegmentLength[1][1] = 3.1275 * length / middleFrontLegLength;
-    legSegmentLength[1][2] = 2.6987 * length / middleFrontLegLength;
+    legSegmentLength[1][1] = 3.8275 * length / middleFrontLegLength;
+    legSegmentLength[1][2] = 3.0988 * length / middleFrontLegLength;
     legSegmentLength[1][3] = 2.6987 * length / middleFrontLegLength;
 }
 
@@ -192,18 +204,18 @@ void RealSpiderFamily::initMiddleRearLeg(btScalar length)
 {
     btScalar middleRearLegLength = 9.2075;//8.41375;
     legSegmentLength[2][0] = 1.01125 * length / middleRearLegLength;
-    legSegmentLength[2][1] = 1.8575 * length / middleRearLegLength;
-    legSegmentLength[2][2] = 2.6193 * length / middleRearLegLength;
-    legSegmentLength[2][3] = 2.6193 * length / middleRearLegLength;
+    legSegmentLength[2][1] = 2.2577 * length / middleRearLegLength;
+    legSegmentLength[2][2] = 3.2193 * length / middleRearLegLength;
+    legSegmentLength[2][3] = 2.7193 * length / middleRearLegLength;
 }
 
 void RealSpiderFamily::initRearLeg(btScalar length)
 {
     btScalar rearLegLength = 11.1125;//10.16;
     legSegmentLength[3][0] = 1.01125 * length / rearLegLength;
-    legSegmentLength[3][1] = 2.81 * length / rearLegLength;
-    legSegmentLength[3][2] = 3.175 * length / rearLegLength;
-    legSegmentLength[3][3] = 3.175 * length / rearLegLength;
+    legSegmentLength[3][1] = 3.0313 * length / rearLegLength;
+    legSegmentLength[3][2] = 3.785 * length / rearLegLength;
+    legSegmentLength[3][3] = 3.285 * length / rearLegLength;
 }
 
 RealSpiderFamily::~RealSpiderFamily()
@@ -320,7 +332,12 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
     btQuaternion legLocal;
     btQuaternion legLocal2;
 
-    foreach(QVariant effect, entityMap.value("body").toMap().value("shape").toMap().value("rootFix").toMap()["effectors"].toList())
+    QList<QVariant> effectors = entityMap.value("body").toMap().
+                                            value("shape").toMap().
+                                            value("rootFix").toMap()
+                                            ["effectors"].toList();
+
+    foreach(QVariant effect, effectors)
     {
         QVariantMap effectorMap = effect.toMap();
         if((EffectorType)effectorMap["type"].toInt() == legEffector)
@@ -331,12 +348,24 @@ Entity* RealSpiderFamily::createEntity(QVariant genotype, btShapesFactory *shape
             if(leg.value("side").toInt()>0)
             {
                 anglesY[nbLegs-i][0] = i*((SIMD_PI)/(nbLegs+1));
-                ent->addRightLeg(Leg::createRightLeg(effectorMap, i, nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
+                ent->addRightLeg(
+                    Leg::createRightLeg(effectorMap, i, nbBoneInLeg,
+                        rootFix, anglesY[nbLegs-i], anglesZ,
+                        btScalar(parameters.value("kneeRadius").toFloat()),
+                        lowerLimits, upperLimits,
+                        btScalar(parameters.value("legRadius").toFloat()),
+                        legSegmentLength[nbLegs-i]));
             }
             else
             {
                 anglesY[nbLegs-i][0] = -i*((SIMD_PI)/(nbLegs+1));
-                ent->addLeftLeg(Leg::createLeftLeg(effectorMap, i, nbBoneInLeg, rootFix, anglesY[nbLegs-i], anglesZ, btScalar(parameters.value("kneeRadius").toFloat()), lowerLimits, upperLimits, btScalar(parameters.value("legRadius").toFloat()), legSegmentLength[nbLegs-i]));
+                ent->addLeftLeg(
+                    Leg::createLeftLeg(effectorMap, i, nbBoneInLeg,
+                        rootFix, anglesY[nbLegs-i], anglesZ,
+                        btScalar(parameters.value("kneeRadius").toFloat()),
+                        lowerLimits, upperLimits,
+                        btScalar(parameters.value("legRadius").toFloat()),
+                        legSegmentLength[nbLegs-i]));
             }
         }
     }

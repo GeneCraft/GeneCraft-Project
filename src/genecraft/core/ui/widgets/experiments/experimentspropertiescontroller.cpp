@@ -294,7 +294,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         boneAngularLimitsMutation = new FloatMutationController(mutationsManager->boneAngularLimits->axisMutation,"Bones angular limits");
         bonesStructuralMutation = new StructuralMutationController(mutationsManager->bonesStructural,"Bones Structural");
 
-        // TODO SI UNE REAL SPIDER
+        // Real Spider params
         bodyRadiusMutation = new FloatMutationController(mutationsManager->bodyRadius, "Body Radius");
         legLengthMutation = new FloatMutationController(mutationsManager->legLength, "Legs Length");
         legRadiusMutation = new FloatMutationController(mutationsManager->legRadius, "Legs Radius");

@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud, Zéni David
+Copyright 2011, 2012 Zéni David
 
 This file is part of Genecraft-Project.
 
@@ -26,27 +26,52 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 namespace GeneCraftCore {
 
 /**
- * @brief Engine to manage entities.
- * 1) During before step, sensors will stepped.
- * 2) During step, brains will stepped.
- * 3) During after step, modifiers will stepped.
+ * @brief Engine to manage the world.
+ * 1) During before step, gravity will be checked.
  *
  *
  */
 class WorldEngine : public Engine
 {
 public:
+    /**
+     * @brief Create the world engine
+     *
+     */
     WorldEngine();
-
+    /**
+     * @brief Set the world to monitor
+     *
+     * @param w
+     *
+     */
     void setWorld(btoWorld* w);
-
+    /**
+     * @brief Set the experiment running
+     *
+     * @param exp
+     *
+     */
     void setExperiment(Experiment* exp);
-
-    void beforeStep();
+    /**
+     * @brief Check how much steps has passed
+     *          and then change gravity if needed
+     *
+     */
+    virtual void beforeStep();
+    /**
+     * @brief Set if used by CreatureViewer
+     *          or worker
+     *
+     * @param val
+     *
+     */
+    void setNotWorker(bool val);
 private:
     btoWorld* world;
     Experiment* exp;
     int nbSteps;
+    bool isNotWorker;
 };
 
 }

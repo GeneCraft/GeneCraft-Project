@@ -42,6 +42,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "sensors/contactsensor.h"
 #include "sensors/boxsmellsensor.h"
 #include "sensors/distancesensor.h"
+#include "sensors/gravitysensor.h"
 
 // effectors
 #include "effectors/effector.h"
@@ -138,6 +139,7 @@ MutationsManager::MutationsManager()
     sensorsStructuralList->elements.append(new MutationElement("Contact sensor",contactSensor,1.0));
     sensorsStructuralList->elements.append(new MutationElement("Box smell sensor",boxSmellSensor,0));
     sensorsStructuralList->elements.append(new MutationElement("Distance sensor",distanceSensor,1.0));
+    sensorsStructuralList->elements.append(new MutationElement("Gravity sensor", gravitySensor,1.0));
 
     // TODO serialize and add to ui
     distanceSensorYZ = new FloatMutation();
@@ -822,6 +824,9 @@ void MutationsManager::addSensor(QVariantList &sensorsList, int i) {
         break;
     case distanceSensor :
         newSensor = DistanceSensor::generateEmpty();
+        break;
+    case gravitySensor :
+        newSensor = GravitySensor::generateEmpty();
         break;
     }
 

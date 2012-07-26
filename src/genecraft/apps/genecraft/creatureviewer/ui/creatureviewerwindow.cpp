@@ -398,6 +398,7 @@ void CreatureViewerWindow::init() {
     connect(entitySpawner, SIGNAL(timeout()), this, SLOT(spawnNew()));
 
 
+
     switchToWelcomeMode();
 }
 
@@ -430,6 +431,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     // ogre engine
     OgreEngine *ogreEngine = static_cast<OgreEngine*>(factory->getEngineByName("Ogre"));
     ogreEngine->getOgreSceneManager()->clearScene();
+    ogreEngine->getOgreSceneManager()->getRootSceneNode()->createChildSceneNode("gravity");
 
     // --------------------------
     // -- Create the new world --
@@ -440,6 +442,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     WorldEngine* worldEngine = static_cast<WorldEngine*>(factory->getEngineByName("World"));
     worldEngine->setWorld(world);
     worldEngine->setExperiment(experiment);
+    worldEngine->setNotWorker(true);
 
     cvim->setWorld(world);
 
@@ -466,6 +469,12 @@ void CreatureViewerWindow::loadResult(Result *result) {
     if(this->experiment->getWaitBeforeSetGravity())
     {
         world->setGravity(experiment->getWorldDataMap(), 0.0, -1.0, 0.0);
+    }
+    else
+    {
+        QVariant dataBiome = experiment->getWorldDataMap()["biome"];
+        QVariantMap gravityMap = dataBiome.toMap()["gravities"].toMap();
+        world->setGravity(experiment->getWorldDataMap(), gravityMap["axeX"].toDouble(),gravityMap["axeY"].toDouble(),gravityMap["axeZ"].toDouble());
     }
 
     Entity* e = createCreature(genome, world->getSpawnPosition(), result->getRessource());
@@ -1003,38 +1012,34 @@ void CreatureViewerWindow::toggleShadows() {
 
 void CreatureViewerWindow::setGravity()
 {
-    Ogre::Vector3 actual(world->getGravity().getX(), world->getGravity().getY(), world->getGravity().getZ());
-    qDebug() << actual.x << ":" << actual.y << ":" << actual.z;
-    world->setGravity(experiment->getWorldDataMap(), sbxAxeX->value(), sbxAxeY->value(), sbxAxeZ->value());
-    Ogre::Vector3 newGravity(world->getGravity().getX(), world->getGravity().getY(), world->getGravity().getZ());
-    qDebug() << newGravity.x << ":" << newGravity.y << ":" << newGravity.z;
-
-    Ogre::Radian angleSurX = angleSurAxe(actual, newGravity, ANGLE_SUR_AXE_X);
-    qDebug()<<angleSurX.valueDegrees();
-    Ogre::Radian angleSurY = angleSurAxe(actual, newGravity, ANGLE_SUR_AXE_Y);
-    qDebug()<<angleSurY.valueDegrees();
-    Ogre::Radian angleSurZ = angleSurAxe(actual, newGravity, ANGLE_SUR_AXE_Z);
-    qDebug()<<angleSurZ.valueDegrees();
-
     BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
     Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
     Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
 
-    Ogre::Quaternion rotX(angleSurX, Ogre::Vector3::UNIT_X);
-    Ogre::Quaternion rotY(angleSurY, Ogre::Vector3::UNIT_Y);
-    Ogre::Quaternion rotZ(angleSurZ, Ogre::Vector3::UNIT_Z);
+    QVariant dataBiome = experiment->getWorldDataMap()["biome"];
+    btScalar gravity = dataBiome.toMap()["gravity"].toFloat();
 
-    //cam->rotate(rotX);
-    //cam->rotate(rotY);
-    //cam->rotate(rotZ);
+    Ogre::Vector3 actual(world->getGravity().getX()/gravity, world->getGravity().getY()/gravity, world->getGravity().getZ()/gravity);
 
-    Ogre::Degree a;
-    Ogre::Vector3 b;
-    cam->getOrientation().ToAngleAxis(a, b);
-    qDebug() << a.valueDegrees();
-    qDebug() << b.x << " : " << b.y << " : " << b.z;
+    //OgreEngine * ogre = (OgreEngine *) factory->getEngineByName("Ogre");
+    //Ogre::SceneNode* gravityNode = (Ogre::SceneNode*)ogre->getOgreSceneManager()->getRootSceneNode()->getChild("gravity");
 
-    cam->yaw();
+    /*gravityNode->setPosition(cam->getPosition());
+    gravityNode->setDirection(actual);*/
+
+    world->setGravity(experiment->getWorldDataMap(), sbxAxeX->value(), sbxAxeY->value(), sbxAxeZ->value());
+    Ogre::Vector3 newGravity(world->getGravity().getX()/gravity, world->getGravity().getY()/gravity, world->getGravity().getZ()/gravity);
+
+    /*gravityNode->setDirection(newGravity);
+
+    Ogre::Quaternion orient = gravityNode->getOrientation();
+    orient.x = 0;
+    orient.z = 0;
+
+    cam->setOrientation(orient);*/
+
+    if(actual.y*newGravity.y < 0)
+        cam->roll(Ogre::Degree(180));
 }
 
 Ogre::Radian CreatureViewerWindow::angleSurAxe(Ogre::Vector3 vect1, Ogre::Vector3 vect2, Ogre::Vector3 axe)

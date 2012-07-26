@@ -25,6 +25,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "btfactory.h"
+#include "btworld.h"
 
 namespace GeneCraftCore {
 
@@ -44,6 +45,8 @@ protected:
     QVariantMap data;
 
     btDynamicsWorld* world;
+
+    btWorld* bulletWorld;
 };
 
 }

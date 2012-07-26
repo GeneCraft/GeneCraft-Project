@@ -53,6 +53,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "ressources/dbrecord.h"
 #include "ressources/ressourcesmanager.h"
 
+#include "engines/world/worldengine.h"
+
 #include "tools.h"
 
 #include <QtScript>
@@ -613,14 +615,18 @@ namespace GeneCraftCore {
     {
         e->getShape()->getRoot()->setOutputsFrom(fromBrain);
 
+        WorldEngine* we = static_cast<WorldEngine*>(factory->getEngineByName("World"));
+        we->setExperiment(this->exp);
+        we->setWorld((btoWorld*)this->world);
+
         for(int i = 0 ; i < exp->getStepsBeforeSetGravity() ; i++)
         {
             this->engineStep();
         }
 
-        QVariant data = exp->getWorldDataMap()["biome"];
-        QVariantMap gravityMap = data.toMap()["gravities"].toMap();
-        world->setGravity(exp->getWorldDataMap(), gravityMap["axeX"].toDouble(),gravityMap["axeY"].toDouble(),gravityMap["axeZ"].toDouble());
+        //QVariant data = exp->getWorldDataMap()["biome"];
+        //QVariantMap gravityMap = data.toMap()["gravities"].toMap();
+        //world->setGravity(exp->getWorldDataMap(), gravityMap["axeX"].toDouble(),gravityMap["axeY"].toDouble(),gravityMap["axeZ"].toDouble());
     }
 
     bool ExperimentManager::simulateEntity(Entity* e) {
