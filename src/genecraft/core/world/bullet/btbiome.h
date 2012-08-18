@@ -45,8 +45,6 @@ protected:
     QVariantMap data;
 
     btDynamicsWorld* world;
-
-    btWorld* bulletWorld;
 };
 
 }

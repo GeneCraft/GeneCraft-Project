@@ -18,11 +18,14 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "worldengine.h"
+
+#ifndef WORKER
 #include "Ogre.h"
+#include "btofactory.h"
 #include "bulletogre/bulletogreengine.h"
 #include "bullet/bulletengine.h"
 #include "ogre/ogreengine.h"
-#include "btofactory.h"
+#endif
 
 namespace GeneCraftCore {
 
@@ -53,10 +56,12 @@ void WorldEngine::beforeStep()
                 // Switch upside down if needed
                 if(gravityMap["axeY"].toDouble() > 0)
                 {
+#ifndef WORKER
                     BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
                     Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
                     Ogre::Camera * cam = sceneManager->getCamera("firstCamera");
                     cam->roll(Ogre::Degree(180));
+#endif
                 }
             }
 

@@ -10,6 +10,8 @@ TARGET = genecraft_worker
 CONFIG   += console silent
 CONFIG   -= app_bundle
 
+DEFINES += WORKER
+
 DESTDIR     = ../bin
 OBJECTS_DIR = ../obj
 

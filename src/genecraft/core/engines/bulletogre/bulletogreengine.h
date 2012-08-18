@@ -23,8 +23,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "engine.h"
-#include "Ogre.h"
-
+#include "lib/ogre/include/OGRE/Ogre.h"
 
 namespace GeneCraftCore {
 

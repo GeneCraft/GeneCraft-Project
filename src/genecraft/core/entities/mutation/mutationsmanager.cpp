@@ -708,6 +708,8 @@ QVariant MutationsManager::mutateFixation(const QVariant &fixVariant){
         case gripperEffector :
             effectorMap.insert("gripperOutput", mutateBrainOut(effectorMap["gripperOutput"]));
             break;
+        case legEffector:
+            effectorMap.insert("legOutput", mutateBrainOut(effectorMap["legOutput"]));
         case flyingEffector :
             effectorMap.insert("impulseX", mutateBrainOut(effectorMap["impulseX"]));
             effectorMap.insert("impulseY", mutateBrainOut(effectorMap["impulseY"]));
