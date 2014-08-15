@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud
+Copyright 2011, 2012 AurÃ©lien Da Campo, Cyprien Huissoud
 
 This file is part of Genecraft-Project.
 
@@ -141,7 +141,7 @@ namespace GeneCraftCore {
         if(readyRead%200 == 0) {
             this->ui->txtOut->clear();
         }
-        // Ajout du text Ã  la sortie de la console
+        // Ajout du text Ãƒ  la sortie de la console
         if(!process)
             return;
         QString data = process->readAllStandardError();

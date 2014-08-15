@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud
+Copyright 2011, 2012 AurÃ©lien Da Campo, Cyprien Huissoud
 
 This file is part of Genecraft-Project.
 
@@ -89,7 +89,7 @@ struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {
         // TODO
         //! If you don't want to consider collisions where the bodies are joined by a constraint, override needsCollision:
         /*! However, if you use a btCollisionObject for #body instead of a btRigidBody,
-         *  then this is unnecessary—checkCollideWithOverride isn't available */
+         *  then this is unnecessaryÂ—checkCollideWithOverride isn't available */
 //        virtual bool needsCollision(btBroadphaseProxy* proxy) const {
 //                // superclass will check m_collisionFilterGroup and m_collisionFilterMask
 //                if(!btCollisionWorld::ContactResultCallback::needsCollision(proxy))

@@ -1,5 +1,5 @@
 /*
-Copyright 2011, 2012 Aur�lien Da Campo, Cyprien Huissoud
+Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud
 
 This file is part of Genecraft-Project.
 
@@ -661,7 +661,7 @@ namespace GeneCraftCore {
            }
            // Insert
            else if(bonesStructural->checkAdd()) {
-               // Un copie de l'os précédent est plus intéressante qu'un os totalement random
+               // Un copie de l'os prÃ©cÃ©dent est plus intÃ©ressante qu'un os totalement random
                // The new bone
                QVariant oldBone = bonesList.takeAt(i);
                QVariantMap newBoneMap = oldBone.toMap();

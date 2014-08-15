@@ -103,7 +103,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
    <item row="3" column="2">
     <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Aurélien Da Campo &amp; Cyprien Huissoud</string>
+      <string>AurÃ©lien Da Campo &amp; Cyprien Huissoud</string>
      </property>
     </widget>
    </item>

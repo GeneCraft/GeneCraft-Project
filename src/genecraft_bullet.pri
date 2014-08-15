@@ -1,4 +1,4 @@
-#Copyright 2011, 2012 Aurélien Da Campo, Cyprien Huissoud
+#Copyright 2011, 2012 AurÃ©lien Da Campo, Cyprien Huissoud
 #
 #This file is part of Genecraft-Project.
 #
