@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BONE_H
 
 #include <QObject>
+#include <QDebug>
 #include <QVariant>
 
 #include "genecraftcoreclasses.h"
@@ -28,7 +29,15 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 #include "bullet/shapes/btbone.h"
 
+#include "genome/genomemodifier.h"
+
+#include "symmetry.h"
+#include "recursion.h"
+
 namespace GeneCraftCore {
+
+    class Symmetry;
+    class Recursion;
 
 class Bone : public QObject
 {
@@ -49,6 +58,7 @@ public:
    * @param initTransform the initial position of the muscle
    */
    Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btScalar radius, btScalar lenght, btScalar endFixRadius, const btTransform &initTransform);
+
    /**
     * @brief destruct and free used ressources
     *
@@ -260,6 +270,24 @@ public:
     */
    void disconnectMotor(int i);
 
+   /**
+     Referent bone
+     */
+   void setRef(Bone* ref) { this->ref = ref; }
+   Bone* getRef() { return this->ref;}
+   void addReferee(Bone* referee) { this->referees.prepend(referee); }
+   QList<Bone*> getReferees() { return this->referees; }
+
+   void setModifiers(QList<GenomeModifier*> modifiers) { this->usedModifiers.append(modifiers); qDebug() << "used: " << usedModifiers.size(); }
+
+   /**
+     Special genome element
+     */
+   void       setSymmetry(Symmetry* sym) { this->sym = sym; }
+   Symmetry*  getSymmetry() { return this->sym; }
+   void       setRecursion(Recursion* rec) { this->rec = rec; }
+   Recursion* getRecursion() { return this->rec; }
+
 protected:
 
    // Shape
@@ -287,6 +315,14 @@ protected:
 
    // Shape factory
    btShapesFactory* shapesFactory; /**< TODO */
+
+   // Referent bone
+   Bone*         ref;
+   QList<Bone*>  referees;
+   QList<GenomeModifier*> usedModifiers;
+
+   Symmetry* sym;
+   Recursion* rec;
 
 };
 

@@ -110,7 +110,11 @@ SOURCES += \
     genecraft/core/experiment/resultsmanager.cpp \
     genecraft/core/utils/tools.cpp \
     genecraft/core/engines/terrain/terrain.cpp \
-    genecraft/core/entities/effectors/brainoutmotor.cpp
+    genecraft/core/entities/effectors/brainoutmotor.cpp \
+    genecraft/core/entities/body/symmetry.cpp \
+    genecraft/core/entities/body/recursion.cpp \
+    genecraft/core/factories/genome/genomemodifier.cpp \
+    genecraft/core/factories/genome/genomebuilder.cpp
 
 HEADERS += \
     genecraft/core/engines/engine.h \
@@ -171,9 +175,17 @@ HEADERS += \
     genecraft/core/experiment/resultsmanager.h \
     genecraft/core/utils/tools.h \
     genecraft/core/engines/terrain/terrain.h \
-    genecraft/core/entities/effectors/brainoutmotor.h
+    genecraft/core/entities/effectors/brainoutmotor.h \
+    genecraft/core/entities/body/symmetry.h \
+    genecraft/core/entities/body/recursion.h \
+    genecraft/core/factories/genome/genomemodifier.h \
+    genecraft/core/factories/genome/genomebuilder.h
 
 RESOURCES += \
     genecraft/core/ressources/core.qrc
+
+
+
+
 
 

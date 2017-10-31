@@ -22,11 +22,13 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "genecraftcoreclasses.h"
 #include "widgets/plot/fitnessplot.h"
+#include "widgets/graphicalwidget.h"
 #include <QObject>
 #include <QMap>
 
 #include <QTimer>
 #include <QTime>
+#include <QMutex>
 
 namespace GeneCraftCore {
 
@@ -40,6 +42,7 @@ namespace GeneCraftCore {
         SimulationManager(QMap<QString, Engine*>, QObject *parent = 0);
 
         void addEngine(QString name, Engine *engine);
+        void addGraphicalWidget(GraphicalWidget* widget);
         void removeEngine(QString name);
 
         inline int getPhysicsFreq()
@@ -71,6 +74,8 @@ namespace GeneCraftCore {
         Engine* renderEngine;
         Engine* translationEngine;
         Engine* eventsManager;
+
+        QList<GraphicalWidget*> graphWidgets;
 
         // Execution timer
         int nbSteps;

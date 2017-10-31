@@ -46,7 +46,8 @@ SOURCES += \
     genecraft/core/ui/widgets/experiments/conversionctrl.cpp \
     genecraft/core/ui/widgets/plot/fitnessplot.cpp \
     genecraft/core/ui/widgets/experiments/floordialog.cpp \
-    genecraft/core/utils/uitools.cpp
+    genecraft/core/utils/uitools.cpp \
+    genecraft/core/ui/widgets/graphicalwidget.cpp
 
 HEADERS += \
     genecraft/core/ui/widgets/experiments/structuralmutationcontroller.h \
@@ -71,7 +72,8 @@ HEADERS += \
     genecraft/core/ui/widgets/experiments/conversionctrl.h \
     genecraft/core/ui/widgets/plot/fitnessplot.h \
     genecraft/core/ui/widgets/experiments/floordialog.h \
-    genecraft/core/utils/uitools.h
+    genecraft/core/utils/uitools.h \
+    genecraft/core/ui/widgets/graphicalwidget.h
 
 FORMS += \
     genecraft/core/ui/widgets/entities/generic6dofconstraintcontroller.ui \
@@ -94,3 +96,5 @@ FORMS += \
 
 RESOURCES += \
     genecraft/core/ressources/ressources.qrc
+
+

@@ -114,6 +114,7 @@ namespace GeneCraftCore {
 
         if(fitness)
             fitness->step();
+
     }
 
     void SimulationManager::renderUpdate() {
@@ -132,6 +133,12 @@ namespace GeneCraftCore {
         this->eventsManager->afterStep();
         //this->translationEngine->afterStep();
         this->renderEngine->afterStep();
+
+        // Update some graphical widgets
+        foreach(GraphicalWidget* wi, graphWidgets) {
+            wi->step();
+        }
+
     }
 
     void SimulationManager::setPhysicsFreq(int stepBySec) {
@@ -139,6 +146,10 @@ namespace GeneCraftCore {
         if(stepBySec < 1)
             stepBySec = 1;
         this->stepTimer->setInterval(1000/stepBySec);
+    }
+
+    void SimulationManager::addGraphicalWidget(GraphicalWidget *widget) {
+        this->graphWidgets.append(widget);
     }
 }
 

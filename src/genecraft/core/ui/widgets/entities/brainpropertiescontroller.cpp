@@ -180,20 +180,8 @@ void BrainPropertiesController::selectSensorFixation()
 void BrainPropertiesController::setBrainFrequency()
 {
     if(entity){
-
         entity->getBrain()->setFrequency(ui->sBrainFrequency->value());
         ui->lBrainFrequency->setText(QString::number(entity->getBrain()->getFrequency()));
-
-        //int size = pow(2,ui->cbBrainSize->currentIndex() + 1);
-        //int size = ui->sBrainPluggridSize->value();
-        //ui->lBrainPluggridSize->setText(QString::number(ui->sBrainPluggridSize->value()));
-        //entity->getBrain()->getPlugGrid()->setSize(size);
-
-        // update brain in inspectors (important to refresh neurons (QGraphicsRectItem))
-        //this->brainViz->setBrain(entity->getBrain());
-        //this->brainDezViz->setBrain(entity->getBrain());
-
-        //emit sEntityUpdated(entity);
     }
 }
 

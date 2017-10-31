@@ -108,6 +108,9 @@ namespace GeneCraftCore {
                         break;
                     }
 
+                    if(x == 0 && z == 0)
+                        y = 1;
+
                     btVector3 size(terrain->width, terrain->height + terrain->randomHeight, terrain->width);
 
                     btVector3 pos(x*terrain->width,
@@ -180,6 +183,7 @@ namespace GeneCraftCore {
 
     void Terrain::removeTerrain(TerrainData* terrain) {
         this->terrains.removeAll(terrain);
+        qDeleteAll(terrain->blocs);
         delete terrain;
     }
 }

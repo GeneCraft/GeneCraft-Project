@@ -57,7 +57,7 @@ btScalar roundPrecision(btScalar n, int precision = 2)
 }
 
 BonePropertiesController::BonePropertiesController(QWidget *parent) :
-    QWidget(parent), ui(new Ui::BonePropertiesController), bone(0)
+    GraphicalWidget(parent), ui(new Ui::BonePropertiesController), bone(0)
 {
     ui->setupUi(this);
 
@@ -132,8 +132,8 @@ void BonePropertiesController::entityDeleted(Entity *) {
     setBone(NULL);
 }
 
-void BonePropertiesController::update() {
-    if(this->bone != NULL) {
+void BonePropertiesController::step() {
+    /*if(this->bone != NULL && this->bone->getRotationalMotorsEffector() != NULL) {
         // X
         BrainOutMotor* muscle = this->bone->getRotationalMotorsEffector()->getBrainOutputs(0);
         if(muscle) {
@@ -161,7 +161,7 @@ void BonePropertiesController::update() {
             this->ui->lblContractZ->setText(QString::number(0));
             this->ui->lblExpandZ->setText(QString::number(0));
         }
-    }
+    }*/
 }
 
 void BonePropertiesController::setOutFrom()
@@ -202,6 +202,34 @@ void BonePropertiesController::changeRadiusFromSlider(int value)
 
 void BonePropertiesController::deleteBone()
 {
+    // Symmetric bone ?
+
+    // Recursiv bone ?
+    if(bone->getSymmetry()) {
+        Symmetry* sym = bone->getSymmetry();
+        // Need to delete the copy
+        if(sym->copy->getParentFixation() != NULL)
+            sym->copy->getParentFixation()->removeBone(sym->copy);
+
+        sym->copy->remove();
+        emit sBoneDeleted(sym->copy); // will set bone to NULL
+        delete sym->copy;
+
+    } else if(bone->getRecursion()) {
+        // Delete as usual, that'll delete child too
+    } else { // Delete copy also
+        // Delete the same on the other side
+        foreach(Bone* b, bone->getReferees()) {
+            if(b->getParentFixation() != NULL)
+                b->getParentFixation()->removeBone(bone);
+
+            b->remove();
+            emit sBoneDeleted(b); // will set bone to NULL
+            delete b;
+        }
+    }
+
+
     if(bone->getParentFixation() != NULL)
         bone->getParentFixation()->removeBone(bone);
 
@@ -213,6 +241,41 @@ void BonePropertiesController::deleteBone()
 
 void BonePropertiesController::deleteBoneAndAttachChildrenToParent()
 {
+    if(bone->getSymmetry()) {
+        // Delete the copy as-well
+        Bone* b = bone->getSymmetry()->copy;
+
+        if(b->getParentFixation() != NULL)
+            b->getParentFixation()->removeBone(b);
+
+        b->remove();
+        emit sBoneDeleted(b); // will set bone to NULL
+        delete b;
+
+    } else if(bone->getRecursion()) {
+        // Delete all child and child-tree
+        foreach(Bone* b, bone->getRecursion()->childs) {
+
+            if(b->getParentFixation() != NULL)
+                b->getParentFixation()->removeBone(b);
+
+            b->remove();
+            emit sBoneDeleted(b); // will set bone to NULL
+            delete b;
+        }
+    } else {
+        // Delete the same on the other side
+        foreach(Bone* b, bone->getReferees()) {
+            if(b->getParentFixation() != NULL)
+                b->getParentFixation()->removeBone(b);
+
+            b->removeOnly();
+            emit sBoneDeleted(b); // will set bone to NULL
+            delete b;
+        }
+    }
+
+
     if(bone->getParentFixation() != NULL)
         bone->getParentFixation()->removeBone(bone);
 
@@ -310,10 +373,17 @@ void BonePropertiesController::saveChanges()
 
 void BonePropertiesController::setBone(Bone * bone)
 {
-    this->bone = bone;
+
 
     if(bone)
     {
+        // Try to get the ref
+        while(bone->getRef()) {
+            bone = bone->getRef();
+        }
+
+        this->bone = bone;
+
         this->setEnabled(true);
 
         // Bone outputs

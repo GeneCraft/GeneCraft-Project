@@ -18,6 +18,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "creaturefactory.h"
+#include "genome/genomebuilder.h"
 #include "families/genericfamily.h"
 #include "entity.h"
 
@@ -48,10 +49,10 @@ namespace GeneCraftCore {
 
         // Generic entity
         if(entityData["type"].toString() == "generic")
-            return GenericFamily::createEntity(entityData, shapesFactory, position);
+            return GenomeBuilder::buildEntity(entityData, shapesFactory, position);
         // Whatever
         else if(entityData["type"].toString() == "symetric")
-            return GenericFamily::createEntity(entityData, shapesFactory, position);
+            return GenomeBuilder::buildEntity(entityData, shapesFactory, position);
         // Whatever else
         return NULL;
     }

@@ -85,7 +85,6 @@ namespace GeneCraftCore {
 
         // flatland
         if(floor["type"].toString() == "flatland") {
-                    qDebug() << "first";
                     /*mGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
                     mGlobals->setMaxPixelError(0);
 

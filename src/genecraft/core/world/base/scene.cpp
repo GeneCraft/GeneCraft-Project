@@ -66,7 +66,7 @@ namespace GeneCraftCore {
 
         QVariantList staticShapesList = data.value("shapes").toList();
 
-        //floor["type"] = "randomBoxes";
+        floor["type"] = "randomBoxes";
         // Add the entry to the terrain engine
         terrainEngine->setShapesFactory(world->getShapesFactory());
         terrainData = terrainEngine->addTerrain(floor);
