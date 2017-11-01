@@ -23,7 +23,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "result.h"
 #include <QList>
 #include <QDebug>
-#include <QVariantMap>
+#include <QJsonObject>
 #include <QDir>
 #include "genecraftcoreclasses.h"
 #include "bullet/btworld.h"
@@ -36,8 +36,8 @@ namespace GeneCraftCore {
 
         Experiment();
         ~Experiment();
-        Experiment(QVariant data);
-        QVariant serialize();
+        Experiment(QJsonObject data);
+        QJsonObject serialize();
 
         // -----------------
         // -- Information --
@@ -114,15 +114,15 @@ namespace GeneCraftCore {
         // -- World --
         // -----------
 
-        QVariantMap getWorldDataMap() { return worldDataMap; }
-        void setWorldData(QVariantMap worldDataMap) { this->worldDataMap = worldDataMap; }
+        QJsonObject getWorldDataMap() { return worldDataMap; }
+        void setWorldData(QJsonObject worldDataMap) { this->worldDataMap = worldDataMap; }
 
         // ----------
         // -- Seed --
         // ----------
 
-        QVariantMap getSeedInfo() { return this->seedInfo; }
-        void setSeedInfo(QVariantMap seedInfo) { this->seedInfo = seedInfo; }
+        QJsonObject getSeedInfo() { return this->seedInfo; }
+        void setSeedInfo(QJsonObject seedInfo) { this->seedInfo = seedInfo; }
 
         // -----------
         // -- Other --
@@ -162,10 +162,10 @@ namespace GeneCraftCore {
         MutationsManager *mutationsManager;
 
         // World
-        QVariantMap worldDataMap;
+        QJsonObject worldDataMap;
 
         // Seed
-        QVariantMap seedInfo;
+        QJsonObject seedInfo;
 
         QString evalFunction;
         QString validityFunction;

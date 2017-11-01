@@ -39,24 +39,24 @@ ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
 }
 
 // To create from serialization data
-ContactSensor::ContactSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation) {
+ContactSensor::ContactSensor(QJsonObject data, Fixation * fixation) : Sensor(data, fixation) {
 
-    collided = new BrainIn(data.toMap()["collisionInput"]);
+    collided = new BrainIn(data["collisionInput"]);
 
     brainInputs.append(collided);
 }
 
 // To serialize
-QVariant ContactSensor::serialize()
+QJsonObject ContactSensor::serialize()
 {
-    QVariantMap data = Sensor::serialize().toMap();
+    QJsonObject data = Sensor::serialize();
     data.insert("collisionInput", collided->serialize());
     return data;
 }
 
-QVariant ContactSensor::generateEmpty()
+QJsonObject ContactSensor::generateEmpty()
 {
-    QVariantMap data = Sensor::generateEmpty("Contact sensor", contactSensor).toMap();
+    QJsonObject data = Sensor::generateEmpty("Contact sensor", contactSensor);
 
     BrainIn collided(0,1);
 
@@ -90,13 +90,13 @@ void ContactSensor::step() {
     for (int i=0;i<numManifolds;i++)
     {
             btPersistentManifold* contactManifold =  fixation->getShapesFactory()->getWorld()->getBulletWorld()->getDispatcher()->getManifoldByIndexInternal(i);
-            btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
-            btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+            const btCollisionObject* obA = static_cast<const btCollisionObject*>(contactManifold->getBody0());
+            const btCollisionObject* obB = static_cast<const btCollisionObject*>(contactManifold->getBody1());
 
             // contact ?
             if(contactManifold->getNumContacts() > 0)
             {
-                btCollisionObject* object;
+                const btCollisionObject* object;
 
                 // get object in contact
                 if(obA == (btCollisionObject *) fixation->getRigidBody())

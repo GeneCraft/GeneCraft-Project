@@ -47,16 +47,16 @@ public:
     ContactSensor(Fixation * fixation);
 
     // To create from serialization data
-    ContactSensor(QVariant data, Fixation * fixation);
+    ContactSensor(QJsonObject data, Fixation * fixation);
 
     // To indicate collision
     //void collideStaticObject(const btCollisionObject *object, btVector3 contactPoint);
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To create empty sensor serialization data
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // To update brain inputs values
     void step();

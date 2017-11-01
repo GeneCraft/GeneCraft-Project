@@ -39,14 +39,14 @@ namespace GeneCraftCore {
         /**
           * Load data from ressource
           */
-        virtual QVariant load() = 0;
+        virtual QJsonObject load() = 0;
 
         /**
           * Save data to ressource
           *
           * @return 0 if ok, else error code.
           */
-        virtual int save(QVariant data) = 0;
+        virtual int save(QJsonObject data) = 0;
 
         /**
           * Remove ressource
@@ -61,22 +61,19 @@ namespace GeneCraftCore {
         /**
           * Create a ressource from a ressource metadata
           */
-        static Ressource* unserialize(QVariant v);
+        static Ressource* unserialize(QJsonObject v);
 
         /**
-          * Create an include QVariant bloc,
+          * Create an include QJsonObject bloc,
           * which can be loaded by the static Ressource::load function
           */
-        static QVariant serialize(JsonFile *r);
-        static QVariant serialize(DbRecord *r);
+        static QJsonObject serialize(JsonFile *r);
+        static QJsonObject serialize(DbRecord *r);
 
         /**
           * Load data from either a ressource data, or the real data
           */
-        static QVariant load(QVariant data);
-
-        static QString beautifullJson(QVariant data);
-        static QString beautifullJson(QString data);
+        static QJsonObject load(QJsonObject data);
 
     };
 

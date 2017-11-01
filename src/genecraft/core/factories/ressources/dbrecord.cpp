@@ -24,30 +24,29 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QNetworkRequest>
 #include <QEventLoop>
 
-#include "qxtjson.h"
-
 #include <QDebug>
 #include <QVariantMap>
+#include <QJsonDocument>
 
 namespace GeneCraftCore {
-    DbRecord::DbRecord(DataBase db, QString id, QVariant postData, QObject *parent) :
+    DbRecord::DbRecord(DataBase db, QString id, QJsonObject postData, QObject *parent) :
         Ressource(parent), db(db), id(id), rev(""), postData(postData)
     {
     }
 
-    QVariant DbRecord::load() {
+    QJsonObject DbRecord::load() {
         error = true;
         if(postData == QVariant()) {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
             r = NULL;
             this->request(url, RGET);
             if(!r)
-                return QVariant();
+                return QJsonObject();
 
             r->deleteLater();
             if(r->error() == 0) {
                 error = false;
-                QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+                QJsonObject v = QJsonDocument::fromJson(r->readAll()).object();
                 if(v.contains("_id")) {
                     this->id = v.find("_id").value().toString();
                     this->rev = v.find("_rev").value().toString();
@@ -55,25 +54,25 @@ namespace GeneCraftCore {
                 return v;
             } else {
                 qDebug() << r->readAll();
-                QVariantMap v;
+                QJsonObject v;
                 v.insert("error", r->errorString());
                 return v;
             }
-            return QVariant();
+            return QJsonObject();
         } else {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
             r = NULL;
-            this->request(url, RPOST, QxtJSON::stringify(postData));
+            this->request(url, RPOST, QJsonDocument::fromVariant(postData).toJson());
             if(!r) {
                 error = true;
-                return QVariant();
+                return QJsonObject();
             }
 
             qDebug() << r->error();
             r->deleteLater();
             if(r->error() == 0) {
                 error = false;
-                QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+                QJsonObject v = QJsonDocument::fromJson(r->readAll()).object();
                 if(v.contains("_id")) {
                     this->id = v.find("_id").value().toString();
                     this->rev = v.find("_rev").value().toString();
@@ -81,26 +80,25 @@ namespace GeneCraftCore {
                 return v;
             } else {
                 qDebug() << r->readAll();
-                QVariantMap v;
+                QJsonObject v;
                 v.insert("error", r->errorString());
                 return v;
             }
-            return QVariant();
+            return QJsonObject();
         }
     }
 
-    int DbRecord::save(QVariant data) {
+    int DbRecord::save(QJsonObject data) {
         QString url = QString("%1:%2/%3").arg(db.url, QString::number(db.port), db.dbName);
 
         if(this->id != "")
             url += "/" + this->id;
 
-        QVariantMap mData = data.toMap();
 
         if(this->id != "")
-            mData.insert("_id", this->id);
+            data.insert("_id", this->id);
         if(this->rev != "")
-            mData.insert("_rev", this->rev);
+            data.insert("_rev", this->rev);
 
         RequestType type = RPUT;
 
@@ -108,12 +106,12 @@ namespace GeneCraftCore {
             type = RPOST;
 
         r = NULL;
-        this->request(url, type, QxtJSON::stringify(mData));
+        this->request(url, type, QJsonDocument::fromVariant(data).toJson());
         if(!r)
             return -1;
 
         if(r->error() == 0) {
-            QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+            QJsonObject v = QJsonDocument::fromJson(r->readAll()).object();
             if(v.contains("id")) {
                 this->id = v.find("id").value().toString();
                 this->rev = v.find("rev").value().toString();
@@ -148,7 +146,7 @@ namespace GeneCraftCore {
 
         qDebug() << r->error();
         if(r->error() == 0) {
-            QVariantMap v = QxtJSON::parse(r->readAll()).toMap();
+            QJsonObject v = QJsonDocument::fromJson(r->readAll()).object();
             this->error = false;
 
         } else {

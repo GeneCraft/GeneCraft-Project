@@ -53,16 +53,15 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "ressources/ressourcesmanager.h"
 
 #include "tools.h"
+#include <QJsonArray>
 
-#include <QtScript>
-#include <qxtjson.h>
 
 namespace GeneCraftCore {
 
     /**
       * Creating an experiment manager for a given experiment
       */
-    ExperimentManager::ExperimentManager(btFactory* factory, Experiment* exp, QVariant workerData) {
+    ExperimentManager::ExperimentManager(btFactory* factory, Experiment* exp, QJsonObject workerData) {
         this->factory = factory;
         this->exp = exp;
         this->load(workerData);
@@ -71,7 +70,7 @@ namespace GeneCraftCore {
     /**
       * Creating an experiment manager for a giver experiment data
       */
-    ExperimentManager::ExperimentManager(btFactory* factory, QVariant expData, QVariant workerData) {
+    ExperimentManager::ExperimentManager(btFactory* factory, QJsonObject expData, QJsonObject workerData) {
         this->factory = factory;
         this->exp = new Experiment(Ressource::load(expData));
         this->load(workerData);
@@ -79,21 +78,20 @@ namespace GeneCraftCore {
 
 
     //protected
-    void ExperimentManager::load(QVariant workerData) {
-        QVariantMap workerMap = workerData.toMap();
-        this->maxGen          = workerMap["maxGen"].toInt();
-        this->popSize         = workerMap["popSize"].toInt();
-        this->workerName      = workerMap["name"].toString();
+    void ExperimentManager::load(QJsonObject workerData) {
+        this->maxGen          = workerData["maxGen"].toInt();
+        this->popSize         = workerData["popSize"].toInt();
+        this->workerName      = workerData["name"].toString();
 
-        int bestResultsStored   = workerMap["nbBestResults"].toInt();
-        int randomResultsStored = workerMap["nbRandomResults"].toInt();
+        int bestResultsStored   = workerData["nbBestResults"].toInt();
+        int randomResultsStored = workerData["nbRandomResults"].toInt();
 
-        this->results = new ResultsManager(exp,bestResultsStored, randomResultsStored,workerName);
+        this->results = new ResultsManager(exp,bestResultsStored, randomResultsStored, workerName);
         if(exp->isOnline()) {
             this->ressources = new RessourcesManager(this->results->getDb(), QDir());
         }
 
-        QVariantMap selectionMap   = workerMap["selection"].toMap();
+        QJsonObject selectionMap   = workerData["selection"].toObject();
         this->probFromBestsPop     = selectionMap["bestPop"].toDouble();
         this->probFromBestsResult  = selectionMap["bestResult"].toDouble();
         this->probFromRandomPop    = selectionMap["randomPop"].toDouble();
@@ -121,7 +119,7 @@ namespace GeneCraftCore {
             Statistic* stat = stats[statName];
             // Insert a new properties of our top level object
             // With the name of the statistic
-            QScriptValue statObject = scriptEngine.newQObject(stat);
+            QJSValue statObject = scriptEngine.newQObject(stat);
             entityObj.setProperty(statName, statObject);
         }
 
@@ -274,9 +272,9 @@ namespace GeneCraftCore {
     }
 
     // A new entity
-    QVariant ExperimentManager::randomNewEntity() {
+    QJsonObject ExperimentManager::randomNewEntity() {
         // How to create the new entities ?
-        QVariantMap seedInfo = exp->getSeedInfo();
+        QJsonObject seedInfo = exp->getSeedInfo();
         QString type = seedInfo["type"].toString();
         // From a family
         if(type == "family") {
@@ -305,7 +303,7 @@ namespace GeneCraftCore {
                 Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
                 e->setup();
                 e->setGeneration(0);
-                QVariant genome = e->serialize();
+                QJsonObject genome = e->serialize();
                 // Tree starting mutations !
                 for(int i = 0; i < 3; i++)
                     genome = mutations->mutateEntity(genome);
@@ -318,7 +316,7 @@ namespace GeneCraftCore {
                 Entity* e = GenericFamily::createVirginEntity(shapesFactory, Tools::random(0.2, 1.0), position);
                 e->setup();
                 e->setGeneration(0);
-                QVariant genome = e->serialize();
+                QJsonObject genome = e->serialize();
                 // Tree starting mutations !
                 for(int i = 0; i < 3; i++)
                     genome = mutations->mutateEntity(genome);
@@ -334,18 +332,18 @@ namespace GeneCraftCore {
             e->setup();
             e->setGeneration(0);
             // Serialisation
-            QVariant genome = e->serialize();
+            QJsonObject genome = e->serialize();
             delete e;
             delete family;
             return genome;
         } else if(type == "fixedGenomes") {
             //qDebug() << "loading from fixed genome";
             // TODO FIXME !
-            static QVariantList genomes = QVariantList();
-            if(genomes == QVariantList()) {
-                QVariantList genomesInfo = seedInfo["genomes"].toList();
-                foreach(QVariant genome, genomesInfo) {
-                    genomes.append(Ressource::load(genome));
+            static QJsonArray genomes = QJsonArray();
+            if(genomes == QJsonArray()) {
+                QJsonArray genomesInfo = seedInfo["genomes"].toArray();
+                foreach(QJsonValue genome, genomesInfo) {
+                    genomes.append(Ressource::load(genome.toObject()));
                 }
             }
             int randomGen = qrand()%genomes.size();
@@ -454,7 +452,7 @@ namespace GeneCraftCore {
             // To avoid saving rounding problematic
             // Could still append if the entity modified himself during or
             // At the beginning of the simulation
-            r->setGenome(QxtJSON::parse(QxtJSON::stringify(r->getGenome())));
+            r->setGenome(QJsonDocument::fromJson(QJsonDocument::fromVariant(r->getGenome()).toJson()).toObject());
 
             qDebug() << "Evaluation of a specimen" << exp->getNbRun() << "times.";
             for(int run = 0; run < exp->getNbRun(); run++) {
@@ -493,7 +491,7 @@ namespace GeneCraftCore {
 
                         // Store the statistics inside the result
                         QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
-                        r->setStatistics(QxtJSON::parse(stats));
+                        r->setStatistics(QJsonDocument::fromJson(stats).object());
 
                         // env pressure on genes
                         r->setGenome(e->serialize());
@@ -554,7 +552,7 @@ namespace GeneCraftCore {
         e->getShape()->getRoot()->setOutputsFrom(fromNormal); // Brain
         this->engineStep();
 
-        QScriptValue valid = this->validityFunc.call();
+        QJSValue valid = this->validityFunc.call();
         if(!valid.toBool()) {
             qDebug() << "user validity check fail";
             return false;
@@ -610,13 +608,13 @@ namespace GeneCraftCore {
                 return false;
             }
 
-            QScriptValue died = dieFunc.call();
+            QJSValue died = dieFunc.call();
             if(died.toBool()) {
                 qDebug() << "creature die (user function)";
                 return false;
             }
 
-            QScriptValue endV = endFunc.call(QScriptValue(), QScriptValueList() << i);
+            QJSValue endV = endFunc.call(QJSValueList() << i);
             if(endV.toBool()) {
                 qDebug() << "end of simulation (user triggered)";
                 return true;

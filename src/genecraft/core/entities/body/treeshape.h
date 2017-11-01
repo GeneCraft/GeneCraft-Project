@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define TREESHAPE_H
 #include "genecraftcoreclasses.h"
 #include <QObject>
+#include <QJsonObject>
 #include "LinearMath/btTransform.h"
 
 // TODO: INHERIT : Shape, -> CREATE CLASS SHAPE with method setup AND print
@@ -47,7 +48,7 @@ namespace GeneCraftCore {
           */
         void setup();
 
-        QVariant serialize();
+        QJsonObject serialize();
 
     private:
 

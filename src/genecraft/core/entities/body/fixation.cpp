@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 // Qt
 #include <QStringBuilder>
-#include <QVariantList>
+#include <QJsonArray>
 
 // Engine
 #include "bullet/bulletengine.h"
@@ -400,14 +400,14 @@ namespace GeneCraftCore {
     // -- SERIALIZATION --
     // -------------------
 
-    QVariant Fixation::serialize()
+    QJsonObject Fixation::serialize()
     {
-        QVariantMap fixation;
-        QVariantList bonesVariantList;
-        QVariantList sensorsVariantList;
-        QVariantList effectorsVariantList;
+        QJsonObject fixation;
+        QJsonArray bonesVariantList;
+        QJsonArray sensorsVariantList;
+        QJsonArray effectorsVariantList;
 
-        fixation.insert("radius",QVariant((double)radius));
+        fixation.insert("radius", (double)radius);
 
         foreach(Bone *bone, bones) {
             bonesVariantList.append(bone->serialize());
@@ -428,15 +428,15 @@ namespace GeneCraftCore {
         return fixation;
     }
 
-    QVariant Fixation::generateEmpty()
+    QJsonObject Fixation::generateEmpty()
     {
-        QVariantMap fixation;
+        QJsonObject fixation;
 
         // TODO right values ???
         fixation.insert("radius",(double) Tools::random(0.1,0.5));
-        fixation.insert("bones", QVariantList());
-        fixation.insert("sensors", QVariantList());
-        fixation.insert("effectors", QVariantList());
+        fixation.insert("bones", QJsonArray());
+        fixation.insert("sensors", QJsonArray());
+        fixation.insert("effectors", QJsonArray());
 
         return fixation;
     }

@@ -43,8 +43,8 @@ namespace GeneCraftCore {
         }
     }
 
-    QVariant Brain::serialize() {
-        QVariantMap data;
+    QJsonObject Brain::serialize() {
+        QJsonObject data;
         data.insert("frequency", this->frequency);
         return data;
     }

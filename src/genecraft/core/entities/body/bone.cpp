@@ -42,6 +42,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 // World
 #include "bullet/btworld.h"
+#include <QJsonArray>
 
 
 namespace GeneCraftCore {
@@ -50,7 +51,7 @@ Bone::Bone(btShapesFactory *shapesFactory, btScalar yAxis, btScalar zAxis, btSca
     : QObject(), yAxis(yAxis), zAxis(zAxis), parentFix(NULL), motorsEffector(NULL)
 {
 
-    motorModifierData = QVariant();
+    motorModifierData = QJsonObject();
     parentCt = 0;
     body         = shapesFactory->createBone(length, radius, endFixRadius, initTransform);
     rigidBody    = body->getRigidBody();
@@ -133,8 +134,8 @@ void Bone::setup()
 
 
         // add motor modifier
-        if(motorModifierData != QVariant()) {
-            QVariantMap motor = motorModifierData.toMap();
+        if(motorModifierData != QJsonObject()) {
+            QJsonObject motor = motorModifierData;
             if(!motor.contains("typename")) {
                 motor.insert("typename", "Rotational Motor");
                 motor.insert("type", (int)rotationalMotorEffector);
@@ -258,33 +259,33 @@ void Bone::setZAxis(btScalar zAxis) {
 // -- SERIALIZATION --
 // -------------------
 
-QVariant Bone::serialize()
+QJsonObject Bone::serialize()
 {
-    QVariantMap bone;
+    QJsonObject bone;
 
     // Length & radius
-    bone.insert("length",QVariant((double)getLength()));
-    bone.insert("radius",QVariant((double)getRadius()));
+    bone.insert("length",(double)getLength());
+    bone.insert("radius",(double)getRadius());
 
     // Yaw & Roll
-    QVariantMap localRotation;
-    localRotation.insert("y",QVariant((double)getYAxis()));
-    localRotation.insert("z",QVariant((double)getZAxis()));
+    QJsonObject localRotation;
+    localRotation.insert("y",(double)getYAxis());
+    localRotation.insert("z",(double)getZAxis());
     bone.insert("localRotation",localRotation);
 
     // Limits
-    QVariantMap lowerlimits, upperlimits;
+    QJsonObject lowerlimits, upperlimits;
     btVector3 angularLowerLimits, angularUpperLimits;
     parentCt->getAngularLowerLimit(angularLowerLimits);
     parentCt->getAngularUpperLimit(angularUpperLimits);
 
-    lowerlimits.insert("x",QVariant((double)angularLowerLimits.x()));
-    lowerlimits.insert("y",QVariant((double)angularLowerLimits.y()));
-    lowerlimits.insert("z",QVariant((double)angularLowerLimits.z()));
+    lowerlimits.insert("x",(double)angularLowerLimits.x());
+    lowerlimits.insert("y",(angularLowerLimits.y()));
+    lowerlimits.insert("z",(double)angularLowerLimits.z());
 
-    upperlimits.insert("x",QVariant((double)angularUpperLimits.x()));
-    upperlimits.insert("y",QVariant((double)angularUpperLimits.y()));
-    upperlimits.insert("z",QVariant((double)angularUpperLimits.z()));
+    upperlimits.insert("x",(double)angularUpperLimits.x());
+    upperlimits.insert("y",(double)angularUpperLimits.y());
+    upperlimits.insert("z",(double)angularUpperLimits.z());
 
     bone.insert("lowerLimits",lowerlimits);
     bone.insert("upperLimits",upperlimits);
@@ -298,23 +299,23 @@ QVariant Bone::serialize()
     return bone;
 }
 
-QVariant Bone::generateEmpty() {
+QJsonObject Bone::generateEmpty() {
 
-    QVariantMap bone;
+    QJsonObject bone;
 
     // TODO right values ???
     // Length & radius
-    bone.insert("length",QVariant((double)Tools::random(0.5,3.0)));
-    bone.insert("radius",QVariant((double)Tools::random(0.1,0.5)));
+    bone.insert("length",(double)Tools::random(0.5,3.0));
+    bone.insert("radius",(double)Tools::random(0.1,0.5));
 
     // Yaw & Roll
-    QVariantMap localRotation;
-    localRotation.insert("y",QVariant((double)Tools::random(-SIMD_PI,SIMD_PI)));
-    localRotation.insert("z",QVariant((double)Tools::random(-SIMD_PI,SIMD_PI)));
+    QJsonObject localRotation;
+    localRotation.insert("y",(double)Tools::random(-SIMD_PI,SIMD_PI));
+    localRotation.insert("z",(double)Tools::random(-SIMD_PI,SIMD_PI));
     bone.insert("localRotation",localRotation);
 
     // Limits
-    QVariantMap lowerlimits, upperlimits;
+    QJsonObject lowerlimits, upperlimits;
 
     btScalar lowerLimit_x = Tools::random(-SIMD_PI/6.,   0.);
     btScalar lowerLimit_y = Tools::random(-SIMD_PI/6.,   0.);
@@ -324,9 +325,9 @@ QVariant Bone::generateEmpty() {
     btScalar upperlimits_y = Tools::random(0.,    SIMD_PI/6.);
     btScalar upperlimits_z = Tools::random(0.,    SIMD_PI/6.);
 
-    lowerlimits.insert("x",QVariant((double)lowerLimit_x));
-    lowerlimits.insert("y",QVariant((double)lowerLimit_y));
-    lowerlimits.insert("z",QVariant((double)lowerLimit_z));
+    lowerlimits.insert("x",(double)lowerLimit_x);
+    lowerlimits.insert("y",(double)lowerLimit_y);
+    lowerlimits.insert("z",(double)lowerLimit_z);
 
     upperlimits.insert("x",(double)upperlimits_x);
     upperlimits.insert("y",(double)upperlimits_y);
@@ -338,7 +339,7 @@ QVariant Bone::generateEmpty() {
     // End fixation
     bone.insert("endFix",Fixation::generateEmpty());
 
-    QVariantMap data;
+    QJsonObject data;
 
     data.insert("typeName", "RotationalMotor");
     data.insert("type", rotationalMotorEffector);
@@ -359,15 +360,15 @@ QVariant Bone::generateEmpty() {
               "type":"RotationalMotor"}*/
 
     // TODO DO IT BETHER
-    QVariantMap bOuts;
+    QJsonObject bOuts;
     QString motors[] = {"x","y","z"};
-    QVariantMap emptyOut;
+    QJsonObject emptyOut;
     emptyOut.insert("connexionInfo", "");
-    QVariantList emptyOutList;
+    QJsonArray emptyOutList;
     emptyOutList.append(emptyOut);
     emptyOutList.append(emptyOut);
     for(int i = 0; i < 3; i++) {
-        QVariantMap motorMap;
+        QJsonObject motorMap;
         motorMap.insert("brainOuts", emptyOutList);
         bOuts.insert(motors[i], motorMap);
     }

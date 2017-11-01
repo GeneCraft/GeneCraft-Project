@@ -46,20 +46,20 @@ PositionSensor::PositionSensor(Fixation * rootFix, Fixation *fixation) : Sensor(
     brainInputs.append(inputZ);
 }
 
-PositionSensor::PositionSensor(QVariant data, Fixation* rootFix, Fixation* fixation) : Sensor(data, fixation) {
+PositionSensor::PositionSensor(QJsonObject data, Fixation* rootFix, Fixation* fixation) : Sensor(data, fixation) {
     this->rootFix = rootFix;
 
-    inputX = new BrainIn(data.toMap()["inputX"]);
-    inputY = new BrainIn(data.toMap()["inputY"]);
-    inputZ = new BrainIn(data.toMap()["inputZ"]);
+    inputX = new BrainIn(data["inputX"].toObject());
+    inputY = new BrainIn(data["inputY"].toObject());
+    inputZ = new BrainIn(data["inputZ"].toObject());
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
     brainInputs.append(inputZ);
 }
 
-QVariant PositionSensor::serialize() {
-    QVariantMap data = Sensor::serialize().toMap();
+QJsonObject PositionSensor::serialize() {
+    QJsonObject data = Sensor::serialize();
     data.insert("inputX", inputX->serialize());
     data.insert("inputY", inputY->serialize());
     data.insert("inputZ", inputZ->serialize());
@@ -67,9 +67,9 @@ QVariant PositionSensor::serialize() {
     return data;
 }
 
-QVariant PositionSensor::generateEmpty()
+QJsonObject PositionSensor::generateEmpty()
 {
-    QVariantMap data = Sensor::generateEmpty("Egocentric position sensor", positionSensor).toMap();
+    QJsonObject data = Sensor::generateEmpty("Egocentric position sensor", positionSensor);
 
     BrainIn inputX(minDistanceBetweenRootFixAndThisFix,maxDistanceBetweenRootFixAndThisFix);
     BrainIn inputY(minDistanceBetweenRootFixAndThisFix,maxDistanceBetweenRootFixAndThisFix);

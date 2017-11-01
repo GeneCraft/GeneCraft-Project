@@ -33,16 +33,16 @@ public:
     GripperEffector(Fixation *fixation);
 
     // To create from serialization data
-    GripperEffector(QVariant data, Fixation * fixation);
+    GripperEffector(QJsonObject data, Fixation * fixation);
 
     // To create empty effector serialization data
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // Destructor
     ~GripperEffector();
 
     // To serialize
-    QVariant serialize();
+    QJsonObject serialize();
 
     // To update world.
     void step();

@@ -49,8 +49,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "effectors/grippereffector.h"
 #include "effectors/flyingeffector.h"
 
-#include "qxtjson.h"
-
 namespace GeneCraftCore {
 
     MutationsManager::MutationsManager()

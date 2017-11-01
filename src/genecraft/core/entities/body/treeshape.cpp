@@ -64,11 +64,11 @@ namespace GeneCraftCore {
         getRoot()->setup();
     }
 
-    QVariant TreeShape::serialize()
+    QJsonObject TreeShape::serialize()
     {
-        QVariantMap treeShape, shape;
+        QJsonObject treeShape, shape;
 
-        treeShape.insert("shapeType", QVariant("TreeShape"));
+        treeShape.insert("shapeType", QString("TreeShape"));
         shape.insert("rootFix", root->serialize());
         treeShape.insert("shape",shape);
 

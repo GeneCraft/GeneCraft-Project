@@ -21,7 +21,7 @@
 #
 #-------------------------------------------------
 
-QT    += core gui opengl testlib network script webkit
+QT    += core gui opengl testlib network qml
 TARGET = CreatureViewer
 TEMPLATE = app
 CONFIG += silent

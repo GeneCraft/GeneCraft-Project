@@ -22,8 +22,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "jsonfile.h"
 #include <QVariantMap>
 #include <QDebug>
-#include <QtScript>
-#include <qxtjson.h>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
     int cptRessource = 0;
@@ -38,11 +38,10 @@ namespace GeneCraftCore {
     }
 
 
-    Ressource* Ressource::unserialize(QVariant v) {
-        QVariantMap map = v.toMap();
+    Ressource* Ressource::unserialize(QJsonObject map) {
 
         if(map["type"].toString() == "include") {
-            map = map["data"].toMap();
+            map = map["data"].toObject();
         } else {
             return NULL;
         }
@@ -68,11 +67,11 @@ namespace GeneCraftCore {
     }
 
 
-    QVariant Ressource::load(QVariant data) {
+    QJsonObject Ressource::load(QJsonObject data) {
         Ressource* r = unserialize(data);
         // Include of another data ?
         if(r) {
-            QVariant includedData = r->load();
+            QJsonObject includedData = r->load();
             delete r;
             return load(includedData); // Nested inclusion ?
         } else // Already loaded, not included
@@ -80,9 +79,9 @@ namespace GeneCraftCore {
     }
 
 
-    QVariant Ressource::serialize(JsonFile *r) {
-        QVariantMap ressourceMap;
-        QVariantMap data;
+    QJsonObject Ressource::serialize(JsonFile *r) {
+        QJsonObject ressourceMap;
+        QJsonObject data;
 
         data.insert("type", "file");
 
@@ -95,9 +94,9 @@ namespace GeneCraftCore {
     }
 
 
-    QVariant Ressource::serialize(DbRecord *r) {
-        QVariantMap ressourceMap;
-        QVariantMap data;
+    QJsonObject Ressource::serialize(DbRecord *r) {
+        QJsonObject ressourceMap;
+        QJsonObject data;
 
         data.insert("type", "db");
 
@@ -111,46 +110,5 @@ namespace GeneCraftCore {
         ressourceMap.insert("data", data);
 
         return ressourceMap;
-    }
-
-    QString Ressource::beautifullJson(QString data) {
-
-        static QScriptEngine* e = NULL;
-
-        if(!e) {
-            e = new QScriptEngine();
-            QFile fjs(":/js/js-beautifull");
-            fjs.open(QIODevice::ReadOnly |QIODevice::Text);
-            QString js = fjs.readAll();
-            e->evaluate(js);
-        }
-
-        QScriptValue beautifullJson = e->evaluate("js_beautify");
-        QScriptValue bb = beautifullJson.call(QScriptValue(),
-                                              QScriptValueList()
-                                              << data
-                                              << e->evaluate("({'indent_size': 1,'indent_char': ' '})"));
-        //out << beautifullJson.toString();
-        return bb.toString();
-    }
-
-    QString Ressource::beautifullJson(QVariant data) {
-        static QScriptEngine* e = NULL;
-
-        if(!e) {
-            e = new QScriptEngine();
-            QFile fjs(":/js/js-beautifull");
-            fjs.open(QIODevice::ReadOnly |QIODevice::Text);
-            QString js = fjs.readAll();
-            e->evaluate(js);
-        }
-
-        QScriptValue beautifullJson = e->evaluate("js_beautify");
-        QScriptValue bb = beautifullJson.call(QScriptValue(),
-                                              QScriptValueList()
-                                              << QxtJSON::stringify(data)
-                                              << e->evaluate("({'indent_size': 1,'indent_char': ' '})"));
-        //out << beautifullJson.toString();
-        return bb.toString();
     }
 }

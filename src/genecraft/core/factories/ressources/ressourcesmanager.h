@@ -28,7 +28,7 @@ namespace GeneCraftCore {
 
     struct DataWrapper {
 
-        QVariantMap data;
+        QJsonObject data;
         Ressource *r;
     };
 

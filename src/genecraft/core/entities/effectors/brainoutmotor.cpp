@@ -37,31 +37,30 @@ namespace GeneCraftCore {
         delete this->boTargetVelocity;
     }
 
-    BrainOutMotor::BrainOutMotor(QVariant data, btRotationalLimitMotor* motor) : motor(motor){
-        QVariantMap outMap = data.toMap();
+    BrainOutMotor::BrainOutMotor(QJsonObject data, btRotationalLimitMotor* motor) : motor(motor){
 
         // new version
         if(outMap.contains("contractionOutput")) {
-            boMaxMotorForce = new BrainOut(outMap["contractionOutput"]);
-            boTargetVelocity = new BrainOut(outMap["expansionOutput"]);
+            boMaxMotorForce = new BrainOut(data["contractionOutput"]);
+            boTargetVelocity = new BrainOut(data["expansionOutput"]);
         }
         // old version
         else {
-            QVariantList dataL = outMap["brainOuts"].toList();
+            QJsonArray dataL = data["brainOuts"].toArray();
             boMaxMotorForce = new BrainOut(dataL[0]);
             boTargetVelocity = new BrainOut(dataL[1]);
         }
     }
 
-    QVariant BrainOutMotor::serialize()  {
+    QJsonObject BrainOutMotor::serialize()  {
 
-        QVariantMap data;
+        QJsonObject data;
 
         // old version
-        // QVariantList outs;
+        // QJsonArray outs;
         // outs.append(boMaxMotorForce->serialize());
         // outs.append(boTargetVelocity->serialize());
-        // data.insert("brainOuts", (QVariantList)outs);
+        // data.insert("brainOuts", outs);
 
         // new version
         data.insert("contractionOutput",boMaxMotorForce->serialize());

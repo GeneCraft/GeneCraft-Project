@@ -20,6 +20,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef SMELLSENSOR_H
 #define SMELLSENSOR_H
 
+#include <QtGlobal>
+
 #include "genecraftcoreclasses.h"
 #include "sensor.h"
 
@@ -38,14 +40,14 @@ public:
     SmellSensor(Fixation *fixation, QString typeName, SensorType type, RigidBodyOrigin::RigidBodyType smellType, btScalar radiusOfSmell);
 
     // To create from serialization data
-    SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation);
+    SmellSensor(QJsonObject data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation);
     ~SmellSensor();
 
     // To serialize
-    QVariant serialize();
+    QJsonObject serialize();
 
     // To generate en empty sensor serialization data
-    static QVariant generateEmpty(QString typeName, SensorType type, btScalar radiusOfSmell);
+    static QJsonObject generateEmpty(QString typeName, SensorType type, btScalar radiusOfSmell);
 
     // To update brain inputs values
     void step();
@@ -75,6 +77,9 @@ private:
 
 };
 
+
+
+
 struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {
 
         //! Constructor, pass whatever context you want to have available when processing contacts
@@ -98,26 +103,28 @@ struct ContactSensorCallback : public btCollisionWorld::ContactResultCallback {
 //                return body.checkCollideWithOverride(static_cast<btCollisionObject*>(proxy->m_clientObject));
 //        }
 
+
         //! Called with each contact for your own processing (e.g. test if contacts fall in within sensor parameters)
         virtual btScalar addSingleResult(btManifoldPoint& cp,
-                const btCollisionObject* colObj0,int,int,
-                const btCollisionObject* colObj1,int,int)
+                const btCollisionObjectWrapper* colObj0,int,int,
+                const btCollisionObjectWrapper* colObj1,int,int)
         {
                 btVector3 pt; // will be set to point of collision relative to body
-                if(colObj0==body) {
+                if(colObj0->m_collisionObject==body) {
                     pt = cp.m_localPointA;
 
-                    ctxt->contactCallBack(colObj1);
+                    ctxt->contactCallBack(colObj1->m_collisionObject);
 
                 } else {
-                        assert(colObj1==body && "body does not match either collision object");
+                        Q_ASSERT_X(colObj1->m_collisionObject==body, "smellsensor", "body does not match either collision object");
                         pt = cp.m_localPointB;
 
-                    ctxt->contactCallBack(colObj0);
+                    ctxt->contactCallBack(colObj0->m_collisionObject);
                 }
                 // do stuff with the collision point
                 return 0; // not actually sure if return value is used for anything...?
         }
+
 };
 
 }

@@ -23,7 +23,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QObject>
 #include "genecraftcoreclasses.h"
 
-#include <QVariant>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 class Brain : public QObject
@@ -41,7 +41,7 @@ public:
         this->plugGrid = plugGrid;
     }
 
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     virtual void step() = 0;
 

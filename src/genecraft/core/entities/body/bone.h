@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BONE_H
 
 #include <QObject>
-#include <QVariant>
+#include <QJsonObject>
 
 #include "genecraftcoreclasses.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
@@ -76,12 +76,12 @@ public:
     * @brief create the basic genetic code for this bone
     *
     */
-   QVariant serialize();
+   QJsonObject serialize();
    /**
     * @brief create an empty piece of genetics for a bone
     *
     */
-   static QVariant generateEmpty();
+   static QJsonObject generateEmpty();
 
    // -------------------------
    // -- getters and setters --
@@ -145,7 +145,7 @@ public:
     *
     * @param data genetic code for the brain needed data
     */
-   inline void setMotorModifierData(QVariant data)         { this->motorModifierData = data; }
+   inline void setMotorModifierData(QJsonObject data)         { this->motorModifierData = data; }
 
    // body & size
    /**
@@ -277,7 +277,7 @@ protected:
    btGeneric6DofConstraint *parentCt; // Owner /**< TODO */
 
    // MotorModifier data
-   QVariant motorModifierData; /**< TODO */
+   QJsonObject motorModifierData; /**< TODO */
 
    // Related Entity
    Entity *entity; /**< TODO */

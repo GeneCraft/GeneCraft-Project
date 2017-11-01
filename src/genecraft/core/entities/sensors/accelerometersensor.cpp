@@ -51,11 +51,11 @@ AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
     tmpMinAcc = tmpMaxAcc = 0;
 }
 
-AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : Sensor(data, fixation) {
+AccelerometerSensor::AccelerometerSensor(QJsonObject data, Fixation * fixation) : Sensor(data, fixation) {
 
-    inputX = new BrainIn(data.toMap()["inputX"]);
-    inputY = new BrainIn(data.toMap()["inputY"]);
-    inputZ = new BrainIn(data.toMap()["inputZ"]);
+    inputX = new BrainIn(data["inputX"]);
+    inputY = new BrainIn(data["inputY"]);
+    inputZ = new BrainIn(data["inputZ"]);
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);
@@ -68,9 +68,9 @@ AccelerometerSensor::AccelerometerSensor(QVariant data, Fixation * fixation) : S
     tmpMinAcc = tmpMaxAcc = 0;
 }
 
-QVariant AccelerometerSensor::generateEmpty()
+QJsonObject AccelerometerSensor::generateEmpty()
 {
-    QVariantMap data = Sensor::generateEmpty("Accelerometer sensor", accelerometerSensor).toMap();
+    QJsonObject data = Sensor::generateEmpty("Accelerometer sensor", accelerometerSensor);
 
     BrainIn inputX(MIN_ACCELERATION,MAX_ACCELERATION);
     BrainIn inputY(MIN_ACCELERATION,MAX_ACCELERATION);
@@ -87,8 +87,8 @@ QVariant AccelerometerSensor::generateEmpty()
     return data;
 }
 
-QVariant AccelerometerSensor::serialize() {
-    QVariantMap data = Sensor::serialize().toMap();
+QJsonObject AccelerometerSensor::serialize() {
+    QJsonObject data = Sensor::serialize();
 
     data.insert("inputX", inputX->serialize());
     data.insert("inputY", inputY->serialize());

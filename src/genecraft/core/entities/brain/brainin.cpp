@@ -19,7 +19,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "brainin.h"
 #include <cstdlib>
-#include <QVariant>
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
@@ -28,13 +28,13 @@ namespace GeneCraftCore {
     {
     }
 
-    BrainIn::BrainIn(QVariant data) : Synapse(data.toMap()["connexions"]), value(0) {
-        min = data.toMap()["min"].toFloat();
-        max = data.toMap()["max"].toFloat();
+    BrainIn::BrainIn(QJsonObject data) : Synapse(data["connexions"].toArray()), value(0) {
+        min = data["min"].toDouble();
+        max = data["max"].toDouble();
     }
 
-    QVariant BrainIn::serialize() {
-        QVariantMap data;
+    QJsonObject BrainIn::serialize() {
+        QJsonObject data;
 
         data.insert("connexions", Synapse::serialize());
         data.insert("min", (double)min);
@@ -58,11 +58,11 @@ namespace GeneCraftCore {
         return this->value;
     }
 
-    QVariant BrainIn::generateEmpty(btScalar min, btScalar max)
+    QJsonObject BrainIn::generateEmpty(btScalar min, btScalar max)
     {
-        QVariantMap data;
+        QJsonObject data;
 
-        data.insert("connexions", QVariantList());
+        data.insert("connexions", QJsonArray());
         data.insert("min", (double)min);
         data.insert("max", (double)max);
 

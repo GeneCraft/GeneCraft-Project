@@ -203,10 +203,10 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
                              upperLimitsMap.value("y").toDouble(),
                              upperLimitsMap.value("z").toDouble());
 
-        Bone *bone = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
-        bone->setMotorModifierData(boneMap["muscle"]);
+        Bone *b = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
+        b->setMotorModifierData(boneMap["muscle"]);
         // Add bone recurcively
-        GenericFamily::buildFixFromGenotype(shapesFactory, bone->getEndFixation(), root, boneMap.value("endFix"));
+        GenericFamily::buildFixFromGenotype(shapesFactory, b->getEndFixation(), root, boneMap.value("endFix"));
     }
 }
 }

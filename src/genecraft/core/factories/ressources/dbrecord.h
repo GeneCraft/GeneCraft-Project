@@ -22,6 +22,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "ressource.h"
 #include <QNetworkReply>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
@@ -37,10 +38,10 @@ namespace GeneCraftCore {
     {
         Q_OBJECT
     public:
-        explicit DbRecord(DataBase db, QString id, QVariant postData = QVariant(), QObject *parent = 0);
+        explicit DbRecord(DataBase db, QString id, QJsonObject postData = QJsonObject(), QObject *parent = 0);
 
-        virtual QVariant load();
-        virtual int save(QVariant data);
+        virtual QJsonObject load();
+        virtual int save(QJsonObject data);
         virtual int remove();
         virtual QString getLocation();
 
@@ -60,7 +61,7 @@ namespace GeneCraftCore {
         DataBase db;
         QString id;
         QString rev;
-        QVariant postData;
+        QJsonObject postData;
     protected:
         QNetworkReply* r;
 

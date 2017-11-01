@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define SENSOR_H
 
 #include <QObject>
+#include <QJsonObject>
 #include <QList>
 
 #include "genecraftcoreclasses.h"
@@ -49,10 +50,10 @@ public:
     explicit Sensor(Fixation * fixation, QObject *parent = 0);
 
     // To create a sensor from serialization data
-    Sensor(QVariant data, Fixation* fixation);
+    Sensor(QJsonObject data, Fixation* fixation);
 
     // To generate empty sensor
-    static QVariant generateEmpty(QString typeName, int type);
+    static QJsonObject generateEmpty(QString typeName, int type);
 
     // To delete the sensor
     ~Sensor() {
@@ -63,7 +64,7 @@ public:
     }
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To get the type name
     const QString &getTypeName() { return typeName; }

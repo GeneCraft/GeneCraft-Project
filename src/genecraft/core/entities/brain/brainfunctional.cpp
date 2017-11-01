@@ -536,8 +536,8 @@ btScalar sigmoid(btScalar x)
         return func;
     }
 
-    QVariant BrainFunctional::serialize() {
-        QVariantMap data = Brain::serialize().toMap();
+    QJsonObject BrainFunctional::serialize() {
+        QJsonObject data = Brain::serialize();
         return data;
     }
 }

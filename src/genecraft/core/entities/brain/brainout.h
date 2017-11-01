@@ -24,7 +24,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDebug>
 
 #include "genecraftcoreclasses.h"
-#include <QVariant>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
@@ -33,8 +33,8 @@ namespace GeneCraftCore {
         Q_OBJECT
     public:
         explicit BrainOut(btScalar min = 0.0f, btScalar max = 100.0f, QObject *parent = 0);
-        BrainOut(QVariant data);
-        QVariant serialize();
+        BrainOut(QJsonObject data);
+        QJsonObject serialize();
     signals:
         void newValue(btScalar value);
 
@@ -49,9 +49,9 @@ namespace GeneCraftCore {
           */
         void  setValue(btScalar value);
 
-        void setConnexionInfo(QVariant info);
+        void setConnexionInfo(QJsonValue info);
 
-        QVariant getConnexionInfo();
+        QJsonValue getConnexionInfo();
 
         void setMin(btScalar min) { this->min = min; }
         void setMax(btScalar max) { this->max = max; }
@@ -60,7 +60,7 @@ namespace GeneCraftCore {
         btScalar min;
         btScalar max;
         btScalar value;
-        QVariant connexionInfo;
+        QJsonValue connexionInfo;
 
     };
 

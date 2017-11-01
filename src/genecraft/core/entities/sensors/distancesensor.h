@@ -34,13 +34,13 @@ public:
     DistanceSensor(Fixation * fixation, btScalar yAxis, btScalar zAxis);
 
     // To create from serialization data
-    DistanceSensor(QVariant data, Fixation* fixation);
+    DistanceSensor(QJsonObject data, Fixation* fixation);
 
     // To create empty sensor serialization data
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To update brain inputs values
     void step();

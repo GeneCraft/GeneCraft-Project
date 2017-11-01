@@ -45,12 +45,12 @@ namespace GeneCraftCore {
 
         ~BrainOutMotor();
 
-        BrainOutMotor(QVariant data, btRotationalLimitMotor* motor);
+        BrainOutMotor(QJsonObject data, btRotationalLimitMotor* motor);
 
-        QVariant serialize();
+        QJsonObject serialize();
 
         // To generate an empty version
-        static QVariant generateEmpty();
+        static QJsonObject generateEmpty();
 
         void update();
 

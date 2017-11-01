@@ -27,15 +27,15 @@ namespace GeneCraftCore {
         connexionInfo = "";
     }
 
-    BrainOut::BrainOut(QVariant data)  {
-        min = data.toMap()["min"].toFloat();
-        max = data.toMap()["max"].toFloat();
-        connexionInfo = data.toMap()["connexionInfo"].toString();
+    BrainOut::BrainOut(QJsonObject data)  {
+        min = data["min"].toDouble();
+        max = data["max"].toDouble();
+        connexionInfo = data["connexionInfo"].toString();
         value = (min + max) / 2.0;
     }
 
-    QVariant BrainOut::serialize() {
-        QVariantMap data;
+    QJsonObject BrainOut::serialize() {
+        QJsonObject data;
 
         data.insert("min", (double)min);
         data.insert("max", (double)max);
@@ -66,11 +66,11 @@ namespace GeneCraftCore {
         emit newValue(this->value);
     }
 
-    void BrainOut::setConnexionInfo(QVariant info) {
+    void BrainOut::setConnexionInfo(QJsonValue info) {
         this->connexionInfo = info;
     }
 
-    QVariant BrainOut::getConnexionInfo() {
+    QJsonValue BrainOut::getConnexionInfo() {
         return this->connexionInfo;
     }
 }

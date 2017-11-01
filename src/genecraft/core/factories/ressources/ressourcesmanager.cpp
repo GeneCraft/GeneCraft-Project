@@ -21,6 +21,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "jsonfile.h"
 #include "dbrecord.h"
 #include <QDebug>
+#include <QJsonObject>
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
@@ -45,13 +47,12 @@ namespace GeneCraftCore {
 
     void RessourcesManager::getAllWorld() {
         DbRecord * listDb = new DbRecord(db, "_design/worlds/_view/all");
-        QVariant worlds = listDb->load();
+        QJsonObject worlds = listDb->load();
         delete listDb;
 
-        QVariantMap worldsMap = worlds.toMap();
-        QVariantList worldsList = worldsMap["rows"].toList();
-        foreach(QVariant world, worldsList) {
-            DataWrapper dataw = {world.toMap()["value"].toMap(), NULL};
+        QJsonArray worldsList = worlds["rows"].toArray();
+        foreach(QJsonValue world, worldsList) {
+            DataWrapper dataw = {world.toObject()["value"].toObject(), NULL};
             this->examine(dataw);
         }
     }
@@ -59,26 +60,24 @@ namespace GeneCraftCore {
     void RessourcesManager::getAllCreatures() {
         //http://www.genecraft-project.com/db/genecraft/_design/creature/_view/all?include_docs=true
         DbRecord * listDb = new DbRecord(db, "_design/creature/_view/all?include_docs=true");
-        QVariant creatures = listDb->load();
+        QJsonObject creatures = listDb->load();
         delete listDb;
 
-        QVariantMap creaturesMap = creatures.toMap();
-        QVariantList creaturesList = creaturesMap["rows"].toList();
-        foreach(QVariant creature, creaturesList) {
-            DataWrapper dataw = {creature.toMap()["doc"].toMap(), NULL};
+        QJsonArray creaturesList = creatures["rows"].toArray();
+        foreach(QJsonValue creature, creaturesList) {
+            DataWrapper dataw = {creature.toObject()["doc"].toObject(), NULL};
             this->examine(dataw);
         }
     }
 
     void RessourcesManager::getAllExperiments() {
         DbRecord * listDb = new DbRecord(db, "_design/experiments/_view/all");
-        QVariant experiments = listDb->load();
+        QJsonObject experiments = listDb->load();
         delete listDb;
 
-        QVariantMap experimentsMap = experiments.toMap();
-        QVariantList experimentsList = experimentsMap["rows"].toList();
-        foreach(QVariant experiment, experimentsList) {
-            DataWrapper dataw = {experiment.toMap()["value"].toMap(), NULL};
+        QJsonArray experimentsList = experiments["rows"].toArray();
+        foreach(QJsonValue experiment, experimentsList) {
+            DataWrapper dataw = {experiment.toObject()["value"].toObject(), NULL};
             this->examine(dataw);
         }
     }
@@ -98,7 +97,7 @@ namespace GeneCraftCore {
                                              | QDir::Reversed)) {
             JsonFile* f = new JsonFile(directory.absoluteFilePath(filename));
 
-            DataWrapper dataw = {f->load().toMap(), f};
+            DataWrapper dataw = {f->load(), f};
             this->examine(dataw);
         }
     }
@@ -116,7 +115,7 @@ namespace GeneCraftCore {
     }
 
     void RessourcesManager::examine(DataWrapper dataw) {
-        QVariantMap dataMap = dataw.data;
+        QJsonObject dataMap = dataw.data;
 
         // Experience ?
         if(dataMap.contains("author") && dataMap.contains("duration")) {
@@ -152,7 +151,7 @@ namespace GeneCraftCore {
 
         // if it's a result, convert to genome...
         if(dataMap.contains("type") && dataMap["type"].toString() == "result") {
-            dataMap = dataMap["genome"].toMap();
+            dataMap = dataMap["genome"].toObject();
         }
 
         // Creature ?

@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define ROTATIONALMOTORS_H
 
 #include <QString>
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 #include "effector.h"
 #include "brainoutmotor.h"
@@ -66,7 +67,7 @@ public:
     BrainOutMotor *getBrainOutputs(int i) { return brainMotorOutputs[i]; }
 
     // To get a seralised representation of effector
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
 //    static const int OUTPUTS_FROM_NORMAL_POSITION;
 //    static const int OUTPUTS_FROM_BRAIN;

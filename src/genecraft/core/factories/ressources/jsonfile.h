@@ -30,8 +30,8 @@ class JsonFile : public Ressource
 
 public:
     explicit JsonFile(QString filename, QObject *parent = 0);
-    virtual QVariant load();
-    virtual int save(QVariant data);
+    virtual QJsonObject load();
+    virtual int save(QJsonObject data);
     virtual int remove();
     virtual QString getLocation();
 

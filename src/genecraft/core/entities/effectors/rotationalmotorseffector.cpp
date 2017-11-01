@@ -144,9 +144,9 @@ void RotationalMotorsEffector::disconnectMotor(int i)
     }
 }
 
-QVariant RotationalMotorsEffector::serialize() {
-    QVariantMap data = Effector::serialize().toMap();
-    QVariantMap bOuts;
+QJsonObject RotationalMotorsEffector::serialize() {
+    QJsonObject data = Effector::serialize().toMap();
+    QJsonObject bOuts;
     QString motors[] = {"x","y","z"};
     for(int i = 0; i < 3; i++)
         if(brainMotorOutputs[i]) {

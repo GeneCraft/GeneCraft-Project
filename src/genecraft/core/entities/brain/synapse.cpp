@@ -18,7 +18,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "synapse.h"
-#include <QVariant>
+#include <QJsonObject>
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
@@ -27,17 +28,15 @@ namespace GeneCraftCore {
     {
     }
 
-    Synapse::Synapse(QVariant data) {
+    Synapse::Synapse(QJsonArray data) {
 
-        QVariantList l = data.toList();
-
-        foreach(QVariant v, l) {
-            btScalar x = v.toMap()["x"].toDouble();
-            btScalar y = v.toMap()["y"].toDouble();
-            btScalar w = v.toMap()["w"].toDouble();
+        foreach(QJsonValue v, data) {
+            btScalar x = v.toObject()["x"].toDouble();
+            btScalar y = v.toObject()["y"].toDouble();
+            btScalar w = v.toObject()["w"].toDouble();
             btScalar distance = 0.0f;
-            if(v.toMap().contains("d"))
-                distance = v.toMap()["d"].toDouble();
+            if(v.toObject().contains("d"))
+                distance = v.toObject()["d"].toDouble();
             else
                 distance = Tools::random(0.0, 0.2);
 
@@ -45,13 +44,13 @@ namespace GeneCraftCore {
         }
     }
 
-    QVariant Synapse::serialize() {
+    QJsonArray Synapse::serialize() {
 
-        QVariantList l;
+        QJsonArray l;
 
         for(int i = 0; i < this->connexions.size(); i++) {
             NeuralConnexion c = connexions[i];
-            QVariantMap dataC;
+            QJsonObject dataC;
             dataC.insert("x", (double)c.x);
             dataC.insert("y", (double)c.y);
             dataC.insert("w", (double)c.weight);

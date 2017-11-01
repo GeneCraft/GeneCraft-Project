@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define SYNAPSE_H
 
 #include <QObject>
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 #include <QDebug>
 #include "tools.h"
@@ -53,8 +54,8 @@ namespace GeneCraftCore {
 
     public:
         explicit Synapse(QObject *parent = 0);
-        Synapse(QVariant data);
-        QVariant serialize();
+        Synapse(QJsonArray data);
+        QJsonArray serialize();
 
         QList<NeuralConnexion> getConnexions();
 
