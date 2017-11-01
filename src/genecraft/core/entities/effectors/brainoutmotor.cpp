@@ -70,9 +70,9 @@ namespace GeneCraftCore {
     }
 
     // To generate an empty version
-    QVariant BrainOutMotor::generateEmpty(){
+    QJsonObject BrainOutMotor::generateEmpty(){
 
-        QVariantMap data;
+        QJsonObject data;
         BrainOut boContraction(MIN_CONTRACTION,MAX_CONTRACTION);
         BrainOut boExpansion(MIN_EXPANSION,MAX_EXPANSION);
         data.insert("contractionOutput",boContraction.serialize());

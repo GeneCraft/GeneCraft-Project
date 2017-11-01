@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef CROSSOVERMANAGER_H
 #define CROSSOVERMANAGER_H
 
-#include <QVariant>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
@@ -28,9 +28,9 @@ namespace GeneCraftCore {
     {
     public:
         CrossoverManager();
-        static QVariant onePointCross(QVariant a, QVariant b);
-        static QVariant twoPointCross(QVariant a, QVariant b);
-        static QVariant uniformCross (QVariant a, QVariant b);
+        static QJsonObject onePointCross(QJsonObject a, QJsonObject b);
+        static QJsonObject twoPointCross(QJsonObject a, QJsonObject b);
+        static QJsonObject uniformCross (QJsonObject a, QJsonObject b);
     };
 
 }

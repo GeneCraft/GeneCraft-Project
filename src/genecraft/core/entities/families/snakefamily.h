@@ -45,14 +45,14 @@ public:
     explicit SnakeFamily(QObject *parent = 0);
 
     // To create the family from serialization data
-    SnakeFamily(QVariant data, QObject *parent = 0);
+    SnakeFamily(QJsonObject data, QObject *parent = 0);
 
     // To create an entity of this family
     Entity* createEntity(btShapesFactory* factory, const btVector3 &positionSensor);
 
     // To serialize family
-    QVariant serialize();
-    void load(QVariant data);
+    QJsonObject serialize();
+    void load(QJsonObject data);
 
 private:
     int length;

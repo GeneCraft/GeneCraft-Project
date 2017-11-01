@@ -133,7 +133,7 @@ private:
     /**
      * To add sensor
      *
-     * @param the QVariantList where add
+     * @param the QJsonArray where add
      * @param the position to add (-1 = end of list)
      */
     void addSensor(QJsonArray &sensors, int i=-1);
@@ -141,7 +141,7 @@ private:
     /**
      * To add effector
      *
-     * @param the QVariantList where add
+     * @param the QJsonArray where add
      * @param the position to add (-1 = end of list)
      */
     void addEffector(QJsonArray &effectorsList, int i=-1);
@@ -149,7 +149,7 @@ private:
     /**
      * To add bone
      *
-     * @param the QVariantList where add
+     * @param the QJsonArray where add
      * @param the position to add (-1 = end of list)
      */
     void addBone(QJsonArray &bones, int i=-1, QJsonObject endFix = QJsonObject());

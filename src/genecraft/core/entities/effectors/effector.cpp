@@ -18,7 +18,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "effector.h"
-#include <QVariant>
+#include <QJsonObject>
 namespace GeneCraftCore {
 
 Effector::Effector(QString typeName, EffectorType type) : typeName(typeName), type(type)
@@ -30,14 +30,14 @@ Effector::Effector(QJsonObject data) {
     this->type = (EffectorType)data["type"].toInt();
 }
 
-QVariant Effector::serialize() {
+QJsonObject Effector::serialize() {
     QJsonObject data;
     data.insert("typeName", this->typeName);
     data.insert("type", (int)this->type);
     return data;
 }
 
-QVariant Effector::generateEmpty(QString typeName, int type) {
+QJsonObject Effector::generateEmpty(QString typeName, int type) {
     QJsonObject data;
     data.insert("typeName", typeName);
     data.insert("type", type);

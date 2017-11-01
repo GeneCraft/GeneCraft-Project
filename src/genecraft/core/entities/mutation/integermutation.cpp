@@ -24,9 +24,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 namespace GeneCraftCore {
 
 
-    IntegerMutation::IntegerMutation(QVariant variant)
+    IntegerMutation::IntegerMutation(QJsonObject map)
     {
-        QVariantMap map = variant.toMap();
 
         if(map["type"].toInt() == IntegerMutationType) {
             probability = map["probability"].toDouble();
@@ -50,25 +49,25 @@ namespace GeneCraftCore {
         enable       = true;
     }
 
-    QVariant IntegerMutation::serialize(){
+    QJsonObject IntegerMutation::serialize(){
 
-        QVariantMap map;
+        QJsonObject map;
 
-        map.insert("type",QVariant(IntegerMutationType));
-        map.insert("probability",QVariant((double)probability));
-        map.insert("minIncr",QVariant((double)minIncr));
-        map.insert("maxIncr",QVariant((double)maxIncr));
-        map.insert("minValue",QVariant((double)minValue));
-        map.insert("maxValue",QVariant((double)maxValue));
-        map.insert("enable",QVariant(enable));
+        map.insert("type",IntegerMutationType);
+        map.insert("probability",(double)probability);
+        map.insert("minIncr",(double)minIncr);
+        map.insert("maxIncr",(double)maxIncr);
+        map.insert("minValue",(double)minValue);
+        map.insert("maxValue",(double)maxValue);
+        map.insert("enable",enable);
 
         return map;
     }
 
-    void IntegerMutation::mutate(QVariantMap &map, QString key){
+    void IntegerMutation::mutate(QJsonObject &map, QString key){
         int newValue = this->mutate(map.value(key).toInt());
         map.remove(key);
-        map.insert(key,QVariant((int)newValue));
+        map.insert(key,(int)newValue));
     }
 
     int IntegerMutation::mutate(int value) {

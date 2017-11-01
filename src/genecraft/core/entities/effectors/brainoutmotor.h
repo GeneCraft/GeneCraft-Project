@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BRAINOUTMOTOR_H
 #define BRAINOUTMOTOR_H
 
-#include <QVariant>
+#include <QJsonObject>
 
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 #include "genecraftcoreclasses.h"

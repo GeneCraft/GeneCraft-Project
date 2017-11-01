@@ -43,7 +43,7 @@ public:
 
     virtual Entity* createEntity(btShapesFactory *shapesFactory, const btVector3 &position) = 0;
 
-    virtual QVariant serialize() = 0;
+    virtual QJsonObject serialize() = 0;
 
 };
 }

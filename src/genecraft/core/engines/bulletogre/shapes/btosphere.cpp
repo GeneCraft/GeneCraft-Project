@@ -31,20 +31,19 @@ using namespace Ogre;
 
 int btoSphere::mNumSpheresInstanced = 0;
 
-btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QVariant params)
+btoSphere::btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QJsonObject params)
     :btSphere(world, radius, transform, density)
 {
     this->btoEngine = btoEngine;
     OgreEngine *ogreEngine = btoEngine->getOgreEngine();
 
-    QVariantMap paramsMap = params.toMap();
-    if(paramsMap.contains("Material"))
-        fixationMaterial = params.toMap()["Material"].toString();
+    if(params.contains("Material"))
+        fixationMaterial = params["Material"].toString();
     else
         fixationMaterial = "GeneCraft/Fixation/Root";
 
-    if(paramsMap.contains("MaterialOnSelection"))
-        fixationSelectedMaterial = params.toMap()["MaterialOnSelection"].toString();
+    if(params.contains("MaterialOnSelection"))
+        fixationSelectedMaterial = params["MaterialOnSelection"].toString();
     else
         fixationSelectedMaterial = "GeneCraft/Fixation_Selected/Root";
 

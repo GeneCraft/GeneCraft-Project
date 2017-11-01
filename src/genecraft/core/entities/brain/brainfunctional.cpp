@@ -54,7 +54,7 @@ btScalar sigmoid(btScalar x)
     {
     }
 
-    BrainFunctional::BrainFunctional(QVariant data) : Brain(data) {
+    BrainFunctional::BrainFunctional(QJsonObject data) : Brain(data) {
 
     }
 

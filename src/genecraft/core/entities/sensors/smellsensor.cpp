@@ -54,9 +54,9 @@ SmellSensor::SmellSensor(QJsonObject data, RigidBodyOrigin::RigidBodyType smellT
 {
     this->smellType =  smellType;
 
-    intensityInput = new BrainIn(data["intensityInput"]);
+    intensityInput = new BrainIn(data["intensityInput"].toObject());
     // the max value equals radius of smell !
-    radiusOfSmell = data["radiusOfSmell"].toFloat();
+    radiusOfSmell = data["radiusOfSmell"].toDouble();
     //intensityInput->setMax(radiusOfSmell);
     brainInputs.append(intensityInput);
 

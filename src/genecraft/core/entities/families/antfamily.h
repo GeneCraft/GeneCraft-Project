@@ -48,7 +48,7 @@ public:
                                  const btVector3 &position);
 
     // To serialize the family
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
 protected:
 

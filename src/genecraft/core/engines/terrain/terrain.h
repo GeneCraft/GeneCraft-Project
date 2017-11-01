@@ -25,7 +25,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine.h"
 #include "entities/entitiesengine.h"
 #include <QObject>
-#include <QVariant>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
@@ -47,7 +47,7 @@ namespace GeneCraftCore {
          */
         enum FloorType { NoFloor, FlatLand, RandomBoxes, StairsUp, StairsDown, Slope };
         FloorType floor; /**< the type of the field */
-        QVariantMap floorData; /**< the configurations informations from the field */
+        QJsonObject floorData; /**< the configurations informations from the field */
 
         /**
          * @brief simple comparator, return true if the field is of the same type
@@ -97,7 +97,7 @@ namespace GeneCraftCore {
          *
          * @param floorData
          */
-        TerrainData* addTerrain(QVariantMap floorData);
+        TerrainData* addTerrain(QJsonObject floorData);
         /**
          * @brief Remove a field from the engine
          *

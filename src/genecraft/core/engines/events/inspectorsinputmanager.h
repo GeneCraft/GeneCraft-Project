@@ -58,8 +58,8 @@ signals:
 
     // loading
     void sLoadExperiment(Experiment *experiment);
-    void sLoadWorld(QVariantMap worldData);
-    void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
+    void sLoadWorld(QJsonObject worldData);
+    void sLoadEntity(QJsonObject genomeData, Ressource *ressource);
     void sLoadResult(Result*);
 
 
@@ -85,8 +85,8 @@ public slots:
 
     // loading
     void loadExperiment(Experiment *experiment);
-    void loadWorld(QVariantMap worldData);
-    void loadEntity(QVariantMap genomeData, Ressource *ressource);
+    void loadWorld(QJsonObject worldData);
+    void loadEntity(QJsonObject genomeData, Ressource *ressource);
     void loadResult(Result *result);
 
 };

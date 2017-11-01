@@ -53,9 +53,9 @@ AccelerometerSensor::AccelerometerSensor(Fixation *fixation) : Sensor(fixation)
 
 AccelerometerSensor::AccelerometerSensor(QJsonObject data, Fixation * fixation) : Sensor(data, fixation) {
 
-    inputX = new BrainIn(data["inputX"]);
-    inputY = new BrainIn(data["inputY"]);
-    inputZ = new BrainIn(data["inputZ"]);
+    inputX = new BrainIn(data["inputX"].toObject());
+    inputY = new BrainIn(data["inputY"].toObject());
+    inputZ = new BrainIn(data["inputZ"].toObject());
 
     brainInputs.append(inputX);
     brainInputs.append(inputY);

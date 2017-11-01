@@ -20,16 +20,13 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "floatmutation.h"
 #include "tools.h"
 
-#include <QVariant>
-#include <QVariantMap>
+#include <QJsonObject>
 #include <QDebug>
 
 namespace GeneCraftCore {
 
-    FloatMutation::FloatMutation(QVariant variant)
+    FloatMutation::FloatMutation(QJsonObject map)
     {
-        QVariantMap map = variant.toMap();
-
         if(map["type"].toInt() == FloatMutationType) {
             probability = map["probability"].toDouble();
             if(map.contains("mean")) {
@@ -60,24 +57,24 @@ namespace GeneCraftCore {
         enable      = true;
     }
 
-    QVariant FloatMutation::serialize(){
+    QJsonObject FloatMutation::serialize(){
 
-        QVariantMap map;
+        QJsonObject map;
 
-        map.insert("type",QVariant(FloatMutationType));
-        map.insert("probability",QVariant((double)probability));
-        map.insert("mean",QVariant((double)mean));
-        map.insert("sigma",QVariant((double)sigma));
-        map.insert("minValue",QVariant((double)minValue));
-        map.insert("maxValue",QVariant((double)maxValue));
-        map.insert("enable",QVariant(enable));
+        map.insert("type", FloatMutationType);
+        map.insert("probability", (double)probability);
+        map.insert("mean", (double)mean);
+        map.insert("sigma", (double)sigma);
+        map.insert("minValue", (double)minValue);
+        map.insert("maxValue", (double)maxValue);
+        map.insert("enable", enable);
 
         return map;
     }
 
-    void FloatMutation::mutate(QVariantMap &map, QString key){
+    void FloatMutation::mutate(QJsonObject &map, QString key){
 
-        btScalar newValue = this->mutate((btScalar)map.value(key).toDouble());
+        btScalar newValue = this->mutate((btScalar)map[key].toDouble());
         map.remove(key);
         map.insert(key,(double)newValue);
 

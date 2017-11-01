@@ -25,29 +25,23 @@ namespace GeneCraftCore {
     {
     }
 
-
-    QVariant CrossoverManager::onePointCross(QVariant a, QVariant b) {
-        QVariantMap entityA = a.toMap();
-        QVariantMap entityB = b.toMap();
-        QVariantMap resultEntity;
+    // TODO Implementation
+    QJsonObject CrossoverManager::onePointCross(QJsonObject a, QJsonObject b) {
+        QJsonObject resultEntity;
 
 
         return resultEntity;
     }
 
-    QVariant CrossoverManager::twoPointCross(QVariant a, QVariant b) {
-        QVariantMap entityA = a.toMap();
-        QVariantMap entityB = b.toMap();
-        QVariantMap resultEntity;
+    QJsonObject CrossoverManager::twoPointCross(QJsonObject a, QJsonObject b) {
+        QJsonObject resultEntity;
 
 
         return resultEntity;
     }
 
-    QVariant CrossoverManager::uniformCross (QVariant a, QVariant b) {
-        QVariantMap entityA = a.toMap();
-        QVariantMap entityB = b.toMap();
-        QVariantMap resultEntity;
+    QJsonObject CrossoverManager::uniformCross (QJsonObject a, QJsonObject b) {
+        QJsonObject resultEntity;
 
 
         return resultEntity;

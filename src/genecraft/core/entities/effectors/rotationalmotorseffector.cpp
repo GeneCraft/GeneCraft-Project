@@ -22,10 +22,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 
 #include <QDebug>
-#include <QVariant>
+#include <QJsonObject>
 #include <QList>
-#include <QVariantList>
-#include <QVariantMap>
+#include <QJsonArray>
 #include "tools.h"
 #include "brain/sinusin.h"
 #include "brain/brainout.h"
@@ -66,11 +65,11 @@ RotationalMotorsEffector::RotationalMotorsEffector(Bone * bone, btGeneric6DofCon
 }
 
 
-RotationalMotorsEffector::RotationalMotorsEffector(QVariant data, Bone *bone, btGeneric6DofConstraint* ct) : Effector(data),
+RotationalMotorsEffector::RotationalMotorsEffector(QJsonObject data, Bone *bone, btGeneric6DofConstraint* ct) : Effector(data),
     constraint(ct), m_isDisable(false), outputsFrom(0 /*RotationalMotorsModifier::OUTPUTS_FROM_NORMAL_POSITION*/)
 {
     this->bone = bone;
-    QVariantMap motorsMap = data.toMap()["outs"].toMap();
+    QJsonObject motorsMap = data["outs"].toObject();
 
     QString motors[] = {"x","y","z"};
 

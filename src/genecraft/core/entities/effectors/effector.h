@@ -22,6 +22,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QString>
 #include <QJsonObject>
+#include <QList>
 #include "genecraftcoreclasses.h"
 
 namespace GeneCraftCore {

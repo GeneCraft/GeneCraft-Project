@@ -132,7 +132,7 @@ namespace GeneCraftCore {
         }
     }
 
-    TerrainData* Terrain::addTerrain(QVariantMap floorData) {
+    TerrainData* Terrain::addTerrain(QJsonObject floorData) {
         TerrainData* terrain = new TerrainData();
         terrain->floorData = floorData;
 
@@ -154,15 +154,15 @@ namespace GeneCraftCore {
 
         // Loading eventual step width
         if(floorData.contains("width")) {
-            terrain->width = floorData["width"].toFloat();
+            terrain->width = floorData["width"].toDouble();
         } else {
             terrain->width = 1;
         }
 
         // Loading eventual step height
         if(floorData.contains("minHeight")) {
-            float minHeight = floorData["minHeight"].toFloat();
-            float maxHeight = floorData["maxHeight"].toFloat();
+            float minHeight = floorData["minHeight"].toDouble();
+            float maxHeight = floorData["maxHeight"].toDouble();
             terrain->height = (minHeight + maxHeight) / 2.;
             terrain->randomHeight = maxHeight - minHeight;
         } else {

@@ -31,7 +31,7 @@ class Brain : public QObject
 
 public:
     explicit Brain(QObject *parent = 0);
-    Brain(QVariant data);
+    Brain(QJsonObject data);
 
     BrainPlugGrid* getPlugGrid() {
         return this->plugGrid;

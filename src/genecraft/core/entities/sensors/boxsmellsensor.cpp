@@ -31,12 +31,12 @@ BoxSmellSensor::BoxSmellSensor(Fixation *fixation) :
 }
 
 // To create from serialization data
-BoxSmellSensor::BoxSmellSensor(QVariant data, Fixation * fixation) :
+BoxSmellSensor::BoxSmellSensor(QJsonObject data, Fixation * fixation) :
     SmellSensor(data, RigidBodyOrigin::BASIC_SHAPE, fixation)
 {
 }
 
-QVariant BoxSmellSensor::generateEmpty()
+QJsonObject BoxSmellSensor::generateEmpty()
 {
     return SmellSensor::generateEmpty("Box smell sensor", boxSmellSensor, RADIUS_OF_SMELL);
 }

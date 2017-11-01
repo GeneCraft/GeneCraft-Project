@@ -43,16 +43,16 @@ GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
 
 GyroscopicSensor::GyroscopicSensor(QJsonObject data, Fixation* fixation) : Sensor(data, fixation) {
 
-    inputYaw = new BrainIn(data["inputYaw"]);
-    inputPitch = new BrainIn(data["inputPitch"]);
-    inputRoll = new BrainIn(data["inputRoll"]);
+    inputYaw = new BrainIn(data["inputYaw"].toObject());
+    inputPitch = new BrainIn(data["inputPitch"].toObject());
+    inputRoll = new BrainIn(data["inputRoll"].toObject());
 
     brainInputs.append(inputYaw);
     brainInputs.append(inputPitch);
     brainInputs.append(inputRoll);
 }
 
-QVariant GyroscopicSensor::serialize() {
+QJsonObject GyroscopicSensor::serialize() {
     QJsonObject data = Sensor::serialize();
     data.insert("inputYaw", inputYaw->serialize());
     data.insert("inputPitch", inputPitch->serialize());
@@ -61,7 +61,7 @@ QVariant GyroscopicSensor::serialize() {
     return data;
 }
 
-QVariant GyroscopicSensor::generateEmpty()
+QJsonObject GyroscopicSensor::generateEmpty()
 {
     QJsonObject data = Sensor::generateEmpty("Gyroscopic sensor", gyroscopicSensor);
 

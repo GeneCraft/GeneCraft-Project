@@ -22,7 +22,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "body/treeshape.h"
 #include "body/fixation.h"
 #include "body/bone.h"
-#include <QVariant>
+#include <QJsonObject>
 #include <cmath>
 #include "tools.h"
 #include "sensors/accelerometersensor.h"
@@ -49,13 +49,13 @@ namespace GeneCraftCore {
         this->antennaRadius = Tools::random(.1,0.1);
     }
 
-    CaterpillarFamily::CaterpillarFamily(QVariant data, QObject *parent) :
+    CaterpillarFamily::CaterpillarFamily(QJsonObject data, QObject *parent) :
         EntityFamily(parent)
     {
-        this->length = data.toMap()["length"].toInt();
+        this->length = data["length"].toInt();
 
-        this->pieceLength = data.toMap()["piecelength"].toFloat();
-        this->pieceRadius = data.toMap()["pieceRadius"].toFloat();
+        this->pieceLength = data["piecelength"].toDouble();
+        this->pieceRadius = data["pieceRadius"].toDouble();
     }
 
     Entity* CaterpillarFamily::createEntity(btShapesFactory* factory, const btVector3 &position) {
@@ -165,11 +165,11 @@ namespace GeneCraftCore {
         return entity;
     }
 
-    QVariant CaterpillarFamily::serialize() {
-        QVariantMap data;
-        data["length"] = QVariant(length);
-        data["piecelength"] = QVariant(pieceLength);
-        data["pieceRadius"] = QVariant(pieceRadius);
+    QJsonObject CaterpillarFamily::serialize() {
+        QJsonObject data;
+        data["length"] = length;
+        data["piecelength"] = pieceLength;
+        data["pieceRadius"] = pieceRadius;
         return data;
     }
 }

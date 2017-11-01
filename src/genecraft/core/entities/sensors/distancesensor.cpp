@@ -44,13 +44,13 @@ DistanceSensor::DistanceSensor(Fixation *fixation, btScalar yAxis, btScalar zAxi
 
 DistanceSensor::DistanceSensor(QJsonObject data, Fixation* fixation) : Sensor(data, fixation) {
 
-    distanceInput = new BrainIn(data["distanceInput"]);
+    distanceInput = new BrainIn(data["distanceInput"].toObject());
     brainInputs.append(distanceInput);
 
     QJsonObject orientationMap = data["orientation"].toObject();
 
-    yAxis = orientationMap["y"].toFloat();
-    zAxis = orientationMap["z"].toFloat();
+    yAxis = orientationMap["y"].toDouble();
+    zAxis = orientationMap["z"].toDouble();
 }
 
 QJsonObject DistanceSensor::serialize() {

@@ -26,7 +26,7 @@ namespace GeneCraftCore {
 
     class BrainNodeMutation : public Mutation {
     public:
-        void mutate(QVariantMap &map, QString key);
+        void mutate(QJsonObject &map, QString key);
         btScalar minFact;
         btScalar maxFact;
         btScalar minValue;

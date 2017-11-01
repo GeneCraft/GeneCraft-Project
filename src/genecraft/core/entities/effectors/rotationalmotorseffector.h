@@ -46,7 +46,7 @@ class RotationalMotorsEffector : public Effector
 public:
 
     RotationalMotorsEffector(Bone * bone, btGeneric6DofConstraint * constraint);
-    RotationalMotorsEffector(QVariant data, Bone * bone, btGeneric6DofConstraint* ct);
+    RotationalMotorsEffector(QJsonObject data, Bone * bone, btGeneric6DofConstraint* ct);
     ~RotationalMotorsEffector();
 
     // To connect to brain

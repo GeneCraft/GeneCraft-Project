@@ -28,10 +28,10 @@ namespace GeneCraftCore {
     public:
 
         FloatMutation();
-        FloatMutation(QVariant variant);
-        QVariant serialize();
+        FloatMutation(QJsonObject variant);
+        QJsonObject serialize();
 
-        void mutate(QVariantMap &map, QString key);
+        void mutate(QJsonObject &map, QString key);
         btScalar mutate(btScalar value);
         btScalar mean;
         btScalar sigma;

@@ -41,7 +41,7 @@ ContactSensor::ContactSensor(Fixation * fixation) : Sensor(fixation)
 // To create from serialization data
 ContactSensor::ContactSensor(QJsonObject data, Fixation * fixation) : Sensor(data, fixation) {
 
-    collided = new BrainIn(data["collisionInput"]);
+    collided = new BrainIn(data["collisionInput"].toObject());
 
     brainInputs.append(collided);
 }

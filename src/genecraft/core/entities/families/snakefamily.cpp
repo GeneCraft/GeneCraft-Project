@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "body/treeshape.h"
 #include "body/fixation.h"
 #include "body/bone.h"
-#include <QVariant>
+#include <QJsonObject>
 #include <cmath>
 #include "tools.h"
 #include "sensors/accelerometersensor.h"
@@ -39,7 +39,7 @@ namespace GeneCraftCore {
         this->fixRadius = Tools::random(0.1,1.0);
     }
 
-    SnakeFamily::SnakeFamily(QVariant data, QObject *parent) :
+    SnakeFamily::SnakeFamily(QJsonObject data, QObject *parent) :
         EntityFamily(parent)
     {
         this->length = data.toMap()["length"].toInt();
@@ -145,11 +145,11 @@ namespace GeneCraftCore {
         return entity;
     }
 
-    QVariant SnakeFamily::serialize() {
-        QVariantMap data;
-        data["length"] = QVariant(length);
-        data["piecelength"] = QVariant(pieceLength);
-        data["pieceRadius"] = QVariant(pieceRadius);
+    QJsonObject SnakeFamily::serialize() {
+        QJsonObject data;
+        data["length"] = length;
+        data["piecelength"] = pieceLength;
+        data["pieceRadius"] = pieceRadius;
         return data;
     }
 }

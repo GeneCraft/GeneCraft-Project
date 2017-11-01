@@ -32,10 +32,10 @@ public:
     BoneLimitsMutation();
 
     // Not used !
-    void mutate(QVariantMap &, QString){}
+    void mutate(QJsonObject &, QString){}
 
     // To mutate, a lower limit can't be upper than an upper limit !
-    void mutate(QVariantMap &lowerLimits, QVariantMap &upperLimits);
+    void mutate(QJsonObject &lowerLimits, QJsonObject &upperLimits);
 
     FloatMutation *axisMutation;
 

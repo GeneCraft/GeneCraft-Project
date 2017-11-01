@@ -69,9 +69,9 @@ public slots:
     void showAbout();
 
     // new / load / save entity
-    void addEntity(QVariantMap entityData, Ressource *ressource);
+    void addEntity(QJsonObject entityData, Ressource *ressource);
     Entity *createNewEntity();
-    Entity *createCreature(QVariant genotype, btVector3 position, Ressource *ressource);
+    Entity *createCreature(QJsonObject genotype, btVector3 position, Ressource *ressource);
     void loadEntityFromFile();
     void saveEntityToFile();
     void saveEntityToDb();
@@ -83,9 +83,9 @@ public slots:
 
     // experiment and world
     void setExperiment(Experiment* experiment);
-    void setWorld(QVariantMap worldMap);
+    void setWorld(QJsonObject worldMap);
     void loadResult(Result*);
-    //void addResult(QVariantMap resultData, Ressource *ressource);
+    //void addResult(QJsonObject resultData, Ressource *ressource);
 
     // notifications
     void entitySelected(Entity *entity);

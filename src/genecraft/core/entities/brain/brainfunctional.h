@@ -34,7 +34,7 @@ class BrainFunctional : public Brain
 
 public:
     explicit BrainFunctional(QObject *parent = 0);
-    BrainFunctional(QVariant data);
+    BrainFunctional(QJsonObject data);
     ~BrainFunctional();
 
     void addOut(BrainOut* out);
