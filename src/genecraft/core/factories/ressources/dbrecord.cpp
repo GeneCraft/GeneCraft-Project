@@ -36,7 +36,7 @@ namespace GeneCraftCore {
 
     QJsonObject DbRecord::load() {
         error = true;
-        if(postData == QVariant()) {
+        if(postData == QJsonObject()) {
             QString url = QString("%1:%2/%3/%4").arg(db.url, QString::number(db.port), db.dbName, this->id);
             r = NULL;
             this->request(url, RGET);

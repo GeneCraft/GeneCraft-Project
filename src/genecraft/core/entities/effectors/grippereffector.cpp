@@ -50,7 +50,7 @@ GripperEffector::GripperEffector(QJsonObject data, Fixation * fixation) :
     constraint->setEnabled(false);
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->addConstraint(constraint);
 
-    gripperOutput = new BrainOut(data["gripperOutput"]);
+    gripperOutput = new BrainOut(data["gripperOutput"].toObject());
     brainOutputs.append(gripperOutput);
 }
 

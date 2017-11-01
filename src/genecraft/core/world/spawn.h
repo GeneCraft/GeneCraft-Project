@@ -35,7 +35,7 @@ namespace GeneCraftCore {
 
     public:
 
-        Spawn(QVariant data);
+        Spawn(QJsonObject data);
         Spawn(QString type, btVector3 position);
         Spawn(QString type, btVector3 topleftCorner, btVector3 bottomRightCorner);
 

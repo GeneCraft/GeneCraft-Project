@@ -76,7 +76,7 @@ namespace GeneCraftCore {
 
     protected:
         // To simulate a specific entity
-        Entity* spawnEntity(QVariant genome);
+        Entity* spawnEntity(QJsonObject genome);
         bool stabilizeEntity(Entity* e, Result* r);
         bool simulateEntity(Entity* e);
         btScalar evaluateEntity(Entity* e);

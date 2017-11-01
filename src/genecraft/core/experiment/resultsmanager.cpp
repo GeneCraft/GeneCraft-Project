@@ -21,6 +21,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "ressources/jsonfile.h"
 #include "ressources/dbrecord.h"
 
+#include <QJsonArray>
+
 #define RESULTS_DIR "results"
 
 namespace GeneCraftCore {
@@ -102,7 +104,7 @@ namespace GeneCraftCore {
                     = qMax(lastModifiedResultLoaded, fileInfo.lastModified());
 
             JsonFile* file = new JsonFile(results.absoluteFilePath(f));
-            QVariant result = file->load();
+            QJsonObject result = file->load();
             bool valid = false;
             Result* r = Result::loadResult(result, valid);
             r->setRessource(file);
@@ -145,7 +147,7 @@ namespace GeneCraftCore {
             }
 
             JsonFile* file = new JsonFile(results.absoluteFilePath(f));
-            QVariant result = file->load();
+            QJsonObject result = file->load();
             bool valid = false;
             Result* r = Result::loadResult(result, valid);
             r->setRessource(file);
@@ -173,19 +175,18 @@ namespace GeneCraftCore {
                      QString::number(qMax(this->randomResultsStored, this->bestResultsStored))
                      +"&descending=true";
         DbRecord* r = new DbRecord(db, id);
-        QVariant data = r->load();
+        QJsonObject results = r->load();
         delete r;
-        QVariantMap results = data.toMap();
-        QVariantList rows = results["rows"].toList();
-        QVariantList ids;
-        foreach(QVariant row, rows) {
+        QJsonArray rows = results["rows"].toArray();
+        QJsonArray ids;
+        foreach(QJsonValue row, rows) {
             QString id;
 
-            if( row.toMap()["value"].toList().length() == 2) {
-                id = row.toMap()["value"].toList()[1].toList()[1].toString();
+            if( row.toObject()["value"].toArray().count() == 2) {
+                id = row.toObject()["value"].toArray()[1].toArray()[1].toString();
 
             } else {
-                id = row.toMap()["value"].toList()[4].toString();
+                id = row.toObject()["value"].toArray()[4].toString();
             }
 
             if(id.left(14) > lastLoadedId.left(14)) {
@@ -194,16 +195,15 @@ namespace GeneCraftCore {
 
             ids.append(id);
         }
-        QVariantMap postData;
+        QJsonObject postData = QJsonObject();
         postData.insert("keys", ids);
         Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
-        QVariant genomes = re->load();
+        QJsonObject genomesMap = re->load();
 
-        QVariantMap genomesMap = genomes.toMap();
-        QVariantList genomesList = genomesMap["rows"].toList();
+        QJsonArray genomesList = genomesMap["rows"].toArray();
 
-        foreach(QVariant genomeResult, genomesList) {
-            QVariant genome = genomeResult.toMap()["doc"];
+        foreach(QJsonValue genomeResult, genomesList) {
+            QJsonObject genome = genomeResult.toObject()["doc"].toObject();
             bool valid;
             Result* result = Result::loadResult(genome, valid);
             if(valid) {
@@ -227,20 +227,19 @@ namespace GeneCraftCore {
                      QString::number(qMax(this->randomResultsStored, this->bestResultsStored))
                      +"&descending=true";
         DbRecord* r = new DbRecord(db, id);
-        QVariant data = r->load();
+        QJsonObject results = r->load();
         delete r;
-        QVariantMap results = data.toMap();
-        QVariantList rows = results["rows"].toList();
+        QJsonArray rows = results["rows"].toArray();
         QString newLastLoadedId = lastLoadedId;
-        QVariantList ids;
-        foreach(QVariant row, rows) {
+        QJsonArray ids;
+        foreach(QJsonValue row, rows) {
 
 
             QString id;
-            if(row.toMap()["value"].toList().length() == 2) {
-                id = row.toMap()["value"].toList()[1].toList()[1].toString();
+            if(row.toObject()["value"].toArray().count() == 2) {
+                id = row.toObject()["value"].toArray()[1].toArray()[1].toString();
             } else {
-                id = row.toMap()["value"].toList()[4].toString();
+                id = row.toObject()["value"].toArray()[4].toString();
             }
 
             if(id.left(14) <= lastLoadedId.left(14)) {
@@ -253,16 +252,15 @@ namespace GeneCraftCore {
             ids.append(id);
         }
 
-        QVariantMap postData;
+        QJsonObject postData;
         postData.insert("keys", ids);
         Ressource* re = new DbRecord(db, "_all_docs?include_docs=true", postData);
-        QVariant genomes = re->load();
+        QJsonObject genomesMap = re->load();
 
-        QVariantMap genomesMap = genomes.toMap();
-        QVariantList genomesList = genomesMap["rows"].toList();
+        QJsonArray genomesList = genomesMap["rows"].toArray();
 
-        foreach(QVariant genomeResult, genomesList) {
-            QVariant genome = genomeResult.toMap()["doc"];
+        foreach(QJsonValue genomeResult, genomesList) {
+            QJsonObject genome = genomeResult.toObject()["doc"].toObject();
             bool valid;
             Result* result = Result::loadResult(genome, valid);
             if(valid && result->getWorker() != this->workerName) {
@@ -284,7 +282,7 @@ namespace GeneCraftCore {
       * To save the actual progression of the experiment
       */
     void ResultsManager::save() {
-        QVariantList docsList;
+        QJsonArray docsList;
         foreach(Result* r, bestResults) {
             if(r->getFitness() > 0.0 && !r->isBroadcasted()) {
 
@@ -305,7 +303,7 @@ namespace GeneCraftCore {
         }
 
         if(online) {
-            QVariantMap postData;
+            QJsonObject postData;
             postData.insert("docs", docsList);
             DbRecord* r = new DbRecord(db, "_bulk_docs");
             r->save(postData);
@@ -325,10 +323,10 @@ namespace GeneCraftCore {
             foreach(Result * r, bestResults) {
                 if(r->getFitness() + 0.0001 > result->getFitness() &&
                    r->getFitness() - 0.0001 < result->getFitness()) {
-                    QVariantMap g1 = r->getGenome().toMap();
-                    g1.insert("origins", QVariant());
-                    QVariantMap g2 = result->getGenome().toMap();
-                    g2.insert("origins", QVariant());
+                    QJsonObject g1 = r->getGenome();
+                    g1.insert("origins", QJsonObject());
+                    QJsonObject g2 = result->getGenome();
+                    g2.insert("origins", QJsonObject());
                     // Check if genome is the same
                     if(g1 == g2) {
                         already = true;

@@ -54,7 +54,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tools.h"
 #include <QJsonArray>
-
+#include <QJsonDocument>
 
 namespace GeneCraftCore {
 
@@ -347,9 +347,9 @@ namespace GeneCraftCore {
                 }
             }
             int randomGen = qrand()%genomes.size();
-            return mutations->mutateEntity(genomes.at(randomGen));
+            return mutations->mutateEntity(genomes.at(randomGen).toObject());
         }
-        return QVariant();
+        return QJsonObject();
     }
 
     /**
@@ -386,10 +386,10 @@ namespace GeneCraftCore {
             // random new from results
             int id = qrand()%max;
             Result* r = results->getRandomResults().at(id);
-            QVariant genome = r->getGenome();
+            QJsonObject genome = r->getGenome();
 
             // Mutation
-            QVariant newGenome = mutations->mutateEntity(genome);
+            QJsonObject newGenome = mutations->mutateEntity(genome);
 
             qDebug() << (newGenome == genome);
             // Adding to the active population
@@ -420,10 +420,10 @@ namespace GeneCraftCore {
             // random new from results
             int id = qrand()%max;
             Result* r = activePop.at(id);
-            QVariant genome = r->getGenome();
+            QJsonObject genome = r->getGenome();
 
             // Mutation
-            QVariant newGenome = mutations->mutateEntity(genome);
+            QJsonObject newGenome = mutations->mutateEntity(genome);
 
             qDebug() << (newGenome == genome);
             // Adding to the active population
@@ -434,7 +434,7 @@ namespace GeneCraftCore {
         //Remaining random new
         int needed = this->popSize - newActivePop.length();
         for(int i = 0; i < needed; i++) {
-            QVariant newGenome = this->randomNewEntity();
+            QJsonObject newGenome = this->randomNewEntity();
             newActivePop.append(new Result(exp->getId(), 0, 0, 0, newGenome, workerName));
             qDebug() << "new random genome from seeds !";
         }
@@ -452,7 +452,7 @@ namespace GeneCraftCore {
             // To avoid saving rounding problematic
             // Could still append if the entity modified himself during or
             // At the beginning of the simulation
-            r->setGenome(QJsonDocument::fromJson(QJsonDocument::fromVariant(r->getGenome()).toJson()).toObject());
+            r->setGenome(QJsonDocument::fromJson(QJsonDocument::fromVariant(r->getGenome()).toJson()).object());
 
             qDebug() << "Evaluation of a specimen" << exp->getNbRun() << "times.";
             for(int run = 0; run < exp->getNbRun(); run++) {
@@ -491,7 +491,7 @@ namespace GeneCraftCore {
 
                         // Store the statistics inside the result
                         QString stats = scriptEngine.evaluate("JSON.stringify(entity)").toString();
-                        r->setStatistics(QJsonDocument::fromJson(stats).object());
+                        r->setStatistics(QJsonDocument::fromJson(stats.toUtf8()).object());
 
                         // env pressure on genes
                         r->setGenome(e->serialize());
@@ -520,7 +520,7 @@ namespace GeneCraftCore {
 
 
     // To simulate a specific entity
-    Entity* ExperimentManager::spawnEntity(QVariant genome) {
+    Entity* ExperimentManager::spawnEntity(QJsonObject genome) {
         delete world;
         world = worldFactory->createWorld(factory, shapesFactory, exp->getWorldDataMap());
         btVector3 position = world->getSpawnPosition();
@@ -625,7 +625,7 @@ namespace GeneCraftCore {
 
     btScalar ExperimentManager::evaluateEntity(Entity*) {
         // Call to the fitness function
-        QScriptValue fitness = fitnessFunc.call();
+        QJSValue fitness = fitnessFunc.call();
         return fitness.toNumber();
     }
 

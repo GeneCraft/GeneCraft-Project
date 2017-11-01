@@ -40,6 +40,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "effectors/grippereffector.h"
 #include "effectors/rotationalmotorseffector.h"
 
+#include <QJsonArray>
+
 namespace GeneCraftCore {
 GenericFamily::GenericFamily()
 {
@@ -57,7 +59,7 @@ Entity *GenericFamily::createEntity(QJsonObject genotype,
                                   "generic",
                                   origins.value("generation").toInt());
     // Brain
-    entity->setBrain(new BrainFunctional(genotype.value("brain")));
+    entity->setBrain(new BrainFunctional(genotype.value("brain").toObject()));
 
     // Body
     QJsonObject body = genotype.value("body").toObject();
@@ -69,10 +71,10 @@ Entity *GenericFamily::createEntity(QJsonObject genotype,
         initTransform.setIdentity();
         initTransform.setOrigin(initialPosition);
 
-        Fixation* root = GenericFamily::createRootFromGenotype(shapesFactory, body.value("shape"), initTransform);
+        Fixation* root = GenericFamily::createRootFromGenotype(shapesFactory, body.value("shape").toObject(), initTransform);
         treeShape->setRoot(root);
         entity->setShape(treeShape);
-        GenericFamily::buildFixFromGenotype(shapesFactory, root, root,body.value("shape").toMap().value("rootFix"));
+        GenericFamily::buildFixFromGenotype(shapesFactory, root, root,body.value("shape").toObject().value("rootFix").toObject());
     }
 
 
@@ -118,33 +120,33 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
        QJsonObject sensorMap = sensorData.toObject();
        switch((SensorType)sensorMap["type"].toInt()) {
        case accelerometerSensor: {
-           fix->addSensor(new AccelerometerSensor(sensorData, fix));
+           fix->addSensor(new AccelerometerSensor(sensorData.toObject(), fix));
        }
            break;
        case gyroscopicSensor: {
 
-           fix->addSensor(new GyroscopicSensor(sensorData, fix));
+           fix->addSensor(new GyroscopicSensor(sensorData.toObject(), fix));
        }
            break;
        case positionSensor:{
 
-           fix->addSensor(new PositionSensor(sensorData, root, fix));
+           fix->addSensor(new PositionSensor(sensorData.toObject(), root, fix));
        }
            break;
        case contactSensor:{
 
-           fix->addSensor(new ContactSensor(sensorData, fix));
+           fix->addSensor(new ContactSensor(sensorData.toObject(), fix));
        }
            break;
        case boxSmellSensor:{
 
-           fix->addSensor(new BoxSmellSensor(sensorData, fix));
+           fix->addSensor(new BoxSmellSensor(sensorData.toObject(), fix));
 
            break;
        }
        case distanceSensor:{
 
-           fix->addSensor(new DistanceSensor(sensorData, fix));
+           fix->addSensor(new DistanceSensor(sensorData.toObject(), fix));
        }
            break;
        }
@@ -172,7 +174,7 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
     // -----------
     // -- bones --
     // -----------
-    QJsonObject bonesVariantList = fixGenotype.value("bones").toArray();
+    QJsonArray bonesVariantList = fixGenotype.value("bones").toArray();
 
     foreach(QJsonValue bone, bonesVariantList)
     {
@@ -202,9 +204,9 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
                              upperLimitsMap.value("z").toDouble());
 
         Bone *b = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
-        b->setMotorModifierData(boneMap["muscle"]);
+        b->setMotorModifierData(boneMap["muscle"].toObject());
         // Add bone recurcively
-        GenericFamily::buildFixFromGenotype(shapesFactory, b->getEndFixation(), root, boneMap.value("endFix"));
+        GenericFamily::buildFixFromGenotype(shapesFactory, b->getEndFixation(), root, boneMap.value("endFix").toObject());
     }
 }
 }

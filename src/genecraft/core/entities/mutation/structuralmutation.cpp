@@ -33,9 +33,8 @@ StructuralMutation::StructuralMutation()
     replaceProbability  = .5f;
 }
 
-StructuralMutation::StructuralMutation(QVariant variant)
+StructuralMutation::StructuralMutation(QJsonObject map)
 {
-    QVariantMap map = variant.toMap();
 
     enable              = map["enable"].toBool();
     addProbability      = map["addProbability"].toDouble();
@@ -58,8 +57,8 @@ bool StructuralMutation::checkReplace()
     return enable && Tools::random(0.f,1.f) <= replaceProbability;
 }
 
-QVariant StructuralMutation::serialize() {
-    QVariantMap map;
+QJsonObject StructuralMutation::serialize() {
+    QJsonObject map;
 
     map.insert("enable",enable);
     map.insert("addProbability",(double)addProbability);

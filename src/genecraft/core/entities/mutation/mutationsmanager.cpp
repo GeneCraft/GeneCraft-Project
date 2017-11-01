@@ -217,21 +217,21 @@ namespace GeneCraftCore {
         // --------------------
         // -- BODY MUTATIONS --
         // --------------------
-        boneLength = new FloatMutation(map["boneLength"]);
-        boneRadius = new FloatMutation(map["boneRadius"]);
-        fixRadius = new FloatMutation(map["fixRadius"]);
-        boneAngularOrigin = new FloatMutation(map["boneAngularOrigin"]);
+        boneLength = new FloatMutation(map["boneLength"].toObject());
+        boneRadius = new FloatMutation(map["boneRadius"].toObject());
+        fixRadius = new FloatMutation(map["fixRadius"].toObject());
+        boneAngularOrigin = new FloatMutation(map["boneAngularOrigin"].toObject());
         boneAngularLimits = new BoneLimitsMutation();
         delete boneAngularLimits->axisMutation;
-        boneAngularLimits->axisMutation = new FloatMutation(map["boneAngularLimits"]);
+        boneAngularLimits->axisMutation = new FloatMutation(map["boneAngularLimits"].toObject());
 
         // sensors
-        sensorsStructural = new StructuralMutation(map["sensorsStructural"]);
-        sensorsStructuralList = new StructuralList(map["sensorsStructuralList"]);
+        sensorsStructural = new StructuralMutation(map["sensorsStructural"].toObject());
+        sensorsStructuralList = new StructuralList(map["sensorsStructuralList"].toArray());
 
         // effectors
-        effectorsStructural = new StructuralMutation(map["effectorsStructural"]);
-        effectorsStructuralList = new StructuralList(map["effectorsStructuralList"]);
+        effectorsStructural = new StructuralMutation(map["effectorsStructural"].toObject());
+        effectorsStructuralList = new StructuralList(map["effectorsStructuralList"].toArray());
 
         // TODO serialize and add to ui
         distanceSensorYZ = new FloatMutation();
@@ -242,21 +242,21 @@ namespace GeneCraftCore {
         distanceSensorYZ->maxValue      =  SIMD_PI;
 
         // bones
-        bonesStructural = new StructuralMutation(map["bonesStructural"]);
+        bonesStructural = new StructuralMutation(map["bonesStructural"].toObject());
 
         // ---------------------
         // -- BRAIN MUTATIONS --
         // ---------------------
 
         // Plug grid size
-        brainInPos = new FloatMutation(map["brainInPos"]);
-        brainWeight = new FloatMutation(map["brainWeight"]);
-        brainDistance = new FloatMutation(map["brainDistance"]);
-        brainMemorySize = new IntegerMutation(map["brainMemorySize"]);
-        brainFrequency = new IntegerMutation(map["brainFrequency"]);
-        constValue = new FloatMutation(map["constValue"]);
-        brainNodeList = new StructuralList(map["brainNodes"]);
-        brainStructural = new StructuralMutation(map["brainStruct"]);
+        brainInPos = new FloatMutation(map["brainInPos"].toObject());
+        brainWeight = new FloatMutation(map["brainWeight"].toObject());
+        brainDistance = new FloatMutation(map["brainDistance"].toObject());
+        brainMemorySize = new IntegerMutation(map["brainMemorySize"].toObject());
+        brainFrequency = new IntegerMutation(map["brainFrequency"].toObject());
+        constValue = new FloatMutation(map["constValue"].toObject());
+        brainNodeList = new StructuralList(map["brainNodes"].toArray());
+        brainStructural = new StructuralMutation(map["brainStruct"].toObject());
         if(brainNodeList->elements.size() < 22) {
             qDebug() << "adding wave to the list of mutations !";
             brainNodeList->elements.append(new MutationElement("wave : a", 22, 4));
@@ -326,7 +326,8 @@ namespace GeneCraftCore {
         return map;
     }
 
-    QJsonObject MutationsManager::mutateEntity(const QJsonObject &entityMap) {
+    QJsonObject MutationsManager::mutateEntity(const QJsonObject &map) {
+        QJsonObject entityMap = QJsonObject(map);
         QJsonObject originsMap =  entityMap["origins"].toObject();
         QJsonObject bodyMap = entityMap["body"].toObject();
         QJsonObject treeShapeMap = bodyMap["shape"].toObject();
@@ -353,9 +354,10 @@ namespace GeneCraftCore {
         return entityMap;
     }
 
-    QJsonObject MutationsManager::mutateTreeShape(const QJsonObject &treeShapeMap)
+    QJsonObject MutationsManager::mutateTreeShape(const QJsonObject &map)
     {
-        // Convert to map
+        // clone
+        QJsonObject treeShapeMap = QJsonObject(map);
 
         // mutate the root fix
         QJsonObject rootFixMap = treeShapeMap.value("rootFix").toObject();
@@ -364,7 +366,8 @@ namespace GeneCraftCore {
         // mutate all bones
         QJsonArray newBonesList;
         foreach(QJsonValue boneVariant, rootFixMap.value("bones").toArray()) {
-            newBonesList.append(recursiveMutateTreeShape(boneVariant));
+            QJsonObject boneMap = boneVariant.toObject();
+            newBonesList.append(recursiveMutateTreeShape(boneMap));
         }
 
         // add new bone to fix
@@ -389,23 +392,24 @@ namespace GeneCraftCore {
 
         // mutate all bones
         QJsonArray newBonesList;
-        foreach(QJsonValue boneVariant, endFixMap.value("bones").toArray())
-            newBonesList.append(recursiveMutateTreeShape(boneVariant));
-
+        foreach(QJsonValue boneVariant, endFixMap.value("bones").toArray()) {
+            QJsonObject boneMap = boneVariant.toObject();
+            newBonesList.append(recursiveMutateTreeShape(boneMap));
+        }
         // add new bone to fix
         if(bonesStructural->checkAdd())
              addBone(newBonesList);
 
         endFixMap.remove("bones");
         endFixMap.insert("bones",newBonesList);
-        boneVariantMap.remove("endFix");
-        boneVariantMap.insert("endFix",endFixMap);
+        boneVariant.remove("endFix");
+        boneVariant.insert("endFix",endFixMap);
 
-        return boneVariantMap;
+        return boneVariant;
     }
 
-    QJsonObject MutationsManager::mutateBone(const QJsonObject &boneMap){
-
+    QJsonObject MutationsManager::mutateBone(const QJsonObject &map){
+        QJsonObject boneMap = QJsonObject(map);
         // ----------
         // -- size --
         // ----------
@@ -457,7 +461,7 @@ namespace GeneCraftCore {
             if(motors.contains(motor))
             {
                 // need to delete motor ?
-                if(lowerLimits[motor].toFloat() == 0.0f && upperLimits[motor].toFloat() == 0.0f) {
+                if(lowerLimits[motor].toDouble() == 0.0f && upperLimits[motor].toDouble() == 0.0f) {
                     continue; // not insert in newMotors
                 }
 
@@ -493,7 +497,7 @@ namespace GeneCraftCore {
             } else {
 
                 // need to create a new motor ?
-                if(lowerLimits[motor].toFloat() != 0.0f || upperLimits[motor].toFloat() != 0.0f) {
+                if(lowerLimits[motor].toDouble() != 0.0f || upperLimits[motor].toDouble() != 0.0f) {
                    newMotors.insert(motor,BrainOutMotor::generateEmpty());
                 }
             }
@@ -507,7 +511,8 @@ namespace GeneCraftCore {
         return boneMap;
     }
 
-    QJsonObject MutationsManager::mutateFixation(const QJsonObject &fixMap){
+    QJsonObject MutationsManager::mutateFixation(const QJsonObject &map){
+        QJsonObject fixMap = QJsonObject(map);
         // radius mutation
         fixRadius->mutate(fixMap, "radius");
 
@@ -540,29 +545,29 @@ namespace GeneCraftCore {
 
             switch((SensorType) sensorMap["type"].toInt()) {
                 case accelerometerSensor:
-                    sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"]));
-                    sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"]));
-                    sensorMap.insert("inputZ", mutateBrainIn(sensorMap["inputZ"]));
+                    sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"].toObject()));
+                    sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"].toObject()));
+                    sensorMap.insert("inputZ", mutateBrainIn(sensorMap["inputZ"].toObject()));
                     break;
                 case gyroscopicSensor:
-                    sensorMap.insert("inputPitch", mutateBrainIn(sensorMap["inputPitch"]));
-                    sensorMap.insert("inputYaw",   mutateBrainIn(sensorMap["inputYaw"]));
-                    sensorMap.insert("inputRoll",  mutateBrainIn(sensorMap["inputRoll"]));
+                    sensorMap.insert("inputPitch", mutateBrainIn(sensorMap["inputPitch"].toObject()));
+                    sensorMap.insert("inputYaw",   mutateBrainIn(sensorMap["inputYaw"].toObject()));
+                    sensorMap.insert("inputRoll",  mutateBrainIn(sensorMap["inputRoll"].toObject()));
                     break;
                 case positionSensor:
-                    sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"]));
-                    sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"]));
-                    sensorMap.insert("inputZ", mutateBrainIn(sensorMap["inputZ"]));
+                    sensorMap.insert("inputX", mutateBrainIn(sensorMap["inputX"].toObject()));
+                    sensorMap.insert("inputY", mutateBrainIn(sensorMap["inputY"].toObject()));
+                    sensorMap.insert("inputZ", mutateBrainIn(sensorMap["inputZ"].toObject()));
                     break;
                 case contactSensor:
-                    sensorMap.insert("collisionInput", mutateBrainIn(sensorMap["collisionInput"]));
+                    sensorMap.insert("collisionInput", mutateBrainIn(sensorMap["collisionInput"].toObject()));
                     break;
                 case boxSmellSensor:
-                    sensorMap.insert("intensityInput", mutateBrainIn(sensorMap["intensityInput"]));
+                    sensorMap.insert("intensityInput", mutateBrainIn(sensorMap["intensityInput"].toObject()));
                     // TODO mutate radius of smell...
                     break;
                 case distanceSensor:
-                    sensorMap.insert("distanceInput", mutateBrainIn(sensorMap["distanceInput"]));
+                    sensorMap.insert("distanceInput", mutateBrainIn(sensorMap["distanceInput"].toObject()));
                     QJsonObject orientationMap = sensorMap["orientation"].toObject();
                     distanceSensorYZ->mutate(orientationMap,"y");
                     distanceSensorYZ->mutate(orientationMap,"z");
@@ -613,12 +618,12 @@ namespace GeneCraftCore {
                     // do in bone mutation...
                     break;
                 case gripperEffector :
-                    effectorMap.insert("gripperOutput", mutateBrainOut(effectorMap["gripperOutput"]));
+                    effectorMap.insert("gripperOutput", mutateBrainOut(effectorMap["gripperOutput"].toObject()));
                     break;
                 case flyingEffector :
-                    effectorMap.insert("impulseX", mutateBrainOut(effectorMap["impulseX"]));
-                    effectorMap.insert("impulseY", mutateBrainOut(effectorMap["impulseY"]));
-                    effectorMap.insert("impulseZ", mutateBrainOut(effectorMap["impulseZ"]));
+                    effectorMap.insert("impulseX", mutateBrainOut(effectorMap["impulseX"].toObject()));
+                    effectorMap.insert("impulseY", mutateBrainOut(effectorMap["impulseY"].toObject()));
+                    effectorMap.insert("impulseZ", mutateBrainOut(effectorMap["impulseZ"].toObject()));
                     break;
             }
 
@@ -770,14 +775,14 @@ namespace GeneCraftCore {
 
     // Mutate the brain
     QJsonObject MutationsManager::mutateBrain(QJsonObject brain) {
-        brainFrequency->mutate(brainMap, "frequency");
-        return brainMap;
+        brainFrequency->mutate(brain, "frequency");
+        return brain;
     }
 
     // Mutate a brainInput
     QJsonObject MutationsManager::mutateBrainIn(QJsonObject brainIn) {
         // "inputRoll":{"connexions":[{"w":-0.0762658,"x":0.471847,"y":0.920957}
-        QJsonArray connexions = brainIn["connexions"].toList();
+        QJsonArray connexions = brainIn["connexions"].toArray();
         QJsonArray newConnexions;
 
         foreach(QJsonValue connexion, connexions) {
@@ -969,15 +974,15 @@ namespace GeneCraftCore {
                 // x et y
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
-                            QString::number(brainInPos->mutate(nodePart[1].toFloat())));
+                            QString::number(brainInPos->mutate(nodePart[1].toDouble())));
                 newConnexionInfo.append(" " +
-                            QString::number(brainInPos->mutate(nodePart[2].toFloat())));
+                            QString::number(brainInPos->mutate(nodePart[2].toDouble())));
                 newConnexionInfo.append(",");
                 break;
             case CONSTANT:
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
-                            QString::number(constValue->mutate(nodePart[1].toFloat())));
+                            QString::number(constValue->mutate(nodePart[1].toDouble())));
                 newConnexionInfo.append(",");
                 break;
             case INTEGRATE:
@@ -999,7 +1004,7 @@ namespace GeneCraftCore {
             case WAVE:
                 newConnexionInfo.append(nodePart[0]);
                 newConnexionInfo.append(" " +
-                            QString::number(constValue->mutate(nodePart[1].toFloat())));
+                            QString::number(constValue->mutate(nodePart[1].toDouble())));
                 newConnexionInfo.append(",");
                 break;
 
@@ -1010,10 +1015,10 @@ namespace GeneCraftCore {
             }
         }
 
-        outMap.remove("connexionInfo");
-        outMap.insert("connexionInfo", newConnexionInfo);
+        brainOut.remove("connexionInfo");
+        brainOut.insert("connexionInfo", newConnexionInfo);
 
-        return outMap;
+        return brainOut;
     }
 
     void MutationsManager::consumnSubTree(QStringList::iterator &it) {

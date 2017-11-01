@@ -31,21 +31,22 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "tools.h"
 
 #include "btworldfactory.h"
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
     double test[129*129];
 
-    btScene::btScene(btWorld* world, QVariant sceneData, QObject *parent) :
+    btScene::btScene(btWorld* world, QJsonObject sceneData, QObject *parent) :
         QObject(parent)
     {
         this->world = world;
         this->world->setScene(this);
-        this->data = sceneData.toMap();
-        QVariantList spawnData = data["spawns"].toList();
+        this->data = sceneData;
+        QJsonArray spawnData = data["spawns"].toArray();
 
-        foreach(QVariant v, spawnData) {
-            this->spawns.append(new Spawn(v));
+        foreach(QJsonValue v, spawnData) {
+            this->spawns.append(new Spawn(v.toObject()));
         }
 
         if(this->spawns.size() == 0) { // Prevent no spawn bug !
@@ -81,9 +82,9 @@ namespace GeneCraftCore {
 
     void btScene::setup() {
 
-        QVariantMap floor = data["floor"].toMap();
+        QJsonObject floor = data["floor"].toObject();
 
-        QVariantList staticShapesList = data.value("shapes").toList();
+        QJsonArray staticShapesList = data.value("shapes").toArray();
 
         //floor["type"] = "randomBoxes";
         // Add the entry to the terrain engine

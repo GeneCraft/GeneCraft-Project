@@ -47,15 +47,15 @@ FlyingEffector::FlyingEffector(QJsonObject data, Fixation *fixation) : Effector(
 
     btScalar mass = 1/fixation->getRigidBody()->getInvMass();
 
-    impulseX = new BrainOut(outs["impulseX"]);
+    impulseX = new BrainOut(outs["impulseX"].toObject());
     impulseX->setMin(-mass*MASS_FACTOR);
     impulseX->setMin(mass*MASS_FACTOR);
 
-    impulseY = new BrainOut(outs["impulseY"]);
+    impulseY = new BrainOut(outs["impulseY"].toObject());
     impulseY->setMin(-mass*MASS_FACTOR*10.0);
     impulseY->setMin(mass*MASS_FACTOR*10.0);
 
-    impulseZ = new BrainOut(outs["impulseZ"]);
+    impulseZ = new BrainOut(outs["impulseZ"].toObject());
     impulseZ->setMin(-mass*MASS_FACTOR);
     impulseZ->setMin(mass*MASS_FACTOR);
 

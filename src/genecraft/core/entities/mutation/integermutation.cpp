@@ -67,7 +67,7 @@ namespace GeneCraftCore {
     void IntegerMutation::mutate(QJsonObject &map, QString key){
         int newValue = this->mutate(map.value(key).toInt());
         map.remove(key);
-        map.insert(key,(int)newValue));
+        map.insert(key,(int)newValue);
     }
 
     int IntegerMutation::mutate(int value) {

@@ -43,9 +43,9 @@ QJsonObject SimpleProbabilityMutation::serialize(){
 
     QJsonObject map;
 
-    map.insert("type",QVariant(SimpleProbabilityType));
-    map.insert("probability",QVariant((double)probability));
-    map.insert("enable",QVariant(enable));
+    map.insert("type",SimpleProbabilityType);
+    map.insert("probability",(double)probability);
+    map.insert("enable",enable);
 
     return map;
 }

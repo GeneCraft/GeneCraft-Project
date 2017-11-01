@@ -81,7 +81,7 @@ RotationalMotorsEffector::RotationalMotorsEffector(QJsonObject data, Bone *bone,
 
         QString motor = motors[i];
         if(motorsMap.contains(motor)) {
-            brainMotorOutputs[i] = new BrainOutMotor(motorsMap.value(motor), constraint->getRotationalLimitMotor(i));
+            brainMotorOutputs[i] = new BrainOutMotor(motorsMap.value(motor).toObject(), constraint->getRotationalLimitMotor(i));
             brainMotorOutputs[i]->motor->m_enableMotor = true;
             brainMotorOutputs[i]->motor->m_currentPosition = 0;
             this->outputsFrom = 1;
@@ -144,7 +144,7 @@ void RotationalMotorsEffector::disconnectMotor(int i)
 }
 
 QJsonObject RotationalMotorsEffector::serialize() {
-    QJsonObject data = Effector::serialize().toMap();
+    QJsonObject data = Effector::serialize();
     QJsonObject bOuts;
     QString motors[] = {"x","y","z"};
     for(int i = 0; i < 3; i++)

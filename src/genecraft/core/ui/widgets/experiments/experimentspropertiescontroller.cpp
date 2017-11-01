@@ -349,7 +349,7 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
         // default check in QtCreator, check false to emit toggle and disable others...
         ui->gbFixedGenomes->setChecked(false);
 
-        QVariantMap seedsMap = experiment->getSeedInfo();
+        QJsonObject seedsMap = experiment->getSeedInfo();
         QString seedType = seedsMap["type"].toString();
         if(seedType == "family") {
 
@@ -365,22 +365,22 @@ void ExperimentsPropertiesController::setExperiment(Experiment *experiment){
             ui->gbFixedGenomes->setChecked(true);
             if(seedsMap.contains("genomes"))
             {
-                QVariantList genomesList = seedsMap["genomes"].toList();
+                QJsonArray genomesList = seedsMap["genomes"].toArray();
 
-                foreach(QVariant genome, genomesList)
-                    ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(genome.toMap()));
+                foreach(QJsonValue genome, genomesList)
+                    ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(genome.toObject()));
             }
         }
     }
 }
 
-void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
+void ExperimentsPropertiesController::setWorld(QJsonObject worldData){
 
     // -- world --
     ui->leWorldName->setText(worldData["name"].toString());
 
     // -- Biome --
-    QVariantMap biomeMap = worldData["biome"].toMap();
+    QJsonObject biomeMap = worldData["biome"].toObject();
     double gravity = biomeMap["gravity"].toDouble();
 
     for(int i=0; i<gravitiesName.count();++i)
@@ -396,10 +396,10 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
     ui->teLights->setText(Ressource::beautifullJson(biomeMap["lights"]));
 
     // -- Scene --
-    QVariantMap sceneMap = worldData["scene"].toMap();
+    QJsonObject sceneMap = worldData["scene"].toObject();
 
     // floor
-    QVariantMap floorMap = sceneMap["floor"].toMap();
+    QJsonObject floorMap = sceneMap["floor"].toObject();
     QString type = floorMap["type"].toString();
 
     this->ui->lblFloorType->setText(type);
@@ -426,7 +426,7 @@ void ExperimentsPropertiesController::setWorld(QVariantMap worldData){
         ui->cbFloor->setCurrentIndex(0);*/
 
     // camera
-    QVariantMap camMap = sceneMap["camera"].toMap();
+    QJsonObject camMap = sceneMap["camera"].toObject();
     ui->leCamPosX->setText(camMap["posX"].toString());
     ui->leCamPosY->setText(camMap["posY"].toString());
     ui->leCamPosZ->setText(camMap["posZ"].toString());
@@ -551,9 +551,9 @@ void ExperimentsPropertiesController::updateStructures() {
     // Seed
     experiment->setSeedInfo(getSeedMap());
 }
-QVariantMap ExperimentsPropertiesController::getSeedMap() {
+QJsonObject ExperimentsPropertiesController::getSeedMap() {
 
-    QVariantMap seedMap;
+    QJsonObject seedMap;
     if(ui->gbFamily->isChecked()) {
 
         seedMap.insert("type","family");
@@ -563,7 +563,7 @@ QVariantMap ExperimentsPropertiesController::getSeedMap() {
 
         seedMap.insert("type","fixedGenomes");
 
-        QVariantList genomes;
+        QJsonArray genomes;
 
         for(int i=0; i < ui->twEntitiesSelected->topLevelItemCount(); ++i) {
            EntityTreeWidgetItem *entityItem = (EntityTreeWidgetItem *) ui->twEntitiesSelected->topLevelItem(i);
@@ -576,22 +576,22 @@ QVariantMap ExperimentsPropertiesController::getSeedMap() {
 }
 
 
-QVariantMap ExperimentsPropertiesController::getWorldMap() {
+QJsonObject ExperimentsPropertiesController::getWorldMap() {
 
     // World
-    QVariantMap worldMap = experiment->getWorldDataMap();
+    QJsonObject worldMap = experiment->getWorldDataMap();
     worldMap.insert("name",ui->leWorldName->text());
 
     // -- Biome --
-    QVariantMap biomeMap;
+    QJsonObject biomeMap;
     biomeMap.insert("gravity",gravities[ui->cbGravity->currentIndex()]);
     biomeMap.insert("lights",QxtJSON::parse(ui->teLights->toPlainText()));
     biomeMap.insert("skyMaterial",skyMaterials[ui->cbSkyMaterial->currentIndex()]);
     worldMap.insert("biome",biomeMap);
 
     // -- Scene --
-    QVariantMap sceneMap = experiment->getWorldDataMap()["scene"].toMap();
-    QVariantMap camMap;
+    QJsonObject sceneMap = experiment->getWorldDataMap()["scene"].toObject();
+    QJsonObject camMap;
     camMap.insert("posX",ui->leCamPosX->text().toDouble());
     camMap.insert("posY",ui->leCamPosY->text().toDouble());
     camMap.insert("posZ",ui->leCamPosZ->text().toDouble());
@@ -600,7 +600,7 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
     camMap.insert("targetZ",ui->leCamTargetZ->text().toDouble());
     sceneMap.insert("camera",camMap);
 
-    //QVariantMap floorMap;
+    //QJsonObject floorMap;
     //floorMap.insert("type",ui->cbFloor->currentText());
 
     /*if(ui->cbFloor->currentText() == "flatland")
@@ -610,8 +610,8 @@ QVariantMap ExperimentsPropertiesController::getWorldMap() {
     */
 
     //sceneMap.insert("floor",floorMap);
-    sceneMap.insert("shapes",QxtJSON::parse(ui->teStaticShapes->toPlainText()));
-    sceneMap.insert("spawns",QxtJSON::parse(ui->teSpawns->toPlainText()));
+    sceneMap.insert("shapes",QJsonDocument::fromJson(ui->teStaticShapes->toPlainText().toUtf8()));
+    sceneMap.insert("spawns",QJsonDocument::fromJson(ui->teSpawns->toPlainText().toUtf8()));
     worldMap.insert("scene",sceneMap);
 
     return worldMap;

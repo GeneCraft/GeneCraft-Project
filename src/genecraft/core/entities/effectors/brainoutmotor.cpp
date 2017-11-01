@@ -19,6 +19,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "brainoutmotor.h"
 #include <QString>
+#include <QJsonArray>
 #include "genecraftcoreclasses.h"
 #include "effector.h"
 #include "brain/brainout.h"
@@ -40,15 +41,15 @@ namespace GeneCraftCore {
     BrainOutMotor::BrainOutMotor(QJsonObject data, btRotationalLimitMotor* motor) : motor(motor){
 
         // new version
-        if(outMap.contains("contractionOutput")) {
-            boMaxMotorForce = new BrainOut(data["contractionOutput"]);
-            boTargetVelocity = new BrainOut(data["expansionOutput"]);
+        if(data.contains("contractionOutput")) {
+            boMaxMotorForce = new BrainOut(data["contractionOutput"].toObject());
+            boTargetVelocity = new BrainOut(data["expansionOutput"].toObject());
         }
         // old version
         else {
             QJsonArray dataL = data["brainOuts"].toArray();
-            boMaxMotorForce = new BrainOut(dataL[0]);
-            boTargetVelocity = new BrainOut(dataL[1]);
+            boMaxMotorForce = new BrainOut(dataL[0].toObject());
+            boTargetVelocity = new BrainOut(dataL[1].toObject());
         }
     }
 

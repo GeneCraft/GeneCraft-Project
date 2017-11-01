@@ -42,10 +42,10 @@ namespace GeneCraftCore {
     SnakeFamily::SnakeFamily(QJsonObject data, QObject *parent) :
         EntityFamily(parent)
     {
-        this->length = data.toMap()["length"].toInt();
+        this->length = data["length"].toInt();
 
-        this->pieceLength = data.toMap()["piecelength"].toFloat();
-        this->pieceRadius = data.toMap()["pieceRadius"].toFloat();
+        this->pieceLength = data["piecelength"].toDouble();
+        this->pieceRadius = data["pieceRadius"].toDouble();
     }
 
     Entity* SnakeFamily::createEntity(btShapesFactory* factory, const btVector3 &position) {

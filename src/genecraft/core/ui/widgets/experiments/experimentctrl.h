@@ -46,7 +46,7 @@ namespace GeneCraftCore {
         void connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim);
 
     signals:
-        void sAddEntity(QVariantMap genome, Ressource* r);
+        void sAddEntity(QJsonObject genome, Ressource* r);
         void sLoadResult(Result*);
         void newDataAvailable();
 

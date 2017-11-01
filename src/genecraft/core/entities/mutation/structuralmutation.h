@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef STRUCTURALMUTATION_H
 #define STRUCTURALMUTATION_H
 
-#include <QVariant>
+#include <QJsonObject>
 #include "LinearMath/btScalar.h"
 
 namespace GeneCraftCore {
@@ -29,8 +29,8 @@ class StructuralMutation
 {
 public:
     StructuralMutation();
-    StructuralMutation(QVariant variant);
-    QVariant serialize();
+    StructuralMutation(QJsonObject variant);
+    QJsonObject serialize();
 
     bool checkAdd();
     bool checkDelete();

@@ -123,7 +123,7 @@ namespace GeneCraftCore {
 
             // Take the inside world
 //            if(dataMap.contains("world")) {
-//                QVariantMap worldMap = dataMap["world"].toMap();
+//                QJsonObject worldMap = dataMap["world"].toObject();
 //                DataWrapper dataWorld = {worldMap, NULL};
 
 //                // no add two times the same world
