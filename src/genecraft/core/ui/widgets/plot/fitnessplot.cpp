@@ -34,8 +34,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDebug>
 #include "entity.h"
 #include "experiment.h"
-#include <QScriptValue>
-#include <QScriptEngine>
+#include <QJSValue>
+#include <QJSEngine>
 
 
 namespace GeneCraftCore {
@@ -188,13 +188,13 @@ namespace GeneCraftCore {
 
         lastStep = age;
 
-        QScriptValue fitnessVal = fitnessFunc.call();
+        QJSValue fitnessVal = fitnessFunc.call();
         float fitness = fitnessVal.toNumber();
         if(isinf(fitness) || isnan(fitness)) {
             fitness = 0;
         }
 
-        QScriptValue endBool = endFunc.call(QScriptValue(), QScriptValueList() << age);
+        QJSValue endBool = endFunc.call(QScriptValue(), QScriptValueList() << age);
         bool end = endBool.toBool();
         if(end && !ended) {
             ended = true;
@@ -234,7 +234,7 @@ namespace GeneCraftCore {
             markers << m;
         }
 
-        QScriptValue dead = dieFunc.call();
+        QJSValue dead = dieFunc.call();
         bool isDead = dead.toBool();
         if(isDead && !die) {
             die = true;
@@ -475,7 +475,7 @@ namespace GeneCraftCore {
                 Statistic* stat = stats[statName];
                 // Insert a new properties of our top level object
                 // With the name of the statistic
-                QScriptValue statObject = scriptEngine.newQObject(stat);
+                QJSValue statObject = scriptEngine.newQObject(stat);
                 entityObj.setProperty(statName, statObject);
             }
 

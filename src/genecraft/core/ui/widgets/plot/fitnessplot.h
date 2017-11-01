@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define __CPU_PLOT_H_
 #include "qwt_plot.h"
 #include <QList>
-#include <QScriptEngine>
+#include <QJSEngine>
 #include "genecraftcoreclasses.h"
 #define HISTORY 1200
 #define NB_STAT 14
@@ -72,12 +72,12 @@ namespace GeneCraftCore {
 
 
         // Scripting
-        QScriptEngine scriptEngine;
-        QScriptValue  entityObj;
-        QScriptValue  validityFunc;
-        QScriptValue  endFunc;
-        QScriptValue  dieFunc;
-        QScriptValue  fitnessFunc;
+        QJSEngine scriptEngine;
+        QJSValue  entityObj;
+        QJSValue  validityFunc;
+        QJSValue  endFunc;
+        QJSValue  dieFunc;
+        QJSValue  fitnessFunc;
 
     };
 }

@@ -31,12 +31,12 @@ INCLUDEPATH += \
 #library related
 INCLUDEPATH  += \
     ../lib/bullet/src \
-    ../lib/qwt/include/
+    ../lib/qwt/src
 
 
 #suppress warning for thoses systems
 QMAKE_CXXFLAGS  += -isystemlib/bullet/src
-QMAKE_CXXFLAGS  += -isystemlib/qwt/include
+QMAKE_CXXFLAGS  += -isystemlib/qwt/src
 
 LIBS += -L../src/lib/bullet/lib
 

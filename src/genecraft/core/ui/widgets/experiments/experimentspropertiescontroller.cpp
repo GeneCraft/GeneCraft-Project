@@ -39,7 +39,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 // ressources
 #include "ressources/jsonfile.h"
-#include "qxtjson.h"
 #include "ressourcesItems.h"
 #include "ressources/ressourcesmanager.h"
 
