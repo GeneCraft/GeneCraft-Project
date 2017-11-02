@@ -22,7 +22,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "brain/brainin.h"
 #include "body/fixation.h"
 #include <QDebug>
-#include <QVariant>
 #include "tools.h"
 
 // FIXME : max size of an entity is 10 in this case !

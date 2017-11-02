@@ -33,7 +33,7 @@ public:
     btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QObject *parent = 0);
 
     // To create a world from serialization data
-    btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent = 0);
+    btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QJsonObject data, QObject *parent = 0);
 
     virtual void setup();
 

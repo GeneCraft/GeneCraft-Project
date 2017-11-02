@@ -19,15 +19,16 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "floordialog.h"
 #include "ui_floordialog.h"
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
-    FloorDialog::FloorDialog(QVariant floorData, QWidget *parent) :
+    FloorDialog::FloorDialog(QJsonObject floorData, QWidget *parent) :
         QDialog(parent),
         ui(new Ui::FloorDialog)
     {
         ui->setupUi(this);
-        QString type = floorData.toMap()["type"].toString();
+        QString type = floorData["type"].toString();
         if(type == "nofloor") {
             this->ui->cmbType->setCurrentIndex(0);
         } else if (type == "flatland") {
@@ -46,23 +47,22 @@ namespace GeneCraftCore {
             loadBoxes(floorData);
         } else if (type == "slope") {
             this->ui->cmbType->setCurrentIndex(3);
-            this->ui->spbSIncl->setValue(floorData.toMap()["inclinaison"].toFloat());
+            this->ui->spbSIncl->setValue(floorData["inclinaison"].toDouble());
         }
     }
 
-    void FloorDialog::loadBoxes(QVariant data) {
-        QVariantMap map = data.toMap();
-        float width         = map["width"].toFloat();
-        float minHeight     = map["minHeight"].toFloat();
-        float maxHeight     = map["maxHeight"].toFloat();
+    void FloorDialog::loadBoxes(QJsonObject map) {
+        float width         = map["width"].toDouble();
+        float minHeight     = map["minHeight"].toDouble();
+        float maxHeight     = map["maxHeight"].toDouble();
 
         this->ui->spbBWidth->setValue(width);
         this->ui->spbBMinHeight->setValue(minHeight);
         this->ui->spbBMaxHeight->setValue(maxHeight);
     }
 
-    QVariant FloorDialog::serialize() {
-        QVariantMap data;
+    QJsonObject FloorDialog::serialize() {
+        QJsonObject data;
 
         QString type = this->ui->cmbType->currentText();
 

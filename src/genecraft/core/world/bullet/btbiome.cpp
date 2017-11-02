@@ -21,11 +21,10 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btworld.h"
 
 namespace GeneCraftCore {
-    btBiome::btBiome(btWorld* world, QVariant biomeData, QObject *parent) :
+    btBiome::btBiome(btWorld* world, QJsonObject data, QObject *parent) :
         QObject(parent)
     {
         world->setBiome(this);
-        this->data = biomeData.toMap();
     }
 
     btBiome::~btBiome() {
@@ -33,7 +32,7 @@ namespace GeneCraftCore {
     }
 
     void btBiome::setup() {
-        btScalar gravity = data["gravity"].toFloat();
+        btScalar gravity = data["gravity"].toDouble();
         world->setGravity(btVector3(0,-gravity,0));
     }
 

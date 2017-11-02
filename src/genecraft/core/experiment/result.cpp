@@ -22,8 +22,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDate>
 #include <QDateTime>
 
-#include <QVariantMap>
-
 namespace GeneCraftCore {
 
     // To sort result, descending

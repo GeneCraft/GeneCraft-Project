@@ -22,7 +22,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "brain/brainin.h"
 #include "body/fixation.h"
 #include <QDebug>
-#include <QVariant>
 #include "tools.h"
 
 namespace GeneCraftCore {

@@ -18,7 +18,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "sensor.h"
-#include <QVariant>
 
 namespace GeneCraftCore {
     Sensor::Sensor(Fixation * fixation, QObject *parent) :

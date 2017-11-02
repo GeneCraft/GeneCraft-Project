@@ -62,7 +62,7 @@ namespace GeneCraftCore {
         lights.append(pointLightMap);
 
         // directional
-//        QVariantMap directionalLightMap;
+//        QJsonObject directionalLightMap;
 //        directionalLightMap.insert("type","directional");
 //        directionalLightMap.insert("r",(double)1.0);
 //        directionalLightMap.insert("g",(double)1.0);
@@ -99,7 +99,7 @@ namespace GeneCraftCore {
         //createBoxAreaSpawn(spawns,btVector3(100,1,100),btVector3(0,20,0));
         createPositionSpawn(spawns,btVector3(0,10,0));
 
-//        QVariantMap zoneSpawn;
+//        QJsonObject zoneSpawn;
 //        zoneSpawn.insert("type", (int)Spawn::Zone);
 //        zoneSpawn.insert("minX", -60);
 //        zoneSpawn.insert("minY", 10);

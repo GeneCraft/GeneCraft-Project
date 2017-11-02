@@ -44,8 +44,8 @@ public:
 signals:
 
     void sLoadExperiment(Experiment *);
-    void sLoadWorld(QVariantMap worldData);
-    void sLoadEntity(QVariantMap genomeData, Ressource *ressource);
+    void sLoadWorld(QJsonObject worldData);
+    void sLoadEntity(QJsonObject genomeData, Ressource *ressource);
 
 public slots:
 

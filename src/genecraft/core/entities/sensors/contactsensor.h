@@ -23,7 +23,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "genecraftcoreclasses.h"
 #include "sensor.h"
 #include "LinearMath/btVector3.h"
-#include <QVariant>
 #include "btBulletCollisionCommon.h"
 
 namespace GeneCraftCore {

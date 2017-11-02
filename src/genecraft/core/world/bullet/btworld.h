@@ -26,7 +26,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <btBulletDynamicsCommon.h>
 
 #include <deque>
-#include <QVariant>
+#include <QJsonObject>
 
 #include "bullet/btscene.h"
 #include "bullet/btbiome.h"
@@ -43,7 +43,7 @@ namespace GeneCraftCore {
         btWorld(btFactory* factory, btShapesFactory* shapesFactory, QObject *parent = 0);
 
         // To create a world from serialization data
-        btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent = 0);
+        btWorld(btFactory* factory, btShapesFactory* shapesFactory, QJsonObject worldData, QObject *parent = 0);
         ~btWorld();
 
         // To create a new creature
@@ -96,7 +96,7 @@ namespace GeneCraftCore {
         btSequentialImpulseConstraintSolver* solver;
 
         // Data
-        QVariantMap data;
+        QJsonObject data;
     };
 
 }

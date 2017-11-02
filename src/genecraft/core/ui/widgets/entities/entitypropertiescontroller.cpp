@@ -20,7 +20,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "entitypropertiescontroller.h"
 #include "ui_entitypropertiescontroller.h"
 
-#include <QVariant>
 #include <QMetaType>
 #include <QLayout>
 

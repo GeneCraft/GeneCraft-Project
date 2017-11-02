@@ -119,9 +119,9 @@ namespace GeneCraftCore {
         if(data.contains("shapes")){
 
 
-            foreach(QVariant shapeData, staticShapesList)
+            foreach(QJsonValue shapeData, staticShapesList)
             {
-                QVariantMap shapeMap = shapeData.toMap();
+                QJsonObject shapeMap = shapeData.toObject();
                 QString type = shapeMap["type"].toString();
 
                 if(type.compare("box") == 0) {
@@ -135,7 +135,7 @@ namespace GeneCraftCore {
                     btVector3 size(shapeMap.value("sizeX").toDouble(),shapeMap.value("sizeY").toDouble(),shapeMap.value("sizeZ").toDouble());
 
                     // create the box
-                    btBox *box = world->getShapesFactory()->createBox(size, transform, shapeMap["density"].toFloat());
+                    btBox *box = world->getShapesFactory()->createBox(size, transform, shapeMap["density"].toDouble());
                     box->setup();
                     shapes.append(box);
 
@@ -148,7 +148,7 @@ namespace GeneCraftCore {
                     transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
-                    btSphere *sphere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toFloat(), transform, shapeMap["density"].toFloat());
+                    btSphere *sphere = world->getShapesFactory()->createSphere(shapeMap.value("radius").toDouble(), transform, shapeMap["density"].toDouble());
                     sphere->setup();
                     shapes.append(sphere);
                 }
@@ -160,7 +160,11 @@ namespace GeneCraftCore {
                     transform.getBasis().setEulerZYX(shapeMap.value("eulerX").toDouble(),shapeMap.value("eulerY").toDouble(),shapeMap.value("eulerZ").toDouble());
 
                     // create the box
-                    btCylinder *cylinder = world->getShapesFactory()->createCylinder(shapeMap.value("radius").toFloat(), shapeMap.value("height").toFloat(), transform, shapeMap["density"].toFloat());
+                    btCylinder *cylinder = world->getShapesFactory()->createCylinder(
+                                shapeMap.value("radius").toDouble(),
+                                shapeMap.value("height").toDouble(),
+                                transform,
+                                shapeMap["density"].toDouble());
                     cylinder->setup();
                     shapes.append(cylinder);
                 }

@@ -188,7 +188,7 @@ namespace GeneCraftCore {
     {
         if(this->ui->twResults->currentItem()) {
             Result* r = this->results[this->ui->twResults->currentIndex().row()];
-            emit sAddEntity(r->serialize().toMap(), NULL);
+            emit sAddEntity(r->serialize(), NULL);
         }
     }
 

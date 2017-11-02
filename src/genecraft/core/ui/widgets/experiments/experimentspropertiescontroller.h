@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define EXPERIMENTSPROPERTIESCONTROLLER_H
 
 #include <QWidget>
-#include <QVariantMap>
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 
 namespace Ui {
@@ -42,8 +42,8 @@ public:
 
     void connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim);
 
-    QVariantMap getWorldMap();
-    QVariantMap getSeedMap();
+    QJsonObject getWorldMap();
+    QJsonObject getSeedMap();
 
 signals:
     void sLoadExperiment(Experiment *experiment);
@@ -64,7 +64,7 @@ public slots:
     void loadWorldFromFile();
     void saveWorldToFile();
 
-    void setWorld(QVariantMap worldData);
+    void setWorld(QJsonObject worldData);
     void setExperiment(GeneCraftCore::Experiment *exp);
 
     void removeEntityFromSeed();

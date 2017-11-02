@@ -20,10 +20,12 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "ressource.h"
 #include "dbrecord.h"
 #include "jsonfile.h"
-#include <QVariantMap>
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJSEngine>
+#include <QJSValue>
+#include <QJSValueList>
 
 namespace GeneCraftCore {
     int cptRessource = 0;
@@ -110,5 +112,13 @@ namespace GeneCraftCore {
         ressourceMap.insert("data", data);
 
         return ressourceMap;
+    }
+
+    QString Ressource::beautifullJson(QString data) {
+        QJsonDocument::fromJson(data.toUtf8()).toJson(QJsonDocument::Indented);
+    }
+
+    QString Ressource::beautifullJson(QJsonObject data) {
+        QJsonDocument::fromVariant(data).toJson(QJsonDocument::Indented);
     }
 }

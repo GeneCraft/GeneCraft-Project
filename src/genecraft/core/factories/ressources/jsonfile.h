@@ -21,7 +21,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define JSONFILE_H
 
 #include "ressource.h"
-#include <QVariant>
 #include <QFile>
 
 namespace GeneCraftCore {

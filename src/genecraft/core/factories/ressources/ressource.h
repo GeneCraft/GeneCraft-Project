@@ -21,7 +21,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define RESSOURCE_H
 
 #include <QObject>
-#include <QVariant>
 
 
 namespace GeneCraftCore {
@@ -74,6 +73,11 @@ namespace GeneCraftCore {
           * Load data from either a ressource data, or the real data
           */
         static QJsonObject load(QJsonObject data);
+
+        static QString beautifullJson(QString);
+        static QString beautifullJson(QJsonObject);
+
+
 
     };
 

@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTBIOME_H
 
 #include <QObject>
-#include <QVariant>
+#include <QJsonObject>
 
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "btfactory.h"
@@ -31,7 +31,7 @@ namespace GeneCraftCore {
 class btBiome : public QObject
 {
 public:
-    explicit btBiome(btWorld* world, QVariant biomeData, QObject *parent = 0);
+    explicit btBiome(btWorld* world, QJsonObject biomeData, QObject *parent = 0);
     ~btBiome();
 
     virtual void setup();
@@ -41,7 +41,7 @@ public:
     }
 
 protected:
-    QVariantMap data;
+    QJsonObject data;
 
     btDynamicsWorld* world;
 };

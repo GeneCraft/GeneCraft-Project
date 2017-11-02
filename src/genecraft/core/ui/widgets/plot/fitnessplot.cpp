@@ -26,7 +26,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <qwt_scale_draw.h>
 #include <qwt_scale_widget.h>
 #include <qwt_legend.h>
-#include <qwt_legend_item.h>
+#include <qwt_legend_label.h>
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_marker.h>
 #include "fitnessplot.h"
@@ -35,6 +35,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "entity.h"
 #include "experiment.h"
 #include <QJSValue>
+#include <QJSValueList>
 #include <QJSEngine>
 
 
@@ -127,12 +128,12 @@ namespace GeneCraftCore {
 
         setAutoReplot( false );
 
-        canvas()->setBorderRadius( 10 );
+        dynamic_cast<QwtPlotCanvas*>(canvas())->setBorderRadius( 10 );
 
         plotLayout()->setAlignCanvasToScales( true );
 
         QwtLegend *legend = new QwtLegend;
-        legend->setItemMode( QwtLegend::CheckableItem );
+        legend->setDefaultItemMode( QwtLegendData::Mode::Checkable );
         insertLegend( legend, QwtPlot::RightLegend );
 
         /*
@@ -190,11 +191,11 @@ namespace GeneCraftCore {
 
         QJSValue fitnessVal = fitnessFunc.call();
         float fitness = fitnessVal.toNumber();
-        if(isinf(fitness) || isnan(fitness)) {
+        if(qIsInf(fitness) || qIsNaN(fitness)) {
             fitness = 0;
         }
 
-        QJSValue endBool = endFunc.call(QScriptValue(), QScriptValueList() << age);
+        QJSValue endBool = endFunc.call(QJSValueList() << age);
         bool end = endBool.toBool();
         if(end && !ended) {
             ended = true;
@@ -264,10 +265,10 @@ namespace GeneCraftCore {
                 break;
             }
         }
-        if(isnan(min) || isinf(min))
+        if(qIsNaN(min) || qIsInf(min))
             min = 0;
 
-        if(isnan(max) || isinf(max))
+        if(qIsNaN(max) || qIsInf(max))
             max = 0;
 
         for(int i = 0; i < NB_STAT; i++) {
@@ -282,11 +283,11 @@ namespace GeneCraftCore {
 
                 FitnessCurve* c = (FitnessCurve*)curves[i].curve;
                 if(c->isVisible()) {
-                    if(min > curves[i].data[j] && !isnan(curves[i].data[j]) && !isinf(curves[i].data[j])) {
+                    if(min > curves[i].data[j] && !qIsNaN(curves[i].data[j]) && !qIsInf(curves[i].data[j])) {
                         min = curves[i].data[j];
                     }
 
-                    if(max < curves[i].data[j] && !isnan(curves[i].data[j]) && !isinf(curves[i].data[j])) {
+                    if(max < curves[i].data[j] && !qIsNaN(curves[i].data[j]) && !qIsInf(curves[i].data[j])) {
                         max = curves[i].data[j];
                     }
                 }
@@ -318,7 +319,7 @@ namespace GeneCraftCore {
                 break;
 
             curves[i].data[0] = ent->getStatisticsStorage()->getStatistics()[s]->getValue();
-            if(isnan(curves[i].data[0]) || isinf(curves[i].data[0]))
+            if(qIsNaN(curves[i].data[0]) || qIsInf(curves[i].data[0]))
                 curves[i].data[0] = 0;
 
         }
@@ -365,11 +366,19 @@ namespace GeneCraftCore {
     {
         item->setVisible( on );
 
-        QwtLegendItem *legendItem =
-            qobject_cast<QwtLegendItem *>( legend()->find( item ) );
+        QwtLegend *lgd = qobject_cast<QwtLegend *>( legend() );
 
-        if ( legendItem )
-            legendItem->setChecked( on );
+        QList<QWidget *> legendWidgets =
+            lgd->legendWidgets( itemToInfo( item ) );
+
+        if ( legendWidgets.size() == 1 )
+        {
+            QwtLegendLabel *legendLabel =
+                qobject_cast<QwtLegendLabel *>( legendWidgets[0] );
+
+            if ( legendLabel )
+                legendLabel->setChecked( on );
+        }
 
         replot();
     }

@@ -19,7 +19,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "distancesensor.h"
 
-#include <QVariantMap>
 #include "body/fixation.h"
 #include "btshapesfactory.h"
 #include "bullet/btworld.h"

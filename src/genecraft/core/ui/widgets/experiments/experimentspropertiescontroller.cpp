@@ -24,6 +24,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSettings>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QJsonDocument>
+#include <QJsonArray>
 
 #include "experiment/experiment.h"
 
@@ -48,6 +50,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 // floor dialog
 #include "floordialog.h"
+
 
 namespace GeneCraftCore {
 
@@ -209,7 +212,7 @@ void ExperimentsPropertiesController::addFromGenome() {
     QString text = ui->teGenome->toPlainText().trimmed();
 
     if(!text.isEmpty())
-        ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(QxtJSON::parse(text).toMap()));
+        ui->twEntitiesSelected->insertTopLevelItem(0,new EntityTreeWidgetItem(QJsonDocument::fromJson(text.toUtf8()).object()));
     else
         qDebug() << "genome empty";
 }
@@ -392,7 +395,7 @@ void ExperimentsPropertiesController::setWorld(QJsonObject worldData){
             ui->cbSkyMaterial->setCurrentIndex(i);
 
     // lights
-    ui->teLights->setText(Ressource::beautifullJson(biomeMap["lights"]));
+    ui->teLights->setText(Ressource::beautifullJson(biomeMap["lights"].toObject()));
 
     // -- Scene --
     QJsonObject sceneMap = worldData["scene"].toObject();
@@ -434,10 +437,10 @@ void ExperimentsPropertiesController::setWorld(QJsonObject worldData){
     ui->leCamTargetZ->setText(camMap["targetZ"].toString());
 
     // shapes
-    ui->teStaticShapes->setText(Ressource::beautifullJson(sceneMap["shapes"]));
+    ui->teStaticShapes->setText(Ressource::beautifullJson(sceneMap["shapes"].toObject()));
 
     // spawns
-    ui->teSpawns->setText(Ressource::beautifullJson(sceneMap["spawns"]));
+    ui->teSpawns->setText(Ressource::beautifullJson(sceneMap["spawns"].toObject()));
 }
 
 ExperimentsPropertiesController::~ExperimentsPropertiesController() {
@@ -584,7 +587,7 @@ QJsonObject ExperimentsPropertiesController::getWorldMap() {
     // -- Biome --
     QJsonObject biomeMap;
     biomeMap.insert("gravity",gravities[ui->cbGravity->currentIndex()]);
-    biomeMap.insert("lights",QxtJSON::parse(ui->teLights->toPlainText()));
+    biomeMap.insert("lights",QJsonDocument::fromJson(ui->teLights->toPlainText().toUtf8()).object());
     biomeMap.insert("skyMaterial",skyMaterials[ui->cbSkyMaterial->currentIndex()]);
     worldMap.insert("biome",biomeMap);
 
@@ -609,8 +612,8 @@ QJsonObject ExperimentsPropertiesController::getWorldMap() {
     */
 
     //sceneMap.insert("floor",floorMap);
-    sceneMap.insert("shapes",QJsonDocument::fromJson(ui->teStaticShapes->toPlainText().toUtf8()));
-    sceneMap.insert("spawns",QJsonDocument::fromJson(ui->teSpawns->toPlainText().toUtf8()));
+    sceneMap.insert("shapes",QJsonDocument::fromJson(ui->teStaticShapes->toPlainText().toUtf8()).object());
+    sceneMap.insert("spawns",QJsonDocument::fromJson(ui->teSpawns->toPlainText().toUtf8()).object());
     worldMap.insert("scene",sceneMap);
 
     return worldMap;
@@ -628,7 +631,7 @@ void ExperimentsPropertiesController::loadExpFromFile() {
 
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);
-        QVariant expData = from->load();
+        QJsonObject expData = from->load();
         Experiment *experiment = new Experiment(expData);
         experiment->setRessource(from);
         setExperiment(experiment);
@@ -648,14 +651,14 @@ void ExperimentsPropertiesController::loadWorldFromFile() {
 
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);
-        QVariant data = from->load();
-        setWorld(data.toMap());
+        QJsonObject data = from->load();
+        setWorld(data);
     }
 }
 
 void ExperimentsPropertiesController::saveWorldToFile() {
 
-    QVariantMap worldMap = getWorldMap();
+    QJsonObject worldMap = getWorldMap();
 
     // To new file
     QString selectedFile = QFileDialog::getSaveFileName(this, "Save your world", "./ressources/" + worldMap["name"].toString() + ".world", "World (*.world)");
@@ -704,8 +707,8 @@ void ExperimentsPropertiesController::takeFromCamera() {
 
 void GeneCraftCore::ExperimentsPropertiesController::on_btnFloor_clicked()
 {
-    QVariantMap map = experiment->getWorldDataMap();
-    QVariant floorMap = map["floor"];
+    QJsonObject map = experiment->getWorldDataMap();
+    QJsonObject floorMap = map["floor"].toObject();
     FloorDialog fd(floorMap);
     fd.exec();
     floorMap = fd.serialize();
@@ -714,7 +717,7 @@ void GeneCraftCore::ExperimentsPropertiesController::on_btnFloor_clicked()
     map.insert("floor", floorMap);
     experiment->setWorldData(map);
 
-    this->ui->lblFloorType->setText(floorMap.toMap()["type"].toString());
+    this->ui->lblFloorType->setText(floorMap["type"].toString());
 }
 
 }

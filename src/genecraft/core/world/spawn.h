@@ -25,8 +25,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "LinearMath/btVector3.h"
 
-#include <QVariant>
-
 namespace GeneCraftCore {
 
 

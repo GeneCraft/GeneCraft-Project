@@ -23,7 +23,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QTreeWidgetItem>
 #include <QListWidgetItem>
 #include <QTableWidgetItem>
-#include <QVariantMap>
 #include <ressources/ressourcesmanager.h>
 #include "result.h"
 #include <QDebug>
@@ -90,8 +89,8 @@ public:
     {
         this->dataw = dataw;
 
-        QVariantMap biome = dataw.data["biome"].toMap();
-        QVariantMap scene = dataw.data["scene"].toMap();
+        QJsonObject biome = dataw.data["biome"].toObject();
+        QJsonObject scene = dataw.data["scene"].toObject();
 
         setText(0,dataw.data["name"].toString());
         setText(1,QString::number(biome["gravity"].toDouble()));
@@ -112,14 +111,14 @@ public:
 
         setText(0, QString::number(r->getFitness(), 10, 4));
         setText(1, r->getWorker());
-        setText(2, QString::number(r->getGenome().toMap()["origins"].toMap()["generation"].toInt()));
+        setText(2, QString::number(r->getGenome()["origins"].toObject()["generation"].toInt()));
     }
 
     bool operator<(const QTreeWidgetItem &other)const {
         int column = treeWidget()->sortColumn();
         if(column == 0) {
             // sorting by fitness
-            return text(0).toFloat() < other.text(0).toFloat();
+            return text(0).toDouble() < other.text(0).toDouble();
         }
         else if(column == 2) {
             return text(2).toInt() < other.text(2).toInt();
@@ -139,7 +138,7 @@ public:
     {
         this->dataw = dataw;
 
-        QVariantMap origins = dataw.data["origins"].toMap();
+        QJsonObject origins = dataw.data["origins"].toObject();
 
         if(dataw.data.contains("_id")) {
             origins["name"] = dataw.data["_id"];
@@ -150,12 +149,12 @@ public:
         setText(2,origins["generation"].toString());
     }
 
-    EntityTreeWidgetItem(QVariantMap genomeMap)
+    EntityTreeWidgetItem(QJsonObject genomeMap)
     {
         dataw.data = genomeMap;
         dataw.r = NULL;
 
-        QVariantMap origins = dataw.data["origins"].toMap();
+        QJsonObject origins = dataw.data["origins"].toObject();
 
         if(dataw.data.contains("_id")) {
             origins["name"] = dataw.data["_id"];

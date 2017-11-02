@@ -274,8 +274,8 @@ void BonePropertiesController::saveChanges()
             {
                 case 0 :
                     motor->m_enableMotor = this->ui->cbEnable_m1->isChecked();
-                    motor->m_targetVelocity = this->ui->leTargetVelocity_m1->text().toFloat();
-                    motor->m_maxMotorForce = this->ui->leMaxMotorForce_m1->text().toFloat();
+                    motor->m_targetVelocity = this->ui->leTargetVelocity_m1->text().toDouble();
+                    motor->m_maxMotorForce = this->ui->leMaxMotorForce_m1->text().toDouble();
                     motor->m_loLimit = this->ui->dAngularLowerLimitX->value() / 100.0;
                     motor->m_hiLimit = this->ui->dAngularUpperLimitX->value() / 100.0;
                     this->ui->lAngularLowerLimitX->setText(QString::number(motor->m_loLimit));
@@ -284,8 +284,8 @@ void BonePropertiesController::saveChanges()
 
                 case 1 :
                     motor->m_enableMotor = this->ui->cbEnable_m2->isChecked();
-                    motor->m_targetVelocity = this->ui->leTargetVelocity_m2->text().toFloat();
-                    motor->m_maxMotorForce = this->ui->leMaxMotorForce_m2->text().toFloat();
+                    motor->m_targetVelocity = this->ui->leTargetVelocity_m2->text().toDouble();
+                    motor->m_maxMotorForce = this->ui->leMaxMotorForce_m2->text().toDouble();
                     motor->m_loLimit = this->ui->dAngularLowerLimitY->value() / 100.0;
                     motor->m_hiLimit = this->ui->dAngularUpperLimitY->value() / 100.0;
                     this->ui->lAngularLowerLimitY->setText(QString::number(motor->m_loLimit));
@@ -295,8 +295,8 @@ void BonePropertiesController::saveChanges()
 
                 case 2 :
                     motor->m_enableMotor = this->ui->cbEnable_m3->isChecked();
-                    motor->m_targetVelocity = this->ui->leTargetVelocity_m3->text().toFloat();
-                    motor->m_maxMotorForce = this->ui->leMaxMotorForce_m3->text().toFloat();
+                    motor->m_targetVelocity = this->ui->leTargetVelocity_m3->text().toDouble();
+                    motor->m_maxMotorForce = this->ui->leMaxMotorForce_m3->text().toDouble();
                     motor->m_loLimit = this->ui->dAngularLowerLimitZ->value() / 100.0;
                     motor->m_hiLimit = this->ui->dAngularUpperLimitZ->value() / 100.0;
                     this->ui->lAngularLowerLimitZ->setText(QString::number(motor->m_loLimit));

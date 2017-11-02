@@ -34,7 +34,7 @@ namespace GeneCraftCore {
 class btoScene : public btScene
 {
 public:
-    explicit btoScene(btoWorld* world, QVariant sceneData, QObject *parent = 0);
+    explicit btoScene(btoWorld* world, QJsonObject sceneData, QObject *parent = 0);
     ~btoScene();
 
     virtual void setup();

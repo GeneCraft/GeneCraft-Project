@@ -168,9 +168,9 @@ void FixationPropertiesController::fixInTheAir()
         if(fixation->isFixedInTheAir())
             fixation->unfixInTheAir();
         else
-            fixation->fixeInTheAir(/*btVector3(ui->leX->text().toFloat(),
-                                             ui->leY->text().toFloat(),
-                                             ui->leZ->text().toFloat())*/);
+            fixation->fixeInTheAir(/*btVector3(ui->leX->text().toDouble(),
+                                             ui->leY->text().toDouble(),
+                                             ui->leZ->text().toDouble())*/);
     }
 }
 

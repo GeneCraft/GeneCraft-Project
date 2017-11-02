@@ -36,9 +36,9 @@ Generic6DofConstraintController::~Generic6DofConstraintController()
 
 void Generic6DofConstraintController::saveChanges()
 {
-    this->constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->leEulerRotX->text().toFloat(),
-                                                               this->ui->leEulerRotY->text().toFloat(),
-                                                               this->ui->leEulerRotZ->text().toFloat());
+    this->constraint->getFrameOffsetA().getBasis().setEulerZYX(this->ui->leEulerRotX->text().toDouble(),
+                                                               this->ui->leEulerRotY->text().toDouble(),
+                                                               this->ui->leEulerRotZ->text().toDouble());
 
     btRotationalLimitMotor *motor;
     for(int i=0;i<3;i++)
@@ -50,38 +50,38 @@ void Generic6DofConstraintController::saveChanges()
             case 0 :
 
                 motor->m_enableMotor = this->ui->cbEnable_m1->isChecked();
-                motor->m_targetVelocity = this->ui->leTargetVelocity_m1->text().toFloat();
-                motor->m_maxMotorForce = this->ui->leMaxMotorForce_m1->text().toFloat();
-                motor->m_maxLimitForce = this->ui->leMaxLimitForce_m1->text().toFloat();
-                motor->m_bounce = this->ui->leBounce_m1->text().toFloat();
-                motor->m_damping = this->ui->leDamping_m1->text().toFloat();
+                motor->m_targetVelocity = this->ui->leTargetVelocity_m1->text().toDouble();
+                motor->m_maxMotorForce = this->ui->leMaxMotorForce_m1->text().toDouble();
+                motor->m_maxLimitForce = this->ui->leMaxLimitForce_m1->text().toDouble();
+                motor->m_bounce = this->ui->leBounce_m1->text().toDouble();
+                motor->m_damping = this->ui->leDamping_m1->text().toDouble();
 
-                motor->m_loLimit = this->ui->leAngularLowerLimit_x->text().toFloat();
-                motor->m_hiLimit = this->ui->leAngularUpperLimit_x->text().toFloat();
+                motor->m_loLimit = this->ui->leAngularLowerLimit_x->text().toDouble();
+                motor->m_hiLimit = this->ui->leAngularUpperLimit_x->text().toDouble();
                 break;
 
             case 1 :
                 motor->m_enableMotor = this->ui->cbEnable_m2->isChecked();
-                motor->m_targetVelocity = this->ui->leTargetVelocity_m2->text().toFloat();
-                motor->m_maxMotorForce = this->ui->leMaxMotorForce_m2->text().toFloat();
-                motor->m_maxLimitForce = this->ui->leMaxLimitForce_m2->text().toFloat();
-                motor->m_bounce = this->ui->leBounce_m2->text().toFloat();
-                motor->m_damping = this->ui->leDamping_m2->text().toFloat();
+                motor->m_targetVelocity = this->ui->leTargetVelocity_m2->text().toDouble();
+                motor->m_maxMotorForce = this->ui->leMaxMotorForce_m2->text().toDouble();
+                motor->m_maxLimitForce = this->ui->leMaxLimitForce_m2->text().toDouble();
+                motor->m_bounce = this->ui->leBounce_m2->text().toDouble();
+                motor->m_damping = this->ui->leDamping_m2->text().toDouble();
 
-                motor->m_loLimit = this->ui->leAngularLowerLimit_y->text().toFloat();
-                motor->m_hiLimit = this->ui->leAngularUpperLimit_y->text().toFloat();
+                motor->m_loLimit = this->ui->leAngularLowerLimit_y->text().toDouble();
+                motor->m_hiLimit = this->ui->leAngularUpperLimit_y->text().toDouble();
                 break;
 
             case 2 :
                 motor->m_enableMotor = this->ui->cbEnable_m3->isChecked();
-                motor->m_targetVelocity = this->ui->leTargetVelocity_m3->text().toFloat();
-                motor->m_maxMotorForce = this->ui->leMaxMotorForce_m3->text().toFloat();
-                motor->m_maxLimitForce = this->ui->leMaxLimitForce_m3->text().toFloat();
-                motor->m_bounce = this->ui->leBounce_m3->text().toFloat();
-                motor->m_damping = this->ui->leDamping_m3->text().toFloat();
+                motor->m_targetVelocity = this->ui->leTargetVelocity_m3->text().toDouble();
+                motor->m_maxMotorForce = this->ui->leMaxMotorForce_m3->text().toDouble();
+                motor->m_maxLimitForce = this->ui->leMaxLimitForce_m3->text().toDouble();
+                motor->m_bounce = this->ui->leBounce_m3->text().toDouble();
+                motor->m_damping = this->ui->leDamping_m3->text().toDouble();
 
-                motor->m_loLimit = this->ui->leAngularLowerLimit_z->text().toFloat();
-                motor->m_hiLimit = this->ui->leAngularUpperLimit_z->text().toFloat();
+                motor->m_loLimit = this->ui->leAngularLowerLimit_z->text().toDouble();
+                motor->m_hiLimit = this->ui->leAngularUpperLimit_z->text().toDouble();
                 break;
         }
     }

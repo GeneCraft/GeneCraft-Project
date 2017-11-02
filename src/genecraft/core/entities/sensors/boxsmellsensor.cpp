@@ -19,8 +19,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "boxsmellsensor.h"
 
-#include <QVariant>
-
 #define RADIUS_OF_SMELL 20.0
 
 namespace GeneCraftCore {

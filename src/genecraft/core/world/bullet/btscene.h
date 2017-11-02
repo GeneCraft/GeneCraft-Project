@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTSCENE_H
 
 #include <QObject>
-#include <QVariant>
+#include <QJsonObject>
 
 #include "spawn.h"
 #include "genecraftcoreclasses.h"

@@ -25,7 +25,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QEventLoop>
 
 #include <QDebug>
-#include <QVariantMap>
+#include <QJsonObject>
 #include <QJsonDocument>
 
 namespace GeneCraftCore {
