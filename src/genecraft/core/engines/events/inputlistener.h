@@ -23,6 +23,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QObject>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 

@@ -21,7 +21,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define OGREWIDGET_H
 
 #include <QGLWidget>
-#include <QX11Info>
 #include <QMutex>
 #include <QMouseEvent>
 #include "genecraftcoreclasses.h"

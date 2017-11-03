@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core testlib network gui script
+QT       += core testlib network gui qml
 
 TARGET = genecraft_worker
 CONFIG   += console silent

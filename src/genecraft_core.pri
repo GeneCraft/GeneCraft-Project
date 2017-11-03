@@ -35,10 +35,11 @@ INCLUDEPATH  += \
 
 
 #suppress warning for thoses systems
-QMAKE_CXXFLAGS  += -isystemlib/bullet/src
-QMAKE_CXXFLAGS  += -isystemlib/qwt/src
+QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
+QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
 
-LIBS += -L../src/lib/bullet/lib
+LIBS += -L../lib/bullet/lib
+LIBS += -L../lib/qwt/lib
 
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision

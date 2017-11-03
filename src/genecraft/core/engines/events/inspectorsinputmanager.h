@@ -20,6 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef INSPECTORSINPUTMANAGER_H
 #define INSPECTORSINPUTMANAGER_H
 
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 #include "inputlistener.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"

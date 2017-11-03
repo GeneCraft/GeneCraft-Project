@@ -35,7 +35,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 namespace GeneCraftCore {
 
     btoBiome::btoBiome(btoWorld* world, QJsonObject biomeDataMap, QObject *parent) :
-        btBiome(world, biomeData, parent), world(world)
+        btBiome(world, biomeDataMap, parent), world(world)
     {
         this->world = world;
 

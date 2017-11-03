@@ -23,6 +23,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bullet/bulletengine.h"
 #include "ogre/ogreengine.h"
 
+#if defined(Q_WS_X11)
+  #include <QX11Info>
+#endif
 using namespace Ogre;
 
 namespace GeneCraftCore {

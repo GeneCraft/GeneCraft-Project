@@ -157,7 +157,7 @@ void CreatureViewerInputManager::pickBody()
     world->getBulletWorld()->rayTest(rayFrom,rayTo,rayCallback);
     if (rayCallback.hasHit())
     {
-        btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+        const btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
 
         if(body) {
 

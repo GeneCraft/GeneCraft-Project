@@ -115,10 +115,10 @@ namespace GeneCraftCore {
     }
 
     QString Ressource::beautifullJson(QString data) {
-        QJsonDocument::fromJson(data.toUtf8()).toJson(QJsonDocument::Indented);
+        return QJsonDocument::fromJson(data.toUtf8()).toJson(QJsonDocument::Indented);
     }
 
     QString Ressource::beautifullJson(QJsonObject data) {
-        QJsonDocument::fromVariant(data).toJson(QJsonDocument::Indented);
+        return QJsonDocument::fromVariant(data).toJson(QJsonDocument::Indented);
     }
 }

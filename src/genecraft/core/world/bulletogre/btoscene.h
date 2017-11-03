@@ -24,8 +24,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btscene.h"
 
 // Terrain
-#include "Terrain/OgreTerrain.h"
-#include "Terrain/OgreTerrainGroup.h"
+#include "OgreTerrain.h"
+#include "OgreTerrainGroup.h"
 
 #include "btofactory.h"
 

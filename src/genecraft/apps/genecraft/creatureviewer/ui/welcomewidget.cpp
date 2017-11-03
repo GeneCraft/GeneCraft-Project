@@ -19,7 +19,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "welcomewidget.h"
 #include "ui_welcomewidget.h"
-
 WelcomeWidget::WelcomeWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::WelcomeWidget)
@@ -36,5 +35,5 @@ WelcomeWidget::~WelcomeWidget()
 
 void WelcomeWidget::backToWelcomePage() {
 
-    ui->webView->setUrl(QUrl("qrc:/help/welcome.html"));
+    //ui->webView->setUrl(QUrl("qrc:/help/welcome.html"));
 }
