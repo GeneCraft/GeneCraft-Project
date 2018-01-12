@@ -25,6 +25,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #include "Ogre.h"
+#include "OgreOverlay.h"
+#include "OgreOverlayManager.h"
+#include "OgreOverlayContainer.h"
 #include "OgreTextAreaOverlayElement.h"
 
 namespace GeneCraftCore {

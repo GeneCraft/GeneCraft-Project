@@ -42,13 +42,13 @@ public:
     GyroscopicSensor(Fixation * fixation);
 
     // To create from serialization data
-    GyroscopicSensor(QVariant data, Fixation* fixation);
+    GyroscopicSensor(QJsonObject data, Fixation* fixation);
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To create an empty sensor
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // To update brain inputs values
     void step();

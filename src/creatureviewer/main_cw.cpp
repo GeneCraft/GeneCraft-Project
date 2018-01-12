@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QtGui/QApplication>
+#include <QApplication>
 
 #include "genecraftcoreclasses.h"
 
@@ -30,9 +30,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "ressources/ressourcesmanager.h"
 
 #include <QDebug>
-#include <QtScript>
-#include <qxtjson.h>
 #include <QSplashScreen>
+#include <QSettings>
 
 #ifdef __APPLE__
 #include "CoreFoundation/CoreFoundation.h"

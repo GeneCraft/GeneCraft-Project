@@ -22,27 +22,28 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "tools.h"
 
 #include <QDebug>
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
-    QVariant btWorldFactory::createSimpleWorld() {
+    QJsonObject btWorldFactory::createSimpleWorld() {
 
         // World from program (soon from file)
-        QVariantMap worldData;
+        QJsonObject worldData;
         worldData.insert("name", "Somewhere on Earth");
 
         // ------------
         // -- Biome --
         // ------------
-        QVariantMap biomeData;
+        QJsonObject biomeData;
         biomeData.insert("gravity", 9.81);
         biomeData.insert("skyMaterial", "Examples/CloudySky");
 
         // -- lights --
-        QVariantList lights;
+        QJsonArray lights;
 
         // ambiant
-        QVariantMap ambiantLightMap;
+        QJsonObject ambiantLightMap;
         ambiantLightMap.insert("type","ambient");
         ambiantLightMap.insert("r",(double)0.8);
         ambiantLightMap.insert("g",(double)0.8);
@@ -50,7 +51,7 @@ namespace GeneCraftCore {
         lights.append(ambiantLightMap);
 
         // point
-        QVariantMap pointLightMap;
+        QJsonObject pointLightMap;
         pointLightMap.insert("type","point");
         pointLightMap.insert("r",(double)1.);
         pointLightMap.insert("g",(double)1.);
@@ -61,7 +62,7 @@ namespace GeneCraftCore {
         lights.append(pointLightMap);
 
         // directional
-//        QVariantMap directionalLightMap;
+//        QJsonObject directionalLightMap;
 //        directionalLightMap.insert("type","directional");
 //        directionalLightMap.insert("r",(double)1.0);
 //        directionalLightMap.insert("g",(double)1.0);
@@ -80,10 +81,10 @@ namespace GeneCraftCore {
         // -----------
         // -- Scene --
         // -----------
-        QVariantMap sceneData;
+        QJsonObject sceneData;
 
         // -- Camera --
-        QVariantMap camData;
+        QJsonObject camData;
         camData.insert("posX",  -20);
         camData.insert("posY",  10);
         camData.insert("posZ",  -20);
@@ -93,12 +94,12 @@ namespace GeneCraftCore {
         sceneData.insert("camera", camData);
 
         // -- Spawn areas --
-        QVariantList spawns;
+        QJsonArray spawns;
 
         //createBoxAreaSpawn(spawns,btVector3(100,1,100),btVector3(0,20,0));
         createPositionSpawn(spawns,btVector3(0,10,0));
 
-//        QVariantMap zoneSpawn;
+//        QJsonObject zoneSpawn;
 //        zoneSpawn.insert("type", (int)Spawn::Zone);
 //        zoneSpawn.insert("minX", -60);
 //        zoneSpawn.insert("minY", 10);
@@ -111,7 +112,7 @@ namespace GeneCraftCore {
         sceneData.insert("spawns", spawns);
 
         // -- Static boxes --
-        QVariantList shapes;
+        QJsonArray shapes;
 
 //        createRuins(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(1.0,1.0,1.0), btVector3(10.0,10.0,10.0), 100, 0);
 //        createBoxesFloor(shapes, 100.0, 100.0, btVector3(0,0,0), btVector3(2.0,1.0,2.0), btVector3(15.0,2.0,15.0));
@@ -136,7 +137,7 @@ namespace GeneCraftCore {
         sceneData.insert("shapes", shapes);
 
         // Floor
-        QVariantMap floor;
+        QJsonObject floor;
         floor.insert("type", "flatland");
         floor.insert("material", "GeneCraft/GrassFloor");
         sceneData.insert("floor",floor);
@@ -146,9 +147,9 @@ namespace GeneCraftCore {
         return worldData;
     }
 
-    void btWorldFactory::createPositionSpawn(QVariantList &spawnsList,btVector3 pos) {
+    void btWorldFactory::createPositionSpawn(QJsonArray &spawnsList,btVector3 pos) {
 
-        QVariantMap positionSpawn;
+        QJsonObject positionSpawn;
         positionSpawn.insert("type", "position");
         positionSpawn.insert("posX", (double)pos.x());
         positionSpawn.insert("posY", (double)pos.y());
@@ -156,9 +157,9 @@ namespace GeneCraftCore {
         spawnsList.append(positionSpawn);
     }
 
-    void btWorldFactory::createBoxAreaSpawn(QVariantList &spawnsList, btVector3 size, btVector3 pos)
+    void btWorldFactory::createBoxAreaSpawn(QJsonArray &spawnsList, btVector3 size, btVector3 pos)
     {
-        QVariantMap spawnMap;
+        QJsonObject spawnMap;
         spawnMap.insert("type", "boxArea");
         spawnMap.insert("sizeX", (double)size.x());
         spawnMap.insert("sizeY", (double)size.y());
@@ -169,9 +170,9 @@ namespace GeneCraftCore {
         spawnsList.append(spawnMap);
     }
 
-    void btWorldFactory::createBox(QVariantList &shapesList, btVector3 size, btVector3 pos, btVector3 euler, double density)
+    void btWorldFactory::createBox(QJsonArray &shapesList, btVector3 size, btVector3 pos, btVector3 euler, double density)
     {
-        QVariantMap boxMap;
+        QJsonObject boxMap;
         boxMap.insert("type","box");
         boxMap.insert("density",(double)density);
         boxMap.insert("posX",(double)pos.x());
@@ -186,9 +187,9 @@ namespace GeneCraftCore {
         shapesList.append(boxMap);
     }
 
-    void btWorldFactory::createSphere(QVariantList &shapesList, btScalar radius, btVector3 pos, btVector3 euler, double density) {
+    void btWorldFactory::createSphere(QJsonArray &shapesList, btScalar radius, btVector3 pos, btVector3 euler, double density) {
 
-        QVariantMap sphereMap;
+        QJsonObject sphereMap;
         sphereMap.insert("type","sphere");
         sphereMap.insert("radius",(double)radius);
         sphereMap.insert("posX",(double)pos.x());
@@ -201,9 +202,9 @@ namespace GeneCraftCore {
         shapesList.append(sphereMap);
     }
 
-    void btWorldFactory::createCylinder(QVariantList &shapesList, btScalar radius, btScalar height, btVector3 pos, btVector3 euler, double density) {
+    void btWorldFactory::createCylinder(QJsonArray &shapesList, btScalar radius, btScalar height, btVector3 pos, btVector3 euler, double density) {
 
-        QVariantMap cylinderMap;
+        QJsonObject cylinderMap;
         cylinderMap.insert("type","cylinder");
         cylinderMap.insert("radius",(double)radius);
         cylinderMap.insert("height",(double)height);
@@ -217,7 +218,7 @@ namespace GeneCraftCore {
         shapesList.append(cylinderMap);
     }
 
-    void btWorldFactory::createBoxesStairs(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, double stepWidth, double yMinStep, double yMaxStep) {
+    void btWorldFactory::createBoxesStairs(QJsonArray &shapesList, double areaX, double areaZ, btVector3 pos, double stepWidth, double yMinStep, double yMaxStep) {
 
         // Boxes Floor
         double sizeX = stepWidth;
@@ -243,7 +244,7 @@ namespace GeneCraftCore {
         }
     }
 
-    void btWorldFactory::createSlope(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 axis, double minAngle, double maxAngle) {
+    void btWorldFactory::createSlope(QJsonArray &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 axis, double minAngle, double maxAngle) {
 
 
 
@@ -254,7 +255,7 @@ namespace GeneCraftCore {
 
     }
 
-    void btWorldFactory::createBoxesFloor(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax) {
+    void btWorldFactory::createBoxesFloor(QJsonArray &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax) {
 
         // Boxes Floor
         double sizeX = Tools::random((double)boxMin.x(), (double)boxMax.x());
@@ -279,7 +280,7 @@ namespace GeneCraftCore {
         }
     }
 
-    void btWorldFactory::createRuins(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax, int nbBoxes, double density) {
+    void btWorldFactory::createRuins(QJsonArray &shapesList, double areaX, double areaZ, btVector3 pos, btVector3 boxMin, btVector3 boxMax, int nbBoxes, double density) {
 
         // Ruin Floor
         for(int i=0;i<nbBoxes;++i){
@@ -302,17 +303,16 @@ namespace GeneCraftCore {
 
     btWorld* btWorldFactory::createWorld(btFactory* factory,
                                        btShapesFactory* shapesFactory,
-                                       QVariant map) {
-        QVariantMap worldMap = map.toMap();
+                                       QJsonObject worldMap) {
 
         // Create the world
-        btWorld* world = new btWorld(factory, shapesFactory, worldMap["world"]);
+        btWorld* world = new btWorld(factory, shapesFactory, worldMap["world"].toObject());
         shapesFactory->setWorld(world);
 
-        btBiome* biome = new btBiome(world, worldMap["biome"]);
+        btBiome* biome = new btBiome(world, worldMap["biome"].toObject());
         world->setBiome(biome);
 
-        btScene* scene = new btScene(world, worldMap["scene"]);
+        btScene* scene = new btScene(world, worldMap["scene"].toObject());
         world->setScene(scene);
 
         world->setup();
@@ -320,7 +320,7 @@ namespace GeneCraftCore {
         return world;
     }
 
-    void btWorldFactory::createPoolOfBalls(QVariantList &shapesList, double areaX, double areaZ, btVector3 pos, int nbBalls) {
+    void btWorldFactory::createPoolOfBalls(QJsonArray &shapesList, double areaX, double areaZ, btVector3 pos, int nbBalls) {
 
         // walls
         btScalar wallsHeight = 10.0;

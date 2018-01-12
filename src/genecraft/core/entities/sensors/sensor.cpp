@@ -18,7 +18,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "sensor.h"
-#include <QVariant>
 
 namespace GeneCraftCore {
     Sensor::Sensor(Fixation * fixation, QObject *parent) :
@@ -28,21 +27,21 @@ namespace GeneCraftCore {
     }
 
 
-    Sensor::Sensor(QVariant data, Fixation* fixation) {
+    Sensor::Sensor(QJsonObject data, Fixation* fixation) {
         this->fixation = fixation;
-        this->typeName = data.toMap()["typeName"].toString();
-        this->type = (SensorType)data.toMap()["type"].toInt();
+        this->typeName = data["typeName"].toString();
+        this->type = (SensorType)data["type"].toInt();
     }
 
-    QVariant Sensor::serialize() {
-        QVariantMap data;
+    QJsonObject Sensor::serialize() {
+        QJsonObject data;
         data.insert("typeName", this->typeName);
         data.insert("type", (int)this->type);
         return data;
     }
 
-    QVariant Sensor::generateEmpty(QString typeName, int type) {
-        QVariantMap data;
+    QJsonObject Sensor::generateEmpty(QString typeName, int type) {
+        QJsonObject data;
         data.insert("typeName", typeName);
         data.insert("type", type);
         return data;

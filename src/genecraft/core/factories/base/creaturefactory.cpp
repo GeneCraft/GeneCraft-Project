@@ -23,16 +23,15 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GeneCraftCore {
 
-    Entity* CreatureFactory::createEntity(QVariant data,
+    Entity* CreatureFactory::createEntity(QJsonObject entityData,
                                           btShapesFactory* shapesFactory,
                                           btVector3 position) {
-        QVariantMap entityData = data.toMap();
 
         // inside a result ?
         if(entityData["type"].toString() == "result") {
             // Decapsulate
             qDebug() << "decapsulation from result !";
-            entityData = entityData["genome"].toMap();
+            entityData = entityData["genome"].toObject();
         }
 
         // Version check

@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef MUTATION_H
 #define MUTATION_H
 
-#include <QVariant>
+#include <QJsonObject>
 #include "LinearMath/btScalar.h"
 
 namespace GeneCraftCore {
@@ -30,7 +30,7 @@ namespace GeneCraftCore {
     class Mutation {
     public:
         btScalar probability;
-        virtual void mutate(QVariantMap &map, QString key);
+        virtual void mutate(QJsonObject &map, QString key);
         bool canMutate();
         bool enable;
     };

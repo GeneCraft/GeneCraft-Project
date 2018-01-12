@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef STRUCTURALLIST_H
 #define STRUCTURALLIST_H
 
-#include <QVariant>
+#include <QJsonObject>
 #include <QMap>
 #include "LinearMath/btScalar.h"
 
@@ -30,8 +30,8 @@ class MutationElement {
  public:
 
     MutationElement(QString name, int type, btScalar weight);
-    MutationElement(QVariant variant);
-    QVariant serialize();
+    MutationElement(QJsonObject variant);
+    QJsonObject serialize();
 
     QString name;
     int type;
@@ -42,9 +42,9 @@ class StructuralList
 {
 public:
     StructuralList();
-    StructuralList(QVariant variant);
+    StructuralList(QJsonArray variant);
     ~StructuralList();
-    QVariant serialize();
+    QJsonArray serialize();
 
     MutationElement * pickOne();
     QList<MutationElement *> elements;

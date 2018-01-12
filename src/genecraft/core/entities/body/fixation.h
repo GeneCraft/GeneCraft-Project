@@ -44,10 +44,10 @@ namespace GeneCraftCore {
         ~Fixation();
 
         // To serialize
-        QVariant serialize();
+        QJsonObject serialize();
 
         // To generate an empty serialized version
-        static QVariant generateEmpty();
+        static QJsonObject generateEmpty();
 
         // To set default parameters of fixation and add it into engines
         void setup();

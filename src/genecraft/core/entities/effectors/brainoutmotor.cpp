@@ -19,6 +19,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "brainoutmotor.h"
 #include <QString>
+#include <QJsonArray>
 #include "genecraftcoreclasses.h"
 #include "effector.h"
 #include "brain/brainout.h"
@@ -37,31 +38,30 @@ namespace GeneCraftCore {
         delete this->boTargetVelocity;
     }
 
-    BrainOutMotor::BrainOutMotor(QVariant data, btRotationalLimitMotor* motor) : motor(motor){
-        QVariantMap outMap = data.toMap();
+    BrainOutMotor::BrainOutMotor(QJsonObject data, btRotationalLimitMotor* motor) : motor(motor){
 
         // new version
-        if(outMap.contains("contractionOutput")) {
-            boMaxMotorForce = new BrainOut(outMap["contractionOutput"]);
-            boTargetVelocity = new BrainOut(outMap["expansionOutput"]);
+        if(data.contains("contractionOutput")) {
+            boMaxMotorForce = new BrainOut(data["contractionOutput"].toObject());
+            boTargetVelocity = new BrainOut(data["expansionOutput"].toObject());
         }
         // old version
         else {
-            QVariantList dataL = outMap["brainOuts"].toList();
-            boMaxMotorForce = new BrainOut(dataL[0]);
-            boTargetVelocity = new BrainOut(dataL[1]);
+            QJsonArray dataL = data["brainOuts"].toArray();
+            boMaxMotorForce = new BrainOut(dataL[0].toObject());
+            boTargetVelocity = new BrainOut(dataL[1].toObject());
         }
     }
 
-    QVariant BrainOutMotor::serialize()  {
+    QJsonObject BrainOutMotor::serialize()  {
 
-        QVariantMap data;
+        QJsonObject data;
 
         // old version
-        // QVariantList outs;
+        // QJsonArray outs;
         // outs.append(boMaxMotorForce->serialize());
         // outs.append(boTargetVelocity->serialize());
-        // data.insert("brainOuts", (QVariantList)outs);
+        // data.insert("brainOuts", outs);
 
         // new version
         data.insert("contractionOutput",boMaxMotorForce->serialize());
@@ -71,9 +71,9 @@ namespace GeneCraftCore {
     }
 
     // To generate an empty version
-    QVariant BrainOutMotor::generateEmpty(){
+    QJsonObject BrainOutMotor::generateEmpty(){
 
-        QVariantMap data;
+        QJsonObject data;
         BrainOut boContraction(MIN_CONTRACTION,MAX_CONTRACTION);
         BrainOut boExpansion(MIN_EXPANSION,MAX_EXPANSION);
         data.insert("contractionOutput",boContraction.serialize());

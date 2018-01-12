@@ -24,7 +24,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GeneCraftCore {
 
-    void Mutation::mutate(QVariantMap &, QString){}
+    void Mutation::mutate(QJsonObject &, QString){}
 
     bool Mutation::canMutate()
     {

@@ -24,8 +24,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btscene.h"
 
 // Terrain
-#include "Terrain/OgreTerrain.h"
-#include "Terrain/OgreTerrainGroup.h"
+#include "OgreTerrain.h"
+#include "OgreTerrainGroup.h"
 
 #include "btofactory.h"
 
@@ -34,7 +34,7 @@ namespace GeneCraftCore {
 class btoScene : public btScene
 {
 public:
-    explicit btoScene(btoWorld* world, QVariant sceneData, QObject *parent = 0);
+    explicit btoScene(btoWorld* world, QJsonObject sceneData, QObject *parent = 0);
     ~btoScene();
 
     virtual void setup();

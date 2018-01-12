@@ -42,7 +42,7 @@ GripperEffector::GripperEffector(Fixation *fixation) : Effector(TYPE_NAME, TYPE)
 }
 
 // To create from serialization data
-GripperEffector::GripperEffector(QVariant data, Fixation * fixation) :
+GripperEffector::GripperEffector(QJsonObject data, Fixation * fixation) :
     Effector(data), fixation(fixation) {
 
     // create the air contraint
@@ -50,7 +50,7 @@ GripperEffector::GripperEffector(QVariant data, Fixation * fixation) :
     constraint->setEnabled(false);
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->addConstraint(constraint);
 
-    gripperOutput = new BrainOut(data.toMap()["gripperOutput"]);
+    gripperOutput = new BrainOut(data["gripperOutput"].toObject());
     brainOutputs.append(gripperOutput);
 }
 
@@ -62,8 +62,8 @@ GripperEffector::~GripperEffector()
 }
 
 // To serialize
-QVariant GripperEffector::serialize() {
-    QVariantMap data = Effector::serialize().toMap();
+QJsonObject GripperEffector::serialize() {
+    QJsonObject data = Effector::serialize();
     data.insert("gripperOutput", gripperOutput->serialize());
     return data;
 }
@@ -91,9 +91,9 @@ void GripperEffector::step() {
         constraint->setEnabled(false);
 }
 
-QVariant GripperEffector::generateEmpty()
+QJsonObject GripperEffector::generateEmpty()
 {
-    QVariantMap data = Effector::generateEmpty(TYPE_NAME, TYPE).toMap();
+    QJsonObject data = Effector::generateEmpty(TYPE_NAME, TYPE);
 
     BrainOut gripperOutput(-1,1);
     data.insert("gripperOutput", gripperOutput.serialize());

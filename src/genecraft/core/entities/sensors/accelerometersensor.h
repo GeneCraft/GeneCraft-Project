@@ -45,13 +45,13 @@ public:
     AccelerometerSensor(Fixation * fixation);
 
     // To create from serialization data
-    AccelerometerSensor(QVariant data, Fixation * fixation);
+    AccelerometerSensor(QJsonObject data, Fixation * fixation);
 
     // To create an empty sensor
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To update brain inputs values
     void step();

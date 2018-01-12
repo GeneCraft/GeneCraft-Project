@@ -30,10 +30,10 @@ public:
     BoxSmellSensor(Fixation *fixation);
 
     // To create from serialization data
-    BoxSmellSensor(QVariant data, Fixation * fixation);
+    BoxSmellSensor(QJsonObject data, Fixation * fixation);
 
     // To generate an empty sensor serialization data
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 };
 
 }

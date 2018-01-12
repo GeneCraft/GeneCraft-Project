@@ -29,17 +29,16 @@ namespace GeneCraftCore {
 
     btoWorld* btoWorldFactory::createWorld(btoFactory *factory,
                                  btoShapesFactory *shapesFactory,
-                                 QVariant map) {
-        QVariantMap worldMap = map.toMap();
+                                 QJsonObject worldMap) {
 
         // Create the world
-        btoWorld* world = new btoWorld(factory, shapesFactory, worldMap["world"]);
+        btoWorld* world = new btoWorld(factory, shapesFactory, worldMap["world"].toObject());
         shapesFactory->setWorld(world);
 
-        btBiome* biome = new btoBiome(world, worldMap["biome"]);
+        btBiome* biome = new btoBiome(world, worldMap["biome"].toObject());
         world->setBiome(biome);
 
-        btScene* scene = new btoScene(world, worldMap["scene"]);
+        btScene* scene = new btoScene(world, worldMap["scene"].toObject());
         world->setScene(scene);
 
         world->setup();

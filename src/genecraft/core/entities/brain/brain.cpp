@@ -32,9 +32,9 @@ namespace GeneCraftCore {
         this->frequency = qrand()%60 + 1;
     }
 
-    Brain::Brain(QVariant data) {
+    Brain::Brain(QJsonObject data) {
         this->plugGrid = new BrainPlugGrid();
-        this->frequency = data.toMap()["frequency"].toInt();
+        this->frequency = data["frequency"].toInt();
         if(frequency <= 0) {
             frequency = 1;
         }
@@ -43,8 +43,8 @@ namespace GeneCraftCore {
         }
     }
 
-    QVariant Brain::serialize() {
-        QVariantMap data;
+    QJsonObject Brain::serialize() {
+        QJsonObject data;
         data.insert("frequency", this->frequency);
         return data;
     }

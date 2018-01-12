@@ -24,8 +24,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "experiment.h"
 #include "resultsmanager.h"
 #include "mutation/mutationsmanager.h"
-
-#include <QtScript>
+#include <QJSEngine>
+#include <QJSValue>
 
 class SelectionManager;
 
@@ -36,12 +36,12 @@ namespace GeneCraftCore {
         /**
           * Creating an experiment manager for a given experiment
           */
-        ExperimentManager(btFactory* factory, Experiment* exp, QVariant workerData) ;
+        ExperimentManager(btFactory* factory, Experiment* exp, QJsonObject workerData) ;
 
         /**
           * Creating an experiment manager for a giver experiment data
           */
-        ExperimentManager(btFactory* factory, QVariant expData, QVariant workerData);
+        ExperimentManager(btFactory* factory, QJsonObject expData, QJsonObject workerData);
 
         /**
           * Experimentation loop
@@ -76,14 +76,14 @@ namespace GeneCraftCore {
 
     protected:
         // To simulate a specific entity
-        Entity* spawnEntity(QVariant genome);
+        Entity* spawnEntity(QJsonObject genome);
         bool stabilizeEntity(Entity* e, Result* r);
         bool simulateEntity(Entity* e);
         btScalar evaluateEntity(Entity* e);
         void engineStep();
-        QVariant randomNewEntity();
+        QJsonObject randomNewEntity();
 
-        void load(QVariant data);
+        void load(QJsonObject data);
 
         void createEngine();
         void bindEntity(Entity* e);
@@ -105,12 +105,12 @@ namespace GeneCraftCore {
         QMap<QString, Engine*> engines;
 
         // Scripting
-        QScriptEngine scriptEngine;
-        QScriptValue  entityObj;
-        QScriptValue  validityFunc;
-        QScriptValue  endFunc;
-        QScriptValue  dieFunc;
-        QScriptValue  fitnessFunc;
+        QJSEngine scriptEngine;
+        QJSValue  entityObj;
+        QJSValue  validityFunc;
+        QJSValue  endFunc;
+        QJSValue  dieFunc;
+        QJSValue  fitnessFunc;
 
         int maxGen;
         int popSize;

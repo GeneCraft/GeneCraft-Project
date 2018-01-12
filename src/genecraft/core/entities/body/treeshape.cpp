@@ -19,8 +19,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "treeshape.h"
 
-#include <QVariant>
-#include <QVariantMap>
+#include <QJsonObject>
 
 #include "fixation.h"
 #include "treeshape.h"
@@ -64,11 +63,11 @@ namespace GeneCraftCore {
         getRoot()->setup();
     }
 
-    QVariant TreeShape::serialize()
+    QJsonObject TreeShape::serialize()
     {
-        QVariantMap treeShape, shape;
+        QJsonObject treeShape, shape;
 
-        treeShape.insert("shapeType", QVariant("TreeShape"));
+        treeShape.insert("shapeType", QString("TreeShape"));
         shape.insert("rootFix", root->serialize());
         treeShape.insert("shape",shape);
 

@@ -21,7 +21,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define JSONFILE_H
 
 #include "ressource.h"
-#include <QVariant>
 #include <QFile>
 
 namespace GeneCraftCore {
@@ -30,8 +29,8 @@ class JsonFile : public Ressource
 
 public:
     explicit JsonFile(QString filename, QObject *parent = 0);
-    virtual QVariant load();
-    virtual int save(QVariant data);
+    virtual QJsonObject load();
+    virtual int save(QJsonObject data);
     virtual int remove();
     virtual QString getLocation();
 

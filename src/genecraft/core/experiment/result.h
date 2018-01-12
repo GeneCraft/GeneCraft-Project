@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define RESULT_H
 
 #include "factories/ressources/ressource.h"
-#include <QVariant>
+#include <QJsonObject>
 #include <QDateTime>
 #include "LinearMath/btScalar.h"
 
@@ -40,7 +40,7 @@ namespace GeneCraftCore {
           * A result is a fitness for a genome, and the ressource where this result is stored
           * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
           */
-        Result(QString expId, btScalar fitness, int nbRun, int stableTime, QVariant genome,
+        Result(QString expId, btScalar fitness, int nbRun, int stableTime, QJsonObject genome,
                QString workerName = "Anonymous",
                QString date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
                );
@@ -66,9 +66,9 @@ namespace GeneCraftCore {
           * Broadcast a result -> save it to the ressource
           */
         void save(Ressource * r);
-        QVariant serialize();
+        QJsonObject serialize();
 
-        static Result* loadResult(QVariant data, bool& ok);
+        static Result* loadResult(QJsonObject data, bool& ok);
 
         btScalar getFitness() const {
             if(nbRun > 0)
@@ -77,7 +77,7 @@ namespace GeneCraftCore {
                 return -1;
         }
 
-        QVariant getGenome() const {
+        QJsonObject getGenome() const {
             return genome;
         }
 
@@ -98,7 +98,7 @@ namespace GeneCraftCore {
             this->fitness += fitness;
         }
 
-        void setGenome(QVariant genome) {
+        void setGenome(QJsonObject genome) {
             this->genome = genome;
         }
 
@@ -126,11 +126,11 @@ namespace GeneCraftCore {
             return this->broadcasted;
         }
 
-        void setStatistics(QVariant statistics) {
+        void setStatistics(QJsonObject statistics) {
             this->statistics = statistics;
         }
 
-        QVariant getStatistics() {
+        QJsonObject getStatistics() {
             return this->statistics;
         }
 
@@ -163,7 +163,7 @@ namespace GeneCraftCore {
         // Score
         btScalar fitness;
         // Entity
-        QVariant genome;
+        QJsonObject genome;
         // Where to store it
         Ressource* ressource;
         // The attached experimentation
@@ -175,7 +175,7 @@ namespace GeneCraftCore {
         // Broadcasted online already ?
         bool broadcasted;
         // The entity statistics
-        QVariant statistics;
+        QJsonObject statistics;
         // Stability reached at
         int stableTime;
         // Nb Time tested

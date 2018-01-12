@@ -40,28 +40,29 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "effectors/grippereffector.h"
 #include "effectors/rotationalmotorseffector.h"
 
+#include <QJsonArray>
+
 namespace GeneCraftCore {
 GenericFamily::GenericFamily()
 {
 }
 
-Entity *GenericFamily::createEntity(QVariant genotype,
+Entity *GenericFamily::createEntity(QJsonObject genotype,
                                     btShapesFactory *shapesFactory,
                                     const btVector3 &initialPosition)
 {
-    QVariantMap entityMap = genotype.toMap();
 
     // Entity & origins
-    QVariantMap origins = entityMap.value("origins").toMap();
+    QJsonObject origins = genotype.value("origins").toObject();
     Entity * entity = new Entity(origins.value("name").toString(),
                                   origins.value("family").toString(),
                                   "generic",
                                   origins.value("generation").toInt());
     // Brain
-    entity->setBrain(new BrainFunctional(entityMap.value("brain")));
+    entity->setBrain(new BrainFunctional(genotype.value("brain").toObject()));
 
     // Body
-    QVariantMap body = entityMap.value("body").toMap();
+    QJsonObject body = genotype.value("body").toObject();
     if(body.value("shapeType").toString().compare(QString("TreeShape")) == 0)
     {
         TreeShape* treeShape = new TreeShape(shapesFactory);
@@ -70,10 +71,10 @@ Entity *GenericFamily::createEntity(QVariant genotype,
         initTransform.setIdentity();
         initTransform.setOrigin(initialPosition);
 
-        Fixation* root = GenericFamily::createRootFromGenotype(shapesFactory, body.value("shape"), initTransform);
+        Fixation* root = GenericFamily::createRootFromGenotype(shapesFactory, body.value("shape").toObject(), initTransform);
         treeShape->setRoot(root);
         entity->setShape(treeShape);
-        GenericFamily::buildFixFromGenotype(shapesFactory, root, root,body.value("shape").toMap().value("rootFix"));
+        GenericFamily::buildFixFromGenotype(shapesFactory, root, root,body.value("shape").toObject().value("rootFix").toObject());
     }
 
 
@@ -100,53 +101,52 @@ Entity *GenericFamily::createVirginEntity(btShapesFactory *shapesFactory,
     return entity;
 }
 
-Fixation* GenericFamily::createRootFromGenotype(btShapesFactory *shapesFactory, QVariant genotype, btTransform initTransform) {
-    QVariantMap treeShapeMap = genotype.toMap();
+Fixation* GenericFamily::createRootFromGenotype(btShapesFactory *shapesFactory, QJsonObject genotype, btTransform initTransform) {
 
     // Root fix
-    QVariantMap rootFixMap = treeShapeMap.value("rootFix").toMap();
+    QJsonObject rootFixMap = genotype.value("rootFix").toObject();
 
     return new Fixation(shapesFactory, rootFixMap.value("radius").toDouble(), initTransform);
 
 }
 
-void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QVariant fixGenotype)
+void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QJsonObject fixGenotype)
 {
 
     // -------------
     // -- sensors --
     // -------------
-    foreach(QVariant sensorData, fixGenotype.toMap()["sensors"].toList()) {
-       QVariantMap sensorMap = sensorData.toMap();
+    foreach(QJsonValue sensorData, fixGenotype["sensors"].toArray()) {
+       QJsonObject sensorMap = sensorData.toObject();
        switch((SensorType)sensorMap["type"].toInt()) {
        case accelerometerSensor: {
-           fix->addSensor(new AccelerometerSensor(sensorData, fix));
+           fix->addSensor(new AccelerometerSensor(sensorData.toObject(), fix));
        }
            break;
        case gyroscopicSensor: {
 
-           fix->addSensor(new GyroscopicSensor(sensorData, fix));
+           fix->addSensor(new GyroscopicSensor(sensorData.toObject(), fix));
        }
            break;
        case positionSensor:{
 
-           fix->addSensor(new PositionSensor(sensorData, root, fix));
+           fix->addSensor(new PositionSensor(sensorData.toObject(), root, fix));
        }
            break;
        case contactSensor:{
 
-           fix->addSensor(new ContactSensor(sensorData, fix));
+           fix->addSensor(new ContactSensor(sensorData.toObject(), fix));
        }
            break;
        case boxSmellSensor:{
 
-           fix->addSensor(new BoxSmellSensor(sensorData, fix));
+           fix->addSensor(new BoxSmellSensor(sensorData.toObject(), fix));
 
            break;
        }
        case distanceSensor:{
 
-           fix->addSensor(new DistanceSensor(sensorData, fix));
+           fix->addSensor(new DistanceSensor(sensorData.toObject(), fix));
        }
            break;
        }
@@ -155,8 +155,8 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
     // --------------
     // -- effector --
     // --------------
-    foreach(QVariant effector, fixGenotype.toMap()["effectors"].toList()) {
-       QVariantMap effectorMap = effector.toMap();
+    foreach(QJsonValue effector, fixGenotype["effectors"].toArray()) {
+       QJsonObject effectorMap = effector.toObject();
        switch((EffectorType)effectorMap["type"].toInt()) {
 
        case rotationalMotorEffector: break;
@@ -174,27 +174,27 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
     // -----------
     // -- bones --
     // -----------
-    QVariantList bonesVariantList = fixGenotype.toMap().value("bones").toList();
+    QJsonArray bonesVariantList = fixGenotype.value("bones").toArray();
 
-    foreach(QVariant bone, bonesVariantList)
+    foreach(QJsonValue bone, bonesVariantList)
     {
-        QVariantMap boneMap = bone.toMap();
+        QJsonObject boneMap = bone.toObject();
 
         // Radius & lenght
         btScalar boneRadius = boneMap.value("radius").toDouble();
         btScalar boneLength = boneMap.value("length").toDouble();
 
-        btScalar endFixRadius = boneMap.value("endFix").toMap().value("radius").toDouble();
+        btScalar endFixRadius = boneMap.value("endFix").toObject().value("radius").toDouble();
 
         // Yaw & Roll (local)
-        QVariantMap localRotationMap = boneMap.value("localRotation").toMap();
+        QJsonObject localRotationMap = boneMap.value("localRotation").toObject();
         btScalar yAxisRot = localRotationMap.value("y").toDouble();
         btScalar zAxisRot = localRotationMap.value("z").toDouble();
 
         // Limits
         btVector3 lowerLimits, upperLimits;
-        QVariantMap lowerLimitsMap = boneMap.value("lowerLimits").toMap();
-        QVariantMap upperLimitsMap = boneMap.value("upperLimits").toMap();
+        QJsonObject lowerLimitsMap = boneMap.value("lowerLimits").toObject();
+        QJsonObject upperLimitsMap = boneMap.value("upperLimits").toObject();
 
         lowerLimits.setValue(lowerLimitsMap.value("x").toDouble(),
                              lowerLimitsMap.value("y").toDouble(),
@@ -203,10 +203,10 @@ void GenericFamily::buildFixFromGenotype(btShapesFactory *shapesFactory, Fixatio
                              upperLimitsMap.value("y").toDouble(),
                              upperLimitsMap.value("z").toDouble());
 
-        Bone *bone = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
-        bone->setMotorModifierData(boneMap["muscle"]);
+        Bone *b = fix->addBone(yAxisRot,zAxisRot,boneRadius,boneLength,endFixRadius,lowerLimits,upperLimits);
+        b->setMotorModifierData(boneMap["muscle"].toObject());
         // Add bone recurcively
-        GenericFamily::buildFixFromGenotype(shapesFactory, bone->getEndFixation(), root, boneMap.value("endFix"));
+        GenericFamily::buildFixFromGenotype(shapesFactory, b->getEndFixation(), root, boneMap.value("endFix").toObject());
     }
 }
 }

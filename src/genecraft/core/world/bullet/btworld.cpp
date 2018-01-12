@@ -45,7 +45,7 @@ namespace GeneCraftCore {
         QObject(parent)
     {
         // TODO
-        this->data = QVariantMap();
+        this->data = QJsonObject();
         this->factory = factory;
         this->shapesFactory = shapesFactory;
         this->btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));
@@ -53,10 +53,9 @@ namespace GeneCraftCore {
 
     }
 
-    btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QVariant worldData, QObject *parent) :
+    btWorld::btWorld(btFactory* factory, btShapesFactory* shapesFactory, QJsonObject data, QObject *parent) :
         QObject(parent)
     {
-        this->data = worldData.toMap();
         this->factory = factory;
         this->shapesFactory = shapesFactory;
         this->btEngine = static_cast<BulletEngine*>(factory->getEngineByName("Bullet"));

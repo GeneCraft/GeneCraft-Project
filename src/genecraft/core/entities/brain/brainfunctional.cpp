@@ -54,7 +54,7 @@ btScalar sigmoid(btScalar x)
     {
     }
 
-    BrainFunctional::BrainFunctional(QVariant data) : Brain(data) {
+    BrainFunctional::BrainFunctional(QJsonObject data) : Brain(data) {
 
     }
 
@@ -101,13 +101,13 @@ btScalar sigmoid(btScalar x)
                 break;
             case INPUT:
                 {
-                    BrainNodeIn* in =  new BrainNodeIn(nodePart[1].toFloat(), nodePart[2].toFloat());
+                    BrainNodeIn* in =  new BrainNodeIn(nodePart[1].toDouble(), nodePart[2].toDouble());
                     tree.append(in);
                     this->brainins.append(in); // display purpose
                 }
                 break;
             case CONSTANT:
-                tree.append(new BrainNodeConst(nodePart[1].toFloat()));
+                tree.append(new BrainNodeConst(nodePart[1].toDouble()));
                 break;
             case INTEGRATE:
             case INTERPOLATE:
@@ -125,7 +125,7 @@ btScalar sigmoid(btScalar x)
                 break;
             case WAVE:
                 tree.append(new BrainNode(WAVE));
-                tree.append(new BrainNodeConst(nodePart[1].toFloat()));
+                tree.append(new BrainNodeConst(nodePart[1].toDouble()));
                 tree.append(new BrainMemory(1));
                 break;
             case MEMORY_SPACE:
@@ -536,8 +536,8 @@ btScalar sigmoid(btScalar x)
         return func;
     }
 
-    QVariant BrainFunctional::serialize() {
-        QVariantMap data = Brain::serialize().toMap();
+    QJsonObject BrainFunctional::serialize() {
+        QJsonObject data = Brain::serialize();
         return data;
     }
 }

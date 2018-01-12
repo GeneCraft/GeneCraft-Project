@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define ENTITY_H
 
 #include <QObject>
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 #include "statistics/statisticsstorage.h"
 #include "body/fixation.h"
@@ -90,8 +91,8 @@ public:
     //static EntityPropertiesController *getInspectorWidget(Entity * selectedEntity = NULL, btRigidBody *selectedBody = NULL);
 
     // serialisation
-    QVariant serialize();
-    QVariant serializeOrigins();
+    QJsonObject serialize();
+    QJsonObject serializeOrigins();
 
     // Set ressource
     void setRessource(Ressource* r);

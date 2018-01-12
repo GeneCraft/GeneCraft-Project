@@ -47,7 +47,7 @@ Experiment::Experiment() : ressource(NULL){
         mutationsManager = new MutationsManager();
 
         // world
-        worldDataMap = btWorldFactory::createSimpleWorld().toMap();
+        worldDataMap = btWorldFactory::createSimpleWorld();
 
         // seed
         seedInfo.insert("type", "family");
@@ -75,9 +75,8 @@ Experiment::Experiment() : ressource(NULL){
         delete mutationsManager;
     }
 
-    Experiment::Experiment(QVariant data) : ressource(NULL) {
+    Experiment::Experiment(QJsonObject map) : ressource(NULL) {
 
-        QVariantMap map = data.toMap();
         online = false;
 
         // TODO
@@ -102,13 +101,13 @@ Experiment::Experiment() : ressource(NULL){
         stopIfEntityIsNotInOnePiece = map["stopIfEntityIsNotInOnePiece"].toBool();
 
         // mutations
-        mutationsManager = new MutationsManager(map["mutations"]);
+        mutationsManager = new MutationsManager(map["mutations"].toObject());
 
         // world
-        worldDataMap = map["world"].toMap();
+        worldDataMap = map["world"].toObject();
 
         // seed TODO
-        seedInfo = map["seedInfo"].toMap();
+        seedInfo = map["seedInfo"].toObject();
 
         if(map.contains("evalFunction")) {
             evalFunction     = map["evalFunction"].toString();
@@ -163,8 +162,8 @@ Experiment::Experiment() : ressource(NULL){
         }
     }
 
-    QVariant Experiment::serialize() {
-        QVariantMap map;
+    QJsonObject Experiment::serialize() {
+        QJsonObject map;
 
         // version
         map.insert("version",EXP_FORMAT_VERSION);

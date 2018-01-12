@@ -21,7 +21,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define EFFECTOR_H
 
 #include <QString>
-#include <QVariant>
+#include <QJsonObject>
+#include <QList>
 #include "genecraftcoreclasses.h"
 
 namespace GeneCraftCore {
@@ -48,13 +49,13 @@ public:
     Effector(QString typeName, EffectorType type);
 
     // To create from serialization data
-    Effector(QVariant data);
+    Effector(QJsonObject data);
 
     // To create empty sensor serialization data
-    static QVariant generateEmpty(QString typeName, int type);
+    static QJsonObject generateEmpty(QString typeName, int type);
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To get the type name
     const QString &getTypeName() { return typeName; }

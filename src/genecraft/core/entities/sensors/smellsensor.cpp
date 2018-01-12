@@ -50,15 +50,13 @@ SmellSensor::SmellSensor(Fixation *fixation, QString typeName, SensorType type,
 }
 
 // To create from serialization data
-SmellSensor::SmellSensor(QVariant data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation) : Sensor(data, fixation)
+SmellSensor::SmellSensor(QJsonObject data, RigidBodyOrigin::RigidBodyType smellType, Fixation * fixation) : Sensor(data, fixation)
 {
-    QVariantMap map = data.toMap();
-
     this->smellType =  smellType;
 
-    intensityInput = new BrainIn(map["intensityInput"]);
+    intensityInput = new BrainIn(data["intensityInput"].toObject());
     // the max value equals radius of smell !
-    radiusOfSmell = map["radiusOfSmell"].toFloat();
+    radiusOfSmell = data["radiusOfSmell"].toDouble();
     //intensityInput->setMax(radiusOfSmell);
     brainInputs.append(intensityInput);
 
@@ -83,9 +81,9 @@ void SmellSensor::createRigidBody(btScalar radiusOfSmell) {
 }
 
 // To serialize
-QVariant SmellSensor::serialize()
+QJsonObject SmellSensor::serialize()
 {
-    QVariantMap data = Sensor::serialize().toMap();
+    QJsonObject data = Sensor::serialize();
     data.insert("intensityInput", intensityInput->serialize());
     data.insert("radiusOfSmell", (double) radiusOfSmell);
 
@@ -155,9 +153,9 @@ void SmellSensor::objectSmelled(const btRigidBody *body) {
     }
 }
 
-QVariant SmellSensor::generateEmpty(QString typeName, SensorType type, btScalar radiusOfSmell)
+QJsonObject SmellSensor::generateEmpty(QString typeName, SensorType type, btScalar radiusOfSmell)
 {
-    QVariantMap data = Sensor::generateEmpty(typeName, type).toMap();
+    QJsonObject data = Sensor::generateEmpty(typeName, type);
 
     BrainIn intensity(0, radiusOfSmell);
     intensity.connectRandomly();

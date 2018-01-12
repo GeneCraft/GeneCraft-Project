@@ -47,13 +47,13 @@ public:
     PositionSensor(Fixation * rootFix, Fixation * fixation);
 
     // To create from serialization data
-    PositionSensor(QVariant data, Fixation* rootFix, Fixation* fixation);
+    PositionSensor(QJsonObject data, Fixation* rootFix, Fixation* fixation);
 
     // To serialize
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     // To create an empty sensor
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // To update brain inputs values
     void step();

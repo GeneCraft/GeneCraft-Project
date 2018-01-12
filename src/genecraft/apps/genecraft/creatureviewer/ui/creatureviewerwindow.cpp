@@ -312,7 +312,7 @@ void CreatureViewerWindow::init() {
     expCtrl = new ExperimentCtrl();
     this->ui->dwExperiment->setWidget(expCtrl);
     expCtrl->connectToInspectorInputManager(cvim);
-    //connect(expCtrl, SIGNAL(addEntity(QVariantMap, Ressource*)), this, SLOT(addResult(QVariantMap,Ressource*)));
+    //connect(expCtrl, SIGNAL(addEntity(QJsonObject, Ressource*)), this, SLOT(addResult(QJsonObject,Ressource*)));
 
     // ----------------------------------
     // -- Connections to input manager --
@@ -328,8 +328,8 @@ void CreatureViewerWindow::init() {
     connect(cvim,SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(setExperiment(Experiment*)));
     connect(this,SIGNAL(sLoadExperiment(Experiment*)),cvim,SLOT(loadExperiment(Experiment*)),Qt::DirectConnection);
     emit sLoadExperiment(experiment);
-    connect(cvim,SIGNAL(sLoadWorld(QVariantMap)),this,SLOT(setWorld(QVariantMap)));
-    connect(cvim,SIGNAL(sLoadEntity(QVariantMap,Ressource*)),this,SLOT(addEntity(QVariantMap,Ressource*)));
+    connect(cvim,SIGNAL(sLoadWorld(QJsonObject)),this,SLOT(setWorld(QJsonObject)));
+    connect(cvim,SIGNAL(sLoadEntity(QJsonObject,Ressource*)),this,SLOT(addEntity(QJsonObject,Ressource*)));
     connect(cvim,SIGNAL(sLoadResult(Result*)),this,SLOT(loadResult(Result*)));
 
     // --------------
@@ -405,7 +405,7 @@ void CreatureViewerWindow::setExperiment(Experiment* experiment)
     simulationManager->setStatus(status);
 }
 
-void CreatureViewerWindow::setWorld(QVariantMap worldMap) {
+void CreatureViewerWindow::setWorld(QJsonObject worldMap) {
     bool status = simulationManager->status();
     this->simulationManager->stop();
     if(experiment != NULL) {
@@ -420,7 +420,7 @@ void CreatureViewerWindow::loadResult(Result *result) {
     this->simulationManager->stop();
     setExperiment(experiment);
 
-    QVariantMap genome = result->getGenome().toMap();
+    QJsonObject genome = result->getGenome();
 
     Entity* e = createCreature(genome, world->getSpawnPosition(), result->getRessource());
     if(this->experiment->getOnlyIfEntityIsStable())
@@ -509,7 +509,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     EntitiesEngine *entitiesEngine = static_cast<EntitiesEngine*>(factory->getEngines().find("Entities").value());
     //entitiesEngine->addEntity(originEntity);
     //ents.append(originEntity);
-    QVariant originGenome = originEntity->serialize();
+    QJsonObject originGenome = originEntity->serialize();
 
     // circle
     btScalar r = 3 * nbCreatures;
@@ -518,7 +518,7 @@ void CreatureViewerWindow::spawnMutationSample(Entity *originEntity, int nbCreat
     // mutations
     for(int i = 0; i < nbCreatures; i++) {
 
-        QVariant newGenome = experiment->getMutationsManager()->mutateEntity(originGenome);
+        QJsonObject newGenome = experiment->getMutationsManager()->mutateEntity(originGenome);
 
         btVector3 pos(sin(i*angle)*r,5,cos(i*angle)*r); //pos(0, 0, i*15 + 15);//
 
@@ -619,11 +619,11 @@ Entity * CreatureViewerWindow::createNewEntity()
     return e;
 }
 
-void CreatureViewerWindow::addEntity(QVariantMap entityData,Ressource *ressource) {
+void CreatureViewerWindow::addEntity(QJsonObject entityData,Ressource *ressource) {
     createCreature(entityData, getCameraPosition(), ressource);
 }
 
-//void CreatureViewerWindow::addResult(QVariantMap resultData, Ressource *ressource) {
+//void CreatureViewerWindow::addResult(QJsonObject resultData, Ressource *ressource) {
 //    Entity* e = createCreature(resultData, world->getSpawnPosition(), ressource);
 //    e->addOutScript(0, fromNormal); // Normal position during stability time
 //    e->addOutScript(resultData["stable"].toInt(), fromBrain); // Next from brain
@@ -643,7 +643,7 @@ void CreatureViewerWindow::loadEntityFromFile()
 
         // Load Generic Entity
         Ressource* from = new JsonFile(selectedFile);
-        QVariant genotype = from->load();
+        QJsonObject genotype = from->load();
 
         Entity *e = createCreature(genotype, getCameraPosition(),from);
 
@@ -654,7 +654,7 @@ void CreatureViewerWindow::loadEntityFromFile()
     simulationManager->start();
 }
 
-Entity * CreatureViewerWindow::createCreature(QVariant genotype, btVector3 position, Ressource *ressource) {
+Entity * CreatureViewerWindow::createCreature(QJsonObject genotype, btVector3 position, Ressource *ressource) {
 
     Entity *e = CreatureFactory::createEntity(genotype, shapesFactory, position);
 

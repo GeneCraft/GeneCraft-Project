@@ -25,8 +25,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "LinearMath/btVector3.h"
 
-#include <QVariant>
-
 namespace GeneCraftCore {
 
 
@@ -35,7 +33,7 @@ namespace GeneCraftCore {
 
     public:
 
-        Spawn(QVariant data);
+        Spawn(QJsonObject data);
         Spawn(QString type, btVector3 position);
         Spawn(QString type, btVector3 topleftCorner, btVector3 bottomRightCorner);
 

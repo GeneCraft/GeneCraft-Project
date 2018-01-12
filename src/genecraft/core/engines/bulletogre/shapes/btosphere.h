@@ -23,14 +23,14 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "genecraftcoreclasses.h"
 #include "bullet/shapes/btsphere.h"
 #include "Ogre.h"
-#include <QVariant>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
 class btoSphere : public btSphere
 {
 public:
-    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QVariant params = QVariant());
+    btoSphere(btoWorld *world, BulletOgreEngine *btoEngine, btScalar radius, const btTransform &transform, const btScalar density, QJsonObject params = QJsonObject());
     ~btoSphere();
     void setup();
     void setSelected(bool selected);

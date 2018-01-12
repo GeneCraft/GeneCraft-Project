@@ -28,8 +28,8 @@ namespace GeneCraftCore {
     public:
 
         SimpleProbabilityMutation();
-        SimpleProbabilityMutation(QVariant variant);
-        QVariant serialize();
+        SimpleProbabilityMutation(QJsonObject variant);
+        QJsonObject serialize();
     };
 
 }

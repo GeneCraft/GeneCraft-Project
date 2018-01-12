@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tools.h"
 #include <QDebug>
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
@@ -34,21 +35,20 @@ MutationElement::MutationElement(QString name, int type, btScalar weight) {
     this->weight = weight;
 }
 
-MutationElement::MutationElement(QVariant variant) {
-    QVariantMap map = variant.toMap();
+MutationElement::MutationElement(QJsonObject map) {
 
     name = map["name"].toString();
     type = map["type"].toInt();
 
-    if(map["weight"].toFloat() < 0.0)
+    if(map["weight"].toDouble() < 0.0)
         weight = 0.0;
     else
-        weight = map["weight"].toFloat();
+        weight = map["weight"].toDouble();
 }
 
-QVariant MutationElement::serialize() {
+QJsonObject MutationElement::serialize() {
 
-    QVariantMap map;
+    QJsonObject map;
 
     map.insert("name",name);
     map.insert("type",type);
@@ -64,10 +64,9 @@ StructuralList::~StructuralList() {
     elements.clear();
 }
 
-StructuralList::StructuralList(QVariant variant) {
-    QVariantList list = variant.toList();
-    foreach(QVariant variant, list)
-        elements.append(new MutationElement(variant));
+StructuralList::StructuralList(QJsonArray list) {
+    foreach(QJsonValue variant, list)
+        elements.append(new MutationElement(variant.toObject()));
 }
 
 MutationElement *StructuralList::pickOne() {
@@ -94,8 +93,8 @@ MutationElement *StructuralList::pickOne() {
     return elements.last();
 }
 
-QVariant StructuralList::serialize() {
-    QVariantList list;
+QJsonArray StructuralList::serialize() {
+    QJsonArray list;
 
     foreach(MutationElement *element, elements)
         list.append(element->serialize());

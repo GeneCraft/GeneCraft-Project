@@ -23,7 +23,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bullet/bulletengine.h"
 #include "BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "Ogre.h"
-
+#include "OgreOverlay.h"
+#include "OgreOverlayElement.h"
+#include "OgreOverlayManager.h"
 
 namespace GeneCraftCore {
 

@@ -30,7 +30,7 @@ namespace GeneCraftCore {
 
     public:
 
-        static Entity* createEntity(QVariant data,
+        static Entity* createEntity(QJsonObject data,
                              btShapesFactory* shapesFactory,
                              btVector3 positionSensor);
     };

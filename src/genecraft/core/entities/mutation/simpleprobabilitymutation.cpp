@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "simpleprobabilitymutation.h"
 
 #include <QDebug>
-#include <QVariantMap>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
@@ -29,8 +29,7 @@ SimpleProbabilityMutation::SimpleProbabilityMutation(){
     enable      = true;
 }
 
-SimpleProbabilityMutation::SimpleProbabilityMutation(QVariant variant){
-    QVariantMap map = variant.toMap();
+SimpleProbabilityMutation::SimpleProbabilityMutation(QJsonObject map){
 
     if(map["type"].toInt() == SimpleProbabilityType) {
         probability = map["probability"].toDouble();
@@ -40,13 +39,13 @@ SimpleProbabilityMutation::SimpleProbabilityMutation(QVariant variant){
         qDebug() << Q_FUNC_INFO << "Wrong mutation type" << map["Type"].toInt();
 }
 
-QVariant SimpleProbabilityMutation::serialize(){
+QJsonObject SimpleProbabilityMutation::serialize(){
 
-    QVariantMap map;
+    QJsonObject map;
 
-    map.insert("type",QVariant(SimpleProbabilityType));
-    map.insert("probability",QVariant((double)probability));
-    map.insert("enable",QVariant(enable));
+    map.insert("type",SimpleProbabilityType);
+    map.insert("probability",(double)probability);
+    map.insert("enable",enable);
 
     return map;
 }

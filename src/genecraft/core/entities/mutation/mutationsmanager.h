@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef MUTATIONSMANAGER_H
 #define MUTATIONSMANAGER_H
 
-#include <QVariant>
+#include <QJsonObject>
 #include <QStringList>
 #include <QMap>
 #include "body/bone.h"
@@ -36,33 +36,33 @@ public:
 
     // To create the mutation manager
     MutationsManager();    
-    MutationsManager(QVariant mutationsParams);
+    MutationsManager(QJsonObject mutationsParams);
     ~MutationsManager();
-    QVariant serialize();
+    QJsonObject serialize();
 
     // To mutate an entire entity
-    QVariant mutateEntity(const QVariant &entityVariant);
+    QJsonObject mutateEntity(const QJsonObject &entityVariant);
 
     // To mutate a treeshape
-    QVariant mutateTreeShape(const QVariant &treeShapeVariant);
+    QJsonObject mutateTreeShape(const QJsonObject &treeShapeVariant);
 
     // To mutate a fixation (Not recursively)
-    QVariant mutateBone(const QVariant &boneVariant);
+    QJsonObject mutateBone(const QJsonObject &boneVariant);
 
     // To mutate a fixation (Not recursively)
-    QVariant mutateFixation(const QVariant &fixVariant);
+    QJsonObject mutateFixation(const QJsonObject &fixVariant);
 
     // Mutate the brain
-    QVariant mutateBrain(QVariant brain);
+    QJsonObject mutateBrain(QJsonObject brain);
 
     // Mutate a brainInput
-    QVariant mutateBrainIn(QVariant brainIn);
+    QJsonObject mutateBrainIn(QJsonObject brainIn);
 
     // Mutate a brainOutput
-    QVariant mutateBrainOut(QVariant brainOut);
+    QJsonObject mutateBrainOut(QJsonObject brainOut);
 
     // Mutate the tree of a brainOutput
-    QVariant mutateBrainOutTree(QVariant brainOut);
+    QJsonObject mutateBrainOutTree(QJsonObject brainOut);
 
     // ----------
     // -- body --
@@ -126,36 +126,36 @@ public:
 private:
 
     // To mutate a value in a map
-    void mutate(QVariantMap &map, QString key, Mutation* mutation);
+    void mutate(QJsonObject &map, QString key, Mutation* mutation);
     int treeDepth(QStringList::iterator& it);
     void consumnSubTree(QStringList::iterator& it);
 
     /**
      * To add sensor
      *
-     * @param the QVariantList where add
+     * @param the QJsonArray where add
      * @param the position to add (-1 = end of list)
      */
-    void addSensor(QVariantList &sensors, int i=-1);
+    void addSensor(QJsonArray &sensors, int i=-1);
 
     /**
      * To add effector
      *
-     * @param the QVariantList where add
+     * @param the QJsonArray where add
      * @param the position to add (-1 = end of list)
      */
-    void addEffector(QVariantList &effectorsList, int i=-1);
+    void addEffector(QJsonArray &effectorsList, int i=-1);
 
     /**
      * To add bone
      *
-     * @param the QVariantList where add
+     * @param the QJsonArray where add
      * @param the position to add (-1 = end of list)
      */
-    void addBone(QVariantList &bones, int i=-1, QVariant endFix = QVariant());
+    void addBone(QJsonArray &bones, int i=-1, QJsonObject endFix = QJsonObject());
 
 
-    QVariant recursiveMutateTreeShape(QVariant &boneVariant);
+    QJsonObject recursiveMutateTreeShape(QJsonObject &boneVariant);
 
 };
 

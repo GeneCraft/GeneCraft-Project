@@ -96,9 +96,9 @@ void Entity::setShape(TreeShape* shape) {
         this->treeShape->getRoot()->setEntity(this);
 }
 
-QVariant Entity::serializeOrigins()
+QJsonObject Entity::serializeOrigins()
 {
-    QVariantMap origins;
+    QJsonObject origins;
 
     origins.insert("name",name);
     origins.insert("family",family);
@@ -107,9 +107,9 @@ QVariant Entity::serializeOrigins()
     return origins;
 }
 
-QVariant Entity::serialize()
+QJsonObject Entity::serialize()
 {
-    QVariantMap entityVariant;
+    QJsonObject entityVariant;
 
     entityVariant.insert("version", genomeVersion);
     entityVariant.insert("type", type);
@@ -156,7 +156,7 @@ void Entity::addLinkToEffector(Effector *modifier) {
         // Creatures from creature viewer
         if(modifier->getOutputs()[i]->getConnexionInfo() == "") {
             QString randomFunc = brain->createRandomFunc(2);
-            modifier->getOutputs()[i]->setConnexionInfo(QVariant(randomFunc));
+            modifier->getOutputs()[i]->setConnexionInfo(randomFunc);
         }
 
         brain->addOut(modifier->getOutputs()[i]);
@@ -172,7 +172,7 @@ void Entity::addBrainOut(BrainOut *brainOut)
 
     if(brainOut->getConnexionInfo() == "") {
         QString randomFunc = brain->createRandomFunc(2);
-        brainOut->setConnexionInfo(QVariant(randomFunc));
+        brainOut->setConnexionInfo(randomFunc);
     }
 
     brain->addOut(brainOut);

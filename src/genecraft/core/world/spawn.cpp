@@ -21,43 +21,42 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tools.h"
 
-#include <QVariantMap>
+#include <QJsonObject>
 #include <QDebug>
 
 namespace GeneCraftCore {
 
 
-    Spawn::Spawn(QVariant data) {
+    Spawn::Spawn(QJsonObject dMap) {
 
-        QVariantMap dMap = data.toMap();
 
         this->type = dMap["type"].toString();
 
         if(type == "position") {
 
-            this->position = btVector3(dMap["posX"].toFloat(),
-                                       dMap["posY"].toFloat(),
-                                       dMap["posZ"].toFloat());
+            this->position = btVector3(dMap["posX"].toDouble(),
+                                       dMap["posY"].toDouble(),
+                                       dMap["posZ"].toDouble());
         }
         else if(type == "minMaxArea") {
 
-            this->minPosition = btVector3(dMap["minX"].toFloat(),
-                                          dMap["minY"].toFloat(),
-                                          dMap["minZ"].toFloat());
+            this->minPosition = btVector3(dMap["minX"].toDouble(),
+                                          dMap["minY"].toDouble(),
+                                          dMap["minZ"].toDouble());
 
-            this->maxPosition = btVector3(dMap["maxX"].toFloat(),
-                                          dMap["maxY"].toFloat(),
-                                          dMap["maxZ"].toFloat());
+            this->maxPosition = btVector3(dMap["maxX"].toDouble(),
+                                          dMap["maxY"].toDouble(),
+                                          dMap["maxZ"].toDouble());
         }
         else if(type == "boxArea") {
 
-            btVector3 size(dMap["sizeX"].toFloat(),
-                          dMap["sizeY"].toFloat(),
-                          dMap["sizeZ"].toFloat());
+            btVector3 size(dMap["sizeX"].toDouble(),
+                          dMap["sizeY"].toDouble(),
+                          dMap["sizeZ"].toDouble());
 
-            btVector3 pos(dMap["posX"].toFloat(),
-                          dMap["posY"].toFloat(),
-                          dMap["posZ"].toFloat());
+            btVector3 pos(dMap["posX"].toDouble(),
+                          dMap["posY"].toDouble(),
+                          dMap["posZ"].toDouble());
 
             this->minPosition = pos - size/2.0;
             this->maxPosition = pos + size/2.0;

@@ -21,7 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define BTSCENE_H
 
 #include <QObject>
-#include <QVariant>
+#include <QJsonObject>
 
 #include "spawn.h"
 #include "genecraftcoreclasses.h"
@@ -41,7 +41,7 @@ class btScene : public QObject
 {
 
 public:
-    explicit btScene(btWorld* world, QVariant sceneData, QObject *parent = 0);
+    explicit btScene(btWorld* world, QJsonObject sceneData, QObject *parent = 0);
     ~btScene();
 
     virtual void setup();
@@ -53,7 +53,7 @@ public:
     }
 
 protected:
-    QVariantMap data;
+    QJsonObject data;
     btDynamicsWorld* bulletWorld;
     btWorld* world;
     QList<Spawn*> spawns;

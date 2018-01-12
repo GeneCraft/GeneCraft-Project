@@ -26,22 +26,20 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "bulletogre/bulletogreengine.h"
 #include "ogre/ogreengine.h"
 
-#include <QVariant>
-#include <QVariantMap>
-#include <QVariantList>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "btofactory.h"
 
 #include <QDebug>
 
 namespace GeneCraftCore {
 
-    btoBiome::btoBiome(btoWorld* world, QVariant biomeData, QObject *parent) :
-        btBiome(world, biomeData, parent), world(world)
+    btoBiome::btoBiome(btoWorld* world, QJsonObject biomeDataMap, QObject *parent) :
+        btBiome(world, biomeDataMap, parent), world(world)
     {
         this->world = world;
 
-        QVariantMap biomeDataMap = biomeData.toMap();
-        lightsData = biomeDataMap["lights"].toList();
+        lightsData = biomeDataMap["lights"].toArray();
     }
 
     void btoBiome::setup() {
@@ -77,14 +75,14 @@ namespace GeneCraftCore {
         int nbPointLights = 0; // for id
         int nbDirectionalLights = 0; // for id
         int nbSpotLights = 0; // for id
-        foreach(QVariant lightData, lightsData) {
+        foreach(QJsonValue lightData, lightsData) {
 
-           QVariantMap lightMap = lightData.toMap();
+           QJsonObject lightMap = lightData.toObject();
 
            // TODO diffuse and specular !!! dr, dg, db, sr, sg, sb
-           btScalar r = lightMap["r"].toFloat();
-           btScalar g = lightMap["g"].toFloat();
-           btScalar b = lightMap["b"].toFloat();
+           btScalar r = lightMap["r"].toDouble();
+           btScalar g = lightMap["g"].toDouble();
+           btScalar b = lightMap["b"].toDouble();
 
            QString type = lightMap["type"].toString();
            if(type.compare("ambient") == 0) {
@@ -95,9 +93,9 @@ namespace GeneCraftCore {
 
                nbPointLights++;
 
-               btScalar x = lightMap["posX"].toFloat();
-               btScalar y = lightMap["posY"].toFloat();
-               btScalar z = lightMap["posZ"].toFloat();
+               btScalar x = lightMap["posX"].toDouble();
+               btScalar y = lightMap["posY"].toDouble();
+               btScalar z = lightMap["posZ"].toDouble();
 
                Ogre::Light* pointLight = sceneManager->createLight();
                pointLight->setType(Ogre::Light::LT_POINT);
@@ -109,9 +107,9 @@ namespace GeneCraftCore {
 
                nbDirectionalLights++;
 
-               btScalar dirX = lightMap["dirX"].toFloat();
-               btScalar dirY = lightMap["dirY"].toFloat();
-               btScalar dirZ = lightMap["dirZ"].toFloat();
+               btScalar dirX = lightMap["dirX"].toDouble();
+               btScalar dirY = lightMap["dirY"].toDouble();
+               btScalar dirZ = lightMap["dirZ"].toDouble();
 
                Ogre::Light* directionalLight = sceneManager->createLight();
                directionalLight->setType(Ogre::Light::LT_DIRECTIONAL);
@@ -124,17 +122,17 @@ namespace GeneCraftCore {
 
                nbSpotLights++;
 
-               btScalar dirX = lightMap["dirX"].toFloat();
-               btScalar dirY = lightMap["dirY"].toFloat();
-               btScalar dirZ = lightMap["dirZ"].toFloat();
+               btScalar dirX = lightMap["dirX"].toDouble();
+               btScalar dirY = lightMap["dirY"].toDouble();
+               btScalar dirZ = lightMap["dirZ"].toDouble();
 
-               btScalar posX = lightMap["posX"].toFloat();
-               btScalar posY = lightMap["posY"].toFloat();
-               btScalar posZ = lightMap["posZ"].toFloat();
+               btScalar posX = lightMap["posX"].toDouble();
+               btScalar posY = lightMap["posY"].toDouble();
+               btScalar posZ = lightMap["posZ"].toDouble();
 
-               btScalar innerAngle = lightMap["innerAngle"].toFloat();
-               btScalar outerAngle = lightMap["outerAngle"].toFloat();
-               //btScalar falloff = lightMap["falloff"].toFloat();
+               btScalar innerAngle = lightMap["innerAngle"].toDouble();
+               btScalar outerAngle = lightMap["outerAngle"].toDouble();
+               //btScalar falloff = lightMap["falloff"].toDouble();
 
                Ogre::Light* spotLight = sceneManager->createLight();
                spotLight->setType(Ogre::Light::LT_SPOTLIGHT);

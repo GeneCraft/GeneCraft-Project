@@ -30,25 +30,20 @@ INCLUDEPATH += \
 
 #library related
 INCLUDEPATH  += \
-    lib/bullet/src \
-    lib/qxt/src/core \
-    lib/qwt/include/ \
-    /usr/include/qxt/QxtCore/
+    ../lib/bullet/src \
+    ../lib/qwt/src
 
 
 #suppress warning for thoses systems
-QMAKE_CXXFLAGS  += -isystemlib/bullet/src
-QMAKE_CXXFLAGS  += -isystemlib/qxt/src/core
-QMAKE_CXXFLAGS  += -isystemlib/qwt/include
+QMAKE_CXXFLAGS  += -isystem../lib/bullet/src
+QMAKE_CXXFLAGS  += -isystem../lib/qwt/src
 
-LIBS += -L../src/lib/bullet/lib
-LIBS += -L../src/lib/qxt/lib
-#LIBS += -L../src/lib/qwt/lib
+LIBS += -L../lib/bullet/lib
+LIBS += -L../lib/qwt/lib
 
 LIBS += -lBulletDynamics
 LIBS += -lBulletCollision
 LIBS += -lLinearMath
-LIBS += -lQxtCore
 LIBS += -lqwt
 
 SOURCES += \

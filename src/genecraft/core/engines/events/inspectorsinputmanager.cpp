@@ -75,10 +75,10 @@ void InspectorsInputManager::experimentUpdated(Experiment *experiment){
 void InspectorsInputManager::loadExperiment(Experiment *experiment){
     emit sLoadExperiment(experiment);
 }
-void InspectorsInputManager::loadWorld(QVariantMap worldData) {
+void InspectorsInputManager::loadWorld(QJsonObject worldData) {
     emit sLoadWorld(worldData);
 }
-void InspectorsInputManager::loadEntity(QVariantMap genomeData, Ressource *ressource) {
+void InspectorsInputManager::loadEntity(QJsonObject genomeData, Ressource *ressource) {
     emit sLoadEntity(genomeData, ressource);
 }
 void InspectorsInputManager::loadResult(Result *result) {

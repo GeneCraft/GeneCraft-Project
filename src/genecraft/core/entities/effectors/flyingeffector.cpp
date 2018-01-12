@@ -41,21 +41,21 @@ FlyingEffector::FlyingEffector(Fixation *fixation) : Effector(QString(TYPE_NAME)
     brainOutputs.append(impulseZ);
 }
 
-FlyingEffector::FlyingEffector(QVariant data, Fixation *fixation) : Effector(data), fixation(fixation)
+FlyingEffector::FlyingEffector(QJsonObject data, Fixation *fixation) : Effector(data), fixation(fixation)
 {
-    QVariantMap outs = data.toMap()["outs"].toMap();
+    QJsonObject outs = data["outs"].toObject();
 
     btScalar mass = 1/fixation->getRigidBody()->getInvMass();
 
-    impulseX = new BrainOut(outs["impulseX"]);
+    impulseX = new BrainOut(outs["impulseX"].toObject());
     impulseX->setMin(-mass*MASS_FACTOR);
     impulseX->setMin(mass*MASS_FACTOR);
 
-    impulseY = new BrainOut(outs["impulseY"]);
+    impulseY = new BrainOut(outs["impulseY"].toObject());
     impulseY->setMin(-mass*MASS_FACTOR*10.0);
     impulseY->setMin(mass*MASS_FACTOR*10.0);
 
-    impulseZ = new BrainOut(outs["impulseZ"]);
+    impulseZ = new BrainOut(outs["impulseZ"].toObject());
     impulseZ->setMin(-mass*MASS_FACTOR);
     impulseZ->setMin(mass*MASS_FACTOR);
 
@@ -71,11 +71,11 @@ void FlyingEffector::step() {
     fixation->getRigidBody()->applyCentralImpulse(impulse);
 }
 
-QVariant FlyingEffector::serialize() {
+QJsonObject FlyingEffector::serialize() {
 
-    QVariantMap data = Effector::serialize().toMap();
+    QJsonObject data = Effector::serialize();
 
-    QVariantMap bOuts;
+    QJsonObject bOuts;
     bOuts.insert("impulseX", impulseX->serialize());
     bOuts.insert("impulseY", impulseY->serialize());
     bOuts.insert("impulseZ", impulseZ->serialize());
@@ -84,16 +84,16 @@ QVariant FlyingEffector::serialize() {
     return data;
 }
 
-QVariant FlyingEffector::generateEmpty()
+QJsonObject FlyingEffector::generateEmpty()
 {
-    QVariantMap data = Effector::generateEmpty(TYPE_NAME, TYPE).toMap();
+    QJsonObject data = Effector::generateEmpty(TYPE_NAME, TYPE);
 
     // min & max init in contructor according mass of fixation
     BrainOut impulseX(0,0);
     BrainOut impulseY(0,0);
     BrainOut impulseZ(0,0);
 
-    QVariantMap bOuts;
+    QJsonObject bOuts;
     bOuts.insert("impulseX", impulseX.serialize());
     bOuts.insert("impulseY", impulseY.serialize());
     bOuts.insert("impulseZ", impulseZ.serialize());

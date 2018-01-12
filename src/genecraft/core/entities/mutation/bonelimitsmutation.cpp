@@ -35,7 +35,7 @@ BoneLimitsMutation::BoneLimitsMutation()
     axisMutation->maxValue       =  SIMD_PI;
 }
 
-void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimits)
+void BoneLimitsMutation::mutate(QJsonObject &lowerLimits, QJsonObject &upperLimits)
 {
     // foreach axis...
     QString allAxis[] = {"x","y","z"};
@@ -66,8 +66,8 @@ void BoneLimitsMutation::mutate(QVariantMap &lowerLimits, QVariantMap &upperLimi
 
         lowerLimits.remove(axis);
         upperLimits.remove(axis);
-        lowerLimits.insert(axis,QVariant((double)loValue));
-        upperLimits.insert(axis,QVariant((double)upValue));
+        lowerLimits.insert(axis,(double)loValue);
+        upperLimits.insert(axis,(double)upValue);
     }
 }
 

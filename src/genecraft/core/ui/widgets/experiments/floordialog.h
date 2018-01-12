@@ -21,7 +21,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define FLOORDIALOG_H
 
 #include <QDialog>
-#include <QVariant>
 
 namespace Ui {
     class FloorDialog;
@@ -34,14 +33,14 @@ namespace GeneCraftCore {
         Q_OBJECT
 
     public:
-        explicit FloorDialog(QVariant floorData, QWidget *parent = 0);
-        QVariant serialize();
+        explicit FloorDialog(QJsonObject floorData, QWidget *parent = 0);
+        QJsonObject serialize();
         ~FloorDialog();
 
 
     private:
         Ui::FloorDialog *ui;
-        void loadBoxes(QVariant data);
+        void loadBoxes(QJsonObject data);
 
     private slots:
         void on_cmbBoxType_currentIndexChanged(QString );

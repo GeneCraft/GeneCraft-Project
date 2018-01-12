@@ -19,8 +19,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "boxsmellsensor.h"
 
-#include <QVariant>
-
 #define RADIUS_OF_SMELL 20.0
 
 namespace GeneCraftCore {
@@ -31,12 +29,12 @@ BoxSmellSensor::BoxSmellSensor(Fixation *fixation) :
 }
 
 // To create from serialization data
-BoxSmellSensor::BoxSmellSensor(QVariant data, Fixation * fixation) :
+BoxSmellSensor::BoxSmellSensor(QJsonObject data, Fixation * fixation) :
     SmellSensor(data, RigidBodyOrigin::BASIC_SHAPE, fixation)
 {
 }
 
-QVariant BoxSmellSensor::generateEmpty()
+QJsonObject BoxSmellSensor::generateEmpty()
 {
     return SmellSensor::generateEmpty("Box smell sensor", boxSmellSensor, RADIUS_OF_SMELL);
 }

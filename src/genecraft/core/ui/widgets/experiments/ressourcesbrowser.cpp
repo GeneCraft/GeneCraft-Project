@@ -100,8 +100,8 @@ RessourcesBrowser::~RessourcesBrowser()
 void RessourcesBrowser::connectToInspectorInputManager(GeneCraftCore::InspectorsInputManager * iim) {
 
     connect(this,SIGNAL(sLoadExperiment(Experiment*)),iim,SLOT(loadExperiment(Experiment*)));
-    connect(this,SIGNAL(sLoadWorld(QVariantMap)),iim,SLOT(loadWorld(QVariantMap)));
-    connect(this,SIGNAL(sLoadEntity(QVariantMap, Ressource*)),iim,SLOT(loadEntity(QVariantMap, Ressource*)));
+    connect(this,SIGNAL(sLoadWorld(QJsonObject)),iim,SLOT(loadWorld(QJsonObject)));
+    connect(this,SIGNAL(sLoadEntity(QJsonObject, Ressource*)),iim,SLOT(loadEntity(QJsonObject, Ressource*)));
 
     connect(iim,SIGNAL(sExperimentUpdated(Experiment*)),this,SLOT(experimentUpdated(Experiment*)));
 }
@@ -282,7 +282,7 @@ void RessourcesBrowser::saveEntity() {
 
         EntityTreeWidgetItem *entityTWI = (EntityTreeWidgetItem *) ui->twOnlineEntities->currentItem();
 
-        QVariantMap origins = entityTWI->dataw.data["origins"].toMap();
+        QJsonObject origins = entityTWI->dataw.data["origins"].toObject();
         QString selectedFile = QString("./ressources/") + QString(origins["name"].toString()) + QString(".genome");
 
         // file already exists ?
@@ -322,8 +322,8 @@ void RessourcesBrowser::shareExperiment()
 
         // Load Generic Entity
         Ressource* to = new DbRecord(database, expTWI->dataw.data["_id"].toString());
-        QVariant load = to->load();
-        if(load.toMap().contains("error")) {
+        QJsonObject load = to->load();
+        if(load.contains("error")) {
             to->save(expTWI->dataw.data);
             refreshOnlineRessources();
         } else {
@@ -345,8 +345,8 @@ void RessourcesBrowser::shareWorld()
         WorldTreeWidgetItem *worldTWI = (WorldTreeWidgetItem *) ui->twLocalWorlds->currentItem();
 
         Ressource* to = new DbRecord(database, worldTWI->dataw.data["name"].toString());
-        QVariant load = to->load();
-        if(load.toMap().contains("error")) {
+        QJsonObject load = to->load();
+        if(load.contains("error")) {
             to->save(worldTWI->dataw.data);
             refreshOnlineRessources();
         } else {
@@ -374,15 +374,15 @@ void RessourcesBrowser::shareEntity()
 
         // Load Generic Entity
         Ressource* to = new DbRecord(database, id);
-        QVariantMap creatureData = expTWI->dataw.data;
-        QVariantMap origins = creatureData["origins"].toMap();
+        QJsonObject creatureData = expTWI->dataw.data;
+        QJsonObject origins = creatureData["origins"].toObject();
         //qDebug() << creatureData["origins"].toMap();
         origins.insert("name", id);
         creatureData.insert("origins", origins);
         //qDebug() << creatureData["origins"].toMap();
 
-        QVariant load = to->load();
-        if(load.toMap().contains("error")) {
+        QJsonObject load = to->load();
+        if(load.contains("error")) {
             to->save(creatureData);
             refreshOnlineRessources();
         } else {

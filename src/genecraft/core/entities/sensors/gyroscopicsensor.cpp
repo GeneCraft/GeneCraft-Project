@@ -22,7 +22,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "brain/brainin.h"
 #include "body/fixation.h"
 #include <QDebug>
-#include <QVariant>
 #include "tools.h"
 
 namespace GeneCraftCore {
@@ -41,19 +40,19 @@ GyroscopicSensor::GyroscopicSensor(Fixation *fixation) : Sensor(fixation){
     brainInputs.append(inputRoll);
 }
 
-GyroscopicSensor::GyroscopicSensor(QVariant data, Fixation* fixation) : Sensor(data, fixation) {
+GyroscopicSensor::GyroscopicSensor(QJsonObject data, Fixation* fixation) : Sensor(data, fixation) {
 
-    inputYaw = new BrainIn(data.toMap()["inputYaw"]);
-    inputPitch = new BrainIn(data.toMap()["inputPitch"]);
-    inputRoll = new BrainIn(data.toMap()["inputRoll"]);
+    inputYaw = new BrainIn(data["inputYaw"].toObject());
+    inputPitch = new BrainIn(data["inputPitch"].toObject());
+    inputRoll = new BrainIn(data["inputRoll"].toObject());
 
     brainInputs.append(inputYaw);
     brainInputs.append(inputPitch);
     brainInputs.append(inputRoll);
 }
 
-QVariant GyroscopicSensor::serialize() {
-    QVariantMap data = Sensor::serialize().toMap();
+QJsonObject GyroscopicSensor::serialize() {
+    QJsonObject data = Sensor::serialize();
     data.insert("inputYaw", inputYaw->serialize());
     data.insert("inputPitch", inputPitch->serialize());
     data.insert("inputRoll", inputRoll->serialize());
@@ -61,9 +60,9 @@ QVariant GyroscopicSensor::serialize() {
     return data;
 }
 
-QVariant GyroscopicSensor::generateEmpty()
+QJsonObject GyroscopicSensor::generateEmpty()
 {
-    QVariantMap data = Sensor::generateEmpty("Gyroscopic sensor", gyroscopicSensor).toMap();
+    QJsonObject data = Sensor::generateEmpty("Gyroscopic sensor", gyroscopicSensor);
 
     BrainIn inputYaw(-SIMD_PI, SIMD_PI);
     BrainIn inputPitch(-SIMD_PI, SIMD_PI);

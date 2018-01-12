@@ -71,7 +71,7 @@ namespace GeneCraftCore {
 
         connect(iim, SIGNAL(sLoadExperiment(Experiment*)),this,SLOT(loadExperiment(Experiment*)));
         connect(this, SIGNAL(sLoadResult(Result*)),iim,SLOT(loadResult(Result*)));
-        connect(this, SIGNAL(sAddEntity(QVariantMap,Ressource*)), iim, SLOT(loadEntity(QVariantMap, Ressource*)));
+        connect(this, SIGNAL(sAddEntity(QJsonObject,Ressource*)), iim, SLOT(loadEntity(QJsonObject, Ressource*)));
     }
 
     void ExperimentCtrl::refresh() {
@@ -188,7 +188,7 @@ namespace GeneCraftCore {
     {
         if(this->ui->twResults->currentItem()) {
             Result* r = this->results[this->ui->twResults->currentIndex().row()];
-            emit sAddEntity(r->serialize().toMap(), NULL);
+            emit sAddEntity(r->serialize(), NULL);
         }
     }
 

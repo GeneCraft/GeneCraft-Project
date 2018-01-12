@@ -27,11 +27,11 @@ namespace GeneCraftCore {
     class IntegerMutation : public Mutation {
     public:
 
-        IntegerMutation(QVariant variant);
+        IntegerMutation(QJsonObject variant);
         IntegerMutation();
-        QVariant serialize();
+        QJsonObject serialize();
 
-        void mutate(QVariantMap &map, QString key);
+        void mutate(QJsonObject &map, QString key);
         int mutate(int value);
         int minIncr;
         int maxIncr;

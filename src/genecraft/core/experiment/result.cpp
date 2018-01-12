@@ -22,8 +22,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDate>
 #include <QDateTime>
 
-#include <QVariantMap>
-
 namespace GeneCraftCore {
 
     // To sort result, descending
@@ -41,9 +39,9 @@ namespace GeneCraftCore {
         ressource->save(this->serialize());
     }
 
-    QVariant Result::serialize() {
+    QJsonObject Result::serialize() {
 
-        QVariantMap resultData;
+        QJsonObject resultData;
         resultData.insert("type", "result");
         resultData.insert("experiment", exp);
         resultData.insert("fitness", (double)this->fitness);
@@ -64,10 +62,10 @@ namespace GeneCraftCore {
         this->ressource = NULL;
         this->exp = "";
         this->date = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        this->genome = QVariant();
+        this->genome = QJsonObject();
         this->worker = "";
         this->broadcasted = false;
-        this->statistics = QVariant();
+        this->statistics = QJsonObject();
         this->stableTime = 0;
         this->nbRun = 0;
     }
@@ -81,7 +79,7 @@ namespace GeneCraftCore {
       * A result is a fitness for a genome, and the ressource where this result is stored
       * If it come from a parent result (mutation, etc..) the ressource of the parent is attached
       */
-    Result::Result(QString expId, btScalar fitness, int nbRun, int stableTime, QVariant genome,
+    Result::Result(QString expId, btScalar fitness, int nbRun, int stableTime, QJsonObject genome,
            QString worker, QString date) {
         this->exp = expId;
         if(nbRun == 0) {
@@ -97,7 +95,7 @@ namespace GeneCraftCore {
         this->date = date;
         this->worker = worker;
         this->broadcasted = false;
-        this->statistics = QVariant();
+        this->statistics = QJsonObject();
         this->stableTime = stableTime;
     }
 
@@ -134,60 +132,58 @@ namespace GeneCraftCore {
         this->nbRun = r.nbRun;
     }
 
-    Result* Result::loadResult(QVariant data, bool& ok) {
+    Result* Result::loadResult(QJsonObject data, bool& ok) {
         ok = true;
 
-        QVariantMap dataMap = data.toMap();
 
-        btScalar fitness = dataMap["fitness"].toFloat(&ok);
-        if(!ok)
+        if(!data.contains("fitness")) {
             return new Result();
+        }
+        btScalar fitness = data["fitness"].toDouble();
 
-        if(!dataMap.contains("genome")) {
+        if(!data.contains("genome")) {
+            ok = false;
+            return new Result();
+        }
+        QJsonObject genome = data["genome"].toObject();
+
+        if(!data.contains("experiment")) {
             ok = false;
             return new Result();
         }
 
-        if(!dataMap.contains("experiment")) {
+        QString exp        = data["experiment"].toString();
+        if(!data.contains("date")) {
             ok = false;
             return new Result();
         }
 
-        if(!dataMap.contains("date")) {
-            ok = false;
-            return new Result();
-        }
-
+        QString date       = data["date"].toString();
         QString worker;
-        if(!dataMap.contains("worker")) {
+        if(!data.contains("worker")) {
             worker = "OldResult";
         } else {
 
-            worker = dataMap["worker"].toString();
+            worker = data["worker"].toString();
         }
 
-        QVariant statistics = QVariant();
-        if(dataMap.contains("statistics")) {
-            statistics = dataMap["statistics"];
+        QJsonObject statistics = QJsonObject();
+        if(data.contains("statistics")) {
+            statistics = data["statistics"].toObject();
         }
 
         int stableTime = 0;
-        if(dataMap.contains("stable")) {
-            stableTime = dataMap["stable"].toInt();
+        if(data.contains("stable")) {
+            stableTime = data["stable"].toInt();
         }
 
         int nbRun = 1;
-        if(dataMap.contains("nbRun")) {
-            nbRun = dataMap["nbRun"].toInt();
+        if(data.contains("nbRun")) {
+            nbRun = data["nbRun"].toInt();
         }
 
-        QVariantMap genome = dataMap["genome"].toMap();
-        QString exp        = dataMap["experiment"].toString();
-        QString date       = dataMap["date"].toString();
         Result* r = new Result(exp, fitness, nbRun, stableTime, genome, worker, date);
         r->setStatistics(statistics);
-
-
 
         return r;
     }

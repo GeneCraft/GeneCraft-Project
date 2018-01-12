@@ -20,8 +20,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btoscene.h"
 
 // Qt
-#include <QVariantMap>
-#include <QVariantList>
+#include <QJsonObject>
+#include <QJsonArray>
 
 // ogre
 #include "Ogre.h"
@@ -37,8 +37,8 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "btoworld.h"
 
 // Terrain
-#include "Terrain/OgreTerrain.h"
-#include "Terrain/OgreTerrainGroup.h"
+#include "OgreTerrain.h"
+#include "OgreTerrainGroup.h"
 
 
 // Debug
@@ -46,7 +46,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 namespace GeneCraftCore {
 
     float terrain[129*129];
-    btoScene::btoScene(btoWorld* world, QVariant sceneData, QObject *parent) :
+    btoScene::btoScene(btoWorld* world, QJsonObject sceneData, QObject *parent) :
         btScene(world, sceneData, parent)
     {
         mGlobals = NULL;
@@ -64,10 +64,10 @@ namespace GeneCraftCore {
         // ------------
         // -- Camera --
         // ------------
-        QVariantMap camData = data["camera"].toMap();
+        QJsonObject camData = data["camera"].toObject();
 
-        Ogre::Vector3 position(camData["posX"].toFloat(), camData["posY"].toFloat(), camData["posZ"].toFloat());
-        Ogre::Vector3 target(camData["targetX"].toFloat(), camData["targetY"].toFloat(), camData["targetZ"].toFloat());
+        Ogre::Vector3 position(camData["posX"].toDouble(), camData["posY"].toDouble(), camData["posZ"].toDouble());
+        Ogre::Vector3 target(camData["targetX"].toDouble(), camData["targetY"].toDouble(), camData["targetZ"].toDouble());
 
         BulletOgreEngine* btoEngine = static_cast<BulletOgreEngine*>(world->getFactory()->getEngineByName("BulletOgre"));
         Ogre::SceneManager* sceneManager = btoEngine->getOgreEngine()->getOgreSceneManager();
@@ -80,7 +80,7 @@ namespace GeneCraftCore {
         // -- Floor --
         // -----------
 
-        QVariantMap floor = data["floor"].toMap();
+        QJsonObject floor = data["floor"].toObject();
 
 
         // flatland

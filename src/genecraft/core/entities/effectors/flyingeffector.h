@@ -35,16 +35,16 @@ public:
     FlyingEffector(Fixation *fixation);
 
     // To create from data
-    FlyingEffector(QVariant data, Fixation *fixation);
+    FlyingEffector(QJsonObject data, Fixation *fixation);
 
     // To create empty effector serialization data
-    static QVariant generateEmpty();
+    static QJsonObject generateEmpty();
 
     // To update world.
     void step();
 
     // To serialize
-    QVariant serialize();
+    QJsonObject serialize();
 
 private:
 

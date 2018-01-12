@@ -26,13 +26,12 @@ INCLUDEPATH += \
 
 
 win32 {
-    INCLUDEPATH += lib/ogre/include/OGRE \
-                   lib/ogre/include \
-                   lib/ogre/boost_1_44 \ # for win32
-                   lib/ogre/boost_1_46_1/ \ # for macos
-    QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/boost_1_44/  # boost_1_44 for win32
-    QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/include
-    QMAKE_CXXFLAGS  += -isystem../src/lib/ogre/include/OGRE
+    INCLUDEPATH += ../lib/ogre/OgreMain/include \
+                   ../lib/ogre-build/include \
+                   ../lib/ogre/Components/Overlay/include \
+                   ../lib/ogre/Components/Terrain/include
+
+    QMAKE_CXXFLAGS  += -isystem../lib/ogre/OgreMain/include -isystem../lib/ogre-build/include
 }
 
 unix {
@@ -43,7 +42,7 @@ unix {
 
 win32 {
 
-    LIBS += -L../src/lib/ogre/bin/Release
+    LIBS += -L../lib/ogre-build/bin/Release
     LIBS += -lOgreMain
 }
 

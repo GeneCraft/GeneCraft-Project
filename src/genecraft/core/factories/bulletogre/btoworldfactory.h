@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef BTOWORLDFACTORY_H
 #define BTOWORLDFACTORY_H
 
-#include <QVariant>
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 
 namespace GeneCraftCore {
@@ -31,7 +31,7 @@ namespace GeneCraftCore {
 
         static btoWorld* createWorld(btoFactory* factory,
                                      btoShapesFactory* shapesFactory,
-                                     QVariant worldData);
+                                     QJsonObject worldData);
     };
 
 }

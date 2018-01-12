@@ -30,8 +30,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "ogre/ogreengine.h"
 
 #include <QDebug>
-#include <QVariant>
-#include <QVariantMap>
+#include <QJsonObject>
 
 namespace GeneCraftCore {
 
@@ -42,7 +41,7 @@ namespace GeneCraftCore {
         btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));
     }
 
-    btoWorld::btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QVariant data, QObject *parent) :
+    btoWorld::btoWorld(btoFactory* factory, btoShapesFactory* shapesFactory, QJsonObject data, QObject *parent) :
         btWorld(factory, shapesFactory, data, parent)
     {
         btoEngine = static_cast<BulletOgreEngine*>(factory->getEngineByName("BulletOgre"));

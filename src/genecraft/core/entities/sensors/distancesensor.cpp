@@ -19,7 +19,6 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "distancesensor.h"
 
-#include <QVariantMap>
 #include "body/fixation.h"
 #include "btshapesfactory.h"
 #include "bullet/btworld.h"
@@ -42,23 +41,23 @@ DistanceSensor::DistanceSensor(Fixation *fixation, btScalar yAxis, btScalar zAxi
     brainInputs.append(distanceInput);
 }
 
-DistanceSensor::DistanceSensor(QVariant data, Fixation* fixation) : Sensor(data, fixation) {
+DistanceSensor::DistanceSensor(QJsonObject data, Fixation* fixation) : Sensor(data, fixation) {
 
-    distanceInput = new BrainIn(data.toMap()["distanceInput"]);
+    distanceInput = new BrainIn(data["distanceInput"].toObject());
     brainInputs.append(distanceInput);
 
-    QVariantMap orientationMap = data.toMap()["orientation"].toMap();
+    QJsonObject orientationMap = data["orientation"].toObject();
 
-    yAxis = orientationMap["y"].toFloat();
-    zAxis = orientationMap["z"].toFloat();
+    yAxis = orientationMap["y"].toDouble();
+    zAxis = orientationMap["z"].toDouble();
 }
 
-QVariant DistanceSensor::serialize() {
+QJsonObject DistanceSensor::serialize() {
 
-    QVariantMap data = Sensor::serialize().toMap();
+    QJsonObject data = Sensor::serialize();
     data.insert("distanceInput", distanceInput->serialize());
 
-    QVariantMap orientationMap;
+    QJsonObject orientationMap;
     orientationMap.insert("y",(double)yAxis);
     orientationMap.insert("z",(double)zAxis);
     data.insert("orientation",orientationMap);
@@ -86,7 +85,7 @@ void DistanceSensor::step() {
     fixation->getShapesFactory()->getWorld()->getBulletWorld()->rayTest(rayFrom,realRayTo,rayCallback);
     if(rayCallback.hasHit())
     {
-        btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+        const btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
 
         if(body) {
 
@@ -104,9 +103,9 @@ void DistanceSensor::step() {
     distanceInput->setValue(0);
 }
 
-QVariant DistanceSensor::generateEmpty()
+QJsonObject DistanceSensor::generateEmpty()
 {
-    QVariantMap data = Sensor::generateEmpty("Distance sensor", distanceSensor).toMap();
+    QJsonObject data = Sensor::generateEmpty("Distance sensor", distanceSensor);
 
     BrainIn distanceInput(0,MAX_DISTANCE);
     distanceInput.connectRandomly();

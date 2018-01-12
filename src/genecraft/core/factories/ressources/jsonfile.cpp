@@ -21,9 +21,9 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QTextStream>
 #include <QDebug>
+#include <QJsonObject>
+#include <QJsonDocument>
 
-#include "qxtjson.h"
-#include <QtScript>
 
 namespace GeneCraftCore {
     JsonFile::JsonFile(QString filename, QObject *parent) :
@@ -33,20 +33,19 @@ namespace GeneCraftCore {
     }
 
 
-    int JsonFile::save(QVariant data) {
+    int JsonFile::save(QJsonObject data) {
         f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
         QTextStream out(&f);
 
-        QString beautifull = Ressource::beautifullJson(data);
-        out << beautifull;
+        out << QJsonDocument::fromVariant(data).toJson();
 
         f.close();
 
         return f.error();
     }
 
-    QVariant JsonFile::load() {
-        QString content;
+    QJsonObject JsonFile::load() {
+        QByteArray content;
         if(f.exists()) {
             // On ouvre le fichier et on le lit !
             if(f.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -56,7 +55,8 @@ namespace GeneCraftCore {
         }
 
         f.close();
-        return QxtJSON::parse(content);
+        QJsonDocument doc = QJsonDocument::fromJson(content);
+        return doc.object();
     }
 
     int JsonFile::remove() {

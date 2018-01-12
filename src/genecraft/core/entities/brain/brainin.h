@@ -21,6 +21,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #define NEURALIN_H
 
 #include <QObject>
+#include <QJsonObject>
 
 #include "genecraftcoreclasses.h"
 #include "synapse.h"
@@ -32,10 +33,10 @@ namespace GeneCraftCore {
 
     public:
         explicit BrainIn(btScalar min = 0.0f, btScalar max = 100.0f, QObject *parent = 0);
-        BrainIn(QVariant data);
+        BrainIn(QJsonObject data);
 
-        static QVariant generateEmpty(btScalar min, btScalar max);
-        QVariant serialize();
+        static QJsonObject generateEmpty(btScalar min, btScalar max);
+        QJsonObject serialize();
 
         void setMin(btScalar min) { this->min = min; }
         void setMax(btScalar max) { this->max = max; }

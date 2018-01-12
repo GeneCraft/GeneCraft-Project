@@ -25,7 +25,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #include "brainnode.h"
 
 #include <QMap>
-#include <QVariant>
+#include <QJsonObject>
 #include <QList>
 
 namespace GeneCraftCore {
@@ -34,7 +34,7 @@ class BrainFunctional : public Brain
 
 public:
     explicit BrainFunctional(QObject *parent = 0);
-    BrainFunctional(QVariant data);
+    BrainFunctional(QJsonObject data);
     ~BrainFunctional();
 
     void addOut(BrainOut* out);
@@ -46,7 +46,7 @@ public:
 
     static QString createRandomFunc(int depth, StructuralList* nodesList = NULL);
 
-    virtual QVariant serialize();
+    virtual QJsonObject serialize();
 
     virtual void step();
 

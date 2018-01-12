@@ -20,7 +20,7 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef GENERICFAMILY_H
 #define GENERICFAMILY_H
 
-#include <QVariant>
+#include <QJsonObject>
 #include "genecraftcoreclasses.h"
 #include "LinearMath/btVector3.h"
 #include "LinearMath/btTransform.h"
@@ -43,7 +43,7 @@ public:
     GenericFamily();
 
     // To create an entity with its genome
-    static Entity *createEntity(QVariant genotype,
+    static Entity *createEntity(QJsonObject genotype,
                                 btShapesFactory *shapesFactory,
                                 const btVector3 &initialPosition);
 
@@ -53,8 +53,8 @@ public:
                                      const btVector3 &initialPosition);
 
 
-    static Fixation* createRootFromGenotype(btShapesFactory *shapesFactory, QVariant genotype, btTransform initTransform);
-    static void buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QVariant fixGenotype);
+    static Fixation* createRootFromGenotype(btShapesFactory *shapesFactory, QJsonObject genotype, btTransform initTransform);
+    static void buildFixFromGenotype(btShapesFactory *shapesFactory, Fixation *fix, Fixation* root, QJsonObject fixGenotype);
 
 
 };

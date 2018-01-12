@@ -126,8 +126,8 @@ void SpiderFamily::addLeg(Fixation *fixBody, btScalar yAxis, btScalar zAxis, con
     }
 }
 
-QVariant SpiderFamily::serialize() {
-    return QVariant();
+QJsonObject SpiderFamily::serialize() {
+    return QJsonObject();
 }
 
 }

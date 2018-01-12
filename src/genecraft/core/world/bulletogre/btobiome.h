@@ -22,23 +22,24 @@ along with Genecraft-Project.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "genecraftcoreclasses.h"
 #include "btbiome.h"
+#include <QJsonArray>
 
 namespace GeneCraftCore {
 
 class btoBiome : public btBiome
 {
 public:
-    explicit btoBiome(btoWorld* world, QVariant biomeData, QObject *parent = 0);
+    explicit btoBiome(btoWorld* world, QJsonObject biomeData, QObject *parent = 0);
 
     virtual void setup();
 
-    QVariantList getLightsData() { return lightsData; }
-    void setLightsData(QVariantList lightsData) { this->lightsData = lightsData; }
+    QJsonArray getLightsData() { return lightsData; }
+    void setLightsData(QJsonArray lightsData) { this->lightsData = lightsData; }
 
 private:
     btoWorld* world;
 
-    QVariantList lightsData;
+    QJsonArray lightsData;
 };
 
 }
